@@ -1,0 +1,4026 @@
+<?xml version="1.0" encoding="UTF-8"?><Db flnm="carga_laravel" nm="carga_laravel" ver="1.3.4">
+  <VerLbl/>
+  <VerNotes/>
+  <DefTblOpts/>
+  <DocFolder>C:\laragon\www\carga</DocFolder>
+  <Sch Cm="" nm="schemaA">
+    <Tbl UsSo="1" nm="aerolineas_aeropuertos">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <Pk ClNs="id" nm="pkaerolineas_aeropuertos"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="localizacion_id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="nombre" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="direccion" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="zip" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="10" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="codigo" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="5" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="Aerolineas" nm="tipo" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0000-00-00 00:00:00" nm="updated_at" nu="0">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_aerolineas_localizacion" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="localizacion" oe="1" sch="schemaA" zr="0"/>
+        <CdTb mn="1" nm="aerolineas_aeropuertos" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="localizacion_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="fk_aerolineas_localizacion" spa="0" unq="0">
+        <ClNs>localizacion_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="aerolineas_inventario">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8</TblOpts>
+      <Pk ClNs="id" nm="pkaerolineas_inventario"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="aerolinea_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="consecutivo_creacion" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="guia" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="20" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="usado" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_aerolineas_inventario_aerolineas_aeropuertos" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="aerolineas_aeropuertos" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="aerolineas_inventario" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="aerolinea_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="aerolineas_id" spa="0" unq="0">
+        <ClNs>aerolinea_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="agencia">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <Pk ClNs="id" nm="pkagencia"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="descripcion" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="responsable" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="direccion" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="localizacion_id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="zip" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="telefono" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="observacion" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="200" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="logo" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="tipo_agencia" nu="1">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="file_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="email" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="email_host" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="email_port" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="email_encriptyon" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="email_username" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="email_password" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="email_paypal" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="200" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="compra_porcentaje_comision" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="0" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="compra_minima_comision" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="0" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="compra_rango_comision" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="0" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="compra_rango_comision2" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="0" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="zopim" nu="1">
+        <DT arr="0" ds="Text" en="" id="703" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="usar_mail_chimp" nu="1">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="usar_zopim" nu="1">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="amazon_id" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="terminos_condiciones" nu="1">
+        <DT arr="0" ds="Text" en="" id="703" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="usar_paypal" nu="0">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="url" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="url_terms" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0000-00-00 00:00:00" nm="updated_at" nu="0">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_agencia_localizacion" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="localizacion" oe="1" sch="schemaA" zr="0"/>
+        <CdTb mn="1" nm="agencia" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="localizacion_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="email" spa="0" unq="1">
+        <ClNs>email</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_agencia_localizacion" spa="0" unq="0">
+        <ClNs>localizacion_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="localizacion_id" spa="0" unq="0">
+        <ClNs>localizacion_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="agencia_afiliaciones">
+      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+      <Pk ClNs="id" nm="pkagencia_afiliaciones"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="agencia_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="banner_afiliaciones" nu="1">
+        <DT arr="0" ds="Text" en="" id="703" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="banner_alto" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="banner_ancho" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_agencia_afiliaciones_agencia" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="agencia" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="agencia_afiliaciones" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="agencia_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="fk_agencia_afiliaciones_agencia" spa="0" unq="0">
+        <ClNs>agencia_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="agencia_detalle">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <Pk ClNs="id" nm="pkagencia_detalle"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="agencia_id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="servicios_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="tarifa_principal" nu="0">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="tarifa_agencia" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="seguro_principal" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="seguro" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_agencia_detalle_agencia" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="agencia" oe="1" sch="schemaA" zr="0"/>
+        <CdTb mn="1" nm="agencia_detalle" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="agencia_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_agencia_detalle_servicios" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="servicios" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="agencia_detalle" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="servicios_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="fk_agencia_detalle_agencia" spa="0" unq="0">
+        <ClNs>agencia_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_agencia_detalle_servicios" spa="0" unq="0">
+        <ClNs>servicios_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="auxiliar_consecutivo">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8</TblOpts>
+      <Pk ClNs="id" nm="pkauxiliar_consecutivo"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="documento_id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="tipo_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="0">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_auxiliar_consecutivo_documento" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="documento" oe="1" sch="schemaA" zr="0"/>
+        <CdTb mn="1" nm="auxiliar_consecutivo" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="documento_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_auxiliar_consecutivo_tipo_documento" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="tipo_documento" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="auxiliar_consecutivo" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="tipo_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="auxiliar_consecutivo_documento_id_Idx" spa="0" unq="0">
+        <ClNs>documento_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="auxiliar_consecutivo_tipo_id_Idx" spa="0" unq="0">
+        <ClNs>tipo_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="cargos_adicionales_detalle">
+      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <Pk ClNs="id" nm="pkcargos_adicionales_detalle"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="documento_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="concepto" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="precio" nu="0">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="cantidad" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="total" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_cargos_adicionales_detalle_guia_hija" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="documento" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="cargos_adicionales_detalle" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="documento_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="fk_cargos_adicionales_detalle_guia_hija" spa="0" unq="0">
+        <ClNs>documento_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="clientes">
+      <TblOpts/>
+      <Pk ClNs="id" nm="pkclientes"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="nombre" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="direccion" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="telefono" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="30" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="celular" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="30" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="email" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="30" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="cc" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="cco" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="0">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="compras">
+      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+      <Pk ClNs="id" nm="pkcompras"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="link" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="200" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="cantidad" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="2" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="codigo_desto_tienda" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="peso" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="2" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="valor_declarado" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="2" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="compras_status">
+      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+      <Pk ClNs="id" nm="pkcompras_status"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="compras_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="descripcion" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="color" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="20" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="icono" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="30" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_compras_status_compras" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="compras" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="compras_status" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="compras_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="fk_compras_status_compras" spa="0" unq="0">
+        <ClNs>compras_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="conceptos_costos_master">
+      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+      <Pk ClNs="id" nm="pkconceptos_costos_master"/>
+      <Cl au="0" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="descripcion" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="200" sc="null" sg="1" un="0"/>
+      </Cl>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="consignee">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <Pk ClNs="id" nm="pkconsignee"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="agencia_id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="tipo_identificacion_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="localizacion_id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="clientes_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="po_box" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="20" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="documento" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="25" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="primer_nombre" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="segundo_nombre" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="primer_apellido" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="segundo_apellido" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="direccion" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="telefono" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="25" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="correo" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="zip" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="celular" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="25" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="tarifa" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="1" nm="estatus" nu="1">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="nombre_full" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="200" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="casillero" nu="1">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="password_casillero" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="direccion2" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="acepta_condiciones" nu="1">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="recibir_info" nu="1">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="corporativo" nu="0">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="contactos_json" nu="1">
+        <DT arr="0" ds="LongText" en="" id="712" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_consignee_clientes" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="clientes" oe="1" sch="schemaA" zr="0"/>
+        <CdTb mn="1" nm="consignee" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="clientes_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_consignee_localizacion" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="localizacion" oe="1" sch="schemaA" zr="0"/>
+        <CdTb mn="1" nm="consignee" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="localizacion_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_consignee_tipo_identificacion" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="tipo_identificacion" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="consignee" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="tipo_identificacion_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="consignee_clientes_id_Idx" spa="0" unq="0">
+        <ClNs>clientes_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_consignee_localizacion" spa="0" unq="0">
+        <ClNs>localizacion_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_consignee_tipo_identificacion" spa="0" unq="0">
+        <ClNs>tipo_identificacion_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="consolidado_detalle">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <Pk ClNs="id" nm="pkconsolidado_detalle"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="consolidado_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="documento_detalle_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="num_bolsa" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="shipper" nu="1">
+        <DT arr="0" ds="LongText" en="" id="712" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="consignee" nu="1">
+        <DT arr="0" ds="LongText" en="" id="712" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="agrupado" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="reajuste" nu="0">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="invoice" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="10" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="fecha_entrega" nu="1">
+        <DT arr="0" ds="Date" en="" id="91" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="flag" nu="0">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_consolidado_detalle_documento" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="documento" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="consolidado_detalle" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="consolidado_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_consolidado_detalle_guia_hija_detalle" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="documento_detalle" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="consolidado_detalle" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="documento_detalle_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="fk_consolidado_detalle_consolidado" spa="0" unq="0">
+        <ClNs>consolidado_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_consolidado_detalle_guia_hija_detalle" spa="0" unq="0">
+        <ClNs>documento_detalle_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="costos_master">
+      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+      <Pk ClNs="id" nm="pkcostos_master"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="master_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="costo_1" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="2" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="trm" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="2" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="conceptos_costos_master_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="moneda_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="observaciones" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_costos_master_conceptos_costos_master" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="conceptos_costos_master" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="costos_master" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="conceptos_costos_master_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_costos_master_master" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="master" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="costos_master" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="master_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_costos_master_moneda" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="moneda" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="costos_master" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="moneda_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="fk_costos_master_conceptos_costos_master" spa="0" unq="0">
+        <ClNs>conceptos_costos_master_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_costos_master_master" spa="0" unq="0">
+        <ClNs>master_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_costos_master_moneda" spa="0" unq="0">
+        <ClNs>moneda_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="deptos">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <Pk ClNs="id" nm="pkdeptos"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="pais_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="descripcion" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="cod_dane" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="20" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_deptoss_pais" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="pais" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="deptos" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="pais_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="fk_deptoss_pais" spa="0" unq="0">
+        <ClNs>pais_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="documento">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <Pk ClNs="id" nm="pkdocumento"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="usuario_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="agencia_id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="consecutivo" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="tipo_documento_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="pais_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="central_destino_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="master_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="shipper_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="consignee_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="transporte_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="piezas" nu="0">
+        <DT arr="0" ds="BigInt" en="" id="-5" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="peso" nu="0">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="volumen" nu="0">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="peso_cobrado" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="observaciones" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="valor" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="valor_libra" nu="0">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="flete" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="seguro" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="seguro_cobrado" nu="0">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="cargos_add" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="descuento" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="total" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="num_guia" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="20" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="consolidado" nu="1">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="valor_declarado" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="pa_aduana" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="num_consolidado" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="user_update" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="impuesto" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="factura" nu="1">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="carga_peligrosa" nu="1">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="re_empacado" nu="1">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="mal_empacado" nu="1">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="rota" nu="1">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="estado_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="num_warehouse" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="20" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="pago" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="liquidado" nu="0">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_guia_hija_agencia" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="agencia" oe="1" sch="schemaA" zr="0"/>
+        <CdTb mn="1" nm="documento" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="agencia_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_guia_hija_tipo_documento" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="tipo_documento" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="documento" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="tipo_documento_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_guia_hija_usuario" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="users" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="documento" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="usuario_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_weare_house_consignee" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="consignee" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="documento" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="consignee_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_weare_house_shipper" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="shipper" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="documento" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="shipper_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="central_destino" spa="0" unq="0">
+        <ClNs>central_destino_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_guia_hija_agencia" spa="0" unq="0">
+        <ClNs>agencia_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_guia_hija_tipo_documento" spa="0" unq="0">
+        <ClNs>tipo_documento_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_guia_hija_usuario" spa="0" unq="0">
+        <ClNs>usuario_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_weare_house_consignee" spa="0" unq="0">
+        <ClNs>consignee_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_weare_house_shipper" spa="0" unq="0">
+        <ClNs>shipper_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="master_id" spa="0" unq="0">
+        <ClNs>master_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="pais_id" spa="0" unq="0">
+        <ClNs>pais_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="documento_detalle">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <Pk ClNs="id" nm="pkdocumento_detalle"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="documento_id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="tipo_empaque_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="posicion_arancelaria_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="arancel_id2" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="consignee_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="shipper_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="dimensiones" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="20" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="largo" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="ancho" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="alto" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="contenido" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="contenido2" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="tracking" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="volumen" nu="0">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="valor" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="declarado2" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="0" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="peso" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="0" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="peso2" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="0" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="consolidado" nu="1">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="num_warehouse" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="20" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="num_guia" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="num_consolidado" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="liquidado" nu="1">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="agrupar" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="30" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="1" nm="paquete" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="pago" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_detalle_guia_hija_guia_hija" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="documento" oe="1" sch="schemaA" zr="0"/>
+        <CdTb mn="1" nm="documento_detalle" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="documento_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_guia_hija_detalle_consignee" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="consignee" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="documento_detalle" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="consignee_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_guia_hija_detalle_maestra_multiple" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="maestra_multiple" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="documento_detalle" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="tipo_empaque_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_guia_hija_detalle_posicion_arancelaria" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="posicion_arancelaria" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="documento_detalle" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="posicion_arancelaria_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_guia_hija_detalle_posicion_arancelaria_2" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="posicion_arancelaria" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="documento_detalle" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="arancel_id2" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_guia_hija_detalle_shipper" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="shipper" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="documento_detalle" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="shipper_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="fk_detalle_guia_hija_guia_hija" spa="0" unq="0">
+        <ClNs>documento_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_guia_hija_detalle_consignee" spa="0" unq="0">
+        <ClNs>consignee_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_guia_hija_detalle_posicion_arancelaria" spa="0" unq="0">
+        <ClNs>posicion_arancelaria_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_guia_hija_detalle_posicion_arancelaria_2" spa="0" unq="0">
+        <ClNs>arancel_id2</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_guia_hija_detalle_shipper" spa="0" unq="0">
+        <ClNs>shipper_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_guia_hija_detalle_tipo_empaque" spa="0" unq="0">
+        <ClNs>tipo_empaque_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="documento_notas">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8</TblOpts>
+      <Pk ClNs="id" nm="pkdocumento_notas"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="documento_id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="user_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="nota" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="0">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_documento_notas_documento" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="documento" oe="1" sch="schemaA" zr="0"/>
+        <CdTb mn="1" nm="documento_notas" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="documento_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_documento_notas_users" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="users" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="documento_notas" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="user_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="documento_id" spa="0" unq="0">
+        <ClNs>documento_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="user_id" spa="0" unq="0">
+        <ClNs>user_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="factura_warehouse">
+      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+      <Pk ClNs="id" nm="pkfactura_warehouse"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="warehouse_detalle_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="consignee_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="agencia_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="num_warehouse" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="cantidad" nu="1">
+        <DT arr="0" ds="BigInt" en="" id="-5" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="direccion" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="200" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="telefono" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="30" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="ciudad" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="200" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="transportador" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="200" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="num_recibo" nu="1">
+        <DT arr="0" ds="BigInt" en="" id="-5" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="usuario_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="documento_detalle_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_factura_warehouse_agencia" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="agencia" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="factura_warehouse" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="agencia_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_factura_warehouse_consignee" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="consignee" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="factura_warehouse" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="consignee_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_factura_warehouse_guia_hija_detalle" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="documento_detalle" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="factura_warehouse" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="documento_detalle_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_factura_warehouse_usuario" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="users" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="factura_warehouse" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="usuario_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="fk_factura_warehouse_agencia" spa="0" unq="0">
+        <ClNs>agencia_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_factura_warehouse_consignee" spa="0" unq="0">
+        <ClNs>consignee_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_factura_warehouse_guia_hija_detalle" spa="0" unq="0">
+        <ClNs>documento_detalle_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_factura_warehouse_usuario" spa="0" unq="0">
+        <ClNs>usuario_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="guia_wrh_pivot">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8</TblOpts>
+      <Pk ClNs="id" nm="pkguia_wrh_pivot"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="documento_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="servicios_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="forma_pago_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="tipo_pago_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="tipo_embarque_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="grupo_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="estado_id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_guia_wrh_pivot_guia_hija" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="documento" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="guia_wrh_pivot" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="documento_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_guia_wrh_pivot_maestra_multiple_embarque" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="maestra_multiple" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="guia_wrh_pivot" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="tipo_embarque_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_guia_wrh_pivot_maestra_multiple_grupo" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="maestra_multiple" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="guia_wrh_pivot" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="grupo_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_guia_wrh_pivot_maestra_multiple_pago" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="maestra_multiple" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="guia_wrh_pivot" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="forma_pago_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_guia_wrh_pivot_maestra_multiple_tipo_pago" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="maestra_multiple" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="guia_wrh_pivot" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="tipo_pago_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_guia_wrh_pivot_servicios" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="servicios" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="guia_wrh_pivot" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="servicios_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="estado_id" spa="0" unq="0">
+        <ClNs>estado_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_guia_wrh_pivot_guia_hija" spa="0" unq="0">
+        <ClNs>documento_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_guia_wrh_pivot_maestra_multiple_embarque" spa="0" unq="0">
+        <ClNs>tipo_embarque_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_guia_wrh_pivot_maestra_multiple_tipo_pago" spa="0" unq="0">
+        <ClNs>tipo_pago_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_guia_wrh_pivot_servicios" spa="0" unq="0">
+        <ClNs>servicios_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_pibot_wrh_guia_forma_pago" spa="0" unq="0">
+        <ClNs>forma_pago_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="guia_wrh_pivot_grupo_id_Idx" spa="0" unq="0">
+        <ClNs>grupo_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="impuesto_hijas">
+      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+      <Pk ClNs="id" nm="pkimpuesto_hijas"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="documento_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="reajuste" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="2" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="fecha_entrega" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="seguro" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="2" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="flete" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="2" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="costo" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="2" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="arancel" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="2" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="iva" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="2" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="total_impuesto" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="2" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="porcentaje_iva" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="2" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="porcentaje_arancel" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="2" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="reserva_dian" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_impuesto_hijas_guia_hija" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="documento" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="impuesto_hijas" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="documento_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="fk_impuesto_hijas_guia_hija" spa="0" unq="0">
+        <ClNs>documento_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="impuesto_master">
+      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+      <Pk ClNs="id" nm="pkimpuesto_master"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="master_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="fecha_liquidacion" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="rate" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="2" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="trm" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="2" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="peso" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="2" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="fecha_pago" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="codigo_pago" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="reserva_dian" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_impuesto_master_master" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="master" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="impuesto_master" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="master_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="fk_impuesto_master_master" spa="0" unq="0">
+        <ClNs>master_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="instruccion">
+      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+      <Pk ClNs="id" nm="pkinstruccion"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="descripcion" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="localizacion">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=1270 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <Pk ClNs="id" nm="pklocalizacion"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="codigo_dane" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="nombre" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="codigo_int" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="codigo_depto" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="20" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deptos_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="prefijo" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="10" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="CURRENT_TIMESTAMP" nm="updated_at" nu="0">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_localizacion_deptos" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="deptos" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="localizacion" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="deptos_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="fk_localizacion_deptos" spa="0" unq="0">
+        <ClNs>deptos_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="log_activities">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</TblOpts>
+      <Pk ClNs="id" nm="pklog_activities"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="user_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="subject" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="150" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="url" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="method" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="10" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="ip" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="20" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="agent" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_log_activities_users" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="users" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="log_activities" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="user_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="fk_log_activities_users" spa="0" unq="0">
+        <ClNs>user_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="maestra_multiple">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8</TblOpts>
+      <Pk ClNs="id" nm="pkmaestra_multiple"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="modulo_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="nombre" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="descripcion" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="CURRENT_TIMESTAMP" nm="created_at" nu="0">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_maestra_multiple_modulo" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="modulo" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="maestra_multiple" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="modulo_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="modulo_id" spa="0" unq="0">
+        <ClNs>modulo_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="mail_chimp">
+      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+      <Pk ClNs="id" nm="pkmail_chimp"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="agencia_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="api_key" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_mail_chimp_agencia" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="agencia" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="mail_chimp" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="agencia_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="fk_mail_chimp_agencia" spa="0" unq="0">
+        <ClNs>agencia_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="mail_chimp_list">
+      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+      <Pk ClNs="id" nm="pkmail_chimp_list"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="mail_chimp_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="formulario_id" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="list_id" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_mail_chimp_list_mail_chimp" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="mail_chimp" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="mail_chimp_list" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="mail_chimp_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="fk_mail_chimp_list_mail_chimp" spa="0" unq="0">
+        <ClNs>mail_chimp_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="master">
+      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <Pk ClNs="id" nm="pkmaster"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="master_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="aerolinea_inventario_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="usuario_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="shipper_id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="consignee_id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="carrier_id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="agencia_id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="aerolineas_id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="aeropuertos_id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="aeropuertos_id_destino" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="num_master" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="20" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="account_information" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="agent_iata_code" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="30" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="num_account" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="30" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="reference_num" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="30" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="optional_shipping_info" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="60" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="to1" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="5" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="to2" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="5" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="to3" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="5" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="by1" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="5" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="by2" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="5" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="by_first_carrier" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="currency" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="5" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="chgs_code" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="10" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="dec_value_carriage" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="20" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="dec_value_customs" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="20" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="fecha_vuelo1" nu="1">
+        <DT arr="0" ds="Date" en="" id="91" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="fecha_vuelo2" nu="1">
+        <DT arr="0" ds="Date" en="" id="91" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="amount_insurance" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="30" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="handing_information" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="sci" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="20" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="weight_charge" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="valuation_charge" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="tax" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="total_other_charge_due_agent" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="total_other_charge_due_carrier" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="total_prepaid" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="total_collect" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="currency_conversion" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="20" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="charges_dest_currency" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="20" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="charges_at_destination" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="20" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="other_charges" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="signature_shipper_agent" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="total_collect_charges" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="user_update" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_master_aerolineas" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="aerolineas_aeropuertos" oe="1" sch="schemaA" zr="0"/>
+        <CdTb mn="1" nm="master" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="aerolineas_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_master_aerolineas_aeropuertos_aeropuertos" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="aerolineas_aeropuertos" oe="1" sch="schemaA" zr="0"/>
+        <CdTb mn="1" nm="master" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="aeropuertos_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="aerolinea_inventario_id" spa="0" unq="0">
+        <ClNs>aerolinea_inventario_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_master_aerolineas" spa="0" unq="0">
+        <ClNs>aerolineas_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_master_aeropuertos" spa="0" unq="0">
+        <ClNs>aeropuertos_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="master_detalle">
+      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <Pk ClNs="id" nm="pkmaster_detalle"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="master_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="piezas" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="peso" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="peso_kl" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="unidad_medida" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="5" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="rate_class" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="5" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="commodity_item" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="peso_cobrado" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="tarifa" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="total" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="descripcion" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="2024" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_master_detalle_master" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="master" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="master_detalle" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="master_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="fk_master_detalle_master" spa="0" unq="0">
+        <ClNs>master_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="migrations">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</TblOpts>
+      <Pk ClNs="id" nm="pkmigrations"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="migration" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="191" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="batch" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="modulo">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8</TblOpts>
+      <Pk ClNs="id" nm="pkmodulo"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="nombre" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="CURRENT_TIMESTAMP" nm="created_at" nu="0">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="moneda">
+      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+      <Pk ClNs="id" nm="pkmoneda"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="moneda" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="3" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="descripcion" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="pais">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=247 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <Pk ClNs="id" nm="pkpais"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="descripcion" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="iso2" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="10" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="iso3" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="10" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="phone_code" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="10" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0000-00-00 00:00:00" nm="updated_at" nu="0">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="password_resets">
+      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</TblOpts>
+      <Cl au="0" df="" nm="email" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="191" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="token" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="191" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Idx clu="0" ftx="0" nm="password_resets_email_index" spa="0" unq="0">
+        <ClNs>email</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="payu">
+      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+      <Pk ClNs="id" nm="pkpayu"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="agencia_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="merchant_id" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="20" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="api_key" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="200" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="gateway_url" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="200" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="pagina_respuesta" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="pagina_confirmacion" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_payu_agencia" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="agencia" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="payu" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="agencia_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="fk_payu_agencia" spa="0" unq="0">
+        <ClNs>agencia_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="permission_role">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</TblOpts>
+      <Pk ClNs="id" nm="pkpermission_role"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="permission_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="role_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_permission_role_permissions" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="permissions" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="permission_role" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="permission_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_permission_role_roles" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="roles" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="permission_role" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="role_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="permission_role_permission_id_index" spa="0" unq="0">
+        <ClNs>permission_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="permission_role_role_id_index" spa="0" unq="0">
+        <ClNs>role_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="permission_user">
+      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</TblOpts>
+      <Pk ClNs="id" nm="pkpermission_user"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="permission_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="user_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_permission_user_permissions" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="permissions" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="permission_user" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="permission_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_permission_user_users" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="users" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="permission_user" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="user_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="permission_user_permission_id_index" spa="0" unq="0">
+        <ClNs>permission_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="permission_user_user_id_index" spa="0" unq="0">
+        <ClNs>user_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="permissions">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=120 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</TblOpts>
+      <Pk ClNs="id" nm="pkpermissions"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="name" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="191" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="slug" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="191" sc="null" sg="1" un="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="description" nu="1">
+        <DT arr="0" ds="Text" en="" id="703" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Idx clu="0" ftx="0" nm="permissions_slug_unique" spa="0" unq="1">
+        <ClNs>slug</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="plantillas_correo">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8</TblOpts>
+      <Pk ClNs="id" nm="pkplantillas_correo"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="agencia_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="nombre" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="subject" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="mensaje" nu="1">
+        <DT arr="0" ds="Text" en="" id="703" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="descripcion_plantilla" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="otros_destinatarios" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_plantillas_correo_agencia" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="agencia" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="plantillas_correo" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="agencia_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="fk_plantillas_correo_agencia" spa="0" unq="0">
+        <ClNs>agencia_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="posicion_arancelaria">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=238 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <Pk ClNs="id" nm="pkposicion_arancelaria"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="pa" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="30" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="arancel" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="10" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="iva" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="10" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="descripcion" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="prealerta">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8</TblOpts>
+      <Pk ClNs="id" nm="pkprealerta"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="consignee_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="agencia_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="tracking" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="contenido" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="instruccion" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="correo" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="telefono" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="30" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="despachar" nu="0">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_prealerta_agencia" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="agencia" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="prealerta" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="agencia_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="fk_prealerta_consignee" spa="0" unq="0">
+        <ClNs>consignee_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="prealerta_agencia_id_Idx" spa="0" unq="0">
+        <ClNs>agencia_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="tracking" spa="0" unq="1">
+        <ClNs>tracking</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="reporte_carga">
+      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+      <Pk ClNs="id" nm="pkreporte_carga"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="fecha" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="agencia_id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="agencia_id_principal" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="usuario_id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="piezas" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="peso" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="val_agencia" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="2" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="total" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="2" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_reporte_carga_agencia" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="agencia" oe="1" sch="schemaA" zr="0"/>
+        <CdTb mn="1" nm="reporte_carga" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="agencia_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_reporte_carga_usuario" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="users" oe="1" sch="schemaA" zr="0"/>
+        <CdTb mn="1" nm="reporte_carga" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="usuario_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="fk_reporte_carga_agencia" spa="0" unq="0">
+        <ClNs>agencia_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_reporte_carga_usuario" spa="0" unq="0">
+        <ClNs>usuario_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="reporte_carga_detalle">
+      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+      <Pk ClNs="id" nm="pkreporte_carga_detalle"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="reporte_carga_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="documento_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="consignee_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="shipper_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="piezas" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="peso" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="declarado" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="2" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="impuesto" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="2" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="seguro" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="2" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="flete" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="2" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="fijo" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="2" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="agencia" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="2" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="total" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="2" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="tipo_pago" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_reporte_carga_detalle_consignee" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="consignee" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="reporte_carga_detalle" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="consignee_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_reporte_carga_detalle_guia_hija" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="documento" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="reporte_carga_detalle" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="documento_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_reporte_carga_detalle_reporte_carga" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="reporte_carga" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="reporte_carga_detalle" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="reporte_carga_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_reporte_carga_detalle_shipper" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="shipper" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="reporte_carga_detalle" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="shipper_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="fk_reporte_carga_detalle_consignee" spa="0" unq="0">
+        <ClNs>consignee_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_reporte_carga_detalle_guia_hija" spa="0" unq="0">
+        <ClNs>documento_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_reporte_carga_detalle_reporte_carga" spa="0" unq="0">
+        <ClNs>reporte_carga_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_reporte_carga_detalle_shipper" spa="0" unq="0">
+        <ClNs>shipper_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="role_user">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</TblOpts>
+      <Pk ClNs="id" nm="pkrole_user"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="user_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="role_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_role_user_roles" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="roles" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="role_user" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="role_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_role_user_users" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="users" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="role_user" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="user_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="role_user_role_id_index" spa="0" unq="0">
+        <ClNs>role_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="role_user_user_id_index" spa="0" unq="0">
+        <ClNs>user_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="roles">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</TblOpts>
+      <Pk ClNs="id" nm="pkroles"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="name" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="191" sc="null" sg="1" un="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="slug" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="191" sc="null" sg="1" un="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="description" nu="1">
+        <DT arr="0" ds="Text" en="" id="703" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="special" nu="1">
+        <DT arr="0" ds="Enum" en="'all-access','no-access'" id="706" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Idx clu="0" ftx="0" nm="roles_name_unique" spa="0" unq="1">
+        <ClNs>name</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="roles_slug_unique" spa="0" unq="1">
+        <ClNs>slug</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="servicios">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <Pk ClNs="id" nm="pkservicios"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="nombre" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="tarifa" nu="0">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="cobro_opcional" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="cobro_peso_volumen" nu="1">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="peso_minimo" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="seguro" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="impuesto" nu="1">
+        <DT arr="0" ds="Decimal" en="" id="3" ln="10" sc="0" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="tipo_embarque_id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_servicios_maestra_multiple" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="maestra_multiple" oe="1" sch="schemaA" zr="0"/>
+        <CdTb mn="1" nm="servicios" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="tipo_embarque_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="fk_servicios_maestra_multiple" spa="0" unq="0">
+        <ClNs>tipo_embarque_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="shipper">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <Pk ClNs="id" nm="pkshipper"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="tipo_identificacion_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="agencia_id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="localizacion_id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="primer_nombre" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="segundo_nombre" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="primer_apellido" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="segundo_apellido" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="direccion" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="telefono" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="30" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="correo" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="zip" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="nombre_full" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="200" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="nombre_old" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="200" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="contactos_json" nu="1">
+        <DT arr="0" ds="LongText" en="" id="712" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Idx clu="0" ftx="0" nm="tipo_identificacion_id" spa="0" unq="0">
+        <ClNs>tipo_identificacion_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="shipper_consignee">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8</TblOpts>
+      <Pk ClNs="id" nm="pkshipper_consignee"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="consignee_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="shipper_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_shipper_consignee_consignee" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="consignee" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="shipper_consignee" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="consignee_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_shipper_consignee_shipper" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="shipper" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="shipper_consignee" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="shipper_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="fk_shipper_consignee_consignee" spa="0" unq="0">
+        <ClNs>consignee_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_shipper_consignee_shipper" spa="0" unq="0">
+        <ClNs>shipper_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="status">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <Pk ClNs="id" nm="pkstatus"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="descripcion" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="color" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="20" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="email" nu="1">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0000-00-00 00:00:00" nm="updated_at" nu="0">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="status_detalle">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <Pk ClNs="id" nm="pkstatus_detalle"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="status_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="usuario_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="documento_detalle_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="codigo" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="20" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="fecha_status" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="observacion" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="transportadora" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="num_transportadora" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_status_detalle_guia_hija_detalle" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="documento_detalle" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="status_detalle" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="documento_detalle_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_status_detalle_status" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="status" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="status_detalle" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="status_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="fk_status_detalle_guia_hija_detalle" spa="0" unq="0">
+        <ClNs>documento_detalle_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_status_detalle_status" spa="0" unq="0">
+        <ClNs>status_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="usuario_id" spa="0" unq="0">
+        <ClNs>usuario_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="tienda">
+      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+      <Pk ClNs="id" nm="pktienda"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="archivo_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="descripcion" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="pagina" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="agencia_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_tienda_agencia" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="agencia" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="tienda" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="agencia_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="fk_tienda_agencia" spa="0" unq="0">
+        <ClNs>agencia_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="tipo_documento">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8</TblOpts>
+      <Pk ClNs="id" nm="pktipo_documento"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="consecutivo_inicial" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="nombre" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="prefijo" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="10" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="icono" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="funcionalidades" nu="1">
+        <DT arr="0" ds="LongText" en="" id="712" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="credenciales" nu="1">
+        <DT arr="0" ds="LongText" en="" id="712" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="email_plantilla_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="email_copia" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="email_copia_oculta" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="CURRENT_TIMESTAMP" nm="created_at" nu="0">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="tipo_identificacion">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <Pk ClNs="id" nm="pktipo_identificacion"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="descripcion" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="abreviatura" nu="1">
+        <DT arr="0" ds="Char" en="" id="1" ln="5" sc="null" sg="1" un="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Idx clu="0" ftx="0" nm="tipo_identificacion_abreviatura_Idx" spa="0" unq="1">
+        <ClNs>abreviatura</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="tipo_identificacion_descripcion_Idx" spa="0" unq="1">
+        <ClNs>descripcion</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="tipo_pago">
+      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <Pk ClNs="id" nm="pktipo_pago"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="descripcion" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="30" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="abreviatura" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="30" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="tracking">
+      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+      <Pk ClNs="id" nm="pktracking"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="agencia_id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="documento_detalle_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="consignee_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="codigo" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="contenido" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="confirmed_send" nu="0">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="CURRENT_TIMESTAMP" nm="created_at" nu="0">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_tracking_consignee" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="consignee" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="tracking" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="consignee_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="agencia_id" spa="0" unq="0">
+        <ClNs>agencia_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="codigo" spa="0" unq="1">
+        <ClNs>codigo</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="documento_detalle_id" spa="0" unq="0">
+        <ClNs>documento_detalle_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_tracking_consignee" spa="0" unq="0">
+        <ClNs>consignee_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="transportador">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <Pk ClNs="id" nm="pktransportador"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="nombre" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="200" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="direccion" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="telefono" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="20" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="contacto" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="zip" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="10" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="ciudad" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="estado" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="pais" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="shipper" nu="0">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="consignee" nu="0">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="carrier" nu="0">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0000-00-00 00:00:00" nm="updated_at" nu="0">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="transportador_casillero">
+      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+      <Pk ClNs="id" nm="pktransportador_casillero"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="descripcion" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="pagina_rastreo" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="archivo_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="pais" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="users">
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</TblOpts>
+      <Pk ClNs="id" nm="pkusers"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="name" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="191" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="email" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="191" sc="null" sg="1" un="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="password" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="191" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="1" nm="actived" nu="0">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="referido" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="191" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="agencia_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="remember_token" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Idx clu="0" ftx="0" nm="users_email_unique" spa="0" unq="1">
+        <ClNs>email</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Proc nm="`fn_ConsecutivoByTipoDocumento`(`id_tipo_documento` INT)">
+      <src>CREATE DEFINER=`root`@`localhost` FUNCTION `fn_ConsecutivoByTipoDocumento`(`id_tipo_documento` INT) RETURNS int(11)
+    NO SQL
+RETURN (SELECT&#13;
+tipo_documento.consecutivo_inicial&#13;
+FROM&#13;
+tipo_documento&#13;
+WHERE&#13;
+tipo_documento.id = id_tipo_documento AND&#13;
+tipo_documento.deleted_at IS NULL) + &#13;
+(SELECT&#13;
+Count(a.tipo_id) AS consecutivo&#13;
+FROM&#13;
+auxiliar_consecutivo AS a&#13;
+WHERE&#13;
+a.deleted_at IS NULL AND&#13;
+a.tipo_id = id_tipo_documento )</src>
+    </Proc>
+    <Proc nm="`getAllGuias`">
+      <src>CREATE DEFINER=`root`@`localhost` PROCEDURE `getAllGuias`(IN `id_age` INT(11))
+    NO SQL
+SELECT&#13;
+guia_hija.id AS guia_hija_id,&#13;
+guia_hija.num_guia AS nume_guia,&#13;
+consignee.nombre_full AS cons_nomfull,&#13;
+shipper.nombre_full AS ship_nomfull,&#13;
+guia_hija.peso AS peso,&#13;
+guia_hija.volumen AS volumen,&#13;
+agencia.descripcion AS nom_agencia,&#13;
+guia_hija.created_at,&#13;
+guia_hija.consolidado&#13;
+FROM&#13;
+guia_hija&#13;
+INNER JOIN shipper ON guia_hija.shipper_id = shipper.id&#13;
+INNER JOIN consignee ON guia_hija.consignee_id = consignee.id&#13;
+INNER JOIN agencia ON guia_hija.agencia_id = agencia.id&#13;
+WHERE&#13;
+guia_hija.deleted_at IS NULL</src>
+    </Proc>
+    <Proc nm="`getAllWarehouseDetalle`">
+      <src>CREATE DEFINER=`root`@`localhost` PROCEDURE `getAllWarehouseDetalle`(IN `id_agencia` INT(11))
+    NO SQL
+IF id_agencia = 0 THEN&#13;
+SELECT guia_hija_detalle.id, guia_hija_detalle.consolidado, guia_hija_detalle.num_consolidado, guia_hija_detalle.guia_hija_id, guia_hija_detalle.tipo_empaque_id, guia_hija_detalle.posicion_arancelaria_id, guia_hija_detalle.dimensiones, guia_hija_detalle.largo, guia_hija_detalle.ancho, guia_hija_detalle.alto, guia_hija_detalle.peso, guia_hija_detalle.contenido, guia_hija_detalle.tracking, guia_hija_detalle.volumen, guia_hija_detalle.valor, guia_hija_detalle.num_guia, guia_hija_detalle.created_at, guia_hija_detalle.num_warehouse, guia_hija_detalle.estado, guia_hija.num_guia AS nume_guia, guia_hija.shipper_id, guia_hija.consignee_id, guia_hija.consolidado, agencia.descripcion AS nom_agencia, posicion_arancelaria.pa AS nom_pa, shipper.nombre_full AS ship_nomfull, consignee.nombre_full AS cons_nomfull, guia_hija_detalle.deleted_at &#13;
+FROM guia_hija_detalle &#13;
+INNER JOIN guia_hija ON guia_hija_detalle.guia_hija_id = guia_hija.id &#13;
+LEFT OUTER JOIN posicion_arancelaria ON posicion_arancelaria.id = guia_hija_detalle.posicion_arancelaria_id &#13;
+LEFT OUTER JOIN agencia ON guia_hija.agencia_id = agencia.&#13;
+id &#13;
+LEFT OUTER JOIN consignee ON guia_hija.consignee_id = consignee.id AND consignee.agencia_id=agencia.id &#13;
+LEFT OUTER JOIN shipper ON guia_hija.shipper_id = shipper.id AND shipper.agencia_id=agencia.id &#13;
+WHERE guia_hija_detalle.deleted_at IS NULL &#13;
+AND guia_hija.deleted_at IS NULL&#13;
+ORDER BY guia_hija.created_at DESC;&#13;
+ELSE&#13;
+SELECT guia_hija_detalle.id, guia_hija_detalle.consolidado, guia_hija_detalle.num_consolidado, guia_hija_detalle.guia_hija_id, guia_hija_detalle.tipo_empaque_id, guia_hija_detalle.posicion_arancelaria_id, guia_hija_detalle.dimensiones, guia_hija_detalle.largo, guia_hija_detalle.ancho, guia_hija_detalle.alto, guia_hija_detalle.peso, guia_hija_detalle.contenido, guia_hija_detalle.tracking, guia_hija_detalle.volumen, guia_hija_detalle.valor, guia_hija_detalle.num_guia, guia_hija_detalle.created_at, guia_hija_detalle.num_warehouse, guia_hija_detalle.estado, guia_hija.num_guia AS nume_guia, guia_hija.shipper_id, guia_hija.consignee_id, guia_hija.consolidado, agencia.descripcion AS nom_agencia, posicion_arancelaria.pa AS nom_pa, shipper.nombre_full AS ship_nomfull, consignee.nombre_full AS cons_nomfull, guia_hija_detalle.deleted_at &#13;
+FROM guia_hija_detalle &#13;
+INNER JOIN guia_hija ON guia_hija_detalle.guia_hija_id = guia_hija.id &#13;
+LEFT OUTER JOIN posicion_arancelaria ON posicion_arancelaria.id = guia_hija_detalle.posicion_arancelaria_id &#13;
+LEFT OUTER JOIN agencia ON guia_hija.agencia_id = agencia.&#13;
+id &#13;
+LEFT OUTER JOIN consignee ON guia_hija.consignee_id = consignee.id AND consignee.agencia_id=agencia.id &#13;
+LEFT OUTER JOIN shipper ON guia_hija.shipper_id = shipper.id AND shipper.agencia_id=agencia.id &#13;
+WHERE guia_hija_detalle.deleted_at IS NULL &#13;
+AND guia_hija.deleted_at IS NULL &#13;
+AND guia_hija.is_wrh_guia = 1 &#13;
+AND guia_hija.agencia_id = id_agencia&#13;
+ORDER BY guia_hija.created_at DESC;&#13;
+END IF</src>
+    </Proc>
+    <Proc nm="`getConsecutivoByTipoDocumento`">
+      <src>CREATE DEFINER=`root`@`localhost` PROCEDURE `getConsecutivoByTipoDocumento`(IN `id_tipo_documento` INT, IN `id_documento` INT, IN `fecha` TIMESTAMP)
+    NO SQL
+BEGIN&#13;
+SELECT fn_ConsecutivoByTipoDocumento(id_tipo_documento) AS consecutivo;&#13;
+&#13;
+INSERT INTO auxiliar_consecutivo &#13;
+(documento_id,tipo_id,created_at) &#13;
+VALUES &#13;
+(id_documento, id_tipo_documento,fecha);&#13;
+END</src>
+    </Proc>
+    <Proc nm="`getDatosConsolidacionByNumGuia`">
+      <src>CREATE DEFINER=`root`@`localhost` PROCEDURE `getDatosConsolidacionByNumGuia`(IN `num_guia` VARCHAR(20))
+    NO SQL
+SELECT&#13;
+a.id,&#13;
+a.consolidado,&#13;
+a.num_consolidado,&#13;
+a.guia_hija_id,&#13;
+d.id AS ship_id,&#13;
+d.primer_nombre AS ship_nom1,&#13;
+d.segundo_nombre AS ship_nom2,&#13;
+d.primer_apellido AS ship_ape1,&#13;
+d.segundo_apellido AS ship_ape2,&#13;
+d.nombre_full AS ship_nomfull,&#13;
+c.id AS cons_id,&#13;
+c.primer_nombre AS cons_nom1,&#13;
+c.segundo_nombre AS cons_nom2,&#13;
+c.primer_apellido AS cons_ape1,&#13;
+c.segundo_apellido AS cons_ape2,&#13;
+c.nombre_full AS cons_nomfull,&#13;
+a.num_guia,&#13;
+a.num_warehouse,&#13;
+a.estado,&#13;
+b.piezas,&#13;
+e.id AS id_ciudad,&#13;
+f.id AS id_estado,&#13;
+g.id AS id_pais,&#13;
+i.id AS id_pa,&#13;
+i.pa,&#13;
+a.declarado2,&#13;
+a.peso2,&#13;
+a.contenido2,&#13;
+a.p&#13;
+FROM&#13;
+guia_hija_detalle AS a&#13;
+INNER JOIN guia_hija AS b ON a.guia_hija_id = b.id&#13;
+INNER JOIN consignee AS c ON b.consignee_id = c.id&#13;
+INNER JOIN shipper AS d ON b.shipper_id = d.id&#13;
+INNER JOIN localizacion AS e ON e.id = c.localizacion_id&#13;
+INNER JOIN deptos AS f ON f.id = e.deptos_id&#13;
+INNER JOIN pais AS g ON g.id = f.pais_id&#13;
+INNER JOIN posicion_arancelaria AS i ON a.posicion_arancelaria_id = i.id&#13;
+WHERE&#13;
+(a.num_guia = num_guia COLLATE utf8_unicode_ci OR a.num_warehouse = num_guia COLLATE utf8_unicode_ci) AND&#13;
+a.deleted_at IS NULL</src>
+    </Proc>
+    <Proc nm="`getDatosInformeWarehouseById`">
+      <src>CREATE DEFINER=`root`@`localhost` PROCEDURE `getDatosInformeWarehouseById`(IN `id_wrh` INT)
+    NO SQL
+SELECT&#13;
+a.id AS id,&#13;
+a.usuario_id,&#13;
+a.shipper_id,&#13;
+a.consignee_id,&#13;
+a.mal_empacado AS malEmpaque,&#13;
+a.rota AS rota,&#13;
+a.re_empacado AS reEmpaque,&#13;
+a.carga_peligrosa AS peligro,&#13;
+a.factura AS factura,&#13;
+a.piezas AS piezas,&#13;
+a.peso AS peso,&#13;
+a.volumen AS vol,&#13;
+a.observaciones AS observacion,&#13;
+a.created_at AS fechaCrea,&#13;
+a.agencia_id AS id_agencia,&#13;
+d.id AS id_ship,&#13;
+d.localizacion_id AS ship_localizacion,&#13;
+d.nombre_full AS ship_nomfull,&#13;
+d.direccion AS ship_dir,&#13;
+d.telefono AS ship_tel,&#13;
+d.correo AS ship_email,&#13;
+d.zip AS ship_zip,&#13;
+b.id AS cons_id,&#13;
+b.tipo_identificacion_id AS cons_tipo_id,&#13;
+b.localizacion_id AS cons_localiz_id,&#13;
+b.documento AS cons_doc,&#13;
+b.nombre_full AS cons_nomfull,&#13;
+b.direccion AS cons_dir,&#13;
+b.telefono AS cons_tel,&#13;
+b.correo AS cons_email,&#13;
+b.zip AS cons_zip,&#13;
+b.celular AS cons_cel,&#13;
+b.tarifa AS cons_tarifa,&#13;
+b.po_box AS cons_poBox,&#13;
+b.estado AS cons_estado,&#13;
+c.descripcion AS agencia_des,&#13;
+c.localizacion_id AS agencia_localizacion,&#13;
+c.direccion AS agencia_dir,&#13;
+c.responsable AS agencia_responsable,&#13;
+c.zip AS agencia_zip,&#13;
+c.telefono AS agencia_tel&#13;
+FROM&#13;
+guia_hija AS a&#13;
+INNER JOIN consignee AS b ON a.consignee_id = b.id&#13;
+INNER JOIN agencia AS c ON a.agencia_id = c.id&#13;
+INNER JOIN shipper AS d ON a.shipper_id = d.id&#13;
+WHERE&#13;
+a.id = id_wrh AND&#13;
+a.deleted_at IS NULL</src>
+    </Proc>
+    <Proc nm="`getDetalleConsolidadoById`">
+      <src>CREATE DEFINER=`root`@`localhost` PROCEDURE `getDetalleConsolidadoById`(IN `id_conso` INT(11))
+    NO SQL
+SELECT&#13;
+c.estado,&#13;
+b.num_bolsa,&#13;
+c.num_guia,&#13;
+c.num_warehouse,&#13;
+d.nombre_full AS nom_cons,&#13;
+c.contenido2,&#13;
+f.pa AS arancel,&#13;
+f.id AS arancel_id,&#13;
+c.declarado2,&#13;
+c.peso2,&#13;
+Count(c.id) AS piezas,&#13;
+e.nombre_full AS nom_ship,&#13;
+a.id,&#13;
+b.id AS id_detalle,&#13;
+b.is_guia,&#13;
+c.id AS id_guia_detalle,&#13;
+d.id AS id_cons,&#13;
+e.id AS id_ship&#13;
+FROM&#13;
+consolidado AS a&#13;
+INNER JOIN consolidado_detalle AS b ON b.consolidado_id = a.id&#13;
+INNER JOIN guia_hija_detalle AS c ON c.id = b.guia_hija_detalle_id&#13;
+INNER JOIN consignee AS d ON c.consignee_id = d.id&#13;
+INNER JOIN shipper AS e ON c.shipper_id = e.id&#13;
+INNER JOIN posicion_arancelaria AS f ON c.arancel_id2 = f.id&#13;
+WHERE&#13;
+a.deleted_at IS NULL AND&#13;
+c.deleted_at IS NULL AND&#13;
+a.id = id_conso&#13;
+GROUP BY&#13;
+c.estado,&#13;
+b.num_bolsa,&#13;
+c.num_guia,&#13;
+d.nombre_full,&#13;
+e.nombre_old,&#13;
+c.contenido2,&#13;
+f.pa,&#13;
+f.id,&#13;
+c.declarado2,&#13;
+c.peso2</src>
+    </Proc>
+    <Proc nm="`getGuiasDisponiblesByFechas`">
+      <src>CREATE DEFINER=`root`@`localhost` PROCEDURE `getGuiasDisponiblesByFechas`(IN `id_age` INT(11), IN `fecha_ini` VARCHAR(20), IN `fecha_fin` VARCHAR(20))
+    NO SQL
+SELECT&#13;
+	a.id,&#13;
+	a.guia_hija_id,&#13;
+	a.num_guia,&#13;
+	a.peso2,&#13;
+	a.declarado2,&#13;
+	a.shipper_id,&#13;
+	a.consignee_id,&#13;
+	DATE_FORMAT(a.created_at,'%Y-%m-%d') as created_at&#13;
+FROM&#13;
+	guia_hija_detalle AS a&#13;
+INNER JOIN guia_hija AS b ON b.id = a.guia_hija_id&#13;
+WHERE&#13;
+	a.deleted_at IS NULL&#13;
+AND a.consolidado = 0&#13;
+AND b.agencia_id = id_age&#13;
+AND a.created_at BETWEEN fecha_ini&#13;
+AND fecha_fin</src>
+    </Proc>
+    <Proc nm="`getIdGuiaDetalleByTracking`">
+      <src>CREATE DEFINER=`root`@`localhost` PROCEDURE `getIdGuiaDetalleByTracking`(IN `track` VARCHAR(100))
+    NO SQL
+SELECT&#13;
+guia_hija_detalle.id&#13;
+FROM&#13;
+guia_hija_detalle&#13;
+INNER JOIN guia_hija ON guia_hija_detalle.guia_hija_id = guia_hija.id&#13;
+WHERE&#13;
+guia_hija.is_wrh_guia = 1 AND&#13;
+guia_hija_detalle.tracking = track COLLATE utf8_unicode_ci AND&#13;
+guia_hija_detalle.deleted_at IS NULL AND&#13;
+guia_hija.deleted_at IS NULL</src>
+    </Proc>
+    <Proc nm="`getInformeConsolidadoById`">
+      <src>CREATE DEFINER=`root`@`localhost` PROCEDURE `getInformeConsolidadoById`(IN `id_conso` INT(11))
+    NO SQL
+SELECT&#13;
+a.num_guia,&#13;
+a.num_warehouse,&#13;
+d.id AS ship_id,&#13;
+d.nombre_full AS ship_nom,&#13;
+d.direccion AS ship_dir,&#13;
+d.telefono AS ship_tel,&#13;
+c.id AS cons_id,&#13;
+c.direccion AS cons_dir,&#13;
+c.telefono AS cons_tel,&#13;
+c.nombre_full AS cons_nom,&#13;
+a.declarado2 AS declarado2,&#13;
+a.peso2 AS peso2,&#13;
+a.contenido2 AS contenido2,&#13;
+d.localizacion_id AS ship_localidad_id,&#13;
+c.localizacion_id AS cons_localidad_id,&#13;
+b.consolidado_id,&#13;
+b.num_bolsa,&#13;
+b.created_at,&#13;
+b.is_guia,&#13;
+e.pa,&#13;
+g.descripcion AS agencia&#13;
+FROM&#13;
+guia_hija_detalle AS a&#13;
+INNER JOIN consolidado_detalle AS b ON b.guia_hija_detalle_id = a.id&#13;
+INNER JOIN consignee AS c ON c.id = a.consignee_id&#13;
+INNER JOIN shipper AS d ON d.id = a.shipper_id&#13;
+INNER JOIN posicion_arancelaria AS e ON a.arancel_id2 = e.id&#13;
+INNER JOIN guia_hija AS f ON a.guia_hija_id = f.id&#13;
+INNER JOIN agencia AS g ON f.agencia_id = g.id&#13;
+WHERE&#13;
+b.deleted_at IS NULL AND&#13;
+b.consolidado_id = id_conso</src>
+    </Proc>
+    <Proc nm="`getNumWarehousesByIdWhr`">
+      <src>CREATE DEFINER=`root`@`localhost` PROCEDURE `getNumWarehousesByIdWhr`(IN `id_wrh` INT(11))
+    NO SQL
+SELECT&#13;
+guia_hija_detalle.num_warehouse&#13;
+FROM&#13;
+guia_hija_detalle&#13;
+WHERE&#13;
+guia_hija_detalle.guia_hija_id = id_wrh AND&#13;
+guia_hija_detalle.deleted_at IS NULL</src>
+    </Proc>
+    <Proc nm="`getStatusDetalleByIdGuia`">
+      <src>CREATE DEFINER=`root`@`localhost` PROCEDURE `getStatusDetalleByIdGuia`(IN `id_guia` INT(11))
+    NO SQL
+SELECT&#13;
+guia_hija_detalle.id AS guia_id,&#13;
+guia_hija_detalle.num_warehouse,&#13;
+guia_hija_detalle.num_guia,&#13;
+`status`.descripcion,&#13;
+usuario.user_name,&#13;
+status_detalle.id,&#13;
+`status`.id AS status_id,&#13;
+usuario.id AS usuario_id,&#13;
+status_detalle.fecha_status,&#13;
+status_detalle.observacion&#13;
+FROM&#13;
+status_detalle&#13;
+INNER JOIN guia_hija_detalle ON guia_hija_detalle.id = status_detalle.guia_hija_detalle_id&#13;
+INNER JOIN `status` ON `status`.id = status_detalle.status_id&#13;
+INNER JOIN usuario ON status_detalle.usuario_id = usuario.id&#13;
+WHERE&#13;
+status_detalle.guia_hija_detalle_id = id_guia AND&#13;
+status_detalle.deleted_at IS NULL&#13;
+ORDER BY&#13;
+status_detalle.created_at DESC</src>
+    </Proc>
+    <Proc nm="`getStatusDetalleByIdGuiaDetalle`">
+      <src>CREATE DEFINER=`root`@`localhost` PROCEDURE `getStatusDetalleByIdGuiaDetalle`(IN `id_guia` INT(11))
+    NO SQL
+SELECT&#13;
+status_detalle.id,&#13;
+status_detalle.status_id,&#13;
+status_detalle.usuario_id,&#13;
+status_detalle.guia_hija_detalle_id,&#13;
+status_detalle.fecha_status,&#13;
+status_detalle.transportadora,&#13;
+status_detalle.num_transportadora,&#13;
+status_detalle.created_at,&#13;
+`status`.descripcion,&#13;
+status_detalle.observacion,&#13;
+guia_hija_detalle.shipper_id,&#13;
+shipper.nombre_full,&#13;
+guia_hija_detalle.peso,&#13;
+guia_hija_detalle.tracking,&#13;
+guia_hija_detalle.num_guia,&#13;
+guia_hija_detalle.num_warehouse,&#13;
+guia_hija.is_wrh_guia&#13;
+FROM&#13;
+status_detalle&#13;
+INNER JOIN `status` ON status_detalle.status_id = `status`.id&#13;
+INNER JOIN guia_hija_detalle ON status_detalle.guia_hija_detalle_id = guia_hija_detalle.id&#13;
+INNER JOIN shipper ON guia_hija_detalle.shipper_id = shipper.id&#13;
+INNER JOIN guia_hija ON guia_hija_detalle.guia_hija_id = guia_hija.id&#13;
+WHERE&#13;
+status_detalle.guia_hija_detalle_id = id_guia AND&#13;
+status_detalle.deleted_at IS NULL AND&#13;
+`status`.deleted_at IS NULL&#13;
+ORDER BY&#13;
+	status_detalle.created_at DESC</src>
+    </Proc>
+    <Proc nm="`getWarehouseById`">
+      <src>CREATE DEFINER=`root`@`localhost` PROCEDURE `getWarehouseById`(IN `id_wrh` INT(11))
+    NO SQL
+SELECT&#13;
+guia_hija.id,&#13;
+guia_hija.consignee_id,&#13;
+guia_hija.shipper_id,&#13;
+guia_hija.agencia_id,&#13;
+guia_hija.piezas,&#13;
+guia_hija.peso,&#13;
+guia_hija.volumen,&#13;
+guia_hija.peso_cobrado,&#13;
+guia_hija.created_at,&#13;
+guia_hija.factura,&#13;
+guia_hija.carga_peligrosa,&#13;
+guia_hija.re_empacado,&#13;
+guia_hija.mal_empacado,&#13;
+guia_hija.rota,&#13;
+guia_hija.estado,&#13;
+guia_hija.num_warehouse,&#13;
+guia_hija.num_guia,&#13;
+guia_hija.usuario_id,&#13;
+guia_hija.observaciones&#13;
+FROM&#13;
+guia_hija&#13;
+WHERE&#13;
+guia_hija.id = id_wrh AND&#13;
+guia_hija.deleted_at IS NULL</src>
+    </Proc>
+    <Proc nm="`getWarehouseDetalleByIdWarehouse`">
+      <src>CREATE DEFINER=`root`@`localhost` PROCEDURE `getWarehouseDetalleByIdWarehouse`(IN `id_wrh` INT(11), IN `is_detalle` INT(11))
+    NO SQL
+IF is_detalle = 0 THEN&#13;
+SELECT&#13;
+guia_hija_detalle.id,&#13;
+guia_hija_detalle.guia_hija_id,&#13;
+guia_hija_detalle.tipo_empaque_id,&#13;
+guia_hija_detalle.dimensiones,&#13;
+guia_hija_detalle.peso,&#13;
+guia_hija_detalle.largo,&#13;
+guia_hija_detalle.ancho,&#13;
+guia_hija_detalle.alto,&#13;
+guia_hija_detalle.contenido,&#13;
+guia_hija_detalle.tracking,&#13;
+guia_hija_detalle.volumen,&#13;
+guia_hija_detalle.estado,&#13;
+guia_hija_detalle.num_warehouse,&#13;
+guia_hija_detalle.created_at&#13;
+FROM&#13;
+guia_hija_detalle&#13;
+WHERE&#13;
+guia_hija_detalle.guia_hija_id = id_wrh AND&#13;
+guia_hija_detalle.deleted_at IS NULL;&#13;
+ELSE&#13;
+SELECT&#13;
+guia_hija_detalle.id,&#13;
+guia_hija_detalle.guia_hija_id,&#13;
+guia_hija_detalle.tipo_empaque_id,&#13;
+guia_hija_detalle.dimensiones,&#13;
+guia_hija_detalle.peso,&#13;
+guia_hija_detalle.largo,&#13;
+guia_hija_detalle.ancho,&#13;
+guia_hija_detalle.alto,&#13;
+guia_hija_detalle.contenido,&#13;
+guia_hija_detalle.tracking,&#13;
+guia_hija_detalle.volumen,&#13;
+guia_hija_detalle.estado,&#13;
+guia_hija_detalle.num_warehouse,&#13;
+guia_hija_detalle.created_at&#13;
+FROM&#13;
+guia_hija_detalle&#13;
+WHERE&#13;
+guia_hija_detalle.id = id_wrh AND&#13;
+guia_hija_detalle.deleted_at IS NULL;&#13;
+END IF</src>
+    </Proc>
+    <CustomTypes/>
+  </Sch>
+  <Dgm nm="diagramA">
+    <RnCf ClkAct="true" FtSz="9" lkStgy="RightAngleStrategy" zm="1.0">
+      <VbCfg>
+        <Fg ky="Auto Number" vl="0"/>
+        <Fg ky="Check" vl="0"/>
+        <Fg ky="Comment" vl="0"/>
+        <Fg ky="Data Type" vl="1"/>
+        <Fg ky="Default" vl="0"/>
+        <Fg ky="ENUM Values" vl="0"/>
+        <Fg ky="Length" vl="1"/>
+        <Fg ky="Name" vl="1"/>
+        <Fg ky="Nullable" vl="0"/>
+        <Fg ky="Schema Name" vl="0"/>
+        <Fg ky="Signed" vl="0"/>
+      </VbCfg>
+    </RnCf>
+    <DiaProps>
+      <Show AllCols="1" FkCols="1" FkNms="1" PkCols="1"/>
+      <ErNotation>DbwErNotation</ErNotation>
+      <DbTableRectangleFill>HeaderFooterFill</DbTableRectangleFill>
+      <svg path=""/>
+    </DiaProps>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="aerolineas_aeropuertos" x="1274" y="2042"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="aerolineas_inventario" x="899" y="2585"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="agencia" x="1952" y="1136"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="agencia_afiliaciones" x="1557" y="1402"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="agencia_detalle" x="1551" y="1136"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="auxiliar_consecutivo" x="2010" y="223"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="cargos_adicionales_detalle" x="2762" y="988"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="compras" x="50" y="3094"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="compras_status" x="431" y="3094"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="conceptos_costos_master" x="50" y="2042"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="consignee" x="2752" y="1289"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="consolidado_detalle" x="2802" y="682"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="costos_master" x="380" y="2042"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="deptos" x="1290" y="2718"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="documento" x="2378" y="50"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="documento_detalle" x="2812" y="50"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="documento_notas" x="2782" y="865"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="factura_warehouse" x="3210" y="223"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="guia_wrh_pivot" x="1961" y="50"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="impuesto_hijas" x="2005" y="559"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="impuesto_master" x="453" y="2185"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="instruccion" x="3902" y="50"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="localizacion" x="1620" y="2042"/>
+    <TbGl bkCl="ffff0033" sch="schemaA" tbl="log_activities" x="1694" y="993"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="maestra_multiple" x="3210" y="426"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="mail_chimp" x="1576" y="1289"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="mail_chimp_list" x="1232" y="1289"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="master" x="827" y="2042"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="master_detalle" x="465" y="2333"/>
+    <TbGl bkCl="ffff0033" sch="schemaA" tbl="migrations" x="4172" y="50"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="modulo" x="3540" y="426"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="moneda" x="50" y="2100"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="pais" x="958" y="2718"/>
+    <TbGl bkCl="ffff0033" sch="schemaA" tbl="password_resets" x="4440" y="50"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="payu" x="1547" y="1510"/>
+    <TbGl bkCl="ffff0033" sch="schemaA" tbl="permission_role" x="1028" y="880"/>
+    <TbGl bkCl="ffff0033" sch="schemaA" tbl="permission_user" x="1684" y="880"/>
+    <TbGl bkCl="ffff0033" sch="schemaA" tbl="permissions" x="1356" y="880"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="plantillas_correo" x="1549" y="1638"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="posicion_arancelaria" x="3210" y="549"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="prealerta" x="1597" y="1776"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="reporte_carga" x="1616" y="336"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="reporte_carga_detalle" x="1996" y="336"/>
+    <TbGl bkCl="ffff0033" sch="schemaA" tbl="role_user" x="1688" y="747"/>
+    <TbGl bkCl="ffff0033" sch="schemaA" tbl="roles" x="1360" y="747"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="servicios" x="1578" y="50"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="shipper" x="1999" y="2851"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="shipper_consignee" x="3141" y="1289"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="status" x="3609" y="50"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="status_detalle" x="3220" y="50"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="tienda" x="1622" y="1934"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="tipo_documento" x="2752" y="1106"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="tipo_identificacion" x="3131" y="1530"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="tipo_pago" x="3902" y="128"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="tracking" x="3131" y="1392"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="transportador" x="4172" y="128"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="transportador_casillero" x="4440" y="128"/>
+    <TbGl bkCl="ffff0033" sch="schemaA" tbl="users" x="2022" y="747"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="clientes" x="3149" y="1612"/>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.aerolineas_aeropuertos.fk_aerolineas_localizacion" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="1603" x2="1517" y1="2103" y2="2103"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.aerolineas_inventario.fk_aerolineas_inventario_aerolineas_aeropuertos" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="1387" x2="1387" y1="2182" y2="2632"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1171" x2="1383" y1="2636" y2="2636"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.agencia.fk_agencia_localizacion" parentEdge="EAST" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="1849" x2="2203" y1="2103" y2="2103"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2207" x2="2207" y1="1506" y2="2099"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.agencia_afiliaciones.fk_agencia_afiliaciones_agencia" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="1935" x2="1809" y1="1445" y2="1445"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.agencia_detalle.fk_agencia_detalle_agencia" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="1935" x2="1789" y1="1197" y2="1197"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="NORTH" nm="schemaA.agencia_detalle.fk_agencia_detalle_servicios" parentEdge="SOUTH" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="1675" x2="1675" y1="210" y2="1119"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.auxiliar_consecutivo.fk_auxiliar_consecutivo_documento" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="2361" x2="2235" y1="264" y2="264"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.auxiliar_consecutivo.fk_auxiliar_consecutivo_tipo_documento" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="2880" x2="2880" y1="1089" y2="281"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2235" x2="2876" y1="277" y2="277"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.cargos_adicionales_detalle.fk_cargos_adicionales_detalle_guia_hija" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="2553" x2="2553" y1="520" y2="1035"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2745" x2="2557" y1="1039" y2="1039"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.compras_status.fk_compras_status_compras" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="328" x2="414" y1="3140" y2="3140"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.consignee.fk_consignee_clientes" parentEdge="WEST" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="3132" x2="3010" y1="1731" y2="1731"/>
+        <positionableLine lineRole="CHILD_LINE" x1="3006" x2="3006" y1="1619" y2="1727"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.consignee.fk_consignee_localizacion" parentEdge="EAST" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="1849" x2="2877" y1="2042" y2="2042"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2881" x2="2881" y1="1619" y2="2038"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.consignee.fk_consignee_tipo_identificacion" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="3114" x2="3028" y1="1561" y2="1561"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.consolidado_detalle.fk_consolidado_detalle_documento" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="2603" x2="2603" y1="520" y2="754"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2785" x2="2607" y1="758" y2="758"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="NORTH" nm="schemaA.consolidado_detalle.fk_consolidado_detalle_guia_hija_detalle" parentEdge="SOUTH" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="2934" x2="2934" y1="390" y2="665"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.costos_master.fk_costos_master_conceptos_costos_master" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="277" x2="363" y1="2063" y2="2063"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.costos_master.fk_costos_master_master" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="810" x2="704" y1="2098" y2="2098"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.costos_master.fk_costos_master_moneda" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="277" x2="363" y1="2126" y2="2126"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.deptos.fk_deptoss_pais" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="1187" x2="1273" y1="2764" y2="2764"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.documento.fk_guia_hija_agencia" parentEdge="EAST" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="2275" x2="2449" y1="1312" y2="1312"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2453" x2="2453" y1="520" y2="1308"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.documento.fk_guia_hija_tipo_documento" parentEdge="WEST" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="2735" x2="2532" y1="1182" y2="1182"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2528" x2="2528" y1="520" y2="1178"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.documento.fk_guia_hija_usuario" parentEdge="EAST" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="2275" x2="2424" y1="791" y2="791"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2428" x2="2428" y1="520" y2="787"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.documento.fk_weare_house_consignee" parentEdge="WEST" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="2735" x2="2507" y1="1440" y2="1440"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2503" x2="2503" y1="520" y2="1436"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.documento.fk_weare_house_shipper" parentEdge="EAST" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="2275" x2="2474" y1="2952" y2="2952"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2478" x2="2478" y1="520" y2="2948"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.documento_detalle.fk_detalle_guia_hija_guia_hija" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="2649" x2="2795" y1="211" y2="211"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.documento_detalle.fk_guia_hija_detalle_consignee" parentEdge="NORTH" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="2911" x2="2911" y1="1272" y2="390"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.documento_detalle.fk_guia_hija_detalle_maestra_multiple" parentEdge="WEST" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="3193" x2="3050" y1="472" y2="472"/>
+        <positionableLine lineRole="CHILD_LINE" x1="3046" x2="3046" y1="390" y2="468"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.documento_detalle.fk_guia_hija_detalle_posicion_arancelaria" parentEdge="WEST" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="3193" x2="2972" y1="617" y2="617"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2968" x2="2968" y1="390" y2="613"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.documento_detalle.fk_guia_hija_detalle_posicion_arancelaria_2" parentEdge="WEST" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="3193" x2="3011" y1="583" y2="583"/>
+        <positionableLine lineRole="CHILD_LINE" x1="3007" x2="3007" y1="390" y2="579"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.documento_detalle.fk_guia_hija_detalle_shipper" parentEdge="EAST" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="2275" x2="2847" y1="2851" y2="2851"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2851" x2="2851" y1="390" y2="2847"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.documento_notas.fk_documento_notas_documento" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="2578" x2="2578" y1="520" y2="892"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2765" x2="2582" y1="896" y2="896"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.documento_notas.fk_documento_notas_users" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="2275" x2="2765" y1="872" y2="872"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.factura_warehouse.fk_factura_warehouse_agencia" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="2156" x2="2156" y1="1119" y2="341"/>
+        <positionableLine lineRole="CHILD_LINE" x1="3193" x2="2160" y1="337" y2="337"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.factura_warehouse.fk_factura_warehouse_consignee" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="2944" x2="2944" y1="1272" y2="227"/>
+        <positionableLine lineRole="CHILD_LINE" x1="3193" x2="2948" y1="223" y2="223"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.factura_warehouse.fk_factura_warehouse_guia_hija_detalle" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="3107" x2="3193" y1="298" y2="298"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.factura_warehouse.fk_factura_warehouse_usuario" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="2178" x2="2178" y1="730" y2="227"/>
+        <positionableLine lineRole="CHILD_LINE" x1="3193" x2="2182" y1="223" y2="223"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.guia_wrh_pivot.fk_guia_wrh_pivot_guia_hija" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="2361" x2="2205" y1="111" y2="111"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.guia_wrh_pivot.fk_guia_wrh_pivot_maestra_multiple_embarque" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="3350" x2="3350" y1="409" y2="94"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2205" x2="3346" y1="90" y2="90"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.guia_wrh_pivot.fk_guia_wrh_pivot_maestra_multiple_grupo" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="3315" x2="3315" y1="409" y2="114"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2205" x2="3311" y1="110" y2="110"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.guia_wrh_pivot.fk_guia_wrh_pivot_maestra_multiple_pago" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="3280" x2="3280" y1="409" y2="134"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2205" x2="3276" y1="130" y2="130"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.guia_wrh_pivot.fk_guia_wrh_pivot_maestra_multiple_tipo_pago" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="3245" x2="3245" y1="409" y2="154"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2205" x2="3241" y1="150" y2="150"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.guia_wrh_pivot.fk_guia_wrh_pivot_servicios" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="1858" x2="1944" y1="111" y2="111"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.impuesto_hijas.fk_impuesto_hijas_guia_hija" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="2403" x2="2403" y1="520" y2="641"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2275" x2="2399" y1="645" y2="645"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.impuesto_master.fk_impuesto_master_master" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="810" x2="714" y1="2251" y2="2251"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.localizacion.fk_localizacion_deptos" parentEdge="EAST" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="1517" x2="1722" y1="2764" y2="2764"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1726" x2="1726" y1="2182" y2="2760"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.log_activities.fk_log_activities_users" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="2178" x2="2178" y1="897" y2="1045"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1919" x2="2174" y1="1049" y2="1049"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.maestra_multiple.fk_maestra_multiple_modulo" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="3523" x2="3437" y1="462" y2="462"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.mail_chimp.fk_mail_chimp_agencia" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="1935" x2="1799" y1="1325" y2="1325"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.mail_chimp_list.fk_mail_chimp_list_mail_chimp" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="1559" x2="1473" y1="1325" y2="1325"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.master.fk_master_aerolineas" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="1257" x2="1161" y1="2103" y2="2103"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.master.fk_master_aerolineas_aeropuertos_aeropuertos" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="1257" x2="1161" y1="2103" y2="2103"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.master_detalle.fk_master_detalle_master" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="810" x2="724" y1="2419" y2="2419"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.payu.fk_payu_agencia" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="2003" x2="2003" y1="1506" y2="1562"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1819" x2="1999" y1="1566" y2="1566"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.permission_role.fk_permission_role_permissions" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="1339" x2="1253" y1="916" y2="916"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.permission_role.fk_permission_role_roles" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="1464" x2="1464" y1="867" y2="900"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1253" x2="1460" y1="904" y2="904"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.permission_user.fk_permission_user_permissions" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="1581" x2="1667" y1="916" y2="916"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.permission_user.fk_permission_user_users" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="2100" x2="2100" y1="897" y2="912"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1909" x2="2096" y1="916" y2="916"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.plantillas_correo.fk_plantillas_correo_agencia" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="2054" x2="2054" y1="1506" y2="1695"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1829" x2="2050" y1="1699" y2="1699"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.prealerta.fk_prealerta_agencia" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="2105" x2="2105" y1="1506" y2="1843"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1839" x2="2101" y1="1847" y2="1847"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.reporte_carga.fk_reporte_carga_agencia" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="2054" x2="2054" y1="1119" y2="428"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1893" x2="2050" y1="424" y2="424"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.reporte_carga.fk_reporte_carga_usuario" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="2100" x2="2100" y1="730" y2="340"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1893" x2="2096" y1="336" y2="336"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.reporte_carga_detalle.fk_reporte_carga_detalle_consignee" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="2816" x2="2816" y1="1272" y2="468"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2255" x2="2812" y1="464" y2="464"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.reporte_carga_detalle.fk_reporte_carga_detalle_guia_hija" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="2361" x2="2255" y1="419" y2="419"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.reporte_carga_detalle.fk_reporte_carga_detalle_reporte_carga" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="1893" x2="1979" y1="402" y2="402"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.reporte_carga_detalle.fk_reporte_carga_detalle_shipper" parentEdge="NORTH" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="2118" x2="2118" y1="2834" y2="546"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.role_user.fk_role_user_roles" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="1585" x2="1671" y1="783" y2="783"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.role_user.fk_role_user_users" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="2005" x2="1899" y1="783" y2="783"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.servicios.fk_servicios_maestra_multiple" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="3385" x2="3385" y1="409" y2="148"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1858" x2="3381" y1="144" y2="144"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.shipper_consignee.fk_shipper_consignee_consignee" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="3028" x2="3124" y1="1325" y2="1325"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.shipper_consignee.fk_shipper_consignee_shipper" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="2171" x2="2171" y1="2834" y2="1341"/>
+        <positionableLine lineRole="CHILD_LINE" x1="3124" x2="2175" y1="1337" y2="1337"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.status_detalle.fk_status_detalle_guia_hija_detalle" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="3107" x2="3203" y1="121" y2="121"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.status_detalle.fk_status_detalle_status" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="3592" x2="3506" y1="96" y2="96"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.tienda.fk_tienda_agencia" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="2156" x2="2156" y1="1506" y2="1976"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1849" x2="2152" y1="1980" y2="1980"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.tracking.fk_tracking_consignee" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="3028" x2="3114" y1="1453" y2="1453"/>
+      </positionableLines>
+    </FkGl>
+    <Notes/>
+    <Zones/>
+  </Dgm>
+  <RnmMgr NxRnmId="2">
+    <RnmCh ObjCls="Column" ParCls="Table" ParNme="clientes" SupCls="Schema" SupNme="schemaA">
+      <Rnm id="1" nNm="id" oNm="Id"/>
+    </RnmCh>
+  </RnmMgr>
+  <DbDocOptionMgr>
+    <BasicOptionMgr>
+      <Name>db.doc.option.mgr</Name>
+      <BoolOpt lbl="Diagrams" nm="doc.diagrams" on="1" spl="0"/>
+      <BoolOpt lbl="Foreign Keys" nm="doc.fks" on="1" spl="0"/>
+      <BoolOpt lbl="Indexes" nm="doc.indexes" on="1" spl="0"/>
+      <BoolOpt lbl="Overwrite CSS File" nm="doc.overwrite.css" on="1" spl="0"/>
+      <BoolOpt lbl="Procedures" nm="doc.procs" on="1" spl="0"/>
+      <BoolOpt lbl="Schemas" nm="doc.schemas" on="1" spl="0"/>
+      <BoolOpt lbl="Sequences" nm="doc.sequences" on="1" spl="0"/>
+      <BoolOpt lbl="Tables" nm="doc.tables" on="1" spl="0"/>
+      <BoolOpt lbl="Triggers" nm="doc.triggers" on="1" spl="0"/>
+      <BoolOpt lbl="Views" nm="doc.views" on="1" spl="0"/>
+    </BasicOptionMgr>
+  </DbDocOptionMgr>
+  <OpenEditors>
+    <OpenEditor ClsNm="Diagram" fqn="null.diagramA" selected="1"/>
+  </OpenEditors>
+  <TreePaths>
+    <TreePath/>
+    <TreePath>/Schemas (1)</TreePath>
+    <TreePath>/Schemas (1)/schemaA</TreePath>
+    <TreePath>/Schemas (1)/schemaA/Tables (59)</TreePath>
+  </TreePaths>
+</Db>

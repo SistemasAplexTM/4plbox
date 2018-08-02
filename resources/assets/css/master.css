@@ -1,0 +1,1571 @@
+.contenedorM{
+    width: 100%;
+    font-size: 1rem;
+    /*background-color: #afd9ee;*/
+}
+.form-horizontal .form-group{
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+}
+label{
+    margin: 0px;
+}
+.list-group-item-text{
+    margin: 0px;
+}
+p{
+    font-weight: bold;
+}
+.cabecera{
+    width: 100%;
+    /*background-color: #ff0;*/
+    /*position: absolute;*/
+}
+.tabla1{
+    width: 50%;
+    float: left;
+    /*background-color: #CBD5DD;*/
+}
+.tabla2{
+    width: 50%;
+    float: right;
+    /*background-color: #e4b9b9;*/
+}
+.numMaster1,.prefijoCiudad,.numMaster2,.numMasterCompleto{
+    font-weight: bold;
+    font-size: 2rem;
+}
+.numMaster1, .prefijoCiudad{
+    float: left;
+    border-right: 1px solid #000;
+    width: 10%;
+}
+.numMaster2{
+    float: left;
+    width: 80%;
+}
+.numMasterCompleto{
+    float: right;
+    width: 100%;
+    text-align: right;
+}
+.shipperInfo{
+    position: relative;
+    width: 100%;
+    margin-top: 28px;
+    border: 1px solid #000;
+    height: 12rem;
+    /*background-color: #e4b9b9;*/
+}
+.airWaibil{
+    font-weight: bold;
+    font-size: 2rem;
+}
+.contAir{
+    font-weight: bold;
+    /*font-size: rem;*/
+    text-align: center;
+}
+.contShipper,.contCons{
+    /*padding-top: 5%;*/
+}
+.contCons input[type="text"], .contShipper input[type="text"]{
+    padding: 0px;
+    width: 60%;
+    height: 5%;
+    font-size: 13px;
+}
+.contentAgent input[type="text"]{
+    padding: 0px;
+    width: 60%;
+    height: 17%;
+    font-size: 13px;
+}
+.titleShipper,.titleCons{
+    float: left;
+    width: 60%; 
+}
+.shipperNumber{
+    width: 40%;
+    float: right;
+    height: 40px;
+    text-align: center;
+    border-bottom: 1px solid #000;
+    border-left: 1px solid #000;
+    /*background-color: #CBD5DD;*/
+}
+.consigneeInfo{
+    position: relative;
+    width: 100%;
+    border-bottom: 1px solid #000;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    height: 12rem;
+    /*background-color: #e4b9b9;*/
+}
+.consigneeNumber{
+    width: 40%;
+    float: right;
+    height: 40px;
+    text-align: center;
+    border-bottom: 1px solid #000;
+    border-left: 1px solid #000;
+    /*background-color: #CBD5DD;*/
+}
+.contentAirWaibil{
+    position: relative;
+    width: 100%;
+    border-bottom: 1px solid #000;
+    border-top: 1px solid #000;
+    border-right: 1px solid #000;
+    margin-top: 28px;
+    height: 10rem;
+    /*background-color: #CBD5DD;*/
+}
+#chexboxActualizar{
+    width: 100px;
+    margin-top: -26px;
+    margin-left: 61%;
+}
+.info1{
+    border-bottom: 1px solid #000;
+    border-right: 1px solid #000;
+    font-size: 10px;
+    padding: 5px;
+    height: 2rem;
+    /*background-color: #CBD5DD;*/
+}
+.info2{
+    border-bottom: 1px solid #000;
+    border-right: 1px solid #000;
+    height: 12rem;
+    font-size: 10px;
+    padding: 3px;
+    /*background-color: #CBD5DD;*/
+}
+.agent{
+    border-bottom: 1px solid #000;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    height: 12rem;
+}
+.contentAgent{
+    height: 12rem;
+}
+.iataCode{
+    height: 4rem;
+    width: 50%;
+    float: left;
+    border-bottom: 1px solid #000;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+}
+.contentIata{
+    height: 25px;
+}
+.numAccount{
+    height: 4rem;
+    width: 50%;
+    float: right;
+    border-bottom: 1px solid #000;
+    border-right: 1px solid #000;
+}
+.contentNumA{
+    height: 25px;
+}
+.airporInfo{
+    height: 4rem;
+    width: 100%;
+    float: left;
+    border-bottom: 1px solid #000;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+}
+.contentAirport{
+    height: 30px;
+}
+.accountInformation{
+    border-bottom: 1px solid #000;
+    border-right: 1px solid #000;
+    height: 16rem;
+}
+.contentAcI{
+    height: 80%;
+}
+.to1,.to2{
+    height: 4rem;
+    width: 12%;
+    float: left;
+    /*border-bottom: 1px solid #000;*/
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    /*background-color: #00FF00;*/
+}
+.by2{
+    height: 4rem;
+    width: 12%;
+    float: left;
+    border-left: 1px solid #000;
+}
+.to3,.by1{
+    height: 4rem;
+    width: 12%;
+    float: left;
+    border-bottom: 1px solid #000; 
+}
+.by1{
+    width: 12%;
+    float: left;
+    border-right: 1px solid #000;
+}
+@media(max-width: 1300px){
+    .titleTo1,.titleTo2,.titleTo3,.titleBy1,.titleBy2{
+        font-size: 0.7rem; 
+    }
+}
+.firsCarrier{
+    height: 4rem;
+    width: 40%;
+    float: left;
+    border-bottom: 1px solid #000;
+    /*background-color: #00FF00;*/
+}
+.contentTo1, .contentCar,.contentTo2,.contentBy1,.contentTo3,.contentBy2{
+    height: 2.5rem;
+}
+.currency,.chgs,.WT,.valCarri{
+    float: left;
+    /*border-bottom: 1px solid #000;*/
+    border-right: 1px solid #000;
+}
+.titleCu,.titleWT{
+    border-bottom: 1px solid #000;
+}
+.contentChgs,.contentvalCarri,.contentvalCustom,.contentCu{
+    height: 2.4rem;
+    width: 100%;
+}
+.ifCarga{
+    float: left;
+    width: 100%;
+    height: 4rem;
+    border-bottom: 1px solid #000;
+    border-right: 1px solid #000;
+}
+.contentvalCarri{
+
+    width: 100%;
+}
+.contentvalCustom{
+    float: left;
+    width: 100%;
+}
+.ppd,.coll{
+    float: left;
+    height: 2.4rem;
+    width: 50%;
+}
+.WT{
+    width: 14%;
+}
+.chgs{
+    width: 9%;
+}
+.ppd{
+    border-right: 1px solid #000;
+}
+#wtspanpp,#wtspancol{
+    width: 100%;
+    font-size: 0.7rem;
+}
+#valpp,#valcol{
+    text-align: center;
+    font-size: 1.3rem;
+}
+.currency{
+    width: 11%;
+}
+.valCarri{
+    width: 33%;
+}
+.valCustom{
+    float: left;
+    width: 33%;
+}
+.refNumber{
+    float: left;
+    width: 34%;
+    /*border-bottom: 1px solid #000;*/
+    /*border-right: 1px solid #000;*/
+}
+.opInf{
+    float: left;
+    width: 33%;
+    /*border-bottom: 1px solid #000;*/
+}
+.opInf2{
+    height: 4rem;
+    float: left;
+    width: 33%;
+    /*border-bottom: 1px solid #000;*/
+    /*border-right: 1px solid #000;*/
+}
+.titleRef{
+    border-bottom: 1px solid #000; 
+}
+.titleopInf{
+    /*font-size: 0.7rem;*/
+    text-align: center;
+    border-bottom: 1px solid #000;
+}
+.contentRef,.contentoptInf{
+    height: 2.4rem;
+    border-right: 1px solid #000;
+}
+.contentoptInf2{
+    height: 2.5rem;
+}
+.line1 {
+    width: 2.4%;
+    height: 52px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-8rem)
+        translateX(-1.5rem)
+        rotate(30deg); 
+    position: absolute;
+}
+.line2 {
+    width: 2.4%;
+    height: 52px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-8rem)
+        translateX(610%)
+        rotate(-30deg); 
+    position: absolute;
+}
+.line1FC {
+    width: 1.5%;
+    height: 52px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-160%)
+        translateX(600%)
+        rotate(30deg); 
+    position: absolute;
+}
+.line2FC {
+    width: 1.5%;
+    height: 52px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-160%)
+        translateX(1010%)
+        rotate(-30deg); 
+    position: absolute;
+}
+
+.routingDest{
+    font-size: 56%;
+    font-weight: bold;
+    position: absolute;
+    margin-top: -3.2%;
+    margin-left: 9%;
+    border-bottom: 1px solid #000;
+}
+@media(max-width: 1300px){
+    .line1FC{
+        width: 1%;
+        height: 52px;
+        -webkit-transform:
+            translateY(-155%)
+            translateX(1000%)
+            rotate(30deg); 
+    }
+    .line2FC {
+        width: 1%;
+        height: 52px;
+        -webkit-transform:
+            translateY(-155%)
+            translateX(1450%)
+            rotate(-30deg); 
+    }
+    .routingDest{
+        font-size: 0.5rem;
+    }
+    .routingDest{
+        margin-top: -4%;
+    }
+}
+.airport{
+    height: 4rem;
+    width: 50%;
+    float: left;
+    border-bottom: 1px solid #000;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+}
+.contentairport{
+    height: 30px;
+}
+.fechasVuelo{
+    float: left;
+    width: 50%;
+    height: 4rem;
+    border-bottom: 1px solid #000;
+    border-right: 1px solid #000;
+}
+.titleflightdate1,.titleflightdate2,.titleflightdate3{
+    float: left;
+    width: 33%;
+}
+.titleflightdate2{
+    
+    border-bottom: 1px solid #000;
+}
+.titleflightdate3{
+    text-align: right;
+}
+.flightdate1{
+    border-right: 1px solid #000;
+}
+.flightdate1,.flightdate2{
+    height: 2.6rem;
+    width: 50%;
+    float: left;
+}
+.contentflightdate1,.contentflightdate2{
+    height: 30px;
+}
+
+.contentflightdate2,.flightdate2{
+    text-align: right;
+}
+.ifFlight{
+    position: absolute;
+    margin-left: 8.2%;
+    margin-top: -3.5%;
+    border-bottom: 1px solid #000;
+    background-color: mintcream;
+}
+.line1FD {
+    width: 2.5%;
+    height: 52px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-163%)
+        translateX(275%)
+        rotate(30deg); 
+    position: absolute;
+}
+.line2FD {
+    width: 2.5%;
+    height: 52px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-163%)
+        translateX(590%)
+        rotate(-30deg); 
+    position: absolute;
+}
+@media(max-width: 1300px){
+    .ifFlight{
+        font-size: 0.7rem;
+        margin-left: 8.5%;
+        margin-top: -4.5%;
+    }
+    .line1FD {
+        width: 2.2%;
+        height: 52px;
+        border-bottom: 1px solid #000;
+        -webkit-transform:
+            translateY(-165%)
+            translateX(350%)
+            rotate(30deg); 
+        position: absolute;
+    }
+    .line2FD {
+        width: 2.2%;
+        height: 52px;
+        border-bottom: 1px solid #000;
+        -webkit-transform:
+            translateY(-167%)
+            translateX(630%)
+            rotate(-30deg); 
+        position: absolute;
+    }
+}
+@media(max-width: 1200px){
+    .ifFlight{
+        font-size: 0.5rem;
+        margin-left: 8.5%;
+        margin-top: -4.5%;
+    }
+}
+.amountins{
+    width: 30%;
+    float: left;
+    /*border-bottom: 1px solid #000;*/
+    border-right: 1px solid #000;
+}
+.contentamountins{
+    height: 24px;
+}
+.ifinsura{
+    width: 70%;
+    float: left;
+    /*border-bottom: 1px solid #000;*/
+    /*border-right: 1px solid #000;*/
+}
+.contentifinsura{
+    text-align: justify;
+    /*height: 44px;*/
+}
+.amountins,.ifinsura{
+    /*height: 44.5px;*/
+}
+@media(max-width: 1300px){
+    .amountins,.ifinsura{
+        height: 40px;
+    }
+}
+.tabla3{
+    width: 100%;
+    float: left;
+}
+.handinginf{
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+}
+.contenthandinginf{
+    width: 90%;
+    height: 50px;
+}
+.contentinfhanding{
+    height: 29px;
+}
+.sci{
+    width: 9.7%;
+    float: right;
+    margin-top: -1.9%;
+    height: 5rem;
+    border-left: 1px solid #000;
+    border-top: 1px solid #000;
+}
+.titlesci{
+    text-align: center; 
+}
+
+#master_sci{
+    padding: 0px;
+    font-size: 1.5rem;
+    height: 100%;
+}
+.hendInf1{
+    float: left;
+    width: 45%;
+}
+.hendInf2{
+    float: left;
+    width: 12%;
+    margin-left: 33%;
+}
+@media(max-width: 1300px){
+    .sci{
+        height: 4rem;
+    }
+    .hendInf2{
+        width: 15%;
+        margin-left: 30%;
+    }
+}
+@media(max-width: 1400px){
+    .hendInf1{
+        width: 58%;
+    }
+    .hendInf2{
+        width: 15%;
+        margin-left: 15%;
+    }
+}
+.tabla4{
+    width: 100%;
+    float: left;
+    border-left: 1px solid #000;
+    border-bottom: 1px solid #000;
+    border-right: 1px solid #000;
+    /*background-color: #CBD5DD;*/
+}
+.pieces{
+    float: left;
+    width: 8%;
+}
+.titlepieces{
+    height: 40px;
+}
+.titlepieces,.contentpieces{
+    border-bottom: 1px solid #000;
+    border-right: 1px solid #000;
+}
+.contentpieces{
+    height: 200px;
+}
+.footpieces{
+    border-right: 1px solid #000;
+    height: 30px;
+}
+.gross{
+    float: left;
+    width: 7%;
+}
+.titlegross{
+    height: 40px;
+}
+.titlegross,.contentgross{
+    border-bottom: 1px solid #000;
+    border-right: 1px solid #000;
+}
+.contentgross{
+    height: 200px;
+}
+.footgross{
+    border-right: 1px solid #000;
+    height: 30px;
+}
+.unidMedida{
+    float: left;
+    width: 2%;
+}
+.titleunidMedida{
+    height: 40px;
+}
+.titleunidMedida{
+    border-bottom: 1px solid #000;
+    border-right: 1px solid #000;
+}
+.contentunidMedida{
+    border-right: 1px solid #000;
+    height: 230px;
+}
+.space{
+    float: left;
+    width: 1%;
+    height: 270px;
+    border-right: 1px solid #000;
+    background-color: #DDDDDD;
+}
+.space1{
+    float: left;
+    width: 1%;
+    height: 270px;
+    background-color: #DDDDDD;
+}
+.rateCom{
+    float: left;
+    width: 8%;
+}
+.titlerateclas{
+    background-color: #DDDDDD;
+    border-right: 1px solid #000;
+}
+.titleCom{
+    border: 1px solid #000;
+    height: 26px;
+}
+.contentrateCom{
+    height: 230px;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+}
+.chargable{
+    float: left;
+    width: 8%; 
+}
+.titlechargable{
+    height: 40px;
+}
+.titlechargable{
+    border-bottom: 1px solid #000;
+    border-right: 1px solid #000;
+}
+.contentchargable{
+    height: 230px;
+    border-right: 1px solid #000;
+}
+.chargable{
+    float: left;
+    width: 8%; 
+}
+.titlechargable{
+    height: 40px;
+}
+.titlechargable,.contentchargable{
+    /*border-bottom: 1px solid #000;*/
+    border-right: 1px solid #000;
+}
+.rateCharge{
+    float: left;
+    width: 8%;
+}
+.titlecharge{
+    text-align: right;
+    border-bottom: 1px solid #000;
+    border-right: 1px solid #000;
+}
+.titlerate{
+    border-right: 1px solid #000;
+}
+.titlerate,.titlecharge{
+    height: 20px;
+}
+.contentrateCharge{
+    height: 230px;
+    border-right: 1px solid #000;
+}
+.lineRate{
+    width: 8rem;
+    height: 4.2%;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-130%)
+        translateX(230%)
+        rotate(-25deg); 
+    position: absolute;
+}
+@media(max-width: 1400px){
+    .lineRate{
+        -webkit-transform:
+            translateY(-130%)
+            translateX(205%)
+            rotate(-25deg); 
+        position: absolute;
+    } 
+}
+@media(max-width: 1380px){
+    .lineRate{
+        width: 6rem;
+        -webkit-transform:
+            translateY(-130%)
+            translateX(290%)
+            rotate(-25deg); 
+        position: absolute;
+    } 
+}
+@media(max-width: 1370px){
+    .lineRate{
+        -webkit-transform:
+            translateY(-130%)
+            translateX(270%)
+            rotate(-25deg); 
+        position: absolute;
+    }
+}
+@media(max-width: 1300px){
+    .titlecharge{
+        border-top: 1px solid #000;
+    }
+    .lineRate{
+        display: none;
+    }
+}
+.total{
+    float: left;
+    width: 15%;
+}
+.titletotal{
+    height: 40px;
+}
+.titletotal,.contenttotal{
+    border-bottom: 1px solid #000;
+    border-right: 1px solid #000;
+}
+.contenttotal{
+    height: 200px;
+}
+.foottotal{
+    border-right: 1px solid #000;
+    height: 30px;
+}
+.desc{
+    float: left;
+    width: 38%;
+}
+
+.titledesc{
+    border-bottom: 1px solid #000; 
+    height: 40px;
+}
+.contentdesc{
+    height: 230px;
+}
+.tabla5{
+    width: 35%;
+    float: left;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+}
+.titleweigthecha{
+    position: absolute;
+}
+.columna1,.columna2{
+    float: left;
+    width: 50%;
+    border-bottom: 1px solid #000;
+    /*background-color: #c8e5bc;*/
+}
+.columna1{
+    border-right: 1px solid #000; 
+}
+/******************************************************************************/
+
+.contentprepaid,.contentcollect,.contentvalchargP,.contentvalchargC,
+.contenttaxP,.contenttaxC,.contentagentP,.contentagentC,.contentcarrierP,
+.contentcarrierC,.contenttotalP,.contenttotalC,.contentccP,.contentccC,.contentchargdestC,.contenttotalchargC{
+    height: 25px;
+}
+.valchargP,.valchargC,.taxP,.taxC,.agentP,.agentC,.carrierP,.carrierC,.totalP,.totalC,.ccP,.ccC,.infoP,.chargdestC{
+    border-top: 1px solid #000;
+}
+.contentinfoP{
+    text-align: center;
+    padding: 10px;
+    height: 45px;
+}
+.spaceP,.spaceC{
+    border-top: 1px solid #000;
+    height: 40px;
+    background-color: #DDDDDD;
+}
+.titleweigthecha{
+    position: absolute;
+    height: 20px;
+    margin-left: 13.5%;
+    width: 7.5%;
+    text-align: center;
+    border-bottom: 1px solid #000;
+    background-color: mintcream;
+}
+.line1weigt{
+    width: 2.4%;
+    height: 5px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(0.5rem)
+        translateX(850%)
+        rotate(-40deg); 
+    position: absolute;
+}
+.line2weigt{
+    width: 2.4%;
+    height: 5px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(0.5rem)
+        translateX(475%)
+        rotate(40deg); 
+    position: absolute;
+}
+/*********** columna 1 Pripaid ************/
+.titleprepaid{
+    height: 2rem;
+    margin-left: 33%;
+    width: 21%;
+    text-align: center;
+    border-bottom: 1px solid #000;
+}
+.line1prepaid{
+    width: 2.4%;
+    height: 0.4%;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-4rem)
+        translateX(365%)
+        rotate(-40deg); 
+    position: absolute;
+}
+.line2prepaid{
+    width: 2.4%;
+    height: 0.4%;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-4rem)
+        translateX(150%)
+        rotate(40deg); 
+    position: absolute;
+}
+.titlevalchargP{
+    width: 50%;
+    text-align: center;
+    margin-left: 75%;
+    height: 20px;
+    border-bottom: 1px solid #000;
+    background-color: mintcream;
+}
+.line1valchargP{
+    width: 2.4%;
+    height: 5px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-4rem)
+        translateX(860%)
+        rotate(-40deg); 
+    position: absolute;
+}
+.line2valchargP{
+    width: 2.4%;
+    height: 5px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-4rem)
+        translateX(445%)
+        rotate(40deg); 
+    position: absolute;
+}
+.titletaxP{
+    width: 35%;
+    text-align: center;
+    margin-left: 83%;
+    height: 20px;
+    border-bottom: 1px solid #000;
+    background-color: mintcream;
+}
+.line1taxP{
+    width: 2.4%;
+    height: 5px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-4rem)
+        translateX(810%)
+        rotate(-40deg); 
+    position: absolute;
+}
+.line2taxP{
+    width: 2.4%;
+    height: 5px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-4rem)
+        translateX(500%)
+        rotate(40deg); 
+    position: absolute;
+}
+.titleagentP{
+    width: 90%;
+    text-align: center;
+    margin-left: 55%;
+    height: 20px;
+    border-bottom: 1px solid #000;
+    background-color: mintcream;
+}
+.line1agentP{
+    width: 2.4%;
+    height: 5px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-4rem)
+        translateX(1000%)
+        rotate(-40deg); 
+    position: absolute;
+}
+.line2agentP{
+    width: 2.4%;
+    height: 5px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-4rem)
+        translateX(305%)
+        rotate(40deg); 
+    position: absolute;
+}
+.titlecarrierP{
+    width: 90%;
+    text-align: center;
+    margin-left: 55%;
+    height: 20px;
+    border-bottom: 1px solid #000;
+    background-color: mintcream;
+}
+.line1carrierP{
+    width: 2.4%;
+    height: 5px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-4rem)
+        translateX(1000%)
+        rotate(-40deg); 
+    position: absolute;
+}
+.line2carrierP{
+    width: 2.4%;
+    height: 5px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-4rem)
+        translateX(305%)
+        rotate(40deg); 
+    position: absolute;
+}
+.titletotalP{
+    height: 20px;
+    margin-left: 33%;
+    width: 40%;
+    text-align: center;
+    border-bottom: 1px solid #000;
+}
+.line1totalP{
+    width: 2.4%;
+    height: 5px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-4rem)
+        translateX(490%)
+        rotate(-40deg); 
+    position: absolute;
+}
+.line2totalP{
+    width: 2.4%;
+    height: 5px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-4rem)
+        translateX(150%)
+        rotate(40deg); 
+    position: absolute;
+}
+.titleccP{
+    height: 20px;
+    margin-left: 15%;
+    width: 70%;
+    text-align: center;
+    border-bottom: 1px solid #000;
+}
+.line1ccP{
+    width: 2.4%;
+    height: 5px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-4rem)
+        translateX(580%)
+        rotate(-40deg); 
+    position: absolute;
+}
+.line2ccP{
+    width: 2.4%;
+    height: 5px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-4rem)
+        translateX(20%)
+        rotate(40deg); 
+    position: absolute;
+}
+/*********** columna 2 Collect ************/
+
+.titlecollect{
+    height: 2rem;
+    margin-left: 50%;
+    width: 22%;
+    text-align: center;
+    border-bottom: 1px solid #000;
+}
+@media(max-width: 1300px){
+    .titlecollect,.titleweigthecha,.titleprepaid,
+    .titlevalchargP,.titletaxP,.titletotalP,.titletotalC,
+    .titleagentP,.titlecarrierP,.titleccP,.titleccC{
+        font-size: 0.7rem;
+    }
+}
+.line1collect{
+    width: 2.4%;
+    height: 5px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-40px)
+        translateX(490%)
+        rotate(-40deg); 
+    position: absolute;
+}
+.line2collect{
+    width: 2.4%;
+    height: 5px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-4rem)
+        translateX(270%)
+        rotate(40deg); 
+    position: absolute;
+}
+.titletotalC{
+    height: 20px;
+    margin-left: 33%;
+    width: 40%;
+    text-align: center;
+    border-bottom: 1px solid #000;
+}
+.line1totalC{
+    width: 2.4%;
+    height: 5px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-4rem)
+        translateX(490%)
+        rotate(-40deg); 
+    position: absolute;
+}
+.line2totalC{
+    width: 2.4%;
+    height: 5px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-4rem)
+        translateX(150%)
+        rotate(40deg); 
+    position: absolute;
+}
+.titleccC{
+    height: 20px;
+    margin-left: 15%;
+    width: 70%;
+    text-align: center;
+    border-bottom: 1px solid #000;
+}
+.line1ccC{
+    width: 2.4%;
+    height: 5px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-4rem)
+        translateX(580%)
+        rotate(-40deg); 
+    position: absolute;
+}
+.line2ccC{
+    width: 2.4%;
+    height: 5px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-4rem)
+        translateX(20%)
+        rotate(40deg); 
+    position: absolute;
+}
+.titlechargdestC{
+    height: 20px;
+    margin-left: 15%;
+    width: 70%;
+    text-align: center;
+    border-bottom: 1px solid #000;
+}
+.line1chargdestC{
+    width: 2.4%;
+    height: 5px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-4rem)
+        translateX(580%)
+        rotate(-40deg); 
+    position: absolute;
+}
+.line2chargdestC{
+    width: 2.4%;
+    height: 5px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-4rem)
+        translateX(20%)
+        rotate(40deg); 
+    position: absolute;
+}
+
+.titlevalchargC,.titletaxC,.titleagentC,.titlecarrierC,.titletotalchargC{
+    height: 20px;
+}
+.tabla6{
+    width: 65%;
+    float: left;
+    border-right: 1px solid #000;
+}
+.descOther,.signature,.datePlace{
+    border-bottom: 1px solid #000;
+}
+.signature{
+    height: 13.2rem;
+}
+.titledescOther,.contentdescOther{
+    padding: 5px;
+}
+.contentdescOther{
+    height: 113px;
+}
+.titlesignature,.contentsignature,.footsignature,.contentdatePlace,.footdatePlace{
+    padding: 5px;
+}
+.datePlace{
+    padding-top: 6px;
+    height: 9.2rem;
+}
+.contentsignature{
+    height: 3rem;
+}
+.footsignature{
+    margin-top: 1rem;
+    width: 95%;
+    margin-left: 2.5%;
+    text-align: center;
+    border-top: 1px solid #000;
+    border-top-style:dashed;
+}
+.contExecutedon,.contIssuing{
+    float: left;
+    height: 6rem;
+    width: 50%;
+    border-bottom: 1px solid #000;
+    border-bottom-style:dashed;
+}
+.exeon{
+    /*    padding: 5px;
+        padding-bottom: 0px;
+        width: 100px;*/
+}
+.dateon{
+    /*    text-align: left;
+        padding-top: 5px;
+        width: 80px;
+        margin-left: 100px;
+        margin-top: -20px;*/
+}
+.aton{
+    /*    text-align: center;
+        padding-top: 5px;
+        width: 70px;
+        margin-left: 180px;
+        margin-top: -20px;*/
+}
+.placeon{
+    /*    text-align: center;
+        padding-top: 5px;
+        width: 100px;
+        margin-left: 242px;
+        margin-top: -20px;*/
+}
+.issuing{
+    /*    text-align: center;
+        margin-left: 343px;
+        width: 340px;
+        margin-top: -20px;*/
+}
+
+.titletotalchargC{
+    height: 20px;
+    margin-left: 15%;
+    width: 70%;
+    text-align: center;
+    border-bottom: 1px solid #000;
+}
+.line1totalchargC{
+    width: 2.4%;
+    height: 5px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-4rem)
+        translateX(595%)
+        rotate(-40deg); 
+    position: absolute;
+}
+.line2totalchargC{
+    width: 2.4%;
+    height: 5px;
+    border-bottom: 1px solid #000;
+    -webkit-transform:
+        translateY(-4rem)
+        translateX(25%)
+        rotate(40deg); 
+    position: absolute;
+}
+.totalchargC{
+    width: 27%;
+    border-bottom: 1px solid #000;
+    border-right: 1px solid #000;
+}
+.numMasterFoot{
+    text-align: center;
+    width: 73%;
+    margin-top: -46px;
+    float: right;
+    height: 46px;
+    border-bottom: 1px solid #000;
+    background-color: #DDDDDD;
+}
+.contentnumMasterFoot{
+    font-size: 30px;
+    font-weight: bold;
+}
+.contFoot1,.contFoot2{
+    float: left;
+    width: 50%;
+}
+
+@media(min-width:1600px){
+    .lineRate{
+        width: 8rem;
+        height: 4.2%;
+        border-bottom: 1px solid #000;
+        -webkit-transform: translateY(-130%) translateX(270%) rotate(-25deg);
+        position: absolute;
+    }
+}
+@media(max-width:1500px){
+    .titlevalchargP{
+        margin-left: 75%;
+    }
+    .titleflightdate2{
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 1300px) {
+    .titleopInf{
+        font-size: 0.6rem;
+        height: 14.5px;
+    }
+    .titleRef,.titleCu,.titleChgs,.titleWT,.titleamountins,.contentifinsura{
+        font-size: 0.7rem;
+        height: 14.5px;
+    }
+    .titlevalCarri,.titlevalCustom{
+        font-size: 0.7rem;
+        height: 14.0px;
+    }
+    .contentifinsura{
+        height: 44.5px;
+    }
+    .titleCar{
+        font-size: 0.7rem;
+    }
+    .titlevalchargP{
+
+    }
+    .titleflightdate2{
+        font-size: 0.9rem;
+    }
+    .titleflightdate2{
+        font-size: 0.7rem;
+    }
+
+}
+@media (max-width: 1205px) {
+    .info2{
+        font-size: 0.7rem;  
+    }
+    .titleflightdate2{
+        font-size: 0.6rem;
+    }
+}
+@media (max-width: 1024px) {
+    .routingDest{
+        margin-top: -5%;
+    }
+    .line2FC {
+        width: 1.5%;
+        height: 52px;
+        border-bottom: 1px solid #000;
+        -webkit-transform:
+            translateY(-140%)
+            translateX(1000%)
+            rotate(-50deg); 
+        position: absolute;
+    }
+    .line1FC {
+        width: 1.5%;
+        height: 52px;
+        border-bottom: 1px solid #000;
+        -webkit-transform:
+            translateY(-140%)
+            translateX(760%)
+            rotate(50deg); 
+        position: absolute;
+    }
+    .line1 {
+        width: 4%;
+        height: 52px;
+        border-bottom: 1px solid #000;
+        -webkit-transform:
+            translateY(-8rem)
+            translateX(-1.5rem)
+            rotate(30deg); 
+        position: absolute;
+    }
+    .line2 {
+        width: 4%;
+        height: 52px;
+        border-bottom: 1px solid #000;
+        -webkit-transform:
+            translateY(-8rem)
+            translateX(350%)
+            rotate(-30deg); 
+        position: absolute;
+    }
+    .titleflightdate2{
+        font-size: 0.5rem;
+    }
+}
+@media(max-width: 1024px){
+    .hendInf1{
+        width: 60%;
+    }
+    .hendInf2{
+        width: 20%;
+        margin-left: 10%;
+    }
+    .contentAirWaibil{
+        height: 8rem;
+    }
+    .info1{
+        font-size: 0.7rem;
+        height: 2rem
+    }
+    .info2{
+        height: 10rem;
+    }
+    .titleflightdate3,.titleflightdate1{
+        font-size: 0.7rem;
+    }
+    .ifFlight{
+        margin-top: -5.8%;
+    }
+    .line1FD {
+        width: 2.5%;
+        height: 52px;
+        border-bottom: 1px solid #000;
+        -webkit-transform:
+            translateY(-163%)
+            translateX(320%)
+            rotate(30deg); 
+        position: absolute;
+    }
+    .line2FD {
+        width: 2.5%;
+        height: 52px;
+        border-bottom: 1px solid #000;
+        -webkit-transform:
+            translateY(-163%)
+            translateX(530%)
+            rotate(-30deg); 
+        position: absolute;
+    }
+    .descOther{
+        height: 13.8rem;
+    }
+    .exeon{
+        width: 100%;
+    }
+    .issuing{
+        width: 100%;
+    }
+    .titleweigthecha{
+
+    }
+    .titlevalchargP{
+        margin-left: 75%;
+    }
+    .titletaxP{
+        margin-left: 85%;
+    }
+    .titleagentP,.titlecarrierP{
+        font-size: 0.7rem;
+        width: 100%;
+        margin-left: 50%;
+    }
+    .titletotalP,.titletotalC{
+        margin-left: 33%;
+    }
+    .titleccP,.titleccC{
+        font-size: 0.7rem;
+        width: 70%;
+        margin-left: 17%;
+    }
+    .titlechargdestC{
+        font-size: 0.7rem;
+        width: 75%;
+        margin-left: 14%;
+    }
+    .titletotalchargC{
+        font-size: 0.7rem;
+        width: 75%;
+        margin-left: 14%;
+    }
+}
+
+/*********************************************** Frmulario ****************************************/
+
+.aerolinea{
+    height: 25px;
+    padding: 0px;
+}
+.acoutingInf{
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+}
+.fechaVuelo1,.fechaVuelo2{
+    padding: 2px;
+    font-size: 1rem;
+    height: 20px;
+}
+.currencyTxt{
+    padding: 0px;
+    font-size: 1rem;
+    height: 100%;
+}
+.chgsCodeTxt,.decValCarrierTxt,.decValCustomTxt,
+.amountInsTxt,.contentIataTxt,.contentNumATxt,
+.totalTxt,.piezasTxt,.pesoTxt{
+    padding: 0px;
+    font-size: 2rem;
+    height: 100%;
+}
+
+.infcargaTxt{
+    padding: 0px;
+    font-size: 1rem;
+    height: 100%;
+}
+.handinginfTxt{
+    max-width: 100%;
+    max-height: 5rem;
+}
+.unMedidaTxt{
+    padding: 0px;
+    font-size: 2rem;
+}
+.descContenidoTxt{
+    max-width: 100%;
+}
+#wPrepaid,#valPrepaid,#taxPrepaid,#totalPrepaid,#converPrepaid,
+#wCollect,#valCollect,#taxCollect,#totalCollect,#converCollect,
+#chargDest,#totCollCharg{
+    text-align: center;
+    padding: 0px;
+    font-size: 2rem;
+    height: 100%;
+    background-color: #EBF2F1;
+}
+.otherCharge{
+    max-width: 100%;
+    max-height: 10rem;
+}
+.toTxt,.to1Txt,.contCargaTxt,.to2Txt,.to3Txt,.by1Txt,.by2Txt{
+    padding: 0px;
+    font-size: 1rem;
+    height: 100%;
+}
+#master_num_master{
+    margin-top: 1.1rem;
+    background-color: #DDDDDD;
+    border-color: #DDDDDD;
+    font-size: 2rem;
+    text-align: center;
+}

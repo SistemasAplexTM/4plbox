@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="{{ app()->getLocale() }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>Registrar casillero | 4plbox</title>
+
+    <!-- Styles -->
+    <link href="{{ asset('css/plantilla.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('css/main.css') }}" rel="stylesheet"> --}}
+    <style>
+    body{
+            background-color: #ffffff;
+        }
+        .asterisco{
+            color: red !important;
+        }
+    </style>
+</head>
+<body>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQTpXj82d8UpCi97wzo_nKXL7nYrd4G70"></script>
+    <div id="wrapper">
+        <div id="">
+            <div class="wrapper wrapper-content animated fadeInRight" id="casillero">
+                <div class="row">
+                    <div class="col-lg-6 col-lg-offset-3">
+                        {{-- <h1>Registrese</h1>
+                        <p>Obtenga su código de casillero en los Estados Unidos con nosotros y reciba sus compras en su domicilio.</p> --}}
+                        <form id="formCasillero" enctype="multipart/form-data" class="form-horizontal casillero_form" role="form" action="#" method="post">          
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-content">
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4  col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2 text-center">
+                                            {{-- <img src="{{ asset($img->logo)}}" alt=""  class="img-responsive"> --}}
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <hr>
+                                    <!--***** contenido ******-->
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="pull-right">
+                                                <input type='checkbox' data-toggle="toggle" id='corporativo' data-size='mini' data-on="Corporativo" data-off="Personal" data-width="100" data-style="ios" data-onstyle="warning" data-offstyle="primary">
+                                            </div>
+                                            <h3>
+                                                Datos generales y dirección de envío
+                                            </h3>
+                                            <hr>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6" :class="[corporativo ? 'col-lg-12' : 'col-lg-6']">
+                                            <div class="form-group" :class="{'has-error': errors.has('primer_nombre') }">
+                                                <label class="control-label" for="primer_nombre">
+                                                        @{{ !corporativo ? 'Primer Nombre' : 'Razón social' }} <span class="asterisco">*</span>
+                                                </label> 
+                                                <input 
+                                                    v-model="primer_nombre"
+                                                    v-validate.disable="'required'"
+                                                    type="text" required="" :placeholder="[corporativo ? 'Razón social' : 'Primer nombre']" class="form-control" id="primer_nombre" name="primer_nombre" value="">
+                                                <label v-show="errors.has('primer_nombre')" class="error">@{{ errors.first('primer_nombre') }}</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-12 col-sm-12" v-show="!corporativo">
+                                            <div class="form-group" :class="{'has-error': errors.has('primer_apellido') }">
+                                                <label class="control-label" for="primer_apellido">Primer Apellido <span class="asterisco">*</span></label> 
+                                                <input 
+                                                    v-model="primer_apellido" 
+                                                    v-validate.disable="corporativo ? '' : 'required'" 
+                                                    type="text" required="" placeholder="Primer Apellido" class="form-control" id="primer_apellido" name="primer_apellido" value="">
+                                                <label v-show="errors.has('primer_apellido')" class="error">@{{ errors.first('primer_apellido') }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="form-group" :class="{'has-error': errors.has('localizacion_id') }">
+                                                <label class="control-label">Ciudad: <span class="asterisco">*</span></label>
+                                                <v-select name="localizacion_id" v-model="localizacion_id" label="name" :filterable="false" :options="ciudades" @search="onSearch" v-validate="'required'" :on-change="setPhoneCode">
+                                                    <template slot="no-options">
+                                                      No hay resultados para la busqueda
+                                                    </template>
+                                                    <template slot="option" slot-scope="option">
+                                                        <div>
+                                                            @{{ option.name }}
+                                                        </div>
+                                                        <small>@{{ option.depto }} - @{{ option.pais }}</small>
+                                                    </template>
+                                                    <template slot="selected-option" slot-scope="option">
+                                                        <div>
+                                                            @{{ option.name }}
+                                                        </div>
+                                                        <small>@{{ option.depto }} - @{{ option.pais }}</small>
+                                                    </template>
+                                                </v-select>
+                                                <label v-show="errors.has('localizacion_id')" class="error">@{{ errors.first('localizacion_id') }}</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="form-group" :class="{'has-error': errors.has('direccion') }">
+                                                <label class="control-label" for="direccion">Dirección <span class="asterisco">*</span></label>
+                                                <input 
+                                                    v-model="direccion"
+                                                    v-validate.disable="'required'" 
+                                                    type="text" required="" placeholder="Dirección" class="form-control" id="direccion" name="direccion" value="">
+                                                <label v-show="errors.has('direccion')" class="error">@{{ errors.first('direccion') }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-12 col-sm-12">
+                                            <div class="form-group" :class="{'has-error': errors.has('zip') }">
+                                                <label class="control-label" for="zip">Código Postal:  <span class="asterisco">*</span></label>
+                                                <div class="input-group">
+                                                    <input 
+                                                    v-model="zip"
+                                                    v-validate.disable="'required'" 
+                                                    type="number" placeholder="Zip" id="zip" name="zip" class="form-control" value="">
+                                                    <label v-show="errors.has('zip')" class="error">@{{ errors.first('zip') }}</label>
+                                                    <span class="input-group-addon" @click="setZip" style="cursor: pointer;">Calcular</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-12 col-sm-12">
+                                            <div class="form-group" :class="{'has-error': errors.has('celular') }">
+                                                <label class="control-label" for="celular">Celular <span class="asterisco">*</span></label> 
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">(+@{{ phone_code }})</span>
+                                                    <input 
+                                                        v-model="celular"
+                                                        v-validate.disable="'required'"
+                                                        type="tel" required="" placeholder="999-9999" class="form-control" id="celular" name="celular" value="">
+                                                </div>
+                                                <label v-show="errors.has('celular')" class="error">@{{ errors.first('celular') }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                            <div class="form-group" :class="{'has-error': errors.has('email') }">
+                                                <label class="control-label" for="email">Email <span class="asterisco">*</span></label> 
+                                                <input
+                                                 v-model="email" 
+                                                 v-validate.disable="'required|email|unique'"
+                                                 type="email" 
+                                                 required="" placeholder="Email (será tu usuario)" class="form-control" id="email" name="email">
+                                                <label v-show="errors.has('email')" class="error">@{{ errors.first('email') }}</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                            <div class="form-group" :class="{'has-error': errors.has('email') }">
+                                                <label class="control-label" for="email_confirmation">Confirmar Email <span class="asterisco">*</span></label>
+                                                <input
+                                                v-validate="'required|confirmed:email'"
+                                                 type="email" required="" placeholder="Repite el Email" class="form-control" id="email_confirmation" name="email_confirmation" value="" >
+                                                <label v-show="errors.has('email_confirmation')" class="error">@{{ errors.first('email_confirmation') }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="form-group" :class="{'has-error': errors.has('acepta_condiciones') }">
+                                                <div class="checkbox checkbox-success checkbox-inline">
+                                                        <input 
+                                                    v-model="acepta_condiciones" 
+                                                    v-validate.disable="'required'" 
+                                                    type="checkbox" id="acepta_condiciones" name="acepta_condiciones" value="f" style="">
+                                                    <label for="acepta_condiciones"> He leído los <strong><a href="#" data-toggle="modal" data-target="#modalTerminosCondiciones" data-original-title="" title="">términos y condiciones generales.</a></strong></label>
+                                                </div>
+                                                <label v-show="errors.has('acepta_condiciones')" class="error">@{{ errors.first('acepta_condiciones') }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                               <div class="checkbox checkbox-success checkbox-inline">
+                                                    <input 
+                                                    v-model="recibir_info" 
+                                                    type="checkbox" id="recibir_info" name="recibir_info" value="f" style="">
+                                                    <label for="recibir_info"> Deseo recibir información de mi casillero y de mi interés.</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                               
+                                    <div class="row">
+                                        <div class="col-lg-12 text-center">
+                                            <div class="form-group">
+                                                <button @click.prevent="create" type="button" class="ladda-button btn btn-primary hvr-float-shadow" data-style="zoom-in" title="">
+                                                    <span class="ladda-label"><i class="fa fa-user" aria-hidden="true"></i> Crear casillero</span>
+                                                    <span class="ladda-spinner"></span>
+                                                </button>
+                                            </div>
+                                        </div>   
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/plantilla.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
+    <script src="{{ asset('js/templates/documento/postalCode.js') }}"></script>
+    <script src="{{ asset('js/templates/casillero.js') }}"></script>
+</body>
+</html>

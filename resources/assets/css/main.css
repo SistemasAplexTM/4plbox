@@ -1,0 +1,378 @@
+@import url("https://fonts.googleapis.com/css?family=Russo+One");
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+/* CARGANDO*/
+
+#pre-load-web {
+    width: 100%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 100000;
+    background: rgba(255, 253, 250, 0.2);
+}
+/*aqui centramos la imagen si coloco margin left -30 es por que la imagen mide 60 */
+
+#pre-load-web #imagen-load {
+    left: 50%;
+    margin-left: -30px;
+    position: absolute
+}
+.sk-spinner-wave.sk-spinner {
+    height: 100px;
+    width: 100%;
+}
+.sk-spinner-wave div {
+    height: 100px;
+    width: 15px;
+    margin: 1px;
+    background-color: #f7a54a;
+}
+
+/* FIN CARGANDO */
+.ibox-title h5 {
+    font-size: 20px;
+    margin-bottom: 0px;
+}
+table.table td a {
+    margin: 0 5px;
+}
+table.table td a.view {
+    width: 30px;
+    height: 30px;
+    color: #2196F3;
+    border: 2px solid;
+    border-radius: 30px;
+    text-align: center;
+    font-weight: bold;
+    display: inline-block;
+    text-decoration: none;
+}
+table.table td a.view i {
+    font-size: 22px;
+    margin: 2px 0 0 1px;
+}
+.swal2-container {
+    z-index: 99999!important;
+}
+/*estilo grande para el sweet alert2*/
+
+.swal2-popup {
+    font-size: 1.2em !important;
+}
+.btn, .btn-xs {
+    font-size: 16px!important;
+}
+#require {
+    color: red;
+}
+.page-heading {
+    font-family: 'Russo One', sans-serif;
+}
+.wrapper-content {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 16px;
+}
+.corloError {
+    color: #d43f3a;
+    background-color: #d43f3a;
+    font-size: 15px !important;
+}
+.ibox-content {
+    background-color: mintcream;
+}
+.note-editable, .chosen-container-single {
+    background-color: #fff;
+}
+#campoObligatorio {
+    color: red;
+}
+#asterisco {
+    color: red;
+}
+/* STYLE VUE-SELECT */
+
+.v-select {
+    background-color: #FFFFFF;
+}
+.v-select .dropdown li {
+    border-bottom: 1px solid rgba(112, 128, 144, 0.1);
+}
+.v-select .dropdown li:last-child {
+    border-bottom: none;
+}
+.v-select .dropdown li a {
+    padding: 10px 20px;
+    width: 100%;
+    font-size: 1.25em;
+    color: #3c3c3c;
+}
+.v-select .dropdown-menu .active>a {
+    color: #fff;
+}
+.dropdown-toggle>input[type="search"] {
+    width: 100px !important;
+}
+.dropdown-toggle>input[type="search"]:focus:valid {
+    width: 100% !important;
+}
+/*color para utilizar en el view*/
+
+/*.list-group-item{*/
+
+/*background-color:#d9edf7;*/
+
+/*}*/
+
+/*.btnForm{
+    align-content: flex-start;
+}*/
+
+/*.guardar{
+    padding-top: 50px;
+}*/
+
+/* .shfDevelopmentBar {
+    background-color: rgb(61,35,0);
+    position: fixed;
+    right: 0px;
+    color: #ffffff;
+    width: 500px;
+    z-index: 2147483647;
+    padding: 3px 3px 3px 5px;
+    border-radius: 0px 0px 0px 5px;
+    font-size: 0.8em;
+    text-shadow: 1px 1px 2px rgba(20, 20, 20, 1);
+    top: 0px;
+}
+ */
+
+/*#datosShipper, #datosConsignee{
+    background-color: mintcream;
+
+}*/
+
+/*#titleShip, #titleCon{
+    font-size: 20px;
+    border-bottom: 1px solid;
+
+}*/
+
+/*#datosShipper{
+    border-right-style: double;
+    border-width: 4px;
+}
+#datosConsignee{
+    border-left-style: double;
+    border-width: 4px;
+}
+#comentarios{
+    background-color: mintcream;
+    margin: 0 auto;
+    margin-top: 5px;
+    width: 50%;
+}*/
+
+/*#imgProfile{
+    width: 45px;
+    height: 45px;
+}*/
+
+/* .dropdown-menu{
+    min-width: 100px;
+}
+.dataTables_wrapper{
+    padding-bottom: 90px;
+    padding-right: 20px;
+} */
+
+/*********************************** Toast ******************************/
+
+/* #myToast-container{
+    margin-top: -100px;
+    display: none;
+    position: fixed;
+    z-index: 999999;
+    right: 0px;
+    color: #ffffff;
+    width: 500px;
+    z-index: 2147483647;
+    padding: 3px 3px 3px 5px;
+    font-size: 0.8em;
+    text-shadow: 1px 1px 2px rgba(20, 20, 20, 1);
+    top: 60px;
+    right: 25px;
+    opacity: 0.7;
+} */
+
+/* #toast-content-mensaje{
+    padding: 6px;
+    border-radius: 5px;
+}
+#myToast-container:hover{
+    opacity: 0.9;
+}
+#toast-mensaje:hover{
+    cursor: pointer;
+}
+.my-toast-progress{
+    display: none;
+position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 4px;
+    background-color: #000;
+    opacity: .4;
+    -ms-filter: alpha(Opacity=40);
+    filter: alpha(opacity=40);
+    top: 28px;
+    width: 182px;
+    border-radius: 0 0 5px 5px;
+}
+ */
+
+/* #myToast-container2{
+    width: 10.6%;
+    bottom: 6px;
+    position: fixed;
+    z-index: 5000;
+    right: 0px;
+    color: #ffffff;
+    font-size: 1em;
+    text-shadow: 1px 1px 2px rgba(20, 20, 20, 1);
+    right: 25px;
+    opacity: 0.7;
+}
+
+#myToast-container3{
+margin-top: -100px;
+    display: none;
+    position: fixed;
+    z-index: 999999;
+    right: 0px;
+    color: #ffffff;
+    width: 500px;
+    z-index: 9999999;
+    padding: 3px 3px 3px 5px;
+    font-size: 0.8em;
+    text-shadow: 1px 1px 2px rgba(20, 20, 20, 1);
+    top: 60px;
+    right: 25px;
+    opacity: 0.7;
+} */
+
+/* Start by setting display:none to make this hidden.
+   Then we position it in relation to the viewport window
+   with position:fixed. Width, height, top and left speak
+   for themselves. Background we set to 80% white with
+   our animation centered, and no-repeating */
+
+/* .modal {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 0, 0, 0, .4 ) 
+                url('../img/loading.svg') 
+                50% 50% 
+                no-repeat;
+} */
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+
+/* body.loading {
+    overflow: hidden;   
+} */
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+
+/* body.loading .modal {
+    display: block;
+} */
+
+/* .transition, .autocomplete, .showAll-transition, .autocomplete ul, .autocomplete ul li a{
+  transition:all 0.3s ease-out;
+  -moz-transition:all 0.3s ease-out;
+  -webkit-transition:all 0.3s ease-out;
+  -o-transition:all 0.3s ease-out;
+}
+
+.autocomplete ul{
+  font-family: sans-serif;
+  position: absolute;
+  list-style: none;
+  background: #f8f8f8;
+  padding: 10px 0;
+  margin: 0;
+  display: inline-block;
+  min-width: 15%;
+  margin-top: 10px;
+}
+
+.autocomplete ul:before{
+  content: "";
+  display: block;
+  position: absolute;
+  height: 0;
+  width: 0;
+  border: 10px solid transparent;
+  border-bottom: 10px solid #f8f8f8;
+  left: 46%;
+  top: -20px
+}
+
+.autocomplete ul li a{
+  text-decoration: none;
+  display: block;
+  background: #f8f8f8;
+  color: #2b2b2b;
+  padding: 5px;
+  padding-left: 10px;
+}
+
+.autocomplete ul li a:hover, .autocomplete ul li.focus-list a{
+  color: white;
+  background: #2F9AF7;
+}
+
+.autocomplete ul li a span, backwards compat
+.autocomplete ul li a .autocomplete-anchor-label{
+  display: block;
+  margin-top: 3px;
+  color: grey;
+  font-size: 13px;
+}
+
+.autocomplete ul li a:hover .autocomplete-anchor-label, 
+.autocomplete ul li.focus-list a span, backwards compat
+.autocomplete ul li a:hover .autocomplete-anchor-label, 
+.autocomplete ul li.focus-list a span{ backwards compat
+  color: white;
+} */
+
+/*.showAll-transition{
+  opacity: 1;
+  height: 50px;
+  overflow: hidden;
+}
+
+.showAll-enter{
+  opacity: 0.3;
+  height: 0;
+}
+
+.showAll-leave{
+  display: none;
+}*/
+
+/* 
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to .fade-leave-active below version 2.1.8 {
+  opacity: 0;
+} */
