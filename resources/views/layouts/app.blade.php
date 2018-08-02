@@ -59,8 +59,8 @@
                     this.datos = data;
                 },
                 getNameAgencia: function() {
-                    axios.get('/user/getNameAgenciaUser').then(response => {
-                    // axios.get('/carga/public/user/getNameAgenciaUser').then(response => {
+                    // axios.get('/user/getNameAgenciaUser').then(response => {
+                    axios.get('/carga/public/user/getNameAgenciaUser').then(response => {
                         $('#_agencia').html(response.data.data['descripcion']);
                     });
                 },

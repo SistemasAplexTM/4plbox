@@ -8,8 +8,8 @@
                 {{-- {{ session('agencia_name_global') }} --}}
             </span>
             <span class="minimalize-styl-2" style="font-size: 15px;font-weight: bold;width: 50%;">
-                {{-- <autocomplete-component type="navbar" @change-select="showRigthSidebar" url="carga/public/documento/searchDataByNavbar"></autocomplete-component> --}}
-                <autocomplete-component type="navbar" @change-select="showRigthSidebar" url="documento/searchDataByNavbar"></autocomplete-component>
+                <autocomplete-component type="navbar" @change-select="showRigthSidebar" url="carga/public/documento/searchDataByNavbar"></autocomplete-component>
+                {{-- <autocomplete-component type="navbar" @change-select="showRigthSidebar" url="documento/searchDataByNavbar"></autocomplete-component> --}}
             </span>
         </div>
 

@@ -66,7 +66,7 @@
                       v-model="shipper.name"
                       type="s" 
                       @change-select="setData" 
-                      url="master/buscar"
+                      url="/carga/public/master/buscar"
                       ></autocomplete-component>
                     <small v-show="errors.has('nombre')" class="bg-danger">{{ errors.first('nombre') }}</small>
                   </div>
@@ -136,7 +136,7 @@
                     v-model="consignee.name"
                     type="c" 
                     @change-select="setData" 
-                    url="master/buscar"
+                    url="/carga/public/master/buscar"
                     ></autocomplete-component>
                     <small v-show="errors.has('nombreC')" class="bg-danger">{{ errors.first('nombreC') }}</small>
                   </div>
@@ -206,7 +206,7 @@
                       v-model="carrier.name"
                       type="cr" 
                       @change-select="setData" 
-                      url="master/buscar"
+                      url="/carga/public/master/buscar"
                       ></autocomplete-component>
                     <small v-show="errors.has('nombreCR')" class="bg-danger">{{ errors.first('nombreCR') }}</small>
                   </div>
