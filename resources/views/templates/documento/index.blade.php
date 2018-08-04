@@ -60,7 +60,9 @@
                             </div>
                             <div class="col-lg-10">
                                 <div class="col-lg-12" style="font-size: 30px; font-weight:800;border-bottom: 1px solid #CDCDCD;"><i aria-hidden="true" id="icono_doc" class="fa fa-file-text-o"></i>&nbsp; 
-                                    <div style="display:inline;" id="nombre_doc">Warehouse</div>
+                                    <div style="display:inline;" id="nombre_doc">
+                                        Warehouse
+                                    </div>
                                      @if (session()->has('sendemail'))
                                             <div class="alert alert-success alert-dismissible" role="alert" id="msn_sendmail">
                                               <button type="button" class="close" data-dismiss="alert" aria-label="Close" id="icon_close"><span aria-hidden="true">&times;</span></button>

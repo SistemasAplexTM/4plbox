@@ -1,9 +1,9 @@
 <?php return array (
-  'fideloper/proxy' => 
+  'nesbot/carbon' => 
   array (
     'providers' => 
     array (
-      0 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
+      0 => 'Carbon\\Laravel\\ServiceProvider',
     ),
   ),
   'barryvdh/laravel-dompdf' => 
@@ -28,22 +28,29 @@
       'JavaScript' => 'Laracasts\\Utilities\\JavaScript\\JavaScriptFacade',
     ),
   ),
+  'caffeinated/shinobi' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Caffeinated\\Shinobi\\ShinobiServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Shinobi' => 'Caffeinated\\Shinobi\\Facades\\Shinobi',
+    ),
+  ),
+  'fideloper/proxy' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
+    ),
+  ),
   'laravel/tinker' => 
   array (
     'providers' => 
     array (
       0 => 'Laravel\\Tinker\\TinkerServiceProvider',
-    ),
-  ),
-  'yajra/laravel-datatables-oracle' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Yajra\\DataTables\\DataTablesServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'DataTables' => 'Yajra\\DataTables\\Facades\\DataTables',
     ),
   ),
   'nztim/mailchimp' => 
@@ -57,15 +64,15 @@
       'Mailchimp' => 'NZTim\\Mailchimp\\MailchimpFacade',
     ),
   ),
-  'caffeinated/shinobi' => 
+  'yajra/laravel-datatables-oracle' => 
   array (
     'providers' => 
     array (
-      0 => 'Caffeinated\\Shinobi\\ShinobiServiceProvider',
+      0 => 'Yajra\\DataTables\\DataTablesServiceProvider',
     ),
     'aliases' => 
     array (
-      'Shinobi' => 'Caffeinated\\Shinobi\\Facades\\Shinobi',
+      'DataTables' => 'Yajra\\DataTables\\Facades\\DataTables',
     ),
   ),
 );

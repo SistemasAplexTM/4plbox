@@ -60,7 +60,7 @@
                 },
                 getNameAgencia: function() {
                     // axios.get('/user/getNameAgenciaUser').then(response => {
-                    axios.get('/carga/public/user/getNameAgenciaUser').then(response => {
+                    axios.get('/4plbox/public/user/getNameAgenciaUser').then(response => {
                         $('#_agencia').html(response.data.data['descripcion']);
                     });
                 },

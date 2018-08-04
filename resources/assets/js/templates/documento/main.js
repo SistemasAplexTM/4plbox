@@ -9,6 +9,15 @@ $(document).ready(function() {
 var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialite) {
     var href_print = '';
     var href_print_label = '';
+    /* MOSTRAR LABELS DE ESTADOS SI ES WAREHOUSE */
+    var labels = '';
+    if(tipo_doc_id == '1'){
+        labels = ' <label class="lb_status badge badge-default">Creado</label> '+
+                    '<label class="lb_status badge badge-success">Pendiente</label> '+
+                    '<label class="lb_status badge badge-primary">Liquidado</label> '+
+                    '<label class="lb_status badge badge-warning">Consolidado</label> '+
+                    '<label class="lb_status badge badge-danger">Anulado</label>';
+    }
     if (reinitialite) {
         $('#tbl-documento').dataTable().fnDestroy();
     }
@@ -24,19 +33,21 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
         columns: [{
             "render": function(data, type, full, meta) {
                 var codigo = full.codigo;
-                if (full.tipo_documento_id != 3) {
-                    if (full.liquidado == 1) {
-                        codigo = full.num_guia;
-                    } else {
-                        codigo = full.num_warehouse;
-                    }
-                }
                 var color_badget = 'success';
                 if (full.cantidad == 0) {
-                    color_badget = 'warning';
+                    if (full.tipo_documento_id != 3) {
+                        codigo = full.num_warehouse;
+                    }
+                    color_badget = 'default';
                 }else{
-                    if(full.consolidado > 1){
-                        color_badget = 'danger';
+                    if (full.tipo_documento_id != 3) {
+                        codigo = full.num_warehouse;
+                        if (full.liquidado == 1) {
+                            color_badget = 'primary';
+                        }
+                    }
+                    if(full.consolidado >= 1){
+                        color_badget = 'warning';
                     }
                 }
                 return '<strong>' + codigo + '<strong> <span style="float: right;" class="badge badge-' + color_badget + '" data-toggle="tooltip" data-placement="top" title="" data-original-title="Cantidad de cajas">' + full.cantidad + '</span>';
@@ -73,15 +84,15 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                     var btns = "<div class='btn-group'>" + "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + "<i class='material-icons' style='vertical-align:  middle;'>print</i><span class='caret'></span>" + "</button>" + "<ul class='dropdown-menu'>" + "<li><a href='../impresion-documento/" + full.id + "/consolidado' target='_blank'> <spam class='fa fa-print'></spam> Imprimir manifiesto</a></li>" + "<li><a href='../impresion-documento/" + full.id + "/consolidado_guias' target='_blank'> <spam class='fa fa-print'></spam> Imprimir Guias</a></li>" + "<li role='separator' class='divider'></li> " + "<li><a href='../../impresion-documento/pdfContrato' target='_blank'> <spam class='fa fa-print'></spam> Imprimir contrato</a></li>" + "<li><a href='../../impresion-documento/pdfTsa' target='_blank'> <spam class='fa fa-print'></spam> Imprimir TSA</a></li>" + "</ul></div>";
                     return btns + ' ' + btn_edit + btn_delete;
                 } else {
-                    var codigo = '';
+                    var codigo = full.num_warehouse;
                     if (full.liquidado == 1) {
                         href_print = "impresion-documento/" + full.id + "/guia";
                         href_print_label = "impresion-documento-label/" + full.id + "/guia";
-                        codigo = full.num_guia;
+                        // codigo = full.num_guia;
                     } else {
                         href_print = "impresion-documento/" + full.id + "/warehouse";
                         href_print_label = "impresion-documento-label/" + full.id + "/warehouse";
-                        codigo = full.num_warehouse;
+                        // codigo = full.num_warehouse;
                     }
                     var btn_tags = ' <a onclick="openModalTagsDocument(' + full.id + ', \'' + codigo + '\', \'' + full.cons_nomfull + '\', \'' + full.email_cons + '\', \'' + full.cantidad + '\', \'' + full.liquidado + '\')" data-toggle="modal" data-target="#modalTagDocument" class="view"><i class="material-icons" data-toggle="tooltip" title="Tareas">&#xE5C8;</i></a>';
                     var btns = "<div class='btn-group'>" + "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + "<i class='material-icons' style='vertical-align:  middle;'>print</i> <span class='caret'></span>" + "</button>" + "<ul class='dropdown-menu'><li><a href='" + href_print + "' target='_blank'> <spam class='fa fa-print'></spam> Imprimir</a></li>" + "<li><a href='" + href_print_label + "' target='_blank'> <spam class='fa fa-print'></spam> Imprimir Labels</a></li>" + "<li><a href='#' onclick=\"sendMail(" + full.id + ")\"> <spam class='fa fa-envelope'></spam> Enviar Mail</a></li>" + "</ul></div>";
@@ -98,7 +109,7 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
     if (typeof tipo_doc_id == "undefined") {
         tipo_doc_id = 1;
     }
-    $('#nombre_doc').html(nom);
+    $('#nombre_doc').html(nom + labels);
     var className = $('#icono_doc').attr('class');
     if (icon == null) {
         var icon = 'file-text-o';
@@ -172,7 +183,7 @@ var objVue = new Vue({
         typeDocumentList: function() {
             axios.get('tipoDocumento/all').then(function(response) {
                 $.each(response.data.data, function(key, value) {
-                    var lista = '<button type="button" id="btn' + value.id + '" ' + ' onclick="listDocument(' + value.id + ',\'' + value.nombre + '\',\'' + value.icono + '\',\'' + value.funcionalidades + '\',\'' + true + '\')"' + ' class="btn btn-default btn-block" style="text-align:left;">' + ' <i class="fa fa-' + value.icono + '" aria-hidden="true"></i>  ' + value.nombre + '</button>';
+                    var lista = '<button type="button" id="btn' + value.id + '" ' + ' onclick="listDocument(' + value.id + ',\'' + value.nombre + '\',\'' + value.icono + '\',\'' + value.funcionalidades + '\',\'' + true + '\')"' + ' class="btn btn-default btn-block" style="text-align:left;">' + ' <i class="fa fa-' + value.icono + '" aria-hidden="true"></i>  ' + value.nombre +'</button>';
                     if (value.id == 1) {
                         listDocument(value.id, value.nombre, value.icono, value.funcionalidades);
                     }
@@ -186,8 +197,8 @@ var objVue = new Vue({
         },
         createNewDocument: function(data) {
             swal({
-                title: "Se creará un(a) <spam style='color: rgb(212, 103, 82);'>" + data.name + ".</spam><br>\n¿Desea Continuar?.",
-                // text: "You won't be able to revert this!",
+                title: "<div>Se creará un(a) <span style='color: rgb(212, 103, 82);'>" + data.name + ".</span></div>",
+                text: "¿Desea Continuar?.",
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
