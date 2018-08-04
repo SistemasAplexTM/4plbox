@@ -22,9 +22,7 @@
 
 @section('content')
     <div class="row" id="agenciaform">
-        {{-- @include('layouts.errors') --}}
     	<form id="formaagencia" enctype="multipart/form-data" class="form-horizontal" role="form" action="{{ (isset($agencia) and $agencia) ? route('agencia.update', [$agencia->id]) : route('agencia.store') }}" method="{{ (isset($agencia) and $agencia) ? 'POST' : 'POST' }}">
-            {{-- {{ Form::open(array('url' => (isset($agencia) and $agencia) ? route('agencia.update', [$agencia->id]) : route('agencia.store'), 'id' => 'formaagencia', 'method' => (isset($agencia) and $agencia) ? 'PUT' : 'POST', 'enctype'=>'multipart/form-data', 'class'=>'form-horizontal')) }} --}}
             {{ csrf_field() }}
             {{ (isset($agencia) and $agencia) ? method_field('PUT') : method_field('POST') }}
             <input type="hidden" id="edit" value="{{ (isset($agencia) and $agencia) ? 'edit' : '' }}">

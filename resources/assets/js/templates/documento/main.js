@@ -46,7 +46,7 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                             color_badget = 'primary';
                         }
                     }
-                    if(full.consolidado >= 1){
+                    if(full.consolidado_status == 1){
                         color_badget = 'warning';
                     }
                 }

@@ -223,12 +223,16 @@ class ShipperController extends Controller
         $term = $request->term ?: '';
 
         if ($tableName != 'localizacion') {
-            $tags = DB::table($tableName)
-                ->select([$tableName . '.id', $tableName . '.descripcion as text'])
-                ->where([
-                    [$tableName . '.descripcion', 'like', $term . '%'],
-                    [$tableName . '.deleted_at', '=', null],
-                ])->get();
+            if($tableName == 'agencia' && !Auth::user()->isRole('admin')){
+                $tags = false;
+            }else{
+                $tags = DB::table($tableName)
+                    ->select([$tableName . '.id', $tableName . '.descripcion as text'])
+                    ->where([
+                        [$tableName . '.descripcion', 'like', $term . '%'],
+                        [$tableName . '.deleted_at', '=', null],
+                    ])->get();
+            }
         } else {
             $tags = DB::table($tableName)
                 ->join('deptos', 'localizacion.deptos_id', '=', 'deptos.id')

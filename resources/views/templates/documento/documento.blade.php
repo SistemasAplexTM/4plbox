@@ -105,9 +105,17 @@
                             <label for="agencia_id" class="">Agencia</label>
                                 <select id="agencia_id" name="agencia_id" class="form-control" style="font-size: 17px;font-weight: 900;">
                                     @if(isset($agencias) and $agencias)
-                                        @foreach($agencias as $agencia)
-                                            <option {{ ($documento->agencia_id == $agencia['id']) ? 'selected' : ((Auth::user()->agencia_id == $agencia['id']) ? 'selected ' : '') }} value="{{ $agencia['id'] }}">{{ $agencia['descripcion'] }}</option>
-                                        @endforeach
+                                        @role('admin')
+                                            @foreach($agencias as $agencia)
+                                                <option {{ ($documento->agencia_id == $agencia['id']) ? 'selected' : ((Auth::user()->agencia_id == $agencia['id']) ? 'selected ' : '') }} value="{{ $agencia['id'] }}">{{ $agencia['descripcion'] }}</option>
+                                            @endforeach
+                                        @else
+                                            @foreach($agencias as $agencia)
+                                                @if(Auth::user()->agencia_id == $agencia['id'])
+                                                    <option {{ ($documento->agencia_id == $agencia['id']) ? 'selected' : ((Auth::user()->agencia_id == $agencia['id']) ? 'selected ' : '') }} value="{{ $agencia['id'] }}">{{ $agencia['descripcion'] }}</option>
+                                                @endif
+                                            @endforeach
+                                        @endrole
                                     @endif
                                 </select>
                         </div>

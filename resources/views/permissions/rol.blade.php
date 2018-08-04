@@ -60,47 +60,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
-                            <div class="col-lg-12">
-                                    <div class="form-group" :class="{'has-error': listErrors.special}">
-                                        <div class="col-sm-12">
-                                            <label class="control-label gcore-label-top">Permiso especial:</label>
-                                        </div>
-                                        <div class="col-sm-12">
-                                        	<div class="radio radio-info radio-inline">
-	                                            <input type="radio" id="inlineRadio1" v-bind:value="null" name="special" checked="" v-model="special">
-	                                            <label for="inlineRadio1"> Ninguno </label>
-	                                        </div>
-	                                        <div class="radio radio-info radio-inline">
-	                                            <input type="radio" id="inlineRadio2" value="all-access" name="special" v-model="special">
-	                                            <label for="inlineRadio2"> Acceso total </label>
-	                                        </div>
-	                                        <div class="radio radio-info radio-inline">
-	                                            <input type="radio" id="inlineRadio3" value="no-access" name="special" v-model="special">
-	                                            <label for="inlineRadio3"> Sin acceso </label>
-	                                        </div>
-                                        </div>
-                                    </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                        	<div class="col-lg-12" style="margin-top: 20px;">
-        						<form id="permissions" role="form">
-	                        		<table id="tbl-permissions" class="table table-hover table-responsive table-striped">
-	                        			<thead>
-	                        				<tr>
-	                        					<th class="text-center" colspan="3">Listado de permisos</th>
-	                        				</tr>
-	                        				<tr>
-	                        					<th></th>
-	                        					<th>Nombre</th>
-	                        					<th>Descripción</th>
-	                        				</tr>
-	                        			</thead>
-	                        		</table>
-        						</form>
-                        	</div>
-                        </div>
+                        
 
                         <div class="row">
                             @include('layouts.buttons')

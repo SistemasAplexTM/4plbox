@@ -103,6 +103,7 @@ class DocumentoController extends Controller
                 $data->tipo_documento_id = $request->tipo_documento_id;
                 $data->usuario_id        = Auth::user()->id;
                 $data->created_at        = date('Y-m-d H:i:s');
+                $tipo = TipoDocumento::findOrFail($request->tipo_documento_id);
 
                 if ($data->save()) {
                     $id_documento = $data->id;
@@ -131,7 +132,7 @@ class DocumentoController extends Controller
                         $caracteres      = strlen($consecutivo);
                         $sumarCaracteres = 7 - $caracteres;
                         $carcater        = '0';
-                        $prefijo         = 'WRH';
+                        $prefijo         = $tipo->prefijo;
                         // $prefijo2        = 'CLO';
                         for ($i = 1; $i <= $sumarCaracteres; $i++) {
                             $prefijo = $prefijo . $carcater;
@@ -166,7 +167,7 @@ class DocumentoController extends Controller
                 }
                 return $answer;
             });
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $error = '';
             foreach ($e->errorInfo as $key => $value) {
                 $error .= $key . ' - ' . $value . ' <br> ';
@@ -448,7 +449,7 @@ class DocumentoController extends Controller
                         for ($i = 1; $i <= $sumarCaracteres; $i++) {
                             $prefijo = $prefijo . $carcater;
                         }
-                        $data->num_guia = $prefijo . $data->consecutivo . $prefijoPais;
+                        // $data->num_guia = $prefijo . $data->consecutivo . $prefijoPais;
                     }
                 }
 
@@ -687,17 +688,20 @@ class DocumentoController extends Controller
                 ->join('agencia', 'documento.agencia_id', '=', 'agencia.id')
                 ->leftJoin(DB::raw("(SELECT
                                             Count(DISTINCT z.consolidado) AS consolidado,
+                                            z.consolidado AS consolidado_status,
                                             z.documento_id
                                         FROM
                                             documento_detalle AS z
                                         GROUP BY
-                                            z.documento_id
+                                            z.documento_id,
+                                            z.consolidado
                                     ) AS t"), "documento.id", "t.documento_id")
                 ->select('documento.id as id', 'documento.liquidado', 'documento.tipo_documento_id as tipo_documento_id', 'documento.consecutivo as codigo', 'documento.num_warehouse', 'documento.created_at as fecha', 'shipper.nombre_full as ship_nomfull', 'consignee.nombre_full as cons_nomfull', 'consignee.correo as email_cons', 'agencia.descripcion as agencia',
                     DB::raw("(SELECT Count(a.id) AS cantidad FROM documento_detalle AS a WHERE a.documento_id = documento.id AND a.deleted_at IS NULL) as cantidad"),
                     DB::raw("(SELECT Sum(documento_detalle.peso) FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as peso"),
                     DB::raw("(SELECT Sum(documento_detalle.volumen) FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as volumen"),
-                    't.consolidado'
+                    't.consolidado',
+                    't.consolidado_status'
                 )
                 ->where([
                     ['documento.deleted_at', null],

@@ -24,17 +24,14 @@
                 <div class="ibox-title">
                     <h5>Agencias</h5>
                     <div class="ibox-tools">
-
+                        <a href="{{ route('agencia.create') }}">
+                        <button type="button" class="btn btn-primary btn-sm">
+                            <span class="fa fa-plus" aria-hidden="true"></span> Nuevo
+                        </button>
+                    </a>
                     </div>
                 </div>
                 <div class="ibox-content">
-                    @if(Auth::user()->email === 'jhonnyalejo2212@gmail.com')
-                	<a href="{{ route('agencia.create') }}">
-					    <button type="button" class="btn btn-primary btn-sm">
-					        <span class="fa fa-plus" aria-hidden="true"></span> Nuevo
-					    </button>
-					</a>
-                    @endif
                     <!--***** contenido ******-->
                     <div class="table-responsive">
                         <table id="tbl-agencia" class="table table-striped table-hover table-bordered" style="width: 100%;">

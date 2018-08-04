@@ -128,7 +128,7 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{ 'has-error': errors.has('rol_id') }">
                                         <div class="col-sm-5">
-                                            <label for="rol_id" class="control-label gcore-label-top">Credencial:</label>
+                                            <label for="rol_id" class="control-label gcore-label-top">Rol:</label>
                                         </div>
                                         <div class="col-sm-7">
                                             <v-select name="rol_id" v-model="rol_id" label="name" :options="roles" v-validate.disable="'required'" placeholder="Credencial"></v-select>
