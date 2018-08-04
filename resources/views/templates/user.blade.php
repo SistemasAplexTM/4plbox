@@ -131,7 +131,7 @@
                                             <label for="rol_id" class="control-label gcore-label-top">Rol:</label>
                                         </div>
                                         <div class="col-sm-7">
-                                            <v-select name="rol_id" v-model="rol_id" label="name" :options="roles" v-validate.disable="'required'" placeholder="Credencial"></v-select>
+                                            <v-select name="rol_id" v-model="rol_id" label="name" :options="roles" v-validate.disable="'required'" placeholder="Roles"></v-select>
                                             <small class="help-block">@{{ errors.first('rol_id') }}</small>
                                         </div>
                                     </div>

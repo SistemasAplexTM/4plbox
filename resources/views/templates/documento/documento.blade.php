@@ -363,15 +363,7 @@
                                             
                                         </div>
                                         <div class="row">
-                                           <!--  <div class="col-sm-4">
-                                               <div class="form-group">
-                                                   <div class="form-group" id="Valtrac" style="width: 100%">
-                                                       <label class="tracking">Tracking</label>
-                                                       <input type="text" id="tracking" name="tracking" class="form-control track_guia" value="">
-                                                   </div>
-                                               </div>
-                                           </div> -->
-                                           <div class="col-sm-3" v-if="mostrar.includes(16)">
+                                           <div class="col-sm-2">
                                                 <label class="valDeclarado">Declarado</label>
                                                     <div class="form-group" id="ValDecla">
                                                         <label style="display: none;" for="" class=""></label>
@@ -379,7 +371,15 @@
                                                         <small class="help-block" id="HvalDeclarado" style="display: none">Este campo es obligatorio</small>
                                                     </div>
                                             </div>
-                                            <div class="col-sm-3">
+                                           <div class="col-sm-2" v-if="mostrar.includes(34)">
+                                                <label class="valDeclarado">Piezas</label>
+                                                    <div class="form-group" id="ValDecla">
+                                                        <label style="display: none;" for="" class=""></label>
+                                                        <input type="number" onkeyup="deleteError($(this).parent());" placeholder=" Piezas" onkeyup="deleteError($(this).parent());" id="valPiezas" name="valPiezas" class="form-control" value="1">
+                                                        <small class="help-block" id="Hpiezas" style="display: none">Este campo es obligatorio</small>
+                                                    </div>
+                                            </div>
+                                            <div class="col-sm-2">
                                                     <div class="form-group" id="Valtipoem">
                                                         <label for="tipo_empaque_id" class="">Empaque</label>
                                                         <select  onchange="deleteError($(this).parent());" id="tipo_empaque_id" name="tipo_empaque_id" class="form-control">
@@ -433,7 +433,7 @@
                                                             <table class="table table-striped table-bordered table-hover" id="whgTable">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th style="width: 17%;" v-if="mostrar.includes(23)"># Guía</th>
+                                                                        <th style="width: 17%;" v-if="mostrar.includes(23)">Código</th>
                                                                         <th style="width: 10%;">Peso (Lb)</th>
                                                                         <th style="">Contiene</th>
                                                                         <th style="width: 15%;">PA</th>
@@ -445,7 +445,7 @@
                                                                     @foreach ($detalle as $key)
                                                                         <tr id="fila{{ $key->id }}">
                                                                             <td v-if="mostrar.includes(23)">
-                                                                                <input type="text" id="numGuia{{ $key->id }}" name="numGuia[]" value="{{ $key->num_guia }}" class="form-control" readonly style="font-size: small;">
+                                                                                <input type="text" id="numGuia{{ $key->id }}" name="numGuia[]" value="{{ $key->num_warehouse }}" class="form-control" readonly style="font-size: small;">
                                                                             </td>
                                                                             <td class="">
                                                                                 <input type="number" id="pesoD{{ $key->id }}" name="pesoD[]" value="{{ $key->peso }}" class="form-control cp_peso" readonly="" onkeyup="totalizeDocument();">

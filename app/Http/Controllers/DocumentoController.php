@@ -829,6 +829,9 @@ class DocumentoController extends Controller
             if ($request->valor == '') {
                 $data->valor = 0;
             }
+            if ($request->piezas == '') {
+                $data->piezas = 1;
+            }
             if ($request->declarado2 == '') {
                 $data->declarado2 = 0;
             }

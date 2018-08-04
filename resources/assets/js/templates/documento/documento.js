@@ -872,6 +872,7 @@ var objVue = new Vue({
             var valDeclarado = parseFloat($('#valDeclarado').val());
             var resArancel = 0;
             var resIva = 0;
+            var piezas = $('#valPiezas').val();
             /* insercion del detalle */
             var me = this;
             axios.post('../insertDetail', {
@@ -893,6 +894,7 @@ var objVue = new Vue({
                 'declarado2': valDeclarado,
                 'peso': peso,
                 'peso2': peso,
+                'piezas': piezas
             }).then(function(response) {
                 if (response.data['code'] == 200) {
                     toastr.success('Registro creado correctamente.');
@@ -901,6 +903,7 @@ var objVue = new Vue({
                     toastr.warning(response.data['error']);
                     toastr.options.closeButton = true;
                 }
+                $('#valPiezas').val(1);
                 $('#peso').val('');
                 $('#largo').val(0);
                 $('#ancho').val(0);
@@ -928,7 +931,7 @@ var objVue = new Vue({
             var campo_pa = '';
             var campo_declarado = '';
             if (me.document_type === 'guia') {
-                campo_pa = '<td><input type="text" id="numGuia' + data['id'] + '" name="numGuia[]" value="' + data['num_guia'] + '" class="form-control" readonly style="font-size: small;"></td>';
+                campo_pa = '<td><input type="text" id="numGuia' + data['id'] + '" name="numGuia[]" value="' + data['num_warehouse'] + '" class="form-control" readonly style="font-size: small;"></td>';
                 campo_declarado = '<td>\n\
                 <input onkeyup="totalizeDocument(this);"  type="text" id="valorDeclarado' + data['id'] + '" name="valorDeclarado[]" class="form-control cp_declarado" value="' + data['valor'] + '" readonly="readonly">\n\
                 <input type="hidden" id="arancel' + data['id'] + '" name="arancel[]" class="form-control" value="' + data['id'] + '" readonly>\n\
