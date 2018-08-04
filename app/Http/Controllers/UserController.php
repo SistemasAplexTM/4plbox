@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequest;
 use App\User;
 use DataTables;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -178,13 +179,15 @@ class UserController extends Controller
      */
     public function getAll()
     {
+        $where = [['users.deleted_at', null]];
+        if(!Auth::user()->isRole('admin')){
+            $where[] = array('users.agencia_id', Auth::user()->agencia_id);
+        }
         $data = User::leftjoin('agencia as a', 'users.agencia_id', 'a.id')
             ->join('role_user as b', 'users.id', 'b.user_id')
             ->join('roles as c', 'c.id', 'b.role_id')
             ->select('users.id', 'users.name', 'users.email', 'users.agencia_id', 'users.actived', 'a.descripcion as name_agencia', 'c.id AS rol_id', 'c.name as rol_name')
-            ->where([
-                ['users.deleted_at', null],
-            ])->get();
+            ->where($where)->get();
         return \DataTables::of($data)->make(true);
     }
 
@@ -194,11 +197,23 @@ class UserController extends Controller
         if ($table == 'roles') {
             $field = 'name';
         }
-        $data = DB::table($table)
-            ->select('id', $field . ' as name')
-            ->where([
-                ['deleted_at', null],
-            ])->get();
+
+        if($table == 'agencia' && !Auth::user()->isRole('admin')){
+                $data = DB::table($table)
+                ->select('id', $field . ' as name')
+                ->where([
+                    ['deleted_at', null],
+                    ['id', Auth::user()->agencia_id]
+                ])->get();
+            }else{
+                $data = DB::table($table)
+                ->select('id', $field . ' as name')
+                ->where([
+                    ['deleted_at', null],
+                ])->get();
+            }
+
+        
         $answer = array(
             'data' => $data,
         );

@@ -121,6 +121,9 @@ var objVue = new Vue({
         getDataSelect: function() {
             axios.get('user/getDataSelect/agencia').then(response => {
                 this.agencias = response.data.data;
+                if(this.agencias.length == 1){
+                    this.agencia_id = {id: this.agencias[0].id, name: this.agencias[0].name}
+                }
             });
             axios.get('user/getDataSelect/roles').then(response => {
                 this.roles = response.data.data;
