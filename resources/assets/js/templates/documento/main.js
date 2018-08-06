@@ -75,7 +75,7 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                 if (permission_update) {
                     var btn_edit = '<a href="documento/' + full.id + '/edit" class="edit" title="Editar" data-toggle="tooltip" style="color:#FFC107;"><i class="material-icons">&#xE254;</i></a>';
                 }
-                if (permission_delete) {
+                if (permission_delete && full.consolidado_status != 1) {
                     var btn_delete = '<a onclick=\"modalEliminar()\" class="delete" title="Eliminar" data-toggle="tooltip" style="color:#E34724;"><i class="material-icons">&#xE872;</i></a>';
                 }
 

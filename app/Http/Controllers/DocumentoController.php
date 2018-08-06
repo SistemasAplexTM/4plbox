@@ -1121,6 +1121,7 @@ class DocumentoController extends Controller
                 'agencia.telefono as agencia_tel',
                 'agencia.direccion as agencia_dir',
                 'agencia.zip as agencia_zip',
+                'agencia.email as agencia_email',
                 'ciudad_agencia.nombre AS agencia_ciudad',
                 'deptos_agencia.descripcion AS agencia_depto',
                 'pais_agencia.descripcion AS agencia_pais',
@@ -1182,12 +1183,13 @@ class DocumentoController extends Controller
 
         if ($document === 'guia') {
             $this->AddToLog('Impresion Guia (' . $documento->id . ')');
-            $pdf          = PDF::loadView('pdf.guiaPdf', compact('documento', 'detalle'));
+            // $pdf          = PDF::loadView('pdf.guiaPdf', compact('documento', 'detalle'));
+            $pdf          = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
             $nameDocument = $documento->tipo_documento . '-' . $documento->id;
         } else {
             if ($document === 'warehouse') {
                 $this->AddToLog('Impresion warehouse (' . $documento->id . ')');
-                $pdf          = PDF::loadView('pdf.warehousePdf', compact('documento', 'detalle'));
+                $pdf          = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
                 $nameDocument = $documento->tipo_documento . '-' . $documento->id;
             } else {
                 if ($document === 'invoice') {

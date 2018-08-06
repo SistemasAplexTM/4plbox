@@ -258,6 +258,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('aerolinea_inventario/get/{aerolinea}', 'AerolineasInventarioController@getByAerolinea');
     Route::get('aerolinea_inventario/all', 'AerolineasInventarioController@getAll');
     Route::get('aerolinea_inventario', 'AerolineasInventarioController@index')->name('aerolinea_inventario.index');
+
+    /*--- MODULO CLIENTES ---*/
+    Route::resource('clientes', 'ClienteController', ['except' => ['show', 'create', 'edit']]);
+    Route::get('clientes/all', 'ClienteController@getAll')->name('datatable/all');
+    Route::get('clientes/delete/{id}/{logical?}', 'ClienteController@delete')->name('arancel.delete');
+    Route::get('clientes/restaurar/{id}', 'ClienteController@restaurar');
+    Route::get('clientes/selectInput/{tableName}', 'ClienteController@selectInput');
 });
 Route::get('documento/vueSelectGeneral/{table}/{term}', 'DocumentoController@vueSelectGeneral');
 Route::get('documento/vueSelect/{term}', 'DocumentoController@vueSelect');
@@ -266,6 +273,9 @@ Route::get('documento/vueSelectTransportadorMaster/{term}', 'DocumentoController
 Route::get('documento/vueSelectServicios/{term}', 'DocumentoController@vueSelectServicios');
 Route::get('documento/searchDataByNavbar/{data}/{element}', 'DocumentoController@searchDataByNavbar');
 Route::get('master/vueSelectConsolidados/{term}', 'MasterController@vueSelectConsolidados');
+
+/* VALIDAR EMAIL DE CLIENTE */
+Route::post('clientes/existEmail', 'ClienteController@existEmail');
 
 /* VALIDAR EMAIL DE CONSIGNEE */
 Route::post('consignee/existEmail', 'ConsigneeController@existEmail');

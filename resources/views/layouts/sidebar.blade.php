@@ -127,6 +127,15 @@
                         </a>
                     </li>
                     @endcan
+                    @can('clientes.index')
+                    <li>
+                        <a href="{{ route('clientes.index') }}">
+                            <spam class="fa fa-users">
+                            </spam>
+                            Clientes
+                        </a>
+                    </li>
+                    @endcan
                 </ul>
             </li>
             <li class="active">
