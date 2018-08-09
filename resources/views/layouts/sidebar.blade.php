@@ -162,7 +162,7 @@
                     </ul>
                 </li>
             @endif
-            <li class="">
+            <li class="active">
                 <a href="" style="background-color: #0e9aef; color: white;">
                     <i class="fa fa-wrench">
                     </i>
@@ -266,7 +266,7 @@
                 </ul>
             </li>
             {{-- SOLO LO VE ADMINISTRADOR Y GESTION --}}
-            <li class="" style="">
+            <li class="active" style="">
                 <a href="#" style="background-color: #017767; color: white;">
                     <i class="fa fa-cogs">
                     </i>
@@ -376,7 +376,7 @@
                     @endif
                 </ul>
             </li>
-            <li class="" style="">
+            <li class="active" style="">
                 <a href="#" style="background-color: #ff1d1d; color: white;">
                     <i class="fa fa-key">
                     </i>

@@ -428,7 +428,7 @@
                   <div class="col-lg-8">
                     <div class="form-group" :class="{'has-error': errors.has('handing_information') }">
                       <label for="handing_information">Handing information</label>
-                      <textarea v-validate="'required'" v-model="handing_information" class="form-control" name="handing_information" id="handing_information" cols="30" rows="4"></textarea>
+                      <textarea v-model="handing_information" class="form-control" name="handing_information" id="handing_information" cols="30" rows="4"></textarea>
                       <small v-show="errors.has('handing_information')" class="bg-danger">{{ errors.first('handing_information') }}</small>
                     </div>
                   </div>
@@ -718,7 +718,7 @@ span.error{
       },
       validar_tercer_tab: function(){
           return new Promise((resolve, reject) => {
-          this.$validator.validateAll(['handing_information', 'piezas', 'peso', 'unidad_medida', 'peso_cobrado', 'tarifa', 'total', 'descripcion'])
+          this.$validator.validateAll(['piezas', 'peso', 'unidad_medida', 'peso_cobrado', 'tarifa', 'total', 'descripcion'])
             .then((isValid) => {
               resolve(isValid)
             });

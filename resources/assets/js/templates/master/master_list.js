@@ -31,7 +31,7 @@ $(document).ready(function () {
                      "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" +
                       "<i class='material-icons' style='vertical-align:  middle;'>print</i> <span class='caret'></span>" +
                        "</button>" + 
-                       "<ul class='dropdown-menu'><li><a href='master/imprimir'" +full.id + '/'+true +
+                       "<ul class='dropdown-menu dropdown-menu-right pull-right'><li><a href='master/imprimir/" +full.id + '/'+true +
                         "' target='_blank'> <spam class='fa fa-print'></spam> Master</a></li>" +
                          "<li><a href='master/imprimir/" +full.id +"' target='_blank'> <spam class='fa fa-print'></spam> Master simple</a></li>" + 
                          "<li><a href='impresion-documento/pdfContrato' target='_blank'> <spam class='fa fa-print'></spam> Contrato</a></li>" + 
