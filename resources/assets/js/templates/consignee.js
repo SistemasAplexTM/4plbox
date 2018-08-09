@@ -26,7 +26,7 @@ $(document).ready(function() {
                 var btn_delete = '';
                 if (permission_update) {
                     var params = [
-                        full.id, +full.agencia_id, +full.tipo_identificacion_id, +full.localizacion_id, "'" + full.documento + "'", "'" + full.primer_nombre + "'", "'" + full.segundo_nombre + "'", "'" + full.primer_apellido + "'", "'" + full.segundo_apellido + "'", "'" + full.direccion + "'", "'" + full.telefono + "'", "'" + full.correo + "'", "'" + full.zip + "'", "'" + full.tarifa + "'", "'" + full.ciudad + "'", "'" + full.agencia + "'", "'" + full.identificacion + "'"
+                        full.id, +full.agencia_id, +full.tipo_identificacion_id, +full.localizacion_id, "'" + full.documento + "'", "'" + full.primer_nombre + "'", "'" + full.segundo_nombre + "'", "'" + full.primer_apellido + "'", "'" + full.segundo_apellido + "'", "'" + full.direccion + "'", "'" + full.telefono + "'", "'" + full.correo + "'", "'" + full.zip + "'", "'" + full.tarifa + "'", "'" + full.ciudad + "'", "'" + full.agencia + "'", "'" + full.identificacion + "'",  + full.cliente_id, "'" + full.cliente + "'"
                     ];
                     var btn_edit = "<a onclick=\"edit(" + params + ")\" class='btn btn-outline btn-success btn-xs' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit'></i></a> ";
                 }
@@ -52,7 +52,7 @@ function pasar_id(id) {
     objVue.parametro = id;
 }
 
-function edit(id, agencia_id, tipo_identificacion_id, localizacion_id, documento, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, direccion, telefono, correo, zip, tarifa, ciudad, agencia, identificacion) {
+function edit(id, agencia_id, tipo_identificacion_id, localizacion_id, documento, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, direccion, telefono, correo, zip, tarifa, ciudad, agencia, identificacion, cliente_id, cliente) {
     var data = {
         id: id,
         tipo_identificacion_id: tipo_identificacion_id,
@@ -70,7 +70,9 @@ function edit(id, agencia_id, tipo_identificacion_id, localizacion_id, documento
         tarifa: tarifa,
         ciudad: ciudad,
         agencia: agencia,
-        identificacion: identificacion
+        identificacion: identificacion,
+        cliente_id : cliente_id,
+        cliente : cliente,
     };
     objVue.edit(data);
 }
@@ -139,6 +141,8 @@ var objVue = new Vue({
         parametro: null,
         tipo_identificacion_id: '',
         agencia_id: '',
+        cliente_id: null,
+        clientes: [],
         localizacion_id: '',
         // documento: '',
         primer_nombre: '',
@@ -195,6 +199,8 @@ var objVue = new Vue({
             this.listErrors = {};
             $('#localizacion_id').select2("val", "");
             $('#localizacion_id_input').val('');
+            this.cliente_id = null;
+            this.clientes = [];
             // $('#tipo_identificacion_id').select2("val", "");
             // $('#tipo_identificacion_id_input').val('');
             // $('#agencia_id').select2("val", "");
@@ -278,6 +284,7 @@ var objVue = new Vue({
                         'zip': this.zip,
                         'tarifa': this.tarifa,
                         'emailsend': this.emailsend,
+                        'cliente_id': (this.cliente_id != null) ? this.cliente_id.id : null,
                     }).then(function(response) {
                         if (response.data['code'] == 200) {
                             toastr.success('Registro creado correctamente.');
@@ -326,6 +333,7 @@ var objVue = new Vue({
                 'zip': this.zip,
                 'tarifa': this.tarifa,
                 'emailsend': this.emailsend,
+                'cliente_id': (this.cliente_id != null) ? this.cliente_id.id : null,
             }).then(function(response) {
                 if (response.data['code'] == 200) {
                     toastr.success('Registro Actualizado correctamente');
@@ -388,6 +396,9 @@ var objVue = new Vue({
             if (data['zip'] != 'null' && data['zip'] != '' && data['zip'] != null) {
                 this.zip = data['zip'];
             }
+            if(data['cliente_id'] != null && data['cliente_id'] != ''){
+                this.cliente_id = {id: data['cliente_id'], name: data['cliente']}
+            }
             this.tarifa = data['tarifa'];
             this.editar = 1;
             this.formErrors = {};
@@ -397,5 +408,17 @@ var objVue = new Vue({
             var me = this;
             me.resetForm();
         },
+        onSearchClientes(search, loading) {
+              loading(true);
+              this.searchCliente(loading, search, this);
+            },
+            searchCliente: _.debounce((loading, search, vm) => {
+              fetch(
+                `consignee/vueSelectClientes/${escape(search)}`
+              ).then(res => {
+                res.json().then(json => (vm.clientes = json.items));
+                loading(false);
+              });
+            }, 300),
     },
 });

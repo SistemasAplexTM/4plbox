@@ -74,8 +74,8 @@
                                     <div class="col-sm-4">
                                         <div class="col-sm-12">
                                             <label class="control-label col-lg-12">&nbsp;</label>
-                                            <a hfer="#" target="blank_" class="btn btn-info btn-sm printDocument" data-toggle="tooltip" data-placement="top" title="Imprimir manifiesto"><i class="fa fa-print"></i> Manifiesto</a>
-                                            <a hfer="#" target="blank_" class="btn btn-info btn-sm printDocumentGuias" data-toggle="tooltip" data-placement="top" title="Imprimir guias hijas"><i class="fa fa-print"></i> Guias hijas</a>
+                                            <a v-if="app_type == 'courier'" hfer="#" target="blank_" class="btn btn-info btn-sm printDocument" data-toggle="tooltip" data-placement="top" title="Imprimir manifiesto"><i class="fa fa-print"></i> Manifiesto</a>
+                                            <a v-if="app_type == 'courier'" hfer="#" target="blank_" class="btn btn-info btn-sm printDocumentGuias" data-toggle="tooltip" data-placement="top" title="Imprimir guias hijas"><i class="fa fa-print"></i> Guias hijas</a>
                                             <a hfer="#" target="blank_" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Imprimir instrucciones"><i class="fa fa-print"></i> Instrucciones</a>
                                         </div>
                                     </div>
@@ -340,6 +340,9 @@
             },permission: {
               type: Object,
               required: false
+            },app_type: {
+              type: String,
+              required: true
             },
     	},
     	watch:{
@@ -609,15 +612,20 @@
 		                    name: 'created_at'
 		                }, {
 		                    "render": function (data, type, full, meta) {
-			                	if(full.liquidado == 0){
-			                		codigoGW = full.num_warehouse;
-			                		return full.num_warehouse;
-			                	}else{
-			                		if(full.liquidado == 1){
-			                			codigoGW = full.num_guia;
-			                			return full.num_guia;
-			                		}
-			                	}
+                                if(me.app_type === 'courier'){
+                                    if(full.liquidado == 0){
+                                        codigoGW = full.num_warehouse;
+                                        return full.num_warehouse;
+                                    }else{
+                                        if(full.liquidado == 1){
+                                            codigoGW = full.num_guia;
+                                            return full.num_guia;
+                                        }
+                                    }
+                                }else{
+                                    codigoGW = full.num_warehouse;
+                                    return full.num_warehouse;
+                                }
 			                }
 		                }, {
 		                    data: 'peso2',
@@ -710,27 +718,37 @@
                                 if(parseInt(full.agrupadas) > 0){
                                     color = 'primary';
                                 }
-			                	if(full.liquidado == 0){
-			                		return full.num_warehouse + '<a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" role="button" \n\
-                                        data-html="true" \n\
-                                        data-toggle="popover" \n\
-                                        data-trigger="hover" \n\
-                                        title="<b>Guias agrupadas</b>" \n\
-                                        data-content="'+groupGuias+'" \n\
-                                        onclick="agruparGuias('+full.id+')">'+full.agrupadas+'</a>';
-			                	}else{
-			                		if(full.liquidado == 1){
-			                			return full.num_guia + '<a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" \n\
-                                        role="button" \n\
-                                        data-html="true" \n\
-                                        data-toggle="popover" \n\
-                                        data-trigger="hover" \n\
-                                        title="<b>Guias agrupadas</b>" \n\
-                                        data-content="'+groupGuias+'" \n\
-                                        onclick="agruparGuias('+full.id+')">'+full.agrupadas+'</a>';
-                                        
-			                		}
-			                	}
+                                if(me.app_type === 'courier'){
+                                    if(full.liquidado == 0){
+                                        return full.num_warehouse + '<a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" role="button" \n\
+                                            data-html="true" \n\
+                                            data-toggle="popover" \n\
+                                            data-trigger="hover" \n\
+                                            title="<b>Guias agrupadas</b>" \n\
+                                            data-content="'+groupGuias+'" \n\
+                                            onclick="agruparGuias('+full.id+')">'+full.agrupadas+'</a>';
+                                    }else{
+                                        if(full.liquidado == 1){
+                                            return full.num_guia + '<a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" \n\
+                                            role="button" \n\
+                                            data-html="true" \n\
+                                            data-toggle="popover" \n\
+                                            data-trigger="hover" \n\
+                                            title="<b>Guias agrupadas</b>" \n\
+                                            data-content="'+groupGuias+'" \n\
+                                            onclick="agruparGuias('+full.id+')">'+full.agrupadas+'</a>';
+                                            
+                                        }
+                                    }
+                                }else{
+                                    return full.num_warehouse + '<a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" role="button" \n\
+                                            data-html="true" \n\
+                                            data-toggle="popover" \n\
+                                            data-trigger="hover" \n\
+                                            title="<b>Guias agrupadas</b>" \n\
+                                            data-content="'+groupGuias+'" \n\
+                                            onclick="agruparGuias('+full.id+')">'+full.agrupadas+'</a>';
+                                }
 			                }
 			            },
 			            {

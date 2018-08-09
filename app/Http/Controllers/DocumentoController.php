@@ -1083,6 +1083,10 @@ class DocumentoController extends Controller
             ->leftJoin('transportador', 'transportador.id', '=', 'm.consignee_id')
             ->leftJoin('shipper', 'documento.shipper_id', '=', 'shipper.id')
             ->leftJoin('consignee', 'documento.consignee_id', '=', 'consignee.id')
+            ->leftJoin('clientes', 'consignee.cliente_id', '=', 'clientes.id')
+            ->leftJoin('localizacion AS ciudad_cliente', 'clientes.localizacion_id', '=', 'ciudad_cliente.id')
+            ->leftJoin('deptos AS deptos_cliente', 'ciudad_cliente.deptos_id', '=', 'deptos_cliente.id')
+            ->leftJoin('pais AS pais_cliente', 'deptos_cliente.pais_id', '=', 'pais_cliente.id')
             ->leftJoin('localizacion AS ciudad_consignee', 'consignee.localizacion_id', '=', 'ciudad_consignee.id')
             ->leftJoin('localizacion AS ciudad_shipper', 'shipper.localizacion_id', '=', 'ciudad_shipper.id')
             ->leftJoin('deptos AS deptos_consignee', 'ciudad_consignee.deptos_id', '=', 'deptos_consignee.id')
@@ -1115,6 +1119,10 @@ class DocumentoController extends Controller
                 'consignee.correo as cons_email',
                 'consignee.zip as cons_zip',
                 'consignee.po_box as cons_pobox',
+                'clientes.nombre as cliente',
+                'clientes.zona as cliente_zona',
+                'ciudad_cliente.nombre as cliente_ciudad',
+                'pais_cliente.descripcion as cliente_pais',
                 'ciudad_consignee.nombre AS cons_ciudad',
                 'deptos_consignee.descripcion AS cons_depto',
                 'agencia.descripcion as agencia',
@@ -1183,13 +1191,20 @@ class DocumentoController extends Controller
 
         if ($document === 'guia') {
             $this->AddToLog('Impresion Guia (' . $documento->id . ')');
-            // $pdf          = PDF::loadView('pdf.guiaPdf', compact('documento', 'detalle'));
-            $pdf          = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
+            if(env('APP_TYPE') === 'courier'){
+                $pdf          = PDF::loadView('pdf.guiaPdf', compact('documento', 'detalle'));
+            }else{
+                $pdf          = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
+            }
             $nameDocument = $documento->tipo_documento . '-' . $documento->id;
         } else {
             if ($document === 'warehouse') {
                 $this->AddToLog('Impresion warehouse (' . $documento->id . ')');
-                $pdf          = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
+                if(env('APP_TYPE') === 'courier'){
+                $pdf          = PDF::loadView('pdf.warehousePdf', compact('documento', 'detalle'));
+                }else{
+                    $pdf          = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
+                }
                 $nameDocument = $documento->tipo_documento . '-' . $documento->id;
             } else {
                 if ($document === 'invoice') {
@@ -1245,10 +1260,12 @@ class DocumentoController extends Controller
                                 'c.nombre_full as ship_nomfull',
                                 'c.direccion as ship_dir',
                                 'c.telefono as ship_tel',
+                                'c.zip as ship_zip',
                                 'e.nombre as ship_ciudad',
                                 'f.descripcion as ship_depto',
                                 'pais.descripcion as ship_pais',
                                 'd.nombre_full as cons_nomfull',
+                                'd.zip as cons_zip',
                                 'g.nombre as cons_ciudad',
                                 'h.descripcion as cons_depto',
                                 'd.direccion as cons_dir',
@@ -1314,10 +1331,12 @@ class DocumentoController extends Controller
                                     DB::raw('CONCAT_WS(" ", c . primer_nombre, c . segundo_nombre, c . primer_apellido, c . segundo_apellido) as nom_ship'),
                                     'c.direccion as dir_ship',
                                     'c.telefono as tel_ship',
+                                    'c.zip as zip_ship',
                                     'e.nombre as ciu_ship',
                                     'f.descripcion as depto_ship',
                                     'pais.descripcion as pais_ship',
                                     DB::raw('CONCAT_WS(" ", d . primer_nombre, d . segundo_nombre, d . primer_apellido, d . segundo_apellido) as nom_cons'),
+                                    'd.zip as zip_cons',
                                     'g.nombre as ciu_cons',
                                     'h.descripcion as depto_cons',
                                     'd.direccion as dir_cons',

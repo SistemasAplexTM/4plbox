@@ -138,28 +138,30 @@
                     @endcan
                 </ul>
             </li>
-            <li class="active">
-                <a href="" style="background-color: brown; color: white;">
-                    <i class="fa fa-vcard">
-                    </i>
-                    <span class="nav-label">
-                        Casillero
-                    </span>
-                    <span class="fa arrow">
-                    </span>
-                </a>
-                <ul class="nav nav-second-level">
-                    @can('prealerta.list')
-                    <li>
-                        <a href="{{ route('prealerta.list') }}">
-                            <spam class="fa fa-exclamation-triangle">
-                            </spam>
-                            Prealertas
-                        </a>
-                    </li>
-                    @endcan
-                </ul>
-            </li>
+            @if(env('APP_TYPE') === 'courier')
+                <li class="active">
+                    <a href="" style="background-color: brown; color: white;">
+                        <i class="fa fa-vcard">
+                        </i>
+                        <span class="nav-label">
+                            Casillero
+                        </span>
+                        <span class="fa arrow">
+                        </span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        @can('prealerta.list')
+                        <li>
+                            <a href="{{ route('prealerta.list') }}">
+                                <spam class="fa fa-exclamation-triangle">
+                                </spam>
+                                Prealertas
+                            </a>
+                        </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endif
             <li class="">
                 <a href="" style="background-color: #0e9aef; color: white;">
                     <i class="fa fa-wrench">

@@ -196,7 +196,8 @@ class ConsigneeController extends Controller
                 ->join('pais', 'deptos.pais_id', 'pais.id')
                 ->join('agencia', $table . '.agencia_id', 'agencia.id')
                 ->leftjoin('tipo_identificacion', $table . '.tipo_identificacion_id', 'tipo_identificacion.id')
-                ->select('consignee.id', 'consignee.po_box', 'consignee.documento', 'consignee.tarifa', 'consignee.primer_nombre', 'consignee.segundo_nombre', 'consignee.primer_apellido', 'consignee.segundo_apellido', 'consignee.nombre_full', 'consignee.zip', 'consignee.correo', 'consignee.telefono', 'consignee.direccion', 'consignee.localizacion_id', 'consignee.tipo_identificacion_id', 'consignee.agencia_id', 'localizacion.nombre as ciudad', 'localizacion.id as ciudad_id', 'deptos.descripcion as estado', 'deptos.id as estado_id', 'pais.descripcion as pais', 'pais.id as pais_id', 'agencia.descripcion as agencia', 'tipo_identificacion.descripcion as identificacion')
+                ->leftjoin('clientes', $table . '.cliente_id', 'clientes.id')
+                ->select('consignee.id', 'consignee.po_box', 'consignee.documento', 'consignee.tarifa', 'consignee.primer_nombre', 'consignee.segundo_nombre', 'consignee.primer_apellido', 'consignee.segundo_apellido', 'consignee.nombre_full', 'consignee.zip', 'consignee.correo', 'consignee.telefono', 'consignee.direccion', 'consignee.localizacion_id', 'consignee.tipo_identificacion_id', 'consignee.agencia_id', 'localizacion.nombre as ciudad', 'localizacion.id as ciudad_id', 'deptos.descripcion as estado', 'deptos.id as estado_id', 'pais.descripcion as pais', 'pais.id as pais_id', 'agencia.descripcion as agencia', 'tipo_identificacion.descripcion as identificacion', 'clientes.id AS cliente_id', 'clientes.nombre AS cliente')
                 ->where($where)
                 ->orderBy($table . '.primer_nombre');
         } else {
@@ -411,6 +412,21 @@ class ConsigneeController extends Controller
             $exception = $e;
             return $e;
         }
+    }
+
+    public function vueSelectClientes($data)
+    {
+        $term = $data;
+
+        $tags = DB::table('clientes')->select(['id', 'nombre as name', 'direccion', 'telefono', 'email', 'zona'])->where([
+            ['nombre', 'like', '%' . $term . '%'],
+            ['deleted_at', null],
+        ])->get();
+        $answer = array(
+            'code'  => 200,
+            'items' => $tags,
+        );
+        return $answer;
     }
 
 }

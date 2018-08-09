@@ -35,5 +35,6 @@ class Consignee extends Model
         'direccion2',
         'acepta_condiciones',
         'recibir_info',
+        'cliente_id',
     ];
 }

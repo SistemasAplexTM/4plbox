@@ -159,19 +159,19 @@
         <table class="datos_company separador_interno">
           <tr>
             <td style="width:15%;"><strong>Agent:</strong></td>
-            <td style="width:45%;">AKCARGO (110)</td>
+            <td style="width:45%;">{{ $documento->cliente }}</td>
             <td style="width:20%;"><strong>Zone:</strong></td>
-            <td style="width:20%;">AKO CARGO</td>
+            <td style="width:20%;">{{ $documento->cliente_zona }}</td>
           </tr>
           <tr>
             <td><strong>Destinarion:</strong></td>
-            <td>MIA</td>
+            <td>{{ $documento->cliente_ciudad }}</td>
             <td><strong>Declared Value:</strong></td>
-            <td>$ 0.00</td>
+            <td>$ {{ $total_declarado }}</td>
           </tr>
           <tr>
             <td><strong>Country:</strong></td>
-            <td>USA</td>
+            <td>{{ $documento->cliente_pais }}</td>
             <td><strong>User:</strong></td>
             <td>{{ ((isset($documento->usuario) and $documento->usuario != '') ? $documento->usuario : '') }}</td>
           </tr>
@@ -188,9 +188,9 @@
             <td style="width:15%;">{{ $total_piezas }} Pcs</td>
             <td style="width:15%;">{{ $total_libras }} Lb</td>
             <td style="width:15%;">{{ number_format($total_libras * 2.20462,2) }} Kl</td>
-            <td style="width:15%;">235 Lb</td>
-            <td style="width:15%;">107 Kl</td>
-            <td style="width:15%;">23 cuft</td>
+            <td style="width:15%;">{{ $val->volumen }} Lb</td>
+            <td style="width:15%;">{{ number_format(($val->volumen / 2.204622), 2) }} Kl</td>
+            <td style="width:15%;">{{ $pie = number_format(($val->largo * $val->ancho * $val->alto) / 1728, 2) }} cuft</td>
             <td style="width:10%;">0.65 cbm</td>
           </tr>
         </table>

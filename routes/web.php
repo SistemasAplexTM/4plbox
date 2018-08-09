@@ -273,6 +273,7 @@ Route::get('documento/vueSelectTransportadorMaster/{term}', 'DocumentoController
 Route::get('documento/vueSelectServicios/{term}', 'DocumentoController@vueSelectServicios');
 Route::get('documento/searchDataByNavbar/{data}/{element}', 'DocumentoController@searchDataByNavbar');
 Route::get('master/vueSelectConsolidados/{term}', 'MasterController@vueSelectConsolidados');
+Route::get('consignee/vueSelectClientes/{term}', 'ConsigneeController@vueSelectClientes');
 
 /* VALIDAR EMAIL DE CLIENTE */
 Route::post('clientes/existEmail', 'ClienteController@existEmail');

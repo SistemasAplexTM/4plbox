@@ -130,7 +130,7 @@
                     @endif
                 </div>
                 {{-- FORMULARIO DE CONSOLIDADO --}}
-                <formconsolidado-component :documento="{{ json_encode($documento) }}" :contactos="contactos" :restore="restoreShipperConsignee" :agrupar="datosAgrupar" :removeragrupado="removerAgrupado" :permission='permissions' v-if="mostrar.includes(24)"></formconsolidado-component>
+                <formconsolidado-component :app_type="'{{ env('APP_TYPE') }}'" :documento="{{ json_encode($documento) }}" :contactos="contactos" :restore="restoreShipperConsignee" :agrupar="datosAgrupar" :removeragrupado="removerAgrupado" :permission='permissions' v-if="mostrar.includes(24)"></formconsolidado-component>
 
                 {{-- CONSIGNEE Y SHIPPER --}}
                 <div class="row form_doc" style="display: none">

@@ -201,6 +201,18 @@
                                     </div>
                             </div>
                         </div>
+                        <div class="row">                            
+                            <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="col-sm-4">
+                                            <label for="cliente_id" class="control-label gcore-label-top">Cliente:</label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <v-select name="cliente_id" v-model="cliente_id" label="name" :filterable="false" :options="clientes" @search="onSearchClientes" placeholder="Cliente"></v-select>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
                         <div class="row">                        
                             <div class="col-lg-12">
                                     <div class="form-group">

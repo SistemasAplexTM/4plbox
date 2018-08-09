@@ -106,7 +106,7 @@ $toalRegistros = count($detalleConsolidado);
                                                                 <div id="shipper">{{ ($value->shipper_json != '') ? $shipper_json->telefono : ((isset($value->ship_tel) and $value->ship_tel != '') ? $value->ship_tel : '&nbsp;') }}</div>
                                                             </td>
                                                             <td>
-                                                                <div id="shipper">{{ ($value->shipper_json != '') ? $shipper_json->ciudad : ((isset($value->ship_ciudad)) ? $value->ship_ciudad : '&nbsp;') }}</div>
+                                                                <div id="shipper">{{ ($value->shipper_json != '') ? $shipper_json->ciudad : ((isset($value->ship_ciudad)) ? $value->ship_ciudad : '&nbsp;') }} , {{ $value->ship_zip }}</div>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -141,7 +141,7 @@ $toalRegistros = count($detalleConsolidado);
                                                                 <div id="consignee">{{ ($value->consignee_json != '') ? $consignee_json->telefono : ((isset($value->cons_tel) and $value->cons_tel != '') ? $value->cons_tel : '&nbsp;') }}</div>
                                                             </td>
                                                             <td>
-                                                                <div id="consignee">{{ ($value->consignee_json != '') ? $consignee_json->ciudad : ((isset($value->cons_ciudad)) ? $value->cons_ciudad : '&nbsp;') }}</div>
+                                                                <div id="consignee">{{ ($value->consignee_json != '') ? $consignee_json->ciudad : ((isset($value->cons_ciudad)) ? $value->cons_ciudad : '&nbsp;') }}, {{ $value->cons_zip }}</div>
                                                             </td>
                                                         </tr>
                                                     </table>
