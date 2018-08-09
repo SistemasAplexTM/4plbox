@@ -125,7 +125,7 @@ class Controller extends BaseController
         if (Auth::check()) {
             $agencia_data = DB::table('users as a')
                 ->join('agencia as b', 'a.agencia_id', 'b.id')
-                ->select(['b.id', 'b.descripcion'])
+                ->select(['b.id', 'b.descripcion', 'b.logo'])
                 ->where('a.id', Auth::user()->id)
                 ->first();
             session(['agencia_name_global' => $agencia_data->descripcion]);

@@ -98,6 +98,7 @@ var objVue = new Vue({
         actived: false,
         editar: 0,
         mostrar_password: true,
+        changue_password: false,
         agencias: [],
         roles: [],
         formErrors: {},
@@ -115,6 +116,7 @@ var objVue = new Vue({
             this.actived = false;
             this.editar = 0;
             this.mostrar_password = true;
+            this.changue_password = false;
             this.formErrors = {};
             this.listErrors = {};
         },
@@ -278,18 +280,27 @@ var objVue = new Vue({
         },
         update: function() {
             this.$validator.validateAll(['agencia_id', 'name', 'email', 'rol_id']).then((result) => {
+                
                 if (result) {
                     var activo = 0;
                     if (this.actived) {
                         activo = 1;
                     }
                     var me = this;
-                    axios.put('user/' + this.id, {
+                    var data = {
                         'name': this.name,
                         'email': this.email,
                         'rol_id': this.rol_id.id,
                         'agencia_id': this.agencia_id.id,
-                        'actived': activo,
+                        'actived': activo
+                    }
+                    if(this.changue_password != null){
+                        data['password'] = this.password;
+                        data['password_confirm'] = this.password_confirm; 
+                    }
+                    console.log(data);
+                    axios.put('user/' + this.id, {
+                        data
                     }).then(function(response) {
                         if (response.data['code'] == 200) {
                             toastr.success('Registro Actualizado correctamente');
@@ -323,7 +334,7 @@ var objVue = new Vue({
                 }
             }).catch(function(error) {
                 console.log(error);
-                toastr.warning('Error: Completa los campos obligatorios.');
+                toastr.warning('Error: '+error);
             });
         },
         edit: function(data) {
@@ -353,6 +364,7 @@ var objVue = new Vue({
             }
             this.editar = 1;
             this.mostrar_password = false;
+            this.changue_password = true;
             this.formErrors = {};
             this.listErrors = {};
         },
@@ -360,5 +372,8 @@ var objVue = new Vue({
             var me = this;
             me.resetForm();
         },
+        changePassword: function(){
+            this.changue_password = false;
+        }
     },
 });

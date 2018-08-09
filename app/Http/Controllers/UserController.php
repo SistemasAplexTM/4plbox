@@ -89,19 +89,21 @@ class UserController extends Controller
     {
         try {
             $data           = User::findOrFail($id);
-            $data->password = bcrypt($request->password);
-            $data->update($request->all());
+            if(isset($request['data']['password']) and $request['data']['password'] != null){
+                $data->password = bcrypt($request['data']['password']);                
+            }
+            $data->save();
             /* ACTUALIZACION DE TABLA PIVOT ROLE_USER */
             DB::table('role_user')
             ->where('user_id', $data->id)
-            ->update(['role_id'    => $request->rol_id]);
+            ->update(['role_id'    => $request['data']['rol_id']]);
             $answer = array(
-                "datos" => $request->all(),
+                "datos" => $request['data'],
                 "code"  => 200,
             );
             return $answer;
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $error = '';
             foreach ($e->errorInfo as $key => $value) {
                 $error .= $key . ' - ' . $value . ' <br> ';

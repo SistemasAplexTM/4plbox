@@ -98,7 +98,19 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row" v-if="mostrar_password">                            
+                        <div class="row" v-if="changue_password">                            
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <div class="col-sm-5">
+                                        <label for="" class="control-label gcore-label-top">&nbsp;</label>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <a @click="changePassword()"><i class="fa fa-key"></i> Cambiar contraseña</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" v-if="mostrar_password || !changue_password">                            
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{ 'has-error': errors.has('password') }">
                                         <div class="col-sm-5">
@@ -111,7 +123,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row" v-if="mostrar_password">                            
+                        <div class="row" v-if="mostrar_password || !changue_password">                            
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{ 'has-error': errors.has('password_confirm') }">
                                         <div class="col-sm-5">

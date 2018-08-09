@@ -4,7 +4,7 @@
             <li class="nav-header">
                 <div class="dropdown profile-element">
                     <span>
-                        <img alt="image" class="img-circle" id="imgProfile" src="{{ asset('storage/logo.png') }}" style="width: 150px;"/>
+                        <img alt="image" class="img-circle" id="imgProfile" src="{{ asset('storage/') }}" style="width: 150px;"/>
                     </span>
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <span class="clear">
@@ -405,6 +405,7 @@
                         </a>
                     </li>
                     @endcan
+                    @can('rol.index')
                     {{-- @can('accessControl.index') --}}
                     <li>
                         <a href="{{ route('accessControl.index') }}">
@@ -414,6 +415,7 @@
                         </a>
                     </li>
                     {{-- @endcan --}}
+                    @endcan
                 </ul>
             </li>
         </ul>
