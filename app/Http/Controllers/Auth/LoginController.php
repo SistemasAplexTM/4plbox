@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -26,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    // protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -36,6 +37,39 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function redirectPath()
+    {
+        /* AGENCIA */
+        $objAgencia = DB::table('agencia AS a')
+            ->join('localizacion AS b', 'b.id', 'a.localizacion_id')
+            ->join('deptos AS c', 'c.id', 'b.deptos_id')
+            ->join('pais AS d', 'd.id', 'c.pais_id')
+            ->select([
+                'a.id',
+                'a.descripcion as descripcion',
+                'a.telefono',
+                'a.email',
+                'a.direccion',
+                'a.zip',
+                'a.logo',
+                'b.nombre AS ciudad',
+                'c.descripcion AS depto',
+                'd.descripcion AS pais',
+            ])->where([
+            ['a.id', Auth::user()->agencia_id],
+            ['a.deleted_at', '=', null],
+        ])->first();
+        /* GUARDAR DATOS EN VARIABLES DE SESION */
+        if($objAgencia->logo != null && $objAgencia->logo != ''){
+            \Session::put('logo', $objAgencia->logo);
+        }else{
+            \Session::put('logo', 'logo.png');
+        }
+        \Session::put('agencia', $objAgencia->descripcion);
+       
+        return '/home';
     }
 
     // public function authenticate(Request $request)

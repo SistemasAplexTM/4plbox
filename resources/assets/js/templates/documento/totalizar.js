@@ -26,7 +26,8 @@ function totalizeDocument(elemento) {
         declarado = 0;
         var cargos_add = 0;
         $(".cp_peso").each(function(index, value) {
-            peso = parseFloat(peso) + parseFloat($(this).val());
+            console.log('peso='+$(this).html());
+            peso = parseFloat(peso) + parseFloat($(this).html());
             piezas = piezas + 1;
         });
         $(".cp_volumen").each(function(index, value) {

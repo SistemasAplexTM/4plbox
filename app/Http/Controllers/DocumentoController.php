@@ -19,7 +19,8 @@ use Redirect;
 
 class DocumentoController extends Controller
 {
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('permission:documento.index')->only('index');
         $this->middleware('permission:documento.create')->only('store', 'create');
         $this->middleware('permission:documento.update')->only('update', 'edit');
@@ -38,7 +39,7 @@ class DocumentoController extends Controller
         $this->middleware('permission:documento.deleteNota')->only('deleteNota');
         $this->middleware('permission:documento.removerGuiaAgrupada')->only('removerGuiaAgrupada');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -103,7 +104,7 @@ class DocumentoController extends Controller
                 $data->tipo_documento_id = $request->tipo_documento_id;
                 $data->usuario_id        = Auth::user()->id;
                 $data->created_at        = date('Y-m-d H:i:s');
-                $tipo = TipoDocumento::findOrFail($request->tipo_documento_id);
+                $tipo                    = TipoDocumento::findOrFail($request->tipo_documento_id);
 
                 if ($data->save()) {
                     $id_documento = $data->id;
@@ -372,7 +373,7 @@ class DocumentoController extends Controller
                             $data->consignee_id = $request->consignee_id;
                         } else {
                             // if ($data->consignee_id != '') {
-                                $data->consignee_id = $data->consignee_id;
+                            $data->consignee_id = $data->consignee_id;
                             // }
                         }
                     }
@@ -523,7 +524,7 @@ class DocumentoController extends Controller
             if ($msn) {
                 $request->session()->put('sendemail', $msn);
             }
-            
+
             $this->AddToLog('Documento WRH/Guia actualizado (' . $id . ')');
         }
 
@@ -709,7 +710,7 @@ class DocumentoController extends Controller
                     ['consignee.deleted_at', null],
                     ['agencia.deleted_at', null],
                     ['documento.tipo_documento_id', $request->id_tipo_doc],
-                    ['documento.agencia_id', Auth::user()->agencia_id]
+                    ['documento.agencia_id', Auth::user()->agencia_id],
                 ])
                 ->orderBy('documento.created_at', 'DESC');
         }
@@ -1131,7 +1132,9 @@ class DocumentoController extends Controller
                 'agencia.zip as agencia_zip',
                 'agencia.email as agencia_email',
                 'ciudad_agencia.nombre AS agencia_ciudad',
+                'ciudad_agencia.prefijo AS agencia_ciudad_prefijo',
                 'deptos_agencia.descripcion AS agencia_depto',
+                'deptos_agencia.abreviatura AS agencia_depto_prefijo',
                 'pais_agencia.descripcion AS agencia_pais',
                 'embarque.nombre as tipo_embarque',
                 'forma_pago.nombre as forma_pago',
@@ -1191,19 +1194,19 @@ class DocumentoController extends Controller
 
         if ($document === 'guia') {
             $this->AddToLog('Impresion Guia (' . $documento->id . ')');
-            if(env('APP_TYPE') === 'courier'){
-                $pdf          = PDF::loadView('pdf.guiaPdf', compact('documento', 'detalle'));
-            }else{
-                $pdf          = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
+            if (env('APP_TYPE') === 'courier') {
+                $pdf = PDF::loadView('pdf.guiaPdf', compact('documento', 'detalle'));
+            } else {
+                $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
             }
             $nameDocument = $documento->tipo_documento . '-' . $documento->id;
         } else {
             if ($document === 'warehouse') {
                 $this->AddToLog('Impresion warehouse (' . $documento->id . ')');
-                if(env('APP_TYPE') === 'courier'){
-                $pdf          = PDF::loadView('pdf.warehousePdf', compact('documento', 'detalle'));
-                }else{
-                    $pdf          = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
+                if (env('APP_TYPE') === 'courier') {
+                    $pdf = PDF::loadView('pdf.warehousePdf', compact('documento', 'detalle'));
+                } else {
+                    $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
                 }
                 $nameDocument = $documento->tipo_documento . '-' . $documento->id;
             } else {
@@ -1489,10 +1492,10 @@ class DocumentoController extends Controller
                         'c.pais_id'
                     )
                     ->where([
-                        ['a.id', $detalle->consignee_id]
+                        ['a.id', $detalle->consignee_id],
                     ])
                     ->first();
-                if($cons->pais_id == $pais_id){
+                if ($cons->pais_id == $pais_id) {
                     /* INSERTAR EN TABLA CONSOLIDADO DETALLE */
                     $id_detail = DB::table('consolidado_detalle')->insertGetId(
                         [
@@ -1521,11 +1524,11 @@ class DocumentoController extends Controller
                         "code" => 200,
                         "data" => $detalle,
                     );
-                }else{
-                   $answer = array(
+                } else {
+                    $answer = array(
                         "code" => 600,
-                        "data" => 'El país de destino de el documento ingresado no coincide con el país de este consolidado'
-                    ); 
+                        "data" => 'El país de destino de el documento ingresado no coincide con el país de este consolidado',
+                    );
                 }
             } else {
                 $answer = array(
@@ -1717,7 +1720,7 @@ class DocumentoController extends Controller
                     'documento_id' => $id,
                     'user_id'      => Auth::user()->id,
                     'nota'         => $request->nota,
-                    'created_at'   => date('Y-m-d H:i:s')
+                    'created_at'   => date('Y-m-d H:i:s'),
                 ]
             );
             $this->AddToLog('Nota creada (' . $idInsert . ')');
@@ -2111,6 +2114,23 @@ class DocumentoController extends Controller
             'code' => 200,
         );
         return $answer;
+    }
+
+    public function getDataDetailDocument($id)
+    {
+        $detalle = DocumentoDetalle::join('documento', 'documento_detalle.documento_id', '=', 'documento.id')
+            ->leftJoin('shipper', 'documento_detalle.shipper_id', '=', 'shipper.id')
+            ->leftJoin('consignee', 'documento_detalle.consignee_id', '=', 'consignee.id')
+            ->join('agencia', 'documento.agencia_id', '=', 'agencia.id')
+            ->leftJoin('posicion_arancelaria', 'documento_detalle.posicion_arancelaria_id', '=', 'posicion_arancelaria.id')
+            ->join('maestra_multiple', 'documento_detalle.tipo_empaque_id', '=', 'maestra_multiple.id')
+            ->select('documento_detalle.*', 'agencia.descripcion AS nom_agencia', 'posicion_arancelaria.pa AS nom_pa', 'posicion_arancelaria.id AS id_pa', 'shipper.nombre_full AS ship_nomfull', 'consignee.nombre_full AS cons_nomfull', 'maestra_multiple.nombre AS empaque',
+                DB::raw("(SELECT Count(a.id) FROM tracking AS a WHERE a.documento_detalle_id = documento_detalle.id AND a.deleted_at IS NULL) as cantidad")
+            )
+            ->where([['documento_detalle.deleted_at', null], ['documento_detalle.documento_id', $id]])
+            ->get();
+
+        return \DataTables::of($detalle)->make(true);
     }
 
 }

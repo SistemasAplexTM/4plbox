@@ -241,6 +241,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('documento/getHistoryDocument/{document}', 'DocumentoController@getHistoryDocument');
     Route::get('documento/{id}/getGuiasAgrupar/{id_detalle}', 'DocumentoController@getGuiasAgrupar');
     Route::put('documento/{id}/updatePositionArancel', 'DocumentoController@updatePositionArancel');
+    Route::get('documento/{id}/getDataDetailDocument', 'DocumentoController@getDataDetailDocument');
 
     /*  REPORTES - IMPRESIONES EN PDF */
     Route::get('impresion-documento/{id}/{document}/{id_detalle?}', 'DocumentoController@pdf')->name('documento.pdf');

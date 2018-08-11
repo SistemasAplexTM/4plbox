@@ -430,18 +430,8 @@
                                             <div class="col-lg-12">
                                                     <div class="form-group">
                                                         <div class="table-responsive">
-                                                            <table class="table table-striped  table-hover" id="whgTable">
+                                                            <table class="table table-striped table-bordered table-hover" id="whgTable">
                                                                 <thead>
-                                                                    <tr>
-                                                                        <th style="width: 17%;">Código</th>
-                                                                        <th style="width: 10%;">Peso (Lb)</th>
-                                                                        <th style="">Contiene</th>
-                                                                        <th style="width: 15%;">PA</th>
-                                                                        <th style="width: 10%;">Valor US$</th>
-                                                                        <th style="width: 20%;">Acción</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                {{-- <thead>
                                                                     <tr>
                                                                         <th style="width: 17%;" v-if="mostrar.includes(23)">Código</th>
                                                                         <th style="width: 10%;">Peso (Lb)</th>
@@ -450,8 +440,8 @@
                                                                         <th style="width: 10%;" v-if="mostrar.includes(23)">Valor US$</th>
                                                                         <th style="width: 20%;">Acción</th>
                                                                     </tr>
-                                                                </thead> --}}
-                                                                {{-- <tbody style="background: white;">
+                                                                </thead>
+                                                                <tbody style="background: white;">
                                                                     @foreach ($detalle as $key)
                                                                         <tr id="fila{{ $key->id }}">
                                                                             <td v-if="mostrar.includes(23)">
@@ -486,8 +476,8 @@
                                                                             </td>
                                                                         </tr>
                                                                     @endforeach
-                                                                </tbody> --}}
-                                                               {{--  <tfoot>
+                                                                </tbody>
+                                                                <tfoot>
                                                                     <tr>
                                                                         <td>
                                                                             <div class="" v-if="mostrar.includes(16)">
@@ -521,7 +511,7 @@
                                                                             </div>
                                                                         </td>
                                                                     </tr>
-                                                                </tfoot> --}}
+                                                                </tfoot>
                                                             </table>
                                                             <div id="noEnviar" class="col-lg-12" style="text-align: center; color: red; display: none;">Para poder registrar es necesario almenos un dato en el detalle</div>
 

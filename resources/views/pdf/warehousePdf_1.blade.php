@@ -99,7 +99,7 @@
             <td colspan="2" class="agency_title">{{ ((isset($documento->agencia_dir) and $documento->agencia_dir != '') ? $documento->agencia_dir : '') }}</td>
           </tr>
           <tr>
-            <td colspan="2" class="agency_title">{{ ((isset($documento->agencia_ciudad) and $documento->agencia_ciudad != '') ? $documento->agencia_ciudad : '') }}, {{ ((isset($documento->agencia_depto) and $documento->agencia_depto != '') ? $documento->agencia_depto : '') }} {{ ((isset($documento->agencia_pais) and $documento->agencia_pais != '') ? $documento->agencia_pais : '') }}</td>
+            <td colspan="2" class="agency_title">{{ ((isset($documento->agencia_ciudad_prefijo) and $documento->agencia_ciudad_prefijo != '') ? $documento->agencia_ciudad_prefijo : '') }}, {{ ((isset($documento->agencia_depto_prefijo) and $documento->agencia_depto_prefijo != '') ? $documento->agencia_depto_prefijo : '') }} {{ ((isset($documento->agencia_zip) and $documento->agencia_zip != '') ? $documento->agencia_zip : '') }}</td>
           </tr>
           <tr>
             <td colspan="2" class="agency_title">{{ ((isset($documento->agencia_tel) and $documento->agencia_tel != '') ? $documento->agencia_tel : '') }}</td>
@@ -111,7 +111,7 @@
         <table class="table_numero">
           <tr>
             <td><strong>Date:</strong></td>
-            <td>{{ ((isset($documento->created_at) and $documento->created_at != '') ? date('Y-m-d', strtotime($documento->created_at)) : '') }}</td>
+            <td>{{ ((isset($documento->created_at) and $documento->created_at != '') ? date('d-m-y', strtotime($documento->created_at)) : '') }}</td>
             <td class="agency_title title_doc">Receipt:</td>
             <td class="agency_title title_doc">{{ ((isset($documento->num_warehouse) and $documento->num_warehouse != '') ? $documento->num_warehouse : '') }}</td>
           </tr>
@@ -224,7 +224,7 @@
         <table class="table_firma separador_interno">
           <tr>
             <td><strong>Printed:</strong></td>
-            <td style="width:22%">{{ date('Y-m-d h:i:s a', time()) }}</td>    
+            <td style="width:22%">{{ date('d-m-y h:i:s a', time()) }}</td>    
           </tr>
           <tr style="height:40px;">
             <td><strong>Sign: </strong></td>

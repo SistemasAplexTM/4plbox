@@ -49,7 +49,7 @@
         var objVue = new Vue({
             el: '#navbar',
             mounted: function() {
-               this.getNameAgencia();
+               // this.getNameAgencia();
             },
             data:{
                 datos: null
@@ -60,11 +60,11 @@
                 },
                 getNameAgencia: function() {
                     // axios.get('/user/getNameAgenciaUser').then(response => {
-                    axios.get('/4plbox/public/user/getNameAgenciaUser').then(response => {
-                        var logo = $('#imgProfile').attr('src');
-                        $('#imgProfile').attr('src', logo +'/'+ response.data.data['logo'])
-                        $('#_agencia').html(response.data.data['descripcion']);
-                    });
+                    // axios.get('/4plbox/public/user/getNameAgenciaUser').then(response => {
+                    //     var logo = $('#imgProfile').attr('src');
+                    //     $('#imgProfile').attr('src', logo +'/'+ response.data.data['logo'])
+                    //     $('#_agencia').html(response.data.data['descripcion']);
+                    // });
                 },
             },
         });

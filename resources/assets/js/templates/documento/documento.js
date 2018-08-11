@@ -48,6 +48,62 @@ $(document).ready(function() {
             llenarSelectServicio($('#tipo_embarque_id').val());
         }, 500);
     }
+
+    $('#whgTable').DataTable({
+        ajax: 'getDataDetailDocument',
+        "paging":   false,
+        "info":     false,
+        "searching": false,
+        columns: [{
+            data: 'num_warehouse',
+            name: 'num_warehouse'
+        }, {
+            data: 'peso',
+            name: 'peso',
+            class: 'cp_peso'
+        }, {
+            data: 'contenido',
+            name: 'contenido'
+        }, {
+            data: 'nom_pa',
+            name: 'nom_pa'
+        }, {
+            data: 'valor',
+            name: 'valor'
+        }, {
+            sortable: false,
+            "render": function(data, type, full, meta) {
+                var btn_addTracking = '';
+                var btn_edit = '';
+                var btn_save = '';
+                var btn_delete = '';
+                var display = 'inline-block';
+                if(full.consolidado == 1){
+                    display = 'none';
+                }
+
+                btn_addTracking = '<a class="btn btn-info btn-xs btn-actions addTrackings" type="button" id="btn_addtracking'+full.id+'" data-toggle="tooltip" title="Agregar tracking" onclick="addTrackings('+full.id+')"><i class="fa fa-barcode"></i> <span id="cant_tracking'+full.id+'">'+full.cantidad+'</span></a> ';
+
+                btn_save = '<a class="btn btn-primary btn-xs btn-actions" type="button" id="btn_confirm'+full.id+'" onclick="saveTableDetail('+full.id+')" data-toggle="tooltip" title="Guardar" style="display:none;"><i class="fa fa-check"></i></a> ';
+
+                btn_edit = '<a class="btn btn-success btn-xs btn-actions" type="button" id="btn_edit'+full.id+'" onclick="editTableDetail('+full.id+')" data-toggle="tooltip" title="Editar"><i class="fa fa-edit"></i></a> ';
+
+                btn_delete = '<a class="btn btn-danger btn-xs btn-actions" type="button" id="btn_remove'+full.id+'" onclick="eliminar('+full.id+', true)" data-toggle="tooltip" title="Eliminar" style="display: '+display+'"><i class="fa fa-times"></i></a> ';
+
+                return btn_addTracking + btn_save + btn_edit + btn_delete;
+            }
+        }],
+        // "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+        //     $(nRow).children().each(function (index, td) {
+        //         $(this).addClass('cp_peso');
+        //     });
+        //  }
+        // "columnDefs": [{
+        //     targets: 1,
+        //     className:"cp_peso"
+        // }, ]
+    });
+
 });
 $(function() {
 
@@ -389,7 +445,6 @@ var objVue = new Vue({
             }
         },
         addTrackingToDocument(data) {
-            console.log(data);
             let me = this;
             if (!$('#chk' + data.idTracking).is(':checked')) {
                 axios.post('../../tracking/addOrDeleteDocument', {
@@ -397,8 +452,9 @@ var objVue = new Vue({
                     'id_tracking': data.idTracking,
                     'id_document': data.idDocument
                 }).then(response => {
-                    var cant = $('#cant_tracking' + data.idDocument).html();
-                    $('#cant_tracking' + data.idDocument).html(parseInt(cant) + 1);
+                    refreshTable('whgTable');
+                    // var cant = $('#cant_tracking' + data.idDocument).html();
+                    // $('#cant_tracking' + data.idDocument).html(parseInt(cant) + 1);
                     toastr.success('Tracking agregado a este documento.');
                     toastr.options.closeButton = true;
                 });
@@ -408,8 +464,9 @@ var objVue = new Vue({
                     'id_tracking': data.idTracking,
                     'id_document': data.idDocument
                 }).then(response => {
-                    var cant = $('#cant_tracking' + data.idDocument).html();
-                    $('#cant_tracking' + data.idDocument).html(parseInt(cant) - 1);
+                    refreshTable('whgTable');
+                    // var cant = $('#cant_tracking' + data.idDocument).html();
+                    // $('#cant_tracking' + data.idDocument).html(parseInt(cant) - 1);
                     toastr.warning('Tracking retirado de este documento.');
                     toastr.options.closeButton = true;
                 });
@@ -650,24 +707,28 @@ var objVue = new Vue({
             var me = this;
             axios.get('../restaurar/' + data.id + '/documento_detalle').then(response => {
                 toastr.success('Registro restaurado.');
-                me.refreshTableDetail(response.data.datos);
+                refreshTable('whgTable');
+                // me.refreshTableDetail(response.data.datos);
             });
         },
         delete: function(data) {
+            console.log(data);
             if (data.logical === true) {
                 axios.get('../delete/' + data.id + '/' + data.logical + '/documento_detalle').then(response => {
                     toastr.success("<div><p>Registro eliminado exitosamente.</p><button type='button' onclick='deshacerEliminar(" + data.id + ")' id='okBtn' class='btn btn-xs btn-danger pull-right'><i class='fa fa-reply'></i> Restaurar</button></div>", '', {
                         timeOut: 15000
                     });
                     toastr.options.closeButton = true;
-                    $('#fila' + data.id).remove();
+                    refreshTable('whgTable');
+                    // $('#fila' + data.id).remove();
                     totalizeDocument();
                 });
             } else {
                 axios.delete('../delete/' + data.id).then(response => {
                     toastr.success('Registro eliminado correctamente.');
                     toastr.options.closeButton = true;
-                    $('#fila' + data.id).remove();
+                    refreshTable('whgTable');
+                    // $('#fila' + data.id).remove();
                     totalizeDocument();
                 });
             }
@@ -911,7 +972,8 @@ var objVue = new Vue({
                 $('#tracking').tagsinput('removeAll');
                 $('#contiene').val('');
                 $('#valDeclarado').val('');
-                me.refreshTableDetail(response.data.datos);
+                refreshTable('whgTable');
+                // me.refreshTableDetail(response.data.datos);
             }).catch(function(error) {
                 console.log(error);
                 if (error.response.status === 422) {

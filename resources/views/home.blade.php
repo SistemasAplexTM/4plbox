@@ -51,27 +51,27 @@
                             <i class="fa fa-dropbox">
                             </i>
                         </button>
-                        <span style="font-size: 20px;">
+                        <div style="font-size: 20px;">
                             Warehouse
-                        </span>
+                        </div>
                     </div>
                     <div class="col-lg-3 text-center">
                         <button class="btn btn-primary dim btn-large-dim btn-outline btn-inicio" type="button" id="master">
                             <i class="fa fa-paste">
                             </i>
                         </button>
-                        <span style="font-size: 20px;">
+                        <div style="font-size: 20px;">
                             Master
-                        </span>
+                        </div>
                     </div>
                     <div class="col-lg-3 text-center">
                         <button class="btn btn-default dim btn-large-dim btn-outline btn-inicio" type="button" id="tracking">
                             <i class="fa fa-cubes">
                             </i>
                         </button>
-                        <span style="font-size: 20px;">
+                        <div style="font-size: 20px;">
                             Tracking
-                        </span>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -80,18 +80,18 @@
                             <i class="fa fa-user-circle-o">
                             </i>
                         </button>
-                        <span style="font-size: 20px;">
+                        <div style="font-size: 20px;">
                             Shipper
-                        </span>
+                        </div>
                     </div>
                     <div class="col-lg-3 text-center">
                         <button class="btn btn-info dim btn-large-dim btn-outline btn-inicio" type="button" id="consignee">
                             <i class="fa fa-user-circle">
                             </i>
                         </button>
-                        <span style="font-size: 20px;">
+                        <div style="font-size: 20px;">
                             Consignee
-                        </span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -116,18 +116,18 @@
                             <i class="fa fa-wrench">
                             </i>
                         </button>
-                        <span style="font-size: 20px;">
+                        <div style="font-size: 20px;">
                             Mantenimiento
-                        </span>
+                        </div>
                     </div>
                     <div class="col-lg-3 text-center">
                         <button class="btn btn-danger dim btn-large-dim btn-outline btn-inicio" type="button" id="administracion">
                             <i class="fa fa-cogs">
                             </i>
                         </button>
-                        <span style="font-size: 20px;">
+                        <div style="font-size: 20px;">
                             Administración
-                        </span>
+                        </div>
                     </div>
                 </div>
             </div> -->
