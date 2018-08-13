@@ -19,7 +19,7 @@
                                 </br>
                             </span>
                             <span class="text-muted text-xs block">
-                                Bienvenido
+                                @lang('sidebar.welcome')
                                 <b class="caret">
                                 </b>
                             </span>
@@ -30,14 +30,14 @@
                             <a href="{{ route('home') }}">
                                 <i class="fa fa-home">
                                 </i>
-                                Inicio
+                                @lang('sidebar.home')
                             </a>
                         </li>
                         <li>
                             <a href="#">
                                 <i class="fa fa-user">
                                 </i>
-                                Perfil
+                                @lang('sidebar.profile')
                             </a>
                         </li>
                         {{-- <li>
@@ -59,7 +59,7 @@
                     <i class="fa fa-th-large">
                     </i>
                     <span class="nav-label">
-                        Carga
+                        @lang('sidebar.load')
                     </span>
                     <span class="fa arrow">
                     </span>
@@ -70,7 +70,7 @@
                         <a href="{{ route('documento.index') }}">
                             <spam class="fa fa-clipboard">
                             </spam>
-                            Documentos
+                            @lang('sidebar.documents')
                         </a>
                     </li>
                     @endcan
@@ -79,7 +79,7 @@
                         <a href="{{ route('tracking.index') }}">
                             <spam class="fa fa-cubes">
                             </spam>
-                            Recibo de Tracking
+                            @lang('sidebar.trackings_receipt')
                         </a>
                     </li>
                     @endcan
@@ -88,7 +88,7 @@
                         <a href="{{ route('master.index') }}">
                             <spam class="fa fa-medium">
                             </spam>
-                            Guia Master
+                            @lang('sidebar.master_guide')
                         </a>
                     </li>
                     @endcan

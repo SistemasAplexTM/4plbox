@@ -52,7 +52,7 @@ $toalRegistros = count($detalleConsolidado);
                ?>>
                         <thead>
                             <tr>
-                                <th colspan="2" width="250px"><img alt="image" class="img-circle" id="logo" style="width: 220px;margin-bottom: 10px;" src="{{ asset('storage/logo.png') }}"/></th>
+                                <th colspan="2" width="300px"><img alt="image" class="img-circle" id="logo" height="120px" style="width: 100%;margin-bottom: 10px;" src="{{ asset('storage/') }}/{{ ((isset($documento->agencia_logo) and $documento->agencia_logo != '') ? $documento->agencia_logo : 'logo.png') }}"/></th>
                                 <th width="250px" style="text-align: right;">
                                     <div class="agencia" id="nomAgencia" style="font-size: 20px;">{{ $documento->agencia }}</div>
                                     <div class="agencia" id="dirAgencia"><span style="color: #1d1d1e;">{{ $documento->agencia_dir }} - {{ $documento->agencia_ciudad }} - {{ $documento->agencia_depto }}</span></div>

@@ -92,8 +92,10 @@
         @endif
         <table>
           <tr>
-            <td colspan="2" rowspan="5" style="width:40%;"><img src="{{ asset('storage/logo.png') }}" height="120px"></td>
-            <td colspan="2" class="agency_title title_doc">{{ ((isset($documento->agencia) and $documento->agencia != '') ? $documento->agencia : '') }}</td>
+            <td colspan="2" rowspan="5" style="width:300px;">
+                <img src="{{ asset('storage/') }}/{{ ((isset($documento->agencia_logo) and $documento->agencia_logo != '') ? $documento->agencia_logo : 'logo.png') }}" height="120px" style="width: 100%"/>
+            </td>
+            <td colspan="2" class="agency_title title_doc" style="">{{ ((isset($documento->agencia) and $documento->agencia != '') ? $documento->agencia : '') }}</td>
           </tr>
           <tr>
             <td colspan="2" class="agency_title">{{ ((isset($documento->agencia_dir) and $documento->agencia_dir != '') ? $documento->agencia_dir : '') }}</td>
@@ -164,7 +166,7 @@
             <td style="width:20%;">{{ $documento->cliente_zona }}</td>
           </tr>
           <tr>
-            <td><strong>Destinarion:</strong></td>
+            <td><strong>Destination:</strong></td>
             <td>{{ $documento->cliente_ciudad }}</td>
             <td><strong>Declared Value:</strong></td>
             <td>$ {{ $total_declarado }}</td>
@@ -188,9 +190,9 @@
             <td style="width:15%;">{{ $total_piezas }} Pcs</td>
             <td style="width:15%;">{{ $total_libras }} Lb</td>
             <td style="width:15%;">{{ number_format($total_libras * 2.20462,2) }} Kl</td>
-            <td style="width:15%;">{{ $val->volumen }} Lb</td>
-            <td style="width:15%;">{{ number_format(($val->volumen / 2.204622), 2) }} Kl</td>
-            <td style="width:15%;">{{ $pie = number_format(($val->largo * $val->ancho * $val->alto) / 1728, 2) }} cuft</td>
+            <td style="width:15%;">{{ isset($val->volumen) ? $val->volumen : 0 }} Lb</td>
+            <td style="width:15%;">{{ number_format(((isset($val->volumen) ? $val->volumen : 0) / 2.204622), 2) }} Kl</td>
+            <td style="width:15%;">{{ $pie = number_format(((isset($val->largo) ? $val->largo : 0) * (isset($val->ancho) ? $val->ancho : 0) * (isset($val->alto) ? $val->alto : 0)) / 1728, 2) }} cuft</td>
             <td style="width:10%;">0.65 cbm</td>
           </tr>
         </table>
@@ -234,7 +236,7 @@
 
         <table class="acuerdo separador_interno">
           <tr>
-            <td><p>Certifico que el contenido del presente envío entregado a <strong>Paramount Express Intl</strong>, se ajusta a lo declarado en la guía <em>y me hago directamente responsable, ante las autoridades nacionales y extranjeras por el contenido, valor declarado y este envío cumple los parámetros aduaneros del país de destino</em>. Adicionalmente certifico que el envío no contiene dinero, valores negociables, ni objetos de prohibido transporte, según las normas internacionales y la legislación aplicable en el país de destino u origen, Por lo tanto, acuerdo indemnizar y absolver a <strong>Continental Services & Carrie, INC</strong>, por cualquier reclamo, obligación y/o costo debido al incumplimineto de cualquier ley o regulación aplicable en el país de origen o destino, de la mercancía amparada en este documento.</p></td>
+            <td><p>Certifico que el contenido del presente envío, se ajusta a lo declarado en la guía <em>y me hago directamente responsable, ante las autoridades nacionales y extranjeras por el contenido, valor declarado y este envío cumple los parámetros aduaneros del país de destino</em>. Adicionalmente certifico que el envío no contiene dinero, valores negociables, ni objetos de prohibido transporte, según las normas internacionales y la legislación aplicable en el país de destino u origen, Por lo tanto, acuerdo indemnizar y absolver, por cualquier reclamo, obligación y/o costo debido al incumplimineto de cualquier ley o regulación aplicable en el país de origen o destino, de la mercancía amparada en este documento.</p></td>
           </tr>
         </table>
     </body>

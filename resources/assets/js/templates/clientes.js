@@ -24,7 +24,7 @@ $(document).ready(function() {
                 var btn_delete = '';
                 if (permission_update) {
                     var params = [
-                        full.id, +full.localizacion_id, "'" + full.nombre + "'", "'" + full.direccion + "'", "'" + full.telefono + "'", "'" + full.correo + "'", "'" + full.zona + "'", "'" + full.ciudad + "'"
+                        full.id, +full.localizacion_id, "'" + full.nombre + "'", "'" + full.direccion + "'", "'" + full.telefono + "'", "'" + full.email + "'", "'" + full.zona + "'", "'" + full.ciudad + "'"
                     ];
                     var btn_edit = "<a onclick=\"edit(" + params + ")\" class='btn btn-outline btn-success btn-xs' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit'></i></a> ";
                 }
@@ -273,10 +273,18 @@ var objVue = new Vue({
         edit: function(data) {
             var me = this;
             me.resetForm();
-            /*console.log(data);*/
             this.id = data['id'];
-            $('#localizacion_id_input').val(data['localizacion_id']);
-            $('#localizacion_id').empty().append('<option value="' + data['localizacion_id'] + '" selected="selected">' + data['ciudad'] + '</option>').val([data['localizacion_id']]).trigger('change');
+
+            // $('#localizacion_id_input').val(data['localizacion_id']);
+            
+            /* ASIGNACION DE VALORES A LOS SELECTS */
+            setTimeout(function(){
+                $('#localizacion_id').empty()
+                .append('<option value="' + data['localizacion_id'] + '" selected="selected">' + data['ciudad'] + '</option>')
+                .val([data['localizacion_id']])
+                .trigger('change');
+            },200);
+            
 
             this.nombre = data['nombre'];
             this.direccion = data['direccion'];

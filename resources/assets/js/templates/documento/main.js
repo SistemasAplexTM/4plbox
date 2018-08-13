@@ -46,7 +46,7 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                             color_badget = 'primary';
                         }
                     }
-                    if(full.consolidado_status == 1){
+                    if(full.consolidado_status >= 1){
                         color_badget = 'warning';
                     }
                 }
@@ -62,8 +62,13 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
             data: 'peso',
             name: 'documento.peso'
         }, {
-            data: 'volumen',
-            name: 'documento.volumen'
+            "render": function(data, type, full, meta) {
+                if(full.volumen == null){
+                    return 0;
+                }else{
+                    return isInteger(full.volumen);
+                }
+            }
         }, {
             data: 'agencia',
             name: 'agencia.descripcion'
@@ -75,13 +80,17 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                 if (permission_update) {
                     var btn_edit = '<a href="documento/' + full.id + '/edit" class="edit" title="Editar" data-toggle="tooltip" style="color:#FFC107;"><i class="material-icons">&#xE254;</i></a>';
                 }
-                if (permission_delete && full.consolidado_status != 1) {
-                    var btn_delete = '<a onclick=\"modalEliminar()\" class="delete" title="Eliminar" data-toggle="tooltip" style="color:#E34724;"><i class="material-icons">&#xE872;</i></a>';
+                if (permission_delete && (parseInt(full.consolidado_status) === 0) || full.consolidado_status == null) {
+                    btn_delete = '<a onclick=\"modalEliminar()\" class="delete" title="Eliminar" data-toggle="tooltip" style="color:#E34724;"><i class="material-icons">&#xE872;</i></a>';
                 }
 
 
                 if (full.tipo_documento_id == 3) { //consolidado = 3
-                    var btns = "<div class='btn-group'>" + "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + "<i class='material-icons' style='vertical-align:  middle;'>print</i><span class='caret'></span>" + "</button>" + "<ul class='dropdown-menu'>" + "<li><a href='impresion-documento/" + full.id + "/consolidado' target='_blank'> <spam class='fa fa-print'></spam> Imprimir manifiesto</a></li>" + "<li><a href='impresion-documento/" + full.id + "/consolidado_guias' target='_blank'> <spam class='fa fa-print'></spam> Imprimir Guias</a></li>" + "<li role='separator' class='divider'></li> " + "<li><a href='../../impresion-documento/pdfContrato' target='_blank'> <spam class='fa fa-print'></spam> Imprimir contrato</a></li>" + "<li><a href='../../impresion-documento/pdfTsa' target='_blank'> <spam class='fa fa-print'></spam> Imprimir TSA</a></li>" + "</ul></div>";
+                    btn_delete = '';
+                    if (permission_delete && (parseInt(full.cantidad) === 0)) {
+                        btn_delete = '<a onclick=\"modalEliminar()\" class="delete" title="Eliminar" data-toggle="tooltip" style="color:#E34724;"><i class="material-icons">&#xE872;</i></a>';
+                    }
+                    var btns = "<div class='btn-group'>" + "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + "<i class='material-icons' style='vertical-align:  middle;'>print</i><span class='caret'></span>" + "</button>" + "<ul class='dropdown-menu'>" + "<li><a href='impresion-documento/" + full.id + "/consolidado' target='_blank'> <spam class='fa fa-print'></spam> Imprimir manifiesto</a></li>" + "<li><a href='impresion-documento/" + full.id + "/consolidado_guias' target='_blank'> <spam class='fa fa-print'></spam> Imprimir Guias</a></li>" + "<li role='separator' class='divider'></li> " + "<li><a href='impresion-documento/pdfContrato' target='_blank'> <spam class='fa fa-print'></spam> Imprimir contrato</a></li>" + "<li><a href='impresion-documento/pdfTsa' target='_blank'> <spam class='fa fa-print'></spam> Imprimir TSA</a></li>" + "</ul></div>";
                     return btns + ' ' + btn_edit + btn_delete;
                 } else {
                     var codigo = full.num_warehouse;

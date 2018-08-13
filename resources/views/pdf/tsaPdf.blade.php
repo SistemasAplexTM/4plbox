@@ -7,7 +7,8 @@
         font-family: sans-serif;  
     }
     #imgLogo{
-        width: 300px;
+        width: 100%;
+        height: 120px;
         margin-top: 20px;
     }
     #center{
@@ -52,7 +53,7 @@
     </tr>
     <tr>
         <td>
-            <div id="center"><img alt="image" class="" id="imgLogo" src="{{ asset('img/imgLogo.png') }}" /></div>
+            <div id="center" style="width:300px;margin: 0 auto;"><img alt="image" class="" id="imgLogo" src="{{ asset('storage/') }}/{{ ((isset($agencia->logo) and $agencia->logo != '') ? $agencia->logo : 'logo.png') }}" /></div>
         </td>
     </tr>
     <tr>

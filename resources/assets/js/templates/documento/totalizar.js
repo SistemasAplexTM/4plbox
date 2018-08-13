@@ -16,70 +16,51 @@ $(window).load(function() {
 $(document).ready(function() {});
 
 function totalizeDocument(elemento) {
-    var cont = 1;
-        flete = $('#servicios_id option:selected').data('tarifamin');
-        $('#flete').val(flete);
-        $(elemento).css('border-color', '');
-        peso = 0;
-        piezas = 0;
-        volumen = 0;
-        declarado = 0;
-        var cargos_add = 0;
-        $(".cp_peso").each(function(index, value) {
-            console.log('peso='+$(this).html());
-            peso = parseFloat(peso) + parseFloat($(this).html());
-            piezas = piezas + 1;
-        });
-        $(".cp_volumen").each(function(index, value) {
-            volumen = parseFloat(volumen) + parseFloat($(this).val());
-        });
-        $(".cp_declarado").each(function(index, value) {
-            valD = $(this).val();
-            if (valD == '') {
-                valD = 0;
+    // setTimeout(function(){
+        var cont = 1;
+            flete = $('#servicios_id option:selected').data('tarifamin');
+            $('#flete').val(flete);
+            $(elemento).css('border-color', '');
+            peso = $('#pesoDim').val();
+            piezas = $('#piezas').val();
+            volumen = $('#volumen').val();
+            declarado = $('#valor_declarado_tbl').val();
+            var cargos_add = 0;
+            cargos_add = $('#cargos_add').val();
+            if ($('#valor_libra2').val() == '0') {
+                $('#valor_libra').val($('#servicios_id option:selected').data('tarifa'));
+                $('#valor_libra2').val($('#servicios_id option:selected').data('tarifa'));
+                $('#valorLibra').html($('#servicios_id option:selected').data('tarifa')); // *********  label
             }
-            declarado = parseFloat(declarado) + parseFloat(valD);
-        });
-        // $(".td_total").each(function(index, value) {
-        //     cargos_add = cargos_add + parseFloat($(this).text());
-        // });
-        cargos_add = $('#cargos_add').val();
-        if ($('#valor_libra2').val() == '0') {
-            $('#valor_libra').val($('#servicios_id option:selected').data('tarifa'));
-            $('#valor_libra2').val($('#servicios_id option:selected').data('tarifa'));
-            $('#valorLibra').html($('#servicios_id option:selected').data('tarifa')); // *********  label
-        }
-        if ($('#impuesto').val() == '0') {
-            if ($('#servicios_id option:selected').data('impuesto_age')) {
-                $('#impuesto').val($('#servicios_id option:selected').data('impuesto_age'));
+            if ($('#impuesto').val() == '0') {
+                if ($('#servicios_id option:selected').data('impuesto_age')) {
+                    $('#impuesto').val($('#servicios_id option:selected').data('impuesto_age'));
+                }
             }
-        }
-        $('#piezas').val(parseFloat(piezas));
-        $('#pesoDim').val(parseFloat(peso));
-        $('#volumen').val(parseFloat(isInteger(volumen)));
-        $('#peso_total').val(parseFloat(peso));
-        $('#peso_cobrado').val(parseFloat(peso));
-        if ($('#impuesto').val() == '') {
-            impuesto = $('#servicios_id option:selected').data('impuesto_age');
-            $('#impuesto').val(impuesto);
-        } else {
-            impuesto = $('#impuesto').val();
-        }
-        $('#valor_declarado').val(parseFloat(declarado));
-        $('#valor_declarado_tbl').val(parseFloat(declarado));
-        pa_aduana = isInteger((parseFloat(declarado) * parseFloat(impuesto) / 100));
-        $('#pa_aduana').val(pa_aduana);
-        flete = parseFloat(calculateFlete(flete));
-        $('#flete').val(isInteger(flete));
-        seguro = calculateInsurance(seguro);
-        $('#seguro').val(seguro);
-        if ($('#descuento').val() === '') {
-            descuento = 0;
-        } else {
-            descuento = $('#descuento').val();
-        }
-        total = parseFloat(pa_aduana) + parseFloat(flete) + parseFloat(seguro) + parseFloat(cargos_add) - parseFloat(descuento);
-        $('#total').val(isInteger(total));
+            $('#peso_total').val(parseFloat(peso));
+            $('#peso_cobrado').val(parseFloat(peso));
+            if ($('#impuesto').val() == '') {
+                impuesto = $('#servicios_id option:selected').data('impuesto_age');
+                $('#impuesto').val(impuesto);
+            } else {
+                impuesto = $('#impuesto').val();
+            }
+            $('#valor_declarado').val(parseFloat(declarado));
+            // $('#valor_declarado_tbl').val(parseFloat(declarado));
+            pa_aduana = isInteger((parseFloat(declarado) * parseFloat(impuesto) / 100));
+            $('#pa_aduana').val(pa_aduana);
+            flete = parseFloat(calculateFlete(flete));
+            $('#flete').val(isInteger(flete));
+            seguro = calculateInsurance(seguro);
+            $('#seguro').val(seguro);
+            if ($('#descuento').val() === '') {
+                descuento = 0;
+            } else {
+                descuento = $('#descuento').val();
+            }
+            total = parseFloat(pa_aduana) + parseFloat(flete) + parseFloat(seguro) + parseFloat(cargos_add) - parseFloat(descuento);
+            $('#total').val(isInteger(total));
+    // },1000);
 }
 
 function calculateFlete(flete) {

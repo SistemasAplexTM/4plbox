@@ -135,10 +135,14 @@ function deleteError(padre) {
 /* COMPROBAR SI UN NUMERO ES ENTERO */
 function isInteger (numero){
   numero = parseFloat(numero);
-  if (numero % 1 == 0) {
-    return numero;
-  } else {
-    return numero.toFixed(2);
+  if(numero == 0){
+      return numero;
+  }else{
+      if (numero % 1 == 0) {
+        return numero;
+      } else {
+        return numero.toFixed(2);
+      }
   }
 }
 

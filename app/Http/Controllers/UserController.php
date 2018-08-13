@@ -92,6 +92,7 @@ class UserController extends Controller
             if(isset($request['data']['password']) and $request['data']['password'] != null){
                 $data->password = bcrypt($request['data']['password']);                
             }
+            $data->agencia_id = $request['data']['agencia_id'];
             $data->save();
             /* ACTUALIZACION DE TABLA PIVOT ROLE_USER */
             DB::table('role_user')

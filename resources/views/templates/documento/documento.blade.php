@@ -430,7 +430,7 @@
                                             <div class="col-lg-12">
                                                     <div class="form-group">
                                                         <div class="table-responsive">
-                                                            <table class="table table-striped  table-hover" id="whgTable">
+                                                            <table class="table table-striped  table-hover" id="whgTable" style="width: 100%;">
                                                                 <thead>
                                                                     <tr>
                                                                         <th style="width: 17%;">Código</th>
@@ -438,82 +438,36 @@
                                                                         <th style="">Contiene</th>
                                                                         <th style="width: 15%;">PA</th>
                                                                         <th style="width: 10%;">Valor US$</th>
-                                                                        <th style="width: 20%;">Acción</th>
+                                                                        <th style="width: 13%;">Acción</th>
                                                                     </tr>
                                                                 </thead>
-                                                                {{-- <thead>
-                                                                    <tr>
-                                                                        <th style="width: 17%;" v-if="mostrar.includes(23)">Código</th>
-                                                                        <th style="width: 10%;">Peso (Lb)</th>
-                                                                        <th style="">Contiene</th>
-                                                                        <th style="width: 15%;">PA</th>
-                                                                        <th style="width: 10%;" v-if="mostrar.includes(23)">Valor US$</th>
-                                                                        <th style="width: 20%;">Acción</th>
-                                                                    </tr>
-                                                                </thead> --}}
-                                                                {{-- <tbody style="background: white;">
-                                                                    @foreach ($detalle as $key)
-                                                                        <tr id="fila{{ $key->id }}">
-                                                                            <td v-if="mostrar.includes(23)">
-                                                                                <input type="text" id="numGuia{{ $key->id }}" name="numGuia[]" value="{{ $key->num_warehouse }}" class="form-control" readonly style="font-size: small;">
-                                                                            </td>
-                                                                            <td class="">
-                                                                                <input type="number" id="pesoD{{ $key->id }}" name="pesoD[]" value="{{ $key->peso }}" class="form-control cp_peso" readonly="" onkeyup="totalizeDocument();">
-                                                                                <input type="hidden" id="volumen{{ $key->id }}" name="volumen[]" value="{{ $key->volumen }}" class="form-control cp_volumen">
-                                                                                <input type="hidden" id="dimensiones{{ $key->id }}" name="dimensiones[]" value="{{ $key->dimensiones }}" class="form-control" readonly>
-                                                                            </td>
-                                                                            <td>
-                                                                                <input type="text" id="contiene{{ $key->id }}" name="contiene[]" value="{{ $key->contenido }}" class="form-control" readonly="">
-                                                                                <input type="hidden" id="tempaque{{ $key->id }}" name="tempaque[]" value="{{ $key->tipo_empaque_id }}" class="form-control" readonly>
-                                                                            </td>
-                                                                            <td>
-                                                                                <input type="text" id="pa{{ $key->id }}" name="pa[]" value="{{ $key->nom_pa }}" class="form-control" readonly >
-                                                                                <input type="hidden" id="id_pa{{ $key->id }}" name="id_pa[]" value="{{ $key->id_pa }}" class="form-control" readonly >
-                                                                            </td>
-                                                                            <td v-if="mostrar.includes(23)">
-                                                                                <input type="number" id="valorDeclarado{{ $key->id }}" name="valorDeclarado[]" value="{{ $key->valor }}" class="form-control cp_declarado" readonly="" onkeyup="totalizeDocument(this);" style="border-color:{{ ($key->valor == '' || $key->valor == 0) ? 'coral' : '' }}">
-                                                                                <input type="hidden" id="arancel{{ $key->id }}" name="arancel[]" class="form-control" value="{{ $key->valor }}" readonly="">
-                                                                                <input type="hidden" id="iva{{ $key->id }}" name="iva[]" class="form-control" value="{{ $key->valor }}" readonly="">
-                                                                            </td>
-                                                                            <td>
-                                                                                <a class="btn btn-info btn-xs btn-actions addTrackings" type="button" id="btn_addtracking{{ $key->id }}" data-toggle='tooltip' title='Agregar tracking' @click="addTrackings({{ $key->id }})"><i class="fa fa-barcode"></i> <span id="cant_tracking{{ $key->id }}">{{ $key->cantidad }}</span></a>
-
-                                                                                <a class="btn btn-primary btn-xs btn-actions" type="button" id="btn_confirm{{ $key->id }}" onclick="saveTableDetail({{ $key->id }})" data-toggle='tooltip' title='Guardar' style="display:none;"><i class="fa fa-check"></i></a>
-
-                                                                                <a class="btn btn-success btn-xs btn-actions" type="button" id="btn_edit{{ $key->id }}" onclick="editTableDetail({{ $key->id }})" data-toggle='tooltip' title='Editar'><i class="fa fa-edit"></i></a>
-
-                                                                                <a class="btn btn-danger btn-xs btn-actions" type="button" id="btn_remove{{ $key->id }}" onclick="eliminar({{ $key->id }}, true)" data-toggle='tooltip' title='Eliminar' style="display: {{ ($key->consolidado == 1) ? 'none' : 'inline-block' }}"><i class="fa fa-times"></i></a>
-                                                                            </td>
-                                                                        </tr>
-                                                                    @endforeach
-                                                                </tbody> --}}
-                                                               {{--  <tfoot>
+                                                                <tfoot style="background-color: paleturquoise;">
                                                                     <tr>
                                                                         <td>
-                                                                            <div class="" v-if="mostrar.includes(16)">
+                                                                            <div class="">
                                                                                     <div class="form-group">
                                                                                         <label class="">Pieza(s)</label>
-                                                                                        <input type="text" onkeyup="deleteError($(this).parent());" id="piezas" name="piezas" class="form-control" readonly="" value="{{ isset($documento->piezas) ? $documento->piezas : '' }}">
+                                                                                        <input type="text" onkeyup="deleteError($(this).parent());" id="piezas" name="piezas" class="form-control" readonly="" value="{{ isset($documento->piezas) ? $documento->piezas : 0 }}">
                                                                                     </div>
                                                                             </div>
                                                                         </td>
                                                                         <td colspan="3">
-                                                                           <div class="col-sm-6" v-if="mostrar.includes(16)">
+                                                                           <div class="col-sm-6">
                                                                                 <div class="form-group">
                                                                                     <label class="">Peso total</label>
-                                                                                    <input type="text" onkeyup="deleteError($(this).parent());" id="pesoDim" name="pesoDim" class="form-control" readonly="" value="{{ isset($documento->peso) ? $documento->peso : '' }}">
+                                                                                    <input type="text" onkeyup="deleteError($(this).parent());" id="pesoDim" name="pesoDim" class="form-control" readonly="" value="{{ isset($documento->peso) ? $documento->peso : 0 }}">
                                                                                 </div>
                                                                             </div> 
-                                                                            <div class="col-sm-6" v-if="mostrar.includes(16)">
+                                                                            <div class="col-sm-6">
                                                                                     <div class="form-group">
                                                                                         <label class="">Volumen</label>
-                                                                                        <input type="text" onkeyup="deleteError($(this).parent());" id="volumen" name="volumen" class="form-control" readonly="" value="{{ isset($documento->volumen) ? $documento->volumen : '' }}">
+                                                                                        <input type="text" onkeyup="deleteError($(this).parent());" id="volumen" name="volumen" class="form-control" readonly="" value="{{ isset($documento->volumen) ? $documento->volumen : 0 }}">
                                                                                     </div>
                                                                                 </div>
                                                                             </div> 
                                                                         </td>
                                                                         <td colspan="2">
-                                                                            <div class="" v-if="mostrar.includes(16)">
+                                                                            <div class="">
                                                                                     <div class="form-group">
                                                                                         <label class="">$ Declarado total</label>
                                                                                         <input type="text" onkeyup="deleteError($(this).parent());" id="valor_declarado_tbl" class="form-control" readonly="" value="0">
@@ -521,7 +475,7 @@
                                                                             </div>
                                                                         </td>
                                                                     </tr>
-                                                                </tfoot> --}}
+                                                                </tfoot>
                                                             </table>
                                                             <div id="noEnviar" class="col-lg-12" style="text-align: center; color: red; display: none;">Para poder registrar es necesario almenos un dato en el detalle</div>
 

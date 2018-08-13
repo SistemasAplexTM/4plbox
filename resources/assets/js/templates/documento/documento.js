@@ -58,18 +58,21 @@ $(document).ready(function() {
             data: 'num_warehouse',
             name: 'num_warehouse'
         }, {
-            data: 'peso',
-            name: 'peso',
-            class: 'cp_peso'
+            "render": function (data, type, full, meta) {
+                return '<a data-name="peso" data-pk="'+full.id+'" class="td_edit" data-type="text" data-placement="right" data-title="Peso">'+full.peso+'</a>';
+            }
         }, {
-            data: 'contenido',
-            name: 'contenido'
+            "render": function (data, type, full, meta) {
+                return '<a data-name="contenido" data-pk="'+full.id+'" class="td_edit" data-type="text" data-placement="right" data-title="Contenido">'+full.contenido+'</a>';
+            }
         }, {
             data: 'nom_pa',
-            name: 'nom_pa'
+            name: 'nom_pa',
+            visible: (objVue.mostrar.includes(16)) ? true : false
         }, {
-            data: 'valor',
-            name: 'valor'
+            "render": function (data, type, full, meta) {
+                return '<a data-name="declarado" data-pk="'+full.id+'" class="td_edit" data-type="text" data-placement="right" data-title="Declarado">'+full.valor+'</a>';
+            }
         }, {
             sortable: false,
             "render": function(data, type, full, meta) {
@@ -90,18 +93,87 @@ $(document).ready(function() {
 
                 btn_delete = '<a class="btn btn-danger btn-xs btn-actions" type="button" id="btn_remove'+full.id+'" onclick="eliminar('+full.id+', true)" data-toggle="tooltip" title="Eliminar" style="display: '+display+'"><i class="fa fa-times"></i></a> ';
 
-                return btn_addTracking + btn_save + btn_edit + btn_delete;
+                return btn_addTracking + btn_delete;
             }
-        }],
-        // "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-        //     $(nRow).children().each(function (index, td) {
-        //         $(this).addClass('cp_peso');
-        //     });
-        //  }
-        // "columnDefs": [{
-        //     targets: 1,
-        //     className:"cp_peso"
-        // }, ]
+        }, {
+            data: 'volumen',
+            name: 'volumen',
+            visible: false
+        }, {
+            data: 'piezas',
+            name: 'piezas',
+            visible: false
+        }, {
+            data: 'peso',
+            name: 'peso',
+            visible: false
+        }, {
+            data: 'valor',
+            name: 'valor',
+            visible: false
+        },],
+        "drawCallback": function () {
+            /* EDITABLE FIELD */
+            // if (me.permissions.editDetail) {
+                $(".td_edit").editable({
+                    ajaxOptions: {
+                        type: 'post',
+                        dataType: 'json'
+                    },
+                    url: "updateDetailDocument",
+                    validate:function(value){
+                        if($.trim(value) == ''){
+                            return 'Este campo es obligatorio!';
+                        }
+                    },
+                    success: function(response, newValue) {
+                        refreshTable('whgTable');
+                        objVue.totalizeDocument();
+                    }
+                });
+            // }
+        },
+        "footerCallback": function (row, data, start, end, display) {
+            var api = this.api(), data;
+            /*Remove the formatting to get integer data for summation*/
+            var intVal = function (i) {
+                return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '') * 1 :
+                        typeof i === 'number' ?
+                        i : 0;
+            };
+            /*Total over all pages*/
+            var vol = api
+                    .column(6)
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+            var peso = api
+                    .column(8)
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+            var dec = api
+                    .column(9)
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+            var piezas = api
+                    .column(7)
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+
+            /*Update footer formatCurrency()*/
+            $('#piezas').val(parseFloat(isInteger(piezas)));
+            $('#volumen').val(parseFloat(isInteger(vol)));
+            $('#pesoDim').val(parseFloat(isInteger(peso)));
+            $('#valor_declarado_tbl').val(parseFloat(isInteger(dec)));
+        },
     });
 
 });
@@ -168,7 +240,7 @@ function llenarSelectServicio(id_embarque) {
                                data-impuesto_age="' + value.impuesto + '">' + value.nombre + '</option>');
                 });
             }
-            totalizeDocument();
+            objVue.totalizeDocument();
         },
         error: function(jqXHR, textStatus, errorThrown) {
             data = {
@@ -377,6 +449,11 @@ var objVue = new Vue({
         permissions: {}, //es para poder pasar los permisos al consolidado
     },
     methods: {
+        totalizeDocument: function(){
+            setTimeout(function(){
+                totalizeDocument();
+            },500);
+        },
         showTotals(value) {
             this.showFieldsTotals = value;
         },
@@ -708,11 +785,13 @@ var objVue = new Vue({
             axios.get('../restaurar/' + data.id + '/documento_detalle').then(response => {
                 toastr.success('Registro restaurado.');
                 refreshTable('whgTable');
+                me.totalizeDocument();
                 // me.refreshTableDetail(response.data.datos);
             });
         },
         delete: function(data) {
-            console.log(data);
+            var me = this;
+            // console.log(data);
             if (data.logical === true) {
                 axios.get('../delete/' + data.id + '/' + data.logical + '/documento_detalle').then(response => {
                     toastr.success("<div><p>Registro eliminado exitosamente.</p><button type='button' onclick='deshacerEliminar(" + data.id + ")' id='okBtn' class='btn btn-xs btn-danger pull-right'><i class='fa fa-reply'></i> Restaurar</button></div>", '', {
@@ -720,16 +799,16 @@ var objVue = new Vue({
                     });
                     toastr.options.closeButton = true;
                     refreshTable('whgTable');
+                    me.totalizeDocument();
                     // $('#fila' + data.id).remove();
-                    totalizeDocument();
                 });
             } else {
                 axios.delete('../delete/' + data.id).then(response => {
                     toastr.success('Registro eliminado correctamente.');
                     toastr.options.closeButton = true;
                     refreshTable('whgTable');
+                    me.totalizeDocument();
                     // $('#fila' + data.id).remove();
-                    totalizeDocument();
                 });
             }
         },
@@ -973,6 +1052,7 @@ var objVue = new Vue({
                 $('#contiene').val('');
                 $('#valDeclarado').val('');
                 refreshTable('whgTable');
+                me.totalizeDocument();
                 // me.refreshTableDetail(response.data.datos);
             }).catch(function(error) {
                 console.log(error);
@@ -1038,7 +1118,7 @@ var objVue = new Vue({
                 $(this).children('span').remove();
             });
             $('.table .bootstrap-tagsinput').children('input').attr('readonly', true);
-            totalizeDocument();
+            me.totalizeDocument();
         },
         editTableDetail: function(data) {
             $('#pesoD' + data.id).attr('readonly', false);

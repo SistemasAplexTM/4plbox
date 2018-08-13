@@ -702,7 +702,7 @@ class DocumentoController extends Controller
                     DB::raw("(SELECT Sum(documento_detalle.peso) FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as peso"),
                     DB::raw("(SELECT Sum(documento_detalle.volumen) FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as volumen"),
                     't.consolidado',
-                    't.consolidado_status'
+                    DB::raw("SUM(t.consolidado_status) AS consolidado_status")
                 )
                 ->where([
                     ['documento.deleted_at', null],
@@ -712,6 +712,19 @@ class DocumentoController extends Controller
                     ['documento.tipo_documento_id', $request->id_tipo_doc],
                     ['documento.agencia_id', Auth::user()->agencia_id],
                 ])
+                ->groupBy(
+                    'documento.id',
+                    'documento.liquidado',
+                    'documento.tipo_documento_id',
+                    'documento.consecutivo',
+                    'documento.num_warehouse',
+                    'documento.created_at',
+                    'shipper.nombre_full',
+                    'consignee.nombre_full',
+                    'consignee.correo',
+                    'agencia.descripcion',
+                    't.consolidado'
+                )
                 ->orderBy('documento.created_at', 'DESC');
         }
 
@@ -1131,6 +1144,7 @@ class DocumentoController extends Controller
                 'agencia.direccion as agencia_dir',
                 'agencia.zip as agencia_zip',
                 'agencia.email as agencia_email',
+                'agencia.logo as agencia_logo',
                 'ciudad_agencia.nombre AS agencia_ciudad',
                 'ciudad_agencia.prefijo AS agencia_ciudad_prefijo',
                 'deptos_agencia.descripcion AS agencia_depto',
@@ -2131,6 +2145,51 @@ class DocumentoController extends Controller
             ->get();
 
         return \DataTables::of($detalle)->make(true);
+    }
+
+    public function updateDetailDocument(Request $request)
+    {
+        try {
+            $data = DocumentoDetalle::findOrFail($request->pk);
+            if (isset($request->value) and $request->name === 'peso') {
+                $data->peso = $request->value;
+            }
+            if (isset($request->value) and $request->name === 'contenido') {
+                $data->contenido = $request->value;
+            }
+            if (isset($request->value) and $request->name === 'declarado') {
+                $data->valor = $request->value;
+            }
+
+            if ($data->save()) {
+                $this->AddToLog('Documento detalle editado (' . $data->id . ')');
+                $answer = array(
+                    "datos"  => $data,
+                    "code"   => 200,
+                    "status" => 200,
+                );
+            } else {
+                $answer = array(
+                    "error"  => 'Error al intentar Eliminar el registro.',
+                    "code"   => 600,
+                    "status" => 500,
+                );
+            }
+            return $answer;
+        } catch (Exception $e) {
+            $error = '';
+            if (isset($e->errorInfo) and $e->errorInfo) {
+                foreach ($e->errorInfo as $key => $value) {
+                    $error .= $key . ' - ' . $value . ' <br> ';
+                }
+            } else { $error = $e;}
+            $answer = array(
+                "error"  => $error,
+                "code"   => 600,
+                "status" => 500,
+            );
+            return $answer;
+        }
     }
 
 }

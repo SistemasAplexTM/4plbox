@@ -14,6 +14,12 @@
         </div>
 
         <ul class="nav navbar-top-links navbar-right">
+            <li>
+                <a href="{{ route('change_lang', ['lang' => 'es']) }}">ES</a>
+            </li>
+            <li>
+                <a href="{{ route('change_lang', ['lang' => 'en']) }}">EN</a>
+            </li>
             <!--NOTIFICACIONES-->
             <li class="dropdown">
                 <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">

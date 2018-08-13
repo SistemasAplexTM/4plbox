@@ -41,7 +41,7 @@
 <table cellspacing="0" cellpadding="0" id="tableContainer" border="0" width="100%">
     <thead>
         <tr>
-            <th colspan="2" width="250px"><img alt="image" class="img-circle" id="logo" style="width: 250px;margin-bottom: 10px;" src="{{ asset('storage/logo.png') }}"/></th>
+            <th colspan="2" width="300px"><img alt="image" class="img-circle" id="logo" height="120px" style="width:100%;margin-bottom: 10px;" src="{{ asset('storage/') }}/{{ ((isset($documento->agencia_logo) and $documento->agencia_logo != '') ? $documento->agencia_logo : 'logo.png') }}"/></th>
             <th>&nbsp;</th>
             <th width="250px" style="text-align: right;">
                 <div id="nomAgencia" style="font-size: 20px;">{{ $documento->agencia }}</div>
