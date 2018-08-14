@@ -99,41 +99,43 @@
                 {{ csrf_field() }}
                 <input type="hidden" class="form-control" id="id_documento" name="id_documento"  value="{{ $documento->id }}" readonly="">
                 <input type="hidden" class="form-control" name="document_type" id="document_type" data-liquidado="{{ $documento->liquidado }}"  value="consolidado" readonly="" v-model="document_type">
-                <div class="col-lg-12" style="padding-left: 0px; padding-right: 0px;">
-                    <div class="col-lg-6" style="padding-left: 0px;">
-                        <div class="form-group">
-                            <label for="agencia_id" class="">Agencia</label>
-                                <select id="agencia_id" name="agencia_id" class="form-control" style="font-size: 17px;font-weight: 900;">
-                                    @if(isset($agencias) and $agencias)
-                                        @role('admin')
-                                            @foreach($agencias as $agencia)
-                                                <option {{ ($documento->agencia_id == $agencia['id']) ? 'selected' : ((Auth::user()->agencia_id == $agencia['id']) ? 'selected ' : '') }} value="{{ $agencia['id'] }}">{{ $agencia['descripcion'] }}</option>
-                                            @endforeach
-                                        @else
-                                            @foreach($agencias as $agencia)
-                                                @if(Auth::user()->agencia_id == $agencia['id'])
-                                                    <option {{ ($documento->agencia_id == $agencia['id']) ? 'selected' : ((Auth::user()->agencia_id == $agencia['id']) ? 'selected ' : '') }} value="{{ $agencia['id'] }}">{{ $agencia['descripcion'] }}</option>
-                                                @endif
-                                            @endforeach
-                                        @endrole
-                                    @endif
-                                </select>
-                        </div>
-                    </div>
-                    @if(isset($agencia) and $agencia)
-                        <div class="col-lg-6" style="padding-right: 0px;">
+                <div class="col-lg-12" style="">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6" style="padding-left: 0px;">
                             <div class="form-group">
-                                <label for="num_guia" class="">Número de Documento</label>
-                                <input type="text" id="num_guia" name="num_guia" class="form-control" readonly="" value="{{ $documento->consecutivo }}" style="background-color: #FFFFFF; font-size: 20px; font-weight: bold; color: forestgreen;">
+                                <label for="agencia_id" class="">Agencia</label>
+                                    <select id="agencia_id" name="agencia_id" class="form-control" style="font-size: 17px;font-weight: 900;">
+                                        @if(isset($agencias) and $agencias)
+                                            @role('admin')
+                                                @foreach($agencias as $agencia)
+                                                    <option {{ ($documento->agencia_id == $agencia['id']) ? 'selected' : ((Auth::user()->agencia_id == $agencia['id']) ? 'selected ' : '') }} value="{{ $agencia['id'] }}">{{ $agencia['descripcion'] }}</option>
+                                                @endforeach
+                                            @else
+                                                @foreach($agencias as $agencia)
+                                                    @if(Auth::user()->agencia_id == $agencia['id'])
+                                                        <option {{ ($documento->agencia_id == $agencia['id']) ? 'selected' : ((Auth::user()->agencia_id == $agencia['id']) ? 'selected ' : '') }} value="{{ $agencia['id'] }}">{{ $agencia['descripcion'] }}</option>
+                                                    @endif
+                                                @endforeach
+                                            @endrole
+                                        @endif
+                                    </select>
                             </div>
                         </div>
-                    @endif
+                        @if(isset($agencia) and $agencia)
+                            <div class="col-lg-6" style="padding-right: 0px;">
+                                <div class="form-group">
+                                    <label for="num_guia" class="">Número de Documento</label>
+                                    <input type="text" id="num_guia" name="num_guia" class="form-control" readonly="" value="{{ $documento->consecutivo }}" style="background-color: #FFFFFF; font-size: 20px; font-weight: bold; color: forestgreen;">
+                                </div>
+                            </div>
+                        @endif
+                    </div>
                 </div>
                 {{-- FORMULARIO DE CONSOLIDADO --}}
                 <formconsolidado-component :app_type="'{{ env('APP_TYPE') }}'" :documento="{{ json_encode($documento) }}" :contactos="contactos" :restore="restoreShipperConsignee" :agrupar="datosAgrupar" :removeragrupado="removerAgrupado" :permission='permissions' v-if="mostrar.includes(24)"></formconsolidado-component>
 
                 {{-- CONSIGNEE Y SHIPPER --}}
-                <div class="row form_doc" style="display: none">
+                <div class="col-lg-12 form_doc" style="display: none">
                     <div class="col-lg-6" style="margin-bottom: 20px;" v-if="mostrar.includes(25)">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
@@ -317,7 +319,7 @@
                         </div>
                     </div>
                 </div>                
-                <div class="row form_doc" style="display: none" v-if="mostrar.includes(22) || mostrar.includes(23)">
+                <div class="col-lg-12 form_doc" style="display: none" v-if="mostrar.includes(22) || mostrar.includes(23)">
                     <div class="col-lg-8">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
@@ -444,34 +446,37 @@
                                                                 <tfoot style="background-color: paleturquoise;">
                                                                     <tr>
                                                                         <td>
-                                                                            <div class="">
-                                                                                    <div class="form-group">
-                                                                                        <label class="">Pieza(s)</label>
-                                                                                        <input type="text" onkeyup="deleteError($(this).parent());" id="piezas" name="piezas" class="form-control" readonly="" value="{{ isset($documento->piezas) ? $documento->piezas : 0 }}">
-                                                                                    </div>
+                                                                            <div class="col-lg-12">
+                                                                                <label class="">Pieza(s)</label>
+                                                                            </div>
+                                                                            <div class="col-lg-12">
+                                                                                <input type="text" onkeyup="deleteError($(this).parent());" id="piezas" name="piezas" class="form-control" readonly="" value="{{ isset($documento->piezas) ? $documento->piezas : 0 }}">
                                                                             </div>
                                                                         </td>
                                                                         <td colspan="3">
-                                                                           <div class="col-sm-6">
-                                                                                <div class="form-group">
+                                                                           <div class="col-lg-6">
+                                                                               <div class="col-sm-12">
                                                                                     <label class="">Peso total</label>
+                                                                                </div>
+                                                                                <div class="col-sm-12">
                                                                                     <input type="text" onkeyup="deleteError($(this).parent());" id="pesoDim" name="pesoDim" class="form-control" readonly="" value="{{ isset($documento->peso) ? $documento->peso : 0 }}">
+                                                                                </div> 
+                                                                            </div>
+                                                                            <div class="col-lg-6">
+                                                                                <div class="col-sm-12">
+                                                                                    <label class="">Volumen</label>
                                                                                 </div>
-                                                                            </div> 
-                                                                            <div class="col-sm-6">
-                                                                                    <div class="form-group">
-                                                                                        <label class="">Volumen</label>
-                                                                                        <input type="text" onkeyup="deleteError($(this).parent());" id="volumen" name="volumen" class="form-control" readonly="" value="{{ isset($documento->volumen) ? $documento->volumen : 0 }}">
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div> 
+                                                                                <div class="col-sm-12">
+                                                                                    <input type="text" onkeyup="deleteError($(this).parent());" id="volumen" name="volumen" class="form-control" readonly="" value="{{ isset($documento->volumen) ? $documento->volumen : 0 }}">
+                                                                                </div> 
+                                                                            </div>
                                                                         </td>
                                                                         <td colspan="2">
-                                                                            <div class="">
-                                                                                    <div class="form-group">
-                                                                                        <label class="">$ Declarado total</label>
-                                                                                        <input type="text" onkeyup="deleteError($(this).parent());" id="valor_declarado_tbl" class="form-control" readonly="" value="0">
-                                                                                    </div>
+                                                                            <div class="col-lg-12">
+                                                                                <label class="">$ Declarado total</label>
+                                                                            </div>
+                                                                            <div class="col-lg-12">
+                                                                                <input type="text" onkeyup="deleteError($(this).parent());" id="valor_declarado_tbl" class="form-control" readonly="" value="0">
                                                                             </div>
                                                                         </td>
                                                                     </tr>

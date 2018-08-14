@@ -659,6 +659,16 @@ class DocumentoController extends Controller
      */
     public function getAll(Request $request)
     {
+        $filter = [
+                    ['documento.deleted_at', null],
+                    ['shipper.deleted_at', null],
+                    ['consignee.deleted_at', null],
+                    ['agencia.deleted_at', null],
+                    ['documento.tipo_documento_id', $request->id_tipo_doc]
+                ];
+        if(!Auth::user()->isRole('admin')){
+            $filter[] = ['documento.agencia_id', Auth::user()->agencia_id];
+        }
         /* GRILLA */
         if ($request->id_tipo_doc == 3) {
             $codigo = 'consecutivo';
@@ -671,14 +681,7 @@ class DocumentoController extends Controller
                     DB::raw("(SELECT IFNULL(Sum(documento_detalle.peso2),0) FROM consolidado_detalle INNER JOIN documento_detalle ON consolidado_detalle.documento_detalle_id = documento_detalle.id WHERE consolidado_detalle.deleted_at IS NULL AND consolidado_detalle.consolidado_id = documento.id) as peso"),
                     DB::raw("(SELECT IFNULL(Sum(documento_detalle.volumen),0) FROM consolidado_detalle INNER JOIN documento_detalle ON consolidado_detalle.documento_detalle_id = documento_detalle.id WHERE consolidado_detalle.deleted_at IS NULL AND consolidado_detalle.consolidado_id = documento.id) as volumen")
                 )
-                ->where([
-                    ['documento.deleted_at', null],
-                    ['shipper.deleted_at', null],
-                    ['consignee.deleted_at', null],
-                    ['agencia.deleted_at', null],
-                    ['documento.tipo_documento_id', $request->id_tipo_doc],
-                    ['documento.agencia_id', Auth::user()->agencia_id],
-                ])
+                ->where($filter)
                 ->orderBy('documento.created_at', 'DESC');
         } else {
             /* CODIGO PARA TRAER LOS DOCUMENTOS DIFERENTES A CONSOLIDADOS */
@@ -704,14 +707,7 @@ class DocumentoController extends Controller
                     't.consolidado',
                     DB::raw("SUM(t.consolidado_status) AS consolidado_status")
                 )
-                ->where([
-                    ['documento.deleted_at', null],
-                    ['shipper.deleted_at', null],
-                    ['consignee.deleted_at', null],
-                    ['agencia.deleted_at', null],
-                    ['documento.tipo_documento_id', $request->id_tipo_doc],
-                    ['documento.agencia_id', Auth::user()->agencia_id],
-                ])
+                ->where($filter)
                 ->groupBy(
                     'documento.id',
                     'documento.liquidado',
