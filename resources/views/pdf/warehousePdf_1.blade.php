@@ -101,7 +101,7 @@
             <td colspan="2" class="agency_title">{{ ((isset($documento->agencia_dir) and $documento->agencia_dir != '') ? $documento->agencia_dir : '') }}</td>
           </tr>
           <tr>
-            <td colspan="2" class="agency_title">{{ ((isset($documento->agencia_ciudad_prefijo) and $documento->agencia_ciudad_prefijo != '') ? $documento->agencia_ciudad_prefijo : '') }}, {{ ((isset($documento->agencia_depto_prefijo) and $documento->agencia_depto_prefijo != '') ? $documento->agencia_depto_prefijo : '') }} {{ ((isset($documento->agencia_zip) and $documento->agencia_zip != '') ? $documento->agencia_zip : '') }}</td>
+            <td colspan="2" class="agency_title">{{ ((isset($documento->agencia_ciudad) and $documento->agencia_ciudad != '') ? $documento->agencia_ciudad : '') }}, {{ ((isset($documento->agencia_depto_prefijo) and $documento->agencia_depto_prefijo != '') ? $documento->agencia_depto_prefijo : $documento->agencia_depto) }} {{ ((isset($documento->agencia_zip) and $documento->agencia_zip != '') ? $documento->agencia_zip : '') }}</td>
           </tr>
           <tr>
             <td colspan="2" class="agency_title">{{ ((isset($documento->agencia_tel) and $documento->agencia_tel != '') ? $documento->agencia_tel : '') }}</td>

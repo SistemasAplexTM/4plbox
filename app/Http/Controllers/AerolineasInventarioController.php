@@ -10,14 +10,14 @@ use Illuminate\Support\Facades\DB;
 class AerolineasInventarioController extends Controller
 {
     public function __construct(){
-        $this->middleware('permission:aerolinea_inventario.index')->only('index');
-        $this->middleware('permission:aerolinea_inventario.store')->only('store');
-        $this->middleware('permission:aerolinea_inventario.update')->only('update');
-        $this->middleware('permission:aerolinea_inventario.delete')->only('delete');
+        // $this->middleware('permission:aerolinea_inventario.index')->only('index');
+        // $this->middleware('permission:aerolinea_inventario.store')->only('store');
+        // $this->middleware('permission:aerolinea_inventario.update')->only('update');
+        // $this->middleware('permission:aerolinea_inventario.delete')->only('delete');
     }
 
     public function index(){
-        $this->assignPermissionsJavascript('aerolinea_inventario');
+        // $this->assignPermissionsJavascript('aerolinea_inventario');
     	return view('templates.aerolineasInventario');
     }
 

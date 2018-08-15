@@ -19,7 +19,8 @@
                                 </br>
                             </span>
                             <span class="text-muted text-xs block">
-                                @lang('sidebar.welcome')
+                                {{-- @lang('sidebar.welcome') --}}
+                                Bienvenido
                                 <b class="caret">
                                 </b>
                             </span>
@@ -30,14 +31,16 @@
                             <a href="{{ route('home') }}">
                                 <i class="fa fa-home">
                                 </i>
-                                @lang('sidebar.home')
+                                {{-- @lang('sidebar.home') --}}
+                                Inicio
                             </a>
                         </li>
                         <li>
                             <a href="#">
                                 <i class="fa fa-user">
                                 </i>
-                                @lang('sidebar.profile')
+                                {{-- @lang('sidebar.profile') --}}
+                                Perfil
                             </a>
                         </li>
                         {{-- <li>
@@ -59,7 +62,8 @@
                     <i class="fa fa-th-large">
                     </i>
                     <span class="nav-label">
-                        @lang('sidebar.load')
+                        {{-- @lang('sidebar.load') --}}
+                        Carga
                     </span>
                     <span class="fa arrow">
                     </span>
@@ -70,7 +74,8 @@
                         <a href="{{ route('documento.index') }}">
                             <spam class="fa fa-clipboard">
                             </spam>
-                            @lang('sidebar.documents')
+                            {{-- @lang('sidebar.documents') --}}
+                            Documentos
                         </a>
                     </li>
                     @endcan
@@ -79,7 +84,8 @@
                         <a href="{{ route('tracking.index') }}">
                             <spam class="fa fa-cubes">
                             </spam>
-                            @lang('sidebar.trackings_receipt')
+                            {{-- @lang('sidebar.trackings_receipt') --}}
+                            Recibo de tracking
                         </a>
                     </li>
                     @endcan
@@ -88,7 +94,8 @@
                         <a href="{{ route('master.index') }}">
                             <spam class="fa fa-medium">
                             </spam>
-                            @lang('sidebar.master_guide')
+                            {{-- @lang('sidebar.master_guide') --}}
+                            Guia master
                         </a>
                     </li>
                     @endcan
@@ -209,7 +216,7 @@
                         </a>
                     </li>
                     @endcan
-                    @can('aerolinea_inventario.index')
+                    {{-- @can('aerolinea_inventario.index') --}}
                     <li>
                         <a href="{{ url('aerolinea_inventario') }}">
                             <spam class="fa fa-plane">
@@ -217,7 +224,7 @@
                             Inventario aerolíneas
                         </a>
                     </li>
-                    @endcan
+                    {{-- @endcan --}}
                     @can('transport.index')
                     <li>
                         <a href="{{ url('transport/aerolineas') }}">
@@ -271,7 +278,7 @@
                     <i class="fa fa-cogs">
                     </i>
                     <span class="nav-label">
-                        Administracion
+                        Administración
                     </span>
                     <span class="fa arrow">
                     </span>

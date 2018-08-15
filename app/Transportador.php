@@ -16,6 +16,7 @@ class Transportador extends Model
         'nombre', 
         'direccion',
         'telefono',
+        'email',
         'contacto',
         'ciudad',
         'estado',

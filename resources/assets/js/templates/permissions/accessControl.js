@@ -214,6 +214,7 @@ var objVue = new Vue({
             let me = this;
             axios.post('accessControl/saveSpecialPermissions',{
                 'role_id': this.role_id.id,
+                'name_module': this.name_module,
                 'datos': $('#form_permissions_special').serializeArray()
             }).then(function (response) {
                 if(response.data.code == 200){

@@ -16,18 +16,18 @@ $(document).ready(function() {
                 var btn_edit = '';
                 var btn_delete = '';
                 var btns = '';
-                if (permission_update) {
+                // if (permission_update) {
                     var params = [
                         full.id,
                         full.aerolinea_id, "'" + full.aerolinea + "'", "'" + full.guia + "'"
                     ];
                     var btn_edit = "<a onclick=\"edit(" + params + ")\" class='btn btn-outline btn-success btn-xs' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit'></i></a> ";
-                }
-                if (permission_delete) {
+                // }
+                // if (permission_delete) {
                     if (full.usado == '0') {
                         btns += btn_delete = " <a onclick=\"eliminar(" + full.id + "," + true + ")\" class='btn btn-outline btn-danger btn-xs' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-trash'></i></a> ";
                     }
-                }
+                // }
                 return btns;
             }
         }],

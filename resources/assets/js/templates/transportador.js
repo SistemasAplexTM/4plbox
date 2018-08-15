@@ -23,7 +23,7 @@ $(document).ready(function() {
                 var btn_delete = '';
                 if (permission_update) {
                     var params = [
-                        full.id, "'" + full.nombre + "'", "'" + full.direccion + "'", "'" + full.telefono + "'", "'" + full.contacto + "'", "'" + full.ciudad + "'", "'" + full.estado + "'", "'" + full.pais + "'", "'" + full.zip + "'",
+                        full.id, "'" + full.nombre + "'", "'" + full.direccion + "'", "'" + full.telefono + "'", "'" + full.email + "'", "'" + full.contacto + "'", "'" + full.ciudad + "'", "'" + full.estado + "'", "'" + full.pais + "'", "'" + full.zip + "'",
                         full.shipper,
                         full.consignee,
                         full.carrier,
@@ -39,12 +39,13 @@ $(document).ready(function() {
     });
 });
 
-function edit(id, nombre, direccion, telefono, contacto, ciudad, estado, pais, zip, shipper, consignee, carrier) {
+function edit(id, nombre, direccion, telefono, email, contacto, ciudad, estado, pais, zip, shipper, consignee, carrier) {
     var data = {
         id: id,
         nombre: nombre,
         direccion: direccion,
         telefono: telefono,
+        email: email,
         contacto: contacto,
         ciudad: ciudad,
         estado: estado,
@@ -65,6 +66,7 @@ var objVue = new Vue({
         nombre: '',
         direccion: '',
         telefono: '',
+        email: '',
         contacto: '',
         ciudad: '',
         estado: '',
@@ -88,6 +90,7 @@ var objVue = new Vue({
             this.nombre = '';
             this.direccion = '';
             this.telefono = '';
+            this.email = '';
             this.contacto = '';
             this.ciudad = '';
             this.estado = '';
@@ -145,6 +148,7 @@ var objVue = new Vue({
                 'nombre': this.nombre,
                 'direccion': this.direccion,
                 'telefono': this.telefono,
+                'email': this.email,
                 'contacto': this.contacto,
                 'ciudad': this.ciudad,
                 'estado': this.estado,
@@ -183,6 +187,7 @@ var objVue = new Vue({
                 'nombre': this.nombre,
                 'direccion': this.direccion,
                 'telefono': this.telefono,
+                'email': this.email,
                 'contacto': this.contacto,
                 'ciudad': this.ciudad,
                 'estado': this.estado,
@@ -218,10 +223,14 @@ var objVue = new Vue({
             });
         },
         edit: function(data) {
+            this.resetForm();
             this.id = data['id'];
             this.nombre = data['nombre'];
             this.direccion = data['direccion'];
             this.telefono = data['telefono'];
+            if(data['email'] != 'null'){
+                this.email = data['email'];
+            }
             this.contacto = data['contacto'];
             this.ciudad = data['ciudad'];
             this.pais = data['pais'];

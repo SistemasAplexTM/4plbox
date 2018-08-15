@@ -113,11 +113,12 @@ class AccessControlController extends Controller
         try {
             $p1 = array();
             $p2 = array();
-            /* CONSULTO LOS permissions_roles QUE HAY EN LA BASE DE DATOS EXEPTUANDO LOS QUE NO PERTENECEN AL CRUD */
+            /* CONSULTO LOS permissions_roles QUE HAY EN LA BASE DE DATOS EXEPTUANDO LOS QUE PERTENECEN AL CRUD */
             $permissions_roles = PermissionRole::join('permissions AS b', 'permission_role.permission_id', 'b.id')
                 ->where([
                     ['role_id', $request->all()['role_id']],
                     ['b.crud', '0'],
+                    ['b.module', $request->all()['name_module']],
                 ])
                 ->get();
             foreach ($permissions_roles as $key) {
@@ -148,7 +149,7 @@ class AccessControlController extends Controller
 
             DB::commit();
             return $answer;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollback();
             $answer = array(
                 "error" => $e,

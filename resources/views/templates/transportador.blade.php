@@ -63,8 +63,21 @@
                                             <label for="telefono" class="control-label gcore-label-top">Teléfono:</label>
                                         </div>
                                         <div class="col-sm-8">
-		                                    <input v-model="telefono" name="telefono" id="telefono" value="" placeholder="Ingrese el telefono" class="form-control" type="text" @click="deleteError('telefono')" @focus="deleteError('telefono')" />
-		                                    <small id="msn1" class="help-block result-telefono" v-show="listErrors.telefono"></small>
+                                            <input v-model="telefono" name="telefono" id="telefono" value="" placeholder="Ingrese el telefono" class="form-control" type="text" @click="deleteError('telefono')" @focus="deleteError('telefono')" />
+                                            <small id="msn1" class="help-block result-telefono" v-show="listErrors.telefono"></small>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="row">                            
+                            <div class="col-lg-12">
+                                    <div class="form-group" :class="{'has-error': listErrors.email}">
+                                        <div class="col-sm-4">
+                                            <label for="email" class="control-label gcore-label-top">Email:</label>
+                                        </div>
+                                        <div class="col-sm-8">
+		                                    <input v-model="email" name="email" id="email" value="" placeholder="Ingrese el email" class="form-control" type="emial" @click="deleteError('email')" @focus="deleteError('email')" />
+		                                    <small id="msn1" class="help-block result-email" v-show="listErrors.email"></small>
                                         </div>
                                     </div>
                             </div>
