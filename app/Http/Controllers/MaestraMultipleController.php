@@ -111,10 +111,30 @@ class MaestraMultipleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($type, $id)
     {
-        $data = MaestraMultiple::findOrFail($id);
-        $data->delete();
+        try {
+            $data = MaestraMultiple::findOrFail($id);
+            $data->delete();
+            $answer = array(
+                "datos" => 'Eliminación exitosa.',
+                "code"  => 200,
+            );
+        } catch (\Exception $e) {
+            $error = '';
+            foreach ($e->errorInfo as $key => $value) {
+                // $error .= $key . ' - ' . $value . ' <br> ';
+                if($value == '23000'){
+                    $error .= 'No es posible eliminar el registro, esta asociado con otro registro <br> ';
+                }
+            }
+            $answer = array(
+                "error"  => $error,
+                "code"   => 600,
+                "status" => 500,
+            );
+        }
+        return $answer;
     }
 
     /**

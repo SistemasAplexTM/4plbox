@@ -3,10 +3,11 @@
 Route::get('/', function () {
     return view('auth/login');
 });
-
+/* RUTA PARA CAMBIAR EL LENGUAJE */
 Route::get('lang/{lang}', function($lang) {
   \Session::put('lang', $lang);
   return \Redirect::back();
+
 })->middleware('web')->name('change_lang');
 
 Auth::routes();

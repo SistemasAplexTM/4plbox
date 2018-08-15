@@ -112,8 +112,28 @@ class DepartamentoController extends Controller
      */
     public function destroy($id)
     {
-        $data = Departamento::findOrFail($id);
-        $data->delete();
+        try {
+            $data = Departamento::findOrFail($id);
+            $data->delete();
+            $answer = array(
+                "datos" => 'Eliminación exitosa.',
+                "code"  => 200,
+            );
+        } catch (\Exception $e) {
+            $error = '';
+            foreach ($e->errorInfo as $key => $value) {
+                // $error .= $key . ' - ' . $value . ' <br> ';
+                if($value == '23000'){
+                    $error .= 'No es posible eliminar el registro, esta asociado con un documento <br> ';
+                }
+            }
+            $answer = array(
+                "error"  => $error,
+                "code"   => 600,
+                "status" => 500,
+            );
+        }
+        return $answer;
     }
 
     /**

@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
-use Redirect;
-use DataTables;
-use App\Status;
 use App\Http\Requests\StatusRequest;
+use App\Status;
+use DataTables;
+use Illuminate\Http\Request;
 
 class StatusController extends Controller
 {
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('permission:status.index')->only('index');
         $this->middleware('permission:status.store')->only('store');
         $this->middleware('permission:status.update')->only('update');
@@ -37,19 +36,19 @@ class StatusController extends Controller
      */
     public function store(StatusRequest $request)
     {
-        try{
-            $data = (new Status)->fill($request->all());
+        try {
+            $data             = (new Status)->fill($request->all());
             $data->created_at = date('Y-m-d H:i:s');
             if ($data->save()) {
-                $answer=array(
-                    "datos" => $request->all(),
-                    "code" => 200,
+                $answer = array(
+                    "datos"  => $request->all(),
+                    "code"   => 200,
                     "status" => 200,
                 );
-            }else{
-                $answer=array(
-                    "error" => 'Error al intentar Eliminar el registro.',
-                    "code" => 600,
+            } else {
+                $answer = array(
+                    "error"  => 'Error al intentar Eliminar el registro.',
+                    "code"   => 600,
                     "status" => 500,
                 );
             }
@@ -57,17 +56,16 @@ class StatusController extends Controller
         } catch (\Exception $e) {
             $error = '';
             foreach ($e->errorInfo as $key => $value) {
-                $error .= $key . ' - ' .  $value . ' <br> ';
+                $error .= $key . ' - ' . $value . ' <br> ';
             }
-            $answer=array(
-                    "error" => $error,
-                    "code" => 600,
-                    "status" => 500,
-                );
+            $answer = array(
+                "error"  => $error,
+                "code"   => 600,
+                "status" => 500,
+            );
             return $answer;
         }
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -81,23 +79,23 @@ class StatusController extends Controller
         try {
             $data = Status::findOrFail($id);
             $data->update($request->all());
-            $answer=array(
-                "datos" => $request->all(),
-                "code" => 200,
+            $answer = array(
+                "datos"  => $request->all(),
+                "code"   => 200,
                 "status" => 500,
             );
             return $answer;
-            
+
         } catch (\Exception $e) {
             $error = '';
             foreach ($e->errorInfo as $key => $value) {
-                $error .= $key . ' - ' .  $value . ' <br> ';
+                $error .= $key . ' - ' . $value . ' <br> ';
             }
-            $answer=array(
-                    "error" => $error,
-                    "code" => 600,
-                    "status" => 500,
-                );
+            $answer = array(
+                "error"  => $error,
+                "code"   => 600,
+                "status" => 500,
+            );
             return $answer;
         }
     }
@@ -110,8 +108,28 @@ class StatusController extends Controller
      */
     public function destroy($id)
     {
-        $data = Status::findOrFail($id);
-        $data->delete();
+        try {
+            $data = Status::findOrFail($id);
+            $data->delete();
+            $answer = array(
+                "datos" => 'Eliminación exitosa.',
+                "code"  => 200,
+            );
+        } catch (\Exception $e) {
+            $error = '';
+            foreach ($e->errorInfo as $key => $value) {
+                // $error .= $key . ' - ' . $value . ' <br> ';
+                if($value == '23000'){
+                    $error .= 'No es posible eliminar el registro, esta asociado con otro registro <br> ';
+                }
+            }
+            $answer = array(
+                "error"  => $error,
+                "code"   => 600,
+                "status" => 500,
+            );
+        }
+        return $answer;
     }
 
     /**
@@ -121,27 +139,27 @@ class StatusController extends Controller
      * @param  boolean  $deleteLogical
      * @return \Illuminate\Http\Response
      */
-    public function delete($id,$logical)
+    public function delete($id, $logical)
     {
-        
-        if(isset($logical) and $logical == 'true'){
-            $data = Status::findOrFail($id);
-            $now = new \DateTime();
-            $data->deleted_at =$now->format('Y-m-d H:i:s');
-            if($data->save()){
-                    $answer=array(
-                        "datos" => 'Eliminación exitosa.',
-                        "code" => 200
-                    ); 
-               }  else{
-                    $answer=array(
-                        "error" => 'Error al intentar Eliminar el registro.',
-                        "code" => 600
-                    );
-               }          
-                
-                return $answer;
-        }else{
+
+        if (isset($logical) and $logical == 'true') {
+            $data             = Status::findOrFail($id);
+            $now              = new \DateTime();
+            $data->deleted_at = $now->format('Y-m-d H:i:s');
+            if ($data->save()) {
+                $answer = array(
+                    "datos" => 'Eliminación exitosa.',
+                    "code"  => 200,
+                );
+            } else {
+                $answer = array(
+                    "error" => 'Error al intentar Eliminar el registro.',
+                    "code"  => 600,
+                );
+            }
+
+            return $answer;
+        } else {
             $this->destroy($id);
         }
     }
@@ -154,11 +172,10 @@ class StatusController extends Controller
      */
     public function restaurar($id)
     {
-        $data = Status::findOrFail($id);
-        $data->deleted_at = NULL;
+        $data             = Status::findOrFail($id);
+        $data->deleted_at = null;
         $data->save();
     }
-
 
     /**
      * Obtener todos los registros de la tabla para el datatable
@@ -167,23 +184,23 @@ class StatusController extends Controller
      */
     public function getAll()
     {
-        return \DataTables::of(Status::query()->where('deleted_at', '=', NULL))->make(true);
+        return \DataTables::of(Status::query()->where('deleted_at', '=', null))->make(true);
     }
 
     public function getDataSelect()
     {
-        $data   = Status::select('descripcion as name', 'id as value')
-        ->where('deleted_at', null)->get();
+        $data = Status::select('descripcion as name', 'id as value')
+            ->where('deleted_at', null)->get();
         return array(
             "code" => 200,
-            "data" => $data
+            "data" => $data,
         );
     }
 
     public function getDataSelectModalTagGuia()
     {
-        $data   = Status::select('descripcion as name', 'id')
-        ->where('deleted_at', null)->get();
+        $data = Status::select('descripcion as name', 'id')
+            ->where('deleted_at', null)->get();
         return \DataTables::of($data)->make(true);
     }
 }

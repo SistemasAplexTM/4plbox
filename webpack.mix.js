@@ -57,8 +57,8 @@ mix.scripts(['resources/assets/js/main.js'] , 'public/js/main.js');
 mix.styles(['resources/assets/css/main.css'] , 'public/css/main.css');
 
 mix.copyDirectory('resources/assets/js/templates', 'public/js/templates');
-// mix.copyDirectory('resources/assets/js/plugins', 'public/js/plugins');
-// mix.copyDirectory('resources/assets/css/plugins', 'public/css/plugins');
+mix.copyDirectory('resources/assets/js/plugins', 'public/js/plugins');
+mix.copyDirectory('resources/assets/css/plugins', 'public/css/plugins');
 // mix.copyDirectory('resources/assets/img', 'public/img');
 // mix.copyDirectory('resources/assets/fonts', 'public/fonts');
 // mix.copyDirectory('resources/assets/css/font-awesome', 'public/css/font-awesome');

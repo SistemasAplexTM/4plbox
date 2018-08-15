@@ -98,7 +98,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.codigo}">
                                         <div class="col-sm-4">
-                                            <label for="codigo" class="control-label gcore-label-top">Código IATA:</label>
+                                            <label for="codigo" class="control-label gcore-label-top">Código:</label>
                                         </div>
                                         <div class="col-sm-8">
                                             <input v-model="codigo" name="codigo" id="codigo" class="form-control" type="text" maxlength="5" @click="deleteError('codigo')" />

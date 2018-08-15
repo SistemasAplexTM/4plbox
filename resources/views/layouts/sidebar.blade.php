@@ -92,10 +92,20 @@
                     @can('master.index')
                     <li>
                         <a href="{{ route('master.index') }}">
-                            <spam class="fa fa-medium">
+                            <spam class="fa fa-plane">
                             </spam>
                             {{-- @lang('sidebar.master_guide') --}}
                             Guia master
+                        </a>
+                    </li>
+                    @endcan
+                    @can('bill.index')
+                    <li>
+                        <a href="{{-- {{ route('bill.index') }} --}}">
+                            <spam class="fa fa-ship">
+                            </spam>
+                            {{-- @lang('sidebar.master_guide') --}}
+                            Bill of lading
                         </a>
                     </li>
                     @endcan

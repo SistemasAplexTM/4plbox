@@ -717,7 +717,7 @@ var objVue = new Vue({
                     $('#direccionD').attr('readonly', true);
                     $('#emailD').attr('readonly', true);
                     $('#telD').attr('readonly', true);
-                    $('#localizacion_id_c').attr('disable', true);
+                    $('#localizacion_id_c').select2({'disabled': true});
                     $('#zipD').attr('readonly', true);
                     $('#btnBuscarConsignee').attr('readonly', false);
                 } else {
@@ -726,7 +726,8 @@ var objVue = new Vue({
                     $('#direccionD').attr('readonly', false);
                     $('#emailD').attr('readonly', false);
                     $('#telD').attr('readonly', false);
-                    $('#localizacion_id_c').attr('disable', false);
+                    $('#localizacion_id_c').select2({'disabled': false});
+                    llenarSelectPersonalizado('documento', 'localizacion', 'localizacion_id_c', 2);
                     $('#zipD').attr('readonly', false);
                     $('#btnBuscarConsignee').attr('readonly', true);
                 }
@@ -737,7 +738,7 @@ var objVue = new Vue({
                     $('#direccionR').attr('readonly', true);
                     $('#emailR').attr('readonly', true);
                     $('#telR').attr('readonly', true);
-                    $('#localizacion_id').attr('disable', true);
+                    $('#localizacion_id').select2({'disabled': true});
                     $('#zipR').attr('readonly', true);
                     $('#btnBuscarShipper').attr('readonly', false);
                 } else {
@@ -746,7 +747,8 @@ var objVue = new Vue({
                     $('#direccionR').attr('readonly', false);
                     $('#emailR').attr('readonly', false);
                     $('#telR').attr('readonly', false);
-                    $('#localizacion_id').attr('disable', false);
+                    $('#localizacion_id').select2({'disabled': false});
+                    llenarSelectPersonalizado('documento', 'localizacion', 'localizacion_id', 2);
                     $('#zipR').attr('readonly', false);
                     $('#btnBuscarShipper').attr('readonly', true);
                 }
@@ -761,7 +763,7 @@ var objVue = new Vue({
                 $('#direccionD').attr('readonly', false);
                 $('#emailD').val('').attr('readonly', false);
                 $('#telD').val('').attr('readonly', false);
-                $('#localizacion_id_c').attr('disable', false);
+                $('#localizacion_id_c').select2({'disabled': false});
                 $('#localizacion_id_c').select2('destroy').empty();
                 llenarSelectPersonalizado('documento', 'localizacion', 'localizacion_id_c', 2); // module, tableName, id_campo
                 $('#zipD').val('').attr('readonly', false);
@@ -773,7 +775,7 @@ var objVue = new Vue({
                 $('#direccionR').attr('readonly', false);
                 $('#emailR').val('').attr('readonly', false);
                 $('#telR').val('').attr('readonly', false);
-                $('#localizacion_id').attr('disable', false);
+                $('#localizacion_id').select2({'disabled': false});
                 $('#localizacion_id').select2('destroy').empty();
                 llenarSelectPersonalizado('documento', 'localizacion', 'localizacion_id', 2); // module, tableName, id_campo
                 $('#zipR').val('').attr('readonly', false);
@@ -821,7 +823,7 @@ var objVue = new Vue({
                 $('#emailR').val(data['correo']).attr('readonly', true);
                 $('#telR').val(data['telefono']).attr('readonly', true);
                 $('#localizacion_id').append('<option value="' + data['ciudad_id'] + '" selected="selected">' + data['ciudad'] + '</option>').val([data['ciudad_id']]).trigger('change');
-                $('#localizacion_id').attr('disable', true);
+                $('#localizacion_id').select2({'disabled': true});
                 $('#zipR').val(data['zip']).attr('readonly', true);
             } else {
                 me.nombreD = data['nombre_full'];
@@ -830,7 +832,7 @@ var objVue = new Vue({
                 $('#emailD').val(data['correo']).attr('readonly', true);
                 $('#telD').val(data['telefono']).attr('readonly', true);
                 $('#localizacion_id_c').append('<option value="' + data['ciudad_id'] + '" selected="selected">' + data['ciudad'] + '</option>').val([data['ciudad_id']]).trigger('change');
-                $('#localizacion_id_c').attr('disable', true);
+                $('#localizacion_id_c').select2({'disabled': true});
                 $('#zipD').val(data['zip']).attr('readonly', true);
             }
         },

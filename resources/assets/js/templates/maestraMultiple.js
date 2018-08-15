@@ -20,7 +20,7 @@ $(document).ready(function() {
                     var btn_edit = "<a onclick=\"edit(" + params + ")\" class='btn btn-outline btn-success btn-xs' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit'></i></a> ";
                 }
                 if (permission_delete) {
-                    var btn_delete = " <a onclick=\"eliminar(" + full.id + "," + true + ")\" class='btn btn-outline btn-danger btn-xs' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-trash'></i></a> ";
+                    var btn_delete = " <a onclick=\"eliminar(" + full.id + "," + false + ")\" class='btn btn-outline btn-danger btn-xs' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-trash'></i></a> ";
                 }
                 return btn_edit + btn_delete;
             }
@@ -91,9 +91,13 @@ var objVue = new Vue({
                 });
             } else {
                 axios.delete(type + '/' + data.id).then(response => {
-                    this.updateTable();
-                    toastr.success('Registro eliminado correctamente.');
-                    toastr.options.closeButton = true;
+                    if(response.data.code == 200){
+                        this.updateTable();
+                        toastr.success('Registro eliminado correctamente.');
+                        toastr.options.closeButton = true;
+                    }else{
+                        toastr.error("Error: " + response.data.error, {timeOut: 50000});
+                    }
                 });
             }
         },

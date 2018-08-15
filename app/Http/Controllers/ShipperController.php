@@ -176,9 +176,12 @@ class ShipperController extends Controller
         }
         $table = 'shipper';
         if ($id_consignee == null || $id_consignee == 'null') {
-            $where = [[$table . '.deleted_at', '=', null], [$table .'.agencia_id', $id_agencia]];
+            $where = [[$table . '.deleted_at', '=', null]];
             if ($data != null and $data != 'null') {
                 $where[] = array($table . '.nombre_full', 'like', '%' . $data . '%');
+            }
+            if(!Auth::user()->isRole('admin')){
+                $where[] = [$table . '.agencia_id', $id_agencia];
             }
             $sql = DB::table($table)
                 ->join('localizacion', $table . '.localizacion_id', '=', 'localizacion.id')
@@ -190,12 +193,15 @@ class ShipperController extends Controller
                 ->orderBy($table . '.nombre_full');
         } else {
 
-            $where = [['a.deleted_at', null], ['b.deleted_at', null], ['d.id', $id_agencia]];
+            $where = [['a.deleted_at', null], ['b.deleted_at', null]];
             if ($data != null and $data != 'null') {
                 $where[] = array('b.nombre_full', 'like', '%' . $data . '%');
             }
             if ($id_consignee != null) {
                 $where[] = array('a.consignee_id', $id_consignee);
+            }
+            if(!Auth::user()->isRole('admin')){
+                $where[] = ['d.id', $id_agencia];
             }
 
             $sql = DB::table('shipper_consignee AS a')
