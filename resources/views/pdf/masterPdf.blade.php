@@ -893,12 +893,12 @@
                         </span>
                     </div>
                     {{-- TOTALES INFORMATION --}}
-                    <div style="position:absolute;top:5.33in;left:0.19in;width:0.5in;line-height:0.16in;font-size:14pt;">
+                    <div style="position:absolute;top:5.33in;left:0.19in;width:0.5in;line-height:0.16in;font-size:13pt;">
                         <span style="font-style:normal;font-weight:normal;font-family:Helvetica;color:#000000">
                             {{ $detalle->piezas }}
                         </span>
                     </div>
-                    <div style="position:absolute;top:5.33in;left:0.78in;width:0.57in;line-height:0.16in;font-size:14pt;">
+                    <div style="position:absolute;top:5.33in;left:0.78in;width:0.57in;line-height:0.16in;font-size:13pt;">
                         <span style="font-style:normal;font-weight:normal;font-family:Helvetica;color:#000000">
                             {{ round($detalle->peso,2) }}
                             <br>
@@ -914,22 +914,22 @@
                             </br>
                         </span>
                     </div>
-                    <div style="position:absolute;top:5.33in;left:1.8in;width:0.57in;line-height:0.16in;font-size:14pt;">
+                    <div style="position:absolute;top:5.33in;left:1.8in;width:0.57in;line-height:0.16in;font-size:13pt;">
                         <span style="font-style:normal;font-weight:normal;font-family:Helvetica;color:#000000">
                             {{ $detalle->rate_class }}
                         </span>
                     </div>
-                    <div style="position:absolute;top:5.33in;left:2.65in;width:0.57in;line-height:0.16in;font-size:14pt;">
+                    <div style="position:absolute;top:5.33in;left:2.65in;width:0.57in;line-height:0.16in;font-size:13pt;">
                         <span style="font-style:normal;font-weight:normal;font-family:Helvetica;color:#000000">
                             {{ $detalle->peso_cobrado }}
                         </span>
                     </div>
-                    <div style="position:absolute;top:5.33in;left:3.5in;width:0.57in;line-height:0.16in;font-size:14pt;">
+                    <div style="position:absolute;top:5.33in;left:3.5in;width:0.57in;line-height:0.16in;font-size:13pt;">
                         <span style="font-style:normal;font-weight:normal;font-family:Helvetica;color:#000000">
                             {{ $detalle->tarifa }}
                         </span>
                     </div>
-                    <div style="position:absolute;top:5.33in;left:4.27in;width:0.96in;line-height:0.16in;font-size:14pt;">
+                    <div style="position:absolute;top:5.33in;left:4.27in;width:0.96in;line-height:0.16in;font-size:13pt;">
                         <span style="font-style:normal;font-weight:normal;font-family:Helvetica;color:#000000">
                             $ {{ $detalle->total }}
                         </span>
@@ -939,17 +939,17 @@
                             {{ $detalle->descripcion }}
                         </span>
                     </div>
-                    <div style="position:absolute;top:7.47in;left:0.19in;width:0.5in;line-height:0.16in;font-size:14pt;">
+                    <div style="position:absolute;top:7.47in;left:0.19in;width:0.5in;line-height:0.16in;font-size:13pt;">
                         <span style="font-style:normal;font-weight:normal;font-family:Helvetica;color:#000000">
                             {{ $detalle->piezas }}
                         </span>
                     </div>
-                    <div style="position:absolute;top:7.47in;left:0.78in;width:0.57in;line-height:0.16in;font-size:14pt;">
+                    <div style="position:absolute;top:7.47in;left:0.78in;width:0.57in;line-height:0.16in;font-size:13pt;">
                         <span style="font-style:normal;font-weight:normal;font-family:Helvetica;color:#000000">
                             {{ round($detalle->peso * 0.453592, 2) }}
                         </span>
                     </div>
-                    <div style="position:absolute;top:7.47in;left:4.27in;width:0.96in;line-height:0.16in;font-size:14pt;">
+                    <div style="position:absolute;top:7.47in;left:4.27in;width:0.96in;line-height:0.16in;font-size:13pt;">
                         <span style="font-style:normal;font-weight:normal;font-family:Helvetica;color:#000000">
                             $ {{ $detalle->total }}
                         </span>

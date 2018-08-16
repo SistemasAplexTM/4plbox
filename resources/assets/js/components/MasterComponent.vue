@@ -516,17 +516,58 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-lg-2">
+                  <div class="col-lg-3">
                     <div class="form-group">
-                      <label for="agent_iata_data">Total Other Fuel Charges</label>
+                      <label for="agent_iata_data">Total Other Charges Due Agent</label>
                       <input v-model="total_other_charge_due_agent" class="form-control" name="" id="total_other_charge_due_agent" type="number">
-                    </div>
-                  </div>
-                  <div class="col-lg-2">
-                    <div class="form-group">
+                      <br>
                       <label for="agent_iata_data">Total Other Charges Due Carrier</label>
                       <input v-model="total_other_charge_due_carrier" class="form-control" name="" id="total_other_charge_due_carrier" type="number">
                     </div>
+                  </div>
+
+                  <div class="col-lg-9">
+                    <h3>Other charges</h3>
+                    <a @click="addOtherChargue()">Add Row</a>
+                    <table class="table table-stripped table-hover table-bordered">
+                      <thead>
+                        <tr>
+                          <th rowspan="2" class="text-center" style="width: 60%;">Descripction</th>
+                          <th colspan="2" class="text-center">Due</th>
+                          <th rowspan="2" class="text-center">Amount</th>
+                          <th rowspan="2"></th>
+                        </tr>
+                        <tr>
+                          <th class="text-center">Agent</th>
+                          <th class="text-center">Carrier</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="(find, index) in finds">
+                          <td>
+                            <input type="text" class="form-control" v-model="find.oc_description">
+                          </td>
+                          <td class="text-center">
+                            <div class="radio radio-info">
+                                <input type="radio" value="agent" :name="'agent'+index" aria-label="Single radio Two" v-model="find.oc_due">
+                                <label></label>
+                            </div>
+                          </td>
+                          <td class="text-center">
+                            <div class="radio radio-info">
+                                <input type="radio" value="carrier" :name="'carrier'+index" aria-label="Single radio Two" v-model="find.oc_due">
+                                <label></label>
+                            </div>
+                          </td>
+                          <td>
+                            <input type="number" class="form-control" v-model="find.oc_value" v-on:keyup="setDueAgent()">
+                          </td>
+                          <td>
+                            <a class="btn btn-xs btn-danger" @click="deleteRow(index)"><i class="fa fa-trash"></i></a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -557,6 +598,14 @@ span.error{
   export default {
     data(){
       return {
+        finds: [{
+          oc_description: null,
+          oc_value: null,
+          oc_due: null,
+        }],
+        // oc_description: [],
+        // oc_value: [],
+        // oc_due: [],
         preContent: "",
         preStyle: {
           background: "#f2f2f2",
@@ -662,6 +711,26 @@ span.error{
       this.getAerolineas('aeropuertos');
     },
     methods: {
+      addOtherChargue: function(){
+        this.finds.push({
+          oc_description: null,
+          oc_value: null,
+          oc_due: null,
+        });
+      },
+      deleteRow(index) {
+        this.finds.splice(index,1);
+        this.setDueAgent();
+      },
+      setDueAgent(){
+        var objeto = this.finds;
+        var total = 0;
+        for (var i in objeto) {
+          total += parseFloat(objeto[i].oc_value);
+          console.log(parseFloat(objeto[i].oc_value));
+        }
+        this.total_other_charge_due_agent = total;
+      },
       onComplete: function(){
         if (!this.editing) {
           this.store();
