@@ -580,6 +580,7 @@ span.error{
         aerolinea_inventario_id: null,
         aerolinea_inventario: null,
         aerolinea: null,
+        aerolinea_name: null,
         aeropuertos: [],
         aeropuerto_salida: null,
         aeropuerto_destino: null,
@@ -732,6 +733,7 @@ span.error{
           'consignee_id': this.consignee.id,
           'aerolinea_inventario_id': this.aerolinea_inventario_id,
           'aerolineas_id': this.aerolinea,
+          'by_first_carrier': this.aerolinea_name,
           'aeropuertos_id': this.aeropuerto_salida.id,
           'aeropuertos_id_destino': this.aeropuerto_destino.id,
           'account_information': this.account_information,
@@ -756,6 +758,7 @@ span.error{
           'descripcion': this.descripcion,
           'handing_information': this.handing_information,
           'consolidado_id': this.consolidado_id.id,
+          'to1': this.aeropuerto_destino.codigo,
         }).then(response => {
             toastr.success('Registro exitoso.');
             location.reload(true);
@@ -791,6 +794,7 @@ span.error{
           'descripcion': this.descripcion,
           'handing_information': this.handing_information,
           'consolidado_id': this.consolidado_id.id,
+          'to1': this.aeropuerto_destino.codigo,
         }).then(response => {
             toastr.success('Actualización exitosa.');
             location.reload(true);
@@ -886,6 +890,7 @@ span.error{
         if (val != null) {
           this.codigo = val.codigo;
           this.aerolinea = val.id;
+          this.aerolinea_name = val.nombre;
           let url = '../aerolinea_inventario/get/' + val.id;
           if (this.editing) {
             url = '../../aerolinea_inventario/get/' + val.id;

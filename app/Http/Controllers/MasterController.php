@@ -205,6 +205,7 @@ class MasterController extends Controller
                 'a.handing_information',
                 'a.to1',
                 'a.by1',
+                'a.by_first_carrier',
                 'a.fecha_vuelo1',
                 'a.fecha_vuelo2',
                 'a.amount_insurance',

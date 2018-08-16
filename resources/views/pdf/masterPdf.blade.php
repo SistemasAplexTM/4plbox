@@ -806,6 +806,7 @@
                     {{-- BY FIRST CARRIER INFORMATION --}}
                     <div style="position:absolute;top:3.7in;left:0.76in;width:1.37in;line-height:0.13in;font-size:8pt;">
                         <span style="font-style:normal;font-weight:normal;font-family:Helvetica;color:#000000">
+                            {{ $data->by_first_carrier }}
                         </span>
                     </div>
                     {{-- TO INFORMATION --}}
@@ -899,7 +900,7 @@
                     </div>
                     <div style="position:absolute;top:5.33in;left:0.78in;width:0.57in;line-height:0.16in;font-size:14pt;">
                         <span style="font-style:normal;font-weight:normal;font-family:Helvetica;color:#000000">
-                            {{ $detalle->peso }}
+                            {{ round($detalle->peso,2) }}
                             <br>
                                 {{ round($detalle->peso * 0.453592, 2) }}
                             </br>

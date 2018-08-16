@@ -28,6 +28,7 @@ class Master extends Model
         'to3',
         'by1',
         'by2',
+        'by_first_carrier',
         'currency',
         'chgs_code',
         'dec_value_carriage',
