@@ -1,15 +1,15 @@
 <template>
 	<div id="right-sidebar" :class="{'sidebar-open' : show}">
 
-		<input type="hidden" id="urlGetStatus" value="/4plbox/public/statusReport/getStatusByIdDetalle/">
+		<!-- <input type="hidden" id="urlGetStatus" value="/4plbox/public/statusReport/getStatusByIdDetalle/">
 		<input type="hidden" id="urlHistoryConsignee" value="/4plbox/public/documento/getHistoryConsignee/">
-		<input type="hidden" id="urlHistoryDocument" value="/4plbox/public/documento/getHistoryDocument/">
+		<input type="hidden" id="urlHistoryDocument" value="/4plbox/public/documento/getHistoryDocument/"> -->
 
 		<!-- SERVER -->
 		
-		<!-- <input type="hidden" id="urlGetStatus" value="/statusReport/getStatusByIdDetalle/">
+		<input type="hidden" id="urlGetStatus" value="/statusReport/getStatusByIdDetalle/">
 		<input type="hidden" id="urlHistoryConsignee" value="/documento/getHistoryConsignee/">
-		<input type="hidden" id="urlHistoryDocument" value="/documento/getHistoryDocument/"> -->
+		<input type="hidden" id="urlHistoryDocument" value="/documento/getHistoryDocument/">
 
 	    <div class="sidebar-container">
 	        <ul class="nav nav-tabs navs-3">

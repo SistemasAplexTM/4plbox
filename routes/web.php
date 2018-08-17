@@ -75,6 +75,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('master/delete/{id}/{logical?}', 'MasterController@delete')->name('modulo.delete');
     Route::get('master/restaurar/{id}', 'MasterController@restaurar');
     Route::get('master/imprimir/{id_master}/{simple?}', 'MasterController@imprimir');
+    Route::get('master/getOtherCharges/{id}', 'MasterController@getOtherCharges');
 
     /*--- MODULO TRACKINGS ---*/
     Route::resource('tracking', 'TrackingController', ['except' => ['show', 'create', 'edit', 'update']]);

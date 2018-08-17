@@ -54,6 +54,22 @@ class MasterController extends Controller
             $detalle->peso = $detalle->peso * 2.20462;
             $detalle->master_id = $master->id;
             $detalle->save();
+
+            DB::table('master_cargos_adicionales')->where('master_id', $master->id)->delete();
+            if($request->other_c[0]['oc_value'] != ''){
+                foreach ($request->other_c as $value) {
+                    DB::table('master_cargos_adicionales')->insert(
+                        [
+                            'master_id' => $master->id, 
+                            'descripcion' => $value['oc_description'], 
+                            'agent_carrier' => $value['oc_due'], 
+                            'valor' => $value['oc_value'],
+                            'created_at' => date('Y-m-d H:i:s'),
+                        ]
+                    );
+                }
+            }
+
             DB::commit();
             return array('id_master' => $master->id);
         } catch (\Exception $e) {
@@ -102,6 +118,7 @@ class MasterController extends Controller
      */
     public function update(Request $request, $master)
     {
+        DB::beginTransaction();
         try {
             $masterObj = Master::findOrFail($master);
             $masterObj->update($request->all());
@@ -117,13 +134,29 @@ class MasterController extends Controller
                 'total'          => $request->total,
                 'descripcion'    => $request->descripcion,
             ]);
+            DB::table('master_cargos_adicionales')->where('master_id', $master)->delete();
+            if(count($request->other_c) > 0){
+                foreach ($request->other_c as $value) {
+                    DB::table('master_cargos_adicionales')->insert(
+                        [
+                            'master_id' => $master, 
+                            'descripcion' => $value['oc_description'], 
+                            'agent_carrier' => $value['oc_due'], 
+                            'valor' => $value['oc_value'],
+                            'created_at' => date('Y-m-d H:i:s'),
+                        ]
+                    );
+                }
+            }
             if ($request->consolidado_id != null) {
                 DB::table('documento')
                     ->where('id', $request->consolidado_id)
                     ->update(['master_id' => $master]);
             }
+            DB::commit();
             return array('id_master' => $master);
         } catch (Exception $e) {
+            DB::rollback();
             return $e;
         }
     }
@@ -173,8 +206,10 @@ class MasterController extends Controller
         }
         $data    = $this->getMasterForImpress($id_master);
         $detalle = $this->getMasterDetalleForImpress($id_master);
-        $data    = array('data' => $data, 'detalle' => $detalle, 'cantidad' => $cantidad);
-        $pdf     = \PDF::loadView('pdf.masterPdf', $data);
+        $other   = $this->getOtherCharges($id_master);
+        // $data    = array('data' => $data, 'detalle' => $detalle, 'other' => $other, 'cantidad' => $cantidad);
+        return view('pdf.masterPdf_1', compact('cantidad', 'data', 'detalle', 'other'));
+        $pdf     = \PDF::loadView('pdf.masterPdf_1', $data);
         // $pdf = \PDF::loadView('templates.master.imprimir', $data);
         return $pdf->stream('master.pdf');
     }
@@ -204,7 +239,10 @@ class MasterController extends Controller
                 'a.chgs_code',
                 'a.handing_information',
                 'a.to1',
+                'a.to2',
+                'a.to3',
                 'a.by1',
+                'a.by2',
                 'a.by_first_carrier',
                 'a.fecha_vuelo1',
                 'a.fecha_vuelo2',
@@ -253,6 +291,8 @@ class MasterController extends Controller
 
                 'f.nombre AS nombre_aeropuerto',
                 'g.nombre AS nombre_aerolinea',
+                'g.direccion AS dir_aerolinea',
+                'g.zip AS zip_aerolinea',
                 'g.codigo AS codigo_aerolinea',
                 'h.nombre AS aeropuerto_destino',
                 'i.guia AS aerolinea_inventario',
@@ -328,6 +368,25 @@ class MasterController extends Controller
         $answer = array(
             'code'  => 200,
             'items' => $tags,
+        );
+        return $answer;
+    }
+
+    public function getOtherCharges($id_master)
+    {
+        $data = DB::table('master_cargos_adicionales AS a')
+            ->select(
+                'a.descripcion AS oc_description',
+                'a.agent_carrier AS oc_due',
+                'a.valor AS oc_value'
+            )
+            ->where([
+                ['a.master_id', $id_master]
+            ])
+            ->get();
+        $answer = array(
+            'code'  => 200,
+            'data' => $data
         );
         return $answer;
     }

@@ -1035,9 +1035,11 @@
                         </span>
                     </div>
                     {{-- Other Charges   --}}
-                    <div style="position:absolute;top:7.79in;left:2.47in;width:5.27in;line-height:0.13in;font-size:10pt;">
+                    <div style="position:absolute;top:7.79in;left:2.47in;width:5.27in;line-height:0.13in;font-size:8pt;">
                         <span style="font-style:normal;font-weight:normal;font-family:Helvetica;color:#000000">
-                            {{ $data->other_charges }}
+                            @foreach($other['data'] AS $ot)
+                            {{ $ot->oc_description . ': $' . number_format($ot->oc_value, 2) .' ('. (($ot->oc_due == 1) ? 'C' : 'A') .')' }} <br>
+                            @endforeach
                         </span>
                     </div>
 					<div style="position:absolute;top:8.83in;left:2.47in;width:5.27in;line-height:0.13in;font-size:6pt;">
@@ -1047,7 +1049,7 @@
                     </div>
                     <div style="position:absolute;top:9.6in;left:2.47in;width:2in;line-height:0.15in;font-size:14pt;">
                         <span style="font-style:normal;font-weight:normal;font-family:Helvetica;color:#000000">
-                            {{ $data->fecha_vuelo1 }}
+                            {{ date('d-m-y', strtotime($data->fecha_vuelo1)) }}
                         </span>
                     </div>
                     <div style="position:absolute;top:9.37in;left:4.7in;width:2.8in;font-size:8pt;">

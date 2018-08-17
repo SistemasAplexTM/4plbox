@@ -2,6 +2,13 @@
   .dropdown-toggle>input[type="search"] {
     width: 120px !important;
   }
+  .input-group-btn select {
+    border-color: #ccc;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 7px;
+    padding-bottom: 5px;
+  }
 </style>
 <template>  
   <form-wizard @on-complete="onComplete"
@@ -66,7 +73,7 @@
                       v-model="shipper.name"
                       type="s" 
                       @change-select="setData" 
-                      url="4plbox/public/master/buscar"
+                      url="master/buscar"
                       ></autocomplete-component>
                     <small v-show="errors.has('nombre')" class="bg-danger">{{ errors.first('nombre') }}</small>
                   </div>
@@ -136,7 +143,7 @@
                     v-model="consignee.name"
                     type="c" 
                     @change-select="setData" 
-                    url="4plbox/public/master/buscar"
+                    url="master/buscar"
                     ></autocomplete-component>
                     <small v-show="errors.has('nombreC')" class="bg-danger">{{ errors.first('nombreC') }}</small>
                   </div>
@@ -206,7 +213,7 @@
                       v-model="carrier.name"
                       type="cr" 
                       @change-select="setData" 
-                      url="4plbox/public/master/buscar"
+                      url="master/buscar"
                       ></autocomplete-component>
                     <small v-show="errors.has('nombreCR')" class="bg-danger">{{ errors.first('nombreCR') }}</small>
                   </div>
@@ -454,9 +461,9 @@
                       <thead>
                         <tr>
                           <th>N° of Pieces RCP</th>
-                          <th colspan="2" width="20%">Gross Weigth</th>
-                          <th>Rate Class</th>
-                          <th>Chargeable Weigth Kl</th>
+                          <th width="15%">Gross Weigth</th>
+                          <th width="9%">Rate Class</th>
+                          <th>Chargeable Weigth</th>
                           <th>Rate Charge</th>
                           <th>Total</th>
                           <th width="40%">Nature and Quantity of Goods(Incl. Dimensions or Volume)</th>
@@ -471,17 +478,40 @@
                           </td>
                           <td>
                             <div class="form-group" :class="{'has-error': errors.has('peso') }">
-                              <input v-validate="'required'" name="peso" v-model="peso" type="number" class="form-control" placeholder="Kl">
+                              <div class="input-group">
+                                <input v-validate="'required'" name="peso" v-model="peso" type="number" class="form-control" placeholder="Kl">
+                                <span class="input-group-btn">
+                                  <select class="btn" name="unidad_medida" v-model="unidad_medida">
+                                    <option value="Kl">Kl</option>
+                                    <!-- <option value="Lb">Lb</option> -->
+                                  </select>
+                                </span>
+                              </div>
                             </div>
                           </td>
-                          <td>
+                          <!-- <td style="width: 5%;">
                             <div class="form-group" :class="{'has-error': errors.has('unidad_medida') }">
                               <input v-validate="'required'" name="unidad_medida" v-model="unidad_medida" type="text" class="form-control" readonly="">
                             </div>
-                          </td>
+                          </td> -->
                           <td>
                             <div class="form-group">
-                              <input name="rate_class" v-model="rate_class" type="number" class="form-control">
+                              <!-- <input name="rate_class" v-model="rate_class" type="number" class="form-control"> -->
+                              <select class="form-control" name="rate_class" v-model="rate_class">
+                                    <option value="M">M</option>
+                                    <option value="N">N</option>
+                                    <option value="Q">Q</option>
+                                    <option value="B">B</option>
+                                    <option value="K">K</option>
+                                    <option value="C">C</option>
+                                    <option value="R">R</option>
+                                    <option value="S">S</option>
+                                    <option value="U">U</option>
+                                    <option value="E">E</option>
+                                    <option value="X">X</option>
+                                    <option value="Y">Y</option>
+                                    <option value="Z">Z</option>
+                              </select>
                             </div>
                           </td>
                           <td>
@@ -527,8 +557,7 @@
                   </div>
 
                   <div class="col-lg-9">
-                    <h3>Other charges</h3>
-                    <a @click="addOtherChargue()">Add Row</a>
+                    <label>Other charges</label><a class="pull-right" @click="addOtherChargue()">Add Row</a>
                     <table class="table table-stripped table-hover table-bordered">
                       <thead>
                         <tr>
@@ -543,19 +572,21 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr v-for="(find, index) in finds">
+                        <tr v-for="(find, index) in other_c">
                           <td>
-                            <input type="text" class="form-control" v-model="find.oc_description">
+                            <div class="form-group" :class="{'has-error': errors.has('oc_description') }">
+                              <input type="text" class="form-control" name="oc_description" v-model="find.oc_description" v-validate="'required'">
+                            </div>
                           </td>
                           <td class="text-center">
                             <div class="radio radio-info">
-                                <input type="radio" value="agent" :name="'agent'+index" aria-label="Single radio Two" v-model="find.oc_due">
+                                <input type="radio" value="0" :name="'agent'+index" aria-label="Single radio Two" v-model="find.oc_due" v-on:change="setDueAgent()">
                                 <label></label>
                             </div>
                           </td>
                           <td class="text-center">
                             <div class="radio radio-info">
-                                <input type="radio" value="carrier" :name="'carrier'+index" aria-label="Single radio Two" v-model="find.oc_due">
+                                <input type="radio" value="1" :name="'carrier'+index" aria-label="Single radio Two" v-model="find.oc_due" v-on:change="setDueAgent()">
                                 <label></label>
                             </div>
                           </td>
@@ -598,14 +629,11 @@ span.error{
   export default {
     data(){
       return {
-        finds: [{
+        other_c: [{
           oc_description: null,
           oc_value: null,
-          oc_due: null,
+          oc_due: 0,
         }],
-        // oc_description: [],
-        // oc_value: [],
-        // oc_due: [],
         preContent: "",
         preStyle: {
           background: "#f2f2f2",
@@ -645,7 +673,7 @@ span.error{
         piezas: null,
         peso: null,
         optional_shipping_info: null,
-        rate_class: null,
+        rate_class: 'N',
         tarifa: null,
         descripcion: null,
         peso_cobrado: null,
@@ -709,27 +737,48 @@ span.error{
       }
       this.getAerolineas('aerolineas');
       this.getAerolineas('aeropuertos');
+      this.getOtherCharges();
     },
     methods: {
       addOtherChargue: function(){
-        this.finds.push({
+        this.other_c.push({
           oc_description: null,
           oc_value: null,
-          oc_due: null,
+          oc_due: 0,
         });
       },
       deleteRow(index) {
-        this.finds.splice(index,1);
+        this.other_c.splice(index,1);
         this.setDueAgent();
       },
       setDueAgent(){
-        var objeto = this.finds;
-        var total = 0;
+        var objeto = this.other_c;
+        var total_c = 0;
+        var total_a = 0;
         for (var i in objeto) {
-          total += parseFloat(objeto[i].oc_value);
-          console.log(parseFloat(objeto[i].oc_value));
+          if(objeto[i].oc_due == '1'){
+            total_c += parseFloat((objeto[i].oc_value == '') ? 0 : objeto[i].oc_value);
+          }else{
+            if(objeto[i].oc_due == '0'){
+              total_a += parseFloat((objeto[i].oc_value == '') ? 0 : objeto[i].oc_value);
+            }
+          }
         }
-        this.total_other_charge_due_agent = total;
+        this.total_other_charge_due_carrier = total_c;
+        this.total_other_charge_due_agent = total_a;
+      },
+      getOtherCharges: function(){
+        let url = null;
+        if (this.editing) {
+          url = '../getOtherCharges/'+this.master;
+          axios.get(url).then(response => {
+            console.log(response.data.data);
+            var obj = response.data.data;
+            if(Object.keys(obj).length !== 0){
+              this.other_c = obj;
+            }
+          });
+        }
       },
       onComplete: function(){
         if (!this.editing) {
@@ -828,10 +877,11 @@ span.error{
           'handing_information': this.handing_information,
           'consolidado_id': this.consolidado_id.id,
           'to1': this.aeropuerto_destino.codigo,
+          'other_c': this.other_c,
         }).then(response => {
             toastr.success('Registro exitoso.');
-            location.reload(true);
-            window.open("imprimir/" + response.data.id_master + '/' + true,'_blank');
+            // location.reload(true);
+            // window.open("imprimir/" + response.data.id_master + '/' + true,'_blank');
         });
       },
       update: function(){
@@ -864,6 +914,7 @@ span.error{
           'handing_information': this.handing_information,
           'consolidado_id': this.consolidado_id.id,
           'to1': this.aeropuerto_destino.codigo,
+          'other_c': this.other_c,
         }).then(response => {
             toastr.success('Actualización exitosa.');
             location.reload(true);
@@ -930,7 +981,7 @@ span.error{
           this.total = response.data.detalle.total;
           this.descripcion = response.data.detalle.descripcion;
           this.total_other_charge_due_agent = response.data.data.total_other_charge_due_agent;
-          this.total_other_charge_due_agent = response.data.data.total_other_charge_due_agent;
+          this.total_other_charge_due_carrier = response.data.data.total_other_charge_due_carrier;
           this.consolidado_id = {
             id: response.data.data.consolidado_id, 
             consolidado: response.data.data.consolidado, 
