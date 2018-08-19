@@ -489,14 +489,8 @@
                               </div>
                             </div>
                           </td>
-                          <!-- <td style="width: 5%;">
-                            <div class="form-group" :class="{'has-error': errors.has('unidad_medida') }">
-                              <input v-validate="'required'" name="unidad_medida" v-model="unidad_medida" type="text" class="form-control" readonly="">
-                            </div>
-                          </td> -->
                           <td>
                             <div class="form-group">
-                              <!-- <input name="rate_class" v-model="rate_class" type="number" class="form-control"> -->
                               <select class="form-control" name="rate_class" v-model="rate_class">
                                     <option value="M">M</option>
                                     <option value="N">N</option>
@@ -724,10 +718,10 @@ span.error{
         this.peso_cobrado = this.peso;
       },
       peso_cobrado: function(){
-        this.total = this.peso_cobrado * this.tarifa;
+        this.total = isInteger(this.peso_cobrado * this.tarifa);
       },
       tarifa: function(){
-        this.total = this.peso_cobrado * this.tarifa;
+        this.total = isInteger(this.peso_cobrado * this.tarifa);
       }
     },
     created(){
@@ -880,8 +874,8 @@ span.error{
           'other_c': this.other_c,
         }).then(response => {
             toastr.success('Registro exitoso.');
-            // location.reload(true);
-            // window.open("imprimir/" + response.data.id_master + '/' + true,'_blank');
+            location.reload(true);
+            window.open("imprimir/" + response.data.id_master + '/' + true,'_blank');
         });
       },
       update: function(){
@@ -972,7 +966,7 @@ span.error{
           this.fecha_vuelo = response.data.data.fecha_vuelo1;
           this.fecha_vuelo = response.data.data.fecha_vuelo2;
           this.piezas = response.data.detalle.piezas;
-          this.peso = response.data.detalle.peso;
+          this.peso = response.data.detalle.peso_kl;
           this.unidad_medida = response.data.detalle.unidad_medida;
           this.rate_class = response.data.detalle.rate_class;
           this.commodity_item = response.data.detalle.commodity_item;

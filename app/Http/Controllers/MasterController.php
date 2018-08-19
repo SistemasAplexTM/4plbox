@@ -318,6 +318,7 @@ class MasterController extends Controller
                 'a.total',
                 'a.descripcion',
                 'a.peso',
+                'a.peso_kl',
                 'a.unidad_medida'
             )
             ->where('a.master_id', $id_master)
@@ -389,5 +390,28 @@ class MasterController extends Controller
             'data' => $data
         );
         return $answer;
+    }
+
+    public function imprimirLabel($id_master)
+    {
+        $data    = $this->getMasterForImpress($id_master);
+        $detalle = DB::table('master_detalle AS a')
+                    ->select(
+                        'a.id',
+                        'a.piezas',
+                        'a.rate_class',
+                        'a.commodity_item',
+                        'a.peso_cobrado',
+                        'a.tarifa',
+                        'a.total',
+                        'a.descripcion',
+                        'a.peso',
+                        'a.peso_kl',
+                        'a.unidad_medida'
+                    )
+                    ->where('a.master_id', $id_master)
+                    ->get();
+        $pdf     = \PDF::loadView('pdf.masterLabelPdf', compact('data', 'detalle'))->setPaper(array(25, -10, 380, 370), 'portrait');
+        return $pdf->stream('master.pdf');
     }
 }

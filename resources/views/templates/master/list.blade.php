@@ -20,7 +20,7 @@
 @section('content')
 <style type="text/css">
     #tbl-master_wrapper{
-        padding-bottom: 100px;
+        padding-bottom: 120px;
     }
 </style>
 <div class="row" id="master">

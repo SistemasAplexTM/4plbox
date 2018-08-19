@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $('#tbl-master').DataTable({
         ajax: 'master/all/reg',
-        "order": [[ 1, "desc" ]],
+        "order": [[ 2, "desc" ]],
         columns: [
             {data: 'num_master', name: 'num_master'},
             {data: 'aerolinea', name: 'aerolinea'},
@@ -34,6 +34,7 @@ $(document).ready(function () {
                        "<ul class='dropdown-menu dropdown-menu-right pull-right'><li><a href='master/imprimir/" +full.id + '/'+true +
                         "' target='_blank'> <spam class='fa fa-print'></spam> Master</a></li>" +
                          "<li><a href='master/imprimir/" +full.id +"' target='_blank'> <spam class='fa fa-print'></spam> Master simple</a></li>" + 
+                         "<li><a href='master/imprimirLabel/" +full.id +"' target='_blank'> <spam class='fa fa-print'></spam> Labels</a></li>" + 
                          "<li><a href='impresion-documento/pdfContrato' target='_blank'> <spam class='fa fa-print'></spam> Contrato</a></li>" + 
                          "<li><a href='impresion-documento/pdfTsa' target='_blank'> <spam class='fa fa-print'></spam> TSA</a></li>" + 
                          "</ul></div>";
