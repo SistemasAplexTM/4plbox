@@ -152,11 +152,11 @@
             font-size: 11px;
         }
         #barcode-name{
-        	font-size: 30px;
+            font-size: 30px;
         }
 </style>
 <?php 
-	$cont = 0;
+    $cont = 0;
     $toalRegistros = count($detalle);
     $contRegistros = 0;
 ?>
@@ -246,8 +246,8 @@
     <tr>
         <td>
             <div class="codebar2">
-            	<img id="barcode" style="height: 50px;padding: 5px;" src="data:image/png;base64, {{ DNS1D::getBarcodePNG($value->codigo, "C128",2,40) }}" alt="barcode" />
-            	<div id="barcode-name">{{ $value->codigo }}</div>
+                <img id="barcode" style="height: 50px;padding: 5px;" src="data:image/png;base64, {{ DNS1D::getBarcodePNG($value->codigo, "C128",2,40) }}" alt="barcode" />
+                <div id="barcode-name">{{ $value->codigo }}</div>
             </div>
         </td>
     </tr>

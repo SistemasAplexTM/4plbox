@@ -661,8 +661,8 @@ class DocumentoController extends Controller
     {
         $filter = [
                     ['documento.deleted_at', null],
-                    ['shipper.deleted_at', null],
-                    ['consignee.deleted_at', null],
+                    // ['shipper.deleted_at', null],
+                    // ['consignee.deleted_at', null],
                     ['agencia.deleted_at', null],
                     ['documento.tipo_documento_id', $request->id_tipo_doc]
                 ];
@@ -1433,6 +1433,7 @@ class DocumentoController extends Controller
             ->leftJoin('localizacion AS ciudad_shipper', 'shipper.localizacion_id', '=', 'ciudad_shipper.id')
             ->leftJoin('deptos AS deptos_consignee', 'ciudad_consignee.deptos_id', '=', 'deptos_consignee.id')
             ->leftJoin('deptos AS deptos_shipper', 'ciudad_shipper.deptos_id', '=', 'deptos_shipper.id')
+            ->leftJoin('pais', 'pais.id', '=', 'deptos_consignee.pais_id')
             ->select(
                 'documento_detalle.id',
                 'documento_detalle.contenido',
@@ -1462,18 +1463,32 @@ class DocumentoController extends Controller
                 'consignee.zip as cons_zip',
                 'consignee.po_box as cons_pobox',
                 'ciudad_consignee.nombre AS cons_ciudad',
-                'deptos_consignee.descripcion AS cons_depto'
+                'deptos_consignee.descripcion AS cons_depto',
+                'pais.descripcion AS cons_pais',
+                'pais.iso2 AS cons_pais_code',
+                'ciudad_consignee.prefijo'
             )
             ->where($where)
             ->get();
 
         $this->AddToLog('Impresion labels (' . $documento->id . ')');
-        $pdf = PDF::loadView('pdf.labelWG', compact('documento', 'detalle', 'document'))
-            ->setPaper(array(25, -25, 260, 360), 'landscape');
+        // $pdf = PDF::loadView('pdf.labelWG_1', compact('documento', 'detalle', 'document'))
+        //     ->setPaper(array(0, 0, 750, 1200));
+        $pdf = PDF::loadView('pdf.labelWG_1', compact('documento', 'detalle', 'document'))
+            ->setPaper(array(0, 0, 460, 360), 'landscape');
+
+        // $pdf = PDF::loadView('pdf.labelWG', compact('documento', 'detalle', 'document'))
+        //     ->setPaper(array(0, 0, 260, 360), 'landscape');
         $nameDocument = 'Label' . $document . '-' . $documento->id;
 
         // return $pdf->download($nameDocument.'.pdf');
         return $pdf->stream($nameDocument . '.pdf');
+
+        return view('pdf.labelWG_1', compact(
+            'documento',
+            'detalle',
+            'document'
+        ));
     }
 
     public function buscarGuias($id, $num_guia, $num_bolsa, $pais_id)
