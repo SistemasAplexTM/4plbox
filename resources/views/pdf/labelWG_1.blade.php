@@ -1,158 +1,68 @@
 <style>
     *{
-            font-size: 11px;
-            font-family: sans-serif;
-            font-weight: bold;
-        }    
-        #mvcIcon, #mvcMain{
-            display: none;
-        }
-        .divTable0{
-            float: left;
-            border: solid 1px #000;
-            width: 420px;
-        }
-        .container{
-            width: 420px;
-            height: 350px;
-            margin: 0 auto;
-        }
-        .fecha{
-            color: #FFFFFF;
-            background-color: #000;
-            width: 188px;
-            font-size: 15px;
-            height: 19px;
-        }
-        .peso{
-            font-size: 26px;
-            text-align: center;
-            font-weight: bold;
-            padding-top: 15px;
-        }
-        .paginacion{
-            font-size: 20px;
-            text-align: center;
-        }
-        .warehouse{
-            margin-top: 8px;
-            border-top: 1px dashed #000;
-            text-align: center;
-        }
-        .remitente{
-            font-size: 11px;
-            padding-top: 20px;
-        }
-        .telefono{
-            font-size: 13px;
-            height: 16px;
-        }
-        .agencia{
-            font-size: 15px;
-            width: 200px;
-            text-align: right;
-            color: #FFFFFF;
-            position: absolute;
-            background-color: #000;
-            height: 19px;
-            font-weight: bold;
-            margin-left: 220px;
-            margin-top: -28px;
-        }
-        #destinatario{
-            margin-top: 5px;
-        }
-        .recibe{
-            height: 18px;
-            background-color: #000;
-            color: #FFFFFF;
-            width: 55px;
-            font-size: 15px;
-            font-weight: bold;
-        }
-        .nomDesti{
-            position: absolute;
-            height: 15px;
-            margin-left: 60px;
-            width: 310px;
-            font-size: 11px;
-        }
-        .dirDesti{
-            margin-left: 60px;
-            width: 310px;
-            font-size: 11px;
-        }
-        .ciudad{
-            font-size: 15px;
-            font-weight: bold;
-            vertical-align: middle;
-            text-align: center;
-        }
-        .datosAdd{
-            height: 136px;
-            margin-top: 4px;
-            background-color: #000;
-            padding-top: 1px;
-        }
-        .codebar1{
-            width: 90px;
-            height: 133px;
-            background-color: #ffffff;
-            margin-left: 3px;
-        }
-        .datos{
-            background-color: #ffffff;
-            position: absolute;
-            width: 320px;
-            height: 133px;
-            margin-left: 97px;
-            margin-top: 5px;
-        }
-        .pkgs, .fob, .des, .tracking, .servicio{
-            margin-left: 5px;
-        }
-        .servicio{
-            height: 28px;
-        }
-        .tracking, .servicio{
-            font-size: 15px;
-            font-weight: bold;
-        }
-        .tracking{
-            height: 35px;
-        }
-        .iatacode{
-            background-color: #000;
-            color: #FFFFFF;
-            font-size: 23px;
-            font-weight: bold;
-            position: absolute;
-            height: 25px;
-            margin-left:200px;
-
-        }
-        .codebar2{
-            margin-top: 5px;
-            margin-bottom: 2px;
-            vertical-align: middle;
-            text-align: center;
-            width: 100%;
-            height: 100px;
-            position: absolute;
-
-        }
-        #imgbarcode{
-            width: 400px;
-            height: 90px;
-        }
-        .des{
-            height: 82px;
-        }
-        #descripcion{
-            font-size: 11px;
-        }
-        #barcode-name{
+        font-size: 15px;
+        font-family: sans-serif;
+        font-weight: bold;
+    }
+    .fecha{
+        text-align: right;
+    }
+    .agencia{
+        font-size: 25px
+    }
+    .datos_agencia{
+        padding-left: 5px;
+        font-size: 13px;
+    }
+    .space{
+        background-color: black;
+        font-size: 5px;
+    }
+    .tb_ship_cons{
+        margin-top: 10px;
+    }
+    .title{
+        margin-bottom: 10px;
+        width: 90%;
+        border-bottom: 1px solid #000;
+    }
+    .tb_ship_cons tr td{
+        font-size: 10px;
+    }
+    .ciudad_destino{
+        font-size: 20px;
+        text-align: center;
+        padding: 5px;
+    }
+    .peso{
+        font-size: 35px;
+        padding-left: 5px;
+    }
+    .paginacion{
+        font-size: 35px;
+        text-align: center;
+    }
+    .des{
+        padding: 5px;
+        margin: 0 auto;
+    }
+    #descripcion{
+        font-size: 12px;
+    }
+    .iatacode{
+        font-size: 45px;
+    font-weight: bold;
+    text-align: right;
+    padding-right: 5px;
+    }
+    #barcode-name{
+        text-align: center;
             font-size: 30px;
+        }
+        .title_consignee{
+            padding-top: 10px;
+            padding-bottom: 10px;
+            font-size: 20px;
         }
 </style>
 <?php 
@@ -168,6 +78,10 @@
             <div class="fecha">
                 {{ $value->created_at->toFormattedDateString() }}
             </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
             <div class="agencia">
                 {{ $documento->agencia }}
             </div>
@@ -175,78 +89,135 @@
     </tr>
     <tr>
         <td>
-            <div class="remitente">
-                {{ $value->ship_nomfull }}
+            <div class="datos_agencia">
+                {{ $documento->agencia_dir }}
             </div>
         </td>
     </tr>
     <tr>
         <td>
-            <div class="telefono">
-                Tel:
-                {{ $value->ship_tel }}
+            <div class="datos_agencia">
+                {{ $documento->agencia_tel }}
             </div>
         </td>
     </tr>
     <tr>
         <td>
-            <div id="destinatario">
-                <div class="recibe">
-                    Recibe:
-                </div>
-                <div class="nomDesti">
-                    {{ $value->cons_nomfull }}
-                </div>
-                <div class="dirDesti">
-                    {{ $value->cons_dir }}
-                </div>
+            <div class="datos_agencia" style="margin-bottom: 10px;">
+                {{ $documento->agencia_email }}
             </div>
         </td>
     </tr>
     <tr>
-        <td>
-            <div class="ciudad">
-                {{ $value->cons_ciudad }}
-            </div>
+        <td class="space">
+            &nbsp;
         </td>
     </tr>
     <tr>
         <td>
-            <div class="datosAdd">
-                <div class="codebar1">
-                    <div class="peso">{{ $value->peso }} Lb</div>
-                    <div class="paginacion">{{ $cont + 1 . '-' . count($detalle) }}</div>
-                    <div class="warehouse">REC: </div>
-                </div>
-                <div class="datos">
-                    <div class="pkgs">PKGS: 1 </div>
-                    <div class="fob">
-                        FOB:
-                        {{ number_format($value->valor,2) }}
-                    </div>
-                    <?php $leng = strlen($value->contenido); ?>
-                    <div class="des">
-                        DESC:
-                        <span id="descripcion">
-                            {{ (($leng > 215) ? str_replace(',', '-', substr($value->contenido, 0, 215)) : str_replace(',', ', ', $value->contenido)) }}
-                            <br>
-                                **- trackings ({{ str_replace(',', ', ', $value->tracking) }})
-                        </span>
-                    </div>
-                    <div class="servicio">
-                        
-                        <div class="iatacode">
-                            {{ $value->prefijo }}/{{ $value->cons_pais_code }}
+            <table border="0" cellpadding="0" cellspacing="0" class="tb_ship_cons" width="100%">
+                <tr>
+                    <th style="width: 50%;">
+                        <div class="title">
+                            Shipper
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </th>
+                    <th>
+                        <div class="title">
+                            Consignee
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        {{ $value->ship_nomfull }}
+                    </td>
+                    <td style="font-size: 20px;">
+                        {{ $value->cons_ciudad }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{ $value->ship_dir }}
+                    </td>
+                    <td>
+                        {{-- {{ $value->cons_dir }} --}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{ $value->ship_tel }}
+                    </td>
+                    <td>
+                        {{-- {{ $value->cons_tel }} --}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{ $value->ship_email }}
+                    </td>
+                    <td>
+                        {{-- {{ $value->cons_email }} --}}
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td class="title_consignee">{{ $value->cons_nomfull }}</td>
+    </tr>
+    <tr>
+        <td>
+            <table border="1" cellpadding="0" cellspacing="0" class="tb_datos_carga" width="100%">
+                <tr>
+                    {{-- <td style="width: 25%;" rowspan="2">
+                        
+                        
+                    </td> --}}
+                    <td style="height: 150px;">
+                        <div class="des">
+                            DESC:
+                            <span id="descripcion">
+                                {{ $value->contenido }}
+                                <br>
+                                    **- trackings ({{ str_replace(',', ', ', $value->tracking) }})
+                                </br>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <table cellpadding="0" cellspacing="0" style="width: 100%;">
+                            <tr>
+                                <td style="width: 60%;border-right: 1px solid #000;">
+                                    <div class="peso">
+                                        {{ $value->peso }} Lbs
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="paginacion">
+                                        {{ $cont + 1 . '-' . count($detalle) }}
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <div class="iatacode">
+                            {{ $value->prefijo }} / {{ $value->cons_pais_code }}
+                        </div>
+                    </th>
+                </tr>
+            </table>
         </td>
     </tr>
     <tr>
         <td>
-            <div class="codebar2">
-                <img id="barcode" style="height: 50px;padding: 5px;" src="data:image/png;base64, {{ DNS1D::getBarcodePNG($value->codigo, "C128",2,40) }}" alt="barcode" />
+            <div class="codebar2" style="text-align: center;">
+                <img id="barcode" style="height: 50px;padding-top: 25px;" src="data:image/png;base64, {{ DNS1D::getBarcodePNG($value->codigo, "C128",2,40) }}" alt="barcode" />
                 <div id="barcode-name">{{ $value->codigo }}</div>
             </div>
         </td>

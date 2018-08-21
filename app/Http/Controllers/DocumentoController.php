@@ -1414,7 +1414,8 @@ class DocumentoController extends Controller
                 'deptos_consignee.descripcion as cons_depto',
                 'agencia.descripcion as agencia',
                 'agencia.telefono as agencia_tel',
-                'agencia.direccion as agencia_dir'
+                'agencia.direccion as agencia_dir',
+                'agencia.email as agencia_email'
             )
             ->where([
                 ['documento.deleted_at', null],
@@ -1472,23 +1473,14 @@ class DocumentoController extends Controller
             ->get();
 
         $this->AddToLog('Impresion labels (' . $documento->id . ')');
-        // $pdf = PDF::loadView('pdf.labelWG_1', compact('documento', 'detalle', 'document'))
-        //     ->setPaper(array(0, 0, 750, 1200));
-        $pdf = PDF::loadView('pdf.labelWG_1', compact('documento', 'detalle', 'document'))
-            ->setPaper(array(0, 0, 460, 360), 'landscape');
-
         // $pdf = PDF::loadView('pdf.labelWG', compact('documento', 'detalle', 'document'))
         //     ->setPaper(array(0, 0, 260, 360), 'landscape');
+
+        $pdf = PDF::loadView('pdf.labelWG_1', compact('documento', 'detalle', 'document'))
+            ->setPaper(array(0, 0, 360, 576)); //multiplicar pulgadas por 72 (5 x 8 pulgadas en este label)
+
         $nameDocument = 'Label' . $document . '-' . $documento->id;
-
-        // return $pdf->download($nameDocument.'.pdf');
         return $pdf->stream($nameDocument . '.pdf');
-
-        return view('pdf.labelWG_1', compact(
-            'documento',
-            'detalle',
-            'document'
-        ));
     }
 
     public function buscarGuias($id, $num_guia, $num_bolsa, $pais_id)
