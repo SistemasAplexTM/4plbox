@@ -295,6 +295,7 @@ class MasterController extends Controller
                 'g.zip AS zip_aerolinea',
                 'g.codigo AS codigo_aerolinea',
                 'h.nombre AS aeropuerto_destino',
+                'h.codigo AS aeropuerto_codigo',
                 'i.guia AS aerolinea_inventario',
                 'z.id AS consolidado_id',
                 'z.consecutivo AS consolidado',
@@ -411,7 +412,8 @@ class MasterController extends Controller
                     )
                     ->where('a.master_id', $id_master)
                     ->get();
-        $pdf     = \PDF::loadView('pdf.masterLabelPdf', compact('data', 'detalle'))->setPaper(array(25, -10, 380, 370), 'portrait');
+        $pdf     = \PDF::loadView('pdf.masterLabelPdf', compact('data', 'detalle'))
+        ->setPaper(array(0, 0, 360, 576)); //multiplicar pulgadas por 72 (5 x 8 pulgadas en este label)
         return $pdf->stream('master.pdf');
     }
 }

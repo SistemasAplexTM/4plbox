@@ -30,7 +30,7 @@ class ConsigneeRequest extends FormRequest
             // 'documento' => 'required',
             'primer_nombre' => 'required',
             'primer_apellido' => 'required',
-            'correo' => 'required|email',
+            // 'correo' => 'email',
             'direccion' => 'required',
         ];
     }

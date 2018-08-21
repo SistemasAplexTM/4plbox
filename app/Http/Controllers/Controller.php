@@ -481,7 +481,7 @@ class Controller extends BaseController
             '({url_principal})'   => url('/'),
             // datos del documento
             '({id})'              => $id,
-            '({num_guia})'        => ($objWarehouse) ? $objWarehouse->num_guia : '',
+            // '({num_guia})'        => ($objWarehouse) ? $objWarehouse->num_guia : '',
             '({num_warehouse})'   => ($objWarehouse) ? $objWarehouse->num_warehouse : '',
             //Datos Shipper
             '({nom_shipper})'     => ($objShipper) ? $objShipper->nombre_full : '',

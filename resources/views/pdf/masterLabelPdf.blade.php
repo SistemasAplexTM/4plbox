@@ -22,7 +22,7 @@
 ?>
 @foreach ($detalle as $value)
 	<?php $contRegistros++ ?>
-	<table border="1" cellpadding="0" cellspacing="0" id="tableLabel" style="page-break-after:{{ ($contRegistros === $toalRegistros) ? 'avoid' : 'always' }}" width="118%">
+	<table border="1" cellpadding="0" cellspacing="0" id="tableLabel" style="page-break-after:{{ ($contRegistros === $toalRegistros) ? 'avoid' : 'always' }}" width="100%">
 	    <tr>
 	    	<td colspan="2" style="border: 1px solid #000;">
 	    		<span class="title">Airline</span>
@@ -63,6 +63,7 @@ JUAN, TRINIDAD{{-- {{ $data->ciudad_consignee }} --}}</div>
 	    <tr>
 	    	<td colspan="2" style="border: 1px solid #000;height: 80px;">
 	    		<span class="title" style="position: absolute;">Optional Information</span>
+	    		<div>{{ $data->aeropuerto_codigo }}</div>
 	    	</td>
 	    </tr>
 	    <?php $cont++ ?>

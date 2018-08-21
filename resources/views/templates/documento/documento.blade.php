@@ -435,8 +435,8 @@
                                                             <table class="table table-striped  table-hover" id="whgTable" style="width: 100%;">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th style="width: 17%;">Código</th>
-                                                                        <th style="width: 10%;">Peso (Lb)</th>
+                                                                        <th style="width: 10%;">Código</th>
+                                                                        <th style="width: 17%;">Peso (Lb)</th>
                                                                         <th style="">Contiene</th>
                                                                         <th style="width: 15%;">PA</th>
                                                                         <th style="width: 10%;">Valor US$</th>

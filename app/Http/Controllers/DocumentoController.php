@@ -2152,6 +2152,7 @@ class DocumentoController extends Controller
 
     public function updateDetailDocument(Request $request)
     {
+
         try {
             $data = DocumentoDetalle::findOrFail($request->pk);
             if (isset($request->value) and $request->name === 'peso') {
@@ -2162,6 +2163,12 @@ class DocumentoController extends Controller
             }
             if (isset($request->value) and $request->name === 'declarado') {
                 $data->valor = $request->value;
+            }
+            if (isset($request->value) and $request->name === 'dimensiones') {
+                $data->largo = $request->value['largo'];
+                $data->ancho = $request->value['ancho'];
+                $data->alto = $request->value['alto'];
+                $data->dimensiones = $data->peso.' Vol='.$request->value['largo'].'x'.$request->value['ancho'].'x'.$request->value['alto'];
             }
 
             if ($data->save()) {

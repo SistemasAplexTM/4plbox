@@ -64,10 +64,10 @@
                                         Warehouse
                                     </div>
                                      @if (session()->has('sendemail'))
-                                            <div class="alert alert-success alert-dismissible" role="alert" id="msn_sendmail">
+                                            {{-- <div class="alert alert-success alert-dismissible" role="alert" id="msn_sendmail">
                                               <button type="button" class="close" data-dismiss="alert" aria-label="Close" id="icon_close"><span aria-hidden="true">&times;</span></button>
                                               <strong>Perfecto!</strong> {{ session()->get('sendemail') }}
-                                            </div>
+                                            </div> --}}
                                     @endif
                                 </div>
                             </div>
