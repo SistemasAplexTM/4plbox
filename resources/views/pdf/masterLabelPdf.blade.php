@@ -40,13 +40,13 @@
 	    <tr>
 	    	<td colspan="2" style="border: 1px solid #000;">
 	    		<span class="title">Air Waybill No.</span>
-	    		<div class="content">{{ $data->codigo_aerolinea .'-'. substr($data->num_master,3) }}</div>
+	    		<div class="content" style="font-size: 40px;">{{ $data->codigo_aerolinea .'-'. substr($data->num_master,3) }}</div>
 	    	</td>
 	    </tr>
 	    <tr>
 	    	<td colspan="2" style="border: 1px solid #000;">
 	    		<span class="title">Consignee.</span>
-	    		<div class="" style="font-size: 20px;text-align: center;">{{ $data->nombre_consignee }}</div>
+	    		<div class="" style="font-size: 40px;text-align: center;">{{ $data->nombre_consignee }}</div>
 	    	</td>
 	    </tr>
 	    <tr>
@@ -63,7 +63,7 @@ JUAN, TRINIDAD{{-- {{ $data->ciudad_consignee }} --}}</div>
 	    <tr>
 	    	<td colspan="2" style="border: 1px solid #000;height: 80px;">
 	    		<span class="title" style="position: absolute;">Optional Information</span>
-	    		<div>{{ $data->aeropuerto_codigo }}</div>
+	    		<div style="text-align: right; font-size: 40px;padding-right: 10px;">{{ $data->aeropuerto_codigo }}</div>
 	    	</td>
 	    </tr>
 	    <?php $cont++ ?>

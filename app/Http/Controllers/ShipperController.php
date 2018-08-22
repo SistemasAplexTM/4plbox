@@ -283,11 +283,6 @@ class ShipperController extends Controller
     {
         $datos = $request->all();
         $d_json = json_encode($datos);
-        // echo '<pre>';
-        // print_r($d_json);
-        // echo '</pre>';
-        // exit();
-        // return $datos;
         DB::table($table)
             ->where('id', $id)
             ->update(['contactos_json' => $d_json]);
@@ -327,5 +322,20 @@ class ShipperController extends Controller
         } catch (Exception $e) {
             return $e;
         }
+    }
+
+    public function vueSelect($data)
+    {
+        $term = $data;
+
+        $tags = Shipper::select(['id', 'nombre_full as name'])->where([
+            ['nombre_full', 'like', '%' . $term . '%'],
+            ['deleted_at', null]
+        ])->get();
+        $answer = array(
+            'code'  => 200,
+            'items' => $tags,
+        );
+        return $answer;
     }
 }

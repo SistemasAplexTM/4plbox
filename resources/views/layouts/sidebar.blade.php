@@ -144,6 +144,15 @@
                         </a>
                     </li>
                     @endcan
+                    {{-- @can('shipper.index') --}}
+                    <li>
+                        <a href="{{ route('consulta.index') }}">
+                            <spam class="fa fa-search">
+                            </spam>
+                            Consulta
+                        </a>
+                    </li>
+                    {{-- @endcan --}}
                     @can('clientes.index')
                     <li>
                         <a href="{{ route('clientes.index') }}">

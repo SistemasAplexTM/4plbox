@@ -1416,9 +1416,9 @@ var objVue = new Vue({
     });
 
     Address.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, {
-        tpl: '<div class="editable-address"><label><span>length: </span><input type="text" name="largo" class="input-small form-control" autocomplete="off"></label></div>'+
-             '<div class="editable-address"><label><span>width:  </span><input type="text" name="ancho" class="input-small form-control" autocomplete="off"></label></div>'+
-             '<div class="editable-address"><label><span>Heigth: </span><input type="text" name="alto" class="input-small form-control" autocomplete="off"></label></div>',
+        tpl: '<div class="editable-address"><label><span>Length: </span><input type="number" name="largo" class="input-small form-control" autocomplete="off"></label></div>'+
+             '<div class="editable-address"><label><span>Width:  </span><input type="number" name="ancho" class="input-small form-control" autocomplete="off"></label></div>'+
+             '<div class="editable-address"><label><span>Heigth: </span><input type="number" name="alto" class="input-small form-control" autocomplete="off"></label></div>',
              
         inputclass: ''
     });

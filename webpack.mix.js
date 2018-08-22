@@ -16,7 +16,9 @@ let mix = require('laravel-mix');
 // 	'resources/assets/js/plugins/ladda/ladda.min.js',
 // 	'resources/assets/js/plugins/ladda/ladda.jquery.min.js',
 // 	'resources/assets/js/plugins/chosen/chosen.jquery.js',
+// 	'resources/assets/js/plugins/fullcalendar/moment.min.js',
 // 	'resources/assets/js/plugins/datapicker/bootstrap-datepicker.js',
+// 	'resources/assets/js/plugins/daterangepicker/daterangepicker.js',
 // 	'resources/assets/js/plugins/select2/select2.full.min.js',
 // 	// 'resources/assets/js/plugins/dropzone/dropzone.js',
 // 	'resources/assets/js/plugins/bootstrapToogle/bootstrap-toggle.min.js',
@@ -42,6 +44,7 @@ let mix = require('laravel-mix');
 // 	'resources/assets/css/plugins/ladda/ladda-themeless.min.css',
 // 	'resources/assets/css/plugins/chosen/chosen.css',
 // 	'resources/assets/css/plugins/datapicker/datepicker3.css',
+// 	'resources/assets/css/plugins/daterangepicker/daterangepicker-bs3.css',
 // 	'resources/assets/css/plugins/bootstrapToogle/bootstrap-toggle.min.css',
 // 	// 'resources/assets/css/plugins/switchery/switchery.css',------------------------ delete
 // 	'resources/assets/css/plugins/select2/select2.min.css',

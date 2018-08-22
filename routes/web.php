@@ -33,6 +33,10 @@ Route::group(['middleware' => 'auth'], function () {
         abort(404);
 
     });
+    /* CONSULTAR SHIPPERS O CONSIGNEE */
+    Route::get('consulta', 'consultaController@index')->name('consulta.index');
+    Route::get('consulta/all', 'consultaController@getAll')->name('consulta.getAll');
+
     /* VISTA RESULTADOS DE LA BUSQUEDA DEL SELECT EN EL NAVBAR */
     Route::get('resultSearch/{id}', 'ResultSearchController@index')->name('resultSearch.index');
 
@@ -276,6 +280,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('clientes/restaurar/{id}', 'ClienteController@restaurar');
     Route::get('clientes/selectInput/{tableName}', 'ClienteController@selectInput');
 });
+Route::get('consignee/vueSelect/{term}', 'ConsigneeController@vueSelect');
+Route::get('shipper/vueSelect/{term}', 'ShipperController@vueSelect');
+
 Route::get('documento/vueSelectGeneral/{table}/{term}', 'DocumentoController@vueSelectGeneral');
 Route::get('documento/vueSelect/{term}', 'DocumentoController@vueSelect');
 Route::get('documento/vueSelectSucursales/{term}', 'DocumentoController@vueSelectSucursales');
