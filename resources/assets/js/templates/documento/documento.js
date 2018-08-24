@@ -851,7 +851,7 @@ var objVue = new Vue({
                 $('#emailR').val(data['correo']).attr('readonly', true);
                 $('#telR').val(data['telefono']).attr('readonly', true);
                 $('#localizacion_id').append('<option value="' + data['ciudad_id'] + '" selected="selected">' + data['ciudad'] + '</option>').val([data['ciudad_id']]).trigger('change');
-                $('#localizacion_id').select2({'disabled': true});
+                // $('#localizacion_id').select2({'disabled': true});
                 $('#zipR').val(data['zip']).attr('readonly', true);
             } else {
                 me.nombreD = data['nombre_full'];
@@ -860,7 +860,7 @@ var objVue = new Vue({
                 $('#emailD').val(data['correo']).attr('readonly', true);
                 $('#telD').val(data['telefono']).attr('readonly', true);
                 $('#localizacion_id_c').append('<option value="' + data['ciudad_id'] + '" selected="selected">' + data['ciudad'] + '</option>').val([data['ciudad_id']]).trigger('change');
-                $('#localizacion_id_c').select2({'disabled': true});
+                // $('#localizacion_id_c').select2({'disabled': true});
                 $('#zipD').val(data['zip']).attr('readonly', true);
             }
         },
