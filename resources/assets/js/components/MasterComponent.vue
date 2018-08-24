@@ -339,7 +339,7 @@
                       name="aeropuerto_salida" 
                       id="aeropuerto_salida" 
                       v-model="aeropuerto_salida" 
-                      label="nombre" :options="aeropuertos" 
+                      label="name" :options="aeropuertos" 
                       :class="{'has-error': errors.has('aeropuerto_salida') }"
                       >
                           <template slot="no-options">
@@ -354,7 +354,7 @@
                   <div class="col-lg-12">
                     <div class="form-group" :class="{'has-error': errors.has('aeropuerto_destino') }">
                       <label for="aeropuerto_destino">Airport of Destination(Address of first  Carrier) and  requested Routing</label>
-                      <v-select v-validate="'required'" v-model="aeropuerto_destino" name="aeropuerto_destino" id="aeropuerto_destino" label="nombre" :options="aeropuertos" :class="{'has-error': errors.has('aeropuerto_destino') }">
+                      <v-select v-validate="'required'" v-model="aeropuerto_destino" name="aeropuerto_destino" id="aeropuerto_destino" label="name" :options="aeropuertos" :class="{'has-error': errors.has('aeropuerto_destino') }">
                           <template slot="no-options">
                             No hay datos
                           </template>

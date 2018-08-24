@@ -14,6 +14,7 @@
         </div>
 
         <ul class="nav navbar-top-links navbar-right">
+            <li><span id="liveclock" style=""></span></li>
             <li>
                 <a href="{{ route('change_lang', ['lang' => 'es']) }}">ES</a>
             </li>

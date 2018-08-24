@@ -46,28 +46,6 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
     <script type="text/javascript">
         document.body.style.zoom="90%";
-        var objVue = new Vue({
-            el: '#navbar',
-            mounted: function() {
-               // this.getNameAgencia();
-            },
-            data:{
-                datos: null
-            },
-            methods:{
-                showRigthSidebar: function(data){
-                    this.datos = data;
-                },
-                getNameAgencia: function() {
-                    // axios.get('/user/getNameAgenciaUser').then(response => {
-                    // axios.get('/4plbox/public/user/getNameAgenciaUser').then(response => {
-                    //     var logo = $('#imgProfile').attr('src');
-                    //     $('#imgProfile').attr('src', logo +'/'+ response.data.data['logo'])
-                    //     $('#_agencia').html(response.data.data['descripcion']);
-                    // });
-                },
-            },
-        });
     </script>
     @yield('scripts')
 </body>

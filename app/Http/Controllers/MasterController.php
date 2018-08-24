@@ -211,7 +211,7 @@ class MasterController extends Controller
         return view('pdf.masterPdf_1', compact('cantidad', 'data', 'detalle', 'other'));
         $pdf     = \PDF::loadView('pdf.masterPdf_1', $data);
         // $pdf = \PDF::loadView('templates.master.imprimir', $data);
-        return $pdf->stream('master.pdf');
+        return $pdf->stream($data->num_master.'.pdf');
     }
 
     public function getMasterForImpress($id_master)

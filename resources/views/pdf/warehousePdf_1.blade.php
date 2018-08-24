@@ -2,7 +2,7 @@
 <html>
     <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Warehouse No: </title>
+    <title>{{ $documento->num_warehouse }}</title>
 
     <style>
         body {
@@ -76,17 +76,18 @@
     $total_libras = 0;
     $total_volumen = 0;
     $total_volumen_cft = 0;
-    $total_volumen_cmt = 0;
+    $total_cmt = 0;
     ?>
     <body>
         @if(count($detalle) > 0)
             @foreach($detalle as $val)
                 <?php 
-                    $total_piezas += $val->valor;
+                    $total_piezas += $val->piezas;
                     $total_declarado += $val->valor;
                     $total_libras += $val->peso;
                     $total_volumen += $val->volumen;
-                    $total_volumen_cft += $val->volumen / 2.204622;
+                    //cft = lxhxw / 1728 (pie cubico)
+                    //cmt = cft/35.315 (metro cubico)
                 ?>
             @endforeach
         @endif
@@ -113,7 +114,7 @@
         <table class="table_numero">
           <tr>
             <td><strong>Date:</strong></td>
-            <td>{{ ((isset($documento->created_at) and $documento->created_at != '') ? date('d-m-y', strtotime($documento->created_at)) : '') }}</td>
+            <td>{{ ((isset($documento->created_at) and $documento->created_at != '') ? date('m-d-y', strtotime($documento->created_at)) : '') }}</td>
             <td class="agency_title title_doc">Receipt:</td>
             <td class="agency_title title_doc">{{ ((isset($documento->num_warehouse) and $documento->num_warehouse != '') ? $documento->num_warehouse : '') }}</td>
           </tr>
@@ -189,11 +190,11 @@
           <tr>
             <td style="width:15%;">{{ $total_piezas }} Pcs</td>
             <td style="width:15%;">{{ $total_libras }} Lb</td>
-            <td style="width:15%;">{{ number_format($total_libras * 2.20462,2) }} Kl</td>
-            <td style="width:15%;">{{ isset($val->volumen) ? $val->volumen : 0 }} Lb</td>
-            <td style="width:15%;">{{ number_format(((isset($val->volumen) ? $val->volumen : 0) / 2.204622), 2) }} Kl</td>
-            <td style="width:15%;">{{ $pie = number_format(((isset($val->largo) ? $val->largo : 0) * (isset($val->ancho) ? $val->ancho : 0) * (isset($val->alto) ? $val->alto : 0)) / 1728, 2) }} cuft</td>
-            <td style="width:10%;">0.65 cbm</td>
+            <td style="width:15%;">{{ number_format($total_libras / 2.20462,2) }} Kl</td>
+            <td style="width:15%;">{{ isset($total_volumen) ? $total_volumen : 0 }} Lb</td>
+            <td style="width:15%;">{{ number_format(((isset($total_volumen) ? $total_volumen : 0) / 2.204622), 2) }} Kl</td>
+            <td style="width:15%;">{{ $pie = number_format(($total_volumen * 166 / 1728), 2) }} cuft</td>
+            <td style="width:10%;">{{ number_format(($pie / 35.315), 2) }} cbm</td>
           </tr>
         </table>
         <table border="1" class="table_grid separador_interno">
@@ -226,7 +227,7 @@
         <table class="table_firma separador_interno">
           <tr>
             <td><strong>Printed:</strong></td>
-            <td style="width:22%">{{ date('d-m-y h:i:s a', time()) }}</td>    
+            <td style="width:22%">{{ date('m-d-y h:i:s a', time()) }}</td>    
           </tr>
           <tr style="height:40px;">
             <td><strong>Sign: </strong></td>

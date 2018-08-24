@@ -445,39 +445,41 @@
                                                                 </thead>
                                                                 <tfoot style="background-color: paleturquoise;">
                                                                     <tr>
-                                                                        <td>
-                                                                            <div class="col-lg-12">
-                                                                                <label class="">Pieza(s)</label>
-                                                                            </div>
-                                                                            <div class="col-lg-12">
-                                                                                <input type="text" onkeyup="deleteError($(this).parent());" id="piezas" name="piezas" class="form-control" readonly="" value="{{ isset($documento->piezas) ? $documento->piezas : 0 }}">
-                                                                            </div>
-                                                                        </td>
-                                                                        <td colspan="3">
-                                                                           <div class="col-lg-6">
-                                                                               <div class="col-sm-12">
-                                                                                    <label class="">Peso total</label>
-                                                                                </div>
-                                                                                <div class="col-sm-12">
-                                                                                    <input type="text" onkeyup="deleteError($(this).parent());" id="pesoDim" name="pesoDim" class="form-control" readonly="" value="{{ isset($documento->peso) ? $documento->peso : 0 }}">
-                                                                                </div> 
-                                                                            </div>
-                                                                            <div class="col-lg-6">
-                                                                                <div class="col-sm-12">
-                                                                                    <label class="">Volumen</label>
-                                                                                </div>
-                                                                                <div class="col-sm-12">
-                                                                                    <input type="text" onkeyup="deleteError($(this).parent());" id="volumen" name="volumen" class="form-control" readonly="" value="{{ isset($documento->volumen) ? $documento->volumen : 0 }}">
-                                                                                </div> 
-                                                                            </div>
-                                                                        </td>
-                                                                        <td colspan="2">
-                                                                            <div class="col-lg-12">
-                                                                                <label class="">$ Declarado total</label>
-                                                                            </div>
-                                                                            <div class="col-lg-12">
-                                                                                <input type="text" onkeyup="deleteError($(this).parent());" id="valor_declarado_tbl" class="form-control" readonly="" value="0">
-                                                                            </div>
+                                                                        <td colspan="6">
+                                                                            <table style="width: 100%;">
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <div class="col-lg-12">
+                                                                                        <label class="">Pieza(s)</label>
+                                                                                            <input type="text" onkeyup="deleteError($(this).parent());" id="piezas" name="piezas" class="form-control" readonly="" value="{{ isset($documento->piezas) ? $documento->piezas : 0 }}" style="width: 100px;">
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div class="col-sm-12">
+                                                                                            <label class="">Peso total</label>
+                                                                                            <input type="text" onkeyup="deleteError($(this).parent());" id="pesoDim" name="pesoDim" class="form-control" readonly="" value="{{ isset($documento->peso) ? $documento->peso : 0 }}" style="width: 100px;">
+                                                                                        </div> 
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div class="col-sm-12">
+                                                                                            <label class="">Volumen</label>
+                                                                                            <input type="text" onkeyup="deleteError($(this).parent());" id="volumen" name="volumen" class="form-control" readonly="" value="{{ isset($documento->volumen) ? $documento->volumen : 0 }}" style="width: 100px;">
+                                                                                        </div> 
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div class="col-sm-12">
+                                                                                            <label class="">Pie cubico ft</label>
+                                                                                            <input type="text" onkeyup="deleteError($(this).parent());" id="volumen" name="volumen" class="form-control" readonly="" value="{{ isset($documento->volumen) ? number_format(($documento->volumen * 166 / 1728), 2) : 0 }}" style="width: 100px;">
+                                                                                        </div> 
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div class="col-lg-12">
+                                                                                            <label class="">$ Declarado total</label>
+                                                                                            <input type="text" onkeyup="deleteError($(this).parent());" id="valor_declarado_tbl" class="form-control" readonly="" value="0" style="width: 100px;">
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
                                                                         </td>
                                                                     </tr>
                                                                 </tfoot>

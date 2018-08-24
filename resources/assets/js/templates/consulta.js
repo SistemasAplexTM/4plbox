@@ -55,6 +55,33 @@ var objVue = new Vue({
                 processing: true,
                 serverSide: true,
                 searching: true,
+                dom: "<'row'<'col-sm-6'l><'col-sm-5 text-right'f><'col-sm-1 text-right'B><'floatright'>rtip>",
+                "buttons": [
+                    {
+                        extend: 'excel',
+                        text: '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
+                        titleAttr: 'Excel',
+                        filename: 'Informe bodega',
+                        extension: '.xlsx',
+                        messageTop: 'Informe bodega',
+                    },
+                    // {
+                    //     extend: 'pdfHtml5',
+                    //     text: '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>',
+                    //     titleAttr: 'PDF',
+                    //     filename: 'Informe bodega',
+                    //     extension: '.pdf',
+                    //     messageTop: 'Informe bodega',
+                    // },
+                    {
+                        text: '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>',
+                        titleAttr: 'PDF',
+                        action: function (e, dt, node, config) {
+                            var url = "consulta/pdf?" + $.param($('#tbl-consulta').DataTable().ajax.params());
+                            window.open(url);
+                        }
+                    }
+                ],
                 ajax: {
                     "url": "consulta/all",
                     "data": {
@@ -64,6 +91,7 @@ var objVue = new Vue({
                         'fechas': $('#fechas').val()
                     }
                 },
+                "lengthMenu": [[10, 15, 20, 50, 100, 250, 500, -1], [10, 15, 20, 50, 100, 250, 500, 'All']],
                 columns: [{
                     data: 'num_warehouse',
                     name: 'num_warehouse'
@@ -88,7 +116,41 @@ var objVue = new Vue({
                 }, {
                     data: 'volumen',
                     name: 'volumen'
-                }]
+                }],
+                "footerCallback": function (row, data, start, end, display) {
+                    var api = this.api(), data;
+                    /*Remove the formatting to get integer data for summation*/
+                    var intVal = function (i) {
+                        return typeof i === 'string' ?
+                                i.replace(/[\$,]/g, '') * 1 :
+                                typeof i === 'number' ?
+                                i : 0;
+                    };
+                    /* Total over this page*/
+                    var cajas = api
+                            .column(5, {page: 'current'})
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    var peso = api
+                            .column(6, {page: 'current'})
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    var vol = api
+                            .column(7, {page: 'current'})
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    /*Update footer formatCurrency()*/
+                    $(api.column(5).footer()).html(cajas);
+                    $(api.column(6).footer()).html(peso);
+                    $(api.column(7).footer()).html(isInteger(vol));
+
+                },
             });
         },
         onSearchShippers(search, loading) {

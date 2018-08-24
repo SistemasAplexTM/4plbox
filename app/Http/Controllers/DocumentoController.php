@@ -1209,7 +1209,7 @@ class DocumentoController extends Controller
             } else {
                 $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
             }
-            $nameDocument = $documento->tipo_documento . '-' . $documento->id;
+            $nameDocument = $documento->num_warehouse;
         } else {
             if ($document === 'warehouse') {
                 $this->AddToLog('Impresion warehouse (' . $documento->id . ')');
@@ -1218,7 +1218,7 @@ class DocumentoController extends Controller
                 } else {
                     $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
                 }
-                $nameDocument = $documento->tipo_documento . '-' . $documento->id;
+                $nameDocument = $documento->num_warehouse;
             } else {
                 if ($document === 'invoice') {
                     $this->AddToLog('Impresion Invoice (' . $documento->id . ')');
@@ -1443,6 +1443,10 @@ class DocumentoController extends Controller
                 'documento_detalle.volumen',
                 'documento_detalle.valor',
                 'documento_detalle.declarado2',
+                'documento_detalle.piezas',
+                'documento_detalle.largo',
+                'documento_detalle.ancho',
+                'documento_detalle.alto',
                 'documento_detalle.peso',
                 'documento_detalle.peso2',
                 'documento_detalle.' . $codigo . ' as codigo',
@@ -1476,7 +1480,8 @@ class DocumentoController extends Controller
         // $pdf = PDF::loadView('pdf.labelWG', compact('documento', 'detalle', 'document'))
         //     ->setPaper(array(0, 0, 260, 360), 'landscape');
 
-        $pdf = PDF::loadView('pdf.labelWG_1', compact('documento', 'detalle', 'document'))
+        // $pdf = PDF::loadView('pdf.labelWG_1', compact('documento', 'detalle', 'document'))
+        $pdf = PDF::loadView('pdf.labelWG_2', compact('documento', 'detalle', 'document'))
             ->setPaper(array(0, 0, 360, 576)); //multiplicar pulgadas por 72 (5 x 8 pulgadas en este label)
 
         $nameDocument = 'Label' . $document . '-' . $documento->id;

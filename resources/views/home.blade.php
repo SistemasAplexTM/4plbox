@@ -154,7 +154,7 @@
             window.location.href = '{{ route('consignee.index') }}';
         });
         $('#mantenimiento').on('click', function(){
-            window.location.href = '{{ route('mantenimiento.index') }}';
+            {{-- window.location.href = '{{ route('mantenimiento.index') }}'; --}}
         });
         $('#administracion').on('click', function(){
             {{-- window.location.href = '{{ route('administracion.index') }}'; --}}

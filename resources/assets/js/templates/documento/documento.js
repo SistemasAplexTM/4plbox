@@ -6,7 +6,7 @@
 $(document).ready(function() {
     permissions();
     //toggle `popup` / `inline` mode
-    $.fn.editable.defaults.mode = 'popup';
+    $.fn.editable.defaults.mode = 'inline';
     $.fn.editable.defaults.params = function(params) {
         params._token = $('meta[name="csrf-token"]').attr('content');
         return params;

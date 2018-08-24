@@ -193,7 +193,7 @@ class AerolineasAeropuertosController extends Controller
         ->join('localizacion', 'aerolineas_aeropuertos.localizacion_id', '=', 'localizacion.id')
         ->join('deptos', 'localizacion.deptos_id', '=', 'deptos.id')
         ->join('pais', 'deptos.pais_id', '=', 'pais.id')
-            ->select('aerolineas_aeropuertos.*', 'localizacion.nombre as ciudad', 'localizacion.id as ciudad_id', 'deptos.descripcion as estado', 'deptos.id as estado_id', 'pais.descripcion as pais', 'pais.id as pais_id')
+            ->select('aerolineas_aeropuertos.*', DB::raw('CONCAT(aerolineas_aeropuertos.codigo," - ", aerolineas_aeropuertos.nombre) AS name'), 'localizacion.nombre as ciudad', 'localizacion.id as ciudad_id', 'deptos.descripcion as estado', 'deptos.id as estado_id', 'pais.descripcion as pais', 'pais.id as pais_id')
             ->where([
                 ['aerolineas_aeropuertos.deleted_at', '=', NULL],
                 ['aerolineas_aeropuertos.tipo', '=', $type]

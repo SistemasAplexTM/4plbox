@@ -34,8 +34,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     });
     /* CONSULTAR SHIPPERS O CONSIGNEE */
-    Route::get('consulta', 'consultaController@index')->name('consulta.index');
-    Route::get('consulta/all', 'consultaController@getAll')->name('consulta.getAll');
+    Route::get('consulta', 'ConsultaController@index')->name('consulta.index');
+    Route::get('consulta/all', 'ConsultaController@getAll')->name('consulta.getAll');
+    Route::get('consulta/pdf', 'ConsultaController@pdf')->name('consulta.pdf');
 
     /* VISTA RESULTADOS DE LA BUSQUEDA DEL SELECT EN EL NAVBAR */
     Route::get('resultSearch/{id}', 'ResultSearchController@index')->name('resultSearch.index');

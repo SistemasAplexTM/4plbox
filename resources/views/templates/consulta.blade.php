@@ -81,6 +81,14 @@
 		                                        <th>Volumen</th>
 		                                    </tr>
 		                                </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th style="text-align:right;" colspan="5">Totales:</th>
+                                                <th id="Tcajas"></th>
+                                                <th id="Tpeso"></th>
+                                                <th id="Tvolumen"></th>
+                                            </tr>
+                                        </tfoot>
 		                            </table>
 		                        </div>  
 		                    </div>  
