@@ -63,6 +63,9 @@ $(document).ready(function() {
             data: 'num_warehouse',
             name: 'num_warehouse'
         }, {
+            data: 'piezas',
+            name: 'piezas'
+        },  {
             "render": function (data, type, full, meta) {
                 var cadena  = full.dimensiones;
                 var dimensiones = cadena.split(" ");
@@ -172,25 +175,25 @@ $(document).ready(function() {
             };
             /*Total over all pages*/
             var vol = api
-                    .column(6)
-                    .data()
-                    .reduce(function (a, b) {
-                        return intVal(a) + intVal(b);
-                    }, 0);
-            var peso = api
-                    .column(8)
-                    .data()
-                    .reduce(function (a, b) {
-                        return intVal(a) + intVal(b);
-                    }, 0);
-            var dec = api
-                    .column(9)
+                    .column(7)
                     .data()
                     .reduce(function (a, b) {
                         return intVal(a) + intVal(b);
                     }, 0);
             var piezas = api
-                    .column(7)
+                    .column(8)
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+            var peso = api
+                    .column(9)
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+            var dec = api
+                    .column(10)
                     .data()
                     .reduce(function (a, b) {
                         return intVal(a) + intVal(b);
@@ -199,6 +202,7 @@ $(document).ready(function() {
             /*Update footer formatCurrency()*/
             $('#piezas').val(parseFloat(isInteger(piezas)));
             $('#volumen').val(parseFloat(isInteger(vol)));
+            $('#pie_ft').val(parseFloat(isInteger(vol * 166 / 1728)));
             $('#pesoDim').val(parseFloat(isInteger(peso)));
             $('#valor_declarado_tbl').val(parseFloat(isInteger(dec)));
         },

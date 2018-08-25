@@ -436,6 +436,7 @@
                                                                 <thead>
                                                                     <tr>
                                                                         <th style="width: 10%;">Código</th>
+                                                                        <th style="width: 7%;">Piezas</th>
                                                                         <th style="width: 17%;">Peso (Lb)</th>
                                                                         <th style="">Contiene</th>
                                                                         <th style="width: 15%;">PA</th>
@@ -445,7 +446,7 @@
                                                                 </thead>
                                                                 <tfoot style="background-color: paleturquoise;">
                                                                     <tr>
-                                                                        <td colspan="6">
+                                                                        <td colspan="7">
                                                                             <table style="width: 100%;">
                                                                                 <tr>
                                                                                     <td>
@@ -469,7 +470,7 @@
                                                                                     <td>
                                                                                         <div class="col-sm-12">
                                                                                             <label class="">Pie cubico ft</label>
-                                                                                            <input type="text" onkeyup="deleteError($(this).parent());" id="volumen" name="volumen" class="form-control" readonly="" value="{{ isset($documento->volumen) ? number_format(($documento->volumen * 166 / 1728), 2) : 0 }}" style="width: 100px;">
+                                                                                            <input type="text" id="pie_ft" name="pie_ft" class="form-control" readonly="" value="{{ (isset($documento->volumen)) ? number_format(($documento->volumen * 166 / 1728), 2) : 0 }}" style="width: 100px;">
                                                                                         </div> 
                                                                                     </td>
                                                                                     <td>

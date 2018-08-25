@@ -5,6 +5,7 @@
 <title>AWB-{{ $data->num_master }}</title>
 
 <style>
+	
 	:root {
 		/*
 		#FF0000 (ROJO)
@@ -238,6 +239,12 @@
 		padding-left:3px;
 		font-size:13px
 	}
+	@page{
+		margin-left: 25px;
+		margin-right: 15px;
+		margin-top: 15px;
+		margin-bottom: 15px;
+	}
 </style>
 
 
@@ -331,7 +338,7 @@
 					  <tr>
 					    <td width="30%" height="20px">
 					    <div class="text_titles_tl" style="color: {{ $color }}">Not Negotiable</div>
-					    <div class="big_title" style="color: {{ $color }}">Air Waybill</div></td>
+					    <div class="big_title" style="color: {{ $color }};font-size: 16px;">Air Waybill</div></td>
 					    <td valign="bottom">
 					    	<div id="aerolinea"><span style="font-size:18px; font-weight:700;">{{ $data->nombre_aerolinea }}</span></div>
 					    </td>
@@ -380,7 +387,7 @@
 					    
 					    </td>
 					    <td width="52%" colspan="2" valign="middle" class="left_line  text_titles_j" style="border-left: 1px solid {{ $color }};color: {{ $color }}">
-					    	<div>
+					    	<div style="font-size: 8px;">
 					        It is agreed that the goods described herein are accepted in apparent good order and condition
 					(except as noted) for carriage SUBJECT TO THE CONDITIONS OF CONTRACT ON THE
 					REVERSE HEREOF, ALL GOODS MAY BE CARRIED BY ANY OTHER MEANS INCLUDING ROAD
@@ -528,7 +535,7 @@
 					    
 					    <td width="24.5%" height="30px" valign="top" colspan="4" class="{{-- special --}}" style="color: {{ $color }}">
 					    <div class="text_titles_tc margin_div" style="color: {{ $color }}">Airport of Destination</div>
-					    <div id="airport_destination" class="text_regular_l" style="color: #000">{{ $data->aeropuerto_destino }}</div>
+					    <div id="airport_destination" class="text_regular_l" style="color: #000;font-size: 8px;">{{ $data->aeropuerto_destino }}</div>
 					    </td>
 					    
 					    <td width="24%" colspan="2" class="left_line" style="border-left: 1px solid {{ $color }};">
@@ -564,7 +571,7 @@
 					    	<div class="text_titles_tc margin_div" style="color: {{ $color }}">Amount of Insurance</div>
 					        <div id="amount_insurance" class="text_regular_c">{{ $data->amount_insurance }}</div>
 					    </td>
-					    <td width="38.5%" class="left_line text_titles_j" style="border-left: 1px solid {{ $color }};color: {{ $color }}"><div>
+					    <td width="38.5%" class="left_line text_titles_j" style="border-left: 1px solid {{ $color }};color: {{ $color }}"><div style="font-size: 8px;">
 					    INSURANCE - If carrier offers insurance, and such insurance is requested
 					in accordance with the consitions thereof, indicate amount to be insured in
 					figures in box marked"Amount of Insurance".
@@ -574,7 +581,7 @@
 
 					<table width="100%" class="main_table_2" style="border-bottom: 1px solid {{ $color }};border-left: 1px solid {{ $color }};border-right: 1px solid {{ $color }};">
 					  <tr>
-					    <td width="85%" valign="top" height="50px" rowspan="2">
+					    <td width="85%" valign="top" height="40px" rowspan="2">
 					    <div class="text_titles_tl margin_div" style="color: {{ $color }}">Handling Information</div>
 					    <div id="handling_information" class="text_regular_l">{{ $data->handing_information }}
 					</div>
@@ -586,7 +593,7 @@
 					  </tr>
 					</table>
 
-					<table width="100%" height="210px" class="main_table_2" style="border-bottom: 1px solid {{ $color }};border-left: 1px solid {{ $color }};border-right: 1px solid {{ $color }};">
+					<table width="100%" height="150px" class="main_table_2" style="border-bottom: 1px solid {{ $color }};border-left: 1px solid {{ $color }};border-right: 1px solid {{ $color }};">
 					  <tr>
 					    <td width="7%" height="5" valign="middle" rowspan="2" class="text_titles_c bottom_line" style="border-bottom: 1px solid {{ $color }};color: {{ $color }}">No. of<br />
 					      Pieces<br />
@@ -873,7 +880,7 @@
 					              <tr>
 					            <td class="text_titles_tl" style="color: {{ $color }}"></td>
 					            <td width="2%" class="line1" style="border-bottom: 1px solid {{ $color }};">&nbsp;</td>
-					            <td class="text_titles_tc bottom_line" style="border-bottom: 1px solid {{ $color }};color: {{ $color }}"><div>Total Prepaid</div></td>
+					            <td class="text_titles_tc bottom_line" style="border-bottom: 1px solid {{ $color }};color: {{ $color }}"><div >Total Prepaid</div></td>
 					            <td></td>
 					            <td width="2%" class="line2" style="border-bottom: 1px solid {{ $color }};">&nbsp;</td>
 					            <td class="text_titles_tr" style="color: {{ $color }}"></td>
@@ -886,7 +893,7 @@
 					              <tr>
 					            <td class="text_titles_tl" style="color: {{ $color }}"></td>
 					            <td width="2%" class="line1" style="border-bottom: 1px solid {{ $color }};">&nbsp;</td>
-					            <td class="text_titles_tc bottom_line" style="border-bottom: 1px solid {{ $color }};color: {{ $color }}"><div>Total Collect</div></td>
+					            <td class="text_titles_tc bottom_line" style="border-bottom: 1px solid {{ $color }};color: {{ $color }}"><div >Total Collect</div></td>
 					            <td></td>
 					            <td width="2%" class="line2" style="border-bottom: 1px solid {{ $color }};">&nbsp;</td>
 					            <td class="text_titles_tr" style="color: {{ $color }}"></td>
@@ -942,7 +949,7 @@
 					    
 					    </td>
 					    <td height="35px" valign="bottom" colspan="3" class="left_line rigth_line" style="border-left: 1px solid {{ $color }};border-right: 1px solid {{ $color }};">
-						    <div id="sign_description" class="text_regular_l margin_div">{{-- DESCRIPCIÓN DE LA FIRMA --}}</div>
+						    {{-- <div id="sign_description" class="text_regular_l margin_div">DESCRIPCIÓN DE LA FIRMA</div> --}}
 						    <div style="width:20%; float:left" class="text_regular_l">{{ date('d-m-y', strtotime($data->fecha_vuelo1)) }}</div>
 						    <div style="width:24%; float:left" class="text_regular_c">{{-- MIA --}}</div>
 						    <div style="width:50%; float:right" class="text_regular_r">

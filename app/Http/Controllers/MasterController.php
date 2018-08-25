@@ -125,7 +125,8 @@ class MasterController extends Controller
             $detalle = MasterDetalle::where('master_id', $master);
             $detalle->update([
                 'piezas'         => $request->piezas,
-                'peso'           => $request->peso,
+                'peso'           => $request->peso * 2.20462,
+                'peso_kl'        => $request->peso,
                 'unidad_medida'  => $request->unidad_medida,
                 'rate_class'     => $request->rate_class,
                 'commodity_item' => $request->commodity_item,

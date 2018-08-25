@@ -377,16 +377,22 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-lg-6">
+                  <div class="col-lg-4">
                     <div class="form-group">
                       <label for="reference_num">Reference number</label>
                       <input v-model="reference_num" class="form-control" name="reference_num" id="reference_num">
                     </div>
                   </div>
-                  <div class="col-lg-6">
+                  <div class="col-lg-4">
                     <div class="form-group">
-                      <label for="optional_shipping_info">Optional shipping information</label>
+                      <label for="optional_shipping_info">Optional shipping inf.</label>
                       <input v-model="optional_shipping_info" id="optional_shipping_info" class="form-control" name="optional_shipping_info">
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="form-group">
+                      <label for="amount_insurance">Amount insurance</label>
+                      <input type="text" v-model="amount_insurance" id="amount_insurance" class="form-control" name="amount_insurance">
                     </div>
                   </div>
                 </div>
@@ -491,7 +497,9 @@
                           </td>
                           <td>
                             <div class="form-group">
-                              <select class="form-control" name="rate_class" v-model="rate_class">
+                              <input type="text" class="form-control" name="rate_class" v-model="rate_class">
+                              <!-- <select class="form-control" name="rate_class" v-model="rate_class">
+                                    <option value=""></option>
                                     <option value="M">M</option>
                                     <option value="N">N</option>
                                     <option value="Q">Q</option>
@@ -505,7 +513,7 @@
                                     <option value="X">X</option>
                                     <option value="Y">Y</option>
                                     <option value="Z">Z</option>
-                              </select>
+                              </select> -->
                             </div>
                           </td>
                           <td>
@@ -662,12 +670,13 @@ span.error{
         reference_num: null,
         handing_information: null,
         optional_shipping_info: null,
+        amount_insurance: null,
         total_other_charge_due_agent: null,
         total_other_charge_due_carrier: null,
         piezas: null,
         peso: null,
         optional_shipping_info: null,
-        rate_class: 'N',
+        rate_class: '',
         tarifa: null,
         descripcion: null,
         peso_cobrado: null,
@@ -853,6 +862,7 @@ span.error{
           'num_account': this.num_account,
           'reference_num': this.reference_num,
           'optional_shipping_info': this.optional_shipping_info,
+          'amount_insurance': this.amount_insurance,
           'total_other_charge_due_agent': this.total_other_charge_due_agent,
           'total_other_charge_due_carrier': this.total_other_charge_due_carrier,
           'currency': this.currency,
@@ -890,6 +900,7 @@ span.error{
           'num_account': this.num_account,
           'reference_num': this.reference_num,
           'optional_shipping_info': this.optional_shipping_info,
+          'amount_insurance': this.amount_insurance,
           'total_other_charge_due_agent': this.total_other_charge_due_agent,
           'total_other_charge_due_carrier': this.total_other_charge_due_carrier,
           'currency': this.currency,
@@ -950,8 +961,8 @@ span.error{
           this.carrier.ciudad = response.data.data.ciudad_carrier;
           this.carrier.contacto = response.data.data.contacto_carrier;
 
-          this.aeropuerto_salida = {id: response.data.data.aeropuertos_id, nombre: response.data.data.nombre_aeropuerto};
-          this.aeropuerto_destino = {id: response.data.data.aeropuertos_id_destino, nombre: response.data.data.aeropuerto_destino};
+          this.aeropuerto_salida = {id: response.data.data.aeropuertos_id, name: response.data.data.nombre_aeropuerto};
+          this.aeropuerto_destino = {id: response.data.data.aeropuertos_id_destino, name: response.data.data.aeropuerto_destino};
           this.aerolinea = response.data.data.nombre_aerolinea;
           this.aerolinea_inventario = response.data.data.aerolinea_inventario;
           this.num_master = response.data.data.num_master;
@@ -961,6 +972,7 @@ span.error{
           this.num_account = response.data.data.num_account;
           this.reference_num = response.data.data.reference_num;
           this.optional_shipping_info = response.data.data.optional_shipping_info;
+          this.amount_insurance = response.data.data.amount_insurance;
           this.currency = response.data.data.currency;
           this.chgs = response.data.data.chgs_code;
           this.fecha_vuelo = response.data.data.fecha_vuelo1;

@@ -1481,6 +1481,7 @@ class DocumentoController extends Controller
         //     ->setPaper(array(0, 0, 260, 360), 'landscape');
 
         // $pdf = PDF::loadView('pdf.labelWG_1', compact('documento', 'detalle', 'document'))
+        
         $pdf = PDF::loadView('pdf.labelWG_2', compact('documento', 'detalle', 'document'))
             ->setPaper(array(0, 0, 360, 576)); //multiplicar pulgadas por 72 (5 x 8 pulgadas en este label)
 
