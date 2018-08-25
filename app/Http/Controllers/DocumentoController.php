@@ -182,12 +182,12 @@ class DocumentoController extends Controller
         }
     }
 
-/**
- * Show the form for liquidar the specified resource.
- *
- * @param  int  $id
- * @return \Illuminate\Http\Response
- */
+    /**
+     * Show the form for liquidar the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function liquidar($id)
     {
         return $this->edit($id, true);
@@ -1394,6 +1394,9 @@ class DocumentoController extends Controller
             ->leftJoin('deptos as deptos_shipper', 'ciudad_shipper.deptos_id', 'deptos_shipper.id')
             ->leftJoin('guia_wrh_pivot', 'guia_wrh_pivot.documento_id', 'documento.id')
             ->join('agencia', 'documento.agencia_id', 'agencia.id')
+            ->leftJoin('localizacion AS ciudad_agencia', 'agencia.localizacion_id', '=', 'ciudad_agencia.id')
+            ->leftJoin('deptos AS deptos_agencia', 'ciudad_agencia.deptos_id', '=', 'deptos_agencia.id')
+            ->leftJoin('pais AS pais_agencia', 'deptos_agencia.pais_id', '=', 'pais_agencia.id')
             ->select(
                 'documento.*',
                 'shipper.nombre_full as ship_nomfull',
@@ -1415,7 +1418,12 @@ class DocumentoController extends Controller
                 'agencia.descripcion as agencia',
                 'agencia.telefono as agencia_tel',
                 'agencia.direccion as agencia_dir',
-                'agencia.email as agencia_email'
+                'agencia.email as agencia_email',
+                'agencia.zip as agencia_zip',
+                'ciudad_agencia.nombre AS agencia_ciudad',
+                'ciudad_agencia.prefijo AS agencia_ciudad_prefijo',
+                'deptos_agencia.descripcion AS agencia_depto',
+                'deptos_agencia.abreviatura AS agencia_depto_prefijo'
             )
             ->where([
                 ['documento.deleted_at', null],
@@ -2158,9 +2166,9 @@ class DocumentoController extends Controller
 
     public function updateDetailDocument(Request $request)
     {
-
         try {
             $data = DocumentoDetalle::findOrFail($request->pk);
+
             if (isset($request->value) and $request->name === 'peso') {
                 $data->peso = $request->value;
             }
@@ -2169,6 +2177,9 @@ class DocumentoController extends Controller
             }
             if (isset($request->value) and $request->name === 'declarado') {
                 $data->valor = $request->value;
+            }
+            if (isset($request->value) and $request->name === 'piezas') {
+                $data->piezas = $request->value;
             }
             if (isset($request->value) and $request->name === 'dimensiones') {
                 $data->largo = $request->value['largo'];

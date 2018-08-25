@@ -179,11 +179,11 @@ class Controller extends BaseController
                 if (count($firstNames) != 0) {
                     if (count($firstNames) != 1) {
                         if ($firstNames[1] != '') {
-                            $dataShip['primer_nombre']  = $firstNames[0];
-                            $dataShip['segundo_nombre'] = $firstNames[1];
+                            $dataShip['primer_nombre']  = strtoupper($firstNames[0]);
+                            $dataShip['segundo_nombre'] = strtoupper($firstNames[1]);
                             $firstNamesFull .= $firstNames[0] . ' ' . $firstNames[1];
                         } else {
-                            $dataShip['primer_nombre']  = $firstNames[0];
+                            $dataShip['primer_nombre']  = strtoupper($firstNames[0]);
                             $dataShip['segundo_nombre'] = '';
                             $firstNamesFull .= $firstNames[0];
                         }
@@ -197,23 +197,23 @@ class Controller extends BaseController
                 if (count($lastName) != 0) {
                     if (count($lastName) != 1) {
                         if ($lastName[0] != '') {
-                            $dataShip['primer_apellido']  = $lastName[0];
-                            $dataShip['segundo_apellido'] = $lastName[1];
+                            $dataShip['primer_apellido']  = strtoupper($lastName[0]);
+                            $dataShip['segundo_apellido'] = strtoupper($lastName[1]);
                             $lastNamesFull .= $lastName[0] . ' ' . $lastName[1];
                         } else {
-                            $dataShip['primer_apellido']  = $lastName[1];
+                            $dataShip['primer_apellido']  = strtoupper($lastName[1]);
                             $dataShip['segundo_apellido'] = '';
                             $lastNamesFull .= $lastName[0];
                         }
                     } else {
-                        $dataShip['primer_apellido']  = $lastName[0];
+                        $dataShip['primer_apellido']  = strtoupper($lastName[0]);
                         $dataShip['segundo_apellido'] = '';
                         $lastNamesFull .= $lastName[0];
                     }
                 }
 
-                $dataShip['nombre_full'] = $firstNamesFull . ' ' . $lastNamesFull;
-                $dataShip['nombre_old']  = $firstNamesFull . ' ' . $lastNamesFull;
+                $dataShip['nombre_full'] = strtoupper($firstNamesFull . ' ' . $lastNamesFull);
+                $dataShip['nombre_old']  = strtoupper($firstNamesFull . ' ' . $lastNamesFull);
 
                 $dataS             = (new Shipper)->fill($dataShip);
                 $dataS->created_at = date('Y-m-d H:i:s');
@@ -245,16 +245,16 @@ class Controller extends BaseController
                 if (count($firstNames) != 0) {
                     if (count($firstNames) != 1) {
                         if ($firstNames[1] != '') {
-                            $dataU->primer_nombre  = $firstNames[0];
-                            $dataU->segundo_nombre = $firstNames[1];
+                            $dataU->primer_nombre  = strtoupper($firstNames[0]);
+                            $dataU->segundo_nombre = strtoupper($firstNames[1]);
                             $firstNamesFull .= $firstNames[0] . ' ' . $firstNames[1];
                         } else {
-                            $dataU->primer_nombre  = $firstNames[0];
+                            $dataU->primer_nombre  = strtoupper($firstNames[0]);
                             $dataU->segundo_nombre = '';
                             $firstNamesFull .= $firstNames[0];
                         }
                     } else {
-                        $dataU->primer_nombre  = $firstNames[0];
+                        $dataU->primer_nombre  = strtoupper($firstNames[0]);
                         $dataU->segundo_nombre = '';
                         $firstNamesFull .= $firstNames[0];
                     }
@@ -263,23 +263,23 @@ class Controller extends BaseController
                 if (count($lastName) != 0) {
                     if (count($lastName) != 1) {
                         if ($lastName[0] != '') {
-                            $dataU->primer_apellido  = $lastName[0];
-                            $dataU->segundo_apellido = $lastName[1];
+                            $dataU->primer_apellido  = strtoupper($lastName[0]);
+                            $dataU->segundo_apellido = strtoupper($lastName[1]);
                             $lastNamesFull .= $lastName[0] . ' ' . $lastName[1];
                         } else {
-                            $dataU->primer_apellido  = $lastName[1];
+                            $dataU->primer_apellido  = strtoupper($lastName[1]);
                             $dataU->segundo_apellido = '';
                             $lastNamesFull .= $lastName[0];
                         }
                     } else {
-                        $dataU->primer_apellido  = $lastName[0];
+                        $dataU->primer_apellido  = strtoupper($lastName[0]);
                         $dataU->segundo_apellido = '';
                         $lastNamesFull .= $lastName[0];
                     }
                 }
 
-                $dataU->nombre_full = $firstNamesFull . ' ' . $lastNamesFull;
-                $dataU->nombre_old  = $firstNamesFull . ' ' . $lastNamesFull;
+                $dataU->nombre_full = strtoupper($firstNamesFull . ' ' . $lastNamesFull);
+                $dataU->nombre_old  = strtoupper($firstNamesFull . ' ' . $lastNamesFull);
 
                 $dataU->save();
             }
@@ -306,16 +306,16 @@ class Controller extends BaseController
                 if (count($firstNames) != 0) {
                     if (count($firstNames) != 1) {
                         if ($firstNames[1] != '') {
-                            $dataCons['primer_nombre']  = $firstNames[0];
-                            $dataCons['segundo_nombre'] = $firstNames[1];
+                            $dataCons['primer_nombre']  = strtoupper($firstNames[0]);
+                            $dataCons['segundo_nombre'] = strtoupper($firstNames[1]);
                             $firstNamesFull .= $firstNames[0] . ' ' . $firstNames[1];
                         } else {
-                            $dataCons['primer_nombre']  = $firstNames[0];
+                            $dataCons['primer_nombre']  = strtoupper($firstNames[0]);
                             $dataCons['segundo_nombre'] = '';
                             $firstNamesFull .= $firstNames[0];
                         }
                     } else {
-                        $dataCons['primer_nombre']  = $firstNames[0];
+                        $dataCons['primer_nombre']  = strtoupper($firstNames[0]);
                         $dataCons['segundo_nombre'] = '';
                         $firstNamesFull .= $firstNames[0];
                     }
@@ -324,23 +324,23 @@ class Controller extends BaseController
                 if (count($lastName) != 0) {
                     if (count($lastName) != 1) {
                         if ($lastName[0] != '') {
-                            $dataCons['primer_apellido']  = $lastName[0];
-                            $dataCons['segundo_apellido'] = $lastName[1];
+                            $dataCons['primer_apellido']  = strtoupper($lastName[0]);
+                            $dataCons['segundo_apellido'] = strtoupper($lastName[1]);
                             $lastNamesFull .= $lastName[0] . ' ' . $lastName[1];
                         } else {
-                            $dataCons['primer_apellido']  = $lastName[1];
+                            $dataCons['primer_apellido']  = strtoupper($lastName[1]);
                             $dataCons['segundo_apellido'] = '';
                             $lastNamesFull .= $lastName[0];
                         }
                     } else {
-                        $dataCons['primer_apellido']  = $lastName[0];
+                        $dataCons['primer_apellido']  = strtoupper($lastName[0]);
                         $dataCons['segundo_apellido'] = '';
                         $lastNamesFull .= $lastName[0];
                     }
                 }
 
-                $dataCons['nombre_full'] = $firstNamesFull . ' ' . $lastNamesFull;
-                $dataCons['nombre_old']  = $firstNamesFull . ' ' . $lastNamesFull;
+                $dataCons['nombre_full'] = strtoupper($firstNamesFull . ' ' . $lastNamesFull);
+                $dataCons['nombre_old']  = strtoupper($firstNamesFull . ' ' . $lastNamesFull);
 
                 $dataC             = (new Consignee)->fill($dataCons);
                 $dataC->created_at = date('Y-m-d H:i:s');
@@ -372,16 +372,16 @@ class Controller extends BaseController
                 if (count($firstNames) != 0) {
                     if (count($firstNames) != 1) {
                         if ($firstNames[1] != '') {
-                            $dataU->primer_nombre  = $firstNames[0];
-                            $dataU->segundo_nombre = $firstNames[1];
+                            $dataU->primer_nombre  = strtoupper($firstNames[0]);
+                            $dataU->segundo_nombre = strtoupper($firstNames[1]);
                             $firstNamesFull .= $firstNames[0] . ' ' . $firstNames[1];
                         } else {
-                            $dataU->primer_nombre  = $firstNames[0];
+                            $dataU->primer_nombre  = strtoupper($firstNames[0]);
                             $dataU->segundo_nombre = '';
                             $firstNamesFull .= $firstNames[0];
                         }
                     } else {
-                        $dataU->primer_nombre  = $firstNames[0];
+                        $dataU->primer_nombre  = strtoupper($firstNames[0]);
                         $dataU->segundo_nombre = '';
                         $firstNamesFull .= $firstNames[0];
                     }
@@ -390,22 +390,22 @@ class Controller extends BaseController
                 if (count($lastName) != 0) {
                     if (count($lastName) != 1) {
                         if ($lastName[0] != '') {
-                            $dataU->primer_apellido  = $lastName[0];
-                            $dataU->segundo_apellido = $lastName[1];
+                            $dataU->primer_apellido  = strtoupper($lastName[0]);
+                            $dataU->segundo_apellido = strtoupper($lastName[1]);
                             $lastNamesFull .= $lastName[0] . ' ' . $lastName[1];
                         } else {
-                            $dataU->primer_apellido  = $lastName[1];
+                            $dataU->primer_apellido  = strtoupper($lastName[1]);
                             $dataU->segundo_apellido = '';
                             $lastNamesFull .= $lastName[0];
                         }
                     } else {
-                        $dataU->primer_apellido  = $lastName[0];
+                        $dataU->primer_apellido  = strtoupper($lastName[0]);
                         $dataU->segundo_apellido = '';
                         $lastNamesFull .= $lastName[0];
                     }
                 }
 
-                $dataU->nombre_full = $firstNamesFull . ' ' . $lastNamesFull;
+                $dataU->nombre_full = strtoupper($firstNamesFull . ' ' . $lastNamesFull);
 
                 $dataU->save();
             }

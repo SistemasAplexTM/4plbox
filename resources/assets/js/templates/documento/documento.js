@@ -63,8 +63,9 @@ $(document).ready(function() {
             data: 'num_warehouse',
             name: 'num_warehouse'
         }, {
-            data: 'piezas',
-            name: 'piezas'
+            "render": function (data, type, full, meta) {
+                return '<a data-name="piezas" data-pk="'+full.id+'" data-value="'+full.piezas+'" class="td_edit" data-type="text" data-placement="right" data-title="Piezas">'+full.piezas+'</a>';
+            }
         },  {
             "render": function (data, type, full, meta) {
                 var cadena  = full.dimensiones;

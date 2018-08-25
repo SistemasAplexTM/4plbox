@@ -102,7 +102,7 @@
                 <tr>
                     <td>
                         <div class="datos_agencia">
-                            {{ $documento->agencia_dir }}
+                            {{ $documento->agencia_dir }}, {{ ($documento->agencia_ciudad_prefijo != '') ? $documento->agencia_ciudad_prefijo : $documento->agencia_ciudad }} {{ ($documento->agencia_depto_prefijo != '') ? $documento->agencia_depto_prefijo : $documento->agencia_depto }} - {{ $documento->agencia_zip }}
                         </div>
                     </td>
                 </tr>
