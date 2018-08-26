@@ -702,6 +702,7 @@ class DocumentoController extends Controller
                                     ) AS t"), "documento.id", "t.documento_id")
                 ->select('documento.id as id', 'documento.liquidado', 'documento.tipo_documento_id as tipo_documento_id', 'documento.consecutivo as codigo', 'documento.num_warehouse', 'documento.created_at as fecha', 'shipper.nombre_full as ship_nomfull', 'consignee.nombre_full as cons_nomfull', 'consignee.correo as email_cons', 'agencia.descripcion as agencia',
                     DB::raw("(SELECT Count(a.id) AS cantidad FROM documento_detalle AS a WHERE a.documento_id = documento.id AND a.deleted_at IS NULL) as cantidad"),
+                    DB::raw("(SELECT IFNULL(SUM(a.piezas), 0) AS piezas FROM documento_detalle AS a WHERE a.documento_id = documento.id AND a.deleted_at IS NULL) as piezas"),
                     DB::raw("(SELECT Sum(documento_detalle.peso) FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as peso"),
                     DB::raw("(SELECT Sum(documento_detalle.volumen) FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as volumen"),
                     't.consolidado',

@@ -34,14 +34,18 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
             "render": function(data, type, full, meta) {
                 var codigo = full.codigo;
                 var color_badget = 'success';
+                var cant = full.cantidad;
                 if (full.cantidad == 0) {
                     if (full.tipo_documento_id != 3) {
                         codigo = full.num_warehouse;
+                        cant = full.piezas;
+
                     }
                     color_badget = 'default';
                 }else{
                     if (full.tipo_documento_id != 3) {
                         codigo = full.num_warehouse;
+                        cant = full.piezas;
                         if (full.liquidado == 1) {
                             color_badget = 'primary';
                         }
@@ -50,7 +54,7 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                         color_badget = 'warning';
                     }
                 }
-                return '<strong>' + codigo + '<strong> <span style="float: right;" class="badge badge-' + color_badget + '" data-toggle="tooltip" data-placement="top" title="" data-original-title="Cantidad de cajas">' + full.cantidad + '</span>';
+                return '<strong>' + codigo + '<strong> <span style="float: right;" class="badge badge-' + color_badget + '" data-toggle="tooltip" data-placement="top" title="" data-original-title="Total piezas">' + cant + '</span>';
             }
         }, {
             data: 'fecha',
