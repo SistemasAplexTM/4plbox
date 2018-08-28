@@ -75,4 +75,18 @@
       'DataTables' => 'Yajra\\DataTables\\Facades\\DataTables',
     ),
   ),
+  'spatie/laravel-backup' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Spatie\\Backup\\BackupServiceProvider',
+    ),
+  ),
+  'benjamincrozat/laravel-dropbox-driver' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'BC\\Laravel\\DropboxDriver\\ServiceProvider',
+    ),
+  ),
 );
