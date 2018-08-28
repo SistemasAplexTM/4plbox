@@ -1,5 +1,9 @@
 /*-- Acá van las funciones que se ejecutan al cargar el documento --*/
 /* funcion para los tooltips de los botones */
+Number.prototype.padLeft = function(base, chr) {
+    var len = (String(base || 10).length - String(this).length) + 1;
+    return len > 0 ? new Array(len).join(chr || '0') + this : this;
+}
 $(function() {
     $('body').tooltip({
         selector: 'a[rel="tooltip"], [data-toggle="tooltip"]'
@@ -146,28 +150,27 @@ function isInteger(numero) {
 }
 
 function show5() {
-        if (!document.layers && !document.all && !document.getElementById) return
-        var Digital = new Date()
-        var hours = Digital.getHours()
-        var minutes = Digital.getMinutes()
-        var seconds = Digital.getSeconds()
-        var dn = "PM"
-        if (hours < 12) dn = "AM"
-        if (hours > 12) hours = hours - 12
-        if (hours == 0) hours = 12
-        if (minutes <= 9) minutes = "0" + minutes
-        if (seconds <= 9) seconds = "0" + seconds
-        //change font size here to your desire
-        myclock = hours + ":" + minutes + ":" + seconds + " " + dn
-        if (document.layers) {
-            document.layers.liveclock.document.write(myclock)
-            document.layers.liveclock.document.close()
-        } else if (document.all) liveclock.innerHTML = myclock
-        else if (document.getElementById) document.getElementById("liveclock").innerHTML = myclock
-        setTimeout("show5()", 1000)
-    }
-    window.onload = show5
-
+    if (!document.layers && !document.all && !document.getElementById) return
+    var Digital = new Date()
+    var hours = Digital.getHours()
+    var minutes = Digital.getMinutes()
+    var seconds = Digital.getSeconds()
+    var dn = "PM"
+    if (hours < 12) dn = "AM"
+    if (hours > 12) hours = hours - 12
+    if (hours == 0) hours = 12
+    if (minutes <= 9) minutes = "0" + minutes
+    if (seconds <= 9) seconds = "0" + seconds
+    //change font size here to your desire
+    myclock = hours + ":" + minutes + ":" + seconds + " " + dn
+    if (document.layers) {
+        document.layers.liveclock.document.write(myclock)
+        document.layers.liveclock.document.close()
+    } else if (document.all) liveclock.innerHTML = myclock
+    else if (document.getElementById) document.getElementById("liveclock").innerHTML = myclock
+    setTimeout("show5()", 1000)
+}
+window.onload = show5
 /*Funciones globales para vue js*/
 Vue.mixin({
     data: function() {
@@ -181,6 +184,16 @@ Vue.mixin({
         formatPrice(value) {
             let val = (value / 1).toFixed(2).replace('.', ',')
             return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+        },
+        getTime() {
+            var d = new Date,
+                dformat = [d.getFullYear(), (d.getMonth() + 1).padLeft(),
+                    d.getDate().padLeft()
+                ].join('-') + ' ' + [d.getHours().padLeft(),
+                    d.getMinutes().padLeft(),
+                    d.getSeconds().padLeft()
+                ].join(':');
+            return dformat;
         }
     }
 })

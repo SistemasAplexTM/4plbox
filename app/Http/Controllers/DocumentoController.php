@@ -99,73 +99,74 @@ class DocumentoController extends Controller
     {
         try {
             return DB::transaction(function () use ($request) {
-                $data                    = new Documento;
-                $data->agencia_id        = Auth::user()->agencia_id;
-                $data->tipo_documento_id = $request->tipo_documento_id;
-                $data->usuario_id        = Auth::user()->id;
-                $data->created_at        = date('Y-m-d H:i:s');
-                $tipo                    = TipoDocumento::findOrFail($request->tipo_documento_id);
+                    $data                    = new Documento;
+                    $data->agencia_id        = Auth::user()->agencia_id;
+                    $data->tipo_documento_id = $request->tipo_documento_id;
+                    $data->usuario_id        = Auth::user()->id;
+                    $data->created_at        = date('Y-m-d H:i:s');
+                    $tipo                    = TipoDocumento::findOrFail($request->tipo_documento_id);
 
-                if ($data->save()) {
-                    $id_documento = $data->id;
+                    if ($data->save()) {
+                        $id_documento = $data->id;
 
-                    /* INSERCION DE TABLA AUXILIAR CONSECUTIVO */
-                    $consecutive = DB::select("CALL getConsecutivoByTipoDocumento(?,?,?)", array($request->tipo_documento_id, $id_documento, date('Y-m-d H:i:s')));
-                    $consecutivo = $consecutive[0]->consecutivo;
+                        /* INSERCION DE TABLA AUXILIAR CONSECUTIVO */
+                        $consecutive = DB::select("CALL getConsecutivoByTipoDocumento(?,?,?)", array($request->tipo_documento_id, $id_documento, date('Y-m-d H:i:s')));
+                        $consecutivo = $consecutive[0]->consecutivo;
 
-                    if ($request->tipo_documento_id == 1 || $request->tipo_documento_id == 2) {
-                        /* INSERCION DE TABLA PIVOT GUIA_WRH_PIVOT */
-                        DB::table('guia_wrh_pivot')->insert([
-                            [
-                                /* VALORES POR DEFECTO AL CREAR EL DOCUMENTO INICIAL */
-                                'documento_id'     => $id_documento,
-                                'servicios_id'     => 1,
-                                'forma_pago_id'    => 1,
-                                'tipo_pago_id'     => 1,
-                                'tipo_embarque_id' => 1,
-                                'grupo_id'         => 1,
-                                'estado_id'        => ($request->tipo_documento_id == 2) ? 27 : 28, //maestra multiple
-                                'created_at'       => date('Y-m-d H:i:s'),
-                            ],
-                        ]);
+                        if ($request->tipo_documento_id == 1 || $request->tipo_documento_id == 2) {
+                            /* INSERCION DE TABLA PIVOT GUIA_WRH_PIVOT */
+                            DB::table('guia_wrh_pivot')->insert([
+                                [
+                                    /* VALORES POR DEFECTO AL CREAR EL DOCUMENTO INICIAL */
+                                    'documento_id'     => $id_documento,
+                                    'servicios_id'     => 1,
+                                    'forma_pago_id'    => 1,
+                                    'tipo_pago_id'     => 1,
+                                    'tipo_embarque_id' => 1,
+                                    'grupo_id'         => 1,
+                                    'estado_id'        => ($request->tipo_documento_id == 2) ? 27 : 28, //maestra multiple
+                                    'created_at'       => date('Y-m-d H:i:s'),
+                                ],
+                            ]);
 
-                        /* GENERAR NUMERO DE GUIA */
-                        $caracteres      = strlen($consecutivo);
-                        $sumarCaracteres = 7 - $caracteres;
-                        $carcater        = '0';
-                        $prefijo         = $tipo->prefijo;
-                        // $prefijo2        = 'CLO';
-                        for ($i = 1; $i <= $sumarCaracteres; $i++) {
-                            $prefijo = $prefijo . $carcater;
-                            // $prefijo2 = $prefijo2 . $carcater;
+                            /* GENERAR NUMERO DE GUIA */
+                            $caracteres      = strlen($consecutivo);
+                            $sumarCaracteres = 7 - $caracteres;
+                            $carcater        = '0';
+                            $prefijo         = $tipo->prefijo;
+                            // $prefijo2        = 'CLO';
+                            for ($i = 1; $i <= $sumarCaracteres; $i++) {
+                                $prefijo = $prefijo . $carcater;
+                                // $prefijo2 = $prefijo2 . $carcater;
+                            }
                         }
-                    }
 
-                    /*ACTUALIZACION DE NUMERO DE GUIA O NUMERO DE WAREHOUSE*/
-                    $data2 = Documento::findOrFail($id_documento);
-                    if ($request->tipo_documento_id == 1 || $request->tipo_documento_id == 2) {
-                        // if ($request->tipo_documento_id == 2) {
-                        $data2->num_warehouse = $prefijo . $consecutivo;
-                        // }
-                        // if ($request->tipo_documento_id == 1) {
-                        // $data2->num_guia = $prefijo2 . $consecutivo;
-                        // }
+                        /*ACTUALIZACION DE NUMERO DE GUIA O NUMERO DE WAREHOUSE*/
+                        $data2 = Documento::findOrFail($id_documento);
+                        if ($request->tipo_documento_id == 1 || $request->tipo_documento_id == 2) {
+                            // if ($request->tipo_documento_id == 2) {
+                            $data2->num_warehouse = $prefijo . $consecutivo;
+                            // }
+                            // if ($request->tipo_documento_id == 1) {
+                            // $data2->num_guia = $prefijo2 . $consecutivo;
+                            // }
+                        }
+                        $data2->consecutivo = $consecutivo;
+                        $data2->save();
+                        $this->AddToLog('Documento creado (' . $id_documento . ') consecutivo (' . $consecutivo . ')');
+                        $answer = array(
+                            "datos"  => $data2,
+                            "code"   => 200,
+                            "status" => 200,
+                        );
+
+                    } else {
+                        $answer = array(
+                            "error"  => 'Error al intentar Eliminar el registro.',
+                            "code"   => 600,
+                            "status" => 500,
+                        );
                     }
-                    $data2->consecutivo = $consecutivo;
-                    $data2->save();
-                    $this->AddToLog('Documento creado (' . $id_documento . ') consecutivo (' . $consecutivo . ')');
-                    $answer = array(
-                        "datos"  => $data2,
-                        "code"   => 200,
-                        "status" => 200,
-                    );
-                } else {
-                    $answer = array(
-                        "error"  => 'Error al intentar Eliminar el registro.',
-                        "code"   => 600,
-                        "status" => 500,
-                    );
-                }
                 return $answer;
             });
         } catch (Exception $e) {
@@ -1491,11 +1492,11 @@ class DocumentoController extends Controller
 
         // $pdf = PDF::loadView('pdf.labelWG_1', compact('documento', 'detalle', 'document'))
         
-        $pdf = PDF::loadView('pdf.labelWG_2', compact('documento', 'detalle', 'document'))
-            ->setPaper(array(0, 0, 360, 576)); //multiplicar pulgadas por 72 (5 x 8 pulgadas en este label)
+        // $pdf = PDF::loadView('pdf.labelWG_2', compact('documento', 'detalle', 'document'))->setPaper(array(0, 0, 360, 576)); //multiplicar pulgadas por 72 (5 x 8 pulgadas en este label)
 
-        $nameDocument = 'Label' . $document . '-' . $documento->id;
-        return $pdf->stream($nameDocument . '.pdf');
+        // $nameDocument = 'Label' . $document . '-' . $documento->id;
+        // return $pdf->stream($nameDocument . '.pdf');
+        return view('pdf/labelWG_2', compact('documento', 'detalle', 'document'));
     }
 
     public function buscarGuias($id, $num_guia, $num_bolsa, $pais_id)
@@ -2187,6 +2188,7 @@ class DocumentoController extends Controller
                 $data->ancho = $request->value['ancho'];
                 $data->alto = $request->value['alto'];
                 $data->dimensiones = $data->peso.' Vol='.$request->value['largo'].'x'.$request->value['ancho'].'x'.$request->value['alto'];
+                $data->volumen = ($request->value['largo'] * $request->value['ancho'] * $request->value['alto'] / 166);
             }
 
             if ($data->save()) {

@@ -433,7 +433,7 @@ function permissions() {
 var objVue = new Vue({
     el: '#documento',
     mounted: function() {
-        //
+        
     },
     created: function() {
         this.liquidado = $('#document_type').data('liquidado');
@@ -639,6 +639,7 @@ var objVue = new Vue({
             $('.form_doc').css('display', 'inline-block')
         },
         saveDocument: function() {
+            $('#date').val(this.getTime());
             const isUnique = (value) => {
                 if ($('#shipper_id').val() == '' || $('#shipper_id').val() == null) {
                     return axios.post('../../shipper/existEmail', {

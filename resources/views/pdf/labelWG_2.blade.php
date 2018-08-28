@@ -81,6 +81,8 @@
         @foreach ($detalle as $value)
             <?php $piezas += $value->piezas ?>
         @endforeach
+
+
         @foreach ($detalle as $value)
             @for($i = 1; $i <= $value->piezas; $i++)
             <?php $contRegistros++ ?>
@@ -248,5 +250,15 @@
             </table>
             @endfor
         @endforeach
+        <script  type="text/javascript">
+        function printHTML() {
+               if (window.print) {
+                   window.print();
+               }
+            }
+            document.addEventListener("DOMContentLoaded", function (event) {
+                printHTML();
+        });
+</script>
     </body>
 </html>

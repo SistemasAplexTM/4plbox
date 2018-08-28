@@ -97,6 +97,7 @@
         <div class="col-lg-12">
             <form class="" id="formDocumento" name="formDocumento" class=" form-horizontal" role="form" action="{{ url('documento/updatedDocument') }}/{{  $documento->id }}" method="post">
                 {{ csrf_field() }}
+                <input type="hidden" class="form-control" id="date" name="date" readonly="">
                 <input type="hidden" class="form-control" id="id_documento" name="id_documento"  value="{{ $documento->id }}" readonly="">
                 <input type="hidden" class="form-control" name="document_type" id="document_type" data-liquidado="{{ $documento->liquidado }}"  value="consolidado" readonly="" v-model="document_type">
                 <div class="col-lg-12" style="">
