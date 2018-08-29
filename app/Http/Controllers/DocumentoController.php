@@ -1707,6 +1707,17 @@ class DocumentoController extends Controller
 
     public function getAllGuiasDisponibles($id, $pais_id = null, $transporte_id = null)
     {
+        $filter = [
+                ['a.deleted_at', null],
+                ['b.deleted_at', null],
+                ['a.consolidado', 0],
+                ['guia_wrh_pivot.tipo_embarque_id', $transporte_id],
+                ['e.pais_id', $pais_id],
+            ];
+        if(!Auth::user()->isRole('admin')){
+            $filter[] = ['b.agencia_id', Auth::user()->agencia_id];
+        }
+
         $detalle = DB::table('documento_detalle AS a')
             ->join('documento as b', 'a.documento_id', 'b.id')
             ->leftJoin('guia_wrh_pivot', 'b.id', '=', 'guia_wrh_pivot.documento_id')
@@ -1722,14 +1733,7 @@ class DocumentoController extends Controller
                 'a.peso2',
                 DB::raw('IFNULL(a.declarado2,0) as declarado2')
             )
-            ->where([
-                ['a.deleted_at', null],
-                ['b.deleted_at', null],
-                ['b.agencia_id', Auth::user()->agencia_id],
-                ['a.consolidado', 0],
-                ['guia_wrh_pivot.tipo_embarque_id', $transporte_id],
-                ['e.pais_id', $pais_id],
-            ])
+            ->where($filter)
             ->get();
         return \DataTables::of($detalle)->make(true);
     }
