@@ -90,6 +90,10 @@ class Controller extends BaseController
             ->select([
                 'a.mensaje',
                 'a.subject',
+                'a.nombre',
+                'a.descripcion_plantilla',
+                'a.otros_destinatarios',
+                'a.enviar_archivo'
             ])->where([
             ['a.id', $id],
             ['a.deleted_at', '=', null],
@@ -503,6 +507,7 @@ class Controller extends BaseController
             '({flete_impuesto})'  => ($objWarehouse) ? (($objWarehouse->valor_declarado * $objWarehouse->impuesto / 100) + $objWarehouse->flete) : '',
             '({seguro})'          => ($objWarehouse) ? $objWarehouse->seguro : '',
             '({descuento})'       => ($objWarehouse) ? $objWarehouse->descuento : '',
+            '({piezas})'          => ($objWarehouse) ? $objWarehouse->piezas : '',
             '({cargos_add})'      => ($objWarehouse) ? $objWarehouse->cargos_add : '',
             '({total})'           => ($objWarehouse) ? (($objWarehouse->valor_declarado * $objWarehouse->impuesto / 100) + $objWarehouse->cargos_add + $objWarehouse->flete + $objWarehouse->seguro - $objWarehouse->descuento) : '',
             //Datos Detalle mensaje

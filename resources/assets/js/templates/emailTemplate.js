@@ -16,7 +16,7 @@ $(document).ready(function() {
                 var btn_delete = '';
                 if (permission_update) {
                     var params = [
-                        full.id, +full.agencia_id, "'" + full.nombre + "'", "'" + full.subject + "'", "'" + full.mensaje + "'", "'" + full.descripcion_plantilla + "'", "'" + full.otros_destinatarios + "'",
+                        full.id, +full.agencia_id, "'" + full.nombre + "'", "'" + full.subject + "'", "'" + full.mensaje + "'", "'" + full.descripcion_plantilla + "'", "'" + full.otros_destinatarios + "'", full.enviar_archivo,
                     ];
                     var btn_edit = "<a onclick=\"edit(" + params + ")\" class='btn btn-outline btn-success btn-xs' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit'></i></a> ";
                 }
@@ -29,7 +29,7 @@ $(document).ready(function() {
     });
 });
 
-function edit(id, agencia_id, nombre, subject, mensaje, descripcion_plantilla, otros_destinatarios) {
+function edit(id, agencia_id, nombre, subject, mensaje, descripcion_plantilla, otros_destinatarios, enviar_archivo) {
     var data = {
         id: id,
         agencia_id: agencia_id,
@@ -37,7 +37,8 @@ function edit(id, agencia_id, nombre, subject, mensaje, descripcion_plantilla, o
         subject: subject,
         mensaje: mensaje,
         descripcion_plantilla: descripcion_plantilla,
-        otros_destinatarios: otros_destinatarios
+        otros_destinatarios: otros_destinatarios,
+        enviar_archivo: enviar_archivo
     };
     objVue.edit(data);
 }
@@ -59,6 +60,7 @@ var objVue = new Vue({
         mensaje: '',
         descripcion_plantilla: '',
         otros_destinatarios: '',
+        email_file: false,
         editar: 0,
         formErrors: {},
         listErrors: {},
@@ -73,6 +75,7 @@ var objVue = new Vue({
             $('.note-editable').html('');
             this.descripcion_plantilla = '';
             this.otros_destinatarios = '';
+            this.email_file = false;
             this.editar = 0;
             this.formErrors = {};
             this.listErrors = {};
@@ -125,6 +128,7 @@ var objVue = new Vue({
                 'mensaje': $('#mensaje').val(),
                 'descripcion_plantilla': this.descripcion_plantilla,
                 'otros_destinatarios': this.otros_destinatarios,
+                'enviar_archivo': this.email_file,
             }).then(function(response) {
                 if (response.data['code'] == 200) {
                     toastr.success('Registro creado correctamente.');
@@ -157,6 +161,7 @@ var objVue = new Vue({
                 'mensaje': $('#mensaje').val(),
                 'descripcion_plantilla': this.descripcion_plantilla,
                 'otros_destinatarios': this.otros_destinatarios,
+                'enviar_archivo': this.email_file,
             }).then(function(response) {
                 if (response.data['code'] == 200) {
                     toastr.success('Registro Actualizado correctamente');
@@ -186,6 +191,7 @@ var objVue = new Vue({
             this.agencia_id = data['agencia_id'];
             this.nombre = data['nombre'];
             this.subject = data['subject'];
+            this.email_file = data['enviar_archivo'];
             this.descripcion_plantilla = data['descripcion_plantilla'];
             if (data['otros_destinatarios'] == 'null') {
                 data['otros_destinatarios'] = '';

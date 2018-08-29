@@ -1,11 +1,4 @@
 <?php return array (
-  'nesbot/carbon' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Carbon\\Laravel\\ServiceProvider',
-    ),
-  ),
   'barryvdh/laravel-dompdf' => 
   array (
     'providers' => 
@@ -75,11 +68,11 @@
       'DataTables' => 'Yajra\\DataTables\\Facades\\DataTables',
     ),
   ),
-  'spatie/laravel-backup' => 
+  'nesbot/carbon' => 
   array (
     'providers' => 
     array (
-      0 => 'Spatie\\Backup\\BackupServiceProvider',
+      0 => 'Carbon\\Laravel\\ServiceProvider',
     ),
   ),
   'benjamincrozat/laravel-dropbox-driver' => 
@@ -87,6 +80,13 @@
     'providers' => 
     array (
       0 => 'BC\\Laravel\\DropboxDriver\\ServiceProvider',
+    ),
+  ),
+  'spatie/laravel-backup' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Spatie\\Backup\\BackupServiceProvider',
     ),
   ),
 );
