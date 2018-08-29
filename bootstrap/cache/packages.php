@@ -10,15 +10,11 @@
       'PDF' => 'Barryvdh\\DomPDF\\Facade',
     ),
   ),
-  'laracasts/utilities' => 
+  'benjamincrozat/laravel-dropbox-driver' => 
   array (
     'providers' => 
     array (
-      0 => 'Laracasts\\Utilities\\JavaScript\\JavaScriptServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'JavaScript' => 'Laracasts\\Utilities\\JavaScript\\JavaScriptFacade',
+      0 => 'BC\\Laravel\\DropboxDriver\\ServiceProvider',
     ),
   ),
   'caffeinated/shinobi' => 
@@ -39,11 +35,29 @@
       0 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
     ),
   ),
+  'laracasts/utilities' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Laracasts\\Utilities\\JavaScript\\JavaScriptServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'JavaScript' => 'Laracasts\\Utilities\\JavaScript\\JavaScriptFacade',
+    ),
+  ),
   'laravel/tinker' => 
   array (
     'providers' => 
     array (
       0 => 'Laravel\\Tinker\\TinkerServiceProvider',
+    ),
+  ),
+  'nesbot/carbon' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Carbon\\Laravel\\ServiceProvider',
     ),
   ),
   'nztim/mailchimp' => 
@@ -57,6 +71,13 @@
       'Mailchimp' => 'NZTim\\Mailchimp\\MailchimpFacade',
     ),
   ),
+  'spatie/laravel-backup' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Spatie\\Backup\\BackupServiceProvider',
+    ),
+  ),
   'yajra/laravel-datatables-oracle' => 
   array (
     'providers' => 
@@ -66,27 +87,6 @@
     'aliases' => 
     array (
       'DataTables' => 'Yajra\\DataTables\\Facades\\DataTables',
-    ),
-  ),
-  'nesbot/carbon' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Carbon\\Laravel\\ServiceProvider',
-    ),
-  ),
-  'benjamincrozat/laravel-dropbox-driver' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'BC\\Laravel\\DropboxDriver\\ServiceProvider',
-    ),
-  ),
-  'spatie/laravel-backup' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Spatie\\Backup\\BackupServiceProvider',
     ),
   ),
 );
