@@ -1902,12 +1902,18 @@ class DocumentoController extends Controller
                 // $moreUsers     = $objConsignee->correo;
                 // $evenMoreUsers = $objConsignee->correo;
 
-                // return new \App\Mail\WarehouseEmail($cuerpo_correo);
                 $this->AddToLog('Email enviado (' . $id_documet . ')');
+                $pdf = false;
+                if($plantilla->enviar_archivo != 0){
+                    $pdf = array(
+                        'pdf' => $this->pdf($id_documet, 'warehouse'), 'pdf_name' => $objDocumento->num_warehouse
+                    );
+                }
+
                 return Mail::to($objConsignee->correo)
                 // ->cc($moreUsers)
                 // ->bcc($evenMoreUsers)
-                    ->send(new \App\Mail\WarehouseEmail($cuerpo_correo, $from_self, $asunto_correo));
+                    ->send(new \App\Mail\WarehouseEmail($cuerpo_correo, $pdf, $from_self, $asunto_correo));
             } else {
                 return 'No es una direccion de email valida';
             }

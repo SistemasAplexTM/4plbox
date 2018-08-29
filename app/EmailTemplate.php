@@ -19,5 +19,6 @@ class EmailTemplate extends Model
         'mensaje', 
         'descripcion_plantilla',
         'otros_destinatarios',
+        'enviar_archivo',
     ];
 }

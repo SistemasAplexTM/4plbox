@@ -14,16 +14,22 @@ class WarehouseEmail extends Mailable
     public $param;
     public $from_self;
     public $subject_msn;
+    protected $pdf;
+    protected $pdf_name;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($param, $from_self = array('address' => 'sac@4plbox.com', 'name' => '4plbox'), $subject_msn = 'Mensaje 4plbox')
+    public function __construct($param, $pdf, $from_self = array('address' => 'sac@4plbox.com', 'name' => '4plbox'), $subject_msn = 'Mensaje 4plbox')
     {
         $this->param = $param;
         $this->from_self = $from_self;
         $this->subject_msn = $subject_msn;
+        if($pdf){
+            $this->pdf = base64_encode($pdf['pdf']);
+            $this->pdf_name = $pdf['pdf_name'];
+        }
     }
 
     /**
@@ -33,8 +39,18 @@ class WarehouseEmail extends Mailable
      */
     public function build()
     {
-        return $this->from($this->from_self)
-        ->subject($this->subject_msn)
-        ->view('prueba');
+        if($this->pdf){
+            return $this->from($this->from_self)
+            ->subject($this->subject_msn)
+            ->view('prueba')
+            ->attachData(base64_decode($this->pdf), $this->pdf_name.'.pdf', [
+                    'mime' => 'application/pdf',
+            ]);
+        }else{
+            return $this->from($this->from_self)
+            ->subject($this->subject_msn)
+            ->view('prueba');
+        }
+
     }
 }

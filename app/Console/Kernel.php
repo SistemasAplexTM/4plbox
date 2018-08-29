@@ -26,6 +26,9 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+
+        // GENERAR BACKUP AUTOMATICO DE LA APLICACION (--only-db = solo base de datos)
+        // $schedule->command('backup:run --only-db')->everyMinute();
     }
 
     /**
