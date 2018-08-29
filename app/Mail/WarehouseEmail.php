@@ -21,7 +21,7 @@ class WarehouseEmail extends Mailable
      *
      * @return void
      */
-    public function __construct($param, $from_self = array('address' => 'sac@4plbox.com', 'name' => '4plbox'), $subject_msn = 'Mensaje 4plbox', $pdf)
+    public function __construct($param, $pdf, $from_self = array('address' => 'sac@4plbox.com', 'name' => '4plbox'), $subject_msn = 'Mensaje 4plbox')
     {
         $this->param = $param;
         $this->from_self = $from_self;
