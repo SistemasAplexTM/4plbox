@@ -47,6 +47,7 @@
                             <a data-target="#modalCambiarAgencia" data-toggle="modal" href="#">
                                 <i class="fa fa-exchange">
                                 </i>
+                         
                                 Cambiar de Agencia
                             </a>
                         </li> --}}
@@ -62,8 +63,7 @@
                     <i class="fa fa-th-large">
                     </i>
                     <span class="nav-label">
-                        {{-- @lang('sidebar.load') --}}
-                        Carga
+                         @lang('sidebar.load') 
                     </span>
                     <span class="fa arrow">
                     </span>
@@ -74,8 +74,7 @@
                         <a href="{{ route('documento.index') }}">
                             <spam class="fa fa-clipboard">
                             </spam>
-                            {{-- @lang('sidebar.documents') --}}
-                            Documentos
+                             @lang('sidebar.documents')                      
                         </a>
                     </li>
                     @endcan
@@ -84,8 +83,7 @@
                         <a href="{{ route('tracking.index') }}">
                             <spam class="fa fa-cubes">
                             </spam>
-                            {{-- @lang('sidebar.trackings_receipt') --}}
-                            Recibo de tracking
+                              @lang('sidebar.trackings_receipt')      
                         </a>
                     </li>
                     @endcan
@@ -94,8 +92,8 @@
                         <a href="{{ route('master.index') }}">
                             <spam class="fa fa-plane">
                             </spam>
-                            {{-- @lang('sidebar.master_guide') --}}
-                            Guia master
+                            @lang('sidebar.master_guide') 
+        
                         </a>
                     </li>
                     @endcan
@@ -104,8 +102,7 @@
                         <a href="{{-- {{ route('bill.index') }} --}}">
                             <spam class="fa fa-ship">
                             </spam>
-                            {{-- @lang('sidebar.master_guide') --}}
-                            Bill of lading
+                         @lang('sidebar.bill_of_lading')
                         </a>
                     </li>
                     @endcan
@@ -115,9 +112,9 @@
                 <a href="" style="background-color: #5cb85c; color: white;">
                     <i class="fa fa-puzzle-piece">
                     </i>
-                    <span class="nav-label">
-                        Mi Cuenta
-                    </span>
+                            <span class="nav-label">
+                                @lang('sidebar.account')
+                            </span>
                     <span class="fa arrow">
                     </span>
                 </a>
@@ -129,7 +126,7 @@
                             </spam>
                             <spam class="fa fa-arrow-up">
                             </spam>
-                            Remitentes
+                                 @lang('sidebar.senders')
                         </a>
                     </li>
                     @endcan
@@ -140,7 +137,8 @@
                             </spam>
                             <spam class="fa fa-arrow-down">
                             </spam>
-                            Destinatario
+                                @lang('sidebar.addressees')
+                     
                         </a>
                     </li>
                     @endcan
@@ -149,7 +147,7 @@
                         <a href="{{ route('clientes.index') }}">
                             <spam class="fa fa-users">
                             </spam>
-                            Clientes
+                                @lang('sidebar.clients')
                         </a>
                     </li>
                     @endcan
@@ -158,7 +156,7 @@
                         <a href="{{ route('consulta.index') }}">
                             <spam class="fa fa-file-o">
                             </spam> 
-                            Informe
+                             @lang('sidebar.reports')
                         </a>
                     </li>
                     {{-- @endcan --}}
@@ -170,7 +168,7 @@
                         <i class="fa fa-vcard">
                         </i>
                         <span class="nav-label">
-                            Casillero
+                             @lang('sidebar.lockens')    
                         </span>
                         <span class="fa arrow">
                         </span>
@@ -181,7 +179,7 @@
                             <a href="{{ route('prealerta.list') }}">
                                 <spam class="fa fa-exclamation-triangle">
                                 </spam>
-                                Prealertas
+                                @lang('sidebar.alerts')  
                             </a>
                         </li>
                         @endcan
@@ -193,7 +191,7 @@
                     <i class="fa fa-wrench">
                     </i>
                     <span class="nav-label">
-                        Mantenimiento
+                      @lang('sidebar.maintenances')   
                     </span>
                     <span class="fa arrow">
                     </span>
@@ -204,7 +202,7 @@
                         <a href="{{ route('emailTemplate.index') }}">
                             <spam class="fa fa-envelope">
                             </spam>
-                            Email Template
+                                  @lang('sidebar.email_templates')   
                         </a>
                     </li>
                     @endcan
@@ -213,7 +211,7 @@
                         <a href="{{ url('administracion/1') }}">
                             <spam class="fa fa-paypal">
                             </spam>
-                            Formas de Pago
+                                @lang('sidebar.payment_methods')   
                         </a>
                     </li>
                     @endcan
@@ -222,7 +220,7 @@
                         <a href="{{ url('administracion/2') }}">
                             <spam class="fa fa-credit-card">
                             </spam>
-                            Tipos de Pago
+                                @lang('sidebar.payment_types')   
                         </a>
                     </li>
                     @endcan
@@ -231,7 +229,7 @@
                         <a href="{{ url('administracion/3') }}">
                             <spam class="fa fa-sitemap">
                             </spam>
-                            Grupos de recibos
+                               @lang('sidebar.groups_of_receipts')   
                         </a>
                     </li>
                     @endcan
@@ -240,7 +238,8 @@
                         <a href="{{ url('aerolinea_inventario') }}">
                             <spam class="fa fa-plane">
                             </spam>
-                            Inventario aerolíneas
+                               @lang('sidebar.inventory_airlines')   
+                      
                         </a>
                     </li>
                     {{-- @endcan --}}
@@ -249,7 +248,7 @@
                         <a href="{{ url('transport/aerolineas') }}">
                             <spam class="fa fa-plane">
                             </spam>
-                            Aerolineas
+                                @lang('sidebar.airlines')  
                         </a>
                     </li>
                     @endcan
@@ -258,7 +257,7 @@
                         <a href="{{ url('transport/aeropuertos') }}">
                             <spam class="fa fa-road">
                             </spam>
-                            Aeropuertos
+                                @lang('sidebar.airports')        
                         </a>
                     </li>
                     @endcan
@@ -267,7 +266,7 @@
                         <a href="{{ route('servicios.index') }}">
                             <spam class="fa fa-share-alt">
                             </spam>
-                            Servicios
+                                 @lang('sidebar.services')                 
                         </a>
                     </li>
                     @endcan
@@ -276,7 +275,7 @@
                         <a href="{{ url('administracion/5') }}">
                             <spam class="fa fa-mail-reply-all">
                             </spam>
-                            Tipo Embarque
+                                 @lang('sidebar.type_boardings')  
                         </a>
                     </li>
                     @endcan
@@ -285,7 +284,7 @@
                         <a href="{{ url('administracion/6') }}">
                             <spam class="fa fa-shopping-bag">
                             </spam>
-                            Tipo Empaque
+                                @lang('sidebar.type_packagings') 
                         </a>
                     </li>
                     @endcan
@@ -297,7 +296,7 @@
                     <i class="fa fa-cogs">
                     </i>
                     <span class="nav-label">
-                        Administración
+                             @lang('sidebar.administration') 
                     </span>
                     <span class="fa arrow">
                     </span>
@@ -308,7 +307,7 @@
                         <a href="{{ route('agencia.index') }}">
                             <spam class="fa fa-home">
                             </spam>
-                            Agencias
+                             @lang('sidebar.agencies') 
                         </a>
                     </li>
                     @endcan
@@ -317,7 +316,7 @@
                         <a href="{{ route('arancel.index') }}">
                             <spam class="fa fa-money">
                             </spam>
-                            Arancel
+                                    @lang('sidebar.tariffs') 
                         </a>
                     </li>
                     @endcan
@@ -326,7 +325,7 @@
                         <a href="{{ route('status.index') }}">
                             <spam class="fa fa-history">
                             </spam>
-                            Status
+                              @lang('sidebar.status') 
                         </a>
                     </li>
                     @endcan
@@ -335,7 +334,7 @@
                         <a href="{{ route('transportador.index') }}">
                             <spam class="fa fa-truck">
                             </spam>
-                            Transportadores
+                               @lang('sidebar.transporters') 
                         </a>
                     </li>
                     @endcan
@@ -344,7 +343,7 @@
                         <a href="{{ route('ciudad.index') }}">
                             <spam class="fa fa-street-view">
                             </spam>
-                            Ciudades
+                               @lang('sidebar.cities') 
                         </a>
                     </li>
                     @endcan
@@ -353,7 +352,8 @@
                         <a href="{{ route('departamento.index') }}">
                             <spam class="fa fa-globe">
                             </spam>
-                            Deptos/Estado
+                              @lang('sidebar.dptos_states') 
+                   
                         </a>
                     </li>
                     @endcan
@@ -362,7 +362,8 @@
                         <a href="{{ route('pais.index') }}">
                             <spam class="fa fa-globe">
                             </spam>
-                            Países
+                              @lang('sidebar.countrieses') 
+                          
                         </a>
                     </li>
                     @endcan
@@ -371,7 +372,7 @@
                         <a href="{{ route('tipoDocumento.index') }}">
                             <spam class="fa fa-file">
                             </spam>
-                            Tipo documento
+                                      @lang('sidebar.document_types') 
                         </a>
                     </li>
                     @endcan
@@ -380,7 +381,8 @@
                         <a href="{{ route('logActivity.index') }}">
                             <spam class="fa fa-history">
                             </spam>
-                            Logs
+                             @lang('sidebar.logs') 
+                        
                         </a>
                     </li>
                     {{-- @endcan --}}
@@ -389,14 +391,15 @@
                         <a href="{{ url('administracion/7') }}">
                             <spam class="fa fa-code-fork">
                             </spam>
-                            Funcionalidades
+                                  @lang('sidebar.functions') 
+                          
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('modulo.index') }}">
                             <spam class="fa fa-window-restore">
                             </spam>
-                            Modulos
+                           @lang('sidebar.modules') 
                         </a>
                     </li>
                     @endif
@@ -407,7 +410,8 @@
                     <i class="fa fa-key">
                     </i>
                     <span class="nav-label">
-                        Seguridad
+                    @lang('sidebar.security') 
+                     
                     </span>
                     <span class="fa arrow">
                     </span>
@@ -418,7 +422,7 @@
                         <a href="{{ route('user.index') }}">
                             <spam class="fa fa-user">
                             </spam>
-                            Usuarios
+                                     @lang('sidebar.users') 
                         </a>
                     </li>
                     @endcan
@@ -427,7 +431,7 @@
                         <a href="{{ route('rol.index') }}">
                             <spam class="fa fa-sitemap">
                             </spam>
-                            Roles
+                             @lang('sidebar.roles') 
                         </a>
                     </li>
                     @endcan
@@ -437,7 +441,7 @@
                         <a href="{{ route('accessControl.index') }}">
                             <spam class="fa fa-address-book">
                             </spam>
-                            Control de acceso
+                                @lang('sidebar.access_controls')   
                         </a>
                     </li>
                     {{-- @endcan --}}

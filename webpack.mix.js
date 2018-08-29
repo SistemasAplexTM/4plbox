@@ -1,16 +1,16 @@
 let mix = require('laravel-mix');
 
 // mix.scripts([
-// 	/*-- Scripts de la plantilla --*/
+// // 	/*-- Scripts de la plantilla --*/
 // 	'resources/assets/js/jquery/jquery-2.1.1.js',
-// 	'resources/assets/js/bootstrap/bootstrap.min.js',
-// 	'resources/assets/js/plugins/metisMenu/jquery.metisMenu.js',
-// 	'resources/assets/js/plugins/slimscroll/jquery.slimscroll.min.js',
-// 	'resources/assets/js/inspinia.js',
-// 	'resources/assets/js/plugins/pace/pace.min.js',
+//  	'resources/assets/js/bootstrap/bootstrap.min.js',
+//  	'resources/assets/js/plugins/metisMenu/jquery.metisMenu.js',
+//  	'resources/assets/js/plugins/slimscroll/jquery.slimscroll.min.js',
+//  	'resources/assets/js/inspinia.js',
+//  	'resources/assets/js/plugins/pace/pace.min.js',
 
-// 	'resources/assets/js/plugins/toastr/toastr.min.js',
-// 	'resources/assets/js/plugins/iCheck/icheck.min.js',
+//  	'resources/assets/js/plugins/toastr/toastr.min.js',
+//  	'resources/assets/js/plugins/iCheck/icheck.min.js',
 // 	'resources/assets/js/plugins/dataTables/datatables.min.js',
 // 	'resources/assets/js/plugins/ladda/spin.min.js', 
 // 	'resources/assets/js/plugins/ladda/ladda.min.js',
@@ -55,13 +55,19 @@ let mix = require('laravel-mix');
 // 	'resources/assets/css/plugins/bootstrapTagsInput/bootstrap-tagsinput.css'
 // 	], 'public/css/plantilla.css');
 
+
+
+
 mix.js('resources/assets/js/app.js' , 'public/js');
 mix.scripts(['resources/assets/js/main.js'] , 'public/js/main.js');
 mix.styles(['resources/assets/css/main.css'] , 'public/css/main.css');
-
 mix.copyDirectory('resources/assets/js/templates', 'public/js/templates');
-mix.copyDirectory('resources/assets/js/plugins', 'public/js/plugins');
-mix.copyDirectory('resources/assets/css/plugins', 'public/css/plugins');
+
+
+
+
+// mix.copyDirectory('resources/assets/js/plugins', 'public/js/plugins');
+// mix.copyDirectory('resources/assets/css/plugins', 'public/css/plugins');
 // mix.copyDirectory('resources/assets/img', 'public/img');
 // mix.copyDirectory('resources/assets/fonts', 'public/fonts');
 // mix.copyDirectory('resources/assets/css/font-awesome', 'public/css/font-awesome');
