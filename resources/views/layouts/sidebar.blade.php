@@ -98,7 +98,7 @@
                     @endcan
                     @can('bill.index')
                     <li>
-                        <a href="{{-- {{ route('bill.index') }} --}}">
+                        <a href="{{ route('bill.index') }}">
                             <spam class="fa fa-ship">
                             </spam>
                          @lang('layouts.bill_of_lading')

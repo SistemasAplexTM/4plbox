@@ -284,6 +284,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('clientes/delete/{id}/{logical?}', 'ClienteController@delete')->name('arancel.delete');
     Route::get('clientes/restaurar/{id}', 'ClienteController@restaurar');
     Route::get('clientes/selectInput/{tableName}', 'ClienteController@selectInput');
+
+    /*--- MODULO BL ---*/
+    Route::resource('bill', 'BillLadingController', ['except' => ['show']]);
+    Route::get('bill/all', 'BillLadingController@getAll')->name('datatable/all');
+    Route::get('bill/delete/{id}/{logical?}', 'BillLadingController@delete')->name('BillLading.delete');
 });
 Route::get('consignee/vueSelect/{term}', 'ConsigneeController@vueSelect');
 Route::get('shipper/vueSelect/{term}', 'ShipperController@vueSelect');
