@@ -103,7 +103,7 @@ class DocumentoController extends Controller
                     $data->agencia_id        = Auth::user()->agencia_id;
                     $data->tipo_documento_id = $request->tipo_documento_id;
                     $data->usuario_id        = Auth::user()->id;
-                    $data->created_at        = date('Y-m-d H:i:s');
+                    $data->created_at        = $request->created_at;
                     $tipo                    = TipoDocumento::findOrFail($request->tipo_documento_id);
 
                     if ($data->save()) {
@@ -125,7 +125,7 @@ class DocumentoController extends Controller
                                     'tipo_embarque_id' => 1,
                                     'grupo_id'         => 1,
                                     'estado_id'        => ($request->tipo_documento_id == 2) ? 27 : 28, //maestra multiple
-                                    'created_at'       => date('Y-m-d H:i:s'),
+                                    'created_at'       => $request->created_at,
                                 ],
                             ]);
 
@@ -311,6 +311,7 @@ class DocumentoController extends Controller
                 $data->central_destino_id = $request->central_destino_id;
                 $data->transporte_id      = $request->transporte_id;
                 $data->observaciones      = $request->observacion;
+                $data->updated_at         = $request->date;
                 if ($data->save()) {
                     $this->AddToLog('Documento Consolidado actualizado (' . $id . ')');
                     $answer = array(
@@ -347,6 +348,7 @@ class DocumentoController extends Controller
         } else {
             DB::transaction(function () use ($request, $id) {
                 $data             = Documento::findOrFail($id);
+                $data->updated_at = $request->date;
                 $data->agencia_id = $request->agencia_id;
                 if ($request->opEditarShip) {
                     //CREACION O ACTUALIZACION DEL SHIPPER O CONSIGNEE
@@ -838,6 +840,7 @@ class DocumentoController extends Controller
     {
         try {
             $data = (new DocumentoDetalle)->fill($request->all());
+
             if ($request->valor == '') {
                 $data->valor = 0;
             }
@@ -848,7 +851,7 @@ class DocumentoController extends Controller
                 $data->declarado2 = 0;
             }
 
-            $data->created_at = date('Y-m-d H:i:s');
+            $data->created_at = $request->created_at;
             if ($data->tracking == '') {
                 $data->tracking = null;
             }

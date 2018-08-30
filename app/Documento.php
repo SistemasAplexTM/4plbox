@@ -56,5 +56,6 @@ class Documento extends Model
         'num_warehouse',
         'pago',
         'paquete',
+        'created_at'
     ];
 }

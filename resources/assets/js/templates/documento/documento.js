@@ -433,7 +433,7 @@ function permissions() {
 var objVue = new Vue({
     el: '#documento',
     mounted: function() {
-        
+        $('#date').val(this.getTime());
     },
     created: function() {
         this.liquidado = $('#document_type').data('liquidado');
@@ -1070,7 +1070,8 @@ var objVue = new Vue({
                 'declarado2': valDeclarado,
                 'peso': peso,
                 'peso2': peso,
-                'piezas': piezas
+                'piezas': piezas,
+                'created_at': this.getTime()
             }).then(function(response) {
                 if (response.data['code'] == 200) {
                     toastr.success('Registro creado correctamente.');

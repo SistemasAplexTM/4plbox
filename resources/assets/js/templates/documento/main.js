@@ -171,6 +171,7 @@ var objVue = new Vue({
     mounted: function() {
         this.typeDocumentList();
         this.printDocument();
+        $('#date').val(this.getTime());
     },
     data: {
         id_status: null,
@@ -222,7 +223,8 @@ var objVue = new Vue({
                 if (result.value) {
                     axios.post('documento/ajaxCreate/' + data.tipo_doc_id, {
                         'tipo_documento_id': data.tipo_doc_id,
-                        'funcionalidaddes': data.functionalities
+                        'funcionalidaddes': data.functionalities,
+                        'created_at': this.getTime()
                     }).then(function(response) {
                         var res = response.data;
                         if (response.data['code'] == 200) {
