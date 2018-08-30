@@ -7,13 +7,13 @@
         <h2>{{ $documento->tipo_nombre }}</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#">Home</a>
+                <a href="#">@lang('documents.home')</a>
             </li>
             <li >
                 <a href="{{ route('documento.index') }}">{{ $documento->tipo_nombre }}</a>
             </li>
             <li class="active">
-                <strong>ver {{ $documento->tipo_nombre }}</strong>
+                <strong>@lang('documents.see'){{ $documento->tipo_nombre }}</strong>
             </li>
         </ol>
     </div>
@@ -77,7 +77,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Visualizar Guia</h5>
+                    <h5>@lang('documents.visualize_guide')</h5>
                     <div class="ibox-tools">
                     </div>
                 </div>
@@ -85,10 +85,12 @@
                     <fieldset>
                         <legend>
                             <div style="padding:2px 0 2px 0">
-                                <a href="" class="btn btn-default btn-sm" target="_blank"><i class="fa fa-print"></i> Imprimir documento</a>
-                                <a href="" class="btn btn-default btn-sm" target="_blank"><i class="fa fa-print"></i> Imprimir Label</a>
-                                <a href="#" onclick="enviarMail()" class="btn btn-info btn-sm"><i class="fa fa-envelope"></i> Enviar Email</a>
-                                <a data-toggle="modal" data-target="#modalAddStatus" id="traerWarehouses" class="btn btn-success btn-sm"><i class="fa fa-commenting"></i> Add. Status</a>
+                                <a href="" class="btn btn-default btn-sm" target="_blank"><i class="fa fa-print"></i>
+                                @lang('documents.print_document')</a>
+                                <a href="" class="btn btn-default btn-sm" target="_blank"><i class="fa fa-print"></i> 
+                                @lang('documents.print_label')</a>
+                                <a href="#" onclick="enviarMail()" class="btn btn-info btn-sm"><i class="fa fa-envelope"></i> @lang('documents.send_email')</a>
+                                <a data-toggle="modal" data-target="#modalAddStatus" id="traerWarehouses" class="btn btn-success btn-sm"><i class="fa fa-commenting"></i> @lang('documents.add_status')</a>
                             </div>
                         </legend>
                         <div class="row col-lg-12">
@@ -113,7 +115,7 @@
                                                             </tr>
                                                             <tr>
                                                                 <td align="left">
-                                                                    <span style="font-weight:bold;">Telefono:</span>{{ $documento->agencia_tel }}
+                                                                    <span style="font-weight:bold;">@lang('documents.phone'):</span>{{ $documento->agencia_tel }}
                                                                 </td>
                                                             </tr>
                                                         </table>
@@ -122,7 +124,7 @@
                                                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                             <tr>
                                                                 <td align="right">
-                                                                    <div id="apDiv6" v-if="mostrar.includes(22)">WAREHOUSE N° {{ $documento->num_warehouse }}</div>    
+                                                                    <div id="apDiv6" v-if="mostrar.includes(22)">@lang('documents.warehouse') N° {{ $documento->num_warehouse }}</div>    
                                                                     <div style="width: 50%;" v-if="mostrar.includes(23)">
                                                                         <img id="barcode" style="padding-top: 5px; height: 40px; width: 100%;" src="data:image/png;base64, {{ DNS1D::getBarcodePNG($documento->num_guia, "C128",1,29,array(1,1,1)) }}" alt="barcode" />
                                                                         <div class="text-center" style="font-weight: 9;">{{ $documento->num_guia }}</div>
@@ -131,12 +133,12 @@
                                                             </tr>
                                                             <tr>
                                                                 <td align="right">
-                                                                    <span style="font-weight:bold;">Fecha:</span> {{ $documento->created_at }}
+                                                                    <span style="font-weight:bold;">@lang('documents.date'):</span> {{ $documento->created_at }}
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td align="right">
-                                                                    <span style="font-weight:bold;">Usuario: </span>{{ $documento->usuario }}
+                                                                    <span style="font-weight:bold;">@lang('documents.user')'': </span>{{ $documento->usuario }}
                                                                 </td>
                                                             </tr>
                                                         </table>
@@ -147,27 +149,27 @@
                                                         <div id="apDiv4">
                                                             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                                 <tr height="20px">
-                                                                    <td width="20%"><b>Shipper:</b></td>
+                                                                    <td width="20%"><b>@lang('documents.shipper'):</b></td>
                                                                     <td colspan="3"> {{ $documento->ship_nomfull }}</td>
                                                                 </tr>
                                                                 <tr height="20px">
-                                                                    <td><b>Dirección:</b></td>
+                                                                    <td><b>@lang('documents.address'):</b></td>
                                                                     <td colspan="3"> {{ $documento->ship_dir }} </td>
                                                                 </tr>
                                                                 <tr height="20px">
-                                                                    <td><b>Teléfono:</b></td>
+                                                                    <td><b>@lang('documents.phone'):</b></td>
                                                                     <td width="33%"> {{ $documento->ship_tel }} </td>
                                                                     <td width="19%"><b>Ciudad:</b> </td>
                                                                     <td width="28%"> {{ $documento->ship_ciudad }} </td>
                                                                 </tr>
                                                                 <tr height="20px">
-                                                                    <td><b>Estado:</b></td>
+                                                                    <td><b>@lang('documents.state'):</b></td>
                                                                     <td> {{ $documento->ship_depto }} </td>
-                                                                    <td><b>Zip:</b></td>
+                                                                    <td><b>@lang('documents.zip'):</b></td>
                                                                     <td>{{ $documento->ship_zip }}</td>
                                                                 </tr>
                                                                 <tr height="20px">
-                                                                    <td><b>Email:</b></td>
+                                                                    <td><b>@lang('documents.email'):</b></td>
                                                                     <td colspan="3"> {{ $documento->ship_email }} </td>
                                                                 </tr>
                                                             </table>
@@ -178,27 +180,27 @@
                                                             <!--Información del Consignatario-->
                                                             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                                 <tr height="20px">
-                                                                    <td width="20%"><b>Consignee:</b></td>
+                                                                    <td width="20%"><b>@lang('documents.consignee'):</b></td>
                                                                     <td colspan="3"> {{ $documento->cons_nomfull }} </td>
                                                                 </tr>
                                                                 <tr height="20px">
-                                                                    <td><b>Dirección:</b></td>
+                                                                    <td><b>@lang('documents.address'):</b></td>
                                                                     <td colspan="3"> {{ $documento->cons_dir }} </td>
                                                                 </tr>
                                                                 <tr height="20px">
-                                                                    <td><b>Teléfono:</b></td>
+                                                                    <td><b>@lang('documents.phone'):</b></td>
                                                                     <td width="33%"> {{ $documento->cons_tel }} </td>
-                                                                    <td width="19%"><b>Cédula:</b> </td>
+                                                                    <td width="19%"><b>@lang('documents.identification_card'):</b> </td>
                                                                     <td width="28%"> {{ $documento->cons_documento }} </td>
                                                                 </tr>
                                                                 <tr height="20px">
-                                                                    <td><b>Ciudad:</b></td>
+                                                                    <td><b>@lang('documents.city'):</b></td>
                                                                     <td width="33%"> {{ $documento->cons_ciudad }} </td>
                                                                     <td width="19%"><b>C.P:</b></td>
                                                                     <td width="28%"> {{ $documento->cons_zip }}</td>
                                                                 </tr>
                                                                 <tr height="20px">
-                                                                    <td><b>Email:</b></td>
+                                                                    <td><b>@lang('documents.email'):</b></td>
                                                                     <td colspan="3"> {{ $documento->cons_email }} </td>
                                                                 </tr>
                                                             </table>
@@ -215,14 +217,16 @@
                                                                         <div id="apDiv7">
                                                                             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                                                 <tr>
-                                                                                    <td  height="30"><b>Factura:</b> &nbsp;{{ ($documento->factura) ? 'Si' :'No' }}</td>
-                                                                                    <td ><b>Carga Peligrosa:</b> &nbsp;{{ ($documento->carga_peligrosa) ? 'Si' :'No' }}</td>
-                                                                                    <td ><b>Re-Empacado:</b> &nbsp;{{ ($documento->re_empacado) ? 'Si' :'No' }}</td>
-                                                                                    <td ><b>Mal Empacado:</b> &nbsp;{{ ($documento->mal_empacado) ? 'Si' :'No' }}</td>
-                                                                                    <td><b>Rota:</b> &nbsp;{{ ($documento->rota) ? 'Si' :'No' }}</td>
+                                                                                    <td  height="30"><b>@lang('documents.bill')</b> &nbsp;{{ ($documento->factura) ? 'Si' :'No' }}</td>
+                                                                                    <td ><b>
+                                                                                    @lang('documents.dangerous_load'):</b> &nbsp;{{ ($documento->carga_peligrosa) ? 'Si' :'No' }}</td>
+                                                                                    <td ><b>@lang('documents.packed')</b> &nbsp;{{ ($documento->re_empacado) ? 'Si' :'No' }}</td>
+                                                                                    <td ><b>
+                                                                                    @lang('documents.badly_packed'):</b> &nbsp;{{ ($documento->mal_empacado) ? 'Si' :'No' }}</td>
+                                                                                    <td><b>@lang('documents.broken'):</b> &nbsp;{{ ($documento->rota) ? 'Si' :'No' }}</td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td valign="top"><b>Observaciones:</b></td>
+                                                                                    <td valign="top"><b>@lang('documents.observations'):</b></td>
                                                                                     <td height="50" colspan="5" valign="top"><span style="padding:4px 0 0 0"> {{ ($documento->observaciones) ? $documento->observaciones : 'Ninguna' }} </span></td>
                                                                                 </tr>
                                                                             </table>
@@ -238,15 +242,15 @@
                                                                         <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000" style="border-collapse:collapse;">
                                                                             <tr>
                                                                                 <th width="2%" rowspan="2" bgcolor="lightgray" scope="col">#</th>
-                                                                                <th width="20%" rowspan="2" bgcolor="lightgray" scope="col">WAREHOUSE</th>
-                                                                                <th width="30%" rowspan="2" bgcolor="lightgray" scope="col">CONTENIDO</th>
-                                                                                <th width="15%" rowspan="2" bgcolor="lightgray" scope="col">TRACKING</th>
+                                                                                <th width="20%" rowspan="2" bgcolor="lightgray" scope="col">@lang('documents.warehouse')</th>
+                                                                                <th width="30%" rowspan="2" bgcolor="lightgray" scope="col">@lang('documents.content')</th>
+                                                                                <th width="15%" rowspan="2" bgcolor="lightgray" scope="col">@lang('documents.tracking')</th>
                                                                                 <th width="3%" rowspan="2" bgcolor="lightgray" scope="col">L</th>
                                                                                 <th width="3%" rowspan="2" bgcolor="lightgray" scope="col">W</th>
                                                                                 <th width="3%" rowspan="2" bgcolor="lightgray" scope="col">H</th>
-                                                                                <th width="5%" rowspan="2" bgcolor="lightgray" scope="col">PESO LBS</th>
-                                                                                <th colspan="2" bgcolor="lightgray" scope="col">PESO VOL</th>
-                                                                                <th colspan="2" bgcolor="lightgray" scope="col">VOLUMEN</th>
+                                                                                <th width="5%" rowspan="2" bgcolor="lightgray" scope="col">@lang('documents.weight') LBS</th>
+                                                                                <th colspan="2" bgcolor="lightgray" scope="col">@lang('documents.weight') VOL</th>
+                                                                                <th colspan="2" bgcolor="lightgray" scope="col">@lang('documents.volume')</th>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th width="6%" bgcolor="lightgray" scope="col">LBS</th>
@@ -295,13 +299,13 @@
                                                                         <table width="100%" border="1" cellpadding="0" cellspacing="1" bordercolor="#000000" style="border-collapse:collapse;">
                                                                             <tr>
                                                                                 <th width="300px" rowspan="2" scope="col"><span style="font-size:20px; color:#666;height: 30px;">Recibe</span></th>
-                                                                                <th width="" height="10" bgcolor="lightgray" scope="col" style="font-size: 10px;">PIEZAS</th>
-                                                                                <th width="" bgcolor="lightgray" scope="col" style="font-size: 10px;">LIBRAS</th>
-                                                                                <th width="" bgcolor="lightgray" scope="col" style="font-size: 10px;">VOL. LBS</th>
-                                                                                <th width="" bgcolor="lightgray" scope="col" style="font-size: 10px;">KLS</th>
-                                                                                <th width="" bgcolor="lightgray" scope="col" style="font-size: 10px;">VOL. KLS</th>
-                                                                                <th width="" bgcolor="lightgray" scope="col" style="font-size: 10px;">VOL. CFT</th>
-                                                                                <th width="" bgcolor="lightgray" scope="col" style="font-size: 10px;">VOL.CMT</th>
+                                                                                <th width="" height="10" bgcolor="lightgray" scope="col" style="font-size: 10px;">@lang('documents.pieces')</th>
+                                                                                <th width="" bgcolor="lightgray" scope="col" style="font-size: 10px;">@lang('documents.pounds')</th>
+                                                                                <th width="" bgcolor="lightgray" scope="col" style="font-size: 10px;">Vol. LBS</th>
+                                                                                <th width="" bgcolor="lightgray" scope="col" style="font-size: 10px;">Kls</th>
+                                                                                <th width="" bgcolor="lightgray" scope="col" style="font-size: 10px;">Vol. KLS</th>
+                                                                                <th width="" bgcolor="lightgray" scope="col" style="font-size: 10px;">Vol. CFT</th>
+                                                                                <th width="" bgcolor="lightgray" scope="col" style="font-size: 10px;">Vol. CMT</th>
                                                                             </tr>
                                                                             <tr>
                                                                                 <td height="10" align="center"><span style="font-size:15px;">{{ $documento->piezas }} </span></td>
@@ -319,30 +323,26 @@
                                                             <tr>
                                                                 <th colspan="2" style="text-align: center;">
                                                                     <div id="apDiv15">
-                                                                        <span class="importante">¡IMPORTANTE!</span>
-                                                                        EL RECIBO SE COBRARÁ POR EL VALOR MAYOR, (PESO O VOLUMEN) PARA LOS ENVÍOS AÉREOS.
+                                                                        <span class="importante">@lang('documents.important')</span>
+                                                                   @lang('documents.message_receipt')
                                                                     </div>
                                                                     <div id="">&nbsp;</div>
                                                                     <div id="apDiv15">
                                                                         <span class="importante">
-                                                                            NO NOS HACEMOS RESPONSABLES DE DAÑOS EN TELEVISORES QUE NO VIAJEN EN  CAJA
-                                                                            DE MADERA.
+                                                                         @lang('documents.we_are_not_responsible')
                                                                         </span>
                                                                     </div>      
                                                                 </th>
                                                             </tr>
                                                             <tr>
                                                                 <th colspan="2" style="text-align: center;">
-                                                                    <div id="apDiv18">REVISAR LA MERCANCÍA ANTES DE RETIRARLA DE LA OFICINA EN COLOMBIA, LUEGO DE ESTO, NO SE ACEPTARÁ NINGÚN RECLAMO. ALL CARGO </div>    
+                                                                    <div id="apDiv18">@lang('documents.check_the_ merchandise')</div>    
                                                                 </th>
 
                                                             </tr>
                                                             <tr>
                                                                 <th colspan="2" style="text-align: center;">
-                                                                    <div id="apDiv19">SHIPPER CERTIFIES THAT THE PARTICULARS ON THE FACE HERE OF ARE CORRECT AND THAT INSOFAR AS ANY PART OF THE CONSIGNMENT
-                                                                        CONTAINS DANGEOROUS GOODS, SUCH PART IS PROPERLY DESCRIBED BY NAME AND IS IN PROPER CONDITION FOR CARRIAGE BY AIR
-                                                                        ACCORDING TO THE APPLICABLE DANGEROUS GOODS REGULATIONS. SHIPPER HEREBY CONSENTS TO A SEARCH OR INSPECTION OF THE
-                                                                        CARGO</div>    
+                                                                    <div id="apDiv19">@lang('documents.shipper_certifies')</div>    
                                                                 </th>
                                                             </tr>
                                                             <tr>
@@ -351,7 +351,7 @@
                                                             </tr>
                                                             <tr>
                                                                 <td style="width: 50%"></td>
-                                                                <td style="text-align: right; font-weight: bold;">Received: </td>
+                                                                <td style="text-align: right; font-weight: bold;">@lang('documents.received'): </td>
                                                             </tr>
                                                         </table>
 
@@ -363,28 +363,30 @@
                                                                         <!--Información del Consignatario-->
                                                                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                                             <tr height="20px">
-                                                                                <td width="20%" colspan="2" style="background-color: lightgray;"><b style="font-weight: bold;font-size: 15px;"><i class="fa fa-money"></i> Liquidación</b></td>
+                                                                                <td width="20%" colspan="2" style="background-color: lightgray;"><b style="font-weight: bold;font-size: 15px;"><i class="fa fa-money"></i> @lang('documents.settlement')</b></td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td><b>Valor: (Flete+Impuesto)</b></td>
+                                                                                <td><b>@lang('documents.value'): (Flete+Impuesto)</b></td>
                                                                                 <td align="right">  echo number_format(($objGuia->declarado_total * 28 / 100) + $objGuia->flete, 2)  USD </td>
                                                                             </tr>                                   
 
                                                                             <tr>
-                                                                                <td><b>Seguro: </b></td>
+
+                                                                                <td><b>@lang('documents.insurance'): </b></td>
                                                                                 $seguro = $objGuia->seguro * $seg / 100;
                                                                                 <td align="right"> echo number_format($seguro, 2)  USD</td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td><b>Descuento:</b></td>
+
+                                                                                <td><b>@lang('documents.discount'):</b></td>
                                                                                 <td align="right">number_format($objGuia->desto, 2) USD</td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td><b>Otros:</b></td>
+                                                                                <td><b>@lang('documents.others'):</b></td>
                                                                                 <td align="right">echo number_format($objGuia->cargos_add, 2) USD</td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td><b>Sub Total:</b></td>
+                                                                                <td><b>Sub @lang('documents.total')'':</b></td>
                                                                                 <td align="right"> echo number_format(($objGuia->declarado_total * 28 / 100) + $objGuia->flete + $seguro - $objGuia->desto, 2)  USD</td>
                                                                             </tr>
                                                                         </table>
@@ -394,7 +396,7 @@
                                                                             <table width="100%" border="0" cellspacing="1" cellpadding="0">
 
                                                                                 <tr>
-                                                                                    <td><b>Total:</b></td>
+                                                                                    <td><b>@lang('documents.total'):</b></td>
                                                                                     <td align="right"><b><span style="font-size:14px;color:#F00">echo number_format($objGuia->total, 2)  USD</span></b>
                                                                                     </td>
                                                                                 </tr>
@@ -409,9 +411,9 @@
                                                                         <!--Información del Consignatario-->
                                                                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                                             <tr height="20px">
-                                                                                <td width="20%" style="background-color: lightgray;"><b>Warehouses</b></td>
-                                                                                <td width="20%" style="background-color: lightgray;"><b>Contenido</b></td>
-                                                                                <td width="20%" style="background-color: lightgray;"><b>Peso (lb)</b></td>
+                                                                                <td width="20%" style="background-color: lightgray;"><b>@lang('documents.warehouses')</b></td>
+                                                                                <td width="20%" style="background-color: lightgray;"><b>@lang('documents.content')</b></td>
+                                                                                <td width="20%" style="background-color: lightgray;"><b>@lang('documents.weight')(lb)</b></td>
                                                                             </tr>
                                                                             {{-- if ($warehouses != '') --}}
                                                                                 {{-- foreach ($warehouses as $wrh): --}}
@@ -445,7 +447,7 @@
                                                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                             <tr>
                                                                 <td align="left">
-                                                                    <span style="font-size:18px; font-weight:bold">Status</span>
+                                                                    <span style="font-size:18px; font-weight:bold">@lang('documents.states')</span>
                                                                 </td>
                                                             </tr>
                                                         </table>
@@ -466,10 +468,10 @@
                                                             <table width="100%" border="0" cellspacing="0" cellpadding="0" id="detalleGuias">
                                                                 <thead>
                                                                     <tr height="20px">
-                                                                        <td><b>Fecha:</b></td>
-                                                                        <td><b>Estado:</b></td>
-                                                                        <td><b>Observación:</b></td>
-                                                                        <td><b>Usuario:</b></td>
+                                                                        <td><b>@lang('documents.date'):</b></td>
+                                                                        <td><b>@lang('documents.state'):</b></td>
+                                                                        <td><b>@lang('documents.observations'):</b></td>
+                                                                        <td><b>@lang('documents.user'):</b></td>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -497,8 +499,8 @@
 
                     </fieldset>
                     <div class="text-right">
-                        <a href="" class="btn btn-default btn-sm"><i class="fa fa-table fa-fw"></i> Volver</a>
-                        <a href="" class="btn btn-primary btn-sm"><i class="fa fa-edit fa-fw"></i> Editar</a>
+                        <a href="" class="btn btn-default btn-sm"><i class="fa fa-table fa-fw"></i> @lang('documents.return')</a>
+                        <a href="" class="btn btn-primary btn-sm"><i class="fa fa-edit fa-fw"></i> @lang('documents.edit')</a>
                     </div>
                 </div>
             </div>

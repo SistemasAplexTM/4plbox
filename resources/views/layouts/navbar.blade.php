@@ -32,14 +32,14 @@
                         <a href="#">
                             <div>
                                 <i class="fa fa-user-circle fa-fw"></i>JHONNYS
-                                <span class="pull-right text-muted small">MENSAJE</span>
+                                <span class="pull-right text-muted small">@lang('layouts.message')</span>
                             </div>
                         </a>
                     </li>
                     <li>
                         <a href="#">
                             <div style="text-align: center; font-weight: bold;">
-                                No hay registros
+                               @lang('layouts.no_records')
                             </div>
                         </a>
                     </li>
@@ -47,7 +47,7 @@
                     <li>
                         <div class="text-center link-block">
                             <a href="#">
-                                <strong>Ver Todas las alertas</strong>
+                                <strong>@lang('layouts.see_all_alerts')</strong>
                                 <i class="fa fa-angle-double-right"></i>
                             </a>
                         </div>
@@ -56,7 +56,7 @@
             </li>
             <li>
                 <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                    <i class="fa fa-sign-out"></i> Log out
+                    <i class="fa fa-sign-out"></i> @lang('layouts.log_out')
                 </a>
                 <li>
                     <a class="right-sidebar-toggle" id="sidebar-rigth">

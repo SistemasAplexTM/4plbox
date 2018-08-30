@@ -132,7 +132,7 @@ $toalRegistros = count($detalleConsolidado);
                             </td>
                         </tr>
                         <tr>
-                            <th>Fecha: {{ $documento->created_at }}</th>
+                            <th> @lang('pdfs.date'): {{ $documento->created_at }}</th>
                             <th align="right">{{ $value->num_guia }}</th>
                         </tr>
                         <tr>
@@ -140,7 +140,7 @@ $toalRegistros = count($detalleConsolidado);
                                 <table border="1" cellspacing="0" cellpadding="0" width="100%">
                                     <tr>
                                         <td>
-                                            <div id="remitente">REMITENTE</div>
+                                            <div id="remitente">@lang('pdfs.sender')</div>
                                         </td>
                                     </tr>
                                     <tr>
@@ -174,7 +174,7 @@ $toalRegistros = count($detalleConsolidado);
                                 <table border="1" cellspacing="0" cellpadding="0" width="100%">
                                     <tr>
                                         <td>
-                                            <div id="destinatario">DESTINATARIO</div>
+                                            <div id="destinatario">@lang('pdfs.addressee')</div>
                                         </td>
                                     </tr>
                                     <tr>
@@ -209,10 +209,10 @@ $toalRegistros = count($detalleConsolidado);
                             <td colspan="2" style="padding-bottom: 10px;">
                                 <table border="1" id="tblContenido" width="100%">
                                     <tr>
-                                        <td style="font-weight: bold;"><div id="tituloCont">Contenido</div></td>
-                                        <td style="width: 6%;border-left: 1px solid #8B91A0;font-weight: bold;"><div id="tituloCont">Piezas</div></td>
-                                        <td style="width: 10%;border-left: 1px solid #8B91A0;font-weight: bold;"><div id="tituloCont">Declarado</div></td>
-                                        <td style="width: 10%;border-left: 1px solid #8B91A0;font-weight: bold;"><div id="tituloCont">Peso</div></td>
+                                        <td style="font-weight: bold;"><div id="tituloCont">@lang('pdfs.content')</div></td>
+                                        <td style="width: 6%;border-left: 1px solid #8B91A0;font-weight: bold;"><div id="tituloCont">@lang('pdfs.pieces')</div></td>
+                                        <td style="width: 10%;border-left: 1px solid #8B91A0;font-weight: bold;"><div id="tituloCont">@lang('pdfs.declared')</div></td>
+                                        <td style="width: 10%;border-left: 1px solid #8B91A0;font-weight: bold;"><div id="tituloCont">@lang('pdfs.weight')</div></td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -234,7 +234,8 @@ $toalRegistros = count($detalleConsolidado);
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <div id="recibido">Recibido Por:__________________________ Identificacion:____________________ Fecha: DD_____MM_____AAAA______</div>
+                                <div id="recibido">@lang('pdfs.received_by'):__________________________ 
+                                @lang('pdfs.id'):____________________@lang('pdfs.date'): DD____MM____AAAA______</div>
                             </td>
                         </tr>
                         <tr>
@@ -245,5 +246,5 @@ $toalRegistros = count($detalleConsolidado);
                     </table>
     @endforeach
 @else
-    <div id="noDatos">NO HAY DATOS</div>
+    <div id="noDatos">@lang('pdfs.there_is_no_data')</div>
 @endif

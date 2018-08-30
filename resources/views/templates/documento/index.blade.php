@@ -20,13 +20,13 @@
 </style>
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Documentos</h2>
+        <h2>@lang('documents.documents')</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#">Home</a>
+                <a href="#">@lang('documents.home')</a>
             </li>
             <li class="active">
-                <strong>Documentos</strong>
+                <strong>@lang('documents.documents')</strong>
             </li>
         </ol>
     </div>
@@ -38,7 +38,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Documentos</h5>
+                    <h5>@lang('documents.documents')</h5>
                 </div>
                 <div class="ibox-content">
                     <modaltagdocument-component :params='params' :id_status='id_status' :table_delete="tableDelete"></modaltagdocument-component>
@@ -49,19 +49,19 @@
                                 <div class="col-lg-12">
                                     <div class="alert alert-danger alert-dismissible" role="alert" id="msnP">
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <strong>Atención!</strong> <i id="msn"></i>
+                                        <strong>@lang('documents.attention')</strong> <i id="msn"></i>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-2" style="text-align: left;" id="ajaxCreate">
                                 <div class="col-lg-12">
-                                    <button type="button"  style="" class="btn btn-primary btn-lg btn-block" id="crearDoc" onclick="createNewDocument_(1)"><i class="fa fa-plus"></i> Crear Documento</button>
+                                    <button type="button"  style="" class="btn btn-primary btn-lg btn-block" id="crearDoc" onclick="createNewDocument_(1)"><i class="fa fa-plus"></i> @lang('documents.create_document')</button>
                                 </div>
                             </div>
                             <div class="col-lg-10">
                                 <div class="col-lg-12" style="font-size: 30px; font-weight:800;border-bottom: 1px solid #CDCDCD;"><i aria-hidden="true" id="icono_doc" class="fa fa-file-text-o"></i>&nbsp; 
                                     <div style="display:inline;" id="nombre_doc">
-                                        Warehouse
+                                       @lang('documents.warehouse')
                                     </div>
                                      @if (session()->has('sendemail'))
                                             {{-- <div class="alert alert-success alert-dismissible" role="alert" id="msn_sendmail">
@@ -79,7 +79,7 @@
                             <div class="col-lg-2" >
                                 <div class="col-lg-12">
                                     <a href="#" class="list-group-item active" style="text-align: center; background-color:#2196f3;border-color: #2196f3 ">
-                                        Tipos de Documentos
+                                      @lang('documents.types_of_documents')
                                     </a>
                                     <div class="btn-group-vertical" id="listaDocumentos" style="width: 100%;">
                                         <!--Listar documentos-->
@@ -92,13 +92,14 @@
                                         <table id="tbl-documento" class="table table-striped table-hover table-bordered" style="width: 100%;">
                                             <thead>
                                                 <tr>
-                                                    <th><i class="fa fa-file-text-o" aria-hidden="true" id="icono-doc-table"></i> #Documento</th>
-                                                    <th><i class="fa fa-calendar" aria-hidden="true"></i> Fecha</th>
-                                                    <th><i class="fa fa-user" aria-hidden="true"></i> Cliente / Consignee</th>
-                                                    <th><i class="fa fa-balance-scale" aria-hidden="true"></i> Peso</th>
-                                                    <th><i class="fa fa-cubes" aria-hidden="true"></i> Volumen</th>
-                                                    <th><i class="fa fa-building" aria-hidden="true"></i> Agencia</th>
-                                                    <th><i class="fa fa-bolt" aria-hidden="true"></i> Acciones</th>
+                                                    <th><i class="fa fa-file-text-o" aria-hidden="true" id="icono-doc-table"></i> #@lang('documents.document')</th>
+                                                    <th><i class="fa fa-calendar" aria-hidden="true"></i> @lang('documents.date')</th>
+                                                    <th><i class="fa fa-user" aria-hidden="true"></i> @lang('documents.client_consignee')</th>
+                                                    <th><i class="fa fa-balance-scale" aria-hidden="true"></i> 
+                                                    @lang('documents.weight')</th>
+                                                    <th><i class="fa fa-cubes" aria-hidden="true"></i> @lang('documents.volume')</th>
+                                                    <th><i class="fa fa-building" aria-hidden="true"></i>@lang('documents.agency')</th>
+                                                    <th><i class="fa fa-bolt" aria-hidden="true"></i>@lang('documents.actions')</th>
                                                 </tr>
                                             </thead>
                                         </table>

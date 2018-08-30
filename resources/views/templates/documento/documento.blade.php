@@ -8,13 +8,13 @@
         <h2>{{ ($documento->liquidado == 1) ? 'Guia' : $documento->tipo_nombre }}</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#">Home</a>
+                <a href="#">@lang('documents.home')</a>
             </li>
             <li >
                 <a href="{{ route('documento.index') }}">{{ ($documento->liquidado == 1) ? 'Guia' : $documento->tipo_nombre }}</a>
             </li>
             <li class="active">
-                <strong>Crear {{ ($documento->liquidado == 1) ? 'Guia' : $documento->tipo_nombre }}</strong>
+                <strong>@lang('documents.create') {{ ($documento->liquidado == 1) ? 'Guia' : $documento->tipo_nombre }}</strong>
             </li>
         </ol>
     </div>
@@ -104,7 +104,7 @@
                     <div class="col-lg-12">
                         <div class="col-lg-6" style="padding-left: 0px;">
                             <div class="form-group">
-                                <label for="agencia_id" class="">Agencia</label>
+                                <label for="agencia_id" class="">@lang('documents.agency')</label>
                                     <select id="agencia_id" name="agencia_id" class="form-control" style="font-size: 17px;font-weight: 900;">
                                         @if(isset($agencias) and $agencias)
                                             @role('admin')
@@ -125,7 +125,7 @@
                         @if(isset($agencia) and $agencia)
                             <div class="col-lg-6" style="padding-right: 0px;">
                                 <div class="form-group">
-                                    <label for="num_guia" class="">Número de Documento</label>
+                                    <label for="num_guia" class="">@lang('documents.document_number')</label>
                                     <input type="text" id="num_guia" name="num_guia" class="form-control" readonly="" value="{{ $documento->consecutivo }}" style="background-color: #FFFFFF; font-size: 20px; font-weight: bold; color: forestgreen;">
                                 </div>
                             </div>
@@ -140,19 +140,19 @@
                     <div class="col-lg-6" style="margin-bottom: 20px;" v-if="mostrar.includes(25)">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
-                                <h5><span class="fa fa-arrow-circle-up"> </span> Remitente (Shipper) <span style="color: coral; display: none;" id="msnEditarShip">Preparado para edición...</span></h5>
+                                <h5><span class="fa fa-arrow-circle-up"> </span> @lang('documents.sender_shipper') <span style="color: coral; display: none;" id="msnEditarShip">@lang('documents.prepared_for_editing')</span></h5>
                                 
                             </div>
                             <div class="ibox-content col-lg-12" :class="[mostrar.includes(22) ? 'wrh' : 'guia' ]">
                                 <div class="row">
                                     <div class="col-sm-12"  data-container="body" data-trigger="focus" data-toggle="popover" data-placement="top" data-content="Para registrar un nuevo Shipper, hacer clic en el icono (Reset Shipper) e ingresar los nuevos datos." style="padding-left: 0px; padding-right: 0px;">
                                         <div class="form-group">
-                                            <label class="control-label col-sm-2">Nombre: </label> 
+                                            <label class="control-label col-sm-2">@lang('documents.name'): </label> 
                                             <div class="col-sm-10">
                                                 <div class="input-group"  style="margin-bottom: 5px;" :class="{ 'has-error': errors.has('nombreR') }">
                                                     <input type="search" data-id="nomBuscarShipper" id="nombreR" name="nombreR" placeholder="Digite para buscar..." class="form-control" onkeyup="deleteError($(this).parent());" v-model="nombreR" v-validate="'required'">
                                                     <span class="input-group-btn">
-                                                        <button id="btnBuscarShipper" @click="modalShipper(true)" class="btn btn-primary" type="button" data-toggle='tooltip' title="Buscar Shipper"><span class="fa fa-search"></span> Buscar</button>
+                                                        <button id="btnBuscarShipper" @click="modalShipper(true)" class="btn btn-primary" type="button" data-toggle='tooltip' title="Buscar Shipper"><span class="fa fa-search"></span> @lang('documents.search')</button>
                                                         <button id="btnEditShipper" @click="editFormsShipperConsignee(0)" class="btn btn-success" type="button" data-toggle='tooltip' title="Editar Shipper"><span class="fa fa-edit"></span>&nbsp;</button>
                                                         <button id="btnResetShipper" @click="resetFormsShipperConsignee(0)" class="btn btn-default" type="button" data-toggle='tooltip' title="Reset Shipper"><span class="fa fa-refresh"></span>&nbsp;</button>
                                                     </span>
@@ -163,7 +163,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="control-label col-sm-2">Dirección: </label> 
+                                    <label class="control-label col-sm-2">@lang('documents.address'): </label> 
                                     <div class="col-sm-10" :class="{ 'has-error': errors.has('direccionR') }">
                                         <input type="text" id="direccionR" name="direccionR" placeholder="Dirección" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());" v-model="direccionR" v-validate="'required'">
                                         <small class="help-block has-error">@{{ errors.first('direccionR') }}</small>
@@ -172,12 +172,12 @@
 
                                     <!-- /Grupo Doble 1 -->
                                      <div class="row">
-                                        <label class="control-label col-sm-2">Email: </label> 
+                                        <label class="control-label col-sm-2">@lang('documents.email'):</label> 
                                         <div class="col-sm-5" :class="{ 'has-error': errors.has('emailR') }">
                                             <input type="email" placeholder="Example@example.com" id="emailR" name="emailR" class="form-control" v-validate.disable="'unique_s'">
                                             <small class="help-block has-error">@{{ errors.first('emailR') }}</small>
                                         </div>
-                                        <label class="control-label col-sm-1">Teléfono: </label>
+                                        <label class="control-label col-sm-1">@lang('documents.phone'): </label>
                                         <div class="col-sm-4">
                                             <input type="tel" data-mask="(999) 999-9999" placeholder="Teléfono" id="telR" name="telR" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());">
                                             <small class="help-block has-error">@{{ errors.first('telR') }}</small>
@@ -188,7 +188,7 @@
 
                                     <!-- /Grupo Doble 2 -->
                                      <div class="row">
-                                        <label class="control-label col-sm-2">Ciudad: </label>
+                                        <label class="control-label col-sm-2">@lang('documents.city'): </label>
                                         <div class="col-sm-5" onclick ="deleteError($(this));">
                                             <input type="hidden" id="localizacion_id_input" value="">
                                             <input type="hidden" id="prefijoR" name="prefijoR" value="">
@@ -196,9 +196,9 @@
                                             </select>
                                             {{-- <v-select name="localizacion_id" v-model="localizacion_id" label="name" :filterable="false" :options="citys" @search="onSearchCity" v-validate="'required'">
                                                 </v-select> --}}
-                                            <small class="help-block has-error" id="msn_l1" style="display: none;">Campo obligatorio</small>
+                                            <small class="help-block has-error" id="msn_l1" style="display: none;">@lang('documents.obligatory_field')</small>
                                         </div>
-                                        <label class="control-label col-sm-1">Zip: </label>
+                                        <label class="control-label col-sm-1">@lang('documents.zip'): </label>
                                         <div class="col-sm-4">
                                             <input type="number" placeholder="Zip" id="zipR" name="zipR" class="form-control" onkeyup="deleteError($(this).parent());">
                                         </div>
@@ -215,7 +215,7 @@
                                             <div class="form-group">
                                                 <div class="checkbox checkbox-success checkbox-inline">
                                                     <input type="checkbox" id="enviarEmailRemitente" name="enviarEmailRemitente" value="t" style="margin-left: -50px;">
-                                                    <label for="enviarEmailRemitente"> Enviar Email <i class="fa fa-envelope-open"></i></label>
+                                                    <label for="enviarEmailRemitente"> @lang('documents.send_email') <i class="fa fa-envelope-open"></i></label>
                                                 </div>
                                             </div>
                                         </div>
@@ -227,9 +227,10 @@
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
                                 <h5>
-                                    <span class="fa fa-arrow-circle-down"> </span> Destinatario (Consignee) 
-                                    <span style="color: coral; display: none;" id="msnEditarCons">Preparado para edición...</span>
+                                    <span class="fa fa-arrow-circle-down"> </span>@lang('documents.addressee_consignee')  
+                                    <span style="color: coral; display: none;" id="msnEditarCons">@lang('documents.prepared_for_editing')</span>
                                     <label class="po">PO#</label>
+                              
                                     <input type="text" id="poBoxD" name="poBoxD" class="" value="" style="border-color: transparent;">
                                 </h5>
                             </div>
@@ -237,13 +238,13 @@
                                 <div class="row">
                                     <div class="col-sm-12"  data-container="body" data-trigger="focus" data-toggle="popover" data-placement="top" data-content="Para registrar un nuevo Consignee para este Shipper, hacer clic en el icono (Reset Consignee) e ingresar los nuevos datos." style="padding-left: 0px; padding-right: 0px;">
                                         <div class="form-group">
-                                            <label class="control-label col-sm-2">Nombre: </label>
+                                            <label class="control-label col-sm-2">@lang('documents.name'): </label>
                                             <div class="col-sm-10">
                                                 <input type="hidden" value="" id="urlBuscarConsignee">
                                                 <div class="input-group" style="margin-bottom: 5px;" :class="{ 'has-error': errors.has('nombreD') }">
                                                     <input type="search" data-id="nomBuscarConsignee" class="form-control" id="nombreD" name="nombreD" placeholder="Digite para buscar..." onkeyup="deleteError($(this).parent());" v-model="nombreD" v-validate="'required'">
                                                     <span class="input-group-btn">
-                                                        <button class="btn btn-primary" @click="modalConsignee(true)" id="btnBuscarConsignee" type="button" data-toggle='tooltip' title="Buscar consignee"><span class="fa fa-search"></span> Buscar</button>
+                                                        <button class="btn btn-primary" @click="modalConsignee(true)" id="btnBuscarConsignee" type="button" data-toggle='tooltip' title="Buscar consignee"><span class="fa fa-search"></span>@lang('documents.search')</button>
                                                         <button id="btnEditConsignee" @click="editFormsShipperConsignee(1)" class="btn btn-success" type="button" data-toggle='tooltip' title="Editar consignee"><span class="fa fa-edit"></span>&nbsp;</button>
                                                         <button id="btnResetConsignee" @click="resetFormsShipperConsignee(1)" class="btn btn-default" type="button" data-toggle='tooltip' title="Reset consignee"><span class="fa fa-refresh"></span>&nbsp;</button>
                                                         </span>
@@ -255,7 +256,7 @@
                                 </div>
                                     <div class="row">
                                         <div class="form-group">
-                                            <label class="control-label col-sm-2">Dirección: </label> 
+                                            <label class="control-label col-sm-2">@lang('documents.address'): </label> 
                                             <div class="col-sm-10" :class="{ 'has-error': errors.has('direccionD') }">
                                                 <input type="text" placeholder="Dirección" id="direccionD" name="direccionD" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());" v-model="direccionD" v-validate="'required'">
                                                 <small class="help-block has-error">@{{ errors.first('direccionD') }}</small>
@@ -264,12 +265,12 @@
                                     </div>
                                     <div class="row">
                                     <!-- /Grupo Doble 1 -->
-                                        <label class="control-label col-sm-2">Email: </label> 
+                                        <label class="control-label col-sm-2">@lang('documents.email'): </label> 
                                         <div class="col-sm-5" :class="{ 'has-error': errors.has('emailD') }">
                                             <input type="email" placeholder="Example@example.com" id="emailD" name="emailD" class="form-control" v-validate.disable="'unique_c'">
                                             <small class="help-block has-error" :class="{ 'small': errors.has('emailD') }">@{{ errors.first('emailD') }}</small>
                                         </div>
-                                        <label class="control-label col-sm-1">Teléfono: </label>
+                                        <label class="control-label col-sm-1">@lang('documents.phone'):</label>
                                         <div class="col-sm-4">
                                             <input type="tel" data-mask="(999) 999-9999" id="telD" name="telD" placeholder="Teléfono" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());">
                                             <small class="help-block has-error">@{{ errors.first('telD') }}</small>
@@ -279,7 +280,7 @@
                                     <div class="row">
                                     <!-- /Grupo Doble 2 -->
                                         <div class="form-group">
-                                            <label class="control-label col-sm-2">Ciudad: </label>
+                                            <label class="control-label col-sm-2">@lang('documents.city'): </label>
                                             <div class="col-sm-5" onclick ="deleteError($(this));">
                                                 <input type="hidden" id="localizacion_id_input_c" value="">
                                                 <input type="hidden" id="prefijoD" name="prefijoD" value="">
@@ -287,7 +288,7 @@
                                                 <input type="hidden" id="paisD" value="">
                                                 <select name="localizacion_id_c" id="localizacion_id_c" class="form-control js-data-example-ajax select2-container" @click="deleteError('localizacion_id_c')">
                                                 </select>
-                                                <small class="help-block has-error" id="msn_l2" style="display: none;">Campo obligatorio</small>
+                                                <small class="help-block has-error" id="msn_l2" style="display: none;">@lang('documents.obligatory_field')</small>
                                             </div>
                                             <label class="control-label col-sm-1">C.P: </label>
                                             <div class="col-sm-4">
@@ -311,7 +312,7 @@
                                         <div class="form-group">
                                             <div class="checkbox checkbox-success checkbox-inline">
                                                 <input type="checkbox" id="enviarEmailDestinatario" name="enviarEmailDestinatario" value="t" style="margin-left: -50px;">
-                                                <label for="enviarEmailDestinatario"> Enviar Email <i class="fa fa-envelope-open"></i></label>
+                                                <label for="enviarEmailDestinatario"> @lang('documents.send_email') <i class="fa fa-envelope-open"></i></label>
                                             </div>
                                         </div>
                                     </div>
@@ -324,7 +325,7 @@
                     <div class="col-lg-8">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
-                                <h5>Datos de la carga</h5>
+                                <h5>@lang('documents.load_data')</h5>
                                 <div class="ibox-tools">
                                     
                                 </div>
@@ -337,14 +338,14 @@
                                             <div class="row">
                                             <div class="col-sm-2">
                                                     <div class="form-group"  id="Valpeso">
-                                                        <label class="peso">Peso</label>
+                                                        <label class="peso">@lang('documents.weight')</label>
                                                         <input type="number" class="form-control" onkeyup="deleteError($(this).parent());" id="peso" name="peso" maxlength="4" placeholder="Lb" value="">
-                                                        <small class="help-block" id="Hpeso" style="display: none">Este campo es obligatorio</small>
+                                                        <small class="help-block" id="Hpeso" style="display: none">@lang('documents.these_data_are_required')</small>
                                                     </div>
                                             </div>
                                             <div class="col-sm-4">
                                                     <div class="form-group"  id="Valdim">
-                                                        <label class="dimensiones">Dimensiones (L x W x H)</label>
+                                                        <label class="dimensiones">@lang('documents.dimensions') (L x W x H)</label>
                                                         <div class="input-group">
                                                             <input type="text" class="form-control" placeholder="L" maxlength="4" id="largo" onkeyup="deleteError($(this).parent());" name="largo" value="0">
                                                             <span class="input-group-addon">x</span>
@@ -352,39 +353,39 @@
                                                             <span class="input-group-addon">x</span>
                                                             <input type="text" class="form-control" placeholder="H" maxlength="4" id="alto" onkeyup="deleteError($(this).parent());" name="alto" value="0">                                                    
                                                         </div>
-                                                        <small class="help-block" id="Hdim" style="display: none">Estos Datos son obligatorios</small>
+                                                        <small class="help-block" id="Hdim" style="display: none">@lang('documents.these_data_are_required')</small>
                                                     </div>
                                             </div>
                                             <div :class="[mostrar.includes(22) ? 'col-sm-6' : 'col-sm-6' ]">
-                                                <label class="contiene">Contenido</label>
+                                                <label class="contiene">@lang('documents.content')</label>
                                                     <div class="form-group"  id="Valconti">
                                                         <label class="contiene" style="display: none;"></label>
                                                         <input type="text" onkeyup="deleteError($(this).parent());" id="contiene" name="contiene" class="form-control" value="" placeholder="Contenido">
-                                                        <small class="help-block" id="Hcontiene" style="display: none">Este campo es obligatorio</small>
+                                                        <small class="help-block" id="Hcontiene" style="display: none">@lang('documents.obligatory_field')</small>
                                                     </div>
                                             </div>
                                             
                                         </div>
                                         <div class="row">
                                            <div class="col-sm-2">
-                                                <label class="valDeclarado">Declarado</label>
+                                                <label class="valDeclarado">@lang('documents.declared')</label>
                                                     <div class="form-group" id="ValDecla">
                                                         <label style="display: none;" for="" class=""></label>
                                                         <input type="number" onkeyup="deleteError($(this).parent());" placeholder=" Declarado" onkeyup="deleteError($(this).parent());" id="valDeclarado" name="valDeclarado" class="form-control" value="">
-                                                        <small class="help-block" id="HvalDeclarado" style="display: none">Este campo es obligatorio</small>
+                                                        <small class="help-block" id="HvalDeclarado" style="display: none">@lang('documents.obligatory_field')</small>
                                                     </div>
                                             </div>
                                            <div class="col-sm-2" v-if="mostrar.includes(34)">
-                                                <label class="valDeclarado">Piezas</label>
+                                                <label class="valDeclarado">@lang('documents.pieces')</label>
                                                     <div class="form-group" id="ValDecla">
                                                         <label style="display: none;" for="" class=""></label>
                                                         <input type="number" onkeyup="deleteError($(this).parent());" placeholder=" Piezas" onkeyup="deleteError($(this).parent());" id="valPiezas" name="valPiezas" class="form-control" value="1">
-                                                        <small class="help-block" id="Hpiezas" style="display: none">Este campo es obligatorio</small>
+                                                        <small class="help-block" id="Hpiezas" style="display: none">>@lang('documents.obligatory_field')</small>
                                                     </div>
                                             </div>
                                             <div class="col-sm-2">
                                                     <div class="form-group" id="Valtipoem">
-                                                        <label for="tipo_empaque_id" class="">Empaque</label>
+                                                        <label for="tipo_empaque_id" class="">@lang('documents.packing')</label>
                                                         <select  onchange="deleteError($(this).parent());" id="tipo_empaque_id" name="tipo_empaque_id" class="form-control">
                                                             @if(isset($empaques) and $empaques)
                                                                 @foreach($empaques as $empaque)
@@ -392,11 +393,11 @@
                                                                 @endforeach
                                                             @endif
                                                         </select>
-                                                        <small class="help-block" id="HtipoE" style="display: none">Este campo es obligatorio</small>
+                                                        <small class="help-block" id="HtipoE" style="display: none">@lang('documents.obligatory_field')</small>
                                                     </div>
                                             </div>                                    
                                             <div class="col-sm-4" v-if="mostrar.includes(16)">
-                                                <label for="pa" class="">Posicion arancelaria</label>
+                                                <label for="pa" class="">@lang('documents.tariff_position')</label>
                                                     <div class="form-group" id="Errpa">
                                                         <label style="display: none;" for="" class=""></label>
                                                         <input type="hidden" value="" id="urlBuscarPA">
@@ -406,7 +407,8 @@
                                                             </span>
                                                             <input type="text" placeholder="seleccionar" class="form-control" readonly="" value="" id="pa" name="pa" onkeyup="deleteError($(this).parent());">
                                                         </div><!-- /input-group -->
-                                                        <small class="help-block" id="Hpa" style="display: none">Este campo es obligatorio</small>
+                                                        <small class="help-block" id="Hpa" style="display: none">
+                                                        @lang('documents.obligatory_field')</small>
                                                     </div>
                                                
                                                     <input type="hidden" placeholder="0" class="form-control" readonly="" value="{{ $id_pa }}" id="pa_id" name="pa_id">
@@ -423,7 +425,7 @@
                                                     <div class="input-group">
                                                         <label for="btn_add" class="control-label" style="padding-top: 2px;">&nbsp;</label>
                                                         <!--para quitar el efecto de bloqueo del boton, quitar la clase btnBlock-->
-                                                        <button class="btn btn-info btn-sm btnBlock" type="button" id="btn_add" value="0" @click="addDetail()" style="width: 100%"><span class="fa fa-plus" ></span> Agregar</button>
+                                                        <button class="btn btn-info btn-sm btnBlock" type="button" id="btn_add" value="0" @click="addDetail()" style="width: 100%"><span class="fa fa-plus" ></span> @lang('documents.add')</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -436,13 +438,13 @@
                                                             <table class="table table-striped  table-hover" id="whgTable" style="width: 100%;">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th style="width: 10%;">Código</th>
-                                                                        <th style="width: 7%;">Piezas</th>
-                                                                        <th style="width: 17%;">Peso (Lb)</th>
-                                                                        <th style="">Contiene</th>
+                                                                        <th style="width: 10%;">@lang('documents.code')</th>
+                                                                        <th style="width: 7%;">@lang('documents.pieces')</th>
+                                                                        <th style="width: 17%;">@lang('documents.weight')(Lb)</th>
+                                                                        <th style="">@lang('documents.contains')</th>
                                                                         <th style="width: 15%;">PA</th>
-                                                                        <th style="width: 10%;">Valor US$</th>
-                                                                        <th style="width: 13%;">Acción</th>
+                                                                        <th style="width: 10%;">@lang('documents.value') US$</th>
+                                                                        <th style="width: 13%;">@lang('documents.action')</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tfoot style="background-color: paleturquoise;">
@@ -452,31 +454,32 @@
                                                                                 <tr>
                                                                                     <td>
                                                                                         <div class="col-lg-12">
-                                                                                        <label class="">Pieza(s)</label>
+                                                                                        <label class="">@lang('documents.pieces')(s)</label>
                                                                                             <input type="text" onkeyup="deleteError($(this).parent());" id="piezas" name="piezas" class="form-control" readonly="" value="{{ isset($documento->piezas) ? $documento->piezas : 0 }}" style="width: 100px;">
                                                                                         </div>
                                                                                     </td>
                                                                                     <td>
                                                                                         <div class="col-sm-12">
-                                                                                            <label class="">Peso total</label>
+                                                                                            <label class="">@lang('documents.weight') total</label>
                                                                                             <input type="text" onkeyup="deleteError($(this).parent());" id="pesoDim" name="pesoDim" class="form-control" readonly="" value="{{ isset($documento->peso) ? $documento->peso : 0 }}" style="width: 100px;">
                                                                                         </div> 
                                                                                     </td>
                                                                                     <td>
                                                                                         <div class="col-sm-12">
-                                                                                            <label class="">Volumen</label>
+                                                                                            <label class="">@lang('documents.volume')</label>
                                                                                             <input type="text" onkeyup="deleteError($(this).parent());" id="volumen" name="volumen" class="form-control" readonly="" value="{{ isset($documento->volumen) ? $documento->volumen : 0 }}" style="width: 100px;">
                                                                                         </div> 
                                                                                     </td>
                                                                                     <td>
                                                                                         <div class="col-sm-12">
-                                                                                            <label class="">Pie cubico ft</label>
+                                                                                            <label class="">@lang('documents.cubic_foot')</label>
                                                                                             <input type="text" id="pie_ft" name="pie_ft" class="form-control" readonly="" value="{{ (isset($documento->volumen)) ? number_format(($documento->volumen * 166 / 1728), 2) : 0 }}" style="width: 100px;">
                                                                                         </div> 
                                                                                     </td>
                                                                                     <td>
                                                                                         <div class="col-lg-12">
-                                                                                            <label class="">$ Declarado total</label>
+                                                                                            <label class="">$ 
+                                                                                            @lang('documents.declared') total</label>
                                                                                             <input type="text" onkeyup="deleteError($(this).parent());" id="valor_declarado_tbl" class="form-control" readonly="" value="0" style="width: 100px;">
                                                                                         </div>
                                                                                     </td>
@@ -486,7 +489,7 @@
                                                                     </tr>
                                                                 </tfoot>
                                                             </table>
-                                                            <div id="noEnviar" class="col-lg-12" style="text-align: center; color: red; display: none;">Para poder registrar es necesario almenos un dato en el detalle</div>
+                                                            <div id="noEnviar" class="col-lg-12" style="text-align: center; color: red; display: none;">@lang('documents.message_register')</div>
 
                                                         </div>
                                                     </div>
@@ -495,7 +498,7 @@
                                         <div class="row pasos_guia" id="generales_guia">
                                             <div class="col-lg-4" v-if="mostrar.includes(17)">
                                                     <div class="form-group">
-                                                        <label for="" class="">Tipo de Pago</label>
+                                                        <label for="" class="">@lang('documents.payment_type')</label>
                                                         <select id="tipo_pago_id" name="tipo_pago_id" class="form-control" onchange="deleteError($(this).parent());">
                                                            @if(isset($tipoPagos) and $tipoPagos)
                                                                 @foreach($tipoPagos as $tipoPago)
@@ -507,7 +510,7 @@
                                             </div>
                                             <div class="col-lg-4" v-if="mostrar.includes(12)">
                                                     <div class="form-group">
-                                                        <label for="forma_pago_id" class="">Forma de Pago</label>
+                                                        <label for="forma_pago_id" class="">@lang('documents.way_to_pay')</label>
                                                         <select id="forma_pago_id" name="forma_pago_id" class="form-control" onchange="deleteError($(this).parent());">
                                                             @if(isset($formaPagos) and $formaPagos)
                                                                 @foreach($formaPagos as $formaPago)
@@ -519,7 +522,7 @@
                                             </div>
                                             <div class="col-lg-4" v-if="mostrar.includes(18)">
                                                     <div class="form-group">
-                                                        <label for="grupo_id" class="">Grupo</label>
+                                                        <label for="grupo_id" class="">@lang('documents.group')</label>
                                                         <select id="grupo_id" name="grupo_id" class="form-control" onchange="deleteError($(this).parent());">
                                                             @if(isset($grupos) and $grupos)
                                                                 @foreach($grupos as $grupo)
@@ -531,30 +534,30 @@
                                             </div>
                                             <div class="col-lg-12">
                                                     <div class="form-group">
-                                                        <label>Comentarios: </label>
+                                                        <label>@lang('documents.comments'): </label>
                                                         <textarea class="form-control" rows="3" style="height: 65px;" id="observaciones" name="observaciones">{{ isset($documento->observaciones) ? $documento->observaciones : '' }}</textarea>
                                                     </div>
                                             </div>
                                             <div class="col-sm-12">
                                                 <div class="checkbox checkbox-success checkbox-inline">
                                                     <input type="checkbox" id="inlineCheckbox1" name="factura" value="1" {{ (isset($documento->factura) and $documento->factura != 0) ? 'checked' : '' }}>
-                                                    <label for="inlineCheckbox1"> Factura </label>
+                                                    <label for="inlineCheckbox1"> @lang('documents.bill') </label>
                                                 </div>
                                                 <div class="checkbox checkbox-success checkbox-inline">
                                                     <input type="checkbox" id="inlineCheckbox2" name="carga_peligrosa" value="1" {{ (isset($documento->carga_peligrosa) and $documento->carga_peligrosa != 0) ? 'checked' : '' }}>
-                                                    <label for="inlineCheckbox2"> Carga Peligrosa </label>
+                                                    <label for="inlineCheckbox2">@lang('documents.dangerous_load')</label>
                                                 </div>
                                                 <div class="checkbox checkbox-success checkbox-inline">
                                                     <input type="checkbox" id="inlineCheckbox3" name="re_empacado" value="1" {{ (isset($documento->re_empacado) and $documento->re_empacado != 0) ? 'checked' : '' }}>
-                                                    <label for="inlineCheckbox3"> Re-Empacado </label>
+                                                    <label for="inlineCheckbox3">@lang('documents.packed') </label>
                                                 </div>
                                                 <div class="checkbox checkbox-success checkbox-inline">
                                                     <input type="checkbox" id="inlineCheckbox4" name="mal_empacado" value="1" {{ (isset($documento->mal_empacado) and $documento->mal_empacado != 0) ? 'checked' : '' }}>
-                                                    <label for="inlineCheckbox4"> Mal empacada </label>
+                                                    <label for="inlineCheckbox4"> @lang('documents.badly_packed')</label>
                                                 </div>
                                                 <div class="checkbox checkbox-success checkbox-inline">
                                                     <input type="checkbox" id="inlineCheckbox5" name="rota" value="1" {{ (isset($documento->rota) and $documento->rota != 0) ? 'checked' : '' }}>
-                                                    <label for="inlineCheckbox5"> Rota </label>
+                                                    <label for="inlineCheckbox5"> @lang('documents.broken')</label>
                                                 </div>
                                             </div>                                            
                                         </div>
@@ -562,22 +565,22 @@
                                         <div class="row">
                                             <div class="form-group">
                                                 <div class="col-sm-12 col-sm-offset-0 guardar">
-                                                    <button type="button" id="saveForm" class="ladda-button btn btn-success" data-style="expand-right" @click="saveDocument()"><i class="fa fa-save fa-fw"></i> Guardar Cambios</button>
+                                                    <button type="button" id="saveForm" class="ladda-button btn btn-success" data-style="expand-right" @click="saveDocument()"><i class="fa fa-save fa-fw"></i>@lang('documents.save_changes')</button>
                                                     {{-- el href de la impresion lo pongo desde la funcion showHiddeFields desde vue --}}
                                                     
                                                     <div class="btn-group dropup">
                                                         <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <i class="fa fa-print"></i>  Imprmir <span class="caret"></span>
+                                                            <i class="fa fa-print"></i>@lang('documents.to_print')<span class="caret"></span>
                                                         </button>
                                                         <ul class="dropdown-menu">
-                                                            <li><a href="" id="printDocument" class="" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> Imprimir {{ ($documento->liquidado == 1) ? 'Guia' : $documento->tipo_nombre }}</a></li>
-                                                            <li><a href="" id="printLabel" class="" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> Imprimir Label</a></li>
+                                                            <li><a href="" id="printDocument" class="" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> @lang('documents.to_print') {{ ($documento->liquidado == 1) ? 'Guia' : $documento->tipo_nombre }}</a></li>
+                                                            <li><a href="" id="printLabel" class="" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> @lang('documents.print_label')</a></li>
                                                             <li role="separator" class="divider"></li>
-                                                            <li><a href="" id="invoice" class="" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> Invoice</a></li>
+                                                            <li><a href="" id="invoice" class="" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> @lang('documents.invoice')</a></li>
                                                         </ul>
                                                     </div>
 
-                                                    <a href="{{ route('documento.index') }}" type="button" class="btn btn-white"><i class="fa fa-times fa-fw"></i> Cancelar </a>
+                                                    <a href="{{ route('documento.index') }}" type="button" class="btn btn-white"><i class="fa fa-times fa-fw"></i> @lang('documents.cancel') </a>
                                                 </div>
                                             </div>                                            
                                         </div>
@@ -590,9 +593,9 @@
                     <div class="col-lg-4">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
-                                <h5>Totales</h5>
+                                <h5>@lang('documents.totals')</h5>
                                 <div class="ibox-tools">
-                                    <label>Liquidar</label>
+                                    <label>@lang('documents.liquidate')</label>
                                     <input type='checkbox' data-toggle="toggle" id='show-totales' name="liquidar" @click="showTotals()" data-size='mini' data-on="Si" data-off="No" data-width="50" data-style="ios" data-onstyle="primary" data-offstyle="danger" {{ ($documento->liquidado != 0) ? 'checked="checked"' : '' }}>
                                 </div>
                             </div>
@@ -603,7 +606,7 @@
                                         <div class="col-lg-12">
                                             <div class="form-group"  style="margin-top: 15px;">
                                                 <div class="col-sm-6">
-                                                    <label for="tipo_embarque_id" class="">Tipo Embarque - <span class="fa fa-ship"></span><span class="fa fa-plane"></span></label>
+                                                    <label for="tipo_embarque_id" class="">@lang('documents.type_boarding') - <span class="fa fa-ship"></span><span class="fa fa-plane"></span></label>
                                                     <select id="tipo_embarque_id" name="tipo_embarque_id" class="form-control" onchange="deleteError($(this).parent());llenarSelectServicio($(this).val())">
                                                         @if(isset($embarques) and $embarques)
                                                             @foreach($embarques as $embarque)
@@ -611,40 +614,40 @@
                                                             @endforeach
                                                         @endif
                                                     </select>
-                                                    <small class="help-block" style="display: none">Campo obligatorio</small>
+                                                    <small class="help-block" style="display: none">@lang('documents.type_boarding')</small>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <label for="servicios_id" class="">Tipo de Servicio</label>
+                                                    <label for="servicios_id" class="">@lang('documents.type_of_service')</label>
                                                     <select onchange="calculateServiceType();" id="servicios_id" name="servicios_id" class="form-control" onchange="deleteError($(this).parent());"  onclick="deleteError($(this).parent());">
-                                                        <option value="">Seleccione tipo embarque</option>
+                                                        <option value="">@lang('documents.select_type_of_boarding')</option>
                                                         @if(isset($servicios) and $servicios)
                                                             @foreach($servicios as $servicio)
                                                                 <option value="{{ $servicio['id'] }}" data-cobvol="{{ $servicio['cobro_peso_volumen'] }}" data-tarifamin="{{ $servicio['peso_minimo'] }}" data-tarifa="{{ $servicio['tarifa'] }}" data-seguro="{{ $servicio['seguro'] }}" data-c_opcional="{{ $servicio['cobro_opcional'] }}" data-t_age="{{ $servicio['tarifa_agencia'] }}" data-seg_age="{{ $servicio['seguro_agencia'] }}" data-impuesto_age="{{ $servicio['impuesto'] }}" {{ (isset($documento->servicios_id) and $documento->servicios_id === $servicio['id']) ? 'selected' : '' }}>{{ $servicio['nombre'] }}</option>
                                                             @endforeach
                                                         @endif
                                                     </select>
-                                                    <small class="help-block" style="display: none">Campo obligatorio</small>
+                                                    <small class="help-block" style="display: none">@lang('documents.obligatory_field')</small>
                                                 </div>
                                             </div>
 
                                             <div class="form-group" v-if="mostrar.includes(22)">
                                                 <div class="col-sm-4">
-                                                    <label class="">Peso</label>
+                                                    <label class="">@lang('documents.weight')</label>
                                                     <input type="text" onkeyup="deleteError($(this).parent());" id="pesoDim" name="pesoDim" class="form-control" readonly="" value="{{ isset($documento->peso) ? $documento->peso : '' }}">
                                                 </div>
                                                 <div class="col-sm-4">
-                                                    <label class="">Volumen</label>
+                                                    <label class="">@lang('documents.volume')</label>
                                                     <input type="text" onkeyup="deleteError($(this).parent());" id="volumen" name="volumen" class="form-control" readonly="" value="{{ isset($documento->volumen) ? $documento->volumen : '' }}">
                                                 </div>
                                                 <div class="col-lg-4">
-                                                    <label class="">Pieza(s)</label>
+                                                    <label class="">@lang('documents.pieces')</label>
                                                     <input type="text" onkeyup="deleteError($(this).parent());" id="piezas" name="piezas" class="form-control" readonly="" value="{{ isset($documento->piezas) ? $documento->piezas : '' }}">
                                                 </div>
                                             </div>
 
                                             <div class="form-group"  style="margin-top: 15px;" v-if="mostrar.includes(20)">
                                                 <div class="col-sm-6">
-                                                    <label class="control-label" for="peso_total">Peso Lb: </label>
+                                                    <label class="control-label" for="peso_total">@lang('documents.weight') Lb: </label>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <input type="text" placeholder="0" class="form-control" readonly="" id="peso_total" name="peso_total" value="{{ isset($documento->peso) ? $documento->peso : '' }}">
@@ -652,7 +655,7 @@
                                             </div>
                                             <div class="form-group" v-if="mostrar.includes(20)">
                                                 <div class="col-sm-6">
-                                                    <label class="control-label" for="peso_cobrado">Peso Cobrado Lb: </label>
+                                                    <label class="control-label" for="peso_cobrado">@lang('documents.charged_weight') Lb: </label>
                                                 </div>
 
                                                 <div class="col-sm-6">
@@ -661,7 +664,7 @@
                                             </div>
                                             <div class="form-group" v-if="mostrar.includes(20)">
                                                 <div class="col-sm-6">
-                                                    <label class="control-label" for="valor_libra">Valor Lb: (<span id="valorLibra">{{ (isset($documento->valor_libra) and $documento->valor_libra != 0)  ? $documento->valor_libra : 0 }}</span>)</label>
+                                                    <label class="control-label" for="valor_libra">@lang('documents.value') Lb: (<span id="valorLibra">{{ (isset($documento->valor_libra) and $documento->valor_libra != 0)  ? $documento->valor_libra : 0 }}</span>)</label>
                                                     <input type="hidden" id="valor_libra2" name="valor_libra2" value="{{ (isset($documento->valor_libra) and $documento->valor_libra != 0)  ? $documento->valor_libra : 0 }}">
                                                 </div>
                                                 <div class="col-sm-6">
@@ -673,7 +676,7 @@
                                             </div>
                                             <div class="form-group" v-if="mostrar.includes(20)">
                                                 <div class="col-sm-6">
-                                                    <label class="control-label" for="impuesto"><div class="col-sm-12" data-trigger="hover"  data-container="body" data-toggle="popover" data-placement="left" data-content="Valor por el cual se calculara el impuesto sobre el valor declarado. (Por defecto 28%)" style="padding-left: 0px; padding-right: 0px;"><i class="fa fa-question-circle" style="cursor: pointer; color: coral;"></i> % Impuesto: </div></label>
+                                                    <label class="control-label" for="impuesto"><div class="col-sm-12" data-trigger="hover"  data-container="body" data-toggle="popover" data-placement="left" data-content="Valor por el cual se calculara el impuesto sobre el valor declarado. (Por defecto 28%)" style="padding-left: 0px; padding-right: 0px;"><i class="fa fa-question-circle" style="cursor: pointer; color: coral;"></i> % @lang('documents.tax'): </div></label>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="input-group m-b">
@@ -688,10 +691,10 @@
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <div class="col-sm-6" style="padding-right: 0px;">
-                                                    <label class="control-label" for="valor_declarado">Declarado: </label>
+                                                    <label class="control-label" for="valor_declarado">@lang('documents.declared'): </label>
                                                 </div>
                                                 <div class="col-sm-6" style="padding-right: 0px;">
-                                                    <label class="control-label" for="pa_aduana">Impuesto: </label>
+                                                    <label class="control-label" for="pa_aduana">@lang('documents.tax'): </label>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -710,7 +713,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-sm-6">
-                                                    <label class="control-label" for="flete"><div class="col-sm-12"  data-container="body" data-trigger="hover"  data-toggle="popover" data-placement="left" data-content="Si el calculo es sobre el volumen (Vol), se evaluara quien es mayor (Peso o Volumen), si es mayor el volumen, se multiplicara por la tarifa. Si es mayor el peso, la diferencia (Peso-Volumen) sera multiplicada por la tarifa." style="padding-left: 0px; padding-right: 0px;"><i class="fa fa-question-circle" style="cursor: pointer; color: coral;"></i> Flete: (<span id="cobrarPor"></span>)</div></label>
+                                                    <label class="control-label" for="flete"><div class="col-sm-12"  data-container="body" data-trigger="hover"  data-toggle="popover" data-placement="left" data-content="Si el calculo es sobre el volumen (Vol), se evaluara quien es mayor (Peso o Volumen), si es mayor el volumen, se multiplicara por la tarifa. Si es mayor el peso, la diferencia (Peso-Volumen) sera multiplicada por la tarifa." style="padding-left: 0px; padding-right: 0px;"><i class="fa fa-question-circle" style="cursor: pointer; color: coral;"></i> @lang('documents.freight'): (<span id="cobrarPor"></span>)</div></label>
                                                 </div>
 
                                                 <div class="col-sm-6">
@@ -722,10 +725,10 @@
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-sm-6">
-                                                    <label class="control-label" for="seguro_valor">Valor Asegurado $US: </label>
+                                                    <label class="control-label" for="seguro_valor">@lang('documents.insured_value') $US: </label>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <label class="control-label" for="seguro">Seguro: </label>
+                                                    <label class="control-label" for="seguro">@lang('documents.insurance'): </label>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -744,7 +747,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-sm-6">
-                                                    <button class="btn btn-info" id="btnBuscarCargosAdd" type="button" @click="modalAdditionalCharges()"><span class="fa fa-plus"></span> Cargos Ad.</button>
+                                                    <button class="btn btn-info" id="btnBuscarCargosAdd" type="button" @click="modalAdditionalCharges()"><span class="fa fa-plus"></span> @lang('documents.charges') </button>
                                                 </div>
 
                                                 <div class="col-sm-6">
@@ -756,7 +759,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-sm-6">
-                                                    <label class="control-label" for="descuento">Descuento: </label>
+                                                    <label class="control-label" for="descuento">@lang('documents.discount'): </label>
                                                 </div>
 
                                                 <div class="col-sm-6">
@@ -768,7 +771,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-sm-6">
-                                                    <label class="control-label" for="total">Total: </label>
+                                                    <label class="control-label" for="total">@lang('documents.total'): </label>
                                                 </div>
 
                                                 <div class="col-sm-6">
@@ -794,21 +797,21 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h2 class="modal-title" id="myModalLabel"><i class="fa fa-barcode"></i> Agregar trackings</h2>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">@lang('documents.close')</span></button>
+                    <h2 class="modal-title" id="myModalLabel"><i class="fa fa-barcode"></i>>@lang('documents.add_trackings')</h2>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-6">
-                            <h2>Trackings disponibles</h2>
+                            <h2>@lang('documents.tracks_available')</h2>
                             <div class="form-group">
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered table-hover" id="tbl-trackings"  style="width: 100%">
                                         <thead>
                                             <tr>
                                                 <th></th>
-                                                <th>Tracking</th>
-                                                <th>Contenido</th>
+                                                <th>@lang('documents.tracking')</th>
+                                                <th>@lang('documents.content')</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -816,15 +819,15 @@
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <h2>Trackings asociados</h2>
+                            <h2>@lang('documents.associated_trackings')</h2>
                             <div class="form-group">
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered table-hover" id="tbl-trackings-used" style="width: 100%">
                                         <thead>
                                             <tr>
                                                 <th></th>
-                                                <th>Tracking</th>
-                                                <th>Contenido</th>
+                                                <th>@lang('documents.tracking')</th>
+                                                <th>@lang('documents.content')</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -834,7 +837,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">@lang('documents.close')</button>
                 </div>
             </div>
         </div>
