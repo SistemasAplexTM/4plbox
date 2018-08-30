@@ -882,6 +882,7 @@ span.error{
           'consolidado_id': this.consolidado_id.id,
           'to1': this.aeropuerto_destino.codigo,
           'other_c': this.other_c,
+          'created_at': this.getTime()
         }).then(response => {
             toastr.success('Registro exitoso.');
             location.reload(true);
@@ -920,6 +921,7 @@ span.error{
           'consolidado_id': this.consolidado_id.id,
           'to1': this.aeropuerto_destino.codigo,
           'other_c': this.other_c,
+          'updated_at': this.getTime()
         }).then(response => {
             toastr.success('Actualización exitosa.');
             location.reload(true);

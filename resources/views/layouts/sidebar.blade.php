@@ -19,8 +19,7 @@
                                 </br>
                             </span>
                             <span class="text-muted text-xs block">
-                                 @lang('layouts.welcome') 
-                       
+                                @lang('layouts.welcome')
                                 <b class="caret">
                                 </b>
                             </span>
@@ -48,7 +47,7 @@
                                 <i class="fa fa-exchange">
                                 </i>
                          
-                                Cambiar de Agencia
+                            @lang('layouts.change_agency')
                             </a>
                         </li> --}}
                     </ul>

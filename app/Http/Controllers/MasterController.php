@@ -121,6 +121,7 @@ class MasterController extends Controller
         DB::beginTransaction();
         try {
             $masterObj = Master::findOrFail($master);
+            $masterObj->updated_at = $request->updated_at;
             $masterObj->update($request->all());
             $detalle = MasterDetalle::where('master_id', $master);
             $detalle->update([

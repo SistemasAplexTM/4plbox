@@ -59,6 +59,7 @@ return [
     'users'=>'  Users',
     'roles'=>'Roles',
     'access_controls'=>'Access controls',
+    'change_agency'  =>'changea_agency',
 
 
    

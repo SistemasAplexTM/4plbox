@@ -32,6 +32,7 @@ class DocumentoDetalle extends Model
         'peso',
         'peso2',
         'declarado2',
-        'arancel_id2'
+        'arancel_id2',
+        'created_at'
     ];
 }

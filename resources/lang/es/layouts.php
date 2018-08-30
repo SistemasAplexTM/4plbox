@@ -60,6 +60,7 @@ return [
     'users'=>'Usuarios',
     'roles'=>'Roles',
     'access_controls'=>'Control de accesos',
+    'change_agency'  =>'Cambiar de Agencia',
 
 
 

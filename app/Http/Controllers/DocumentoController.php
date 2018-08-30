@@ -103,7 +103,7 @@ class DocumentoController extends Controller
                     $data->agencia_id        = Auth::user()->agencia_id;
                     $data->tipo_documento_id = $request->tipo_documento_id;
                     $data->usuario_id        = Auth::user()->id;
-                    $data->created_at        = date('Y-m-d H:i:s');
+                    $data->created_at        = $request->created_at;
                     $tipo                    = TipoDocumento::findOrFail($request->tipo_documento_id);
 
                     if ($data->save()) {
@@ -125,7 +125,7 @@ class DocumentoController extends Controller
                                     'tipo_embarque_id' => 1,
                                     'grupo_id'         => 1,
                                     'estado_id'        => ($request->tipo_documento_id == 2) ? 27 : 28, //maestra multiple
-                                    'created_at'       => date('Y-m-d H:i:s'),
+                                    'created_at'       => $request->created_at,
                                 ],
                             ]);
 
@@ -311,6 +311,7 @@ class DocumentoController extends Controller
                 $data->central_destino_id = $request->central_destino_id;
                 $data->transporte_id      = $request->transporte_id;
                 $data->observaciones      = $request->observacion;
+                $data->updated_at         = $request->date;
                 if ($data->save()) {
                     $this->AddToLog('Documento Consolidado actualizado (' . $id . ')');
                     $answer = array(
@@ -347,6 +348,7 @@ class DocumentoController extends Controller
         } else {
             DB::transaction(function () use ($request, $id) {
                 $data             = Documento::findOrFail($id);
+                $data->updated_at = $request->date;
                 $data->agencia_id = $request->agencia_id;
                 if ($request->opEditarShip) {
                     //CREACION O ACTUALIZACION DEL SHIPPER O CONSIGNEE
@@ -838,6 +840,7 @@ class DocumentoController extends Controller
     {
         try {
             $data = (new DocumentoDetalle)->fill($request->all());
+
             if ($request->valor == '') {
                 $data->valor = 0;
             }
@@ -848,7 +851,7 @@ class DocumentoController extends Controller
                 $data->declarado2 = 0;
             }
 
-            $data->created_at = date('Y-m-d H:i:s');
+            $data->created_at = $request->created_at;
             if ($data->tracking == '') {
                 $data->tracking = null;
             }
@@ -1707,6 +1710,17 @@ class DocumentoController extends Controller
 
     public function getAllGuiasDisponibles($id, $pais_id = null, $transporte_id = null)
     {
+        $filter = [
+                ['a.deleted_at', null],
+                ['b.deleted_at', null],
+                ['a.consolidado', 0],
+                ['guia_wrh_pivot.tipo_embarque_id', $transporte_id],
+                ['e.pais_id', $pais_id],
+            ];
+        if(!Auth::user()->isRole('admin')){
+            $filter[] = ['b.agencia_id', Auth::user()->agencia_id];
+        }
+
         $detalle = DB::table('documento_detalle AS a')
             ->join('documento as b', 'a.documento_id', 'b.id')
             ->leftJoin('guia_wrh_pivot', 'b.id', '=', 'guia_wrh_pivot.documento_id')
@@ -1722,14 +1736,7 @@ class DocumentoController extends Controller
                 'a.peso2',
                 DB::raw('IFNULL(a.declarado2,0) as declarado2')
             )
-            ->where([
-                ['a.deleted_at', null],
-                ['b.deleted_at', null],
-                ['b.agencia_id', Auth::user()->agencia_id],
-                ['a.consolidado', 0],
-                ['guia_wrh_pivot.tipo_embarque_id', $transporte_id],
-                ['e.pais_id', $pais_id],
-            ])
+            ->where($filter)
             ->get();
         return \DataTables::of($detalle)->make(true);
     }
@@ -1905,10 +1912,11 @@ class DocumentoController extends Controller
                         'pdf' => $this->pdf($id_documet, 'warehouse'), 'pdf_name' => $objDocumento->num_warehouse
                     );
                 }
+
                 return Mail::to($objConsignee->correo)
                 // ->cc($moreUsers)
                 // ->bcc($evenMoreUsers)
-                    ->send(new \App\Mail\WarehouseEmail($cuerpo_correo, $from_self, $asunto_correo, $pdf));
+                    ->send(new \App\Mail\WarehouseEmail($cuerpo_correo, $pdf, $from_self, $asunto_correo));
             } else {
                 return 'No es una direccion de email valida';
             }
