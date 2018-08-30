@@ -16,6 +16,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('master/buscar/{dato}/{type?}', 'MasterController@getSoC');
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('commandBackup', function () {
+        \Artisan::call('backup:run', ['--only-db' => true]);
+        return "successfully!";
+    });
 
     /* REGISTRO DE LOG DE ACTIVIDADES DE USUARIOS */
     Route::get('logActivity', 'LogActivityController@index')->name('logActivity.index');
