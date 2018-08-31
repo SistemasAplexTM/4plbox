@@ -93,6 +93,16 @@
                             Consignee
                         </div>
                     </div>
+
+                    <div class="col-lg-3 text-center">
+                        <button class="btn btn-info dim btn-large-dim btn-outline btn-inicio" type="button" id="backup">
+                            <i class="fa fa-user-circle">
+                            </i>
+                        </button>
+                        <div style="font-size: 20px;">
+                            Backup
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -159,6 +169,9 @@
         $('#administracion').on('click', function(){
             {{-- window.location.href = '{{ route('administracion.index') }}'; --}}
         });
+        $('#backup').on('click', function(){
+            objVue.generateBackup();
+        });
     });
 
     function createNewDocument_(tipo_doc_id, name, functionalities) {
@@ -216,7 +229,13 @@ var objVue = new Vue({
                         });
                     }
                 })
-            }
+            },
+            generateBackup: function() {
+                var url = 'commandBackup';
+                axios.get(url).then(response => {
+                    toastr.success('Backup generado.');
+                });
+            },
         }
     })
 </script>
