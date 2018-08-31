@@ -18,10 +18,77 @@
         </ol>
     </div>
 </div>
+<style>
+        *{
+            font-family: Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif"
+        }
+        .bill{
+            width: 100%;
+        }
+        .content{
+            width: 100%;
+            //border: 1px solid #000000;
+        }
+        .title{
+            font-size: 8px;
+            padding-bottom: 5px;
+            padding-top: 2px;
+            padding-left: 2px
+        }
+        .b-top{
+            border-top: 1px solid #000000;
+        }
+        .b-bottom{
+            border-bottom: 1px solid #000000;
+        }
+        .b-left{
+            border-left: 1px solid #000000;
+        }
+        .b-right{
+            border-right: 1px solid #000000;
+        }
+        .p-left{
+            padding-left: 10px;
+        }
+        .var{
+            font-size: 17px;
+/*          font-weight: bold;*/
+        }
+        .detail .title{
+            padding: 5px;
+        }
+
+        /* ESTILOS DE LOS CAMPOS FORMULARIO */
+        .search{
+            font-size: 9px!important;float: right;margin-right: 5px;
+        }
+        .delete{
+            font-size: 9px!important;
+        }
+        .txt-shipper {
+            width:65%;
+            resize:none;
+        }
+        .var{
+            padding: 3px;
+        }
+        .txt-export {
+            width:100%;
+            resize:none;
+        }
+        .txt-consignee {
+            width:65%;
+            margin-bottom: 5px;
+            resize:none;
+        }
+        .txt-forwarding_agent, .txt-notify_party, .txt-domestic_routing{
+           resize:none; 
+        }
+    </style>
 @endsection
 
 @section('content')
-<div class="row" id="bill">
+<div class="row" id="billForm">
     <form id="formBill" enctype="multipart/form-data" class="form-horizontal" role="form" action="" method="post">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
@@ -33,7 +100,7 @@
                 </div>
                 <div class="ibox-content">
                     <!--***** contenido ******-->
-                    
+                    @include('templates.bill.formBill')
                 </div>
             </div>
         </div>
