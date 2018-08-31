@@ -26,7 +26,7 @@
                 <a href="#">@lang('documents.home')</a>
             </li>
             <li class="active">
-                <strong>@lang('documents.documents')</strong>
+                <strong>@lang('documents.document')</strong>
             </li>
         </ol>
     </div>

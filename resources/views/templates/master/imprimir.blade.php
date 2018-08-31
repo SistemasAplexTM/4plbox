@@ -430,12 +430,12 @@
                         <tr>
                             <td style="">
                                 <div class="titleShipper">
-                                    Shipper's Name and Address
+                                   @lang('master.shippers_name_and_address')
                                 </div>
                             </td>
                             <td>
                                 <div class="shipperNumber" style="width: 100%;border-bottom: 1px solid {{  $colorMaster }};border-left: 1px solid {{  $colorMaster }};">
-                                    Shipper's Account Number                                                        
+                                 @lang('master.shippers_account_number')                                                 
                                 </div>
                             </td>
                         </tr>
@@ -480,17 +480,17 @@
                     <table border="0" cellspacing="0" cellpadding="0" style="width: 100%;">
                         <tr>
                             <td style="">
-                                <div class="margen">Not negotiable</div>
+                                <div class="margen">@lang('master.not_negotiable')</div>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <div class="margen airWaibil">Air Waybill</div>
+                                <div class="margen airWaibil">@lang('master.air_Waybill')</div>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <div class="margen issuedBy">Issued by</div>
+                                <div class="margen issuedBy">@lang('master.issued_by')</div>
                             </td>
                         </tr>
                         <tr>
@@ -502,7 +502,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <div class="info1" style="border-top: 1px solid {{  $colorMaster }};">Copies 1, 2 and 3 of this Air Waybill are Originals and have the same validity</div>
+                                <div class="info1" style="border-top: 1px solid {{  $colorMaster }};">@lang('master.copies_123_of _this_air_waybill')</div>
                             </td>
                         </tr>
                     </table>
@@ -515,7 +515,7 @@
                         <tr>
                             <td style="">
                                 <div class="margen titleCons">
-                                    <a id="btnBuscarConsignee" data-value="Consignee">Consignee's Name and Address</a>
+                                    <a id="btnBuscarConsignee" data-value="Consignee">@lang('master.consignees_name_and_address')</a>
                                 </div>
                             </td>
                             <td>
@@ -566,14 +566,7 @@
                         <tr>
                             <td style="">
                                 <div class="margen info2" style="text-align: justify;margin-right: 5px;">
-                                    It is agreed that the goods described herein are accepted in apparent good order and condition (except as noted)
-                                    for carriage SUBJECT TO THE CONDITIONS OF CONTRACT ON THE REVERSE HEREOF. ALL GOODS MAY
-                                    BE CARRIED BY ANY OTHER MEANS INCLUDING ROAD OR ANY OTHER CARRIER UNLESS SPECIFIC
-                                    CONTRARY ISNTRUCTIONS ARE GIVEN HEREON BY THE SHIPPER, AND SHIPPER AGREES THAT THE
-                                    SHIPMENT MAY BE CARRIED VIA INTERMEDIADTE STOPPING PLACES WHICH THE CARRIER DEEMS
-                                    APPROPRIATE. THE SHIPPER'S ATTENTION IS DRAWN TO THE NOTICE CONCERNING CARRIER'S
-                                    LIMITATION OF LIABILITY. Shipper may increase such limitation on liability by declaring a higher value for
-                                    carriage and paying a supplemental charge if required.
+                           @lang('master.message_acept')
                                 </div>
                             </td>
                         </tr>
@@ -586,7 +579,7 @@
                     <table border="0" cellspacing="0" cellpadding="0" style="width: 100%;">
                         <tr>
                             <td colspan="2" style="">
-                                <div class="margen titleAgent">Issuing Carrier's Agent Name and City</div>
+                                <div class="margen titleAgent">@lang('master.issuing_carriers_agent_name_and _city')</div>
                             </td>
                         </tr>
                         <tr>
@@ -619,10 +612,10 @@
                         </tr>
                         <tr>
                             <td style="width: 50%;border-top: solid 1px #000; border-right:solid 1px #000; ">
-                                <div class="margen titleIata">Agent's IATA Code</div>
+                                <div class="margen titleIata">@lang('master.Agents_IATA_code')</div>
                             </td>
                             <td style="border-top: solid 1px #000;">
-                                <div class="margen titleNumA">Account No.</div>
+                                <div class="margen titleNumA">@lang('master.account_no')</div>
                             </td>
                         </tr>
                         <tr>
@@ -643,7 +636,7 @@
                     <table border="0" cellspacing="0" cellpadding="0" style="width: 100%;">
                         <tr>
                             <td style="">
-                                <div class="margen titleAcI">Accounting Information</div>
+                                <div class="margen titleAcI">@lang('master.accounting_information')</div>
                             </td>
                         </tr>
                         <tr>
@@ -662,7 +655,7 @@
                     <table border="0" cellspacing="0" cellpadding="0" style="width: 100%;">
                         <tr>
                             <td style="">
-                                <div class="margen titleAirport">Airport of Departure(Address of first Carrier) and requested Routing</div>
+                                <div class="margen titleAirport">@lang('master.airport_of_departure')</div>
                             </td>
                         </tr>
                         <tr>
@@ -678,10 +671,10 @@
                     <table border="0" cellspacing="0" cellpadding="0" style="width: 100%;">
                         <tr>
                             <td style="width:34%;">
-                                <div class="titleRef">Reference Number</div>
+                                <div class="titleRef">@lang('master.reference_number')</div>
                             </td>
                             <td style="width:34%;">
-                                <div class="titleopInf">Optional Shipping Information</div>
+                                <div class="titleopInf">@lang('master.optional_shipping_information')</div>
                                 <!-- <div class="line1OP" style="border-bottom: 1px solid {{  $colorMaster }};"></div>
                                 <div class="line2OP" style="border-bottom: 1px solid {{  $colorMaster }};"></div> -->
                             </td>

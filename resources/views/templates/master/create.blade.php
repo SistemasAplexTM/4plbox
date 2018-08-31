@@ -4,13 +4,13 @@
 {{-- bread crumbs --}}
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Guía master</h2>
+        <h2>@lang('master.master_guider')</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#">Inicio</a>
+                <a href="#">@lang('master.start')</a>
             </li>
             <li>
-                <a href="{{ route('master.index') }}">Mater</a>
+                <a href="{{ route('master.index') }}">@lang('master.masters')</a>
             </li>
             <li class="active">
                 <strong>{{ (isset($master) and $master) ? 'Editar agencia' : 'Registro de guía master' }}</strong>
@@ -26,7 +26,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Registro de guía master</h5>
+                    <h5>@lang('master.master_guide_record')</h5>
                     <div class="ibox-tools">
                         
                     </div>
