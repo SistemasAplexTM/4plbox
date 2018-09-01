@@ -4,13 +4,13 @@
 {{-- bread crumbs --}}
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Guía master</h2>
+        <h2>@lang('master.master_guide')</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#">Home</a>
+                <a href="#">@lang('master.home')</a>
             </li>
             <li class="active">
-                <strong>Guía master</strong>
+                <strong>@lang('master.master_guide')</strong>
             </li>
         </ol>
     </div>
@@ -28,7 +28,7 @@
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <h5>
-                    Guías registradas
+                    @lang('master.registered_guides')
                 </h5>
                 <div class="ibox-tools">
                     <a href="{{ url('master/create') }}" data-toggle="tooltip" title="Crear nueva master" class="btn btn-primary" >Nuevo <i class="fa fa-plus" style="font-size: small;"></i></a>
@@ -41,15 +41,15 @@
                         <thead>
                             <tr>
                                 <th>Master AWB</th>
-                                <th>Aerolinea</th>
-                                <th>Fecha</th>
-                                <th>Tarifa</th>
-                                <th>Peso Lb</th>
-                                <th>Peso Kl</th>
-                                <th>Consignee</th>
-                                <th>Destino</th>
-                                <th>Consolidado</th>
-                                <th>Acciones</th>
+                                <th>@lang('master.airline')</th>
+                                <th>@lang('master.date')</th>
+                                <th>@lang('master.rate')</th>
+                                <th>@lang('master.weight') Lb</th>
+                                <th>@lang('master.weight') Kl</th>
+                                <th>@lang('master.consignee')</th>
+                                <th>@lang('master.destination')</th>
+                                <th>@lang('master.manifest')</th>
+                                <th>@lang('master.actions')</th>
                             </tr>
                         </thead>
                     </table>

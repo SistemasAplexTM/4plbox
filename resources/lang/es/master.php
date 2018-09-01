@@ -34,7 +34,65 @@ return [
 'reference_number'=>'Número de referencia',
 'optional_shipping_information'=>'Información de envío opcional',
 'by_first_carrier'=>'Por el primer portador',
+'currency'=>'Moneda',
+'dec_value_carriage'=>'Dic. Transporte de valor',
+'dec_value_customs'=>'Dic. Valor Aduanas',
+'airport_of_destination'=>'Aeropuerto de destino',
+'flight_date'=>'Fecha de vuelo',
+'amount_of_insurance'=>'Cantidad de seguro',
+'insurance'=>'SEGURO: Si el transportista ofrece un seguro y dicho seguro se solicita de acuerdo con las condiciones 
+             que, indique el monto que se asegurará en cifras, está marcado con una caja * Cantidad de seguro *',
+'handling_information'=>'Manejo de la información',
+'message_technology'=>'* Esta tecnología o software de productos básicos se exportó desde los Estados Unidos
+                        de conformidad con el Reglamento de la Administración de exportaciones. Destino final.',
+'diversion_contrary'=>'Desviación contraria a la ley de los EE. UU. prohibido.',
+'n°_of_pieces_rcp'=>'N° de Piezas RCP',
+'gross_weight'=>'Peso bruto',
+'commodity_item_n'=>'Producto básico N',
+'chargeable_weight'=>'Peso tarifado',
+'rate_charge'=>'Tasa de tarifa',
+'total'=>'Total',
+'nature_and_quantity'=>'Naturaleza y cantidad de productos (incluidas las dimensiones o el volumen)',
+'prepaid'=>'Pagado por adelantado',
+'weight_charge'=>'Carga de peso',
+'collect'=>'Recoger',
+'valuation_charge'=>'Cargo de Valuación',
+'total_other_charges'=>'Total de otros cargos adeudados agente',
+'total_other_charges1'=>'Total de otros cargos debido portador',
+'total_prepaid'=>'Total prepago',
+'total_collect'=>'Total recoger',
+'currency_conversion'=>'Tasas de conversión de moneda',
+'charges_in_dest'=>'Cc cargos en dest. Moneda',
+'for_carriers'=>'Para transportistas uso solo en el destino',
+'charges_at_destination'=>'Cargos en el destino',
+'other_charge'=>'Otro cargo',
+'shipper_certifies'=>'El remitente certifica que los datos que figuran aquí son correctos y que, en la medida en que cualquier parte del envío
+                      contiene mercancías peligrosas, dicha parte está debidamente descrita por su nombre y está en condiciones adecuadas para el transporte aéreo, 
+                      de conformidad con las reglamentaciones aplicables sobre mercancías peligrosas.',
+'signature_of_shippe'=>'Firma del remitente o su agente',
+'executed_on'=>'Ejecutado en',
+'date'=>'Fecha',
+'place'=>'Lugar',
+'signature_of_issuing'=>'Firma del operador emisor o su agente',
+'total_collect_charges'=>'Total de cobros',
 
+//    resources/templates/list
+
+'home'=>'Casa',
+'registered_guides'=>'Guías registradas',
+'airline'=>'Aerolínea',
+'rate'=>'Tarifa',
+'weight'=>'Peso',
+'consignee'=>'Consignatario',
+'destination'=>'Destino',
+'manifest'=>'Consolidado',
+'actions'=>'Acciones',
+
+
+
+
+
+           
 
 
 

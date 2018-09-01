@@ -709,7 +709,7 @@
                                 <div class="titleTo1">to</div>
                             </td>
                             <td style="border-right: solid 1px #000;">
-                                <div class="margen titleBFC" style="">By First Carrier</div>
+                                <div class="margen titleBFC" style="">@lang('master.by_first_carrier')</div>
                             </td>
                             <td style="border-right: solid 1px #000;">
                                 <div class="routingDest" style="text-align: center;height: 11px;font-size: 8px;border-bottom: 1px solid {{  $colorMaster }};">Routing and Destination</div>
@@ -761,11 +761,13 @@
                         </tr>
                     </table>
                 </td>
+
+                <!--//Aquí-->
                 <td class="fila5">
                     <table border="0" cellspacing="0" cellpadding="0" style="width: 100%;">
                         <tr>
                             <td style="border-right: solid 1px #000;">
-                                <div class="titletbl5">Currency</div>
+                                <div class="titletbl5">@lang('master.currency')</div>
                             </td>
                             <td style="border-right: solid 1px #000;">
                                 <div class="titletbl5">CHGS</div>
@@ -774,10 +776,10 @@
                                 <div class="titletbl5" style="border-bottom: 1px solid {{  $colorMaster }};">WT/VAL</div>
                             </td>
                             <td style="width: 34%;border-right: solid 1px #000;">
-                                <div class="titletbl5">Dec. Value Carriage</div>
+                                <div class="titletbl5">@lang('master.dec_value_carriage')</div>
                             </td>
                             <td style="width: 32%;border-right: solid 1px #000;">
-                                <div class="titletbl5">Dec. Value Customs</div>
+                                <div class="titletbl5">@lang('master.dec_value_customs')</div>
                             </td>
                         </tr>
                         <tr>
@@ -827,16 +829,16 @@
                     <table border="0" cellspacing="0" cellpadding="0" style="width: 100%;">
                         <tr>
                             <td style="width: 55%;border-right: solid 1px #000;">
-                                <div class="margen titleairport">Airport of Destination</div>
+                                <div class="margen titleairport">@lang('master.airport_of_destination')</div>
                             </td>
                             <td style="width: 15%;border-right: solid 1px #000;">
-                                <div class="titleflightdate1" style="font-size: 8px;">Flight/Date</div>
+                                <div class="titleflightdate1" style="font-size: 8px;">@lang('master.flight_dat')</div>
                             </td>
                             <td colspan="2" style="width: 15%;border-right: solid 1px #000;">
                                 <div class="titleflightdate3" style="font-size: 6px;text-align: center;height: 11px;border-bottom: 1px solid {{  $colorMaster }};">For Carrier Use Only</div>
                             </td>
                             <td style="width: 15%;">
-                                <div class="titleflightdate2" style="text-align: right;font-size: 8px;">Flight/Date</div>
+                                <div class="titleflightdate2" style="text-align: right;font-size: 8px;">@lang('master.flight_dat')</div>
                             </td>
                         </tr>
                         <tr>
@@ -868,13 +870,11 @@
                     <table border="0" cellspacing="0" cellpadding="0" style="width: 100%;">
                         <tr>
                             <td style="width: 25%;border-right: solid 1px #000;">
-                                <div class="margen titleAirport" style="height: 18px;font-size: 8px;">Amount of Insurance</div>
+                                <div class="margen titleAirport" style="height: 18px;font-size: 8px;">@lang('master.amount_of_insurance')</div>
                             </td>
                             <td rowspan="2" style="border-right: solid 1px #000;">
                                 <div class="contentifinsura" style="font-size: 8px;">
-                                    INSURANCE: If Carrier offers insurance and such insurance is
-                                    requested in accordance with the conditions therect, indicate amount to
-                                    be insured in figures is box marked *Amount of Insurance*
+                                        @lang('master.insurance')
                                 </div>
                             </td>
                         </tr>
@@ -894,7 +894,7 @@
                     <table border="0" cellspacing="0" cellpadding="0" style="width: 100%;">
                         <tr>
                             <td colspan="3" style="width: 100%;border-right: solid 1px #000;">
-                                <div class="margen titlehandinginf">Handing Information</div>
+                                <div class="margen titlehandinginf">@lang('master.handling_information')</div>
                             </td>
                         </tr>
                         <tr>
@@ -907,13 +907,12 @@
                         <tr>
                             <td style="width: 410px;">
                                 <div class="hendInf1" style="width: 90%;font-size: 8px;">
-                                    *These commodities technology or software were exported from the United Statesin accordance with the export Administation Regulation. Ultimate destination.
+                                    @lang('master.message_technology')
                                 </div>
                             </td>
                             <td style="width: 100px;">
                                 <div class="hendInf2" style="font-size: 8px;">
-                                    Diversion contrary to U.S. law
-                                    prohibited.
+                                   @lang('master.diversion_contrary')
                                 </div>
                             </td>
                             <td style="width: 90px;border-left: solid 1px #000;border-right: solid 1px #000;border-top: solid 1px #000;height: 30px;">
@@ -932,24 +931,24 @@
                     <table border="0" cellspacing="0" cellpadding="0" style="width: 100%;font-weight: bold;">
                         <!-- CABECERA DEL DETALLE -->
                         <tr>
-                            <td style="text-align: center;width: 60px;border-top: 1px solid #000;border-right: 1px solid #000;border-left: 1px solid #000">N° of Pieces RCP</td>
+                            <td style="text-align: center;width: 60px;border-top: 1px solid #000;border-right: 1px solid #000;border-left: 1px solid #000">@lang('master.n°_of_pieces_rcp')</td>
                             <td id="space" style="background-color: #ccc; width: 5px;border-top: 1px solid #000;">&nbsp;</td>
-                            <td style="text-align: center;width: 45px;border-top: 1px solid #000;border-right: 1px solid #000;border-left: 1px solid #000">Gross Weigth</td>
+                            <td style="text-align: center;width: 45px;border-top: 1px solid #000;border-right: 1px solid #000;border-left: 1px solid #000">@lang('master.gross_weight')</td>
                             <td id="space" style="background-color: #ccc; width: 5px;border-top: 1px solid #000;">&nbsp;</td>
                             <td style="text-align: center;width: 15px;border-top: 1px solid #000;border-right: 1px solid #000;border-left: 1px solid #000">kg lb</td>
                             <td id="space" style="background-color: #ccc; width: 5px;border-top: 1px solid #000;">&nbsp;</td>
                             <td style="text-align: center;width: 90px;border-top: 1px solid #000;border-right: 1px solid #000;border-left: 1px solid #000">
                                 Rate Class
-                                <div><div style="border-top: 1px solid #000;border-left: 1px solid #000;width: 90%;margin-left: 9px;">Cpmmodity Item N°</span></div>
+                                <div><div style="border-top: 1px solid #000;border-left: 1px solid #000;width: 90%;margin-left: 9px;">@lang('master.commodity_item_n')</span></div>
                             </td>
                             <td id="space" style="background-color: #ccc; width: 5px;border-top: 1px solid #000;">&nbsp;</td>
-                            <td style="text-align: center;width: 65px;border-top: 1px solid #000;border-right: 1px solid #000;border-left: 1px solid #000">Chargeable Weigth</td>
+                            <td style="text-align: center;width: 65px;border-top: 1px solid #000;border-right: 1px solid #000;border-left: 1px solid #000">@lang('master.chargeable_weight')</td>
                             <td id="space" style="background-color: #ccc; width: 5px;border-top: 1px solid #000;">&nbsp;</td>
-                            <td style="text-align: center;width: 40px;border-top: 1px solid #000;border-right: 1px solid #000;border-left: 1px solid #000">Rate Chargue</td>
+                            <td style="text-align: center;width: 40px;border-top: 1px solid #000;border-right: 1px solid #000;border-left: 1px solid #000">@lang('master.rate_charge')</td>
                             <td id="space" style="background-color: #ccc; width: 5px;border-top: 1px solid #000;">&nbsp;</td>
-                            <td style="text-align: center;width: 70px;border-top: 1px solid #000;border-right: 1px solid #000;border-left: 1px solid #000">Total</td>
+                            <td style="text-align: center;width: 70px;border-top: 1px solid #000;border-right: 1px solid #000;border-left: 1px solid #000">@lang('master.total')</td>
                             <td id="space" style="background-color: #ccc; width: 5px;border-top: 1px solid #000;">&nbsp;</td>
-                            <td style="text-align: center;;border-top: 1px solid #000;border-right: 1px solid #000;border-left: 1px solid #000">Nature and Quantity of Goods (Incl. Dimensions or Volume)</td>
+                            <td style="text-align: center;;border-top: 1px solid #000;border-right: 1px solid #000;border-left: 1px solid #000">@lang('master-nature_and_quantity')</td>
                         </tr>
 
                         <!-- CUERPO DEL DETALLE -->
@@ -1007,17 +1006,17 @@
                                             <table border="0" cellspacing="0" cellpadding="0" style="width: 100%;">
                                                 <tr>
                                                     <td style="width: 33.3%">
-                                                        <div class="wCharge" style="border: 1px solid {{  $colorMaster }};width: 50%;margin-left: 19px;">Prepaid</div>
+                                                        <div class="wCharge" style="border: 1px solid {{  $colorMaster }};width: 50%;margin-left: 19px;">@lang('master.prepaid')</div>
                                                         <!-- <div class="linePre" style="border-bottom: 1px solid {{  $colorMaster }};"></div>
                                                         <div class="linePre2" style="border-bottom: 1px solid {{  $colorMaster }};"></div> -->
                                                     </td>
                                                     <td colspan="2" style="width: 33.4%">
-                                                        <div class="wCharge" style="border: 1px solid {{  $colorMaster }};width: 81%;margin-left: 4px;">Weight Charge</div>
+                                                        <div class="wCharge" style="border: 1px solid {{  $colorMaster }};width: 81%;margin-left: 4px;">@lang('master.weight_charge')</div>
                                                         <!-- <div class="lineWe" style="border-bottom: 1px solid {{  $colorMaster }};"></div>
                                                         <div class="lineWe2" style="border-bottom: 1px solid {{  $colorMaster }};"></div> -->
                                                     </td>
                                                     <td style="width: 33.3%">
-                                                        <div class="wCharge" style="border: 1px solid {{  $colorMaster }};width: 50%;margin-left: 19px;">Collect</div>
+                                                        <div class="wCharge" style="border: 1px solid {{  $colorMaster }};width: 50%;margin-left: 19px;">@lang('master.collect')</div>
                                                         <!-- <div class="lineCol" style="border-bottom: 1px solid {{  $colorMaster }};"></div>
                                                         <div class="lineCol2" style="border-bottom: 1px solid {{  $colorMaster }};"></div> -->
                                                     </td>
@@ -1036,7 +1035,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td colspan="4" style="width: 33.4%">
-                                                        <div class="wCharge" style="border: 1px solid {{  $colorMaster }};width: 50%;margin-left: 90px;">Valuation Charge</div>
+                                                        <div class="wCharge" style="border: 1px solid {{  $colorMaster }};width: 50%;margin-left: 90px;">@lang('master.valuation_charge')</div>
                                                         <!-- <div class="lineVal" style="border-bottom: 1px solid {{  $colorMaster }};"></div>
                                                         <div class="lineVal2" style="border-bottom: 1px solid {{  $colorMaster }};"></div> -->
                                                     </td>
@@ -1086,7 +1085,7 @@
                                             <table border="0" cellspacing="0" cellpadding="0" style="width: 100%;">
                                                 <tr>
                                                     <td colspan="4" style="width: 33.4%">
-                                                        <div class="wCharge" style="border: 1px solid {{  $colorMaster }}; width: 70%;margin-left: 37px;">Total Other Charges Due Agent</div>
+                                                        <div class="wCharge" style="border: 1px solid {{  $colorMaster }}; width: 70%;margin-left: 37px;">@lang('master.total_other_charges')</div>
                                                         <!-- <div class="lineTo" style="border-bottom: 1px solid {{  $colorMaster }};"></div>
                                                         <div class="lineTo2" style="border-bottom: 1px solid {{  $colorMaster }};"></div> -->
                                                     </td>
@@ -1105,7 +1104,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td colspan="4" style="width: 33.4%">
-                                                        <div class="wCharge" style="border: 1px solid {{  $colorMaster }}; width: 70%;margin-left: 37px;">Total Other Charges Due Carrier</div>
+                                                        <div class="wCharge" style="border: 1px solid {{  $colorMaster }}; width: 70%;margin-left: 37px;">@lang('master.total_other_charges1')</div>
                                                         <!-- <div class="lineTo" style="border-bottom: 1px solid {{  $colorMaster }};"></div>
                                                         <div class="lineTo2" style="border-bottom: 1px solid {{  $colorMaster }};"></div> -->
                                                     </td>
@@ -1132,12 +1131,12 @@
                                                 </tr>
                                                 <tr>
                                                     <td colspan="2" style="width: 50%;border-right: 1px solid {{  $colorMaster }};">
-                                                        <div class="wCharge" style="border: 1px solid {{  $colorMaster }};width: 70px;margin-left: 52px;">Total Prepaid</div>
+                                                        <div class="wCharge" style="border: 1px solid {{  $colorMaster }};width: 70px;margin-left: 52px;">@lang('master.total_prepaid')</div>
                                                         <!-- <div class="lineTpre" style="border-bottom: 1px solid {{  $colorMaster }};"></div>
                                                         <div class="lineTpre2" style="border-bottom: 1px solid {{  $colorMaster }};"></div> -->
                                                     </td>
                                                     <td colspan="2" style="width: 50%;">
-                                                        <div class="wCharge" style="border: 1px solid {{  $colorMaster }};width: 70px;margin-left: 22px;">Total Collect</div>
+                                                        <div class="wCharge" style="border: 1px solid {{  $colorMaster }};width: 70px;margin-left: 22px;">@lang('master.total_collect')</div>
                                                         <!-- <div class="lineTpre" style="border-bottom: 1px solid {{  $colorMaster }};"></div>
                                                         <div class="lineTpre2" style="border-bottom: 1px solid {{  $colorMaster }};"></div> -->
                                                     </td>
@@ -1156,12 +1155,12 @@
                                                 </tr>
                                                 <tr>
                                                     <td colspan="2" style="width: 50%;border-right: 1px solid {{  $colorMaster }};">
-                                                        <div class="wCharge" style="width: 80%;margin-left: 12px;height: 12px;font-size: 8px;border: 1px solid {{  $colorMaster }};">Currency Conversion Rates</div>
+                                                        <div class="wCharge" style="width: 80%;margin-left: 12px;height: 12px;font-size: 8px;border: 1px solid {{  $colorMaster }};">@lang('master.currency_conversion')</div>
                                                         <!-- <div class="lineCurr" style="border-bottom: 1px solid {{  $colorMaster }};"></div>
                                                         <div class="lineCurr2" style="border-bottom: 1px solid {{  $colorMaster }};"></div> -->
                                                     </td>
                                                     <td colspan="2" style="width: 50%">
-                                                        <div class="wCharge" style="width: 85%;margin-left: 10px;height: 12px;font-size: 8px;border: 1px solid {{  $colorMaster }};">CC Charges in Dest. Currency</div>
+                                                        <div class="wCharge" style="width: 85%;margin-left: 10px;height: 12px;font-size: 8px;border: 1px solid {{  $colorMaster }};">@lang('master.charges_in_dest')</div>
                                                         <!-- <div class="lineChar" style="border-bottom: 1px solid {{  $colorMaster }};"></div>
                                                         <div class="lineChar2" style="border-bottom: 1px solid {{  $colorMaster }};"></div> -->
                                                     </td>
@@ -1180,10 +1179,10 @@
                                                 </tr>
                                                 <tr>
                                                     <td colspan="2" rowspan="2" style="width: 50%">
-                                                        <div class="wCharge" style="height: 35px;border-right:1px solid {{  $colorMaster }};border-left:1px solid {{  $colorMaster }};border-bottom: 1px solid {{  $colorMaster }};">For Carrier's Use only at Destination</div>
+                                                        <div class="wCharge" style="height: 35px;border-right:1px solid {{  $colorMaster }};border-left:1px solid {{  $colorMaster }};border-bottom: 1px solid {{  $colorMaster }};">@lang('master.for_carriers')</div>
                                                     </td>
                                                     <td colspan="2" style="width: 50%">
-                                                        <div class="wCharge" style="height: 12px;font-size: 9px;width: 83%;margin-left: 11px;margin-top: -5px;border: 1px solid {{  $colorMaster }};">Charges at Destination</div>
+                                                        <div class="wCharge" style="height: 12px;font-size: 9px;width: 83%;margin-left: 11px;margin-top: -5px;border: 1px solid {{  $colorMaster }};">@lang('master.charges_at_destination')</div>
                                                         <!-- <div class="lineChar" style="border-bottom: 1px solid {{  $colorMaster }};"></div>
                                                         <div class="lineChar2" style="border-bottom: 1px solid {{  $colorMaster }};"></div> -->
                                                     </td>
@@ -1204,7 +1203,7 @@
                                 <table border="0" cellspacing="0" cellpadding="0" style="width: 100%;">
                                     <tr>
                                         <td style="height: 102px;border-bottom: solid 1px #000;">
-                                            <div class="margen titleOtherCharge">Other Charge</div>
+                                            <div class="margen titleOtherCharge">@lang('master.other_charge')</div>
                                             <div class="margen contOtherCharge" style="font-size: 12px;height: 90px;font-weight: bold;color: {{  $colorLetras }};">
                                                 {{ $data->other_charges }}
                                             </div>
@@ -1213,14 +1212,12 @@
                                     <tr>
                                         <td style="height: 120px;border-bottom: solid 1px #000;">
                                             <div class="margen titleOtherCharge" style="text-align: justify;margin-right: 5px;">
-                                                Shipper certifies that the particulars on the face here of are correct and that insofar as any part of the consignment
-                                                contains dangeorous goods, such part is properly described by name and is in proper condition for carriage by air
-                                                according to the applicable Dangerous Goods Regulations.
+                                              @lang('master.shipper_certifies')
                                             </div>
                                             <div class="margen contShiporAgent" style="font-size: 10px;height: 49px;color: {{  $colorLetras }};">
                                                 
                                             </div>
-                                            <div class="contShiporAgent2" style="border-top: 1px dashed {{  $colorMaster }};text-align: center;">Signature of Shipper or his Agent</div>
+                                            <div class="contShiporAgent2" style="border-top: 1px dashed {{  $colorMaster }};text-align: center;">@lang('master.signature_of_shippe')</div>
                                         </td>
                                     </tr>
                                     <tr>
@@ -1251,13 +1248,13 @@
                                                 <tr>
                                                     <td style="height: 15px;border-bottom: solid 1px #000;">
                                                         <div class="dateplace">
-                                                            Executed on &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                            (Date) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                                                            at &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (Place)
+                                                            @lang('master.executed_on') &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            (@lang('master.date')) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                                                            at &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (@lang('master.place'))
                                                         </div>
                                                     </td>
                                                     <td style="border-bottom: solid 1px #000;">
-                                                        <div class="signatureAgent">Signature of Issuing Carrieror its Agent</div>  
+                                                        <div class="signatureAgent">@lang('master.signature_of_issuing')</div>  
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -1265,7 +1262,7 @@
                                                         <table border="0" cellspacing="0" cellpadding="0" style="height: 30px;width: 100%;">
                                                             <tr>
                                                                 <td style="width: 30%;border-right:1px solid {{  $colorMaster }};">
-                                                                    <div class="wCharge" style="margin-left: 12px;width: 80%;font-size: 10px;">Total Collect Charges</div>
+                                                                    <div class="wCharge" style="margin-left: 12px;width: 80%;font-size: 10px;">@lang('master.total_collect_charges')</div>
                                                                     <!-- <div class="lineTChar" style="border-bottom: 1px solid {{  $colorMaster }};"></div>
                                                                     <div class="lineTChar2" style="border-bottom: 1px solid {{  $colorMaster }};"></div> -->
                                                                 </td>
