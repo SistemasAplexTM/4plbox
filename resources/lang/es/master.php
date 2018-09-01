@@ -87,6 +87,7 @@ return [
 'destination'=>'Destino',
 'manifest'=>'Consolidado',
 'actions'=>'Acciones',
+'new'=>'Nuevo',
 
 
 
