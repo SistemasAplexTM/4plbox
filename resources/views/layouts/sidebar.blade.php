@@ -125,7 +125,7 @@
                             </spam>
                             <spam class="fa fa-arrow-up">
                             </spam>
-                                 @lang('layouts.senders')
+                                 @lang('layouts.shipper')
                         </a>
                     </li>
                     @endcan
@@ -136,7 +136,7 @@
                             </spam>
                             <spam class="fa fa-arrow-down">
                             </spam>
-                                @lang('layouts.addressees')
+                                @lang('layouts.consignee')
                      
                         </a>
                     </li>
