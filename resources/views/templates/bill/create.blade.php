@@ -10,7 +10,7 @@
                 <a href="#">Inicio</a>
             </li>
             <li>
-                <a href="{{ route('bill.index') }}">Mater</a>
+                <a href="{{ route('bill.index') }}">Bill of lading</a>
             </li>
             <li class="active">
                 <strong>{{ (isset($bill) and $bill) ? 'Editar Bill of lading' : 'Registro de Bill of lading' }}</strong>
@@ -52,7 +52,7 @@
         }
         .var{
             font-size: 17px;
-/*          font-weight: bold;*/
+        /* font-weight: bold;*/
         }
         .detail .title{
             padding: 5px;
@@ -62,8 +62,14 @@
         .search{
             font-size: 9px!important;float: right;margin-right: 5px;
         }
+        .addOther{
+            font-size: 9px !important;float: left;margin-left: 5px;margin-bottom: 5px !important;
+        }
         .delete{
             font-size: 9px!important;
+        }
+        .deleteOther{
+            font-size: 9px!important;margin-top: 10px;
         }
         .txt-shipper {
             width:65%;
@@ -90,6 +96,7 @@
 @section('content')
 <div class="row" id="billForm">
     <form id="formBill" enctype="multipart/form-data" class="form-horizontal" role="form" action="" method="post">
+        <input type="hidden" id="bill_id" value="{{ $bill }}">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
@@ -101,6 +108,28 @@
                 <div class="ibox-content">
                     <!--***** contenido ******-->
                     @include('templates.bill.formBill')
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <div class="col-sm-12 col-sm-offset-0 guardar">
+                                    <button type="button" class="ladda-button btn btn-primary" @click.prevent="store()" v-if="editar==0">
+                                        <i class="fa fa-save"></i>  @lang('layouts.save') 
+                                    </button>
+                                    <template v-else>
+                                        <button type="button" class="ladda-button btn btn-warning" @click.prevent="update()">
+                                            <i class="fa fa-edit"></i> @lang('layouts.update') 
+                                        </button>
+                                        <button type="button" class="ladda-button btn btn-info" @click.prevent="print()">
+                                            <i class="fa fa-print"></i> @lang('layouts.print') 
+                                        </button>
+                                    </template>
+                                    <button type="button" class="btn btn-white" @click.prevent="cancel()">
+                                        <i class="fa fa-remove"></i>  @lang('layouts.cancel') 
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -7,6 +7,7 @@ return [
     'save'    =>  'Guardar',
     'cancel'  =>  'Cancelar',
     'update'  =>  'Actualizar',
+    'print'   =>  'Imprimir',
 
 // Navbar  --> Navbar.bade.php    
 

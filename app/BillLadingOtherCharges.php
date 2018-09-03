@@ -15,8 +15,9 @@ class BillLadingOtherCharges extends Model
     protected $fillable = [
         'bill_lading_id', 
         'description',
-        'prepaid_collect',
-        'ammount',
+        'ammount_pp',
+        'ammount_cll',
         'created_at',
+        'updated_at',
     ];
 }

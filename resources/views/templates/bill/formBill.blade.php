@@ -20,14 +20,15 @@
 								</tr>
 								<tr>
 									<td colspan="2" class="p-left">
-										<textarea class="form-control txt-shipper" placeholder="EXPORTER" rows="4" name="shipper_id"></textarea>
+										<textarea class="form-control txt-shipper" placeholder="EXPORTER" rows="4" name="exporter" v-model="exporter"></textarea>
+										<input type="hidden" name="exporter_id" v-model="exporter_id">
 									</td>
 								</tr>
 								<tr>
 									<td style="width: 70%;height: 40px"></td>
 									<td class="b-top b-left" valign="top" style="padding: 3px;">
 										<div style="font-size: 10px;margin-left: 2px">ZIP CODE</div>
-										<input type="text" name="zip" placeholder="Zip" v-model="zip" class="form-control">
+										<input type="text" name="exporter_zip" placeholder="Zip" v-model="exporter_zip" class="form-control">
 									</td>
 								</tr>
 							</table>
@@ -46,7 +47,9 @@
 									<td valign="top" colspan="2" class="title b-top">6. EXPORT REFERENCES</td>
 								</tr>
 								<tr>
-									<td valign="top" colspan="2" class="p-left" style=""><textarea class="form-control txt-export" placeholder="EXPORT REFERENCES" rows="3" v-model="export_references"></textarea></td>
+									<td valign="top" colspan="2" class="p-left" style="">
+										<textarea class="form-control txt-export" placeholder="EXPORT REFERENCES" rows="3" v-model="export_references"></textarea>
+									</td>
 								</tr>
 							</table>
 						</td>
@@ -59,7 +62,8 @@
 								</tr>
 								<tr>
 									<td colspan="2" class="p-left">
-										<textarea class="form-control txt-consignee" placeholder="CONSIGNED TO" rows="4" name="consignee_id" v-model="consignee_id"></textarea>
+										<textarea class="form-control txt-consignee" placeholder="CONSIGNED TO" rows="4" name="consignee" v-model="consignee"></textarea>
+										<input type="hidden" name="consignee_id" v-model="consignee_id">
 									</td>
 								</tr>
 							</table>
@@ -76,8 +80,8 @@
 								</tr>
 								<tr>
 									<td valign="top" colspan="2" class="title b-top" style="padding-left: 2px;">
-										6. EXPORT REFERENCES
-										<div class="var"><input type="text" name="export_references2" placeholder="EXPORT REFERENCES" v-model="export_references2" class="form-control"></div>
+										8. POINT (STATE) OF ORIGIN OR FTZ NUMBER
+										<div class="var"><input type="text" name="point_origin" placeholder="POINT (STATE) OF ORIGIN" v-model="point_origin" class="form-control"></div>
 									</td>
 								</tr>
 							</table>
@@ -93,6 +97,7 @@
 									<td valign="top" colspan="2" class="p-left" style="height: 70px">
 										<div class="var">
 											<textarea class="form-control txt-notify_party" placeholder="NOTIFY PARTY" rows="2" name="notify_party" v-model="notify_party"></textarea>
+											<input type="hidden" name="notify_party_id" v-model="notify_party_id">
 										</div>
 									</td>
 								</tr>
@@ -210,29 +215,29 @@
 									<td><a class="btn btn-xs btn-primary" v-on:click="addDetail()" data-toggle="tooltip" title="Agregar fila"><i class="fa fa-plus"></i></a></td>
 								</tr>
 								<tr v-for="(find, index) in detail">
-									<td valign="top" class="b-top b-right" style="height: 250px">
-										<div class="var" :class="{'has-error': errors.has('marks') }">
-											<input type="text" class="form-control" name="marks" v-model="find.marks" v-validate="'required'">
+									<td valign="top" class="b-top b-right">
+										<div class="var" :class="{'has-error': errors.has('marks_numbers') }">
+											<textarea class="form-control" name="marks_numbers" v-model="find.marks_numbers" v-validate="'required'"></textarea>
 										</div>
 									</td>
 		                          	<td valign="top" class="b-top b-right">
-		                            	<div class="var" :class="{'has-error': errors.has('number') }">
-											<input type="text" class="form-control" name="number" v-model="find.number" v-validate="'required'">
+		                            	<div class="var" :class="{'has-error': errors.has('number_packages') }">
+											<input type="text" class="form-control" name="number_packages" v-model="find.number_packages" v-validate="'required'">
 										</div>
 		                          	</td>
 		                          	<td valign="top" class="b-top b-right">
 		                            	<div class="var" :class="{'has-error': errors.has('description') }">
-											<input type="text" class="form-control" name="description" v-model="find.description" v-validate="'required'">
+											<textarea class="form-control" name="description" v-model="find.description" v-validate="'required'"></textarea>
 										</div>
 		                          	</td>
 		                          	<td valign="top" class="b-top b-right">
-		                            	<div class="var" :class="{'has-error': errors.has('gross') }">
-											<input type="text" class="form-control" name="gross" v-model="find.gross" v-validate="'required'">
+		                            	<div class="var" :class="{'has-error': errors.has('gross_weight') }">
+											<input type="number" class="form-control" name="gross_weight" v-model="find.gross_weight" v-validate="'required'">
 										</div>
 		                          	</td>
 		                          	<td valign="top" class="b-top b-right">
 		                            	<div class="var" :class="{'has-error': errors.has('measurement') }">
-											<input type="text" class="form-control" name="measurement" v-model="find.measurement" v-validate="'required'">
+											<input type="number" class="form-control" name="measurement" v-model="find.measurement" v-validate="'required'">
 										</div>
 		                          	</td>
 			                        <td valign="top" class="b-top" style="padding: 5px;">
@@ -252,25 +257,43 @@
 						<td colspan="2">
 							<table cellspacing="0" cellpadding="0" style="width: 100%">
 								<tr>
-									<td width="50%" class="b-top b-right" style="padding: 6px 6px 0px 0px">
+									<td valign="top" width="50%" class="b-top b-right" style="padding: 6px 6px 0px 0px">
 										<table cellspacing="0" cellpadding="0" style="width: 100%">
 											<tr>
 												<td colspan="3" style="font-size: 11px;font-weight: bold;text-align: center;">FREIGHT RATES, CHARGES, WEIGHTS AND/OR MEASUREMENTS</td>
 											</tr>
 											<tr>
-												<td style="font-size: 11px;text-align: center;" class="b-right">SUBJECT TO CORRECTION</td>
+												<td style="font-size: 11px;text-align: center;" class="b-right">
+													<a class="btn btn-primary btn-xs addOther" data-toggle="tooltip" title="Agregar fila" @click="addDetailOther"><i class="fa fa-plus"></i></a>
+													SUBJECT TO CORRECTION
+												</td>
 												<td style="font-size: 11px;text-align: center;" class="b-top b-right">PREPAID</td>
 												<td style="font-size: 11px;text-align: center;" class="b-top b-right">COLLECT</td>
 											</tr>
-											<tr>
-												<td valign="top"  class="b-top b-right" style="height: 200px">OCEAN FREIGHT</td>
-												<td valign="top"  class="b-top b-right"></td>
-												<td valign="top"  class="b-top b-right"></td>
+											<tr v-for="(find2, index) in other">
+												<td valign="top"  class="b-top b-right" style="width: 60%;">
+													<div class=" col-sm-1">
+														<a class="btn btn-danger btn-xs deleteOther" data-toggle="tooltip" title="Eliminar" @click="deleteRowOther"><i class="fa fa-trash"></i></a>
+													</div>
+													<div class="var col-sm-11" :class="{'has-error': errors.has('description') }">
+														<input type="text" class="form-control" name="description" v-model="find2.description">
+													</div>
+												</td>
+												<td valign="top"  class="b-top b-right">
+													<div class="var" :class="{'has-error': errors.has('ammount_pp') }">
+														<input type="number" class="form-control" name="ammount_pp" v-model="find2.ammount_pp" v-on:keyup="sumar">
+													</div>
+												</td>
+												<td valign="top"  class="b-top b-right">
+													<div class="var" :class="{'has-error': errors.has('ammount_cll') }">
+														<input type="number" class="form-control" name="ammount_cll" v-model="find2.ammount_cll" v-on:keyup="sumar">
+													</div>
+												</td>
 											</tr>
 											<tr>
 												<td valign="top"  class="b-top b-right" style="padding: 10px;text-align: right">GRAND TOTAL :</td>
-												<td valign="top"  class="b-top b-right"></td>
-												<td valign="top"  class="b-top b-right"></td>
+												<td valign="top"  class="b-top b-right">&nbsp;@{{ oc_total_pp }}</td>
+												<td valign="top"  class="b-top b-right">&nbsp;@{{ oc_total_cll }}</td>
 											</tr>
 										</table>
 									</td>
@@ -278,14 +301,14 @@
 										<table cellspacing="0" cellpadding="0" style="width: 100%">
 											<tr>
 												<td valign="top" colspan="2" style="font-size: 8px;font-weight: bold;text-align: center;text-align: justify">Received by the Carrier for shipment by ocean vessel between port of loading and port of
-discharge , and for arrangement or procurement of pre -carriage from place of receipt and on -
-carriage to place of delivery , where stated above , the goods as specified above in apparent
-good order and condition unless otherwise stated . The goods to be delivered at the above
-mentioned port of discharge or place of delivery , whichever is applicable , subject always to the
-exceptions , limitations, conditions and liberties set out on the reverse side hereof , to which the
-Shipper and /or Consignee agree to accepting this Bill of Lading .
-IN WITNESS WHEREOF three (3) original Bills of Lading have been signed , not otherwise
-stated above , one of which being accomplished the others shall be void .</td>
+												discharge , and for arrangement or procurement of pre -carriage from place of receipt and on -
+												carriage to place of delivery , where stated above , the goods as specified above in apparent
+												good order and condition unless otherwise stated . The goods to be delivered at the above
+												mentioned port of discharge or place of delivery , whichever is applicable , subject always to the
+												exceptions , limitations, conditions and liberties set out on the reverse side hereof , to which the
+												Shipper and /or Consignee agree to accepting this Bill of Lading .
+												IN WITNESS WHEREOF three (3) original Bills of Lading have been signed , not otherwise
+												stated above , one of which being accomplished the others shall be void .</td>
 											</tr>
 											<tr>
 												<td colspan="2" style="padding-top: 20px;">
@@ -296,7 +319,9 @@ stated above , one of which being accomplished the others shall be void .</td>
 											<tr>
 												<td colspan="2" style="padding-top: 10px;">
 													<div style="width: 5%;float: left;">BY</div>
-													<div style="width: 95%;float: left;border-bottom: 1px solid #000000;">&nbsp;</div>
+													<div style="width: 95%;float: left;border-bottom: 1px solid #000000;" class="var">
+														<input type="text" name="agent_for_carrier" placeholder="Agent" v-model="agent_for_carrier" class="form-control">
+													</div>
 													<div style="font-size: 12px;text-align: center;">AGENT FOR THE CARRIER</div>
 												</td>
 											</tr>
@@ -321,7 +346,7 @@ stated above , one of which being accomplished the others shall be void .</td>
 											</tr>
 											<tr>
 												<td style="width: 50%;">&nbsp;</td>
-												<td class="b-left" style="text-align: right;padding-right: 5px;font-weight: bold;">HBL-6719</td>
+												<td class="b-left" style="text-align: right;padding-right: 5px;font-weight: bold;">@{{ num_bl }}</td>
 											</tr>
 										</table>
 									</td>
