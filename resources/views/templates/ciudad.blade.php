@@ -4,13 +4,13 @@
 {{-- bread crumbs --}}
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Ciudades</h2>
+        <h2>@lang('general.cities')</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#">Home</a>
+                <a href="#">@lang('general.home')</a>
             </li>
             <li class="active">
-                <strong>Ciudades</strong>
+                <strong>@lang('general.cities')</strong>
             </li>
         </ol>
     </div>
@@ -23,7 +23,7 @@
             <div class="col-lg-5">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Registro de ciudades</h5>
+                        <h5>@lang('general.registration_of_cities')</h5>
                     </div>
                     <div class="ibox-content">
                         <!--***** contenido ******-->
@@ -31,7 +31,7 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.pais_id}">
                                         <div class="col-sm-4">
-                                            <label for="pais_id" class="control-label gcore-label-top">País:</label>
+                                            <label for="pais_id" class="control-label gcore-label-top">@lang('general.country'):</label>
                                         </div>
                                         <div class="col-sm-8">
                                             <input type="hidden" id="pais_id_input" value="">
@@ -46,7 +46,7 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.deptos_id}">
                                         <div class="col-sm-4">
-                                            <label for="deptos_id" class="control-label gcore-label-top">Departamento/Estado:</label>
+                                            <label for="deptos_id" class="control-label gcore-label-top">@lang('general.department_state'):</label>
                                         </div>
                                         <div class="col-sm-8">
                                             <input type="hidden" id="deptos_id_input" value="">
@@ -61,7 +61,7 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.nombre}">
                                         <div class="col-sm-4">
-                                            <label for="nombre" class="control-label gcore-label-top">Descripcion:</label>
+                                            <label for="nombre" class="control-label gcore-label-top">@lang('general.description')</label>
                                         </div>
                                         <div class="col-sm-8">
                                             <input v-model="nombre" name="nombre" id="nombre" value="" placeholder="" class="form-control" type="text" style="" @click="deleteError('nombre')" />
@@ -74,7 +74,7 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.prefijo}">
                                         <div class="col-sm-4">
-                                            <label for="prefijo" class="control-label gcore-label-top">Prefijo:</label>
+                                            <label for="prefijo" class="control-label gcore-label-top">@lang('general.prefix'):</label>
                                         </div>
                                         <div class="col-sm-8">
                                             <input v-model="prefijo" name="prefijo" id="prefijo" value="" placeholder="" class="form-control" type="text" style="" @click="deleteError('prefijo')" />
@@ -95,7 +95,7 @@
         <div class="col-lg-7">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Ciudades</h5>
+                    <h5>@lang('general.cities')</h5>
                     <div class="ibox-tools">
 
                     </div>
@@ -106,11 +106,11 @@
                         <table id="tbl-ciudad" class="table table-striped table-hover table-bordered" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th>Prefijo</th>
-                                    <th>Ciudad</th>
-                                    <th>Departamento</th>
-                                    <th>País</th>
-                                    <th>Acciones</th>
+                                    <th>@lang('general.prefix')</th>
+                                    <th>@lang('general.city')</th>
+                                    <th>@lang('general.department')</th>
+                                    <th>@lang('general.country')</th>
+                                    <th>@lang('general.actions')</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -118,11 +118,11 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Prefijo</th>
-                                    <th>Ciudad</th>
-                                    <th>Departamento</th>
-                                    <th>País</th>
-                                    <th>Acciones</th>
+                                    <th>@lang('general.prefix')</th>
+                                    <th>@lang('general.city')</th>
+                                    <th>@lang('general.department')</th>
+                                    <th>@lang('general.country')</th>
+                                    <th>@lang('general.actions')</th>
                                 </tr>
                             </tfoot>
                         </table>

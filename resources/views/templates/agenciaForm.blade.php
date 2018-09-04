@@ -309,24 +309,26 @@
                                         </div>
                                     </div>
                                     <!--**************** Detalle Agencia  *******************************-->
+                                     <!--****************Aquí*******************************-->
+                                    
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="tab2">
                                     <div class="row">
                                         <div class="col-lg-12" style="margin-top: 20px;">
                                             <div class="col-lg-12">
                                                 <div class="form-group">
-                                                        <h3>Seleccione las integraciones que desea para esta agencia.</h3>
+                                                        <h3>@lang('general.select_the_integrations')</h3>
                                                     <div class="checkbox checkbox-success checkbox-inline">
                                                         <input type="checkbox" id="paypal" name="usar_paypal" {{ (isset($agencia->usar_paypal) and $agencia->usar_paypal == '1') ? 'checked=""' : '' }}>
-                                                        <label for="paypal"><i class="fa fa-paypal"></i>  Usar PayPal </label>
+                                                        <label for="paypal"><i class="fa fa-paypal"></i>@lang('general.use_paypal') </label>
                                                     </div>
                                                     <div class="checkbox checkbox-success checkbox-inline">
                                                         <input type="checkbox" id="mail" name="usar_mail_chimp" {{ (isset($agencia->usar_mail_chimp) and $agencia->usar_mail_chimp == '1') ? 'checked=""' : '' }}>
-                                                        <label for="mail"><i class="fa fa-mail-reply-all"></i>  Usar MailChimp </label>
+                                                        <label for="mail"><i class="fa fa-mail-reply-all"></i> @lang('general.use_mailchimp') </label>
                                                     </div>
                                                     <div class="checkbox checkbox-success checkbox-inline">
                                                         <input type="checkbox" id="zopim" name="usar_zopim" {{ (isset($agencia->usar_zopim) and $agencia->usar_zopim == '1') ? 'checked=""' : '' }}>
-                                                        <label for="zopim"><i class="fa fa-comments"></i>  Usar Zopim </label>
+                                                        <label for="zopim"><i class="fa fa-comments"></i>@lang('general.usar_zopim')</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -341,25 +343,25 @@
                                                     <table class="table table-striped table-hover table-bordered" id="tbl-url" style="width: 100%;">
                                                         <thead>
                                                             <tr>
-                                                                <th width="40%">Descripción</th>
+                                                                <th width="40%">@lang('general.description')</th>
                                                                 <th>Url</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <tr>
-                                                                <td>Rastreo</td>
+                                                                <td>@lang('general.tracking')</td>
                                                                 <td><a target="_blank" href="{{ url('/').'/rastreo' }}">{{ url('/').'/rastreo' }}</a></td>
                                                             </tr>
                                                             <tr>
-                                                                <td>Registro casillero</td>
+                                                                <td>@lang('general.locker_registration')</td>
                                                                 <td><a target="_blank" href="{{ url('/').'/casillero/' }}{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}">{{ url('/').'/casillero/' }}{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}</a></td>
                                                             </tr>
                                                             <tr>
-                                                                <td>Prealerta</td>
+                                                                <td>@lang('general.pre_alert')</td>
                                                                 <td><a target="_blank" href="{{ url('/').'/prealerta/' }}{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}">{{ url('/').'/prealerta/' }}{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}</a></td>
                                                             </tr>
                                                             <tr>
-                                                                <td>Casillero</td>
+                                                                <td>@lang('general.locker')</td>
                                                                 <td></td>
                                                             </tr>
                                                         </tbody>
@@ -377,16 +379,16 @@
                                         <div class="form-group">
                                             <div class="col-sm-12 col-sm-offset-0 guardar">
                                                 <a class="btn btn-white" href="{{ route('agencia.index') }}"  style="display: {{ (isset($agencia) and $agencia) ? 'none' : 'inline-block' }}">
-                                                    <i class="fa fa-mail-reply"></i> Volver
+                                                    <i class="fa fa-mail-reply"></i> @lang('general.return')
                                                 </a>
                                                 <a class="btn btn-white" href="{{ route('agencia.index') }}"  style="display: {{ (isset($agencia) and $agencia) ? 'inline-block' : 'none' }}">
-                                                    <i class="fa fa-remove"></i> Cancelar
+                                                    <i class="fa fa-remove"></i> @lang('general.cancel')
                                                 </a>
                                                 <a class="ladda-button btn btn-primary" id="saveForm" style="display: {{ (isset($agencia) and $agencia) ? 'none' : 'inline-block' }}">
-                                                    <i class="fa fa-save"></i> Guardar
+                                                    <i class="fa fa-save"></i> @lang('general.save')
                                                 </a>
                                                 <button class="ladda-button btn btn-warning" id="updateForm" style="display: {{ (isset($agencia) and $agencia) ? 'inline-block' : 'none' }}">
-                                                    <i class="fa fa-edit"></i> Actualizar
+                                                    <i class="fa fa-edit"></i> @lang('general.update')
                                                 </button>
                                             </div>
                                         </div>
