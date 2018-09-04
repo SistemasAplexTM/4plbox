@@ -15,21 +15,17 @@ $(document).ready(function () {
                     var btn_edit = '';
                     var btn_delete = '';
                     // if (permission_update) {
-                        var btn_edit = '<a href="master/create/' + full.id + '" class="edit" title="Editar" data-toggle="tooltip" style="color:#FFC107;"><i class="material-icons">&#xE254;</i></a>';
+                        var btn_edit = '<a href="bill/create/' + full.id + '" class="edit" title="Editar" data-toggle="tooltip" style="color:#FFC107;"><i class="material-icons">&#xE254;</i></a>';
                     // }
                     // if (permission_delete) {
-                        var btn_delete = '<a onclick=\"modalEliminar()\" class="delete" title="Eliminar" data-toggle="tooltip" style="color:#E34724;"><i class="material-icons">&#xE872;</i></a>';
+                        var btn_delete = '<a onclick=\"eliminar(' + full.id + ',' + true + ')\" class="delete" title="Eliminar" data-toggle="tooltip" style="color:#E34724;"><i class="material-icons">&#xE872;</i></a>';
                     // }
                     var btns = "<div class='btn-group'>" +
                      "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" +
                       "<i class='material-icons' style='vertical-align:  middle;'>print</i> <span class='caret'></span>" +
                        "</button>" + 
-                       "<ul class='dropdown-menu dropdown-menu-right pull-right'><li><a href='master/imprimir/" +full.id + '/'+true +
-                        "' target='_blank'> <spam class='fa fa-print'></spam> Master</a></li>" +
-                         "<li><a href='master/imprimir/" +full.id +"' target='_blank'> <spam class='fa fa-print'></spam> Master simple</a></li>" + 
-                         "<li><a href='master/imprimirLabel/" +full.id +"' target='_blank'> <spam class='fa fa-print'></spam> Labels</a></li>" + 
-                         "<li><a href='impresion-documento/pdfContrato' target='_blank'> <spam class='fa fa-print'></spam> Contrato</a></li>" + 
-                         "<li><a href='impresion-documento/pdfTsa' target='_blank'> <spam class='fa fa-print'></spam> TSA</a></li>" + 
+                       "<ul class='dropdown-menu dropdown-menu-right pull-right'><li><a href='bill/imprimir/" +full.id + '/'+true +
+                        "' target='_blank'> <spam class='fa fa-print'></spam> Bill of lading</a></li>" +
                          "</ul></div>";
                     return btn_edit + btns + btn_delete;
                 }
@@ -37,3 +33,28 @@ $(document).ready(function () {
         ]
     });
 });
+
+
+/* objetos VUE index */
+var objVue = new Vue({
+    el: '#bill',
+    data: {
+        //
+    },
+    methods: {
+        delete: function(data) {
+            axios.get('bill/delete/' + data.id + '/' + data.logical).then(response => {
+                refreshTable('tbl-bill');
+                toastr.success("<div><p>Registro eliminado exitosamente.</p><button type='button' onclick='deshacerEliminar(" + data.id + ")' id='okBtn' class='btn btn-xs btn-danger pull-right'><i class='fa fa-reply'></i> Restaurar</button></div>");
+                toastr.options.closeButton = true;
+            });
+        },
+        rollBackDelete: function(data) {
+            var urlRestaurar = 'bill/restaurar/' + data.id;
+            axios.get(urlRestaurar).then(response => {
+                toastr.success('Registro restaurado.');
+                refreshTable('tbl-bill');
+            });
+        },
+    }
+})

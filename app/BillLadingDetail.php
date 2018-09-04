@@ -16,9 +16,10 @@ class BillLadingDetail extends Model
         'bill_lading_id', 
         'marks_numbers',
         'number_packages',
-        'descripction',
+        'description',
         'gross_weight',
         'measurement',
         'created_at',
+        'updated_at',
     ];
 }

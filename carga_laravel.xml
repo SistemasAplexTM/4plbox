@@ -2,10 +2,10 @@
   <VerLbl/>
   <VerNotes/>
   <DefTblOpts/>
-  <DocFolder>C:\laragon\www\carga</DocFolder>
+  <DocFolder>C:\Users\Administrator\Desktop</DocFolder>
   <Sch Cm="" nm="schemaA">
     <Tbl UsSo="1" nm="aerolineas_aeropuertos">
-      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
       <Pk ClNs="id" nm="pkaerolineas_aeropuertos"/>
       <Cl au="1" df="" nm="id" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
@@ -50,7 +50,7 @@
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="aerolineas_inventario">
-      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8</TblOpts>
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8</TblOpts>
       <Pk ClNs="id" nm="pkaerolineas_inventario"/>
       <Cl au="1" df="" nm="id" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
@@ -85,11 +85,15 @@
         <ClNs>aerolinea_id</ClNs>
         <OptTx>USES BTREE</OptTx>
       </Idx>
+      <Idx clu="0" ftx="0" nm="aerolineas_inventario_aerolineas_aeropuertos_id_Idx" spa="0" unq="0">
+        <ClNs>aerolinea_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
       <UniqueConstraints/>
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="agencia">
-      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
       <Pk ClNs="id" nm="pkagencia"/>
       <Cl au="1" df="" nm="id" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
@@ -125,7 +129,7 @@
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="email" nu="1">
-        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="1"/>
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="email_host" nu="1">
         <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
@@ -207,7 +211,11 @@
         <ClNs>localizacion_id</ClNs>
         <OptTx>USES BTREE</OptTx>
       </Idx>
-      <UniqueConstraints/>
+      <UniqueConstraints>
+        <UnCon nm="uc_email">
+          <ClNs>email</ClNs>
+        </UnCon>
+      </UniqueConstraints>
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="agencia_afiliaciones">
@@ -247,7 +255,7 @@
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="agencia_detalle">
-      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
       <Pk ClNs="id" nm="pkagencia_detalle"/>
       <Cl au="1" df="" nm="id" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
@@ -301,7 +309,7 @@
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="auxiliar_consecutivo">
-      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8</TblOpts>
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8</TblOpts>
       <Pk ClNs="id" nm="pkauxiliar_consecutivo"/>
       <Cl au="1" df="" nm="id" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
@@ -312,7 +320,7 @@
       <Cl au="0" df="" nm="tipo_id" nu="1">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
       </Cl>
-      <Cl au="0" df="" nm="created_at" nu="0">
+      <Cl au="0" df="CURRENT_TIMESTAMP" nm="created_at" nu="0">
         <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="updated_at" nu="1">
@@ -342,8 +350,225 @@
       <UniqueConstraints/>
       <SchTrHis/>
     </Tbl>
+    <Tbl UsSo="1" nm="bill_lading">
+      <TblOpts/>
+      <Pk ClNs="id" nm="pkbill_lading"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="agencia_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="users_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="num_bl" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="date_document" nu="1">
+        <DT arr="0" ds="Date" en="" id="91" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="exporter_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="exporter" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="exporter_zip" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="10" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="consignee_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="consignee" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="notify_party_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="notify_party" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="document_number" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="export_references" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="forwarding_agent" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="type_move" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="point_origin" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="domestic_routing" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="loading_pier" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="containered" nu="0">
+        <DT arr="0" ds="Boolean" en="" id="16" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="pre_carriage_by" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="place_of_receipt" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="exporting_carrier" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="port_loading" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="foreign_port" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="placce_delivery" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="agent_for_carrier" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="0">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="1" nm="fk_bill_lading_agencia" prLkCl="id" upAc="1">
+        <PrTb mn="0" nm="agencia" oe="1" sch="schemaA" zr="0"/>
+        <CdTb mn="1" nm="bill_lading" oe="1" sch="schemaA" zr="0"/>
+        <ClPr cdCl="agencia_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="1" nm="fk_bill_lading_bill_parties" prLkCl="id" upAc="1">
+        <PrTb mn="0" nm="bill_parties" oe="1" sch="schemaA" zr="0"/>
+        <CdTb mn="1" nm="bill_lading" oe="1" sch="schemaA" zr="0"/>
+        <ClPr cdCl="exporter_id" prCl="id"/>
+      </Fk>
+      <Fk deAc="1" nm="fk_bill_lading_users" prLkCl="id" upAc="1">
+        <PrTb mn="0" nm="users" oe="1" sch="schemaA" zr="0"/>
+        <CdTb mn="1" nm="bill_lading" oe="1" sch="schemaA" zr="0"/>
+        <ClPr cdCl="users_id" prCl="id"/>
+      </Fk>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="bill_lading_detail">
+      <TblOpts/>
+      <Pk ClNs="id" nm="pkbill_lading_detail"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="bill_lading_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="marks_numbers" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="2048" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="number_packages" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="20" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="description" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="2048" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="gross_weight" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="measurement" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="0">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="1" nm="fk_bill_lading_detail_bill_lading" prLkCl="id" upAc="1">
+        <PrTb mn="0" nm="bill_lading" oe="1" sch="schemaA" zr="0"/>
+        <CdTb mn="1" nm="bill_lading_detail" oe="1" sch="schemaA" zr="0"/>
+        <ClPr cdCl="bill_lading_id" prCl="id"/>
+      </Fk>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="bill_lading_other_charges">
+      <TblOpts/>
+      <Pk ClNs="id" nm="pkbill_lading_other_charges"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="bill_lading_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="description" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="ammount_pp" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="ammount_cll" nu="1">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="0">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="1" nm="fk_bill_lading_other_charges_bill_lading" prLkCl="id" upAc="1">
+        <PrTb mn="0" nm="bill_lading" oe="1" sch="schemaA" zr="0"/>
+        <CdTb mn="1" nm="bill_lading_other_charges" oe="1" sch="schemaA" zr="0"/>
+        <ClPr cdCl="bill_lading_id" prCl="id"/>
+      </Fk>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="bill_parties">
+      <TblOpts/>
+      <Pk ClNs="id" nm="pkbill_parties"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="display_name" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="155" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="account_number" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="20" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="zip" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="text_exporter" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="2048" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="0">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="deleted_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
     <Tbl UsSo="1" nm="cargos_adicionales_detalle">
-      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
       <Pk ClNs="id" nm="pkcargos_adicionales_detalle"/>
       <Cl au="1" df="" nm="id" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
@@ -382,33 +607,30 @@
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="clientes">
-      <TblOpts/>
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4</TblOpts>
       <Pk ClNs="id" nm="pkclientes"/>
       <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="localizacion_id" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="nombre" nu="0">
         <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="direccion" nu="1">
-        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="telefono" nu="1">
         <DT arr="0" ds="VarChar" en="" id="12" ln="30" sc="null" sg="1" un="0"/>
       </Cl>
-      <Cl au="0" df="" nm="celular" nu="1">
-        <DT arr="0" ds="VarChar" en="" id="12" ln="30" sc="null" sg="1" un="0"/>
-      </Cl>
       <Cl au="0" df="" nm="email" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="155" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="zona" nu="1">
         <DT arr="0" ds="VarChar" en="" id="12" ln="30" sc="null" sg="1" un="0"/>
       </Cl>
-      <Cl au="0" df="" nm="cc" nu="1">
-        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
-      </Cl>
-      <Cl au="0" df="" nm="cco" nu="1">
-        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
-      </Cl>
-      <Cl au="0" df="" nm="created_at" nu="0">
+      <Cl au="0" df="CURRENT_TIMESTAMP" nm="created_at" nu="0">
         <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="deleted_at" nu="1">
@@ -417,6 +639,10 @@
       <Cl au="0" df="" nm="updated_at" nu="1">
         <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
       </Cl>
+      <Idx clu="0" ftx="0" nm="localizacion_id" spa="0" unq="0">
+        <ClNs>localizacion_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
       <UniqueConstraints/>
       <SchTrHis/>
     </Tbl>
@@ -499,25 +725,19 @@
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="consignee">
-      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=4263 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
       <Pk ClNs="id" nm="pkconsignee"/>
       <Cl au="1" df="" nm="id" nu="0">
-        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
-      </Cl>
-      <Cl au="0" df="" nm="agencia_id" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="tipo_identificacion_id" nu="1">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
       </Cl>
+      <Cl au="0" df="" nm="agencia_id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
       <Cl au="0" df="" nm="localizacion_id" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
-      </Cl>
-      <Cl au="0" df="" nm="clientes_id" nu="1">
-        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
-      </Cl>
-      <Cl au="0" df="" nm="po_box" nu="1">
-        <DT arr="0" ds="VarChar" en="" id="12" ln="20" sc="null" sg="1" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="documento" nu="1">
         <DT arr="0" ds="VarChar" en="" id="12" ln="25" sc="null" sg="1" un="0"/>
@@ -552,6 +772,9 @@
       <Cl au="0" df="0" nm="tarifa" nu="1">
         <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
       </Cl>
+      <Cl au="0" df="" nm="po_box" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
+      </Cl>
       <Cl au="0" df="1" nm="estatus" nu="1">
         <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
       </Cl>
@@ -579,6 +802,9 @@
       <Cl au="0" df="" nm="contactos_json" nu="1">
         <DT arr="0" ds="LongText" en="" id="712" ln="null" sc="null" sg="1" un="0"/>
       </Cl>
+      <Cl au="0" df="" nm="cliente_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
       <Cl au="0" df="" nm="created_at" nu="1">
         <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
       </Cl>
@@ -588,10 +814,10 @@
       <Cl au="0" df="" nm="deleted_at" nu="1">
         <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
       </Cl>
-      <Fk deAc="3" nm="fk_consignee_clientes" prLkCl="id" upAc="3">
-        <PrTb mn="0" nm="clientes" oe="1" sch="schemaA" zr="0"/>
+      <Fk deAc="3" nm="fk_consignee_agencia" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="agencia" oe="1" sch="schemaA" zr="0"/>
         <CdTb mn="1" nm="consignee" oe="0" sch="schemaA" zr="1"/>
-        <ClPr cdCl="clientes_id" prCl="id"/>
+        <ClPr cdCl="agencia_id" prCl="id"/>
       </Fk>
       <Fk deAc="3" nm="fk_consignee_localizacion" prLkCl="id" upAc="3">
         <PrTb mn="0" nm="localizacion" oe="1" sch="schemaA" zr="0"/>
@@ -603,8 +829,12 @@
         <CdTb mn="1" nm="consignee" oe="0" sch="schemaA" zr="1"/>
         <ClPr cdCl="tipo_identificacion_id" prCl="id"/>
       </Fk>
-      <Idx clu="0" ftx="0" nm="consignee_clientes_id_Idx" spa="0" unq="0">
-        <ClNs>clientes_id</ClNs>
+      <Idx clu="0" ftx="0" nm="cliente_id" spa="0" unq="0">
+        <ClNs>cliente_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="fk_consignee_agencia" spa="0" unq="0">
+        <ClNs>agencia_id</ClNs>
         <OptTx>USES BTREE</OptTx>
       </Idx>
       <Idx clu="0" ftx="0" nm="fk_consignee_localizacion" spa="0" unq="0">
@@ -619,7 +849,7 @@
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="consolidado_detalle">
-      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
       <Pk ClNs="id" nm="pkconsolidado_detalle"/>
       <Cl au="1" df="" nm="id" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
@@ -753,6 +983,9 @@
       <Cl au="0" df="" nm="descripcion" nu="0">
         <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
       </Cl>
+      <Cl au="0" df="" nm="abreviatura" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="10" sc="null" sg="1" un="0"/>
+      </Cl>
       <Cl au="0" df="" nm="cod_dane" nu="1">
         <DT arr="0" ds="VarChar" en="" id="12" ln="20" sc="null" sg="1" un="0"/>
       </Cl>
@@ -778,7 +1011,7 @@
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="documento">
-      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
       <Pk ClNs="id" nm="pkdocumento"/>
       <Cl au="1" df="" nm="id" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
@@ -970,7 +1203,7 @@
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="documento_detalle">
-      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
       <Pk ClNs="id" nm="pkdocumento_detalle"/>
       <Cl au="1" df="" nm="id" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
@@ -1003,6 +1236,9 @@
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="alto" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="piezas" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="contenido" nu="0">
@@ -1120,7 +1356,7 @@
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="documento_notas">
-      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8</TblOpts>
+      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
       <Pk ClNs="id" nm="pkdocumento_notas"/>
       <Cl au="1" df="" nm="id" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
@@ -1128,13 +1364,10 @@
       <Cl au="0" df="" nm="documento_id" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
       </Cl>
-      <Cl au="0" df="" nm="user_id" nu="1">
-        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
-      </Cl>
       <Cl au="0" df="" nm="nota" nu="0">
         <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
       </Cl>
-      <Cl au="0" df="" nm="created_at" nu="0">
+      <Cl au="0" df="CURRENT_TIMESTAMP" nm="created_at" nu="0">
         <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="updated_at" nu="1">
@@ -1143,11 +1376,9 @@
       <Cl au="0" df="" nm="deleted_at" nu="1">
         <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
       </Cl>
-      <Fk deAc="3" nm="fk_documento_notas_documento" prLkCl="id" upAc="3">
-        <PrTb mn="0" nm="documento" oe="1" sch="schemaA" zr="0"/>
-        <CdTb mn="1" nm="documento_notas" oe="0" sch="schemaA" zr="1"/>
-        <ClPr cdCl="documento_id" prCl="id"/>
-      </Fk>
+      <Cl au="0" df="" nm="user_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
       <Fk deAc="3" nm="fk_documento_notas_users" prLkCl="id" upAc="3">
         <PrTb mn="0" nm="users" oe="1" sch="schemaA" zr="1"/>
         <CdTb mn="1" nm="documento_notas" oe="0" sch="schemaA" zr="1"/>
@@ -1155,6 +1386,10 @@
       </Fk>
       <Idx clu="0" ftx="0" nm="documento_id" spa="0" unq="0">
         <ClNs>documento_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <Idx clu="0" ftx="0" nm="documento_notas_users_id_Idx" spa="0" unq="0">
+        <ClNs>user_id</ClNs>
         <OptTx>USES BTREE</OptTx>
       </Idx>
       <Idx clu="0" ftx="0" nm="user_id" spa="0" unq="0">
@@ -1252,7 +1487,7 @@
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="guia_wrh_pivot">
-      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8</TblOpts>
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8</TblOpts>
       <Pk ClNs="id" nm="pkguia_wrh_pivot"/>
       <Cl au="1" df="" nm="id" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
@@ -1517,12 +1752,9 @@
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="log_activities">
-      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</TblOpts>
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=505 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</TblOpts>
       <Pk ClNs="id" nm="pklog_activities"/>
       <Cl au="1" df="" nm="id" nu="0">
-        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
-      </Cl>
-      <Cl au="0" df="" nm="user_id" nu="1">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="subject" nu="0">
@@ -1540,6 +1772,9 @@
       <Cl au="0" df="" nm="agent" nu="0">
         <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
       </Cl>
+      <Cl au="0" df="" nm="user_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
       <Cl au="0" df="" nm="created_at" nu="1">
         <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
       </Cl>
@@ -1551,7 +1786,7 @@
         <CdTb mn="1" nm="log_activities" oe="0" sch="schemaA" zr="1"/>
         <ClPr cdCl="user_id" prCl="id"/>
       </Fk>
-      <Idx clu="0" ftx="0" nm="fk_log_activities_users" spa="0" unq="0">
+      <Idx clu="0" ftx="0" nm="log_activities_user_id_Idx" spa="0" unq="0">
         <ClNs>user_id</ClNs>
         <OptTx>USES BTREE</OptTx>
       </Idx>
@@ -1559,7 +1794,7 @@
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="maestra_multiple">
-      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8</TblOpts>
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8</TblOpts>
       <Pk ClNs="id" nm="pkmaestra_multiple"/>
       <Cl au="1" df="" nm="id" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
@@ -1658,7 +1893,7 @@
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="master">
-      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
       <Pk ClNs="id" nm="pkmaster"/>
       <Cl au="1" df="" nm="id" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
@@ -1832,8 +2067,44 @@
       <UniqueConstraints/>
       <SchTrHis/>
     </Tbl>
+    <Tbl UsSo="1" nm="master_cargos_adicionales">
+      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8mb4</TblOpts>
+      <Pk ClNs="id" nm="pkmaster_cargos_adicionales"/>
+      <Cl au="1" df="" nm="id" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="master_id" nu="1">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="descripcion" nu="0">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="agent_carrier" nu="0">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="valor" nu="0">
+        <DT arr="0" ds="Float" en="" id="6" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="created_at" nu="0">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="updated_at" nu="1">
+        <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_cargos_adicionales_master" prLkCl="id" upAc="3">
+        <PrTb mn="0" nm="master" oe="1" sch="schemaA" zr="1"/>
+        <CdTb mn="1" nm="master_cargos_adicionales" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="master_id" prCl="id"/>
+      </Fk>
+      <Idx clu="0" ftx="0" nm="master_id" spa="0" unq="0">
+        <ClNs>master_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
     <Tbl UsSo="1" nm="master_detalle">
-      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
       <Pk ClNs="id" nm="pkmaster_detalle"/>
       <Cl au="1" df="" nm="id" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
@@ -2034,7 +2305,7 @@
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="permission_role">
-      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</TblOpts>
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</TblOpts>
       <Pk ClNs="id" nm="pkpermission_role"/>
       <Cl au="1" df="" nm="id" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
@@ -2104,6 +2375,10 @@
         <ClNs>permission_id</ClNs>
         <OptTx>USES BTREE</OptTx>
       </Idx>
+      <Idx clu="0" ftx="0" nm="permission_user_permissions_id_Idx" spa="0" unq="0">
+        <ClNs>permission_id</ClNs>
+        <OptTx>USES BTREE</OptTx>
+      </Idx>
       <Idx clu="0" ftx="0" nm="permission_user_user_id_index" spa="0" unq="0">
         <ClNs>user_id</ClNs>
         <OptTx>USES BTREE</OptTx>
@@ -2112,19 +2387,25 @@
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="permissions">
-      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=120 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</TblOpts>
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</TblOpts>
       <Pk ClNs="id" nm="pkpermissions"/>
       <Cl au="1" df="" nm="id" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="module" nu="1">
+        <DT arr="0" ds="VarChar" en="" id="12" ln="150" sc="null" sg="1" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="name" nu="0">
         <DT arr="0" ds="VarChar" en="" id="12" ln="191" sc="null" sg="1" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="slug" nu="0">
-        <DT arr="0" ds="VarChar" en="" id="12" ln="191" sc="null" sg="1" un="1"/>
+        <DT arr="0" ds="VarChar" en="" id="12" ln="191" sc="null" sg="1" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="description" nu="1">
         <DT arr="0" ds="Text" en="" id="703" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="crud" nu="1">
+        <DT arr="0" ds="Char" en="" id="1" ln="2" sc="null" sg="1" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="created_at" nu="1">
         <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
@@ -2136,7 +2417,11 @@
         <ClNs>slug</ClNs>
         <OptTx>USES BTREE</OptTx>
       </Idx>
-      <UniqueConstraints/>
+      <UniqueConstraints>
+        <UnCon nm="uc_slug">
+          <ClNs>slug</ClNs>
+        </UnCon>
+      </UniqueConstraints>
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="plantillas_correo">
@@ -2162,6 +2447,9 @@
       </Cl>
       <Cl au="0" df="" nm="otros_destinatarios" nu="1">
         <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="0" nm="enviar_archivo" nu="0">
+        <DT arr="0" ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="created_at" nu="1">
         <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
@@ -2215,7 +2503,7 @@
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="prealerta">
-      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8</TblOpts>
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8</TblOpts>
       <Pk ClNs="id" nm="pkprealerta"/>
       <Cl au="1" df="" nm="id" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
@@ -2227,7 +2515,7 @@
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="tracking" nu="1">
-        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="1"/>
+        <DT arr="0" ds="VarChar" en="" id="12" ln="255" sc="null" sg="1" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="contenido" nu="1">
         <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
@@ -2270,7 +2558,11 @@
         <ClNs>tracking</ClNs>
         <OptTx>USES BTREE</OptTx>
       </Idx>
-      <UniqueConstraints/>
+      <UniqueConstraints>
+        <UnCon nm="uc_tracking">
+          <ClNs>tracking</ClNs>
+        </UnCon>
+      </UniqueConstraints>
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="reporte_carga">
@@ -2424,7 +2716,7 @@
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="role_user">
-      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</TblOpts>
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</TblOpts>
       <Pk ClNs="id" nm="pkrole_user"/>
       <Cl au="1" df="" nm="id" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
@@ -2463,16 +2755,16 @@
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="roles">
-      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</TblOpts>
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</TblOpts>
       <Pk ClNs="id" nm="pkroles"/>
       <Cl au="1" df="" nm="id" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="name" nu="0">
-        <DT arr="0" ds="VarChar" en="" id="12" ln="191" sc="null" sg="1" un="1"/>
+        <DT arr="0" ds="VarChar" en="" id="12" ln="191" sc="null" sg="1" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="slug" nu="0">
-        <DT arr="0" ds="VarChar" en="" id="12" ln="191" sc="null" sg="1" un="1"/>
+        <DT arr="0" ds="VarChar" en="" id="12" ln="191" sc="null" sg="1" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="description" nu="1">
         <DT arr="0" ds="Text" en="" id="703" ln="null" sc="null" sg="1" un="0"/>
@@ -2497,7 +2789,14 @@
         <ClNs>slug</ClNs>
         <OptTx>USES BTREE</OptTx>
       </Idx>
-      <UniqueConstraints/>
+      <UniqueConstraints>
+        <UnCon nm="uc_name">
+          <ClNs>name</ClNs>
+        </UnCon>
+        <UnCon nm="uc_slug">
+          <ClNs>slug</ClNs>
+        </UnCon>
+      </UniqueConstraints>
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="servicios">
@@ -2552,7 +2851,7 @@
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="shipper">
-      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
       <Pk ClNs="id" nm="pkshipper"/>
       <Cl au="1" df="" nm="id" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
@@ -2616,7 +2915,7 @@
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="shipper_consignee">
-      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8</TblOpts>
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8</TblOpts>
       <Pk ClNs="id" nm="pkshipper_consignee"/>
       <Cl au="1" df="" nm="id" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
@@ -2682,7 +2981,7 @@
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="status_detalle">
-      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci</TblOpts>
       <Pk ClNs="id" nm="pkstatus_detalle"/>
       <Cl au="1" df="" nm="id" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
@@ -2782,7 +3081,7 @@
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="tipo_documento">
-      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8</TblOpts>
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8</TblOpts>
       <Pk ClNs="id" nm="pktipo_documento"/>
       <Cl au="1" df="" nm="id" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
@@ -2833,10 +3132,10 @@
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="descripcion" nu="0">
-        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="1"/>
+        <DT arr="0" ds="VarChar" en="" id="12" ln="50" sc="null" sg="1" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="abreviatura" nu="1">
-        <DT arr="0" ds="Char" en="" id="1" ln="5" sc="null" sg="1" un="1"/>
+        <DT arr="0" ds="Char" en="" id="1" ln="5" sc="null" sg="1" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="deleted_at" nu="1">
         <DT arr="0" ds="TimeStamp" en="" id="93" ln="null" sc="null" sg="1" un="0"/>
@@ -2849,7 +3148,14 @@
         <ClNs>descripcion</ClNs>
         <OptTx>USES BTREE</OptTx>
       </Idx>
-      <UniqueConstraints/>
+      <UniqueConstraints>
+        <UnCon nm="uc_abreviatura">
+          <ClNs>abreviatura</ClNs>
+        </UnCon>
+        <UnCon nm="uc_descripcion">
+          <ClNs>descripcion</ClNs>
+        </UnCon>
+      </UniqueConstraints>
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="tipo_pago">
@@ -2877,7 +3183,7 @@
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="tracking">
-      <TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+      <TblOpts>ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8</TblOpts>
       <Pk ClNs="id" nm="pktracking"/>
       <Cl au="1" df="" nm="id" nu="0">
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
@@ -2892,7 +3198,7 @@
         <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="0" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="codigo" nu="0">
-        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="1"/>
+        <DT arr="0" ds="VarChar" en="" id="12" ln="100" sc="null" sg="1" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="contenido" nu="1">
         <DT arr="0" ds="VarChar" en="" id="12" ln="1024" sc="null" sg="1" un="0"/>
@@ -2930,7 +3236,11 @@
         <ClNs>consignee_id</ClNs>
         <OptTx>USES BTREE</OptTx>
       </Idx>
-      <UniqueConstraints/>
+      <UniqueConstraints>
+        <UnCon nm="uc_codigo">
+          <ClNs>codigo</ClNs>
+        </UnCon>
+      </UniqueConstraints>
       <SchTrHis/>
     </Tbl>
     <Tbl UsSo="1" nm="transportador">
@@ -3021,7 +3331,7 @@
         <DT arr="0" ds="VarChar" en="" id="12" ln="191" sc="null" sg="1" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="email" nu="0">
-        <DT arr="0" ds="VarChar" en="" id="12" ln="191" sc="null" sg="1" un="1"/>
+        <DT arr="0" ds="VarChar" en="" id="12" ln="191" sc="null" sg="1" un="0"/>
       </Cl>
       <Cl au="0" df="" nm="password" nu="0">
         <DT arr="0" ds="VarChar" en="" id="12" ln="191" sc="null" sg="1" un="0"/>
@@ -3051,7 +3361,11 @@
         <ClNs>email</ClNs>
         <OptTx>USES BTREE</OptTx>
       </Idx>
-      <UniqueConstraints/>
+      <UniqueConstraints>
+        <UnCon nm="uc_email">
+          <ClNs>email</ClNs>
+        </UnCon>
+      </UniqueConstraints>
       <SchTrHis/>
     </Tbl>
     <Proc nm="`fn_ConsecutivoByTipoDocumento`(`id_tipo_documento` INT)">
@@ -3524,479 +3838,543 @@ END IF</src>
       <DbTableRectangleFill>HeaderFooterFill</DbTableRectangleFill>
       <svg path=""/>
     </DiaProps>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="aerolineas_aeropuertos" x="1274" y="2042"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="aerolineas_inventario" x="899" y="2585"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="agencia" x="1952" y="1136"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="agencia_afiliaciones" x="1557" y="1402"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="agencia_detalle" x="1551" y="1136"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="auxiliar_consecutivo" x="2010" y="223"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="cargos_adicionales_detalle" x="2762" y="988"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="compras" x="50" y="3094"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="compras_status" x="431" y="3094"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="conceptos_costos_master" x="50" y="2042"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="consignee" x="2752" y="1289"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="consolidado_detalle" x="2802" y="682"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="costos_master" x="380" y="2042"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="deptos" x="1290" y="2718"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="documento" x="2378" y="50"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="documento_detalle" x="2812" y="50"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="documento_notas" x="2782" y="865"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="factura_warehouse" x="3210" y="223"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="guia_wrh_pivot" x="1961" y="50"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="impuesto_hijas" x="2005" y="559"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="impuesto_master" x="453" y="2185"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="instruccion" x="3902" y="50"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="localizacion" x="1620" y="2042"/>
-    <TbGl bkCl="ffff0033" sch="schemaA" tbl="log_activities" x="1694" y="993"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="maestra_multiple" x="3210" y="426"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="mail_chimp" x="1576" y="1289"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="mail_chimp_list" x="1232" y="1289"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="master" x="827" y="2042"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="master_detalle" x="465" y="2333"/>
-    <TbGl bkCl="ffff0033" sch="schemaA" tbl="migrations" x="4172" y="50"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="modulo" x="3540" y="426"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="moneda" x="50" y="2100"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="pais" x="958" y="2718"/>
-    <TbGl bkCl="ffff0033" sch="schemaA" tbl="password_resets" x="4440" y="50"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="payu" x="1547" y="1510"/>
-    <TbGl bkCl="ffff0033" sch="schemaA" tbl="permission_role" x="1028" y="880"/>
-    <TbGl bkCl="ffff0033" sch="schemaA" tbl="permission_user" x="1684" y="880"/>
-    <TbGl bkCl="ffff0033" sch="schemaA" tbl="permissions" x="1356" y="880"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="plantillas_correo" x="1549" y="1638"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="posicion_arancelaria" x="3210" y="549"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="prealerta" x="1597" y="1776"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="reporte_carga" x="1616" y="336"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="reporte_carga_detalle" x="1996" y="336"/>
-    <TbGl bkCl="ffff0033" sch="schemaA" tbl="role_user" x="1688" y="747"/>
-    <TbGl bkCl="ffff0033" sch="schemaA" tbl="roles" x="1360" y="747"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="servicios" x="1578" y="50"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="shipper" x="1999" y="2851"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="shipper_consignee" x="3141" y="1289"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="status" x="3609" y="50"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="status_detalle" x="3220" y="50"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="tienda" x="1622" y="1934"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="tipo_documento" x="2752" y="1106"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="tipo_identificacion" x="3131" y="1530"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="tipo_pago" x="3902" y="128"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="tracking" x="3131" y="1392"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="transportador" x="4172" y="128"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="transportador_casillero" x="4440" y="128"/>
-    <TbGl bkCl="ffff0033" sch="schemaA" tbl="users" x="2022" y="747"/>
-    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="clientes" x="3149" y="1612"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="aerolineas_aeropuertos" x="1284" y="1557"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="aerolineas_inventario" x="909" y="2159"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="agencia" x="1962" y="50"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="agencia_afiliaciones" x="1567" y="1173"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="agencia_detalle" x="2458" y="1738"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="auxiliar_consecutivo" x="2872" y="203"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="cargos_adicionales_detalle" x="2852" y="499"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="clientes" x="4172" y="50"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="compras" x="50" y="2478"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="compras_status" x="431" y="2478"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="conceptos_costos_master" x="50" y="1557"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="consignee" x="1493" y="253"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="consolidado_detalle" x="2862" y="316"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="costos_master" x="380" y="1557"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="deptos" x="1300" y="2292"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="documento" x="2468" y="50"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="documento_detalle" x="1065" y="253"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="documento_notas" x="3208" y="1071"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="factura_warehouse" x="1480" y="50"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="guia_wrh_pivot" x="2882" y="50"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="impuesto_hijas" x="2842" y="617"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="impuesto_master" x="453" y="1700"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="instruccion" x="4459" y="50"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="localizacion" x="1630" y="1557"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="log_activities" x="3198" y="1179"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="maestra_multiple" x="3182" y="1738"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="mail_chimp" x="2448" y="1911"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="mail_chimp_list" x="2774" y="1911"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="master" x="787" y="1543"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="master_cargos_adicionales" x="481" y="1848"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="master_detalle" x="475" y="1956"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="migrations" x="4729" y="50"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="modulo" x="3512" y="1738"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="moneda" x="50" y="1615"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="pais" x="968" y="2292"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="password_resets" x="4172" y="188"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="payu" x="1557" y="1281"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="permission_role" x="3874" y="938"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="permission_user" x="3218" y="938"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="permissions" x="3546" y="938"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="plantillas_correo" x="1559" y="1409"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="posicion_arancelaria" x="728" y="426"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="prealerta" x="2398" y="2187"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="reporte_carga" x="2438" y="2024"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="reporte_carga_detalle" x="1111" y="616"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="role_user" x="3228" y="805"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="roles" x="3542" y="805"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="servicios" x="2799" y="1738"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="shipper" x="2842" y="1505"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="shipper_consignee" x="1159" y="839"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="status" x="353" y="253"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="status_detalle" x="676" y="253"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="tienda" x="2388" y="2345"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="tipo_documento" x="2842" y="1322"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="tipo_identificacion" x="1170" y="1080"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="tipo_pago" x="4459" y="188"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="tracking" x="1104" y="942"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="transportador" x="4729" y="188"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="transportador_casillero" x="4172" y="376"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="users" x="2842" y="805"/>
+    <TbGl bkCl="ff0000ff" sch="schemaA" tbl="bill_lading" x="596" y="1106"/>
+    <TbGl bkCl="ff0000ff" sch="schemaA" tbl="bill_lading_detail" x="226" y="1157"/>
+    <TbGl bkCl="ff0000ff" sch="schemaA" tbl="bill_lading_other_charges" x="170" y="1342"/>
+    <TbGl bkCl="ff0000ff" sch="schemaA" tbl="bill_parties" x="194" y="959"/>
     <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.aerolineas_aeropuertos.fk_aerolineas_localizacion" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="1603" x2="1517" y1="2103" y2="2103"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="1613" x2="1527" y1="1618" y2="1618"/>
       </positionableLines>
     </FkGl>
     <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.aerolineas_inventario.fk_aerolineas_inventario_aerolineas_aeropuertos" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="1387" x2="1387" y1="2182" y2="2632"/>
-        <positionableLine lineRole="CHILD_LINE" x1="1171" x2="1383" y1="2636" y2="2636"/>
+        <positionableLine lineRole="PARENT_LINE" x1="1397" x2="1397" y1="1697" y2="2206"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1181" x2="1393" y1="2210" y2="2210"/>
       </positionableLines>
     </FkGl>
     <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.agencia.fk_agencia_localizacion" parentEdge="EAST" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="1849" x2="2203" y1="2103" y2="2103"/>
-        <positionableLine lineRole="CHILD_LINE" x1="2207" x2="2207" y1="1506" y2="2099"/>
+        <positionableLine lineRole="PARENT_LINE" x1="1859" x2="2078" y1="1618" y2="1618"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2082" x2="2082" y1="420" y2="1614"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.agencia_afiliaciones.fk_agencia_afiliaciones_agencia" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.agencia_afiliaciones.fk_agencia_afiliaciones_agencia" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="1935" x2="1809" y1="1445" y2="1445"/>
+        <positionableLine lineRole="PARENT_LINE" x1="1992" x2="1992" y1="420" y2="1215"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1819" x2="1988" y1="1219" y2="1219"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.agencia_detalle.fk_agencia_detalle_agencia" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.agencia_detalle.fk_agencia_detalle_agencia" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="1935" x2="1789" y1="1197" y2="1197"/>
+        <positionableLine lineRole="PARENT_LINE" x1="2232" x2="2232" y1="420" y2="1795"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2441" x2="2236" y1="1799" y2="1799"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="NORTH" nm="schemaA.agencia_detalle.fk_agencia_detalle_servicios" parentEdge="SOUTH" positioner="OneLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.agencia_detalle.fk_agencia_detalle_servicios" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="1675" x2="1675" y1="210" y2="1119"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="2782" x2="2696" y1="1799" y2="1799"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.auxiliar_consecutivo.fk_auxiliar_consecutivo_documento" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.auxiliar_consecutivo.fk_auxiliar_consecutivo_documento" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="2361" x2="2235" y1="264" y2="264"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="2739" x2="2855" y1="244" y2="244"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.auxiliar_consecutivo.fk_auxiliar_consecutivo_tipo_documento" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.auxiliar_consecutivo.fk_auxiliar_consecutivo_tipo_documento" parentEdge="NORTH" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="2880" x2="2880" y1="1089" y2="281"/>
-        <positionableLine lineRole="CHILD_LINE" x1="2235" x2="2876" y1="277" y2="277"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="2976" x2="2976" y1="1305" y2="303"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.bill_lading.fk_bill_lading_agencia" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="2115" x2="2115" y1="420" y2="1233"/>
+        <positionableLine lineRole="CHILD_LINE" x1="864" x2="2111" y1="1237" y2="1237"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.bill_lading.fk_bill_lading_bill_parties" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="431" x2="431" y1="1079" y2="1113"/>
+        <positionableLine lineRole="CHILD_LINE" x1="579" x2="435" y1="1117" y2="1117"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.bill_lading.fk_bill_lading_users" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="2960" x2="2960" y1="955" y2="1238"/>
+        <positionableLine lineRole="CHILD_LINE" x1="864" x2="2956" y1="1242" y2="1242"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.bill_lading_detail.fk_bill_lading_detail_bill_lading" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="579" x2="493" y1="1202" y2="1202"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="NORTH" nm="schemaA.bill_lading_other_charges.fk_bill_lading_other_charges_bill_lading" parentEdge="WEST" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="579" x2="353" y1="1325" y2="1325"/>
+        <positionableLine lineRole="CHILD_LINE" x1="349" x2="349" y1="1325" y2="1329"/>
       </positionableLines>
     </FkGl>
     <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.cargos_adicionales_detalle.fk_cargos_adicionales_detalle_guia_hija" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="2553" x2="2553" y1="520" y2="1035"/>
-        <positionableLine lineRole="CHILD_LINE" x1="2745" x2="2557" y1="1039" y2="1039"/>
+        <positionableLine lineRole="PARENT_LINE" x1="2684" x2="2684" y1="520" y2="546"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2835" x2="2688" y1="550" y2="550"/>
       </positionableLines>
     </FkGl>
     <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.compras_status.fk_compras_status_compras" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="328" x2="414" y1="3140" y2="3140"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="328" x2="414" y1="2524" y2="2524"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.consignee.fk_consignee_clientes" parentEdge="WEST" positioner="TwoLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.consignee.fk_consignee_agencia" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="3132" x2="3010" y1="1731" y2="1731"/>
-        <positionableLine lineRole="CHILD_LINE" x1="3006" x2="3006" y1="1619" y2="1727"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="1945" x2="1769" y1="328" y2="328"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.consignee.fk_consignee_localizacion" parentEdge="EAST" positioner="TwoLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.consignee.fk_consignee_localizacion" parentEdge="NORTH" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="1849" x2="2877" y1="2042" y2="2042"/>
-        <positionableLine lineRole="CHILD_LINE" x1="2881" x2="2881" y1="1619" y2="2038"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="1691" x2="1691" y1="1540" y2="583"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.consignee.fk_consignee_tipo_identificacion" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.consignee.fk_consignee_tipo_identificacion" parentEdge="EAST" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="3114" x2="3028" y1="1561" y2="1561"/>
+        <positionableLine lineRole="PARENT_LINE" x1="1390" x2="1661" y1="1111" y2="1111"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1665" x2="1665" y1="583" y2="1107"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.consolidado_detalle.fk_consolidado_detalle_documento" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.consolidado_detalle.fk_consolidado_detalle_documento" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="2603" x2="2603" y1="520" y2="754"/>
-        <positionableLine lineRole="CHILD_LINE" x1="2785" x2="2607" y1="758" y2="758"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="2739" x2="2845" y1="392" y2="392"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="NORTH" nm="schemaA.consolidado_detalle.fk_consolidado_detalle_guia_hija_detalle" parentEdge="SOUTH" positioner="OneLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.consolidado_detalle.fk_consolidado_detalle_guia_hija_detalle" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="2934" x2="2934" y1="390" y2="665"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="1360" x2="2845" y1="392" y2="392"/>
       </positionableLines>
     </FkGl>
     <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.costos_master.fk_costos_master_conceptos_costos_master" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="277" x2="363" y1="2063" y2="2063"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="277" x2="363" y1="1578" y2="1578"/>
       </positionableLines>
     </FkGl>
     <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.costos_master.fk_costos_master_master" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="810" x2="704" y1="2098" y2="2098"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="770" x2="704" y1="1599" y2="1599"/>
       </positionableLines>
     </FkGl>
     <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.costos_master.fk_costos_master_moneda" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="277" x2="363" y1="2126" y2="2126"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="277" x2="363" y1="1641" y2="1641"/>
       </positionableLines>
     </FkGl>
     <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.deptos.fk_deptoss_pais" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="1187" x2="1273" y1="2764" y2="2764"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="1197" x2="1283" y1="2343" y2="2343"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.documento.fk_guia_hija_agencia" parentEdge="EAST" positioner="TwoLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.documento.fk_guia_hija_agencia" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="2275" x2="2449" y1="1312" y2="1312"/>
-        <positionableLine lineRole="CHILD_LINE" x1="2453" x2="2453" y1="520" y2="1308"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="2285" x2="2451" y1="226" y2="226"/>
       </positionableLines>
     </FkGl>
     <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.documento.fk_guia_hija_tipo_documento" parentEdge="WEST" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="2735" x2="2532" y1="1182" y2="1182"/>
-        <positionableLine lineRole="CHILD_LINE" x1="2528" x2="2528" y1="520" y2="1178"/>
+        <positionableLine lineRole="PARENT_LINE" x1="2825" x2="2580" y1="1398" y2="1398"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2576" x2="2576" y1="520" y2="1394"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.documento.fk_guia_hija_usuario" parentEdge="EAST" positioner="TwoLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.documento.fk_guia_hija_usuario" parentEdge="WEST" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="2275" x2="2424" y1="791" y2="791"/>
-        <positionableLine lineRole="CHILD_LINE" x1="2428" x2="2428" y1="520" y2="787"/>
+        <positionableLine lineRole="PARENT_LINE" x1="2825" x2="2616" y1="871" y2="871"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2612" x2="2612" y1="520" y2="867"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.documento.fk_weare_house_consignee" parentEdge="WEST" positioner="TwoLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.documento.fk_weare_house_consignee" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="2735" x2="2507" y1="1440" y2="1440"/>
-        <positionableLine lineRole="CHILD_LINE" x1="2503" x2="2503" y1="520" y2="1436"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="1769" x2="2451" y1="378" y2="378"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.documento.fk_weare_house_shipper" parentEdge="EAST" positioner="TwoLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.documento.fk_weare_house_shipper" parentEdge="WEST" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="2275" x2="2474" y1="2952" y2="2952"/>
-        <positionableLine lineRole="CHILD_LINE" x1="2478" x2="2478" y1="520" y2="2948"/>
+        <positionableLine lineRole="PARENT_LINE" x1="2825" x2="2544" y1="1639" y2="1639"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2540" x2="2540" y1="520" y2="1635"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.documento_detalle.fk_detalle_guia_hija_guia_hija" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.documento_detalle.fk_detalle_guia_hija_guia_hija" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="2649" x2="2795" y1="211" y2="211"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="2451" x2="1360" y1="378" y2="378"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.documento_detalle.fk_guia_hija_detalle_consignee" parentEdge="NORTH" positioner="OneLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.documento_detalle.fk_guia_hija_detalle_consignee" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="2911" x2="2911" y1="1272" y2="390"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="1476" x2="1360" y1="409" y2="409"/>
       </positionableLines>
     </FkGl>
     <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.documento_detalle.fk_guia_hija_detalle_maestra_multiple" parentEdge="WEST" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="3193" x2="3050" y1="472" y2="472"/>
-        <positionableLine lineRole="CHILD_LINE" x1="3046" x2="3046" y1="390" y2="468"/>
+        <positionableLine lineRole="PARENT_LINE" x1="3165" x2="1161" y1="1769" y2="1769"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1157" x2="1157" y1="603" y2="1765"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.documento_detalle.fk_guia_hija_detalle_posicion_arancelaria" parentEdge="WEST" positioner="TwoLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.documento_detalle.fk_guia_hija_detalle_posicion_arancelaria" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="3193" x2="2972" y1="617" y2="617"/>
-        <positionableLine lineRole="CHILD_LINE" x1="2968" x2="2968" y1="390" y2="613"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="962" x2="1048" y1="477" y2="477"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.documento_detalle.fk_guia_hija_detalle_posicion_arancelaria_2" parentEdge="WEST" positioner="TwoLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.documento_detalle.fk_guia_hija_detalle_posicion_arancelaria_2" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="3193" x2="3011" y1="583" y2="583"/>
-        <positionableLine lineRole="CHILD_LINE" x1="3007" x2="3007" y1="390" y2="579"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="962" x2="1048" y1="477" y2="477"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.documento_detalle.fk_guia_hija_detalle_shipper" parentEdge="EAST" positioner="TwoLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.documento_detalle.fk_guia_hija_detalle_shipper" parentEdge="WEST" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="2275" x2="2847" y1="2851" y2="2851"/>
-        <positionableLine lineRole="CHILD_LINE" x1="2851" x2="2851" y1="390" y2="2847"/>
+        <positionableLine lineRole="PARENT_LINE" x1="2825" x2="1253" y1="1572" y2="1572"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1249" x2="1249" y1="603" y2="1568"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.documento_notas.fk_documento_notas_documento" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.documento_notas.fk_documento_notas_users" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="2578" x2="2578" y1="520" y2="892"/>
-        <positionableLine lineRole="CHILD_LINE" x1="2765" x2="2582" y1="896" y2="896"/>
+        <positionableLine lineRole="PARENT_LINE" x1="2983" x2="2983" y1="955" y2="1113"/>
+        <positionableLine lineRole="CHILD_LINE" x1="3191" x2="2987" y1="1117" y2="1117"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.documento_notas.fk_documento_notas_users" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.factura_warehouse.fk_factura_warehouse_agencia" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="2275" x2="2765" y1="872" y2="872"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="1945" x2="1759" y1="136" y2="136"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.factura_warehouse.fk_factura_warehouse_agencia" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.factura_warehouse.fk_factura_warehouse_consignee" parentEdge="NORTH" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="2156" x2="2156" y1="1119" y2="341"/>
-        <positionableLine lineRole="CHILD_LINE" x1="3193" x2="2160" y1="337" y2="337"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="1617" x2="1617" y1="236" y2="240"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.factura_warehouse.fk_factura_warehouse_consignee" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.factura_warehouse.fk_factura_warehouse_guia_hija_detalle" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="2944" x2="2944" y1="1272" y2="227"/>
-        <positionableLine lineRole="CHILD_LINE" x1="3193" x2="2948" y1="223" y2="223"/>
+        <positionableLine lineRole="PARENT_LINE" x1="1204" x2="1204" y1="236" y2="140"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1463" x2="1208" y1="136" y2="136"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.factura_warehouse.fk_factura_warehouse_guia_hija_detalle" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.factura_warehouse.fk_factura_warehouse_usuario" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="3107" x2="3193" y1="298" y2="298"/>
+        <positionableLine lineRole="PARENT_LINE" x1="2960" x2="2960" y1="788" y2="168"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1759" x2="2956" y1="164" y2="164"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.factura_warehouse.fk_factura_warehouse_usuario" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.guia_wrh_pivot.fk_guia_wrh_pivot_guia_hija" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="2178" x2="2178" y1="730" y2="227"/>
-        <positionableLine lineRole="CHILD_LINE" x1="3193" x2="2182" y1="223" y2="223"/>
-      </positionableLines>
-    </FkGl>
-    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.guia_wrh_pivot.fk_guia_wrh_pivot_guia_hija" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
-      <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="2361" x2="2205" y1="111" y2="111"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="2739" x2="2865" y1="111" y2="111"/>
       </positionableLines>
     </FkGl>
     <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.guia_wrh_pivot.fk_guia_wrh_pivot_maestra_multiple_embarque" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="3350" x2="3350" y1="409" y2="94"/>
-        <positionableLine lineRole="CHILD_LINE" x1="2205" x2="3346" y1="90" y2="90"/>
+        <positionableLine lineRole="PARENT_LINE" x1="3350" x2="3350" y1="1721" y2="78"/>
+        <positionableLine lineRole="CHILD_LINE" x1="3126" x2="3346" y1="74" y2="74"/>
       </positionableLines>
     </FkGl>
     <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.guia_wrh_pivot.fk_guia_wrh_pivot_maestra_multiple_grupo" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="3315" x2="3315" y1="409" y2="114"/>
-        <positionableLine lineRole="CHILD_LINE" x1="2205" x2="3311" y1="110" y2="110"/>
+        <positionableLine lineRole="PARENT_LINE" x1="3308" x2="3308" y1="1721" y2="102"/>
+        <positionableLine lineRole="CHILD_LINE" x1="3126" x2="3304" y1="98" y2="98"/>
       </positionableLines>
     </FkGl>
     <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.guia_wrh_pivot.fk_guia_wrh_pivot_maestra_multiple_pago" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="3280" x2="3280" y1="409" y2="134"/>
-        <positionableLine lineRole="CHILD_LINE" x1="2205" x2="3276" y1="130" y2="130"/>
+        <positionableLine lineRole="PARENT_LINE" x1="3266" x2="3266" y1="1721" y2="126"/>
+        <positionableLine lineRole="CHILD_LINE" x1="3126" x2="3262" y1="122" y2="122"/>
       </positionableLines>
     </FkGl>
     <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.guia_wrh_pivot.fk_guia_wrh_pivot_maestra_multiple_tipo_pago" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="3245" x2="3245" y1="409" y2="154"/>
-        <positionableLine lineRole="CHILD_LINE" x1="2205" x2="3241" y1="150" y2="150"/>
+        <positionableLine lineRole="PARENT_LINE" x1="3224" x2="3224" y1="1721" y2="150"/>
+        <positionableLine lineRole="CHILD_LINE" x1="3126" x2="3220" y1="146" y2="146"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.guia_wrh_pivot.fk_guia_wrh_pivot_servicios" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.guia_wrh_pivot.fk_guia_wrh_pivot_servicios" parentEdge="NORTH" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="1858" x2="1944" y1="111" y2="111"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="2972" x2="2972" y1="1721" y2="190"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.impuesto_hijas.fk_impuesto_hijas_guia_hija" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.impuesto_hijas.fk_impuesto_hijas_guia_hija" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="2403" x2="2403" y1="520" y2="641"/>
-        <positionableLine lineRole="CHILD_LINE" x1="2275" x2="2399" y1="645" y2="645"/>
+        <positionableLine lineRole="PARENT_LINE" x1="2648" x2="2648" y1="520" y2="699"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2825" x2="2652" y1="703" y2="703"/>
       </positionableLines>
     </FkGl>
     <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.impuesto_master.fk_impuesto_master_master" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="810" x2="714" y1="2251" y2="2251"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="770" x2="714" y1="1752" y2="1752"/>
       </positionableLines>
     </FkGl>
     <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.localizacion.fk_localizacion_deptos" parentEdge="EAST" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="1517" x2="1722" y1="2764" y2="2764"/>
-        <positionableLine lineRole="CHILD_LINE" x1="1726" x2="1726" y1="2182" y2="2760"/>
+        <positionableLine lineRole="PARENT_LINE" x1="1527" x2="1732" y1="2343" y2="2343"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1736" x2="1736" y1="1697" y2="2339"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.log_activities.fk_log_activities_users" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.log_activities.fk_log_activities_users" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="2178" x2="2178" y1="897" y2="1045"/>
-        <positionableLine lineRole="CHILD_LINE" x1="1919" x2="2174" y1="1049" y2="1049"/>
+        <positionableLine lineRole="PARENT_LINE" x1="2936" x2="2936" y1="955" y2="1231"/>
+        <positionableLine lineRole="CHILD_LINE" x1="3181" x2="2940" y1="1235" y2="1235"/>
       </positionableLines>
     </FkGl>
     <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.maestra_multiple.fk_maestra_multiple_modulo" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="3523" x2="3437" y1="462" y2="462"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="3495" x2="3409" y1="1774" y2="1774"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.mail_chimp.fk_mail_chimp_agencia" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.mail_chimp.fk_mail_chimp_agencia" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="1935" x2="1799" y1="1325" y2="1325"/>
+        <positionableLine lineRole="PARENT_LINE" x1="2202" x2="2202" y1="420" y2="1943"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2431" x2="2206" y1="1947" y2="1947"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.mail_chimp_list.fk_mail_chimp_list_mail_chimp" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.mail_chimp_list.fk_mail_chimp_list_mail_chimp" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="1559" x2="1473" y1="1325" y2="1325"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="2671" x2="2757" y1="1947" y2="1947"/>
       </positionableLines>
     </FkGl>
     <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.master.fk_master_aerolineas" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="1257" x2="1161" y1="2103" y2="2103"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="1267" x2="1121" y1="1618" y2="1618"/>
       </positionableLines>
     </FkGl>
     <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.master.fk_master_aerolineas_aeropuertos_aeropuertos" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="1257" x2="1161" y1="2103" y2="2103"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="1267" x2="1121" y1="1618" y2="1618"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.master_cargos_adicionales.fk_cargos_adicionales_master" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="770" x2="724" y1="1880" y2="1880"/>
       </positionableLines>
     </FkGl>
     <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.master_detalle.fk_master_detalle_master" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="810" x2="724" y1="2419" y2="2419"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="770" x2="734" y1="1999" y2="1999"/>
       </positionableLines>
     </FkGl>
     <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.payu.fk_payu_agencia" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="2003" x2="2003" y1="1506" y2="1562"/>
-        <positionableLine lineRole="CHILD_LINE" x1="1819" x2="1999" y1="1566" y2="1566"/>
+        <positionableLine lineRole="PARENT_LINE" x1="2022" x2="2022" y1="420" y2="1333"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1829" x2="2018" y1="1337" y2="1337"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.permission_role.fk_permission_role_permissions" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.permission_role.fk_permission_role_permissions" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="1339" x2="1253" y1="916" y2="916"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="3771" x2="3857" y1="974" y2="974"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.permission_role.fk_permission_role_roles" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.permission_role.fk_permission_role_roles" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="1464" x2="1464" y1="867" y2="900"/>
-        <positionableLine lineRole="CHILD_LINE" x1="1253" x2="1460" y1="904" y2="904"/>
+        <positionableLine lineRole="PARENT_LINE" x1="3646" x2="3646" y1="925" y2="958"/>
+        <positionableLine lineRole="CHILD_LINE" x1="3857" x2="3650" y1="962" y2="962"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.permission_user.fk_permission_user_permissions" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.permission_user.fk_permission_user_permissions" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="1581" x2="1667" y1="916" y2="916"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="3529" x2="3443" y1="974" y2="974"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.permission_user.fk_permission_user_users" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.permission_user.fk_permission_user_users" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="2100" x2="2100" y1="897" y2="912"/>
-        <positionableLine lineRole="CHILD_LINE" x1="1909" x2="2096" y1="916" y2="916"/>
+        <positionableLine lineRole="PARENT_LINE" x1="3030" x2="3030" y1="955" y2="970"/>
+        <positionableLine lineRole="CHILD_LINE" x1="3201" x2="3034" y1="974" y2="974"/>
       </positionableLines>
     </FkGl>
     <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.plantillas_correo.fk_plantillas_correo_agencia" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="2054" x2="2054" y1="1506" y2="1695"/>
-        <positionableLine lineRole="CHILD_LINE" x1="1829" x2="2050" y1="1699" y2="1699"/>
+        <positionableLine lineRole="PARENT_LINE" x1="2052" x2="2052" y1="420" y2="1471"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1839" x2="2048" y1="1475" y2="1475"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.prealerta.fk_prealerta_agencia" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.prealerta.fk_prealerta_agencia" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="2105" x2="2105" y1="1506" y2="1843"/>
-        <positionableLine lineRole="CHILD_LINE" x1="1839" x2="2101" y1="1847" y2="1847"/>
+        <positionableLine lineRole="PARENT_LINE" x1="2142" x2="2142" y1="420" y2="2254"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2381" x2="2146" y1="2258" y2="2258"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.reporte_carga.fk_reporte_carga_agencia" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.reporte_carga.fk_reporte_carga_agencia" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="2054" x2="2054" y1="1119" y2="428"/>
-        <positionableLine lineRole="CHILD_LINE" x1="1893" x2="2050" y1="424" y2="424"/>
+        <positionableLine lineRole="PARENT_LINE" x1="2172" x2="2172" y1="420" y2="2064"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2421" x2="2176" y1="2068" y2="2068"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.reporte_carga.fk_reporte_carga_usuario" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.reporte_carga.fk_reporte_carga_usuario" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="2100" x2="2100" y1="730" y2="340"/>
-        <positionableLine lineRole="CHILD_LINE" x1="1893" x2="2096" y1="336" y2="336"/>
+        <positionableLine lineRole="PARENT_LINE" x1="2889" x2="2889" y1="955" y2="2086"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2715" x2="2885" y1="2090" y2="2090"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.reporte_carga_detalle.fk_reporte_carga_detalle_consignee" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.reporte_carga_detalle.fk_reporte_carga_detalle_consignee" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="2816" x2="2816" y1="1272" y2="468"/>
-        <positionableLine lineRole="CHILD_LINE" x1="2255" x2="2812" y1="464" y2="464"/>
+        <positionableLine lineRole="PARENT_LINE" x1="1536" x2="1536" y1="583" y2="676"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1370" x2="1532" y1="680" y2="680"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.reporte_carga_detalle.fk_reporte_carga_detalle_guia_hija" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.reporte_carga_detalle.fk_reporte_carga_detalle_guia_hija" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="2361" x2="2255" y1="419" y2="419"/>
+        <positionableLine lineRole="PARENT_LINE" x1="2504" x2="2504" y1="520" y2="740"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1370" x2="2500" y1="744" y2="744"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.reporte_carga_detalle.fk_reporte_carga_detalle_reporte_carga" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.reporte_carga_detalle.fk_reporte_carga_detalle_reporte_carga" parentEdge="WEST" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="1893" x2="1979" y1="402" y2="402"/>
+        <positionableLine lineRole="PARENT_LINE" x1="2421" x2="1275" y1="2112" y2="2112"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1271" x2="1271" y1="826" y2="2108"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.reporte_carga_detalle.fk_reporte_carga_detalle_shipper" parentEdge="NORTH" positioner="OneLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="SOUTH" nm="schemaA.reporte_carga_detalle.fk_reporte_carga_detalle_shipper" parentEdge="WEST" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="2118" x2="2118" y1="2834" y2="546"/>
+        <positionableLine lineRole="PARENT_LINE" x1="2825" x2="1195" y1="1505" y2="1505"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1191" x2="1191" y1="826" y2="1501"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.role_user.fk_role_user_roles" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.role_user.fk_role_user_roles" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="1585" x2="1671" y1="783" y2="783"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="3525" x2="3439" y1="841" y2="841"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.role_user.fk_role_user_users" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.role_user.fk_role_user_users" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="2005" x2="1899" y1="783" y2="783"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="3095" x2="3211" y1="841" y2="841"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.servicios.fk_servicios_maestra_multiple" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.servicios.fk_servicios_maestra_multiple" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="3385" x2="3385" y1="409" y2="148"/>
-        <positionableLine lineRole="CHILD_LINE" x1="1858" x2="3381" y1="144" y2="144"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="3165" x2="3079" y1="1784" y2="1784"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.shipper_consignee.fk_shipper_consignee_consignee" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.shipper_consignee.fk_shipper_consignee_consignee" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="3028" x2="3124" y1="1325" y2="1325"/>
+        <positionableLine lineRole="PARENT_LINE" x1="1579" x2="1579" y1="583" y2="859"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1380" x2="1575" y1="863" y2="863"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.shipper_consignee.fk_shipper_consignee_shipper" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.shipper_consignee.fk_shipper_consignee_shipper" parentEdge="NORTH" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="2171" x2="2171" y1="2834" y2="1341"/>
-        <positionableLine lineRole="CHILD_LINE" x1="3124" x2="2175" y1="1337" y2="1337"/>
+        <positionableLine lineRole="PARENT_LINE" x1="2971" x2="2971" y1="1488" y2="891"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1380" x2="2967" y1="887" y2="887"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.status_detalle.fk_status_detalle_guia_hija_detalle" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.status_detalle.fk_status_detalle_guia_hija_detalle" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="3107" x2="3203" y1="121" y2="121"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="1048" x2="962" y1="324" y2="324"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.status_detalle.fk_status_detalle_status" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.status_detalle.fk_status_detalle_status" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="3592" x2="3506" y1="96" y2="96"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="573" x2="659" y1="299" y2="299"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.tienda.fk_tienda_agencia" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.tienda.fk_tienda_agencia" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="PARENT_LINE" x1="2156" x2="2156" y1="1506" y2="1976"/>
-        <positionableLine lineRole="CHILD_LINE" x1="1849" x2="2152" y1="1980" y2="1980"/>
+        <positionableLine lineRole="PARENT_LINE" x1="2112" x2="2112" y1="420" y2="2387"/>
+        <positionableLine lineRole="CHILD_LINE" x1="2371" x2="2116" y1="2391" y2="2391"/>
       </positionableLines>
     </FkGl>
-    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.tracking.fk_tracking_consignee" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.tracking.fk_tracking_consignee" parentEdge="SOUTH" positioner="TwoLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="3028" x2="3114" y1="1453" y2="1453"/>
+        <positionableLine lineRole="PARENT_LINE" x1="1622" x2="1622" y1="583" y2="999"/>
+        <positionableLine lineRole="CHILD_LINE" x1="1390" x2="1618" y1="1003" y2="1003"/>
       </positionableLines>
     </FkGl>
     <Notes/>
     <Zones/>
   </Dgm>
-  <RnmMgr NxRnmId="2">
-    <RnmCh ObjCls="Column" ParCls="Table" ParNme="clientes" SupCls="Schema" SupNme="schemaA">
-      <Rnm id="1" nNm="id" oNm="Id"/>
+  <RnmMgr NxRnmId="13">
+    <RnmCh ObjCls="Table" ParCls="Schema" ParNme="schemaA" SupCls="" SupNme="">
+      <Rnm id="1" nNm="bill_lading" oNm="bill_landing"/>
+    </RnmCh>
+    <RnmCh ObjCls="Column" ParCls="Table" ParNme="bill_lading" SupCls="Schema" SupNme="schemaA">
+      <Rnm id="2" nNm="id" oNm="Id"/>
+    </RnmCh>
+    <RnmCh ObjCls="Column" ParCls="Table" ParNme="bill_lading" SupCls="Schema" SupNme="schemaA">
+      <Rnm id="3" nNm="num_bl" oNm="num_bill"/>
+    </RnmCh>
+    <RnmCh ObjCls="Column" ParCls="Table" ParNme="bill_lading_detail" SupCls="Schema" SupNme="schemaA">
+      <Rnm id="4" nNm="id" oNm="Id"/>
+    </RnmCh>
+    <RnmCh ObjCls="Column" ParCls="Table" ParNme="bill_lading_other_charges" SupCls="Schema" SupNme="schemaA">
+      <Rnm id="5" nNm="id" oNm="Id"/>
+    </RnmCh>
+    <RnmCh ObjCls="Column" ParCls="Table" ParNme="bill_parties" SupCls="Schema" SupNme="schemaA">
+      <Rnm id="6" nNm="id" oNm="Id"/>
+    </RnmCh>
+    <RnmCh ObjCls="Table" ParCls="Schema" ParNme="schemaA" SupCls="" SupNme="">
+      <Rnm id="8" nNm="bill_parties" oNm="parties"/>
+      <Rnm id="7" nNm="parties" oNm="exporter"/>
+    </RnmCh>
+    <RnmCh ObjCls="Column" ParCls="Table" ParNme="bill_lading" SupCls="Schema" SupNme="schemaA">
+      <Rnm id="9" nNm="exporter_id" oNm="bill_parties_id"/>
+    </RnmCh>
+    <RnmCh ObjCls="Column" ParCls="Table" ParNme="bill_lading_detail" SupCls="Schema" SupNme="schemaA">
+      <Rnm id="10" nNm="description" oNm="descripction"/>
+    </RnmCh>
+    <RnmCh ObjCls="Column" ParCls="Table" ParNme="bill_lading_other_charges" SupCls="Schema" SupNme="schemaA">
+      <Rnm id="11" nNm="ammount_cll" oNm="ammount"/>
+    </RnmCh>
+    <RnmCh ObjCls="Column" ParCls="Table" ParNme="bill_lading_other_charges" SupCls="Schema" SupNme="schemaA">
+      <Rnm id="12" nNm="ammount_pp" oNm="prepaid_collect"/>
     </RnmCh>
   </RnmMgr>
   <DbDocOptionMgr>
@@ -4019,8 +4397,5 @@ END IF</src>
   </OpenEditors>
   <TreePaths>
     <TreePath/>
-    <TreePath>/Schemas (1)</TreePath>
-    <TreePath>/Schemas (1)/schemaA</TreePath>
-    <TreePath>/Schemas (1)/schemaA/Tables (59)</TreePath>
   </TreePaths>
 </Db>
