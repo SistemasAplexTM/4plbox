@@ -4,13 +4,13 @@
 {{-- bread crumbs --}}
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Prealerta</h2>
+        <h2>@lang('general.pre_alert')</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#">Home</a>
+                <a href="#">@lang('general.home')</a>
             </li>
             <li class="active">
-                <strong>Prealerta</strong>
+                <strong>@lang('general.pre_alert')</strong>
             </li>
         </ol>
     </div>
@@ -22,7 +22,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Prealertas</h5>
+                    <h5>@lang('general.pre_alert')</h5>
                     <div class="ibox-tools">
 
                     </div>
@@ -33,14 +33,14 @@
                         <table id="tbl-prealerta" class="table table-striped table-hover table-bordered" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th>Tracking</th>
-                                    <th>Despachar</th>
-                                    <th>Consignee</th>
-                                    <th>Agencia</th>
-                                    <th>Contenido</th>
-                                    <th>Instrucción</th>
-                                    <th>Correo</th>
-                                    <th>Telefono</th>
+                                    <th>@lang('general.tracking')</th>
+                                    <th>@lang('general.pack_off')</th>
+                                    <th>@lang('general.consignee')</th>
+                                    <th>@lang('general.agency')</th>
+                                    <th>@lang('general.content')</th>
+                                    <th>@lang('general.instruction')</th>
+                                    <th>@lang('general.email')</th>
+                                    <th>@lang('general.phone')</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -48,14 +48,14 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Tracking</th>
-                                    <th>Despachar</th>
-                                    <th>Consignee</th>
-                                    <th>Agencia</th>
-                                    <th>Contenido</th>
-                                    <th>Instrucción</th>
-                                    <th>Correo</th>
-                                    <th>Telefono</th>
+                                    <th>@lang('general.tracking')</th>
+                                    <th>@lang('general.pack_off')</th>
+                                    <th>@lang('general.consignee')</th>
+                                    <th>@lang('general.agency')</th>
+                                    <th>@lang('general.content')</th>
+                                    <th>@lang('general.instruction')</th>
+                                    <th>@lang('general.email')</th>
+                                    <th>@lang('general.phone')</th>
                                 </tr>
                             </tfoot>
                         </table>

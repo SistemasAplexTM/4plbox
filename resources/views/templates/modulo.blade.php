@@ -4,13 +4,13 @@
 {{-- bread crumbs --}}
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Modulos</h2>
+        <h2>@lang('general.modules')</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#">Home</a>
+                <a href="#">@lang('general.existing_records')</a>
             </li>
             <li class="active">
-                <strong>Modulos</strong>
+                <strong>@lang('general.modules')</strong>
             </li>
         </ol>
     </div>
@@ -23,7 +23,7 @@
             <div class="col-lg-5">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Registro de Modulos</h5>
+                        <h5>@lang('general.register_of_modules')</h5>
                         <div class="ibox-tools">
                             
                         </div>
@@ -35,11 +35,11 @@
                                 <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.nombre}">
                                         <div class="col-sm-4">
-                                            <label for="nombre" class="control-label gcore-label-top">Nombre:</label>
+                                            <label for="nombre" class="control-label gcore-label-top">@lang('general.name'):</label>
                                         </div>
                                         <div class="col-sm-8">
                                             <input v-model="nombre" name="nombre[]" id="nombre" value="" placeholder="" class="form-control" type="text" @click="deleteError('nombre')" />
-                                            <small id="msn1" class="help-block result-nombre" v-show="listErrors.nombre">* Campo obligatorio</small>
+                                            <small id="msn1" class="help-block result-nombre" v-show="listErrors.nombre">@lang('general.obligatory_field')</small>
                                         </div>
                                     </div>
                                 </div>
@@ -56,7 +56,7 @@
         <div class="col-lg-7">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Modulos</h5>
+                    <h5>@lang('general.modules')</h5>
                     <div class="ibox-tools">
 
                     </div>
@@ -67,8 +67,8 @@
                         <table id="tbl-modulo" class="table table-striped table-hover table-bordered" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th>nombre</th>
-                                    <th>Acciones</th>
+                                    <th>@lang('general.name')<</th>
+                                    <th>@lang('general.actions')<</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -76,8 +76,8 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>nombre</th>
-                                    <th>Acciones</th>
+                                    <th>@lang('general.name')<</th>
+                                    <th>@lang('general.actions')<</th>
                                 </tr>
                             </tfoot>
                         </table>

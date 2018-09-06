@@ -9,7 +9,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Rastreo | 4plbox</title>
+    <title>@lang('general.tracking') | 4plbox</title>
 
     <!-- Styles -->
     <link href="{{ asset('css/plantilla.css') }}" rel="stylesheet">
@@ -60,8 +60,8 @@
             <div class="wrapper wrapper-content animated fadeInRight" id="rastreo">
                 <div class="row" id="contenido">                    
                     <div class="col-lg-5 col-md-6" id="formulario">
-                        <h1>Rastrea tu mercancia</h1>
-                        <p>Ingrese el numero de tracking, warehouse o guia que desea rastrear.</p>
+                        <h1>@lang('general.track_your_merchandise')</h1>
+                        <p>@lang('general.enter_the_tracking')</p>
                         <form id="formRastreo" enctype="multipart/form-data" class="form-horizontal casillero_form" role="form" action="#" method="post">          
                             <div class="ibox float-e-margins">
                                 <div class="ibox-content gray-bg">
@@ -69,7 +69,7 @@
                                     <div class="row">   
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label class="control-label" for="codigo">Warehouse / Guia / Tracking </label>
+                                                <label class="control-label" for="codigo">@lang('general.warehouse_guide_tracking')</label>
                                                 <div class="input-group" :class="{ 'has-error': errors.has('codigo') }">
                                                     <input type="text" placeholder="Rastree su paquete aquí" class="form-control" name="codigo" v-model="codigo" v-validate.disabled="'required'">
                                                     <span class="input-group-btn">
@@ -84,9 +84,9 @@
                                     <div class="row">   
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>Peso: <span id="peso_label">@{{ peso_label }} Lbs</span></label>
-                                                <label> Tracking: <span id="tracking_label">@{{ tracking_label }}</span></label>
-                                                <div>Fecha entrega: <span id="fecha_label">@{{ fecha_entrega }}</span></div>
+                                                <label>@lang('general.weight'): <span id="peso_label">@{{ peso_label }} Lbs</span></label>
+                                                <label>@lang('general.tracking'): <span id="tracking_label">@{{ tracking_label }}</span></label>
+                                                <div>@lang('general.deliver_date'): <span id="fecha_label">@{{ fecha_entrega }}</span></div>
                                                 <div class="hr-line-dashed" style="border-top: 1px dashed #898d90;"></div>
                                             </div>
                                         </div>

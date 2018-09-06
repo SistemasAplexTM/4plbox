@@ -4,13 +4,13 @@
 {{-- bread crumbs --}}
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Clientes</h2>
+        <h2>@lang('general.customers')</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#">Home</a>
+                <a href="#">@lang('general.home')</a>
             </li>
             <li class="active">
-                <strong>Clientes</strong>
+                <strong>@lang('general.customers')</strong>
             </li>
         </ol>
     </div>
@@ -23,7 +23,7 @@
             <div class="col-lg-4">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Registro de clientes</h5>
+                        <h5>@lang('general.customer_registration')</h5>
                         <div class="ibox-tools">
                             
                         </div>
@@ -34,10 +34,10 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.nombre}">
                                         <div class="col-sm-4">
-                                            <label for="nombre" class="control-label gcore-label-top">Nombres:<samp id="require">*</samp></label>
+                                            <label for="nombre" class="control-label gcore-label-top">@lang('general.names'):<samp id="require">*</samp></label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="nombre" name="nombre" id="nombre" value="" placeholder="Nombre" class="form-control" type="text" style="" @click="deleteError('nombre')" />
+                                            <input v-model="nombre" name="nombre" id="nombre" value="" placeholder="Names" class="form-control" type="text" style="" @click="deleteError('nombre')" />
                                             <small id="msn1" class="help-block result-nombre" v-show="listErrors.nombre"></small>
                                         </div>
                                     </div>
@@ -47,7 +47,7 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.direccion}">
                                         <div class="col-sm-4">
-                                            <label for="direccion" class="control-label gcore-label-top">Dirección:<samp id="require">*</samp></label>
+                                            <label for="direccion" class="control-label gcore-label-top">@lang('general.address'):<samp id="require">*</samp></label>
                                         </div>
                                         <div class="col-sm-8">
                                             <input v-model="direccion" name="direccion" id="direccion" value="" placeholder="" class="form-control" type="text" style="" @click="deleteError('direccion')" />
@@ -60,7 +60,7 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.telefono}">
                                         <div class="col-sm-4">
-                                            <label for="telefono" class="control-label gcore-label-top">Teléfono:</label>
+                                            <label for="telefono" class="control-label gcore-label-top">@lang('general.phone'):</label>
                                         </div>
                                         <div class="col-sm-8">
                                             <input v-model="telefono" name="telefono" id="telefono" value="" placeholder="" class="form-control" type="text" style="" @click="deleteError('telefono')" />
@@ -73,7 +73,7 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.correo}">
                                         <div class="col-sm-4">
-                                            <label for="correo" class="control-label gcore-label-top">Correo:</label>
+                                            <label for="correo" class="control-label gcore-label-top">@lang('general.email')</label>
                                         </div>
                                         <div class="col-sm-8"  :class="{ 'has-error': errors.has('correo') }">
                                             <input v-model="correo" name="correo" id="correo" value="" placeholder="" class="form-control" type="text" style="" @click="deleteError('correo')" v-validate.disable="'unique'" />
@@ -87,7 +87,7 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.localizacion_id}">
                                         <div class="col-sm-4">
-                                            <label for="localizacion_id" class="control-label gcore-label-top">Ciudad:<samp id="require">*</samp></label>
+                                            <label for="localizacion_id" class="control-label gcore-label-top">@lang('general.city'):<samp id="require">*</samp></label>
                                         </div>
                                         <div class="col-sm-8">
                                             <input type="hidden" id="localizacion_id_input" value="">
@@ -104,7 +104,7 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.zona}">
                                         <div class="col-sm-4">
-                                            <label for="zona" class="control-label gcore-label-top">Zona:</label>
+                                            <label for="zona" class="control-label gcore-label-top">@lang('general.zone'):</label>
                                         </div>
                                         <div class="col-sm-8">
                                             <input v-model="zona" name="zona" id="zona" value="" placeholder="" class="form-control" type="text" style="" @click="deleteError('zona')" />
@@ -122,7 +122,7 @@
             <div class="col-lg-8">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Clientes</h5>
+                        <h5>@lang('general.customers')</h5>
                         <div class="ibox-tools">
 
                         </div>
@@ -133,12 +133,12 @@
                             <table id="tbl-clientes" class="table table-striped table-hover table-bordered" style="width: 100%;">
                                 <thead>
                                     <tr>
-                                        <th>Nombre</th> 
-                                        <th>Teléfono</th>
-                                        <th>Dirección</th>
-                                        <th>Ciudad</th>
-                                        <th>Zona</th>
-                                        <th>Acciones</th>
+                                        <th>@lang('general.name')</th> 
+                                        <th>@lang('general.phone')</th>
+                                        <th>@lang('general.address')</th>
+                                        <th>@lang('general.city')</th>
+                                        <th>@lang('general.zone')</th>
+                                        <th>@lang('general.actions')</th>
                                     </tr>
                                 </thead>
                             </table>
