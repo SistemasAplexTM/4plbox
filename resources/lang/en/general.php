@@ -207,4 +207,58 @@ return [
     'yes'=>'Yes',
     'not'=>'Not',
 
+    //resources/views/template/statusReport
+
+    'report_status'=>'Report status',
+    'register_report'=>'Register report',
+    'conveyor'=>'conveyor',
+    'conveyor_number'=>'Conveyor Number',
+    'guide'=>'Guide',
+    'observation'=>'Observation',
+    'list_of_status'=>'List of status',
+    'user'=>'User',
+    'consolidated'=>'Consolidated',
+
+    //resources/views/template/tipoDocumento
+
+    'types_of_documents'=>'Types of documents',
+    'record_type_of_document'=>'Record type of document',
+    'icon'=>'Icon',
+    'mail_template'=>'Mail template',
+    'initial_consecutive'=>'Initial consecutive',
+    'security_settings'=>'Security settings',
+    'select_the_credentials'=>'Select the credentials that may use this document *',
+    'select_the_additional_functionalities'=>'Select the additional functionalities of the document (optional)',
+
+     //resources/views/template/tracking
+
+     'track_record'=>'Track record',
+     'registered_tracking'=>'Registered Tracking',
+     'office'=>'Office',
+
+     //resources/views/template/transport
+
+     'register_of'=>'Register of',
+     'code'=>'Code',
+
+    //resources/views/template/transportador
+    
+    'transported'=>'Transported',
+    'registration_of_transported'=>'Registration of transported',
+    'contact'=>'Contact',
+    'state_dpto'=>'State / Dpto',
+    'carrier'=>'Carrier',
+    'transporters'=>'Transporters',
+
+    //resources/views/template/user
+
+    'users'=>'Users',
+    'user_registration'=>'User Registration',
+    'change_password'=>'Change password',
+    'password'=>'Password',
+    'confirm_password'=>'Confirm password',
+    'role'=>'Role',
+    'activated'=>'Activated',
+    'credential'=>'Credential',
+     
 ];

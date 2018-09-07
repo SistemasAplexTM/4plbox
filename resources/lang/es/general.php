@@ -201,6 +201,58 @@ return [
     'yes'=>'Sí',
     'not'=>'No',
 
+    //resources/views/template/statusReport
+    
+    'report_status'=>'Reportar estatus',
+    'register_report'=>' Registrar reporte',
+    'conveyor'=>'Transportadora',
+    'conveyor_number'=>'Número Transportadorar',
+    'guide'=>'Guía',
+    'observation'=>'Observación',
+    'list_of_status'=>'Listado de estatus',
+    'user'=>'Usuario',
+    'consolidated'=>'  Consolidado',
 
+    //resources/views/template/tipoDocumento
 
+    'types_of_documents'=>'Tipos de documentos',
+    'record_type_of_document'=>'Registro tipo de documento',
+    'icon'=>'Icono',
+    'mail_template'=>'Plantilla de correo',
+    'initial_consecutive'=>'Consecutivo inicial',
+    'security_settings'=>'Configuración de seguridad',
+    'select_the_credentials'=>'Seleccione las credenciales que podrán utilizar este documento *',
+    'select_the_additional_functionalities'=>'Seleccione las funcionalidades adicionales del documento (opcional)',
+  
+    //resources/views/template/tracking
+    
+    'track_record'=>'Registro de rastreo',
+    'registered_tracking'=>'Rastreo registrado',
+    'office'=>'Despacho',
+
+    //resources/views/template/transport
+
+    'register_of'=>'Registro de ',
+    'code'=>'Código',
+
+    
+    //resources/views/template/transportador
+    
+    'transported'=>'Transportador',
+    'registration_of_transported'=>'Registro de transportado',
+    'contact'=>'Contacto',
+    'state_dpto'=>'Estado / Dpto',
+    'carrier'=>'Portador',
+    'transporters'=>'Transportadores',
+
+    //resources/views/template/user
+
+    'users'=>'Usuarios',
+    'user_registration'=>'Registro de usuarios',
+    'change_password'=>'cambiar contraseña',
+    'password'=>'Contraseña',
+    'confirm_password'=>'Confirme contraseña',
+    'role'=>'Rol',
+    'activated'=>'Activado',
+    'credential'=>'Credencial',
 ];

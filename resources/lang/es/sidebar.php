@@ -6,7 +6,7 @@ return [
     'profile' => 'Perfil',
     'load' => 'Carga',
     'documents' => 'Documentos',
-    'trackings_receipt' => 'Recibo de trackings',
+    'trackings_receipt' => 'Recibo de rastreo',
     'master_guide' => 'Guías master',
     'bill_of_lading'=>'Bill of lading',
     'account'=>'Cuentas',

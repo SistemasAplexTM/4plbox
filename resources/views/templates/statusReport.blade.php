@@ -5,17 +5,17 @@
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
         <h2>
-            Reportar estatus
+            @lang('general.report_status')
         </h2>
         <ol class="breadcrumb">
             <li>
                 <a href="#">
-                    Home
+                   @lang('general.home')
                 </a>
             </li>
             <li class="active">
                 <strong>
-                    Reportar estatus
+                    @lang('general.report_status')
                 </strong>
             </li>
         </ol>
@@ -58,7 +58,7 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>
-                        Registrar reporte
+                       @lang('general.register_report')
                     </h5>
                     <div class="ibox-tools">
                     </div>
@@ -71,14 +71,14 @@
                                 <div :class="{'has-error': listErrors.status_id}" class="form-group">
                                     <div class="col-sm-4">
                                         <label class="control-label gcore-label-top" for="status_id">
-                                            Estatus:
+                                           @lang('general.status'):
                                         </label>
                                     </div>
                                     <div class="col-sm-8">
                                         <v-select :on-change="setTransport" :options="status" @click="deleteError('status_id')" @focus="deleteError('status_id')" label="name" name="status_id" placeholder="Estatus" v-model="status_id">
                                         </v-select>
                                         <small class="help-block result-status_id" id="msn1" v-show="listErrors.status_id">
-                                            * Campo obligatorio
+                                              @lang('general.obligatory_field')
                                         </small>
                                     </div>
                                 </div>
@@ -91,13 +91,13 @@
                                 <div :class="{'has-error': listErrors.transportadora}" class="form-group">
                                     <div class="col-sm-4">
                                         <label class="control-label gcore-label-top" for="transportadora">
-                                            Transportadora:
+                                            @lang('general.conveyor'):
                                         </label>
                                     </div>
                                     <div class="col-sm-8">
                                         <input @click="deleteError('transportadora')" @focus="deleteError('transportadora')" class="form-control" id="transportadora" name="transportadora" placeholder="" style="" type="text" v-model="transportadora" value=""/>
                                         <small class="help-block result-transportadora" id="msn1" v-show="listErrors.transportadora">
-                                            * Campo obligatorio
+                                            @lang('general.obligatory_field')
                                         </small>
                                     </div>
                                 </div>
@@ -108,13 +108,13 @@
                                 <div :class="{'has-error': listErrors.num_transportadora}" class="form-group">
                                     <div class="col-sm-4">
                                         <label class="control-label gcore-label-top" for="num_transportadora">
-                                            Numero Transportadora:
+                                          @lang('general.conveyor_number')():
                                         </label>
                                     </div>
                                     <div class="col-sm-8">
                                         <input @click="deleteError('num_transportadora')" @focus="deleteError('num_transportadora')" class="form-control" id="num_transportadora" name="num_transportadora" placeholder="" style="" type="text" v-model="num_transportadora" value=""/>
                                         <small class="help-block result-num_transportadora" id="msn1" v-show="listErrors.num_transportadora">
-                                            * Campo obligatorio
+                                            @lang('general.obligatory_field')
                                         </small>
                                     </div>
                                 </div>
@@ -127,13 +127,13 @@
                                 <div :class="{'has-error': listErrors.codigo}" class="form-group">
                                     <div class="col-sm-4">
                                         <label class="control-label gcore-label-top" for="codigo">
-                                            # Guia / WRH:
+                                            # @lang('general.guide')/ WRH:
                                         </label>
                                     </div>
                                     <div class="col-sm-8">
                                         <input @click="deleteError('codigo')" @focus="deleteError('codigo')" class="form-control" id="codigo" name="codigo" placeholder="" style="" type="text" v-model="codigo" value=""/>
                                         <small class="help-block result-codigo" id="msn1" v-show="listErrors.codigo">
-                                            * Campo obligatorio
+                                            @lang('general.obligatory_field')
                                         </small>
                                     </div>
                                 </div>
@@ -146,7 +146,7 @@
                                 <div class="form-group">
                                     <div class="col-sm-4">
                                         <label class="control-label gcore-label-top" for="observacion">
-                                            Observación:
+                                          @lang('general.observation'):
                                         </label>
                                     </div>
                                     <div class="col-sm-8">
@@ -168,7 +168,7 @@
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <h5>
-                    Listado de estatus
+                 @lang('general.list_of_status')
                 </h5>
                 <div class="ibox-tools">
                 </div>
@@ -180,51 +180,51 @@
                         <thead>
                             <tr>
                                 <th>
-                                    Fecha
+                                 @lang('general.date')
                                 </th>
                                 <th>
-                                    Guia / WRH
+                                    @lang('general.guide') / WRH
                                 </th>
                                 <th>
-                                    Consolidado
+                                  @lang('general.consolidated')
                                 </th>
                                 <th>
-                                    Observación
+                                    @lang('general.observation')
                                 </th>
                                 <th>
-                                    Estatus
+                                    @lang('general.status')
                                 </th>
                                 <th>
-                                    Usuario
+                                   @lang('general.user')
                                 </th>
                                 <th>
-                                    Acciones
+                                   @lang('general.actions')
                                 </th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
                                 <th>
-                                    Fecha
-                                </th>
-                                <th>
-                                    Guia / WRH
-                                </th>
-                                <th>
-                                    Consolidado
-                                </th>
-                                <th>
-                                    Observación
-                                </th>
-                                <th>
-                                    Estatus
-                                </th>
-                                <th>
-                                    Usuario
-                                </th>
-                                <th>
-                                    Acciones
-                                </th>
+                                    @lang('general.date')
+                                   </th>
+                                   <th>
+                                       @lang('general.guide') / WRH
+                                   </th>
+                                   <th>
+                                     @lang('general.consolidated')
+                                   </th>
+                                   <th>
+                                       @lang('general.observation')
+                                   </th>
+                                   <th>
+                                       @lang('general.status')
+                                   </th>
+                                   <th>
+                                      @lang('general.user')
+                                   </th>
+                                   <th>
+                                      @lang('general.actions')
+                                   </th>
                             </tr>
                         </tfoot>
                     </table>
