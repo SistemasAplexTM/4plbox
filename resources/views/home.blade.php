@@ -4,7 +4,7 @@
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
         <h2>
-            Inicio
+            @lang('general.home')
         </h2>
     </div>
 </div>
@@ -37,7 +37,7 @@
                         <div class=" feed-activity-list">
                             <div class="feed-element">
                                 <h1>
-                                    Usuarios
+                                    @lang('general.users')
                                 </h1>
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                             </i>
                         </button>
                         <div style="font-size: 20px;">
-                            Warehouse
+                            @lang('general.warehouse')
                         </div>
                     </div>
                     <div class="col-lg-3 text-center">
@@ -70,7 +70,7 @@
                             </i>
                         </button>
                         <div style="font-size: 20px;">
-                            Tracking
+                           @lang('general.tracking')
                         </div>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
                             </i>
                         </button>
                         <div style="font-size: 20px;">
-                            Shipper
+                             @lang('general.shipper')
                         </div>
                     </div>
                     <div class="col-lg-3 text-center">
@@ -90,7 +90,7 @@
                             </i>
                         </button>
                         <div style="font-size: 20px;">
-                            Consignee
+                             @lang('general.consignee')
                         </div>
                     </div>
 
@@ -100,7 +100,7 @@
                             </i>
                         </button>
                         <div style="font-size: 20px;">
-                            Backup
+                            @lang('general.backup')
                         </div>
                     </div>
                 </div>

@@ -76,7 +76,7 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{ 'has-error': errors.has('name') }">
                                         <div class="col-sm-5">
-                                            <label for="name" class="control-label gcore-label-top">>@lang('general.name'):</label>
+                                            <label for="name" class="control-label gcore-label-top">@lang('general.name'):</label>
                                         </div>
                                         <div class="col-sm-7">
                                             <input v-model="name" name="name" placeholder="Nombre del usuario" class="form-control" type="text" v-validate.disable="mostrar_password ? 'required' : 'required'"/>
@@ -89,7 +89,7 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{ 'has-error': errors.has('email') }">
                                         <div class="col-sm-5">
-                                            <label for="email" class="control-label gcore-label-top">>@lang('general.email'):</label>
+                                            <label for="email" class="control-label gcore-label-top">@lang('general.email'):</label>
                                         </div>
                                         <div class="col-sm-7">
                                             <input v-model="email" name="email" placeholder="example@example.com" class="form-control" type="email" v-validate.disable="mostrar_password ? 'required|email|unique' : 'required|email'"/>

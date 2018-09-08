@@ -7,7 +7,7 @@
         <h2>Roles</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#">Home</a>
+                <a href="#">@lang('general.home')</a>
             </li>
             <li class="active">
                 <strong>Roles</strong>
@@ -22,7 +22,7 @@
             <div class="col-lg-7">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Registro de roles</h5>
+                        <h5>@lang('general.record_of_roles')</h5>
                         <div class="ibox-tools">
                             
                         </div>
@@ -33,7 +33,7 @@
                             <div class="col-lg-6">
                                     <div class="form-group" :class="{'has-error': listErrors.name}">
                                         <div class="col-sm-12">
-                                            <label for="name" class="control-label gcore-label-top">Nombre:</label>
+                                            <label for="name" class="control-label gcore-label-top">@lang('general.name'):</label>
                                             <input v-model="name" name="name" id="name" placeholder="Nombre del rol" class="form-control" type="text" v-validate.disable="'required'" v-on:keyup="slugGenerate()"/>
                                             <small class="help-block has-error" :class="{ 'small': errors.has('name') }">@{{ errors.first('name') }}</small>
                                         </div>
@@ -42,7 +42,7 @@
                             <div class="col-lg-6">
                                     <div class="form-group" :class="{'has-error': listErrors.slug}">
                                         <div class="col-sm-12">
-                                            <label for="slug" class="control-label gcore-label-top">Slug para la URL:</label>
+                                            <label for="slug" class="control-label gcore-label-top">@lang('general.slug_for_the_url'):</label>
                                             <input v-model="slug" name="slug" id="slug" placeholder="Slug" class="form-control" type="text" v-validate.disable="'required'"/>
                                             <small class="help-block has-error" :class="{ 'small': errors.has('slug') }">@{{ errors.first('slug') }}</small>
                                         </div>
@@ -53,7 +53,7 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.description}">
                                         <div class="col-sm-12">
-                                            <label for="description" class="control-label gcore-label-top">Descripción:</label>
+                                            <label for="description" class="control-label gcore-label-top">@lang('general.description'):</label>
                                             <input v-model="description" name="description" id="description" placeholder="Descripción del rol" class="form-control" type="text" />
                                             <small class="help-block has-error" :class="{ 'small': errors.has('description') }">@{{ errors.first('description') }}</small>
                                         </div>
@@ -82,8 +82,8 @@
 	                        <table id="tbl-rol" class="table table-striped table-hover table-bordered" style="width: 100%;">
 	                            <thead>
 	                                <tr>
-	                                    <th>Rol</th>
-	                                    <th>Acciones</th>
+	                                    <th>@lang('general.role')</th>
+	                                    <th>@lang('general.actions')</th>
 	                                </tr>
 	                            </thead>
 	                            <tbody>
@@ -91,8 +91,8 @@
 	                            </tbody>
 	                            <tfoot>
 	                                <tr>
-	                                    <th>Rol</th>
-	                                    <th>Acciones</th>
+	                                   <th>@lang('general.role')</th>
+                                        <th>@lang('general.actions')</th>
 	                                </tr>
 	                            </tfoot>
 	                        </table>

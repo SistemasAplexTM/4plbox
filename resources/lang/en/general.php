@@ -260,5 +260,34 @@ return [
     'role'=>'Role',
     'activated'=>'Activated',
     'credential'=>'Credential',
+
+
+    //home
+
+    'warehouse'=>'Warehouse',
+    'backup'=>'Backup', 
+
+    //logActivity
+    'users_logs'=>'users logs',
+    'action'=>'Action',
+    'list_of_activities_list'=>'List of activities list',
+    'method'=>'Method',
+    'user_agent'=>'User agent',
+    'access_control'=>'Access control',
+    'user_access_control'=>'User access control',
+    'special_permission'=>'Special permission',
+    'any'=>'Any',
+    'total_access'=>'Total Access',
+    'no_access'=>'No access',
+    'system_modules'=>'System modules',
+     'special_action_for_the_module'=>'Special action for the module',
+     'record_of_roles'=>'Record of roles',
+     'slug_for_the_url'=>'Slug for the URL',
+
+     //errors
+     'you_do_not_have_permits'=>'403 - You do not have permission to enter',
+     'go_to_home'=>'Go to home',
+     'action_does_not_exist'=>'404 - The module or the action does not exist',
+
      
 ];

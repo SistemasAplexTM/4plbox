@@ -5,7 +5,7 @@ return [
     //resources/views/templates/aerolineasInventario
 
     'airline_inventory'=>'Inventario de aerolíneas',
-    'home'=>'Casa',
+    'home'=>'Inicio',
     'airline_inventory_record'=>'Registro de inventario de aerolínea',
     'airline'=>'Aerolínea:',
     'quantity'=>'Cantidad:',
@@ -255,4 +255,34 @@ return [
     'role'=>'Rol',
     'activated'=>'Activado',
     'credential'=>'Credencial',
+
+    //home
+
+    'warehouse'=>'Almacén',
+    'backup'=>'Apoyo', 
+
+    //logActivity
+    'users_logs'=>'Registros de usuarios',
+    'action'=>'Acción',
+    'list_of_activities_list'=>'Registro de lista de actividades',
+    'method'=>'Método',
+    'user_agent'=>'Agente de usuario',
+
+    //permissions
+    'access_control'=>' Control de acceso',
+    'user_access_control'=>'Control de acceso de usuarios',
+    'special_permission'=>'Permiso especial',
+    'any'=>'Ninguno',
+    'total_access'=>'Acceso total',
+    'no_access'=>'Sin acceso',
+    'system_modules'=>'Módulos del sistema',
+    'special_action_for_the_module'=>'Acción especial para el modulo',
+    'record_of_roles'=>'Registro de roles',
+    'slug_for_the_url'=>'Slug para la URL',
+    'you_do_not_have_permits'=>'403 - No tienes permisos para entrar',
+     'go_to_home'=>'Ir al home',
+     'action_does_not_exist'=>'404 - El modulo o la acción no existe',
+
+
+
 ];
