@@ -4,13 +4,13 @@
 {{-- bread crumbs --}}
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Tracking</h2>
+        <h2>@lang('general.tracking')</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#">Home</a>
+                <a href="#">@lang('general.home')</a>
             </li>
             <li class="active">
-                <strong>Tracking</strong>
+                <strong>@lang('general.tracking')</strong>
             </li>
         </ol>
     </div>
@@ -52,7 +52,7 @@
             <div class="col-lg-4">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Registro de tracking</h5>
+                        <h5>@lang('general.track_record')</h5>
                         <div class="ibox-tools">
                             
                         </div>
@@ -63,7 +63,7 @@
                             <div class="col-lg-12">
                                 <div class="form-group" :class="{ 'has-error': errors.has('tracking') }">
                                     <div class="col-sm-4">
-                                        <label for="tracking" class="control-label gcore-label-top">Tracking:</label>
+                                        <label for="tracking" class="control-label gcore-label-top">@lang('general.tracking'):</label>
                                     </div>
                                     <div class="col-sm-8">
 	                                    <input class="form-control" name="tracking" placeholder="Numero de tracking" type="text" v-model="tracking" v-validate.disable="'required|unique'" v-on:keyup.enter="searchTracking()">
@@ -78,7 +78,7 @@
                             <div class="col-lg-12">
                                 <div class="form-group" :class="{ 'has-error': errors.has('contenido') }">
                                     <div class="col-sm-4">
-                                        <label for="contenido" class="control-label gcore-label-top">Contenido:</label>
+                                        <label for="contenido" class="control-label gcore-label-top">@lang('general.content'):</label>
                                     </div>
                                     <div class="col-sm-8">
                                         <input class="form-control" name="contenido" placeholder="Contenido" type="text" v-model="contenido" v-validate.disable="'required'">
@@ -93,7 +93,7 @@
                             <div class="col-lg-12">
                                 <div class="form-group" :class="{ 'has-error': errors.has('consignee_id') }">
                                     <div class="col-sm-4">
-                                        <label for="consignee_id" class="control-label gcore-label-top">Cliente:</label>
+                                        <label for="consignee_id" class="control-label gcore-label-top">@lang('general.client'):</label>
                                     </div>
                                     <div class="col-sm-8">
                                         <v-select name="consignee_id" :options="consignees" placeholder="Cliente" label="name" v-model="consignee_id" v-validate.disable="'required'">
@@ -111,8 +111,8 @@
                                     <div class="col-sm-12">
                                         <div class="alert alert-info alert-dismissible" role="alert" id="msn_sendmail" style="margin-bottom: 0px;">
                                           <button type="button" class="close" data-dismiss="alert" aria-label="Close" id="icon_close"><span aria-hidden="true">&times;</span></button>
-                                          <strong>Instrucción:</strong> @{{ instruccion }}<br>
-                                          <strong>Email:</strong> @{{ email }}
+                                          <strong>@lang('genral.instruction'):</strong> @{{ instruccion }}<br>
+                                          <strong>@lang('general.email'):</strong> @{{ email }}
                                         </div>
                                     </div>
                                 </div>
@@ -129,7 +129,7 @@
         <div class="col-lg-8">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Tracking registrados</h5>
+                    <h5>@lang('general.registered_tracking')</h5>
                     <div class="ibox-tools">
 
                     </div>
@@ -140,22 +140,22 @@
                         <table id="tbl-tracking" class="table table-striped table-hover table-bordered" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th>Fecha</th>
-                                    <th>Cliente</th>
-                                    <th>Tracking</th>
-                                    <th>Contenido</th>
-                                    <th>Despacho</th>
-                                    <th>Acciones</th>
+                                    <th>@lang('general.date')</th>
+                                    <th>@lang('general.client')</th>
+                                    <th>@lang('general.tracking')</th>
+                                    <th>@lang('general.content')</th>
+                                    <th>@lang('general.office')</th>
+                                    <th>@lang('general.actions')</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th>Fecha</th>
-                                    <th>Cliente</th>
-                                    <th>Tracking</th>
-                                    <th>Contenido</th>
-                                    <th>Despacho</th>
-                                    <th>Acciones</th>
+                                    <th>@lang('general.date')</th>
+                                    <th>@lang('general.client')</th>
+                                    <th>@lang('general.tracking')</th>
+                                    <th>@lang('general.content')</th>
+                                    <th>@lang('general.office')</th>
+                                    <th>@lang('general.actions')</th>
                                 </tr>
                             </tfoot>
                         </table>

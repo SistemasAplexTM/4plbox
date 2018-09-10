@@ -5,7 +5,7 @@ return [
     //resources/views/templates/aerolineasInventario
 
     'airline_inventory'=>'Inventario de aerolíneas',
-    'home'=>'Casa',
+    'home'=>'Inicio',
     'airline_inventory_record'=>'Registro de inventario de aerolínea',
     'airline'=>'Aerolínea:',
     'quantity'=>'Cantidad:',
@@ -20,14 +20,14 @@ return [
     'registration_data'=>'Datos de registro', 
     'integrations'=>'Integraciones',
     'url_public'=>'Url publicas',
-    'name'=>'Nombre:',
+    'name'=>'Nombre',
     'agency_registration'=>'Registro de agencias',
     'responsable'=>'Responsable:',
-    'address'=>'Dirección:',
-    'phone'=>'Teléfono:',
+    'address'=>'Dirección',
+    'phone'=>'Teléfono',
     'city'=>'Ciudad',
     'zip_code'=>'Cd postal:',
-    'email'=>'Correo:',
+    'email'=>'Correo',
     'url_terms'=>'Url términos:',
     'service'=>'Servicio',
     'select'=>'Seleccione',
@@ -78,21 +78,210 @@ return [
     'create_locker'=>' Crear casillero',
 
     //resources/views/templates/ciudad
-
+    
     'cities'=>'Ciudades',
     'registration_of_cities'=>'Registro de ciudades',
     'department_state'=>'Dpto/Estado',
     'prefix'=>'Prefijo',
     'department'=>'Departamento',
 
+    //resources/views/templates/clientes
     
+    'customers'=>'Clientes',
+    'customer_registration'=>'Registro de clientes',
+    'names'=>'Nombres',
+    'zone'=>'Zona',
+
+    //resources/views/templates/consignee
+
+    'consignee'=>'Destinatario',
+    'record_of_consignee'=>'Registro de destinatario',
+    'agency'=>'Agencia',
+    'identification_type'=>'Tipo identificación',
+    'document'=>'Documento',
+    'second_name'=>'Segundo nombre',
+    'surnames'=>'Apellidos',
+    'second_surname'=>'Segundo apellido',
+    'code_zip'=>'Cód ZIP',
+    'client'=>'Cliente',
+    'send_email'=>'Enviar Email',
+    'send_email_with_data'=>' Enviar email con datos de su casillero.',
 
 
+    //resources/views/templates/consulta
+
+    'consult'=>'Consultar',
+    'consult_data_shipper-consignee'=>'Consultar datos (remitente-destinatario)',
+    'since_until'=>'Desde-Hasta',
+    'shipper'=>'Remitente',
+    'search'=>'Buscar',
+    'receipt'=>'Recibo',
+    'date'=>'Fecha',
+    'boxes'=>'Cajas',
+    'weight'=>'Peso',
+    'volume'=>'Volumen',
+    'totals'=>'Totales',
+
+   //resources/views/templates/departamento
+
+    'departments'=>'Departamentos',
+    'registration_of_departments'=>'Registro de departamentos',
+    'description'=>'Descripción',
+
+   //resources/views/templates/emailTemplate
+
+    'email_templates'=>' Plantillas Email',
+    'email_templates_registration'=>'Registro de Plantillas Email',
+    'subject'=>'Tema',
+    'recipients'=>'Destinatario',
+    'send_attached_document'=>'Enviar documento adjunto en el email',
+    'table'=>'Tabla',
+    'document_data'=>'Datos documento',
+    'data_shipper'=>'Datos remitente',
+    'data_consignee'=>'Datos destinatarios',
+    'signature_data_agency'=>'Datos firma - Agencia',
+    'data_detail_message'=>'Datos Detalle mensaje',
+
+    //resources/views/template/maestraMultiple
+
+    'register_of'=>'Registro de',
+    'existing_records'=>'Registros existentes',
+
+
+    //resources/views/template/modulo
+
+    'modules'=>'Módulos',
+    'register_of_modules'=>'Registro de Módulos',
+
+    //resources/views/template/pais
+
+    'country_registration'=>'Registro de país',
+    'countries'=>'Países',
+
+    //resources/views/template/prealerta
+
+    'pre_alert'=>'Pre alerta',
+    'preview_your_shipment'=>'Prealerte su envío',
+    'enter_the_tracking_and_instruction'=>'Ingrese los tracking y la instrucción de envío de sus paquetes.',
+    'dispatch_immediately'=>'Despachar de inmediato',
+    'wait_until_you_decide'=>'Esperar hasta que decida ',
+
+    //resources/views/template/prealertalist
+
+    'instruction'=>'Instrucción',
+    'pack_off'=>'Despachar',
+    'content'=>'Contenido',
+
+    //resources/views/template/rastreo
+
+    'track_your_merchandise'=>'Rastrea tu mercancía',
+    'enter_the_tracking'=>'Ingrese el numero de tracking, warehouse o guia que desea rastrear',
+    'warehouse_guide_tracking'=>'Almacén /Guía/ Seguimiento',
+    'deliver_date'=>'Fecha entrega',
+
+     //resources/views/template/resultSearch
+
+    'result_of_the_search'=>'Resultado de la búsqueda',
+
+    //resources/views/template/services
+    'services'=>'Services',
+    'registration_of _services'=>'Registro de Servicios',
+    'boarding_type'=>'Tipo embarque',
+    'minimum_fee'=>'Tarifa mínima',
+    'optional_charge'=>'Cobro opcional',
+    'tax'=>'Impuesto',
+    'collection_weight_volume'=>'Cobro Peso/Volumen',
+    'weight_volume'=>'Peso / Volumen',
 
     
+    //resources/views/template/shipper
+    'shipper_registration'=>'Registro de Shipper',
+    'status'=>'Estado',
+    'state_registration'=>'State registration',
+    'yes'=>'Sí',
+    'not'=>'No',
 
+    //resources/views/template/statusReport
+    
+    'report_status'=>'Reportar estatus',
+    'register_report'=>' Registrar reporte',
+    'conveyor'=>'Transportadora',
+    'conveyor_number'=>'Número Transportadorar',
+    'guide'=>'Guía',
+    'observation'=>'Observación',
+    'list_of_status'=>'Listado de estatus',
+    'user'=>'Usuario',
+    'consolidated'=>'  Consolidado',
+
+    //resources/views/template/tipoDocumento
+
+    'types_of_documents'=>'Tipos de documentos',
+    'record_type_of_document'=>'Registro tipo de documento',
+    'icon'=>'Icono',
+    'mail_template'=>'Plantilla de correo',
+    'initial_consecutive'=>'Consecutivo inicial',
+    'security_settings'=>'Configuración de seguridad',
+    'select_the_credentials'=>'Seleccione las credenciales que podrán utilizar este documento *',
+    'select_the_additional_functionalities'=>'Seleccione las funcionalidades adicionales del documento (opcional)',
+  
+    //resources/views/template/tracking
+    
+    'track_record'=>'Registro de rastreo',
+    'registered_tracking'=>'Rastreo registrado',
+    'office'=>'Despacho',
+
+    //resources/views/template/transport
+
+    'register_of'=>'Registro de ',
+    'code'=>'Código',
 
     
+    //resources/views/template/transportador
+    
+    'transported'=>'Transportador',
+    'registration_of_transported'=>'Registro de transportado',
+    'contact'=>'Contacto',
+    'state_dpto'=>'Estado / Dpto',
+    'carrier'=>'Portador',
+    'transporters'=>'Transportadores',
+
+    //resources/views/template/user
+
+    'users'=>'Usuarios',
+    'user_registration'=>'Registro de usuarios',
+    'change_password'=>'cambiar contraseña',
+    'password'=>'Contraseña',
+    'confirm_password'=>'Confirme contraseña',
+    'role'=>'Rol',
+    'activated'=>'Activado',
+    'credential'=>'Credencial',
+
+    //home
+
+    'warehouse'=>'Almacén',
+    'backup'=>'Apoyo', 
+
+    //logActivity
+    'users_logs'=>'Registros de usuarios',
+    'action'=>'Acción',
+    'list_of_activities_list'=>'Registro de lista de actividades',
+    'method'=>'Método',
+    'user_agent'=>'Agente de usuario',
+
+    //permissions
+    'access_control'=>' Control de acceso',
+    'user_access_control'=>'Control de acceso de usuarios',
+    'special_permission'=>'Permiso especial',
+    'any'=>'Ninguno',
+    'total_access'=>'Acceso total',
+    'no_access'=>'Sin acceso',
+    'system_modules'=>'Módulos del sistema',
+    'special_action_for_the_module'=>'Acción especial para el modulo',
+    'record_of_roles'=>'Registro de roles',
+    'slug_for_the_url'=>'Slug para la URL',
+    'you_do_not_have_permits'=>'403 - No tienes permisos para entrar',
+     'go_to_home'=>'Ir al home',
+     'action_does_not_exist'=>'404 - El modulo o la acción no existe',
 
 
 

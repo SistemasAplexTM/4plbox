@@ -4,13 +4,13 @@
 {{-- bread crumbs --}}
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Departamentos</h2>
+        <h2>@lang('general.departments')</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#">Home</a>
+                <a href="#">@lang('generel.home')</a>
             </li>
             <li class="active">
-                <strong>Departamentos</strong>
+                <strong>@lang('general.departments')</strong>
             </li>
         </ol>
     </div>
@@ -23,7 +23,7 @@
             <div class="col-lg-5">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Registro de departamentos</h5>
+                        <h5>@lang('general.registration_of_departments')</h5>
                         <div class="ibox-tools">
                             
                         </div>
@@ -35,7 +35,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.descripcion}">
                                         <div class="col-sm-4">
-                                            <label for="descripcion" class="control-label gcore-label-top">Descripcion:</label>
+                                            <label for="descripcion" class="control-label gcore-label-top">@lang('general.description'):</label>
                                         </div>
                                         <div class="col-sm-8">
                                             <input v-model="descripcion" name="descripcion[]" id="descripcion" value="" placeholder="" class="form-control" type="text" style="" @click="deleteError('descripcion')" />
@@ -50,7 +50,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.pais_id}">
                                         <div class="col-sm-4">
-                                            <label for="pais_id" class="control-label gcore-label-top">País:</label>
+                                            <label for="pais_id" class="control-label gcore-label-top">@lang('general.country'):</label>
                                         </div>
                                         <div class="col-sm-8">
                                             <input type="hidden" id="pais_id_input" value="">
@@ -73,7 +73,7 @@
         <div class="col-lg-7">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Departamentos</h5>
+                    <h5>@lang('general.departments')</h5>
                     <div class="ibox-tools">
 
                     </div>
@@ -84,9 +84,9 @@
                         <table id="tbl-departamento" class="table table-striped table-hover table-bordered" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th>Descripcion</th>
-                                    <th>País</th>
-                                    <th>Acciones</th>
+                                    <th>@lang('general.description')</th>
+                                    <th>@lang('general.country')</th>
+                                    <th>@lang('general.actions')</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -94,9 +94,9 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Descripcion</th>
-                                    <th>País</th>
-                                    <th>Acciones</th>
+                                    <th>@lang('general.description')</th>
+                                    <th>@lang('general.country')</th>
+                                    <th>@lang('general.actions')</th>
                                 </tr>
                             </tfoot>
                         </table>

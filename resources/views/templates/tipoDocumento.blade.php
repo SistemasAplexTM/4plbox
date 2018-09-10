@@ -4,13 +4,13 @@
 {{-- bread crumbs --}}
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Tipos de documentos</h2>
+        <h2>@lang('general.types_of_documents')</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#">Home</a>
+                <a href="#">@lang('general.home')</a>
             </li>
             <li class="active">
-                <strong>Tipos de documentos</strong>
+                <strong>@lang('general.types_of_documents')</strong>
             </li>
         </ol>
     </div>
@@ -58,7 +58,7 @@
             <div class="col-lg-5">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Registro tipo de documento</h5>
+                        <h5>@lang('general.record_type_of_document')</h5>
                         <div class="ibox-tools">
                             
                         </div>
@@ -69,11 +69,11 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.nombre}">
                                         <div class="col-sm-4">
-                                            <label for="nombre" class="control-label gcore-label-top">Nombre:</label>
+                                            <label for="nombre" class="control-label gcore-label-top">@lang('general.name'):</label>
                                         </div>
                                         <div class="col-sm-8">
                                             <input v-model="nombre" name="nombre" id="nombre" value="" placeholder="Tipo documento" class="form-control" type="text" @click="deleteError('nombre')" @focus="deleteError('nombre')" />
-                                            <small id="msn1" class="help-block result-nombre" v-show="listErrors.nombre">* Campo obligatorio</small>
+                                            <small id="msn1" class="help-block result-nombre" v-show="listErrors.nombre">@lang('general.obligatory_field')</small>
                                         </div>
                                     </div>
                             </div>
@@ -82,11 +82,11 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.prefijo}">
                                         <div class="col-sm-4">
-                                            <label for="prefijo" class="control-label gcore-label-top">Prefijo:</label>
+                                            <label for="prefijo" class="control-label gcore-label-top">@lang('general.prefix'):</label>
                                         </div>
                                         <div class="col-sm-8">
                                             <input v-model="prefijo" name="prefijo" id="prefijo" value="" placeholder="Ej: TD" class="form-control" type="text" @click="deleteError('prefijo')" @focus="deleteError('prefijo')" />
-                                            <small id="msn1" class="help-block result-prefijo" v-show="listErrors.prefijo">* Campo obligatorio</small>
+                                            <small id="msn1" class="help-block result-prefijo" v-show="listErrors.prefijo">@lang('general.obligatory_field')</small>
                                         </div>
                                     </div>
                             </div>
@@ -95,12 +95,12 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.icono}">
                                         <div class="col-sm-4">
-                                            <label for="icono" class="control-label gcore-label-top">icono:</label>
+                                            <label for="icono" class="control-label gcore-label-top">@lang('general.icon'):</label>
                                         </div>
                                         <div class="col-sm-8">
                                             <select data-live-search="true" id="icono" name="icono" class="form-control ajaxLoadFontAwesome" style="font-family:'FontAwesome'">
                                             </select>
-                                            <small id="msn1" class="help-block result-icono" v-show="listErrors.icono">* Campo obligatorio</small>
+                                            <small id="msn1" class="help-block result-icono" v-show="listErrors.icono">@lang('general.obligatory_field')</small>
                                         </div>
                                     </div>
                             </div>
@@ -109,7 +109,7 @@
                             <div class="col-lg-12">
                                 <div class="form-group" :class="{'has-error': errors.has('email_plantilla_id') }">
                                     <div class="col-sm-4">
-                                        <label for="email_plantilla_id" class="control-label gcore-label-top">Plantilla de correo:</label>
+                                        <label for="email_plantilla_id" class="control-label gcore-label-top">@lang('general.mail_template'):</label>
                                     </div>
                                     <div class="col-sm-8">
                                         <v-select :options="plantillas" name="email_plantilla_id" v-model="email_plantilla_id" label="name" placeholder="Plantilla para correo">
@@ -150,28 +150,28 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.consecutivo_inicial}">
                                         <div class="col-sm-4">
-                                            <label for="consecutivo_inicial" class="control-label gcore-label-top">Consecutivo inicial:</label>
+                                            <label for="consecutivo_inicial" class="control-label gcore-label-top">@lang('general.initial_consecutive'):</label>
                                         </div>
                                         <div class="col-sm-8">
                                             <input v-model="consecutivo_inicial" name="consecutivo_inicial" id="consecutivo_inicial" value="" class="form-control" type="number" min="1" @click="deleteError('consecutivo_inicial')" @focus="deleteError('consecutivo_inicial')" />
-                                            <small id="msn1" class="help-block result-consecutivo_inicial" v-show="listErrors.consecutivo_inicial">* Campo obligatorio</small>
+                                            <small id="msn1" class="help-block result-consecutivo_inicial" v-show="listErrors.consecutivo_inicial">@lang('general.obligatory_field')</small>
                                         </div>
                                     </div>
                             </div>
                         </div>
                         <div class="col-lg-12" style="padding-bottom: 20px;">
-                            <div style="text-align: center;margin-bottom: 40px;" class="label label-danger"><i class="fa fa-lock"></i> Configuración de seguridad</div>
+                            <div style="text-align: center;margin-bottom: 40px;" class="label label-danger"><i class="fa fa-lock"></i> @lang('general.security_settings')</div>
                         </div>
                         <div class="row">                            
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.credenciales}">
                                     	<div class="col-sm-12">
-                                            <small>Seleccione las credenciales que podran utilizar este documento*</small>
+                                            <small>@lang('general.select_the_credentials')</small>
                                         </div>
                                         <div class="col-sm-12">
                                             <select class="js-example-basic-multiple form-control" id="credenciales" name="credenciales[]" multiple="multiple" @click="deleteError('credenciales')" @focus="deleteError('credenciales')">
 											</select>
-                                            <small id="msn1" class="help-block result-credenciales" v-show="listErrors.credenciales">* Campo obligatorio</small>
+                                            <small id="msn1" class="help-block result-credenciales" v-show="listErrors.credenciales">@lang('general.obligatory_field')</small>
                                         </div>
                                     </div>
                             </div>
@@ -183,12 +183,12 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.funcionalidades}">
                                     	<div class="col-sm-12">
-                                            <small>Seleccione las funcionalidades adicionales del documento (opcional)</small>
+                                            <small>@lang('general.select_the_additional_functionalities')</small>
                                         </div>
                                         <div class="col-sm-12">
                                         	<select class="js-example-basic-multiple form-control" id="funcionalidades" name="funcionalidades[]" multiple="multiple" @click="deleteError('funcionalidades')" @focus="deleteError('funcionalidades')">
 											</select>
-                                            <small id="msn1" class="help-block result-funcionalidades" v-show="listErrors.funcionalidades">* Campo obligatorio</small>
+                                            <small id="msn1" class="help-block result-funcionalidades" v-show="listErrors.funcionalidades">@lang('general.obligatory_field')</small>
                                         </div>
                                     </div>
                             </div>
@@ -205,7 +205,7 @@
         <div class="col-lg-7">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Tipos de documentos</h5>
+                    <h5>@lang('general.types_of_documents')</h5>
                     <div class="ibox-tools">
 
                     </div>
@@ -216,10 +216,10 @@
                         <table id="tbl-tipoDocumento" class="table table-striped table-hover table-bordered" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th>Prefijo</th>
-                                    <th>Descripcion</th>
-                                    <th>Plantilla correo</th>
-                                    <th>Acciones</th>
+                                    <th>@lang('general.prefix')</th>
+                                    <th>@lang('general.description')</th>
+                                    <th>@lang('general.mail_template')</th>
+                                    <th>@lang('general.actions')</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -227,10 +227,10 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Prefijo</th>
-                                    <th>Descripcion</th>
-                                    <th>Plantilla correo</th>
-                                    <th>Acciones</th>
+                                    <th>@lang('general.prefix')</th>
+                                    <th>@lang('general.description')</th>
+                                    <th>@lang('general.mail_template')</th>
+                                    <th>@lang('general.actions')</th>
                                 </tr>
                             </tfoot>
                         </table>

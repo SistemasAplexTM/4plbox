@@ -7,7 +7,7 @@
         <h2>{{ $name }}</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#">Home</a>
+                <a href="#">@lang('general.home')</a>
             </li>
             <li class="active">
                 <strong>{{ $name }}</strong>
@@ -24,7 +24,7 @@
             <div class="col-lg-5">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Registro de {{ $name }}</h5>
+                        <h5>@lang('general.register_of'){{ $name }}</h5>
                         <div class="ibox-tools">
                             
                         </div>
@@ -36,11 +36,11 @@
                                 <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.nombre}">
                                         <div class="col-sm-4">
-                                            <label for="nombre" class="control-label gcore-label-top">Nombre:</label>
+                                            <label for="nombre" class="control-label gcore-label-top">@lang('general.name'):</label>
                                         </div>
                                         <div class="col-sm-8">
                                             <input v-model="nombre" name="nombre[]" id="nombre" value="" placeholder="" class="form-control" type="text" @click="deleteError('nombre')" />
-                                            <small id="msn1" class="help-block result-nombre" v-show="listErrors.nombre">* Campo obligatorio</small>
+                                            <small id="msn1" class="help-block result-nombre" v-show="listErrors.nombre">@lang('general.obligatory_field')</small>
                                         </div>
                                     </div>
                                 </div>
@@ -55,7 +55,7 @@
                                         </div>
                                         <div class="col-sm-8">
                                             <input v-model="descripcion" name="descripcion[]" id="descripcion" value="" placeholder="" class="form-control" type="text" @click="deleteError('descripcion')" />
-                                            <small id="msn1" class="help-block result-descripcion" v-show="listErrors.descripcion">* Campo obligatorio</small>
+                                            <small id="msn1" class="help-block result-descripcion" v-show="listErrors.descripcion"> @lang('general.obligatory_field')</small>
                                         </div>
                                     </div>
                                 </div>
@@ -71,7 +71,7 @@
             <div class="col-lg-7">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Registros existentes</h5>
+                        <h5>@lang('general.existing_records')</h5>
                         <div class="ibox-tools">
 
                         </div>
@@ -82,16 +82,16 @@
                             <table id="tbl-maestraMultiple" class="table table-striped table-hover table-bordered" style="width: 100%;">
                                 <thead>
                                     <tr>
-                                        <th>Nombre</th>
+                                        <th>@lang('general.name')</th>
                                         <th>{{ ($type != '1' and $type != '2') ? 'Descripción' : 'Abreviatura' }}</th>
-                                        <th>Acciones</th>
+                                        <th>@lang('general.actions')</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>Nombre</th>
+                                        <th>@lang('general.name')</th>
                                         <th>{{ ($type != '1' and $type != '2') ? 'Descripción' : 'Abreviatura' }}</th>
-                                        <th>Acciones</th>
+                                        <th>@lang('general.actions')</th>
                                     </tr>
                                 </tfoot>
                             </table>
