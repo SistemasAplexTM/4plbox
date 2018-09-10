@@ -20,14 +20,15 @@ $(document).ready(function () {
                     // if (permission_delete) {
                         var btn_delete = '<a onclick=\"eliminar(' + full.id + ',' + true + ')\" class="delete" title="Eliminar" data-toggle="tooltip" style="color:#E34724;"><i class="material-icons">&#xE872;</i></a>';
                     // }
-                    var btns = "<div class='btn-group'>" +
-                     "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" +
-                      "<i class='material-icons' style='vertical-align:  middle;'>print</i> <span class='caret'></span>" +
-                       "</button>" + 
-                       "<ul class='dropdown-menu dropdown-menu-right pull-right'><li><a href='bill/imprimir/" +full.id + '/'+true +
-                        "' target='_blank'> <spam class='fa fa-print'></spam> Bill of lading</a></li>" +
-                         "</ul></div>";
-                    return btn_edit + btns + btn_delete;
+                    // var btns = "<div class='btn-group'>" +
+                    //  "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" +
+                    //   "<i class='material-icons' style='vertical-align:  middle;'>print</i> <span class='caret'></span>" +
+                    //    "</button>" + 
+                    //    "<ul class='dropdown-menu dropdown-menu-right pull-right'><li><a href='bill/imprimir/" +full.id + '/'+true +
+                    //     "' target='_blank'> <spam class='fa fa-print'></spam> Bill of lading</a></li>" +
+                    //      "</ul></div>";
+                        var btn_print = '<a href="bill/imprimir/' + full.id + '/'+true + '" target="_blank" class="edit" title="Imprimir" data-toggle="tooltip" style="color:#676a6c;"><i class="material-icons">print</i></a>';
+                    return btn_edit + btn_print + btn_delete;
                 }
             }
         ]

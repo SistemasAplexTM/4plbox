@@ -15,7 +15,7 @@
 								<tr>
 									<td colspan="2" class="title">
 									2. EXPORTER (Principal or seller -licensee and address including ZIP Code )
-									<a class="btn btn-info btn-xs search" data-toggle="tooltip" title="Buscar" @click="SearchShipper"><i class="fa fa-search"></i></a>
+									<a class="btn btn-info btn-xs search" data-toggle="tooltip" title="Buscar" @click="SearchPartie('Shipper')"><i class="fa fa-search"></i></a>
 								</td>
 								</tr>
 								<tr>
@@ -58,7 +58,7 @@
 						<td valign="top" style="width: 55%" class="b-top b-right">
 							<table width="100%" cellspacing="0" cellpadding="0" class="">
 								<tr>
-									<td colspan="2" class="title">3. CONSIGNED TO <a class="btn btn-info btn-xs search" data-toggle="tooltip" title="Buscar" @click="SearchConsignee"><i class="fa fa-search"></i></a></td>
+									<td colspan="2" class="title">3. CONSIGNED TO <a class="btn btn-info btn-xs search" data-toggle="tooltip" title="Buscar" @click="SearchPartie('Consignee')"><i class="fa fa-search"></i></a></td>
 								</tr>
 								<tr>
 									<td colspan="2" class="p-left">

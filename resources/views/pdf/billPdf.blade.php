@@ -82,7 +82,7 @@
 								<table width="100%" cellspacing="0" cellpadding="0" class="">
 									<tr>
 										<td valign="top" class="title b-right" style="width: 50%;padding-left: 2px;height: 35px">5. DOCUMENT NUMBER
-											<div class="var">{{ $data->document_number }}</div>
+											<div class="var">{{ ($data->document_number != '') ? $data->document_number : '&nbsp;' }}</div>
 										</td>
 										<td valign="top" class="title" style="padding-left: 2px">5a. B/L NUMBER
 											<div class="var">{{ $data->num_bl }}</div>
@@ -121,7 +121,7 @@
 									<tr>
 										<td valign="top" colspan="2" class="title b-top" style="padding-left: 2px;">
 											8. POINT (STATE) OF ORIGIN OR FTZ NUMBER
-											<div class="var">{{ $data->point_origin }}</div>
+											<div class="var">{{ ($data->point_origin != '') ? $data->point_origin : '&nbsp;' }}</div>
 										</td>
 									</tr>
 								</table>
@@ -144,10 +144,10 @@
 									</tr>
 									<tr>
 										<td valign="top" class="p-left b-right">
-											<div class="var">{{ $data->pre_carriage_by }}</div>
+											<div class="var">{{ ($data->pre_carriage_by != '') ? $data->pre_carriage_by : '&nbsp;' }}</div>
 										</td>
 										<td valign="top" class="p-left">
-											<div class="var">{{ $data->place_of_receipt }}</div>
+											<div class="var">{{ ($data->place_of_receipt != '') ? $data->place_of_receipt : '&nbsp;'}}</div>
 										</td>
 									</tr>
 								</table>
@@ -172,10 +172,10 @@
 									</tr>
 									<tr>
 										<td valign="top" class="p-left b-right">
-											<div class="var">{{ $data->exporting_carrier }}</div>
+											<div class="var">{{ ($data->exporting_carrier != '') ? $data->exporting_carrier : '&nbsp;' }}</div>
 										</td>
 										<td valign="top" class="p-left">
-											<div class="var">{{ $data->port_loading }}</div>
+											<div class="var">{{ ($data->port_loading != '') ? $data->port_loading : '&nbsp;' }}</div>
 										</td>
 									</tr>
 								</table>
@@ -187,7 +187,7 @@
 									</tr>
 									<tr>
 										<td valign="top" class="p-left">
-											<div class="var">{{ $data->loading_pier }}</div>
+											<div class="var">{{ ($data->loading_pier != '') ? $data->loading_pier : '&nbsp;' }}</div>
 										</td>
 									</tr>
 								</table>
@@ -202,10 +202,10 @@
 									</tr>
 									<tr>
 										<td valign="top" class="p-left b-right">
-											<div class="var">{{ $data->foreign_port }}</div>
+											<div class="var">{{ ($data->foreign_port != '') ? $data->foreign_port : '&nbsp;' }}</div>
 										</td>
 										<td valign="top" class="p-left">
-											<div class="var">{{ $data->placce_delivery }}</div>
+											<div class="var">{{ ($data->placce_delivery != '') ? $data->placce_delivery : '&nbsp;' }}</div>
 										</td>
 									</tr>
 								</table>
@@ -272,7 +272,7 @@
 							<td colspan="2">
 								<table cellspacing="0" cellpadding="0" style="width: 100%">
 									<tr>
-										<td width="50%" class="b-top b-right" style="padding: 6px 6px 0px 0px">
+										<td width="50%" class="b-top b-right" style="padding: 6px 6px 0px 0px" valign="top">
 											<table cellspacing="0" cellpadding="0" style="width: 100%">
 												<tr>
 													<td colspan="3" style="font-size: 11px;font-weight: bold;text-align: center;">FREIGHT RATES, CHARGES, WEIGHTS AND/OR MEASUREMENTS</td>
