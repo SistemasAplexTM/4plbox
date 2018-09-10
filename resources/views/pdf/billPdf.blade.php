@@ -36,15 +36,18 @@
 		}
 		.var{
 			font-size: 17px;
-/*			font-weight: bold;*/
+		/*font-weight: bold;*/
 		}
 		.detail .title{
 			padding: 5px;
 		}
+		pre {
+			margin: 0;
+		}
 	</style>
 </head>
-{{-- {{ print_r($data) }} --}}
 <body>
+
 	<table class="bill">
 		<thead>
 			<tr>
@@ -64,7 +67,7 @@
 									</tr>
 									<tr>
 										<td colspan="" class="p-left">
-											<div class="var">{{ nl2br($data->exporter)  }}</div>
+											<pre>{{ $data->exporter }}</pre>
 										</td>
 									</tr>
 									<tr>
@@ -79,17 +82,17 @@
 								<table width="100%" cellspacing="0" cellpadding="0" class="">
 									<tr>
 										<td valign="top" class="title b-right" style="width: 50%;padding-left: 2px;height: 35px">5. DOCUMENT NUMBER
-											<div class="var">BK: SANL2497GQ</div>
+											<div class="var">{{ $data->document_number }}</div>
 										</td>
 										<td valign="top" class="title" style="padding-left: 2px">5a. B/L NUMBER
-											<div class="var">HBL-6719</div>
+											<div class="var">{{ $data->num_bl }}</div>
 										</td>
 									</tr>
 									<tr>
 										<td valign="top" colspan="2" class="title b-top">6. EXPORT REFERENCES</td>
 									</tr>
 									<tr>
-										<td valign="top" colspan="2" class="p-left" style="">6. EXPORT REFERENCES</td>
+										<td valign="top" colspan="2" class="p-left" style="">{{ $data->export_references }}</td>
 									</tr>
 								</table>
 							</td>
@@ -102,7 +105,7 @@
 									</tr>
 									<tr>
 										<td colspan="" class="p-left">
-											<div class="var">{{ $data->consignee }}</div>
+											<pre>{{ $data->consignee }}</pre>
 										</td>
 									</tr>
 								</table>
@@ -112,13 +115,13 @@
 									<tr>
 										<td valign="top" class="title" style="padding-left: 2px;height: 55px">
 											7. FORWARDING AGENT (Name and address - references )
-											<div class="var"></div>
+											<div class="var"><pre>{{ $data->forwarding_agent }}</pre></div>
 										</td>
 									</tr>
 									<tr>
 										<td valign="top" colspan="2" class="title b-top" style="padding-left: 2px;">
-											6. EXPORT REFERENCES
-											<div class="var">CALIFORNIA</div>
+											8. POINT (STATE) OF ORIGIN OR FTZ NUMBER
+											<div class="var">{{ $data->point_origin }}</div>
 										</td>
 									</tr>
 								</table>
@@ -132,7 +135,7 @@
 									</tr>
 									<tr>
 										<td valign="top" colspan="2" class="p-left" style="height: 70px">
-											<div class="var">DISEÑO EXCLUSIVO DISEX S.A</div>
+											<pre>{{ $data->notify_party }}</pre>
 										</td>
 									</tr>
 									<tr>
@@ -141,10 +144,10 @@
 									</tr>
 									<tr>
 										<td valign="top" class="p-left b-right">
-											<div class="var">LOS ANGELES</div>
+											<div class="var">{{ $data->pre_carriage_by }}</div>
 										</td>
 										<td valign="top" class="p-left">
-											<div class="var">LOS ANGELES</div>
+											<div class="var">{{ $data->place_of_receipt }}</div>
 										</td>
 									</tr>
 								</table>
@@ -154,7 +157,7 @@
 									<tr>
 										<td valign="top" class="title" style="padding-left: 2px;height: 55px">
 											9. DOMESTIC ROUTING/EXPORT INSTRUCTIONS
-											<div class="var"></div>
+											<div class="var"><pre>{{ $data->domestic_routing }}</pre></div>
 										</td>
 									</tr>
 								</table>
@@ -169,10 +172,10 @@
 									</tr>
 									<tr>
 										<td valign="top" class="p-left b-right">
-											<div class="var">&nbsp;</div>
+											<div class="var">{{ $data->exporting_carrier }}</div>
 										</td>
 										<td valign="top" class="p-left">
-											<div class="var"></div>
+											<div class="var">{{ $data->port_loading }}</div>
 										</td>
 									</tr>
 								</table>
@@ -184,7 +187,7 @@
 									</tr>
 									<tr>
 										<td valign="top" class="p-left">
-											<div class="var">SAN DIEGO</div>
+											<div class="var">{{ $data->loading_pier }}</div>
 										</td>
 									</tr>
 								</table>
@@ -199,10 +202,10 @@
 									</tr>
 									<tr>
 										<td valign="top" class="p-left b-right">
-											<div class="var">GUAYAQUIL</div>
+											<div class="var">{{ $data->foreign_port }}</div>
 										</td>
 										<td valign="top" class="p-left">
-											<div class="var"></div>
+											<div class="var">{{ $data->placce_delivery }}</div>
 										</td>
 									</tr>
 								</table>
@@ -215,11 +218,11 @@
 									</tr>
 									<tr>
 										<td valign="top" class="p-left b-right">
-											<div class="var"></div>
+											<div class="var">{{ $data->type_move }}</div>
 										</td>
 										<td valign="top" class="p-left">
-											<div class="var" style="width: 50%;float: left">Yes </div>
-											<div class="var" style="width: 50%;float: left">No </div>
+											<div class="var" style="width: 50%;float: left">Yes &nbsp;{{ ($data->containered == 0) ? 'X' : '' }}</div>
+											<div class="var" style="width: 50%;float: left">No  &nbsp;{{ ($data->containered == 1) ? 'X' : '' }}</div>
 										</td>
 									</tr>
 								</table>
@@ -235,23 +238,27 @@
 										<td class="title b-right">GROSS WEIGHT <br> (kilos) (21)</td>
 										<td class="title">MEASUREMENT <br> (22)</td>
 									</tr>
-									<tr>
-										<td valign="top" class="b-top b-right" style="height: 250px">
-											<div class="var">BK: SANL2497GQ DFIU: 425134-8 SEAL: UL-1336440</div>
-										</td>
-										<td valign="top" class="b-top b-right">
-											<div class="var">24 PCS</div>
-										</td>
-										<td valign="top" class="b-top b-right">
-											<div class="var">STC: TEXTILE ROLLS</div>
-										</td>
-										<td valign="top" class="b-top b-right">
-											<div class="var">532.06KG 1173.00LBS</div>
-										</td>
-										<td valign="top" class="b-top">
-											<div class="var">79.00FT 2.23MT3</div>
-										</td>
-									</tr>
+									@if(count($detalle) > 0)
+										@foreach($detalle as $dt)
+											<tr>
+												<td valign="top" class="b-top b-right" style="height: 250px">
+													<div class="var"><pre>{{ $dt->marks_numbers }}</pre></div>
+												</td>
+												<td valign="top" class="b-top b-right">
+													<div class="var">{{ $dt->number_packages }}</div>
+												</td>
+												<td valign="top" class="b-top b-right">
+													<div class="var">{{ $dt->description }}</div>
+												</td>
+												<td valign="top" class="b-top b-right">
+													<div class="var" style="text-align: right;">{{ $dt->gross_weight }} KLS<br>{{ number_format(($dt->gross_weight * 2.20462), 2) }} LBS</div>
+												</td>
+												<td valign="top" class="b-top">
+													<div class="var" style="text-align: right;">{{ $dt->measurement }} FT<br>{{ number_format(($dt->measurement / 35.315),2) }} MT3</div>
+												</td>
+											</tr>
+										@endforeach
+									@endif
 								</table>
 							</td>
 						</tr>
@@ -275,15 +282,23 @@
 													<td style="font-size: 11px;text-align: center;" class="b-top b-right">PREPAID</td>
 													<td style="font-size: 11px;text-align: center;" class="b-top b-right">COLLECT</td>
 												</tr>
-												<tr>
-													<td valign="top"  class="b-top b-right" style="height: 200px">OCEAN FREIGHT</td>
-													<td valign="top"  class="b-top b-right"></td>
-													<td valign="top"  class="b-top b-right"></td>
-												</tr>
+												<?php $total_pp = 0; ?>
+												<?php $total_cll = 0; ?>
+												@if(count($other) > 0)
+													@foreach($other as $ot)
+														<tr>
+															<td valign="top"  class="b-top b-right" style="height: 200px">{{ $ot->description }}</td>
+															<td valign="top"  class="b-top b-right">{{ number_format($ot->ammount_pp, 2) }}</td>
+															<td valign="top"  class="b-top b-right">{{ number_format($ot->ammount_cll, 2) }}</td>
+														</tr>
+														<?php $total_pp += $ot->ammount_pp; ?>
+														<?php $total_cll += $ot->ammount_cll; ?>
+													@endforeach
+												@endif
 												<tr>
 													<td valign="top"  class="b-top b-right" style="padding: 10px;text-align: right">GRAND TOTAL :</td>
-													<td valign="top"  class="b-top b-right"></td>
-													<td valign="top"  class="b-top b-right"></td>
+													<td valign="top"  class="b-top b-right">{{ number_format($total_pp, 2) }}</td>
+													<td valign="top"  class="b-top b-right">{{ number_format($total_cll, 2) }}</td>
 												</tr>
 											</table>
 										</td>
@@ -291,14 +306,14 @@
 											<table cellspacing="0" cellpadding="0" style="width: 100%">
 												<tr>
 													<td valign="top" colspan="2" style="font-size: 8px;font-weight: bold;text-align: center;text-align: justify">Received by the Carrier for shipment by ocean vessel between port of loading and port of
-discharge , and for arrangement or procurement of pre -carriage from place of receipt and on -
-carriage to place of delivery , where stated above , the goods as specified above in apparent
-good order and condition unless otherwise stated . The goods to be delivered at the above
-mentioned port of discharge or place of delivery , whichever is applicable , subject always to the
-exceptions , limitations, conditions and liberties set out on the reverse side hereof , to which the
-Shipper and /or Consignee agree to accepting this Bill of Lading .
-IN WITNESS WHEREOF three (3) original Bills of Lading have been signed , not otherwise
-stated above , one of which being accomplished the others shall be void .</td>
+													discharge , and for arrangement or procurement of pre -carriage from place of receipt and on -
+													carriage to place of delivery , where stated above , the goods as specified above in apparent
+													good order and condition unless otherwise stated . The goods to be delivered at the above
+													mentioned port of discharge or place of delivery , whichever is applicable , subject always to the
+													exceptions , limitations, conditions and liberties set out on the reverse side hereof , to which the
+													Shipper and /or Consignee agree to accepting this Bill of Lading .
+													IN WITNESS WHEREOF three (3) original Bills of Lading have been signed , not otherwise
+													stated above , one of which being accomplished the others shall be void .</td>
 												</tr>
 												<tr>
 													<td colspan="2" style="padding-top: 20px;">
@@ -309,15 +324,17 @@ stated above , one of which being accomplished the others shall be void .</td>
 												<tr>
 													<td colspan="2" style="padding-top: 10px;">
 														<div style="width: 5%;float: left;">BY</div>
-														<div style="width: 95%;float: left;border-bottom: 1px solid #000000;">&nbsp;</div>
+														<div style="width: 95%;float: left;border-bottom: 1px solid #000000;">
+															<div style="width: 100%;text-align: center;font-size: 20px;">{{ $data->agent_for_carrier }}</div>
+														</div>
 														<div style="font-size: 12px;text-align: center;">AGENT FOR THE CARRIER</div>
 													</td>
 												</tr>
 												<tr>
 													<td colspan="2" style="padding-top: 5px;">
-														<div style="width: 35%;float: left;">04</div>
-														<div style="width: 30%;float: left;text-align: center">17</div>
-														<div style="width: 35%;float: left;text-align: right">2018</div>
+														<div style="width: 35%;float: left;">{{ date('m', strtotime($data->date_document)) }}</div>
+														<div style="width: 30%;float: left;text-align: center">{{ date('d', strtotime($data->date_document)) }}</div>
+														<div style="width: 35%;float: left;text-align: right">{{ date('Y', strtotime($data->date_document)) }}</div>
 													</td>
 												</tr>
 												<tr><td colspan="2"><div style="border-bottom: 1px solid #000000;"></div></td></tr>
@@ -334,7 +351,7 @@ stated above , one of which being accomplished the others shall be void .</td>
 												</tr>
 												<tr>
 													<td style="width: 50%;">&nbsp;</td>
-													<td class="b-left" style="text-align: right;padding-right: 5px;font-weight: bold;">HBL-6719</td>
+													<td class="b-left" style="text-align: right;padding-right: 5px;font-weight: bold;">{{ $data->num_bl }}</td>
 												</tr>
 											</table>
 										</td>

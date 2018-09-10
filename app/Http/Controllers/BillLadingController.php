@@ -85,8 +85,8 @@ class BillLadingController extends Controller
     {
         DB::beginTransaction();
         try {
-            $bill = BillLading::findOrFail($id_bill);
-            $bill->updated_at = $request->updated_at;
+            $bill               = BillLading::findOrFail($id_bill);
+            $bill->updated_at   = $request->updated_at;
             
 
             if ($bill->update($request->all())) {
