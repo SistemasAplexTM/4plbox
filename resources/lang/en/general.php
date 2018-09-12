@@ -127,8 +127,8 @@ return [
  
     //resources/views/templates/departamento
 
-    'departments'=>'Departaments',
-    'registration_of_departments'=>'Registration of departments',
+    'departments'=>'Departaments / States',
+    'registration_of_departments'=>'Registration of departments / State',
     'description'=>'Description',
     
    //resources/views/templates/emailTemplate

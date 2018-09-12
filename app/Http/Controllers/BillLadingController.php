@@ -60,7 +60,7 @@ class BillLadingController extends Controller
                     }
                 }
                 /* REGISRAR OTROS CARGOS */
-                if($request->other[0]['description'] != ''){
+                if(count($request->other) > 0 and $request->other[0]['description'] != ''){
                     foreach ($request->other as $value2) {
                         $billO                  = (new BillLadingOtherCharges)->fill($value2);
                         $billO->bill_lading_id  = $bill->id;
@@ -83,10 +83,11 @@ class BillLadingController extends Controller
 
     public function update(Request $request, $id_bill)
     {
+        
         DB::beginTransaction();
         try {
-            $bill = BillLading::findOrFail($id_bill);
-            $bill->updated_at = $request->updated_at;
+            $bill               = BillLading::findOrFail($id_bill);
+            $bill->updated_at   = $request->updated_at;
             
 
             if ($bill->update($request->all())) {
@@ -101,7 +102,7 @@ class BillLadingController extends Controller
                     }
                 }
                 /* REGISRAR OTROS CARGOS */
-                if($request->other[0]['description'] != ''){
+                if(count($request->other) > 0 and $request->other[0]['description'] != ''){
                     BillLadingOtherCharges::where('bill_lading_id', $id_bill)->delete();
                     foreach ($request->other as $value2) {
                         $billO                  = BillLadingOtherCharges::updateOrCreate($value2);
@@ -233,5 +234,64 @@ class BillLadingController extends Controller
         $data = BillLading::findOrFail($id);
         $data->deleted_at = NULL;
         $data->save();
+    }
+
+    public function getParties()
+    {
+        $sql = DB::table('bill_parties AS a')
+            ->select(
+                'a.id',
+                'a.display_name',
+                'a.account_number',
+                'a.zip',
+                'a.text_exporter'
+            )
+            ->get();
+        return \DataTables::of($sql)->make(true);
+    }
+
+    public function createPartie(Request $request){
+        DB::beginTransaction();
+        try {
+            DB::table('bill_parties')->insert([
+                [
+                    'display_name'      => $request->display_name,
+                    'account_number'    => $request->account_number,
+                    'zip'               => $request->zip,
+                    'text_exporter'     => $request->text_exporter,
+                    'created_at'        => $request->created_at
+                ],
+            ]);
+            DB::commit();
+            return array('code' => 200);
+        } catch (Exception $e) {
+            DB::rollback();
+            return $e;
+        }
+    }
+
+    public function editPartie(Request $request, $id){
+        DB::beginTransaction();
+        try {
+            DB::table('bill_parties')
+            ->where('id', $id)
+            ->update(
+                    ['display_name'    => $request->display_name,
+                    'account_number'   => $request->account_number,
+                    'zip'              => $request->zip,
+                    'text_exporter'    => $request->text_exporter,
+                    'updated_at'       => $request->updated_at]
+            );
+            DB::commit();
+            return array('code' => 200);
+        } catch (Exception $e) {
+            DB::rollback();
+            return $e;
+        }
+    }
+
+    public function destroyPartie($id)
+    {
+        DB::table('bill_parties')->where('id', $id)->delete();
     }
 }

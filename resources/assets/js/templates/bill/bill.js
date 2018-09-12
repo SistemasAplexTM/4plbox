@@ -1,6 +1,55 @@
 $(document).ready(function() {
-    //
+    $('#modalParties').on('hidden.bs.modal', function() {
+        if($('#collapseOne').hasClass('in')){
+            $('#open_collapse').click();
+            $('#open_collapse').html('<i class="fa fa-plus"></i> Crear nuevo');
+        }
+        objVue.cancelPartie();
+    });
 });
+
+function seleccionarPartie(partie, id, display_name, account_number, zip, text_exporter) {
+    var data = {
+        id: id,
+        display_name: display_name,
+        account_number: account_number,
+        zip: zip,
+        text_exporter: text_exporter
+    };
+    objVue.seleccionarPartie(partie, data);
+}
+
+function editPartieForm(id, display_name, account_number, zip, text_exporter) {
+    var data = {
+        id: id,
+        display_name: display_name,
+        account_number: account_number,
+        zip: zip,
+        text_exporter: text_exporter
+    };
+    objVue.editPartieForm(data);
+}
+
+function deletePartie(id) {
+    var data = {
+        id: id
+    };
+    objVue.deletePartie(data);
+}
+
+function confirmDeletePartie(id){
+    $('#delete_ok'+id).css('display', 'none');
+    $('#delete_'+id).css('display', 'inline-block');
+    $('#delete_c'+id).css('display', 'inline-block');
+}
+
+function cancelDeletePartie(id){
+    $('#delete_'+id).css('display', 'none');
+    $('#delete_c'+id).css('display', 'none');
+    $('#delete_ok'+id).css('display', 'inline-block');
+}
+
+
 /* objetos VUE index */
 var objVue = new Vue({
     el: '#billForm',
@@ -8,7 +57,6 @@ var objVue = new Vue({
         //
     },
     created: function() {
-        console.log('bill = ' + $('#bill_id').val());
         if ($('#bill_id').val() != null && $('#bill_id').val() != '') {
             this.bill_id = $('#bill_id').val();
             this.editar = true;
@@ -55,7 +103,15 @@ var objVue = new Vue({
         }],
         oc_total_pp: 0,
         oc_total_cll: 0,
-        editar: false
+        editar: false,
+        //modal
+        name_partie: null,
+        id_partie: null,
+        display_name: null,
+        account_number: null,
+        zip_partie: null,
+        text_exporter: null,
+        edit_p: false
     },
     methods: {
         print(){
@@ -92,8 +148,59 @@ var objVue = new Vue({
                 me.oc_total_cll += isInteger((me.other[p].ammount_cll == null) ? 0 : me.other[p].ammount_cll)
             }
         },
-        SearchShipper() {},
-        SearchConsignee() {},
+        SearchPartie(partie) {
+            $('#modalParties').modal('show');
+            this.name_partie = partie;
+            this.getParties(partie);
+        },
+        getParties(partie){
+            if ($.fn.DataTable.isDataTable('#tbl-modalParties')) {
+                $('#tbl-modalParties tbody').empty();
+                $('#tbl-modalParties').dataTable().fnDestroy();
+            }
+            if(this.editar){
+                var url = '../getParties';
+            }else{
+                var url = '../bill/getParties';
+            }
+            $('#tbl-modalParties').DataTable({
+                ajax: url,
+                columns: [{
+                    data: 'display_name',
+                    name: 'display_name'
+                }, {
+                    data: 'account_number',
+                    name: 'account_number'
+                }, {
+                    data: 'zip',
+                    name: 'zip'
+                }, {
+                    sortable: false,
+                    "render": function(data, type, full, meta) {
+                        var btn_edit = '';
+                        var btn_delete = '';
+                        var texto = full.text_exporter;
+                        if(texto != 'null' && texto != '' && texto != null){
+                            texto = texto.replace(/\n/g, "-");
+                        }
+                        // if (permission_update) {
+                            var params = [
+                                full.id, "'" + full.display_name + "'", "'" + full.account_number + "'", "'" + full.zip + "'", "'" + texto + "'"
+                            ];
+                            var btn_edit = "<a onclick=\"editPartieForm(" + params + ")\" class='btn btn-outline btn-success btn-xs edit' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit'></i></a> ";
+                        // }
+                        // if (permission_delete) {
+                            var btn_delete = " <a onclick=\"deletePartie(" + full.id + ")\" id='delete_"+full.id+"' class='btn btn-outline btn-danger btn-xs delete_' data-toggle='tooltip' data-placement='top' title='Confirmar eliminado'><i class='fa fa-check'></i></a> ";
+                            var btn_cancel = " <a onclick=\"cancelDeletePartie(" + full.id + ")\" id='delete_c"+full.id+"' class='btn btn-outline btn-default btn-xs delete_c' data-toggle='tooltip' data-placement='top' title='Cancelar'><i class='fa fa-times'></i></a> ";
+                            var btn_confirm_delete = " <a onclick=\"confirmDeletePartie(" + full.id + ")\" id='delete_ok"+full.id+"' class='btn btn-outline btn-danger btn-xs delete_ok' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-trash'></i></a> ";
+                        // }
+                            var btn_selected = " <a onclick=\"seleccionarPartie('" + partie +"', " + params +")\" class='btn btn-outline btn-primary btn-xs selected' data-toggle='tooltip' data-placement='top' title='Seleccionar'><i class='fa fa-check'></i></a> ";
+                        return btn_selected + btn_edit + btn_delete + btn_confirm_delete + btn_cancel;
+                    },
+                    width: 150,
+                }]
+            });
+        },
         store: function() {
             axios.post('../bill', {
                 'document_number'   : this.document_number,
@@ -203,6 +310,97 @@ var objVue = new Vue({
             }else{
                 window.location.href = '../bill';
             }
+        },
+        seleccionarPartie(partie, data){
+            var texto = data.text_exporter;
+            texto = texto.replace(/-/g, "\n");
+            if(partie == 'Shipper'){
+                this.exporter_id = data.id;
+                this.exporter = texto;
+                this.exporter_zip = data.zip;
+            }else{
+                if(partie == 'Consignee'){
+                    this.consignee_id = data.id;
+                    this.consignee = texto;
+                }
+            }
+            if($('#collapseOne').hasClass('in')){
+                $('#open_collapse').click();
+                $('#open_collapse').html('<i class="fa fa-plus"></i> Crear nuevo');
+            }
+            $('#modalParties').modal('hide');
+        },
+        editPartieForm(data){
+            var texto = data.text_exporter;
+            texto = texto.replace(/-/g, "\n");
+            this.display_name   = (data.display_name == 'null') ? null : data.display_name;
+            this.account_number = (data.account_number == 'null') ? null : data.account_number;
+            this.zip_partie     = (data.zip == 'null') ? null : data.zip;
+            this.text_exporter  = (texto == 'null') ? null : texto;
+            this.id_partie      = data.id;
+            this.edit_p         = true;
+            if(!$('#collapseOne').hasClass('in')){
+                $('#open_collapse').click();
+            }
+            $('#open_collapse').html('<i class="fa fa-edit"></i> Editar');
+        },
+        addPartie(){
+            let me = this;
+            if(this.editar){
+                var url = '../createPartie';
+            }else{
+                var url = '../bill/createPartie';
+            }
+            axios.post(url, {
+                'display_name'   : this.display_name,
+                'account_number' : this.account_number,
+                'zip'            : this.zip_partie,
+                'text_exporter'  : this.text_exporter,
+                'created_at'     : this.getTime()
+            }).then(response => {
+                toastr.success('Registro exitoso.');
+                me.cancelPartie();
+                me.getParties(this.name_partie);
+            });
+        },
+        editPartie(){
+            let me = this;
+            if(this.editar){
+                var url = '../editPartie';
+            }else{
+                var url = '../bill/editPartie';
+            }
+            axios.put(url + '/'+ this.id_partie, {
+                'display_name'   : this.display_name,
+                'account_number' : this.account_number,
+                'zip'            : this.zip_partie,
+                'text_exporter'  : this.text_exporter,
+                'updated_at'     : this.getTime()
+            }).then(response => {
+                toastr.success('Actualización exitosa.');
+                me.cancelPartie();
+                me.getParties(this.name_partie);
+            });
+        },
+        cancelPartie(){
+            this.display_name   = null;
+            this.account_number = null;
+            this.zip_partie     = null;
+            this.text_exporter  = null;
+            this.edit_p = false;
+        },
+        deletePartie: function(data) {
+            let me = this;
+            if(this.editar){
+                var url = '../destroyPartie';
+            }else{
+                var url = '../bill/destroyPartie';
+            }
+            axios.delete(url + '/' + data.id).then(response => {
+                toastr.success('Registro eliminado correctamente.');
+                toastr.options.closeButton = true;
+                me.getParties(this.name_partie);
+            });
         },
     }
 });
