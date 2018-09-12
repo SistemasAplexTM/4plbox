@@ -90,14 +90,14 @@
                             </div>
                             <div class="checkbox checkbox-success">
                                 <input type="checkbox" name="remember" id="remember" aria-label="Single checkbox One" {{ old('remember') ? 'checked' : '' }}>
-                                       <label for="remember">No cerrar sesión</label>
+                                       <label for="remember">@lang('auth.not_sign_out')</label>
                             </div>
                             <div class="form-group" style="margin-top: 10px;">
                                 <button type="submit" class="btn btn-primary block full-width m-b">
-                                    Entrar
+                                    @lang('auth.login')
                                 </button>
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    ¿Olvidaste tu contraseña?
+                                    @lang('auth.forgot_pass')
                                 </a>
                                 <br>
                                 <p><small>Usuario: admin@admin.com</small></p>
@@ -106,11 +106,11 @@
                             </div>
                             <p class="m-t"> <small>Power by AplexTM &copy;</small> </p>
                             
-                            <small style="float: left;"><a href="rastreo" target="_blank" data-toggle="tooltip" title="Rastrear mercancia"><i class="fa fa-map-marker"></i> Rastreo</a></small>
+                            <small style="float: left;"><a href="rastreo" target="_blank" data-toggle="tooltip" title="Rastrear mercancia"><i class="fa fa-map-marker"></i> @lang('auth.tracking')</a></small>
 
-                            <small style=""><a href="casillero/1" target="_blank" data-toggle="tooltip" title="Casillero"><i class="fa fa-address-book-o"></i> Registro</a></small>
+                            <small style=""><a href="casillero/1" target="_blank" data-toggle="tooltip" title="Casillero"><i class="fa fa-address-book-o"></i> @lang('auth.registry')</a></small>
 
-                            <small style="float: right;"><a href="prealerta/1" target="_blank" data-toggle="tooltip" title="Prealertar mercancia"><i class="fa fa-bell"></i> Prealerta</a></small>
+                            <small style="float: right;"><a href="prealerta/1" target="_blank" data-toggle="tooltip" title="Prealertar mercancia"><i class="fa fa-bell"></i> @lang('auth.pre-alert')</a></small>
                         </div>
                     </form>
                     

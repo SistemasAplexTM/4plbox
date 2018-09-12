@@ -1,5 +1,9 @@
 $(document).ready(function() {
     $('#modalParties').on('hidden.bs.modal', function() {
+        if($('#collapseOne').hasClass('in')){
+            $('#open_collapse').click();
+            $('#open_collapse').html('<i class="fa fa-plus"></i> Crear nuevo');
+        }
         objVue.cancelPartie();
     });
 });
@@ -320,6 +324,10 @@ var objVue = new Vue({
                     this.consignee = texto;
                 }
             }
+            if($('#collapseOne').hasClass('in')){
+                $('#open_collapse').click();
+                $('#open_collapse').html('<i class="fa fa-plus"></i> Crear nuevo');
+            }
             $('#modalParties').modal('hide');
         },
         editPartieForm(data){
@@ -331,6 +339,10 @@ var objVue = new Vue({
             this.text_exporter  = (texto == 'null') ? null : texto;
             this.id_partie      = data.id;
             this.edit_p         = true;
+            if(!$('#collapseOne').hasClass('in')){
+                $('#open_collapse').click();
+            }
+            $('#open_collapse').html('<i class="fa fa-edit"></i> Editar');
         },
         addPartie(){
             let me = this;

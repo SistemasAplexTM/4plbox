@@ -28,7 +28,6 @@ class SetLang
                 $lang = 'en';
             }
         }
- 
         App::setLocale($lang);
         return $next($request);
     }
