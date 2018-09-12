@@ -4,13 +4,13 @@
 {{-- bread crumbs --}}
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Servicios</h2>
+        <h2>@lang('general.services')</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#">Home</a>
+                <a href="#">@lang('general.home')</a>
             </li>
             <li class="active">
-                <strong>Servicios</strong>
+                <strong>@lang('general.services')</strong>
             </li>
         </ol>
     </div>
@@ -23,7 +23,7 @@
             <div class="col-lg-4">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Registro de Servicios</h5>
+                        <h5>@lang('general.registration_of _services')</h5>
                         <div class="ibox-tools">
                             
                         </div>
@@ -34,11 +34,11 @@
                             <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="col-sm-5" :class="{'has-error': listErrors.tipo_embarque_id}">
-                                            <label for="tipo_embarque_id" class="control-label gcore-label-top">Tipo embarque:</label>
+                                            <label for="tipo_embarque_id" class="control-label gcore-label-top">@lang('general.boarding_type'):</label>
                                         </div>
                                         <div class="col-sm-7">
                                            <select id="tipo_embarque_id" name="tipo_embarque_id" class="form-control"  @click="deleteError('tipo_embarque_id')">
-                                                <option value="" data-seguro="">Seleccione</option>
+                                                <option value="" data-seguro="">@lang('general.select')</option>
                                             </select>
                                             <small id="msn1" class="help-block result-tipo_embarque_id" v-show="listErrors.tipo_embarque_id" style="color:#ed5565"></small>
                                         </div>
@@ -49,7 +49,7 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.nombre}">
                                         <div class="col-sm-5">
-                                            <label for="nombre" class="control-label gcore-label-top">Nombre:</label>
+                                            <label for="nombre" class="control-label gcore-label-top">@lang('general.name'):</label>
                                         </div>
                                         <div class="col-sm-7">
                                             <input v-model="nombre" name="nombre" id="nombre" value="" placeholder="Ingrese el nombre del servicio" class="form-control" type="text" @click="deleteError('nombre')" />
@@ -62,7 +62,7 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.tarifa}">
                                         <div class="col-sm-5">
-                                            <label for="tarifa" class="control-label gcore-label-top">Tarifa:</label>
+                                            <label for="tarifa" class="control-label gcore-label-top">@lang('general.rate'):</label>
                                         </div>
                                         <div class="col-sm-7">
                                         	<div class="input-group">
@@ -78,7 +78,7 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.peso_minimo}">
                                         <div class="col-sm-5">
-                                            <label for="peso_minimo" class="control-label gcore-label-top">Tarifa minima:</label>
+                                            <label for="peso_minimo" class="control-label gcore-label-top">@lang('general.minimum_fee'):</label>
                                         </div>
                                         <div class="col-sm-7">
                                             <div class="input-group">
@@ -94,7 +94,7 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.cobro_opcional}">
                                         <div class="col-sm-5">
-                                            <label for="cobro_opcional" class="control-label gcore-label-top">Cobro opcional:</label>
+                                            <label for="cobro_opcional" class="control-label gcore-label-top">@lang('general.optional_charge'):</label>
                                         </div>
                                         <div class="col-sm-7">
                                         	<div class="input-group">
@@ -110,7 +110,7 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.seguro}">
                                         <div class="col-sm-5">
-                                            <label for="seguro" class="control-label gcore-label-top">Seguro:</label>
+                                            <label for="seguro" class="control-label gcore-label-top">@lang('general.insurance'):</label>
                                         </div>
                                         <div class="col-sm-7">
                                         	<div class="input-group">
@@ -126,7 +126,7 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.impuesto}">
                                         <div class="col-sm-5">
-                                            <label for="impuesto" class="control-label gcore-label-top">Impuesto:</label>
+                                            <label for="impuesto" class="control-label gcore-label-top">@lang('general.tax'):</label>
                                         </div>
                                         <div class="col-sm-7">
                                         	<div class="input-group">
@@ -145,7 +145,7 @@
                                         <div class="col-sm-5">
                                             <label for="cobro_peso_volumen" class="control-label gcore-label-top">
                                                 <div class="col-sm-12" data-trigger="hover"  data-container="body" data-toggle="popover" data-placement="top" data-content="Active el volumen para cobrar los envios con volumen adicional." style="padding-left: 0px; padding-right: 0px;">
-                                                    Cobro Peso / Volumen:
+                                                    @lang('general.collection_weight_volume'):
                                                     <i class="fa fa-question-circle" style="cursor: pointer; color: coral;"></i>
                                                 </div>
                                         </label>
@@ -168,7 +168,7 @@
         <div class="col-lg-8">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Servicios</h5>
+                    <h5>@lang('general.services')</h5>
                     <div class="ibox-tools">
 
                     </div>
@@ -179,15 +179,15 @@
                         <table id="tbl-servicios" class="table table-striped table-hover table-bordered" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th><li class="fa fa-ship"></li><li class="fa fa-plane"></li> Tipo embarque</th>
-                                    <th><li class="fa fa-cubes"></li>Servicio</th>
-                                    <th><li class="fa fa-dollar"></li> Tarifa</th>
-                                    <th><li class="fa fa-dollar"></li> Tarifa minima</th>
-                                    <th><li class="fa fa-dollar"></li> Cobro opcional</th>
-                                    <th><li class="fa fa-dollar"></li> Seguro</th>
-                                    <th><li class="fa fa-percent"></li> Impuesto</th>
-                                    <th>Peso / Volumen</th>
-                                    <th>Acciones</th>
+                                    <th><li class="fa fa-ship"></li><li class="fa fa-plane"></li> @lang('general.boarding_type')</th>
+                                    <th><li class="fa fa-cubes"></li>@lang('general.services')</th>
+                                    <th><li class="fa fa-dollar"></li>@lang('general.rate')</th>
+                                    <th><li class="fa fa-dollar"></li>@lang('general.minimum_fee')</th>
+                                    <th><li class="fa fa-dollar"></li>@lang('general.optional_charge')</th>
+                                    <th><li class="fa fa-dollar"></li>@lang('general.insurance')</th>
+                                    <th><li class="fa fa-percent"></li>@lang('general.tax')</th>
+                                    <th>@lang('general.weight_volume')</th>
+                                    <th>@lang('general.actions')</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -195,15 +195,15 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th><li class="fa fa-ship"></li><li class="fa fa-plane"></li> Tipo embarque</th>
-                                    <th><li class="fa fa-cubes"></li> Servicio</th>
-                                    <th><li class="fa fa-dollar"></li> Tarifa</th>
-                                    <th><li class="fa fa-dollar"></li> Tarifa minima</th>
-                                    <th><li class="fa fa-dollar"></li> Cobro opcional</th>
-                                    <th><li class="fa fa-dollar"></li> Seguro</th>
-                                    <th><li class="fa fa-percent"></li> Impuesto</th>
-                                    <th>Peso / Volumen</th>
-                                    <th>Acciones</th>
+                                    <th><li class="fa fa-ship"></li><li class="fa fa-plane"></li> @lang('general.boarding_type')</th>
+                                    <th><li class="fa fa-cubes"></li>@lang('general.services')</th>
+                                    <th><li class="fa fa-dollar"></li>@lang('general.rate')</th>
+                                    <th><li class="fa fa-dollar"></li>@lang('general.minimum_fee')</th>
+                                    <th><li class="fa fa-dollar"></li>@lang('general.optional_charge')</th>
+                                    <th><li class="fa fa-dollar"></li>@lang('general.insurance')</th>
+                                    <th><li class="fa fa-percent"></li>@lang('general.tax')</th>
+                                    <th>@lang('general.weight_volume')</th>
+                                    <th>@lang('general.actions')</th>
                                 </tr>
                             </tfoot>
                         </table>

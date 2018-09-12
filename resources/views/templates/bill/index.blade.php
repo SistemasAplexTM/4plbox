@@ -23,7 +23,7 @@
         padding-bottom: 120px;
     }
 </style>
-<div class="row" id="master">
+<div class="row" id="bill">
 	<div class="col-lg-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
@@ -31,7 +31,7 @@
                     Bill of lading
                 </h5>
                 <div class="ibox-tools">
-                    <a href="{{ url('bill/create') }}" data-toggle="tooltip" title="Crear nueva master" class="btn btn-primary" >Nuevo <i class="fa fa-plus" style="font-size: small;"></i></a>
+                    <a href="{{ url('bill/create') }}" data-toggle="tooltip" title="Crear bill of lading" class="btn btn-primary" >Nuevo <i class="fa fa-plus" style="font-size: small;"></i></a>
                 </div>
             </div>
             <div class="ibox-content">

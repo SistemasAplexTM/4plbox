@@ -4,13 +4,13 @@
 {{-- bread crumbs --}}
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Shipper</h2>
+        <h2>@lang('general.shipper')</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#">Home</a>
+                <a href="#">@lang('general.home')</a>
             </li>
             <li class="active">
-                <strong>Shipper (Remitente)</strong>
+                <strong>@lang('general.shipper')</strong>
             </li>
         </ol>
     </div>
@@ -23,7 +23,7 @@
             <div class="col-lg-4">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Registro de Shipper (Remitente)</h5>
+                        <h5>@lang('general.shipper_registration') </h5>
                         <div class="ibox-tools">
                             
                         </div>
@@ -34,7 +34,7 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.agencia_id}">
                                         <div class="col-sm-4">
-                                            <label for="agencia_id" class="control-label gcore-label-top">Agencia:<samp id="require">*</samp></label>
+                                            <label for="agencia_id" class="control-label gcore-label-top">@lang('general.agency'):<samp id="require">*</samp></label>
                                         </div>
                                         <div class="col-sm-8">
                                             <input type="hidden" id="agencia_id_input" value="">
@@ -49,10 +49,10 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.primer_nombre}">
                                         <div class="col-sm-4">
-                                            <label for="primer_nombre" class="control-label gcore-label-top">Nombres:<samp id="require">*</samp></label>
+                                            <label for="primer_nombre" class="control-label gcore-label-top">@lang('general.names'):<samp id="require">*</samp></label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="primer_nombre" name="primer_nombre" id="primer_nombre" value="" placeholder="Nombres" class="form-control" type="text" style="" @click="deleteError('primer_nombre')" />
+                                            <input v-model="primer_nombre" name="primer_nombre" id="primer_nombre" value="" placeholder="@lang('general.names')" class="form-control" type="text" style="" @click="deleteError('primer_nombre')" />
                                             <small id="msn1" class="help-block result-primer_nombre" v-show="listErrors.primer_nombre"></small>
                                         </div>
                                     </div>
@@ -62,10 +62,10 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.segundo_nombre}">
                                         <div class="col-sm-4">
-                                            <label for="segundo_nombre" class="control-label gcore-label-top">Segundo Nombre:</label>
+                                            <label for="segundo_nombre" class="control-label gcore-label-top">@lang('general.second_name'):</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="segundo_nombre" name="segundo_nombre" id="segundo_nombre" value="" placeholder="Segundo nombre" class="form-control" type="text" style="" @click="deleteError('segundo_nombre')" />
+                                            <input v-model="segundo_nombre" name="segundo_nombre" id="segundo_nombre" value="" placeholder="@lang('general.second_name')" class="form-control" type="text" style="" @click="deleteError('segundo_nombre')" />
                                             <small id="msn1" class="help-block result-segundo_nombre" v-show="listErrors.segundo_nombre"></small>
                                         </div>
                                     </div>
@@ -75,10 +75,10 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.primer_apellido}">
                                         <div class="col-sm-4">
-                                            <label for="primer_apellido" class="control-label gcore-label-top">Apellidos:<samp id="require">*</samp></label>
+                                            <label for="primer_apellido" class="control-label gcore-label-top">@lang('general.surnames'):<samp id="require">*</samp></label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="primer_apellido" name="primer_apellido" id="primer_apellido" value="" placeholder="Apellidos" class="form-control" type="text" style="" @click="deleteError('primer_apellido')" />
+                                            <input v-model="primer_apellido" name="primer_apellido" id="primer_apellido" value="" placeholder="@lang('general.surnames')s" class="form-control" type="text" style="" @click="deleteError('primer_apellido')" />
                                             <small id="msn1" class="help-block result-primer_apellido" v-show="listErrors.primer_apellido"></small>
                                         </div>
                                     </div>
@@ -88,10 +88,10 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.segundo_apellido}">
                                         <div class="col-sm-4">
-                                            <label for="segundo_apellido" class="control-label gcore-label-top">Segundo Apellido:</label>
+                                            <label for="segundo_apellido" class="control-label gcore-label-top">@lang('general.second_name'):</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="segundo_apellido" name="segundo_apellido" id="segundo_apellido" value="" placeholder="Segundo apellido" class="form-control" type="text" style="" @click="deleteError('segundo_apellido')" />
+                                            <input v-model="segundo_apellido" name="segundo_apellido" id="segundo_apellido" value="" placeholder="@lang('general.second_name')" class="form-control" type="text" style="" @click="deleteError('segundo_apellido')" />
                                             <small id="msn1" class="help-block result-segundo_apellido" v-show="listErrors.segundo_apellido"></small>
                                         </div>
                                     </div>
@@ -101,7 +101,7 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.direccion}">
                                         <div class="col-sm-4">
-                                            <label for="direccion" class="control-label gcore-label-top">Dirección:<samp id="require">*</samp></label>
+                                            <label for="direccion" class="control-label gcore-label-top">@lang('general.address'):<samp id="require">*</samp></label>
                                         </div>
                                         <div class="col-sm-8">
                                             <input v-model="direccion" name="direccion" id="direccion" value="" placeholder="" class="form-control" type="text" style="" @click="deleteError('direccion')" />
@@ -114,7 +114,7 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.telefono}">
                                         <div class="col-sm-4">
-                                            <label for="telefono" class="control-label gcore-label-top">Teléfono:</label>
+                                            <label for="telefono" class="control-label gcore-label-top">@lang('general.phone'):</label>
                                         </div>
                                         <div class="col-sm-8">
                                             <input v-model="telefono" name="telefono" id="telefono" value="" placeholder="" class="form-control" type="text" style="" @click="deleteError('telefono')" />
@@ -127,7 +127,7 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.correo}">
                                         <div class="col-sm-4">
-                                            <label for="correo" class="control-label gcore-label-top">Correo:</label>
+                                            <label for="correo" class="control-label gcore-label-top">@lang('general.email'):</label>
                                         </div>
                                         <div class="col-sm-8" :class="{ 'has-error': errors.has('correo') }">
                                             <input v-model="correo" name="correo"  class="form-control" type="text" v-validate.disable="'unique'" @click="deleteError('correo')" />
@@ -141,7 +141,7 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.localizacion_id}">
                                         <div class="col-sm-4">
-                                            <label for="localizacion_id" class="control-label gcore-label-top">Ciudad:<samp id="require">*</samp></label>
+                                            <label for="localizacion_id" class="control-label gcore-label-top">@lang('general.city'):<samp id="require">*</samp></label>
                                         </div>
                                         <div class="col-sm-8">
                                             <input type="hidden" id="localizacion_id_input" value="">
@@ -156,7 +156,7 @@
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.zip}">
                                         <div class="col-sm-4">
-                                            <label for="zip" class="control-label gcore-label-top">Código ZIP:</label>
+                                            <label for="zip" class="control-label gcore-label-top">@lang('general.code_zip'):</label>
                                         </div>
                                         <div class="col-sm-4">
                                             <input v-model="zip" name="zip" id="zip" value="" placeholder="" class="form-control" type="text" style="" @click="deleteError('zip')" />
@@ -175,7 +175,7 @@
             <div class="col-lg-8">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Shipper (Remitentes)</h5>
+                        <h5>@lang('general.shipper')</h5>
                     </div>
                     <div class="ibox-content">
                         <!--***** contenido ******-->
@@ -183,22 +183,22 @@
                             <table id="tbl-shipper" class="table table-striped table-hover table-bordered" style="width: 100%;">
                                 <thead>
                                     <tr>
-                                        <th>Nombre</th> 
-                                        <th>Teléfono</th>
-                                        <th>Ciudad</th>
+                                        <th>@lang('general.name')</th> 
+                                        <th>@lang('general.phone')</th>
+                                        <th>@lang('general.city')</th>
                                         <th>Zip</th>
-                                        <th>Agencia</th>
-                                        <th>Acciones</th>
+                                        <th>@lang('general.agency')</th>
+                                        <th>@lang('general.actions')</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>Nombre</th> 
-                                        <th>Teléfono</th>
-                                        <th>Ciudad</th>
+                                        <th>@lang('general.name')</th> 
+                                        <th>@lang('general.phone')</th>
+                                        <th>@lang('general.city')</th>
                                         <th>Zip</th>
-                                        <th>Agencia</th>                                
-                                        <th>Acciones</th>
+                                        <th>@lang('general.agency')</th>
+                                        <th>@lang('general.actions')</th>
                                     </tr>
                                 </tfoot>
                             </table>

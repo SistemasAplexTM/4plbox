@@ -46,7 +46,7 @@
             <th width="250px" style="text-align: right;">
                 <div id="nomAgencia" style="font-size: 20px;">{{ $documento->agencia }}</div>
                 <div id="dirAgencia">{{ $documento->agencia_dir }} - {{ $documento->agencia_ciudad }} - {{ $documento->agencia_depto }}</div>
-                <div id="telAgencia">Teléfono: {{ $documento->agencia_tel }} Zip: {{ $documento->agencia_zip }}</div>
+                <div id="telAgencia">@lang('general.phone'): {{ $documento->agencia_tel }} Zip: {{ $documento->agencia_zip }}</div>
             </th>
         </tr>
         <tr>
@@ -160,7 +160,7 @@
         @else
             <tr>
                 <td colspan="8">
-                    <div id="noDatos">NO HAY DATOS</div>
+                    <div id="noDatos">@lang('general.there_is_no_data')</div>
                 </td>
             </tr>
         @endif

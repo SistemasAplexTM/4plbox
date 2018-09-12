@@ -7,6 +7,7 @@ return [
     'save'     =>  'Save',
     'cancel'   =>  'Cancel',
     'update'   =>  'Update',
+    'print'    =>  'Print',
 
 // Navbar  --> Navbar.bade.php  
  	'message'        => 'Message',
@@ -23,11 +24,11 @@ return [
     'load' =>'Load',
     'documents' => 'Documents',
     'trackings_receipt' =>'Trackings receipt',
-    'master_guide' =>'Master guide',
+    'master_guide' =>'Air waybill',
     'bill_of_lading'=>'Bill of lading',
     'account'=>'Account',
-    'senders'=>'Senders',
-    'addressees'=>'Addressees',
+    'shipper'=>'Shipper',
+    'consignee'=>'Consignee',
     'clients'=>'Clients',
     'reports'=>'Reports',
     'lockens'=>'Lockens',

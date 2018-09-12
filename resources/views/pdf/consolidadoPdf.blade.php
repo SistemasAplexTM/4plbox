@@ -110,20 +110,20 @@
             <div id="nomAgencia">{{ $documento->agencia }}</div>
         </td>
         <td colspan="2">
-            <div id="manifiesto">MANIFIESTO DE CARGA</div>
+            <div id="manifiesto">@lang('general.cargo_manifes')</div>
         </td>
     </tr>
     <tr>
         <td colspan="2"><div id="dirAgencia">{{ $documento->agencia_dir }}</div></td>
-        <td colspan="2"><div id="masterawb">MASTER AWB: {{ $documento->master_id }}</div></td>        
+        <td colspan="2"><div id="masterawb">Master AWB: {{ $documento->master_id }}</div></td>        
     </tr>
     <tr>
         <td colspan="2"><div id="localAgencia">{{ $documento->agencia_ciudad }}, {{ $documento->agencia_depto }}. {{ $documento->agencia_zip }}</div></td>
-        <td colspan="2"><div id="numManifiesto">N° MANIFIESTO: {{ $documento->id }}</div></td> 
+        <td colspan="2"><div id="numManifiesto">N° @lang('general.manifest'): {{ $documento->id }}</div></td> 
     </tr>
     <tr>
         <td colspan="2"><div id="paisAgencia">{{ $documento->agencia_pais }}</div></td>
-        <td colspan="2"><div id="creado">CREADO: {{ $documento->created_at }}</div></td>
+        <td colspan="2"><div id="creado">@lang('created'): {{ $documento->created_at }}</div></td>
     </tr>
     <tr>
         <td colspan="2" style="padding-bottom: 10px;"><div id="telAgencia">{{ $documento->agencia_tel }}</div></td>
@@ -133,13 +133,13 @@
 
     <tr>
         <td style="height: 20px;">
-            <div id="datosVuelo">NUMERO DE CARGA:</div>
+            <div id="datosVuelo">@lang('general.carga_number'):</div>
         </td>
         <td>
             <div id="datosDestino"></div>
         </td>
         <td>
-            <div id="datosVuelo">FECHA VUELO:</div>
+            <div id="datosVuelo">@lang('general.flight_date'):</div>
         </td>
         <td>
             <div id="datosDestino"></div>
@@ -147,7 +147,7 @@
     </tr>
     <tr>
         <td>
-            <div id="datosVuelo">NUMERO DE REFERENCIA:</div>
+            <div id="datosVuelo">@lang('general.reference_number'):</div>
         </td>
         <td>
             <div id="datosDestino"></div>
@@ -163,14 +163,14 @@
 <table  cellspacing="0" cellpadding="0" id="tableDetalle" border="0">
     <thead>
         <tr>
-            <td style="width: 5%;"><div id="detalle">#Bolsa</div></td>
-            <td style="width: 20%;"><div id="detalle">Guia</div></td>
-            <td style=""><div id="detalle">Remitente</div></td>
-            <td style=""><div id="detalle">Destinatario</div></td>
-            <td style="width: 10%;"><div id="detalle">Declarado</div></td>
-            <td style="width: 5%;"><div id="detalle">Piezas</div></td>
-            <td style="width: 5%;"><div id="detalle">Peso</div></td>
-            <td style="width: 11%;"><div id="detalle">Aduanas US</div></td>
+            <td style="width: 5%;"><div id="detalle">#@lang('general.bag')</div></td>
+            <td style="width: 20%;"><div id="detalle">@lang('general.guide')</div></td>
+            <td style=""><div id="detalle">@lang('general.shipper')</div></td>
+            <td style=""><div id="detalle">@lang('general.recipients')</div></td>
+            <td style="width: 10%;"><div id="detalle">@lang('general.declared')</div></td>
+            <td style="width: 5%;"><div id="detalle">@lang('general.pieces')</div></td>
+            <td style="width: 5%;"><div id="detalle">@lang('general.weight')</div></td>
+            <td style="width: 11%;"><div id="detalle">@lang('general.customs') US</div></td>
         </tr>
     </thead>
     <tbody>
@@ -240,7 +240,7 @@
                     </td>
                     <td>3055H</td>
                 </tr>
-                <tr><td colspan="8" style="height: 30px;"><div id="contiene"><strong>Contiene:</strong> {{ $val->contenido2 }}</div></td></tr>
+                <tr><td colspan="8" style="height: 30px;"><div id="contiene"><strong>@lang('general.contains'):</strong> {{ $val->contenido2 }}</div></td></tr>
                 <tr><td colspan="8"><div id="space"></div>&nbsp;</td></tr>
                 <?php
                 $totPiezas += $piezas;
@@ -254,7 +254,7 @@
         @else
             <tr>
                 <td colspan="8">
-                    <div id="noDatos">NO HAY DATOS</div>
+                    <div id="noDatos">@lang('general.there_is_no_data')</div>
                 </td>
             </tr>
         @endif
@@ -271,13 +271,13 @@
                         <td colspan="2" style="text-align: center;font-weight: bold;">{{ $peso }}</td>
                     </tr>
                     <tr>
-                        <td style="text-align: center;font-weight: bold;">TOTAL BOLSAS</td>
-                        <td style="text-align: center;font-weight: bold;">TOTAL GUIAS</td>
+                        <td style="text-align: center;font-weight: bold;">@lang('general.total_bag')</td>
+                        <td style="text-align: center;font-weight: bold;">@lang('total_guides')</td>
                         <td style="text-align: center;font-weight: bold;"></td>
                         <td style="text-align: center;font-weight: bold;"></td>
                         <td style="text-align: center;font-weight: bold;"></td>
-                        <td style="text-align: center;font-weight: bold;">TOTAL PIEZAS</td>
-                        <td colspan="2" style="text-align: center;font-weight: bold;">TOTAL PESO</td>
+                        <td style="text-align: center;font-weight: bold;">@lang('general.total_pieces')</td>
+                        <td colspan="2" style="text-align: center;font-weight: bold;">@lang('general.total_weight')</td>
                     </tr>
                 </table>
             </td>

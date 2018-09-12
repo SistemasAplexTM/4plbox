@@ -26,7 +26,7 @@
                 <a href="#">@lang('documents.home')</a>
             </li>
             <li class="active">
-                <strong>@lang('documents.document')</strong>
+                <strong>@lang('documents.documents')</strong>
             </li>
         </ol>
     </div>
@@ -92,7 +92,7 @@
                                         <table id="tbl-documento" class="table table-striped table-hover table-bordered" style="width: 100%;">
                                             <thead>
                                                 <tr>
-                                                    <th><i class="fa fa-file-text-o" aria-hidden="true" id="icono-doc-table"></i> #@lang('documents.document')</th>
+                                                    <th><i class="fa fa-file-text-o" aria-hidden="true" id="icono-doc-table"></i> #@lang('documents.documents')</th>
                                                     <th><i class="fa fa-calendar" aria-hidden="true"></i> @lang('documents.date')</th>
                                                     <th><i class="fa fa-user" aria-hidden="true"></i> @lang('documents.client_consignee')</th>
                                                     <th><i class="fa fa-balance-scale" aria-hidden="true"></i> 

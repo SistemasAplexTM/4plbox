@@ -7,6 +7,7 @@ return [
     'save'    =>  'Guardar',
     'cancel'  =>  'Cancelar',
     'update'  =>  'Actualizar',
+    'print'   =>  'Imprimir',
 
 // Navbar  --> Navbar.bade.php    
 
@@ -23,12 +24,12 @@ return [
     'profile' => 'Perfil',
     'load' => 'Carga',
     'documents' => 'Documentos',
-    'trackings_receipt' => 'Recibo de trackings',
+    'trackings_receipt' => 'Recibo de rastreo',
     'master_guide' => 'Guías master',
     'bill_of_lading'=>'Bill of lading',
     'account'=>'Cuentas',
-    'senders'=>'Remitentes',
-    'addressees'=>'Destinatarios',
+    'shipper'=>'Remitente',
+    'consignee'=>'Destinatario',
     'clients'=>'Clientes',
     'reports'=>'Reportes',
     'lockens'=>'Casilleros',
@@ -47,7 +48,7 @@ return [
     'administration'=>'Administración',
     'agencies'=>'Agencias',
     'tariffs'=>'Aranceles',
-    'statuss'=>'Status',
+    'status'=>'Estado',
     'transporters'=>'Transportadores',
     'cities'=>'Ciudades',
     'dptos_states'=>'Dptos/Estados',

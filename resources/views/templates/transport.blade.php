@@ -7,7 +7,7 @@
         <h2>{{ ucwords($type) }}</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#">Home</a>
+                <a href="#">@lang('general.home')</a>
             </li>
             <li class="active">
                 <strong>{{ $type }}</strong>
@@ -24,7 +24,7 @@
             <div class="col-lg-5">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Registro de {{ $type }}</h5>
+                        <h5>@lang('general.register_of'){{ $type }}</h5>
                         <div class="ibox-tools">
                             
                         </div>
@@ -36,7 +36,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.localizacion_id}">
                                         <div class="col-sm-4">
-                                            <label for="localizacion_id" class="control-label gcore-label-top">Ciudad:</label>
+                                            <label for="localizacion_id" class="control-label gcore-label-top">@lang('general.city'):</label>
                                         </div>
                                         <div class="col-sm-8">
                                             <input type="hidden" id="localizacion_id_input" value="">
@@ -53,7 +53,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.nombre}">
                                         <div class="col-sm-4">
-                                            <label for="nombre" class="control-label gcore-label-top">Nombre:</label>
+                                            <label for="nombre" class="control-label gcore-label-top">@lang('general.name'):</label>
                                         </div>
                                         <div class="col-sm-8">
                                             <input v-model="nombre" name="nombre" id="nombre" value="" placeholder="" class="form-control" type="text" style="" @click="deleteError('nombre')" />
@@ -83,7 +83,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.zip}">
                                         <div class="col-sm-4">
-                                            <label for="zip" class="control-label gcore-label-top">Código ZIP:</label>
+                                            <label for="zip" class="control-label gcore-label-top">@lang('general.code_zip'):</label>
                                         </div>
                                         <div class="col-sm-8">
                                             <input v-model="zip" name="zip" id="zip" value="" placeholder="" class="form-control" type="text" style="" @click="deleteError('zip')" />
@@ -98,7 +98,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.codigo}">
                                         <div class="col-sm-4">
-                                            <label for="codigo" class="control-label gcore-label-top">Código:</label>
+                                            <label for="codigo" class="control-label gcore-label-top">@lang('general.code'):</label>
                                         </div>
                                         <div class="col-sm-8">
                                             <input v-model="codigo" name="codigo" id="codigo" class="form-control" type="text" maxlength="5" @click="deleteError('codigo')" />
@@ -130,14 +130,14 @@
                         <table id="tbl-aerolineas" class="table table-striped table-hover table-bordered" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th>Nombre</th>
-                                    <th>Dirección</th>
-                                    <th>Ciudad</th>
-                                    <th>Estado</th>
-                                    <th>País</th>
-                                    <th>Zip Code</th>
-                                    <th>Código</th>
-                                    <th>Acciones</th>
+                                    <th>@lang('general.name')</th>
+                                    <th>@lang('general.address')</th>
+                                    <th>@lang('general.city')</th>
+                                    <th>@lang('general.state')</th>
+                                    <th>@lang('general.country')</th>
+                                    <th>@lang('general.zip_code')</th>
+                                    <th>@lang('general.code')</th>
+                                    <th>@lang('general.actions')</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -145,14 +145,14 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Nombre</th>
-                                    <th>Dirección</th>
-                                    <th>Ciudad</th>
-                                    <th>Estado</th>
-                                    <th>País</th>
-                                    <th>Zip Code</th>
-                                    <th>Código</th>
-                                    <th>Acciones</th>
+                                    <th>@lang('general.name')</th>
+                                    <th>@lang('general.address')</th>
+                                    <th>@lang('general.city')</th>
+                                    <th>@lang('general.state')</th>
+                                    <th>@lang('general.country')</th>
+                                    <th>@lang('general.zip_code')</th>
+                                    <th>@lang('general.code')</th>
+                                    <th>@lang('general.actions')</th>
                                 </tr>
                             </tfoot>
                         </table>

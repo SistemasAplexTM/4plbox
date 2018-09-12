@@ -9,7 +9,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Registrar casillero | 4plbox</title>
+    <title>@lang('general.register_locker') | 4plbox</title>
 
     <!-- Styles -->
     <link href="{{ asset('css/plantilla.css') }}" rel="stylesheet">
@@ -51,7 +51,7 @@
                                                 <input type='checkbox' data-toggle="toggle" id='corporativo' data-size='mini' data-on="Corporativo" data-off="Personal" data-width="100" data-style="ios" data-onstyle="warning" data-offstyle="primary">
                                             </div>
                                             <h3>
-                                                Datos generales y dirección de envío
+                                                @lang('general.general_shipping_data')
                                             </h3>
                                             <hr>
                                         </div>
@@ -86,7 +86,7 @@
                                                 <label class="control-label">Ciudad: <span class="asterisco">*</span></label>
                                                 <v-select name="localizacion_id" v-model="localizacion_id" label="name" :filterable="false" :options="ciudades" @search="onSearch" v-validate="'required'" :on-change="setPhoneCode">
                                                     <template slot="no-options">
-                                                      No hay resultados para la busqueda
+                                                  @lang('general.there_are_no_results')
                                                     </template>
                                                     <template slot="option" slot-scope="option">
                                                         <div>
@@ -106,7 +106,7 @@
                                         </div>
                                         <div class="col-md-6 col-sm-6">
                                             <div class="form-group" :class="{'has-error': errors.has('direccion') }">
-                                                <label class="control-label" for="direccion">Dirección <span class="asterisco">*</span></label>
+                                                <label class="control-label" for="direccion">@lang('general.address') <span class="asterisco">*</span></label>
                                                 <input 
                                                     v-model="direccion"
                                                     v-validate.disable="'required'" 
@@ -118,20 +118,20 @@
                                     <div class="row">
                                         <div class="col-lg-6 col-md-12 col-sm-12">
                                             <div class="form-group" :class="{'has-error': errors.has('zip') }">
-                                                <label class="control-label" for="zip">Código Postal:  <span class="asterisco">*</span></label>
+                                                <label class="control-label" for="zip">@lang('general.postal_code')  <span class="asterisco">*</span></label>
                                                 <div class="input-group">
                                                     <input 
                                                     v-model="zip"
                                                     v-validate.disable="'required'" 
                                                     type="number" placeholder="Zip" id="zip" name="zip" class="form-control" value="">
                                                     <label v-show="errors.has('zip')" class="error">@{{ errors.first('zip') }}</label>
-                                                    <span class="input-group-addon" @click="setZip" style="cursor: pointer;">Calcular</span>
+                                                    <span class="input-group-addon" @click="setZip" style="cursor: pointer;">@lang('general.calculate')</span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-12 col-sm-12">
                                             <div class="form-group" :class="{'has-error': errors.has('celular') }">
-                                                <label class="control-label" for="celular">Celular <span class="asterisco">*</span></label> 
+                                                <label class="control-label" for="celular">@lang('general.cell_phone') <span class="asterisco">*</span></label> 
                                                 <div class="input-group">
                                                     <span class="input-group-addon">(+@{{ phone_code }})</span>
                                                     <input 
@@ -147,7 +147,7 @@
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                             <div class="form-group" :class="{'has-error': errors.has('email') }">
-                                                <label class="control-label" for="email">Email <span class="asterisco">*</span></label> 
+                                                <label class="control-label" for="email">@lang('general.email')) <span class="asterisco">*</span></label> 
                                                 <input
                                                  v-model="email" 
                                                  v-validate.disable="'required|email|unique'"
@@ -158,7 +158,7 @@
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                             <div class="form-group" :class="{'has-error': errors.has('email') }">
-                                                <label class="control-label" for="email_confirmation">Confirmar Email <span class="asterisco">*</span></label>
+                                                <label class="control-label" for="email_confirmation">@lang('general.confirm_email')<span class="asterisco">*</span></label>
                                                 <input
                                                 v-validate="'required|confirmed:email'"
                                                  type="email" required="" placeholder="Repite el Email" class="form-control" id="email_confirmation" name="email_confirmation" value="" >
@@ -174,7 +174,7 @@
                                                     v-model="acepta_condiciones" 
                                                     v-validate.disable="'required'" 
                                                     type="checkbox" id="acepta_condiciones" name="acepta_condiciones" value="f" style="">
-                                                    <label for="acepta_condiciones"> He leído los <strong><a href="#" data-toggle="modal" data-target="#modalTerminosCondiciones" data-original-title="" title="">términos y condiciones generales.</a></strong></label>
+                                                    <label for="acepta_condiciones">@lang('general.i_have_read_the') <strong><a href="#" data-toggle="modal" data-target="#modalTerminosCondiciones" data-original-title="" title="">@lang('general.terms_and_conditions')</a></strong></label>
                                                 </div>
                                                 <label v-show="errors.has('acepta_condiciones')" class="error">@{{ errors.first('acepta_condiciones') }}</label>
                                             </div>
@@ -187,7 +187,7 @@
                                                     <input 
                                                     v-model="recibir_info" 
                                                     type="checkbox" id="recibir_info" name="recibir_info" value="f" style="">
-                                                    <label for="recibir_info"> Deseo recibir información de mi casillero y de mi interés.</label>
+                                                    <label for="recibir_info"> @lang('general.i_wish_to_receive_information')</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -196,7 +196,7 @@
                                         <div class="col-lg-12 text-center">
                                             <div class="form-group">
                                                 <button @click.prevent="create" type="button" class="ladda-button btn btn-primary hvr-float-shadow" data-style="zoom-in" title="">
-                                                    <span class="ladda-label"><i class="fa fa-user" aria-hidden="true"></i> Crear casillero</span>
+                                                    <span class="ladda-label"><i class="fa fa-user" aria-hidden="true"></i>@lang('general.create_locker')</span>
                                                     <span class="ladda-spinner"></span>
                                                 </button>
                                             </div>

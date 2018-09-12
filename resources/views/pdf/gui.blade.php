@@ -127,7 +127,7 @@ $toalRegistros = count($detalleConsolidado);
             </tr>
             <tr>
                 <td colspan="3">
-                    <div id="" style="padding-left: 5px; font-weight: bold;">Fecha: {{ $documento->created_at }}</div>
+                    <div id="" style="padding-left: 5px; font-weight: bold;">@lang('general.date'): {{ $documento->created_at }}</div>
                 </td>
             </tr>
             <tr>
@@ -135,7 +135,7 @@ $toalRegistros = count($detalleConsolidado);
                     <table border="1" cellspacing="0" cellpadding="0" id="tbl1" width="50%">
                         <tr>
                             <td>
-                                <div id="remitente">REMITENTE</div>
+                                <div id="remitente">@lang('general.shipper')</div>
                             </td>
                         </tr>
                         <tr>
@@ -167,7 +167,7 @@ $toalRegistros = count($detalleConsolidado);
                     <table border="1" cellspacing="0" cellpadding="0" id="tbl2" width="50%">
                         <tr>
                             <td>
-                                <div id="destinatario">DESTINATARIO</div>
+                                <div id="destinatario">@lang('general.consignee')</div>
                             </td>
                         </tr>
                         <tr>
@@ -202,8 +202,8 @@ $toalRegistros = count($detalleConsolidado);
                 <td colspan="3" style="padding-bottom: 20px;">
                     <table border="1" id="tblContenido" width="100%">
                         <tr>
-                            <td style="font-weight: bold;"><div id="tituloCont">Contenido</div></td>
-                            <td style="width: 6%;border-left: 1px solid #8B91A0;font-weight: bold;"><div id="tituloCont">Piezas</div></td>
+                            <td style="font-weight: bold;"><div id="tituloCont">@lang('general.content')</div></td>
+                            <td style="width: 6%;border-left: 1px solid #8B91A0;font-weight: bold;"><div id="tituloCont">@lang('general.pieces')</div></td>
                             <td style="width: 10%;border-left: 1px solid #8B91A0;font-weight: bold;"><div id="tituloCont">Declarado</div></td>
                             <td style="width: 10%;border-left: 1px solid #8B91A0;font-weight: bold;"><div id="tituloCont">Peso</div></td>
                         </tr>
@@ -227,7 +227,7 @@ $toalRegistros = count($detalleConsolidado);
             </tr>
             <tr>
                 <td colspan="3">
-                    <div id="recibido">Recibido Por:__________________________ Identificacion:____________________ Fecha: DD_____MM_____AAAA______</div>
+                    <div id="recibido">@lang('general.received_by'):__________________________ @lang('general.id'):____________________ @lang('general.date'): DD_____MM_____AAAA______</div>
                 </td>
             </tr>
             <tr>
@@ -239,7 +239,7 @@ $toalRegistros = count($detalleConsolidado);
 
     @endforeach
 @else
-    <div id="noDatos">NO HAY DATOS</div>
+    <div id="noDatos">@lang('general.there_is_no_data')</div>
 @endif
 <script  type="text/javascript">
     function printHTML() {

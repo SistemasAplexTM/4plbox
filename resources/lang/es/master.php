@@ -78,7 +78,7 @@ return [
 
 //    resources/templates/list
 
-'home'=>'Casa',
+'home'=>'Inicio',
 'registered_guides'=>'Guías registradas',
 'airline'=>'Aerolínea',
 'rate'=>'Tarifa',
@@ -87,6 +87,7 @@ return [
 'destination'=>'Destino',
 'manifest'=>'Consolidado',
 'actions'=>'Acciones',
+'new'=>'Nuevo',
 
 
 

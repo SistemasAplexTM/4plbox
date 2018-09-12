@@ -119,12 +119,12 @@
                 <tr>
                     <th style="width: 50%;">
                         <div class="title">
-                            Shipper
+                           @lang('general.shipper')
                         </div>
                     </th>
                     <th>
                         <div class="title">
-                            Consignee
+                           @lang('general.consignee')
                         </div>
                     </th>
                 </tr>
@@ -176,7 +176,7 @@
                     </td> --}}
                     <td style="height: 150px;">
                         <div class="des">
-                            DESC:
+                            Desc:
                             <span id="descripcion">
                                 {{ $value->contenido }}
                                 <br>

@@ -286,9 +286,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('clientes/selectInput/{tableName}', 'ClienteController@selectInput');
 
     /*--- MODULO BL ---*/
-    Route::resource('bill', 'BillLadingController', ['except' => ['show']]);
+    Route::resource('bill', 'BillLadingController', ['except' => ['show', 'create']]);
+    Route::get('bill/create/{bill?}', 'BillLadingController@create');
     Route::get('bill/all', 'BillLadingController@getAll')->name('datatable/all');
     Route::get('bill/delete/{id}/{logical?}', 'BillLadingController@delete')->name('BillLading.delete');
+    Route::get('bill/imprimir/{id_bill}/{simple?}', 'BillLadingController@imprimir');
+    Route::get('bill/restaurar/{id}', 'BillLadingController@restaurar');
+    Route::get('bill/getParties', 'BillLadingController@getParties');
+    Route::post('bill/createPartie', 'BillLadingController@createPartie');
+    Route::put('bill/editPartie/{id}', 'BillLadingController@editPartie');
+    Route::delete('bill/destroyPartie/{id}', 'BillLadingController@destroyPartie');
 });
 Route::get('consignee/vueSelect/{term}', 'ConsigneeController@vueSelect');
 Route::get('shipper/vueSelect/{term}', 'ShipperController@vueSelect');

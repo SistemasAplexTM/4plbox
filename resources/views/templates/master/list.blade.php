@@ -31,7 +31,7 @@
                     @lang('master.registered_guides')
                 </h5>
                 <div class="ibox-tools">
-                    <a href="{{ url('master/create') }}" data-toggle="tooltip" title="Crear nueva master" class="btn btn-primary" >Nuevo <i class="fa fa-plus" style="font-size: small;"></i></a>
+                    <a href="{{ url('master/create') }}" data-toggle="tooltip" title="Crear nueva master" class="btn btn-primary" >@lang('master.new') <i class="fa fa-plus" style="font-size: small;"></i></a>
                 </div>
             </div>
             <div class="ibox-content">

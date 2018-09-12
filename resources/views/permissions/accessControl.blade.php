@@ -5,17 +5,17 @@
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
         <h2>
-            Control de acceso
+           @lang('general.access_control')
         </h2>
         <ol class="breadcrumb">
             <li>
                 <a href="#">
-                    Home
+                   @lang('general.home')
                 </a>
             </li>
             <li class="active">
                 <strong>
-                    Control de acceso
+                     @lang('general.access_control')
                 </strong>
             </li>
         </ol>
@@ -42,7 +42,7 @@
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <h5>
-                    Control de acceso de usuarios
+                  @lang('general.user_access_control')
                 </h5>
                 <div class="ibox-tools">
                 </div>
@@ -62,26 +62,26 @@
                             <div class="row" style="margin-top: 20px;">
                                 <div class="form-group">
                                     <label class="control-label gcore-label-top">
-                                        Permiso especial:
+                                        @lang('general.special_permission'):
                                     </label>
                                     <div class="radio radio-info radio-inline">
                                         <input checked="" id="inlineRadio1" name="special" type="radio" v-bind:value="null" v-model="special">
                                             <label for="inlineRadio1">
-                                                Ninguno
+                                             @lang('general.any')
                                             </label>
                                         </input>
                                     </div>
                                     <div class="radio radio-info radio-inline">
                                         <input id="inlineRadio2" name="special" type="radio" v-model="special" value="all-access">
                                             <label for="inlineRadio2">
-                                                Acceso total
+                                              @lang('general.total_access')
                                             </label>
                                         </input>
                                     </div>
                                     <div class="radio radio-info radio-inline">
                                         <input id="inlineRadio3" name="special" type="radio" v-model="special" value="no-access">
                                             <label for="inlineRadio3">
-                                                Sin acceso
+                                          @lang('general.no_access')
                                             </label>
                                         </input>
                                     </div>
@@ -94,7 +94,7 @@
                                             <tr>
                                                 <th>
                                                     <span>
-                                                        Módulos del sistema
+                                                       @lang('general.system_modules')
                                                     </span>
                                                 </th>
                                                 <th>
@@ -191,7 +191,7 @@
                                                     <button @click="savePermissions()" class="ladda-button btn btn-success pull-right" data-style="expand-right" type="button" v-if="role_id != null">
                                                         <i class="fa fa-save">
                                                         </i>
-                                                        Guardar
+                                                      @lang('general.save')  
                                                     </button>
                                                 </td>
                                             </tr>
@@ -207,7 +207,7 @@
                                 <thead>
                                     <tr>
                                         <td>
-                                            Acción especial para el modulo: <strong>(@{{ name_module }})</strong>
+                                            @lang('general.special_action_for_the_module') <strong>(@{{ name_module }})</strong>
                                         </td>
                                         <td>
                                         </td>
@@ -234,7 +234,7 @@
                                             <button @click="saveSpecialPermissions()" class="ladda-button btn btn-primary pull-right" data-style="expand-right" type="button" v-if="role_id != null">
                                                 <i class="fa fa-save">
                                                 </i>
-                                                Guardar
+                                                 @lang('general.save')  
                                             </button>
                                         </td>
                                     </tr>

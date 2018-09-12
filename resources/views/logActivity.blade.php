@@ -4,7 +4,7 @@
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
         <h2>
-            Logs de usuarios
+         @lang('general.users_logs')
         </h2>
     </div>
 </div>
@@ -21,17 +21,17 @@
 </style>
 <div class="row" id="homeIndex">
     <div class="col-lg-12">
-    	<h1>Registro de lista de actividades</h1>
+    	<h1>@lang('general.list_of_activities_list')</h1>
         <table id="tbl-log" class="table table-striped table-hover table-bordered" style="width: 100%;">
 		<thead>
 			<tr>
-				<th>Acción</th>
+				<th>@lang('general.action')</th>
 				<th>URL</th>
-				<th>Metodo</th>
+				<th>@lang('general.method')</th>
 				<th>Ip</th>
-				<th width="300px">Agente de usuario</th>
-				<th>Usuario</th>
-				<th>Agencia</th>
+				<th width="300px">@lang('general.user_agent')</th>
+				<th>@lang('general.user')</th>
+				<th>@lang('general.agency')</th>
 			</tr>
 		</thead>
 	</table>

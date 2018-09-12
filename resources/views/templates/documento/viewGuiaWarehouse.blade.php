@@ -411,7 +411,7 @@
                                                                         <!--Información del Consignatario-->
                                                                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                                             <tr height="20px">
-                                                                                <td width="20%" style="background-color: lightgray;"><b>@lang('documents.warehouses')</b></td>
+                                                                                <td width="20%" style="background-color: lightgray;"><b>@lang('documents.warehouse')</b></td>
                                                                                 <td width="20%" style="background-color: lightgray;"><b>@lang('documents.content')</b></td>
                                                                                 <td width="20%" style="background-color: lightgray;"><b>@lang('documents.weight')(lb)</b></td>
                                                                             </tr>

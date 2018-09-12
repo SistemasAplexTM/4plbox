@@ -240,7 +240,7 @@ $toalRegistros = count($detalleConsolidado);
                         </tr>
                         <tr>
                             <td colspan="2" style="padding: 5px;">
-                                <div id="anuncio">The sender declares that he/she is not sending money, guns, chemicals, jewerly or drugs and he understands that the freight has been insured with 100% of the declare value.Understanding that if there is any total lost,there will be refound of the 100 % of the declare value.if there is partial lost,the refund will be proportional of the lost weight .we are not responsable of broken or damage merchandise .I certify that this shipment does not contain any unauthorized explosive,destructive devices or hazardous materials.I consent to a search of this shipment .I am aware that this endorsement and original signature,along with other shipping documents will be retained on file until the shipment is delivered.shipper hereby consents to a search or ispection of the cargo,including screening of the cargo.</div>
+                                <div id="anuncio">@lang('general.ad')</div>
                             </td>
                         </tr>
                     </table>

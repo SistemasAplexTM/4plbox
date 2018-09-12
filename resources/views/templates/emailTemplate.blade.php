@@ -4,13 +4,13 @@
 {{-- bread crumbs --}}
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Plantillas Email</h2>
+        <h2>@lang('general.email_templates')</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#">Home</a>
+                <a href="#">@lang('general.home')</a>
             </li>
             <li class="active">
-                <strong>Plantillas Email</strong>
+                <strong>@lang('general.email_templates')</strong>
             </li>
         </ol>
     </div>
@@ -33,7 +33,7 @@
             <div class="col-lg-7">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Registro de Plantillas Email</h5>
+                        <h5>@lang('general.email_templates_registration')</h5>
                         <div class="ibox-tools">
                             
                         </div>
@@ -46,28 +46,28 @@
                                 <div class="mail-box">
                                     <div class="mail-body">
                                         <div class="form-group" :class="{'has-error': listErrors.nombre}">
-                                        	<label class="col-sm-3 control-label" for="nombre">Nombre:</label>
+                                        	<label class="col-sm-3 control-label" for="nombre">@lang('general.name'):</label>
                                             <div class="col-sm-9">
                                                 <input type="text" v-model="nombre" placeholder="Identificación del mensaje" class="form-control" value="" id="nombre" name="nombre" @click="deleteError('nombre')">
                                                 <small id="msn1" class="help-block result-nombre" v-show="listErrors.nombre"></small>
                                             </div>
                                         </div>
                                         <div class="form-group" :class="{'has-error': listErrors.descripcion_plantilla}">
-                                        	<label class="col-sm-3 control-label">Descripción:</label>
+                                        	<label class="col-sm-3 control-label">@lang('general.description'):</label>
                                             <div class="col-sm-9">
                                                 <input type="text" v-model="descripcion_plantilla" placeholder="Descripción general del mensaje" class="form-control" value="" id="descripcion_plantilla" name="descripcion_plantilla" @click="deleteError('descripcion_plantilla')">
                                                 <small id="msn1" class="help-block result-descripcion_plantilla" v-show="listErrors.descripcion_plantilla"></small>
                                             </div>
                                         </div>
                                         <div class="form-group" :class="{'has-error': listErrors.subject}">
-                                        	<label class="col-sm-3 control-label">Subject:</label>
+                                        	<label class="col-sm-3 control-label">@lang('general.subject'):</label>
                                             <div class="col-sm-9">
                                                 <input type="text" v-model="subject" placeholder="" class="form-control" value=""  id="subject" name="subject" @click="deleteError('subject')">
                                                 <small id="msn1" class="help-block result-subject" v-show="listErrors.subject"></small>
                                             </div>
                                         </div>
                                         <div class="form-group" :class="{'has-error': listErrors.otros_destinatarios}">
-                                        	<label class="col-sm-3 control-label">Destinatarios:</label>
+                                        	<label class="col-sm-3 control-label">@lang('general.recipients'):</label>
                                             <div class="col-sm-9">
                                                 <input type="text" v-model="otros_destinatarios" placeholder="Otros destinatarios" class="form-control" value="" id="otros_destinatarios" name="otros_destinatarios" @click="deleteError('otros_destinatarios')">
                                                 <small id="msn1" class="help-block result-otros_destinatarios" v-show="listErrors.otros_destinatarios"></small>
@@ -78,7 +78,7 @@
                                         	<div class="col-sm-9">
 		                                        <div class="checkbox checkbox-success checkbox-inline">
 		                                            <input v-model="email_file" type="checkbox" id="email_file" name="email_file">
-		                                            <label for="email_file">Enviar documento adjunto en el email</label>
+		                                            <label for="email_file">@lang('general.send_attached_document')</label>
 		                                        </div>
                                         	</div>
                                         </div>
@@ -103,7 +103,7 @@
         <div class="col-lg-5">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Plantillas Email</h5>
+                    <h5>@lang('general.email_templates')</h5>
                     <div class="ibox-tools">
 
                     </div>
@@ -112,7 +112,7 @@
                 	<div>
 						<!-- Nav tabs -->
 						<ul class="nav nav-tabs" role="tablist">
-							<li role="plantillas" class="active"><a href="#table" aria-controls="table" role="tab" data-toggle="tab">Tabla</a></li>
+							<li role="plantillas" class="active"><a href="#table" aria-controls="table" role="tab" data-toggle="tab">@lang('general.table')</a></li>
 							<li role="plantillas"><a href="#variables" aria-controls="variables" role="tab" data-toggle="tab">Variables</a></li>
 						</ul>
 
@@ -123,16 +123,16 @@
 			                        <table id="tbl-emailTemplate" class="table table-striped table-hover table-bordered" style="width: 100%;">
 			                            <thead>
 			                                <tr>
-			                                    <th>Nombre</th>
-			                                    <th>Descripción</th>
-			                                    <th style="width: 80px;">Acciones</th>
+			                                    <th>@lang('general.name')</th>
+			                                    <th>@lang('general.description')</th>
+			                                    <th style="width: 80px;">@lang('general.actions')</th>
 			                                </tr>
 			                            </thead>
 			                            <tfoot>
 			                                <tr>
-			                                    <th>Nombre</th>
-			                                    <th>Descripción</th>
-			                                    <th>Acciones</th>
+												<th>@lang('general.name')</th>
+			                                    <th>@lang('general.description')</th>
+			                                    <th>@lang('general.actions')</th>
 			                                </tr>
 			                            </tfoot>
 			                        </table>
@@ -143,7 +143,7 @@
 									<div class="col-lg-12">
 										<div class="col-lg-12" style="margin-top: 20px;">
 											<div class="panel panel-info">
-												<div class="panel-heading">Datos Documento</div>
+												<div class="panel-heading">@lang('general.document_data')</div>
 												<!-- List group -->
 												  <ul class="list-group">
 												    <li class="list-group-item">{num_guia}</li>
@@ -157,14 +157,14 @@
 												  </ul>
 											</div>
 											<div class="panel panel-info">
-												<div class="panel-heading">Datos Shipper</div>
+												<div class="panel-heading">@lang('general.data_shipper')</div>
 												<!-- List group -->
 												  <ul class="list-group">
 												    <li class="list-group-item">{nom_shipper}</li>
 												  </ul>
 											</div>
 											<div class="panel panel-info">
-												<div class="panel-heading">Datos consignee</div>
+												<div class="panel-heading">@lang('general.data_consignee')</div>
 												<!-- List group -->
 												  <ul class="list-group">
 												    <li class="list-group-item">{nom_consignee}</li>
@@ -182,7 +182,7 @@
 												  </ul>
 											</div>
 											<div class="panel panel-info">
-												<div class="panel-heading">Datos firma - Agencia</div>
+												<div class="panel-heading">@lang('general.signature_data_agency')</div>
 												<!-- List group -->
 												  <ul class="list-group">
 												    <li class="list-group-item">{id_agencia}</li>
@@ -196,7 +196,7 @@
 												  </ul>
 											</div>
 											<div class="panel panel-info">
-												<div class="panel-heading">Datos Detalle mensaje</div>
+												<div class="panel-heading">@lang('general.data_detail_message')</div>
 												<!-- List group -->
 												  <ul class="list-group">
 												    <li class="list-group-item">{datos_detalle}</li>

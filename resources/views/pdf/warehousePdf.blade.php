@@ -105,12 +105,12 @@
                             </tr>
                             <tr>
                                 <td align="left">
-                                    <span style="font-weight:bold;">Telefono:</span> {{ ((isset($documento->agencia_dir) and $documento->agencia_dir != '') ? $documento->agencia_dir : '') }}
+                                    <span style="font-weight:bold;">@lang('general.phone'):</span> {{ ((isset($documento->agencia_dir) and $documento->agencia_dir != '') ? $documento->agencia_dir : '') }}
                                 </td>
                             </tr>
                             <tr>
                                 <td align="left">
-                                    <span style="font-weight:bold;">Fecha:</span> {{ ((isset($documento->created_at) and $documento->created_at != '') ? $documento->created_at : '') }}
+                                    <span style="font-weight:bold;">@lang('general.date'):</span> {{ ((isset($documento->created_at) and $documento->created_at != '') ? $documento->created_at : '') }}
                                 </td>
                             </tr>
                         </table>
@@ -124,7 +124,7 @@
                             </tr>
                             <tr>
                                 <td align="right">
-                                    <span style="font-weight:bold;">Usuario: </span>{{ ((isset($documento->usuario) and $documento->usuario != '') ? $documento->usuario : '') }}
+                                    <span style="font-weight:bold;">@lang('general.user'): </span>{{ ((isset($documento->usuario) and $documento->usuario != '') ? $documento->usuario : '') }}
                                 </td>
                             </tr>
                         </table>
@@ -140,24 +140,24 @@
                                     <td colspan="3"> {{ ((isset($documento->ship_nomfull) and $documento->ship_nomfull != '') ? $documento->ship_nomfull : '') }} </td>
                                 </tr>
                                 <tr height="20px">
-                                    <td><b>Dirección:</b></td>
+                                    <td><b>@lang('general.address'):</b></td>
                                     <td colspan="3"><div id="dir" style="height: 28px;">{{ ((isset($documento->ship_dir) and $documento->ship_dir != '') ? $documento->ship_dir : '') }}</div></td>
 
                                 </tr>
                                 <tr height="20px">
-                                    <td><b>Teléfono:</b></td>
+                                    <td><b>@lang('general.phone'):</b></td>
                                     <td width="33%"> {{ ((isset($documento->ship_tel) and $documento->ship_tel != '') ? $documento->ship_tel : '') }} </td>
-                                    <td width="19%"><b>Ciudad:</b> </td>
+                                    <td width="19%"><b>@lang('general.city'):</b> </td>
                                     <td width="28%"> {{ ((isset($documento->ship_ciudad) and $documento->ship_ciudad != '') ? $documento->ship_ciudad : '') }} </td>
                                 </tr>
                                 <tr height="20px">
-                                    <td><b>Estado:</b></td>
+                                    <td><b>@lang('general.state'):</b></td>
                                     <td colspan="1"> {{ ((isset($documento->ship_depto) and $documento->ship_depto != '') ? $documento->ship_depto : '') }} </td>
                                     <td><b>Zip:</b></td>
                                     <td>{{ ((isset($documento->ship_zip) and $documento->ship_zip != '') ? $documento->ship_zip : '') }}</td>
                                 </tr>
                                 <tr height="20px">
-                                    <td><b>Email:</b></td>
+                                    <td><b>@lang('general.email'):</b></td>
                                     <td colspan="3" style="font-size: 10px;"> {{ ((isset($documento->ship_email) and $documento->ship_email != '') ? $documento->ship_email : '') }} </td>
                                 </tr>
                             </table>
@@ -172,17 +172,17 @@
                                     <td colspan="3"> {{ ((isset($documento->cons_nomfull) and $documento->cons_nomfull != '') ? $documento->cons_nomfull : '') }} </td>
                                 </tr>
                                 <tr height="20px">
-                                    <td><b>Dirección:</b></td>
+                                    <td><b>@lang('general.address'):</b></td>
                                     <td colspan="3"><div id="dir" style="height: 28px;">{{ ((isset($documento->cons_dir) and $documento->cons_dir != '') ? $documento->cons_dir : '') }}</div>  </td>
                                 </tr>
                                 <tr height="20px">
-                                    <td><b>Teléfono:</b></td>
+                                    <td><b>@lang('general.phone'):</b></td>
                                     <td width="33%"> {{ ((isset($documento->cons_tel) and $documento->cons_tel != '') ? $documento->cons_tel : '') }} </td>
-                                    <td width="19%"><b>Cédula:</b> </td>
+                                    <td width="19%"><b>@lang('general.identification_card'):</b> </td>
                                     <td width="28%"> {{ ((isset($documento->cons_documento) and $documento->cons_documento != '') ? $documento->cons_documento : '') }} </td>
                                 </tr>
                                 <tr height="20px">
-                                    <td><b>Ciudad:</b></td>
+                                    <td><b>@lang('general.city'):</b></td>
                                     <td width="33%" style="font-size: 10px;"> {{ ((isset($documento->cons_ciudad) and $documento->cons_ciudad != '') ? $documento->cons_ciudad : '') }} </td>
                                     <td width="19%"><b>C.P:</b></td>
                                     <td width="28%"> {{ ((isset($documento->cons_zip) and $documento->cons_zip != '') ? $documento->cons_zip : '') }}</td>
@@ -201,14 +201,14 @@
                         <div id="apDiv7">
                             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
-                                    <td  height="10"><b>Factura:</b> &nbsp;{{ ((isset($documento->factura) and $documento->factura != 0) ? 'Si' : 'No') }}</td>
-                                    <td ><b>Carga Peligrosa:</b> &nbsp;{{ ((isset($documento->carga_peligrosa) and $documento->carga_peligrosa != 0) ? 'Si' : 'No') }}</td>
-                                    <td ><b>Re-Empacado:</b> &nbsp;{{ ((isset($documento->re_empacado) and $documento->re_empacado != 0) ? 'Si' : 'No') }}</td>
-                                    <td ><b>Mal Empacado:</b> &nbsp;{{ ((isset($documento->mal_empacado) and $documento->mal_empacado != 0) ? 'Si' : 'No') }}</td>
-                                    <td><b>Rota:</b> &nbsp;{{ ((isset($documento->rota) and $documento->rota != 0) ? 'Si' : 'No') }}</td>
+                                    <td  height="10"><b>@lang('general.invoice'):</b> &nbsp;{{ ((isset($documento->factura) and $documento->factura != 0) ? 'Si' : 'No') }}</td>
+                                    <td ><b>@lang('general.dangerous_load'):</b> &nbsp;{{ ((isset($documento->carga_peligrosa) and $documento->carga_peligrosa != 0) ? 'Si' : 'No') }}</td>
+                                    <td ><b>@lang('general.repacking'):</b> &nbsp;{{ ((isset($documento->re_empacado) and $documento->re_empacado != 0) ? 'Si' : 'No') }}</td>
+                                    <td ><b>@lang('general.bad_packaging'):</b> &nbsp;{{ ((isset($documento->mal_empacado) and $documento->mal_empacado != 0) ? 'Si' : 'No') }}</td>
+                                    <td><b>@lang('general.broken'):</b> &nbsp;{{ ((isset($documento->rota) and $documento->rota != 0) ? 'Si' : 'No') }}</td>
                                 </tr>
                                 <tr>
-                                    <td valign="top" style="height: 50px;"><b>Observaciones:</b></td>
+                                    <td valign="top" style="height: 50px;"><b>@lang('general.observations'):</b></td>
                                     <td height="15" colspan="5" valign="top"><span style="padding:4px 0 0 0"> {{ ((isset($documento->observaciones) and $documento->observaciones != '') ? $documento->observaciones : '') }} </span></td>
                                 </tr>
                             </table>
@@ -224,14 +224,14 @@
                             <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000" style="border-collapse:collapse;">
                                 <tr>
                                     <th width="2%" rowspan="2" bgcolor="lightgray" scope="col" id="titulo_detalle">#.</th>
-                                    <th width="6%" rowspan="2" bgcolor="lightgray" scope="col" id="titulo_detalle">CÓDIGO</th>
-                                    <th width="" rowspan="2" bgcolor="lightgray" scope="col" id="titulo_detalle">CONTENIDO</th>
+                                    <th width="6%" rowspan="2" bgcolor="lightgray" scope="col" id="titulo_detalle">@lang('general.code')</th>
+                                    <th width="" rowspan="2" bgcolor="lightgray" scope="col" id="titulo_detalle">@lang('general.content')</th>
                                     <th width="3%" rowspan="2" bgcolor="lightgray" scope="col" id="titulo_detalle">L</th>
                                     <th width="3%" rowspan="2" bgcolor="lightgray" scope="col" id="titulo_detalle">W</th>
                                     <th width="3%" rowspan="2" bgcolor="lightgray" scope="col" id="titulo_detalle">H</th>
-                                    <th width="5%" rowspan="2" bgcolor="lightgray" scope="col" id="titulo_detalle">PESO LBS</th>
-                                    <th colspan="2" bgcolor="lightgray" scope="col" id="titulo_detalle">PESO VOL</th>
-                                    <th colspan="2" bgcolor="lightgray" scope="col" id="titulo_detalle">VOLUMEN</th>
+                                    <th width="5%" rowspan="2" bgcolor="lightgray" scope="col" id="titulo_detalle">@lang('general.weight') Lbs</th>
+                                    <th colspan="2" bgcolor="lightgray" scope="col" id="titulo_detalle">@lang('general.weight') Vol</th>
+                                    <th colspan="2" bgcolor="lightgray" scope="col" id="titulo_detalle">@lang('general.volume')</th>
                                 </tr>
                                 <tr>
                                     <th width="5%" bgcolor="lightgray" scope="col" id="titulo_detalle">LBS</th>
@@ -281,14 +281,14 @@
                         <div id="apDiv9">
                             <table width="100%" border="1" cellpadding="0" cellspacing="1" bordercolor="#000000" style="border-collapse:collapse;">
                                 <tr>
-                                    <th width="300px" rowspan="2" scope="col"><span style="font-size:20px; color:#666">Recibe</span></th>
-                                    <th width="" height="10" bgcolor="lightgray" scope="col" style="font-size: 10px;">PIEZAS</th>
-                                    <th width="" bgcolor="lightgray" scope="col" style="font-size: 10px;">LIBRAS</th>
-                                    <th width="" bgcolor="lightgray" scope="col" style="font-size: 10px;">VOL. LBS</th>
-                                    <th width="" bgcolor="lightgray" scope="col" style="font-size: 10px;">KLS</th>
-                                    <th width="" bgcolor="lightgray" scope="col" style="font-size: 10px;">VOL. KLS</th>
-                                    <th width="" bgcolor="lightgray" scope="col" style="font-size: 10px;">VOL. CFT</th>
-                                    <th width="" bgcolor="lightgray" scope="col" style="font-size: 10px;">VOL.CMT</th>
+                                    <th width="300px" rowspan="2" scope="col"><span style="font-size:20px; color:#666">@lang('general.receives')</span></th>
+                                    <th width="" height="10" bgcolor="lightgray" scope="col" style="font-size: 10px;">@lang('general.pieces')</th>
+                                    <th width="" bgcolor="lightgray" scope="col" style="font-size: 10px;">@lang('general.pounds')</th>
+                                    <th width="" bgcolor="lightgray" scope="col" style="font-size: 10px;">Vol. LBS</th>
+                                    <th width="" bgcolor="lightgray" scope="col" style="font-size: 10px;">Kls</th>
+                                    <th width="" bgcolor="lightgray" scope="col" style="font-size: 10px;">Vol. KLS</th>
+                                    <th width="" bgcolor="lightgray" scope="col" style="font-size: 10px;">Vol. CFT</th>
+                                    <th width="" bgcolor="lightgray" scope="col" style="font-size: 10px;">Vol. CMT</th>
                                 </tr>
                                 <tr>
                                     <td height="10" align="center"><span id="total_detail">{{ $total_piezas }} </span></td>
@@ -312,29 +312,28 @@
                                         <tr>
                                             <th colspan="2" style="text-align: center;">
                                                 <div id="apDiv15">
-                                                    <span class="importante">¡IMPORTANTE!</span>
-                                                    EL RECIBO SE COBRARÁ POR EL VALOR MAYOR, (PESO O VOLUMEN) PARA LOS ENVÍOS AÉREOS.
+                                                    <span class="importante">@lang('general.important')</span>
+                                                @lang('general.the_receipt_will_be_charged')
                                                 </div>
                                                 <div id="apDiv15">
                                                     <span class="importante">
-                                                        NO NOS HACEMOS RESPONSABLES DE DAÑOS EN TELEVISORES QUE NO VIAJEN EN  CAJA
-                                                        DE MADERA.
+                                                  @lang('general.we_are_not_responsible')
                                                     </span>
                                                 </div>      
                                             </th>
                                         </tr>
                                         <tr>
                                             <th colspan="2" style="text-align: center;">
-                                                <div id="apDiv18">REVISAR LA MERCANCÍA ANTES DE RETIRARLA DE LA OFICINA EN COLOMBIA, LUEGO DE ESTO, NO SE ACEPTARÁ NINGÚN RECLAMO. ALL CARGO </div>    
+                                                <div id="apDiv18">@lang('general.review_the_merchandise')</div>    
                                             </th>
 
                                         </tr>
                                         <tr>
                                             <td colspan="2">
                                                 <div id="infGuia"> The sender declares that he/she is not sending money, guns, chemicals, jewerly or drugs and he understands that the freight has been insured with 100% of the declare
-                                                    value.Understanding that if there is any total lost,there will be refound of the 100 % of the declare value.if there is partial lost,the refund will be proportional of the lost
-                                                    weight .we are not responsable of broken or damage merchandise .I certify that this shipment does not contain any unauthorized explosive,destructive devices or hazardous
-                                                    materials.I consent to a search of this shipment .I am aware that this endorsement and original signature,along with other shipping documents will be retained on file until the
+                                                    value. Understanding that if there is any total lost,there will be refound of the 100 % of the declare value.if there is partial lost,the refund will be proportional of the lost
+                                                    weight. We are not responsable of broken or damage merchandise .I certify that this shipment does not contain any unauthorized explosive,destructive devices or hazardous
+                                                    materials. I consent to a search of this shipment .I am aware that this endorsement and original signature,along with other shipping documents will be retained on file until the
                                                     shipment is delivered.shipper hereby consents to a search or ispection of the cargo,including screening of the cargo.
                                                 </div>
                                             </td>
