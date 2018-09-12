@@ -282,6 +282,92 @@ return [
     'you_do_not_have_permits'=>'403 - No tienes permisos para entrar',
      'go_to_home'=>'Ir al home',
      'action_does_not_exist'=>'404 - El modulo o la acción no existe',
+     'cargo_manifest'=>'Manifiesto de carga.',
+     
+
+     //Pdf
+
+     //billPdf
+
+     'bill_of_lading'=>'Guía de carga',
+
+      //considadoGuiasPdf
+
+     'ad'=>'El remitente declara que no está enviando dinero, armas, productos químicos, joyas o drogas y entiende que el flete ha sido asegurado con el 100% del valor declarado. Entendiendo que si se pierde un total, se volverá a encontrar el 100% del valor de declaración. Si se pierde parcialmente, el reembolso será proporcional al peso perdido. No somos responsables de la mercancía rota o dañada. Certifico que este envío no contiene ningún explosivo no autorizado, dispositivos destructivos o peligrosos. materiales.Ofdo a una búsqueda de este envío. Soy consciente de que este endoso y firma original, junto con otros documentos de envío se conservarán en el archivo hasta que se entregue el envío. El expedidor consiente en la búsqueda o inspección de la carga, incluyendo proyección de la carga.',
+
+     //consolidadoGuiaspdf2
+
+    'time'=>'Hora',
+    'message_goods'=>'Los bienes aquí escritos se aceptan aparentemente en buenas condiciones para su transporte de acuerdo a las   siguientes cláusulas COLOMBIANA DE CARGA CORP. brindara el servicio según lo solicita el remitente y hará los arreglos necesarios para el transporte aéreo a través de una aerolínea directa y responsable. COLOMBIANA DE CARGA CORP. Asegurara este paquete contra perdidas o daños al valor normal de mercado limite de U$100,oo dólares durante la recogida y la entrega. La responsabilidad de COLOMBIANA DE CARGA de acuerdo con este párrafo será reducida por el valor de cualquier otro seguro qué tenga el embarcador o por la perdida o daño del embarque. El remitente garantiza a COLOMBIANA DE CARGA CORP. Que el contenido del embarque puede ser legalmente embarcado en aviones o barcos y no contiene sustancias prohibidas de acuerdo  reglamentos y regulaciones vigentes y que se encuentra adecuadamente envuelto para su propósito si es necesario. El mitente indemnizara a COLOMBIANA DE CARGA CORP. cualquier daño que sufra esta última por violar esta regulación. Esto autoriza a COLOMBIANA DE CARGA CORP. o a sus agentes para designar a un corredor de aduana para que actué en representación del consignatario que es nombrado para que efectué el trámite aduanero.',
+    'note_for_sample'=>'Nota: Para muestra (S.P.X) favor anexar factura comercial * Original y copia',
+    'by_dispatching_this_shipping'=>'Al despachar este envio manifiesto que su contenido no es dinero, joyas, valores negociables, ni objetos de prohibido transporte.',
+    'the_cargo_can_be_inspected'=>'La carga puede ser inspeccionada por las autoridades competentes, tanto en el país de origen como en el país de destino (TSA, DIAN, etc.)',
+
+     //consolidadoPdf
+
+     'manifest'=>'Manifiesto',
+     'created'=>'Creado',
+     'cargo_number'=>'Número de carga',
+     'flight_date'=>'Fecha vuelo',
+     'reference_number'=>'Número de referencia',
+     'pieces'=>'Piezas'
+     'declared'=>'Declarado',
+     'bag'=>'Bolsa',
+     'customs'=>'Aduanas',
+     'there_is_no_data'=>'No hay datos',
+     'total_bag'=>'Total bolsas',
+     'total_guides'=>'Total guidas',
+     'total_pieces'=>'Total piezas',
+     'total_weight'=>'Total peso',
+
+    //consolidadoGuiasPdf2
+
+    'from_shipper'=>'Del remitente',
+    'to_consigned'=>'Para consignados',
+
+
+    //consolidadPdf
+    'contains'=>'Contiene',
+
+     //Consulta
+     'report'=>'Informe',
+
+     //gui
+
+     'received_by'=>'Recibido por',
+     'id'=>'Identificación',
+
+    //guiaPdf
+
+    'identification_card'=>'Cédula',
+    'shipping_type'=>'Tipo de envío',
+    'shipment'=>'Embarque',
+    'observations'=>'Observaciones',
+    'way_to_pay'=>'Forma de pago',
+    'pounds'=>'Libras',
+    'value'=>'Valor',
+    'discount'=>'Descuento',
+    'others'=>'Otros',
+    'important'=>'¡Importante!',
+    'the_receipt_will_be_charged'=>'El recibo se cobrará por el valor mayor, (peso o volumén) para los envíos aéreos.',
+    'we_are_not_responsible'=>'No nos hacemos responsables de daños en televisores que no viajen en  caja  de madera.',
+    'review_the_merchandise'=>'Revisar la mercancía antes de retirarse de la oficina en Colombia, luego de esto, no se aceptará ningún reclamo. Todo cargo.',
+    'commercial_invoice'=>'Factura comercial',
+    'invoice'=>'Factura',
+    'signature'=>'Firma',
+    'declare1'=>'Declaro que lo que se afirma en este documento es que no envío dinero, explosivos, drogas, armas, productos químicos peligrosos ni joyas con fines comerciales. Asimismo, declaro que no se han enviado más de 6 artículos de la misma clase y que el contenido del libro está declarado en su totalidad, de acuerdo con el art. 2 y 3 de la resolución 994 del 02/04/2011 de acuerdo con el art. 123 y siguientes del Decreto 2685/99.',
+
+    //warehousePdf
+
+    'dangerous_load'=>'Carga peligrosa',
+    'repacking'=>'Reempacado',
+    'bad_packaging'=>'Mal empacado',
+    'broken'=>'Rota',
+    'receives'=>'Recibe',
+    'the_receipt_will_be_charged'=>'El recibo se cobrará por el valor mayor, (peso o volumen) para los envíos aéreos.',
+     'i_certify1'=>'Certifico que el contenido del presente envío, se ajusta a lo declarado en la guía',
+     'i_certify2'=>'y me hago directamente responsable, ante las autoridades nacionales y extranjeras por el contenido, valor declarado y este envío cumple los parámetros aduaneros del país de destino',
+     'i_certify3'=>'Adicionalmente certifico que el envío no contiene dinero, valores negociables, ni objetos de prohibido transporte, según las normas internacionales y la legislación aplicable en el país de destino u origen, Por lo tanto, acuerdo indemnizar y absolver, por cualquier reclamo, obligación y/o costo debido al incumplimineto de cualquier ley o regulación aplicable en el país de origen o destino, de la mercancía amparada en este documento.',
 
 
 

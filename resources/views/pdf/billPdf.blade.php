@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Documento sin título</title>
+<title>@lang('general.bill_of_lading')</title>
 	<style>
 		*{
 			font-family: Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif"
@@ -49,7 +49,7 @@
 		<thead>
 			<tr>
 				<td style="padding-left: 5px;font-size: 25px">Dole</td>
-				<td style="text-align: right;padding-right: 5px;font-size: 25px">BILL OF LADING</td>
+				<td style="text-align: right;padding-right: 5px;font-size: 25px">@lang('general.bill_of_lading')</td>
 			</tr>
 		</thead>
 		<tbody style="border: 1px solid #030303;">
@@ -70,7 +70,7 @@
 									<tr>
 										<td style="width: 70%;height: 40px"></td>
 										<td class="b-top b-left" valign="top">
-											<div style="font-size: 10px;margin-left: 2px">ZIP CODE</div>
+											<div style="font-size: 10px;margin-left: 2px">ZIP CO'DE</div>
 										</td>
 									</tr>
 								</table>

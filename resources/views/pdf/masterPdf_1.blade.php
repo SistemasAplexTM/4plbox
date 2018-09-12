@@ -327,7 +327,7 @@
 					                    <div>{{ $data->direccion_shipper }}</div>
 					                    <div>{{ $data->ciudad_shipper }}, {{ $data->estado_shipper }} - {{ $data->pais_shipper }} - {{ $data->zip_shipper }}</div>
 					                    <div>{{ $data->telefono_shipper }}</div>
-					                    <div>Contacto: {{ $data->contacto_shipper }}</div>
+					                    <div>@lang('general.contact'): {{ $data->contacto_shipper }}</div>
 					                </div>
 					            </td>
 					          </tr>
@@ -378,7 +378,7 @@
 					                    <div>{{ $data->direccion_consignee }}</div>
 					                    <div>{{ $data->ciudad_consignee }}, {{ $data->estado_consignee }} - {{ $data->pais_consignee }} - {{ $data->zip_consignee }}</div>
 					                    <div>{{ $data->telefono_consignee }}</div>
-					                    <div>Contacto: {{ $data->contacto_consignee }}</div>
+					                    <div>@lang('general.contact'): {{ $data->contacto_consignee }}</div>
 					                </div>
 					            </td>
 					          </tr>
@@ -389,13 +389,7 @@
 					    <td width="52%" colspan="2" valign="middle" class="left_line  text_titles_j" style="border-left: 1px solid {{ $color }};color: {{ $color }}">
 					    	<div style="font-size: 8px;">
 					        It is agreed that the goods described herein are accepted in apparent good order and condition
-					(except as noted) for carriage SUBJECT TO THE CONDITIONS OF CONTRACT ON THE
-					REVERSE HEREOF, ALL GOODS MAY BE CARRIED BY ANY OTHER MEANS INCLUDING ROAD
-					OR ANY OTHER CARRIER UNLESS SPECIFIC CONTRARY INSTRUCTIONS ARE GIVEN
-					HEREON BY THE SHIPPER, AND SHIPPER AGREES THAT THE SHIPMENT MAY BE CARRIED
-					VIA INTERMEDIATE STOPPING PLACES WHICH THE CARRIER DEEMS APPROPRIATE THE
-					SHIPPER'S ATTENTION IS DRAWN TO THE NOTICE CONCERNING CARRIER'S LIMITATION
-					OF LIABILITY. Shipper may increase such limitation of liability by declaring a higher value for
+					(except as noted) for carriage subject to the conditions of contract on the reverse hereof, all goods may be carried by any other means including road or any other carrier unless specific contrary instructions are given hereon by the shipper, and shipper agrees that the shipment may be carried via intermediate stopping places which the carrier deems appropriate the shipper's attention is drawn to the notice concerning carrier's limitation of liability. Shipper may increase such limitation of liability by declaring a higher value for
 					carriage and paying a supplemental charge if required.
 					        </div>
 					    </td>

@@ -2,7 +2,7 @@
 <html>
     <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Informe </title>
+    <title>@lang('general.report')</title>
 
     <style>
         body {
@@ -90,14 +90,14 @@
         <table class="detalle" style="width: 100%">
         	<thead>
         		<tr>
-        			<th style="width: 80px;"># Recibo</th>
-        			<th>Estado</th>
-        			<th style="width: 80px;">Fecha</th>
-        			<th>Shipper</th>
-        			<th>Consignee</th>
-        			<th>Cajas</th>
-        			<th>Peso</th>
-        			<th>Volumen</th>
+        			<th style="width: 80px;"># @lang('general.receipt')</th>
+        			<th@lang('general.state')</th>
+        			<th style="width: 80px;">@lang('general.date')</th>
+        			<th>@lang('general.shipper')</th>
+        			<th>@lang('general.consignee')</th>
+        			<th>@lang('general.boxes')</th>
+        			<th>@lang('general.weight')</th>
+        			<th>@lang('general.volume')</th>
         		</tr>
         	</thead>
         	<tbody>
@@ -118,7 +118,7 @@
         	</tbody>
         	<tfoot>
         		<tr>
-        			<th colspan="5" style="text-align: right;padding-right: 8px;">Totales</th>
+        			<th colspan="5" style="text-align: right;padding-right: 8px;">@lang('general.totals')</th>
         			<th class="right2">{{ $total_piezas }}</th>
         			<th class="right2">{{ $total_peso }}</th>
         			<th class="right2">{{ $total_volumen }}</th>

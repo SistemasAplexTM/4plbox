@@ -183,7 +183,7 @@
     <tr>
         <td>
             <div class="telefono">
-                Tel:
+                @lang('general.phone'):
                 {{ $value->ship_tel }}
             </div>
         </td>
@@ -192,7 +192,7 @@
         <td>
             <div id="destinatario">
                 <div class="recibe">
-                    Recibe:
+                     @lang('general.consignee'):
                 </div>
                 <div class="nomDesti">
                     {{ $value->cons_nomfull }}
@@ -216,17 +216,17 @@
                 <div class="codebar1">
                     <div class="peso">{{ $value->peso }} Lb</div>
                     <div class="paginacion">{{ $cont + 1 . '-' . count($detalle) }}</div>
-                    <div class="warehouse">REC: </div>
+                    <div class="warehouse">Rec: </div>
                 </div>
                 <div class="datos">
-                    <div class="pkgs">PKGS: 1 </div>
+                    <div class="pkgs">Pkgs: 1 </div>
                     <div class="fob">
-                        FOB:
+                        Fob:
                         {{ number_format($value->valor,2) }}
                     </div>
                     <?php $leng = strlen($value->contenido); ?>
                     <div class="des">
-                        DESC:
+                        Desc:
                         <span id="descripcion">
                             {{ (($leng > 215) ? str_replace(',', '-', substr($value->contenido, 0, 215)) : str_replace(',', ', ', $value->contenido)) }}
                             <br>

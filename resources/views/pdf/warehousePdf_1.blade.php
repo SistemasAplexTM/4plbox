@@ -237,7 +237,7 @@
 
         <table class="acuerdo separador_interno">
           <tr>
-            <td><p>Certifico que el contenido del presente envío, se ajusta a lo declarado en la guía <em>y me hago directamente responsable, ante las autoridades nacionales y extranjeras por el contenido, valor declarado y este envío cumple los parámetros aduaneros del país de destino</em>. Adicionalmente certifico que el envío no contiene dinero, valores negociables, ni objetos de prohibido transporte, según las normas internacionales y la legislación aplicable en el país de destino u origen, Por lo tanto, acuerdo indemnizar y absolver, por cualquier reclamo, obligación y/o costo debido al incumplimineto de cualquier ley o regulación aplicable en el país de origen o destino, de la mercancía amparada en este documento.</p></td>
+            <td><p>@lang('general.i_certify1')<em>@lang('general.i_certify2')</em>@lanh('general.i_certify3')</p></td>
           </tr>
         </table>
     </body>

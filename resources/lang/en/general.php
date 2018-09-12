@@ -289,5 +289,98 @@ return [
      'go_to_home'=>'Go to home',
      'action_does_not_exist'=>'404 - The module or the action does not exist',
 
+
+    //Pdf
+
+     //billPdf
+
+     'bill_of_lading'=>'Bill of lading',
+
+     //considadoGuiasPdf
+
+     'ad'=>'The sender declares that he/she is not sending money, guns, chemicals, jewerly or drugs and he understands that the freight has been insured with 100% of the declare value.Understanding that if there is any total lost,there will be refound of the 100 % of the declare value.if there is partial lost,the refund will be proportional of the lost weight .we are not responsable of broken or damage merchandise .I certify that this shipment does not contain any unauthorized explosive,destructive devices or hazardous materials.I consent to a search of this shipment .I am aware that this endorsement and original signature,along with other shipping documents will be retained on file until the shipment is delivered.shipper hereby consents to a search or ispection of the cargo,including screening of the cargo.',
+
+
+     //consolidadoGuiaspdf2
+
+    'time'=>'Time',
+    'message_goods'=>'The goods written here are apparently accepted in good condition for transport according to the following clauses COLOMBIANA DE CARGA CORP. provide the service as requested by the sender and make the necessary arrangements for air transport through a direct and responsible airline. COLOMBIANA DE CARGA CORP. It will insure this package against loss or damage to the normal market value limit of US $ 100, or dollars during collection and delivery. The responsibility of COLOMBIANA DE CARGA in accordance with this paragraph will be reduced by the value of any other insurance that the shipper has or by the loss or damage of the shipment. The sender guarantees COLOMBIANA DE CARGA CORP. That the contents of the shipment can be legally embarked on airplanes or ships and does not contain prohibited substances in accordance with current regulations and regulations and that it is adequately wrapped for its purpose if necessary. The mitente will indemnify COLOMBIANA DE CARGA CORP. any damage suffered by the latter for violating this regulation. This authorizes COLOMBIANA DE CARGA CORP. or its agents to designate a customs broker to act on behalf of the consignee who is appointed to carry out the customs procedure.',
+    'note_for_sample'=>'Note: For sample (S.P.X) please add commercial invoice * Original and copy',
+    'by_dispatching_this_shipping'=>'When sending this shipment, it is manifest that its content is not money, jewelry, negotiable securities, or objects of prohibited transportation.',
+    'the_cargo_can_be_inspected'=>'The cargo can be inspected by the competent authorities, both in the country of origin and in the country of destination (TSA, DIAN, etc.)',
+
+
+
+
+    //consolidadoPdf
+    'cargo_manifest'=>'Cargo manifest.',
+    'manifest'=>'Manifest',
+    'created'=>'Created',
+    'cargo_number'=>'Cargo number',
+    'flight_date'=>'Flight date',
+    'reference_number'=>'Reference number',
+    'pieces'=>'Piezas',
+    'declared'=>'Declared',
+    'bag'=>'Bag',
+    'customs'=>'customs',
+    'there_is_no_data'=>'There is no data',
+    'total_bag'=>'Total bags',
+    'total_guides'=>'Total guides',
+    'total_pieces'=>'Total pieces',
+    'total_weight'=>'Total weight',
+
+    //consolidadoGuiasPdf2
+
+    'from_shipper'=>'From shipper',
+    'to_consigned'=>'To Consigned',
+
+    //consolidadPdf
+    'contains'=>'Contains'
+
+    //consulta
+
+    'report'=>'Report',
+
+    //gui
+
+     'received_by'=>'Received by',
+     'id'=>'Id'
+
+    //guiaPdf
+
+    'identification_card'=>'Identification card',
+    'shipping_type'=>'Shipping type',
+    'shipment'=>'Shipment',
+    'observations'=>'Observations',
+    'way_to_pay'=>'Way to pay',
+    'pounds'=>'Pounds',
+    'value'=>'Value',
+    'discount'=>'Discount',
+    'others'=>'Others',
+    'important'=>'¡Important!',
+    'the_receipt_will_be_charged'=>'The receipt will be charged for the  greater value, (weight or volume) for air shipping.',
+    'we_are_not_responsible'=>'We are not responsible for damage to televisions that do not travel in wooden box',
+    'review_the_merchandise'=>'Review the merchandise before leaving the office in Colombia, after this, no claim will be accepted. All charge.',
+    'commercial_invoice'=>'Commercial invoice',
+    'invoice'=>'Invoice',
+    'signature'=>'Signature',
+    'declare1'=>'I declare that what is stated in this document is that I do not send money, explosives, drugs, weapons, dangerous chemical products or jewelry for commercial purposes. Also, I declare that no more than 6 articles of the same class have been sent and that the content of the book is declared in its entirety, in accordance with art. 2 and 3 of resolution 994 of 02/04/2011 in accordance with art. 123 and following of Decree 2685/99.',
+
+//warehousePdf
+
+    'dangerous_load'=>'Dangerous load',
+    'repacking'=>'Repacking',
+    'bad_packaging'=>'Bad packaging',
+    'broken'=>'Broken',
+    'receives'=>'Receives',
+    'the_receipt_will_be_charged'=>'The receipt will be charged for the highest value (weight or volume) for air shipments.',
+    'i_certify1'=>'I certify that the content of this shipment is in accordance with that stated in the guide',
+    'i_certify2'=>'and I am directly responsible, before the national and foreign authorities for the content, declared value and this shipment meets the customs parameters of the country of destination',
+    'i_certify3'=>'Additionally, I certify that the shipment does not contain money, negotiable securities, or objects of prohibited transportation, according to international norms and applicable legislation in the country of destination or origin, Therefore, I agree to indemnify and absolve, for any claim, obligation and / or cost due to the breach of any law or regulation applicable in the country of origin or destination, of the merchandise covered in this document.',
+
+
+
+
+
      
 ];

@@ -24,7 +24,7 @@
             <div class="col-lg-5">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>@lang('general.register_of'){{ $name }}</h5>
+                        <h5>@lang('general.register_of') {{ $name }}</h5>
                         <div class="ibox-tools">
                             
                         </div>

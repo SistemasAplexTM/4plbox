@@ -56,11 +56,11 @@ $toalRegistros = count($detalleConsolidado);
                                 <th width="250px" style="text-align: right;">
                                     <div class="agencia" id="nomAgencia" style="font-size: 20px;">{{ $documento->agencia }}</div>
                                     <div class="agencia" id="dirAgencia"><span style="color: #1d1d1e;">{{ $documento->agencia_dir }} - {{ $documento->agencia_ciudad }} - {{ $documento->agencia_depto }}</span></div>
-                                    <div class="agencia" id="telAgencia">Teléfono: <span style="color: #1d1d1e;">{{ $documento->agencia_tel }}</span></div>
+                                    <div class="agencia" id="telAgencia">@lang('general.phone'): <span style="color: #1d1d1e;">{{ $documento->agencia_tel }}</span></div>
                                     <div class="agencia" id="telAgencia">Zip: <span style="color: #1d1d1e;">{{ $documento->agencia_zip }}</span></div>
                                 </th>
                                 <th>
-                                    <div class="guia">GUIA AWB</div>
+                                    <div class="guia">@lang('general.guide') AWB</div>
                                     <div class="guia" style="color: #1d1d1e;">{{ $value->num_guia }}</div>
                                     <div class="" style="color: #1d1d1e;text-align: center;margin-top: 10px;font-size: 12px;">Fecha: {{ substr($documento->created_at, 0, 10) }}</div>
                                 </th>
@@ -72,8 +72,8 @@ $toalRegistros = count($detalleConsolidado);
                                     <div style="">
                                         <table border="0" id="" width="100%" cellspacing="0" cellpadding="0">
                                             <tr>
-                                                <th colspan="4" style="text-align:center;border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;border-right: 1px solid #ccc;">From Shipper - Remitente</th>
-                                                <th colspan="4" style="text-align:center;border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;">To Consigned - Consignatario</th>
+                                                <th colspan="4" style="text-align:center;border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;border-right: 1px solid #ccc;">@lang('general.from_shipper') </th>
+                                                <th colspan="4" style="text-align:center;border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;">@lang('general.to_consigned') </th>
                                             </tr>
                                             <tr>
                                                 <td colspan="4" style="width: 50%;border-right: 1px solid #ccc;">
@@ -85,7 +85,7 @@ $toalRegistros = count($detalleConsolidado);
                                                         </tr>
                                                         <tr>
                                                             <td colspan="2">
-                                                                <div style="margin-left: 10px;">Street Address - Dirección</div>
+                                                                <div style="margin-left: 10px;"> @lang('general.address')</div>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -95,10 +95,10 @@ $toalRegistros = count($detalleConsolidado);
                                                         </tr>
                                                         <tr>
                                                             <td width="40%">
-                                                                <div style="margin-left: 10px;">Phone - Teléfono</div>
+                                                                <div style="margin-left: 10px;">@alng('general.phone')</div>
                                                             </td>
                                                             <td>
-                                                                <div style="margin-left: 10px;">City - Ciudad - State - Estado</div>
+                                                                <div style="margin-left: 10px;">@lang('genela.city') - @lang('general.state')</div>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -120,7 +120,7 @@ $toalRegistros = count($detalleConsolidado);
                                                         </tr>
                                                         <tr>
                                                             <td colspan="2">
-                                                                <div style="margin-left: 10px;">Street Address - Dirección</div>
+                                                                <div style="margin-left: 10px;">@lang('general.address')</div>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -130,10 +130,10 @@ $toalRegistros = count($detalleConsolidado);
                                                         </tr>
                                                         <tr>
                                                             <td width="40%">
-                                                                <div style="margin-left: 10px;">Phone - Teléfono</div>
+                                                                <div style="margin-left: 10px;">@lang('general.phone')</div>
                                                             </td>
                                                             <td>
-                                                                <div style="margin-left: 10px;">City - Ciudad - State - Estado</div>
+                                                                <div style="margin-left: 10px;">@lang('general.city') - @lang('general.staye')</div>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -148,13 +148,13 @@ $toalRegistros = count($detalleConsolidado);
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td colspan="4" style="text-align:center;border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;border-right: 1px solid #ccc;"> Descripción - Contenido</td>
+                                                <td colspan="4" style="text-align:center;border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;border-right: 1px solid #ccc;"> @lang('general.description') - @lang('general.content')</td>
                                                 <td colspan="4" style="border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;">
                                                     <table style="width: 100%">
                                                         <tr>
-                                                            <td width="35%" style="text-align: center;">DECLARED</td>
-                                                            <td width="30%" style="text-align: center;">PIEZAS</td>
-                                                            <td width="35%" style="text-align: center;">WEIGTH - PESO</td>
+                                                            <td width="35%" style="text-align: center;">@lang('general.declared')</td>
+                                                            <td width="30%" style="text-align: center;">@lang('general.pieces')</td>
+                                                            <td width="35%" style="text-align: center;">@lang('general.weight')</td>
                                                         </tr>
                                                     </table>
                                                 </td>
@@ -188,28 +188,21 @@ $toalRegistros = count($detalleConsolidado);
                                             </tr>
                                             <tr>
                                                 <td colspan="2" style="font-size: 9px;color: #1d1d1e;">{{ $value->num_warehouse }}</td>
-                                                <td>Date-Fecha</td>
-                                                <td style="border-right: 1px solid #ccc;">Time-Hora</td>
+                                                <td>@lang('general.date')</td>
+                                                <td style="border-right: 1px solid #ccc;">@lang('general.time')</td>
 
                                                 <td colspan="2"></td>
-                                                <td>Date-Fecha</td>
-                                                <td>Time-Hora</td>
+                                                <td>@lang('general.date')</td>
+                                                <td>@lang('general.time()')</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="8" style="border-top: 1px solid #ccc;margin-top:5px;font-size: 8px;text-align: justify;">
-                                                    Los bienes aquí escritos se aceptan aparentemente en buenas condiciones para su transporte de acuerdo a las siguientes cláusulas COLOMBIANA DE CARGA CORP. brindara el servicio
-según lo solicita el remitente y hará los arreglos necesarios para el transporte aéreo a través de una aerolínea directa y responsable. COLOMBIANA DE CARGA CORP. Asegurara este
-paquete contra perdidas o daños al valor normal de mercado limite de U$100,oo dólares durante la recogida y la entrega. La responsabilidad de COLOMBIANA DE CARGA de acuerdo con
-este párrafo será reducida por el valor de cualquier otro seguro qué tenga el embarcador o por la perdida o daño del embarque. El remitente garantiza a COLOMBIANA DE CARGA CORP.
-que el contenido del embarque puede ser legalmente embarcado en aviones o barcos y no contiene sustancias prohibidas de acuerdo a reglamentos y regulaciones vigentes y que se
-encuentra adecuadamente envuelto para su propósito si es necesario. El remitente indemnizara a COLOMBIANA DE CARGA CORP. cualquier daño que sufra esta última por violar esta
-regulación. Esto autoriza a COLOMBIANA DE CARGA CORP. o a sus agentes para designar a un corredor de aduana para que actué en representación del consignatario que es nombrado
-para que efectué el trámite aduanero.
+                                        @lang('general.message_goods')
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td colspan="6" style="margin-top:5px;font-size: 8px;">
-                                                    NOTA: PARA MUESTRA (S.P.X) FAVOR ANEXAR FACTURA COMERCIAL * ORIGINAL Y COPIA
+                                                  @lang('general.note_for_sample')
                                                 </td>
                                                 <td colspan="2" style="margin-top:5px;text-align:center;font-size: 10px;color: #1d1d1e;font-weight: bold;">
                                                     {{ $value->num_guia }}
@@ -217,12 +210,12 @@ para que efectué el trámite aduanero.
                                             </tr>
                                             <tr>
                                                 <th colspan="8" style="text-align: center;font-size: 10px;">
-                                                    AL DESPACHAR ESTE ENVIO MANIFIESTO QUE SU CONTENIDO NO ES DINERO, JOYAS, VALORES NEGOCIABLES, NI OBJETOS DE PROHIBIDOTRANSPORTE.
+                                               @lang('general.by_dispatching_this_shipping')
                                                 </th>
                                             </tr>
                                             <tr>
                                                 <th colspan="8" style="text-align: center;font-size: 10px;">
-                                                    La carga puede ser inspeccionada por las autoridades competentes, tanto en el país de origen como en el país de destino (TSA, DIAN, etc.)
+                                              @lang('general.the_cargo_can_be_inspecte')
                                                 </th>
                                             </tr>
                                         </table>
@@ -240,5 +233,5 @@ para que efectué el trámite aduanero.
                     </table>
     @endforeach
 @else
-    <div id="noDatos">NO HAY DATOS</div>
+    <div id="noDatos">@lang('general.there_is_no_data')</div>
 @endif
