@@ -310,7 +310,7 @@ return [
      'cargo_number'=>'Número de carga',
      'flight_date'=>'Fecha vuelo',
      'reference_number'=>'Número de referencia',
-     'pieces'=>'Piezas'
+     'pieces'=>'Piezas',
      'declared'=>'Declarado',
      'bag'=>'Bolsa',
      'customs'=>'Aduanas',
