@@ -28,7 +28,7 @@ return [
 		'declared'         => 'Declarado ',
 		'pieces'           => 'Piezas',
 		'packing'          => 'Empaque',
-		'tariff position'  => 'Posición arancelaria',
+		'tariff_position'  => 'Posición arancelaria',
 		'add'              => 'Agregar',
 		'code'             => 'Codigo',
 		'value'            => 'Valor',

@@ -40,22 +40,12 @@ class DocumentoController extends Controller
         $this->middleware('permission:documento.removerGuiaAgrupada')->only('removerGuiaAgrupada');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $this->assignPermissionsJavascript('documento');
         return view('templates/documento/index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create($tipo_documento_id)
     {
         $this->assignPermissionsJavascript('documento');
@@ -90,11 +80,6 @@ class DocumentoController extends Controller
         ));
     }
 
-    /**
-     * Crea el documento vacio y retorna hacia la vista para terminar el registro.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function ajaxCreate(Request $request)
     {
         try {
@@ -183,23 +168,12 @@ class DocumentoController extends Controller
         }
     }
 
-    /**
-     * Show the form for liquidar the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function liquidar($id)
     {
         return $this->edit($id, true);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function edit($id, $liquidar = false)
     {
         $this->assignPermissionsJavascript('documento');
@@ -294,13 +268,6 @@ class DocumentoController extends Controller
         ));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
 
@@ -534,12 +501,6 @@ class DocumentoController extends Controller
         return redirect()->route('documento.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function deleteDetailConsolidado($id, $id_detalle, $logical)
     {
         $obj = DB::table('consolidado_detalle')->where('id', $id_detalle)->first();
@@ -556,12 +517,6 @@ class DocumentoController extends Controller
         return $answer;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id, $table = null)
     {
         if ($table) {
@@ -575,13 +530,6 @@ class DocumentoController extends Controller
         }
     }
 
-    /**
-     * Actualiza el campo deleted_at del registro seleccionado.
-     *
-     * @param  int  $id
-     * @param  boolean  $deleteLogical
-     * @return \Illuminate\Http\Response
-     */
     public function delete($id, $logical, $table = null)
     {
 
@@ -616,12 +564,6 @@ class DocumentoController extends Controller
         }
     }
 
-    /**
-     * Restaura registro eliminado
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function restaurar($id, $table)
     {
         if ($table) {
@@ -655,11 +597,6 @@ class DocumentoController extends Controller
         return $answer;
     }
 
-    /**
-     * Obtener todos los registros de la tabla para el datatable
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function getAll(Request $request)
     {
         $filter = [
@@ -1048,12 +985,6 @@ class DocumentoController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function additionalCharguesDelete($documento_id, $id_chargue)
     {
         DB::table('cargos_adicionales_detalle')->where('id', $id_chargue)->delete();
@@ -1491,14 +1422,12 @@ class DocumentoController extends Controller
 
         $this->AddToLog('Impresion labels (' . $documento->id . ')');
         // $pdf = PDF::loadView('pdf.labelWG', compact('documento', 'detalle', 'document'))
-        //     ->setPaper(array(0, 0, 260, 360), 'landscape');
-
-        // $pdf = PDF::loadView('pdf.labelWG_1', compact('documento', 'detalle', 'document'))
-        
-        // $pdf = PDF::loadView('pdf.labelWG_2', compact('documento', 'detalle', 'document'))->setPaper(array(0, 0, 360, 576)); //multiplicar pulgadas por 72 (5 x 8 pulgadas en este label)
+        //     ->setPaper(array(25, -25, 260, 360), 'landscape');
 
         // $nameDocument = 'Label' . $document . '-' . $documento->id;
         // return $pdf->stream($nameDocument . '.pdf');
+
+
         return view('pdf/labelWG_2', compact('documento', 'detalle', 'document'));
     }
 
@@ -1801,12 +1730,6 @@ class DocumentoController extends Controller
         return \DataTables::of($sql)->make(true);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function deleteNota($id, $logical)
     {
         DB::table('documento_notas')->where('id', $id)->delete();

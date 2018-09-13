@@ -335,7 +335,7 @@ return [
     'to_consigned'=>'To Consigned',
 
     //consolidadPdf
-    'contains'=>'Contains'
+    'contains'=>'Contains',
 
     //consulta
 
@@ -344,7 +344,7 @@ return [
     //gui
 
      'received_by'=>'Received by',
-     'id'=>'Id'
+     'id'=>'Id',
 
     //guiaPdf
 

@@ -43,10 +43,12 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                     }
                     color_badget = 'default';
                 }else{
+                    console.log(full.tipo_documento_id);
                     if (full.tipo_documento_id != 3) {
                         codigo = full.num_warehouse;
                         cant = full.piezas;
                         if (full.liquidado == 1) {
+                            codigo = full.num_guia;
                             color_badget = 'primary';
                         }
                     }
