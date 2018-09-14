@@ -432,6 +432,15 @@ function permissions() {
 }
 var objVue = new Vue({
     el: '#documento',
+    watch:{
+        emailD:function(value){
+            if(value != null && value != ''){
+                this.enviarEmailDestinatario = true;
+            }else{
+                this.enviarEmailDestinatario = false;
+            }
+        },
+    },
     mounted: function() {
         $('#date').val(this.getTime());
     },
@@ -466,13 +475,14 @@ var objVue = new Vue({
         mostrar: {},
         document_type: '',
         liquidado: null,
-        emailD: '',
+        emailD: null,
         nombreR: null,
         nombreD: null,
         direccionR: null,
         direccionD: null,
         showmodalAdd: false,
         showFieldsTotals: false,
+        enviarEmailDestinatario: false,
         // localizacion_id: null,
         // localizacion_id_c: null,
         contactos: {}, //es para poder elegir los contactos de shippero o consignee en la modal de consolidado
@@ -796,6 +806,7 @@ var objVue = new Vue({
                 this.direccionD = null;
                 $('#direccionD').attr('readonly', false);
                 $('#emailD').val('').attr('readonly', false);
+                this.emailD = null;
                 $('#telD').val('').attr('readonly', false);
                 $('#localizacion_id_c').select2({'disabled': false});
                 $('#localizacion_id_c').select2('destroy').empty();
@@ -864,6 +875,7 @@ var objVue = new Vue({
                 me.direccionD = data['direccion'];
                 $('#direccionD').attr('readonly', true);
                 $('#emailD').val(data['correo']).attr('readonly', true);
+                me.emailD = data['correo'];
                 $('#telD').val(data['telefono']).attr('readonly', true);
                 $('#localizacion_id_c').append('<option value="' + data['ciudad_id'] + '" selected="selected">' + data['ciudad'] + '</option>').val([data['ciudad_id']]).trigger('change');
                 // $('#localizacion_id_c').select2({'disabled': true});

@@ -251,7 +251,8 @@ class TipoDocumentoController extends Controller
         $term = $request->term ?: '';
         $name = 'nombre';
         if ($tableName == 'credencial') {
-            $name = 'descripcion';
+            $tableName = 'roles';
+            $name = 'name';
         }
         $tags = DB::table($tableName)
             ->select([$tableName . '.id', $tableName . '.' . $name . ' as text'])

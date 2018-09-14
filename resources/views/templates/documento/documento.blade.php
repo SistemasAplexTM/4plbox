@@ -267,7 +267,7 @@
                                     <!-- /Grupo Doble 1 -->
                                         <label class="control-label col-sm-2">@lang('documents.email'): </label> 
                                         <div class="col-sm-5" :class="{ 'has-error': errors.has('emailD') }">
-                                            <input type="email" placeholder="Example@example.com" id="emailD" name="emailD" class="form-control" v-validate.disable="'unique_c'">
+                                            <input type="email" placeholder="Example@example.com" id="emailD" name="emailD" class="form-control" v-validate.disable="'unique_c'" v-model="emailD">
                                             <small class="help-block has-error" :class="{ 'small': errors.has('emailD') }">@{{ errors.first('emailD') }}</small>
                                         </div>
                                         <label class="control-label col-sm-1">@lang('documents.phone'):</label>
@@ -311,7 +311,7 @@
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <div class="checkbox checkbox-success checkbox-inline">
-                                                <input type="checkbox" id="enviarEmailDestinatario" name="enviarEmailDestinatario" value="t" style="margin-left: -50px;">
+                                                <input type="checkbox" id="enviarEmailDestinatario" name="enviarEmailDestinatario" value="t" style="margin-left: -50px;" v-model="enviarEmailDestinatario">
                                                 <label for="enviarEmailDestinatario"> @lang('documents.send_email') <i class="fa fa-envelope-open"></i></label>
                                             </div>
                                         </div>
