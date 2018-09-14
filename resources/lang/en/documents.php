@@ -69,6 +69,7 @@ return [
 		'tracks_available'         => 'Tracks available',
 		'tracking'                 => 'Tracking',
 		'associated_Trackings'     => 'Associated Trackings',
+		'type_to_search'=>'Type to search',
 
 // templaces/documento/index
 

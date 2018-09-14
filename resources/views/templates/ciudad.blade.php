@@ -64,7 +64,7 @@
                                             <label for="nombre" class="control-label gcore-label-top">@lang('general.description')</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="nombre" name="nombre" id="nombre" value="" placeholder="" class="form-control" type="text" style="" @click="deleteError('nombre')" />
+                                            <input v-model="nombre" name="nombre" id="nombre" value="" placeholder="@lang('general.name')" class="form-control" type="text" style="" @click="deleteError('nombre')" />
                                             <small id="msn1" class="help-block result-nombre" v-show="listErrors.nombre"></small>
                                         </div>
                                     </div>
@@ -77,7 +77,7 @@
                                             <label for="prefijo" class="control-label gcore-label-top">@lang('general.prefix'):</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="prefijo" name="prefijo" id="prefijo" value="" placeholder="" class="form-control" type="text" style="" @click="deleteError('prefijo')" />
+                                            <input v-model="prefijo" name="prefijo" id="prefijo" value="" placeholder="@lang('general.prefix')" class="form-control" type="text" style="" @click="deleteError('prefijo')" />
                                             <small id="msn1" class="help-block result-prefijo" v-show="listErrors.prefijo"></small>
                                         </div>
                                     </div>

@@ -34,7 +34,7 @@
                                         <label for="aerolinea_id" class="control-label gcore-label-top">@lang('general.airline')</label>
                                     </div>
                                     <div class="col-sm-8">
-                                        <v-select :options="aerolineas" v-validate.disable="'required'" name="aerolinea_id" v-model="aerolinea_id" label="nombre" placeholder="Aerolineas"></v-select>
+                                        <v-select :options="aerolineas" v-validate.disable="'required'" name="aerolinea_id" v-model="aerolinea_id" label="nombre" placeholder="@lang('general.airlines')"></v-select>
                                         <small v-show="errors.has('aerolinea_id')" class="error">@{{ errors.first('aerolinea_id') }}</small>
                                     </div>
                                 </div>
@@ -47,7 +47,7 @@
                                         <label for="guia" class="control-label gcore-label-top">@lang('general.guide')</label>
                                     </div>
                                     <div class="col-sm-8">
-                                        <input v-validate.disable="'required'" v-model="guia" name="guia" id="guia" value="" placeholder="Número de guía" class="form-control" type="text" />
+                                        <input v-validate.disable="'required'" v-model="guia" name="guia" id="guia" value="" placeholder="@lang('general.guide_number')" class="form-control" type="text" />
                                         <small v-show="errors.has('guia')" class="error">@{{ errors.first('guia') }}</small>
                                     </div>
                                 </div>
@@ -60,7 +60,7 @@
                                         <label for="cantidad" class="control-label gcore-label-top">@lang('general.quantity')</label>
                                     </div>
                                     <div class="col-sm-8">
-                                        <input v-validate.disable="'required'" v-model="cantidad" name="cantidad" id="cantidad" value="" placeholder="Cantidad" class="form-control" type="number" min="1" />
+                                        <input v-validate.disable="'required'" v-model="cantidad" name="cantidad" id="cantidad" value="" placeholder="@lang('general.quantity')" class="form-control" type="number" min="1" />
                                         <small v-show="errors.has('cantidad')" class="error">@{{ errors.first('cantidad') }}</small>
                                     </div>
                                 </div>

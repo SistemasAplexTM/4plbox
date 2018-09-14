@@ -69,6 +69,7 @@ return [
 		'tracks available'         => 'Rastreos disponibles',
 		'tracking'                 => 'Rastreo',
 		'associated_trackings'     => 'Seguimiento asociado',
+		'type_to_search'=>'Digite para buscar..',
 
 // templaces/documento/index
 

@@ -2,6 +2,20 @@
 
 return [
 
+    //resources/views/templates/bill/create
+    
+    'register_of_bill_of_lading'=>'Register of bill of lading',
+    'create_new'=>'Create new',
+    'display_name'=>'Display name',
+    'account_number'=>'Account number',
+    'data'=>'Data',
+    'edit'=>'Edit',
+    'close'=>'Close',
+    'point_of_origin'=>'Point of origin',
+    'loading_dock'=>'Loading dock',
+    'foreign_port_of_discharge'=>'Foreign port of discharge',
+
+
     //resources/views/templates/aerolineasInventario
 
     'airline_inventory'=>'Airline inventory',
@@ -13,6 +27,9 @@ return [
     'airline_inventories'=>'Airline inventories',
     'group'=>'Group',
     'actions'=>'Actions',
+    'airlines'=>'Airlines',
+    'guide_number'=>'Guide number',
+
 
     //resources/views/templates/agenciaForm
     
@@ -66,6 +83,10 @@ return [
     'description'=>'Description:',
     'tariff'=>'Tariff:',
     'code_pa'=>'Code P.A',
+    'code_of_the_tariff_position'=>'Code of the tariff position',
+    'description_of_p_a'=>'Description of P.A',
+    'percentage_tariff'=>'Percentage tariff EJ: 0.19 => 19%',
+    'percentage_tariff1'=>'Percentage tariff EJ: 0.05 => 5%',
 
     //resources/views/templates/casillero
     'register_locker'=>'Register locker',
@@ -79,6 +100,8 @@ return [
     'terms_and_conditions'=>'General terms and conditions.',
     'i_wish_to_receive_information'=>'I want to receive information from my locker and my interest.',
     'create_locker'=>'Create locker',
+    'email_be_your_user'=>'Email (be your user)',
+    'repeat_email'=>'Repeat email',
    
     //resources/views/templates/ciudad
    
@@ -104,6 +127,7 @@ return [
     'document'=>'Document',
     'second_name'=>'Second name',
     'surnames'=>'Surnames',
+    'Surname'=>'Surname',
     'second_surname'=>'Second surname',
     'code_zip'=>'Cod ZIP',
     'client'=>'Client',
@@ -143,7 +167,10 @@ return [
     'data_shipper'=>'Data shipper',
     'data_consignee'=>'Data consignee',
     'signature_data_agency'=>'Signature data - Agency',
-    'data_detail_message'=>'Data Detail message',
+    'data_detail_message'=>'Data detail message',
+    'identification_of_the_message'=>'Identification of the message',
+    'message_overview'=>'Message overview',
+    'other_recipients'=>'Other recipients',
 
     //resources/views/template/maestraMultiple
 
@@ -335,7 +362,7 @@ return [
     'to_consigned'=>'To Consigned',
 
     //consolidadPdf
-    'contains'=>'Contains'
+    'contains'=>'Contains',
 
     //consulta
 
@@ -344,7 +371,7 @@ return [
     //gui
 
      'received_by'=>'Received by',
-     'id'=>'Id'
+     'id'=>'Id',
 
     //guiaPdf
 

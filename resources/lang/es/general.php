@@ -2,17 +2,36 @@
 
 return [
 
+    //resources/views/templates/bill/create
+
+    'register_of_bill_of_lading'=>'Registro de conocimiento de embarque',
+    'create_new'=>'Crear nuevo',
+    'display_name'=>'Nombre para mostrar',
+    'account_number'=>'Número de cuenta',
+    'data'=>'Datos',
+    'edit'=>'Editar',
+    'close'=>'Cerrar',
+    'point_of_origin'=>'Punto de origen',
+    'loading_dock'=>'Muelle de carga',
+    'foreign_port_of_discharge'=>'Puerto extranjero de descarga',
+
+
+
     //resources/views/templates/aerolineasInventario
 
     'airline_inventory'=>'Inventario de aerolíneas',
     'home'=>'Inicio',
-    'airline_inventory_record'=>'Registro de inventario de aerolínea',
+    'airline_inventory_record'=>'Reg de inventario de aerolínea',
     'airline'=>'Aerolínea:',
     'quantity'=>'Cantidad:',
     'guide'=>'Guía:',
     'airline_inventories'=>'Inventarios aerolínea',
     'group'=>'Grupo',
     'actions'=>'Acciones',
+    'airlines'=>'Aerolíneas',
+    'guide_number'=>'Número de guía',
+    'repeat_email'=>'Repite el email',
+
 
     //resources/views/templates/agenciaForm
  
@@ -65,6 +84,13 @@ return [
     'description'=>'Descripción:',
     'tariff'=>'Arancel:',
     'code_pa'=>'Codigo P.A',
+    'code_of_the_tariff_position'=>'Código de la posicion arancelaria',
+    'description_of_p_a'=>'Descripcion de la P.A',
+    'percentage_tariff'=>'Porcentaje arancel EJ: 0.19 => 19%',
+    'percentage_tariff1'=>'Porcentaje arancel EJ: 0.05 => 5%',
+
+
+    //resources/views/templates/casillero
     'register_locker'=>'Registrar casillero',
     'general_shipping_data'=>' Datos generales y dirección de envío',
     'there_are_no_results'=>'No hay resultados para la búsqueda',
@@ -76,6 +102,8 @@ return [
     'terms_and_conditions'=>'Términos y condiciones generales.',
     'i_wish_to_receive_information'=>'Deseo recibir información de mi casillero y de mi interés.',
     'create_locker'=>' Crear casillero',
+    'email_be_your_user'=>'Correo electrónico (ser tu usuario)',
+
 
     //resources/views/templates/ciudad
     
@@ -101,6 +129,7 @@ return [
     'document'=>'Documento',
     'second_name'=>'Segundo nombre',
     'surnames'=>'Apellidos',
+    'Surname'=>'Primer apellido',
     'second_surname'=>'Segundo apellido',
     'code_zip'=>'Cód ZIP',
     'client'=>'Cliente',
@@ -140,7 +169,11 @@ return [
     'data_shipper'=>'Datos remitente',
     'data_consignee'=>'Datos destinatarios',
     'signature_data_agency'=>'Datos firma - Agencia',
-    'data_detail_message'=>'Datos Detalle mensaje',
+    'data_detail_message'=>'Datos detalle mensaje',
+    'identification_of_the_message'=>'Identificación del mensaje',
+    'message_overview'=>'Descripción general del mensaje',
+    'other_recipients'=>'Otros destinatarios',
+
 
     //resources/views/template/maestraMultiple
 
@@ -310,7 +343,7 @@ return [
      'cargo_number'=>'Número de carga',
      'flight_date'=>'Fecha vuelo',
      'reference_number'=>'Número de referencia',
-     'pieces'=>'Piezas'
+     'pieces'=>'Piezas',
      'declared'=>'Declarado',
      'bag'=>'Bolsa',
      'customs'=>'Aduanas',

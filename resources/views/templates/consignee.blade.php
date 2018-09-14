@@ -39,7 +39,7 @@
                                         </div>
                                         <div class="col-sm-8">
                                             <input type="hidden" id="agencia_id_input" value="">
-                                            <select v-model="agencia_id" name="agencia_id" id="agencia_id" placeholder="" class="form-control js-data-example-ajax select2-container" @click="deleteError('agencia_id')" >
+                                            <select v-model="agencia_id" name="agencia_id" id="agencia_id" placeholder="@lang('general.agency')" class="form-control js-data-example-ajax select2-container" @click="deleteError('agencia_id')" >
                                             </select>
                                             <small id="msn1" class="help-block result-agencia_id" v-show="listErrors.agencia_id"></small>
                                         </div>
@@ -54,7 +54,7 @@
                                         </div>
                                         <div class="col-sm-8">
                                             <input type="hidden" id="tipo_identificacion_id_input" value="">
-                                            <select v-model="tipo_identificacion_id" name="tipo_identificacion_id" id="tipo_identificacion_id" placeholder="" class="form-control js-data-example-ajax select2-container" @click="deleteError('agencia_id')" >
+                                            <select v-model="tipo_identificacion_id" name="tipo_identificacion_id" id="tipo_identificacion_id" placeholder="@lang('general.identification_type')" class="form-control js-data-example-ajax select2-container" @click="deleteError('agencia_id')" >
                                             </select>
                                             <small id="msn1" class="help-block result-tipo_identificacion_id" v-show="listErrors.tipo_identificacion_id"></small>
                                         </div>
@@ -68,7 +68,7 @@
                                             <label for="documento" class="control-label gcore-label-top">@lang('general.document'):<samp id="require">*</samp></label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="documento" name="documento" id="documento" value="" placeholder="N° documento" class="form-control" type="text" style="" @click="deleteError('documento')" />
+                                            <input v-model="documento" name="documento" id="documento" value="" placeholder="N° @lang('general.document')" class="form-control" type="text" style="" @click="deleteError('documento')" />
                                             <small id="msn1" class="help-block result-documento" v-show="listErrors.documento"></small>
                                         </div>
                                     </div>
@@ -120,7 +120,7 @@
                                             <label for="segundo_apellido" class="control-label gcore-label-top">@lang('general.second_surname'):</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="segundo_apellido" name="segundo_apellido" id="segundo_apellido" value="" placeholder="Segundo apellido" class="form-control" type="text" style="" @click="deleteError('segundo_apellido')" />
+                                            <input v-model="segundo_apellido" name="segundo_apellido" id="segundo_apellido" value="" placeholder="@lang('general.second_surname')" class="form-control" type="text" style="" @click="deleteError('segundo_apellido')" />
                                             <small id="msn1" class="help-block result-segundo_apellido" v-show="listErrors.segundo_apellido"></small>
                                         </div>
                                     </div>
@@ -133,7 +133,7 @@
                                             <label for="direccion" class="control-label gcore-label-top">@lang('general.address'):<samp id="require">*</samp></label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="direccion" name="direccion" id="direccion" value="" placeholder="" class="form-control" type="text" style="" @click="deleteError('direccion')" />
+                                            <input v-model="direccion" name="direccion" id="direccion" value="" placeholder="@lang('general.address')" class="form-control" type="text" style="" @click="deleteError('direccion')" />
                                             <small id="msn1" class="help-block result-direccion" v-show="listErrors.direccion"></small>
                                         </div>
                                     </div>
@@ -146,7 +146,7 @@
                                             <label for="telefono" class="control-label gcore-label-top">@lang('general.phone'):</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="telefono" name="telefono" id="telefono" value="" placeholder="" class="form-control" type="text" style="" @click="deleteError('telefono')" />
+                                            <input v-model="telefono" name="telefono" id="telefono" value="" placeholder="@lang('general.phone')" class="form-control" type="text" style="" @click="deleteError('telefono')" />
                                             <small id="msn1" class="help-block result-telefono" v-show="listErrors.telefono"></small>
                                         </div>
                                     </div>
@@ -159,7 +159,7 @@
                                             <label for="correo" class="control-label gcore-label-top">@lang('general.email'):</label>
                                         </div>
                                         <div class="col-sm-8"  :class="{ 'has-error': errors.has('correo') }">
-                                            <input v-model="correo" name="correo" id="correo" value="" placeholder="" class="form-control" type="text" style="" @click="deleteError('correo')" v-validate.disable="'unique'" />
+                                            <input v-model="correo" name="correo" id="correo" value="" placeholder="@lang('general.email')" class="form-control" type="text" style="" @click="deleteError('correo')" v-validate.disable="'unique'" />
                                             <small id="msn1" class="help-block result-correo" v-show="listErrors.correo"></small>
                                             <small class="help-block has-error" :class="{ 'small': errors.has('correo') }">@{{ errors.first('correo') }}</small>
                                         </div>
@@ -191,7 +191,7 @@
                                         </div>
                                         <div class="col-sm-8">
                                             <div class="input-group">
-                                                <input v-model="zip" name="zip" id="zip" value="" placeholder="" class="form-control" type="text" style="" @click="deleteError('zip')" />
+                                                <input v-model="zip" name="zip" id="zip" value="" placeholder="@lang('general.code_zip')" class="form-control" type="text" style="" @click="deleteError('zip')" />
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-primary" @clicK="getZipCode()" data-toggle="tooltip" data-placement="top" title="Generar" type="button"><span class="fa fa-map-marker"></span></button>
                                                 </span>
@@ -208,7 +208,7 @@
                                             <label for="cliente_id" class="control-label gcore-label-top">@lang('general.client'):</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <v-select name="cliente_id" v-model="cliente_id" label="name" :filterable="false" :options="clientes" @search="onSearchClientes" placeholder="Cliente"></v-select>
+                                            <v-select name="cliente_id" v-model="cliente_id" label="name" :filterable="false" :options="clientes" @search="onSearchClientes" placeholder="@lang('general.select')"></v-select>
                                         </div>
                                     </div>
                             </div>
@@ -235,7 +235,7 @@
                                             <label for="tarifa" class="control-label gcore-label-top">@lang('general.rate'):</label>
                                         </div>
                                         <div class="col-sm-4">
-                                            <input v-model="tarifa" name="tarifa" id="tarifa" value="0" placeholder="0.00" class="form-control" type="number" style="" @click="deleteError('tarifa')" />
+                                            <input v-model="tarifa" name="tarifa" id="tarifa" value="0" placeholder="@lang('general.rate') 0.00" class="form-control" type="number" style="" @click="deleteError('tarifa')" />
                                             <small id="msn1" class="help-block result-tarifa" v-show="listErrors.tarifa"></small>
                                         </div>
                                     </div>

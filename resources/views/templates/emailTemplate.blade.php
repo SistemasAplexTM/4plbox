@@ -48,28 +48,28 @@
                                         <div class="form-group" :class="{'has-error': listErrors.nombre}">
                                         	<label class="col-sm-3 control-label" for="nombre">@lang('general.name'):</label>
                                             <div class="col-sm-9">
-                                                <input type="text" v-model="nombre" placeholder="Identificación del mensaje" class="form-control" value="" id="nombre" name="nombre" @click="deleteError('nombre')">
+                                                <input type="text" v-model="nombre" placeholder="@lang('general.identification_of_the_messag')" class="form-control" value="" id="nombre" name="nombre" @click="deleteError('nombre')">
                                                 <small id="msn1" class="help-block result-nombre" v-show="listErrors.nombre"></small>
                                             </div>
                                         </div>
                                         <div class="form-group" :class="{'has-error': listErrors.descripcion_plantilla}">
                                         	<label class="col-sm-3 control-label">@lang('general.description'):</label>
                                             <div class="col-sm-9">
-                                                <input type="text" v-model="descripcion_plantilla" placeholder="Descripción general del mensaje" class="form-control" value="" id="descripcion_plantilla" name="descripcion_plantilla" @click="deleteError('descripcion_plantilla')">
+                                                <input type="text" v-model="descripcion_plantilla" placeholder="@lang('general.message_overview')" class="form-control" value="" id="descripcion_plantilla" name="descripcion_plantilla" @click="deleteError('descripcion_plantilla')">
                                                 <small id="msn1" class="help-block result-descripcion_plantilla" v-show="listErrors.descripcion_plantilla"></small>
                                             </div>
                                         </div>
                                         <div class="form-group" :class="{'has-error': listErrors.subject}">
                                         	<label class="col-sm-3 control-label">@lang('general.subject'):</label>
                                             <div class="col-sm-9">
-                                                <input type="text" v-model="subject" placeholder="" class="form-control" value=""  id="subject" name="subject" @click="deleteError('subject')">
+                                                <input type="text" v-model="subject" placeholder=">@lang('general.subject')" class="form-control" value=""  id="subject" name="subject" @click="deleteError('subject')">
                                                 <small id="msn1" class="help-block result-subject" v-show="listErrors.subject"></small>
                                             </div>
                                         </div>
                                         <div class="form-group" :class="{'has-error': listErrors.otros_destinatarios}">
                                         	<label class="col-sm-3 control-label">@lang('general.recipients'):</label>
                                             <div class="col-sm-9">
-                                                <input type="text" v-model="otros_destinatarios" placeholder="Otros destinatarios" class="form-control" value="" id="otros_destinatarios" name="otros_destinatarios" @click="deleteError('otros_destinatarios')">
+                                                <input type="text" v-model="otros_destinatarios" placeholder="@lang('general.other_recipients')" class="form-control" value="" id="otros_destinatarios" name="otros_destinatarios" @click="deleteError('otros_destinatarios')">
                                                 <small id="msn1" class="help-block result-otros_destinatarios" v-show="listErrors.otros_destinatarios"></small>
                                             </div>
                                         </div>
