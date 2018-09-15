@@ -234,8 +234,8 @@ $toalRegistros = count($detalleConsolidado);
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <div id="recibido">@lang('pdfs.received_by'):__________________________ 
-                                @lang('pdfs.id'):____________________@lang('pdfs.date'): DD____MM____AAAA______</div>
+                                <div id="recibido">@lang('pdfs.received_by') :__________________________ 
+                                @lang('pdfs.id') :____________________ @lang('pdfs.date') : DD____MM____AAAA______</div>
                             </td>
                         </tr>
                         <tr>

@@ -1228,8 +1228,11 @@ class DocumentoController extends Controller
                             ->where([['a.deleted_at', null], ['a.consolidado_id', $id], ['a.flag', 0]])
                             ->get();
                         $this->AddToLog('Impresion Consolidado guias (' . $id . ')');
-                        // $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf', compact('documento', 'detalle', 'detalleConsolidado'));
-                        $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                        if (env('APP_TYPE') === 'courier') {
+                            $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf', compact('documento', 'detalle', 'detalleConsolidado'));
+                        }else{
+                            $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                        }
                         $nameDocument = 'Guias -' . $documento->id;
                     } else {
                         if ($document === 'consolidado') {
@@ -1299,8 +1302,11 @@ class DocumentoController extends Controller
                                 ->where([['a.deleted_at', null], ['a.consolidado_id', $id], ['a.flag', 0]])
                                 ->get();
                             $this->AddToLog('Impresion Consolidado (' . $id . ')');
-                            // $pdf          = PDF::loadView('pdf.consolidadoPdf', compact('documento', 'detalle', 'detalleConsolidado'));
-                            $pdf          = PDF::loadView('pdf.consolidadoPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                            if (env('APP_TYPE') === 'courier') {
+                                $pdf          = PDF::loadView('pdf.consolidadoPdf', compact('documento', 'detalle', 'detalleConsolidado'));
+                            }else{
+                                $pdf          = PDF::loadView('pdf.consolidadoPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                            }
                             $nameDocument = $documento->tipo_documento . '-' . $documento->id;
                         }
                     }
@@ -1421,14 +1427,15 @@ class DocumentoController extends Controller
             ->get();
 
         $this->AddToLog('Impresion labels (' . $documento->id . ')');
-        // $pdf = PDF::loadView('pdf.labelWG', compact('documento', 'detalle', 'document'))
-        //     ->setPaper(array(25, -25, 260, 360), 'landscape');
+        if (env('APP_TYPE') === 'courier') {
+            $pdf = PDF::loadView('pdf.labelWG', compact('documento', 'detalle', 'document'))
+                ->setPaper(array(25, -25, 260, 360), 'landscape');
 
-        // $nameDocument = 'Label' . $document . '-' . $documento->id;
-        // return $pdf->stream($nameDocument . '.pdf');
-
-
-        return view('pdf/labelWG_2', compact('documento', 'detalle', 'document'));
+            $nameDocument = 'Label' . $document . '-' . $documento->id;
+            return $pdf->stream($nameDocument . '.pdf');
+        }else{
+            return view('pdf/labelWG_2', compact('documento', 'detalle', 'document'));
+        }
     }
 
     public function buscarGuias($id, $num_guia, $num_bolsa, $pais_id)

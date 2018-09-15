@@ -73,7 +73,7 @@
                       v-model="shipper.name"
                       type="s" 
                       @change-select="setData" 
-                      url="master/buscar"
+                      url="4plbox/public/master/buscar"
                       ></autocomplete-component>
                     <small v-show="errors.has('nombre')" class="bg-danger">{{ errors.first('nombre') }}</small>
                   </div>
@@ -143,7 +143,7 @@
                     v-model="consignee.name"
                     type="c" 
                     @change-select="setData" 
-                    url="master/buscar"
+                    url="4plbox/public/master/buscar"
                     ></autocomplete-component>
                     <small v-show="errors.has('nombreC')" class="bg-danger">{{ errors.first('nombreC') }}</small>
                   </div>
@@ -213,7 +213,7 @@
                       v-model="carrier.name"
                       type="cr" 
                       @change-select="setData" 
-                      url="master/buscar"
+                      url="4plbox/public/master/buscar"
                       ></autocomplete-component>
                     <small v-show="errors.has('nombreCR')" class="bg-danger">{{ errors.first('nombreCR') }}</small>
                   </div>
@@ -615,12 +615,12 @@
 
 </template>
 <style>
-span.error{
-  color:#e74c3c;
-  font-size:20px;
-  display:flex;
-  justify-content:center;
-}
+  span.error{
+    color:#e74c3c;
+    font-size:20px;
+    display:flex;
+    justify-content:center;
+  }
 </style>
 <script>
   import VueFormWizard from 'vue-form-wizard'
@@ -879,7 +879,7 @@ span.error{
           'total': this.total,
           'descripcion': this.descripcion,
           'handing_information': this.handing_information,
-          'consolidado_id': this.consolidado_id.id,
+          'consolidado_id': (this.consolidado_id != null) ? this.consolidado_id.id : null,
           'to1': this.aeropuerto_destino.codigo,
           'other_c': this.other_c,
           'created_at': this.getTime()
@@ -918,7 +918,7 @@ span.error{
           'total': this.total,
           'descripcion': this.descripcion,
           'handing_information': this.handing_information,
-          'consolidado_id': this.consolidado_id.id,
+          'consolidado_id': (this.consolidado_id != null) ? this.consolidado_id.id : null,
           'to1': this.aeropuerto_destino.codigo,
           'other_c': this.other_c,
           'updated_at': this.getTime()
