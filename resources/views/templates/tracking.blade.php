@@ -66,7 +66,7 @@
                                         <label for="tracking" class="control-label gcore-label-top">@lang('general.tracking'):</label>
                                     </div>
                                     <div class="col-sm-8">
-	                                    <input class="form-control" name="tracking" placeholder="Numero de tracking" type="text" v-model="tracking" v-validate.disable="'required|unique'" v-on:keyup.enter="searchTracking()">
+	                                    <input class="form-control" name="tracking" placeholder="@lang('general.number_of_tracking')" type="text" v-model="tracking" v-validate.disable="'required|unique'" v-on:keyup.enter="searchTracking()">
                                             <small class="help-block error" v-show="errors.has('tracking')">
                                                 @{{ errors.first('tracking') }}
                                             </small>
@@ -81,7 +81,7 @@
                                         <label for="contenido" class="control-label gcore-label-top">@lang('general.content'):</label>
                                     </div>
                                     <div class="col-sm-8">
-                                        <input class="form-control" name="contenido" placeholder="Contenido" type="text" v-model="contenido" v-validate.disable="'required'">
+                                        <input class="form-control" name="contenido" placeholder="@lang('general.content')" type="text" v-model="contenido" v-validate.disable="'required'">
                                         <small class="help-block error" v-show="errors.has('contenido')">
                                             @{{ errors.first('contenido') }}
                                         </small>
@@ -96,7 +96,7 @@
                                         <label for="consignee_id" class="control-label gcore-label-top">@lang('general.client'):</label>
                                     </div>
                                     <div class="col-sm-8">
-                                        <v-select name="consignee_id" :options="consignees" placeholder="Cliente" label="name" v-model="consignee_id" v-validate.disable="'required'">
+                                        <v-select name="consignee_id" :options="consignees" placeholder="@lang('general.client')" label="name" v-model="consignee_id" v-validate.disable="'required'">
                                         </v-select>
                                          <small class="help-block error" v-show="errors.has('consignee_id')">
                                             @{{ errors.first('consignee_id') }}

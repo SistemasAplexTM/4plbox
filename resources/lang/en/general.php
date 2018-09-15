@@ -197,6 +197,8 @@ return [
     'dispatch_immediately'=>'Dispatch immediately',
     'wait_until_you_decide'=>'Wait until you decide',
     'instruction'=>'Instruction',
+    'enter_a_tracking_number'=>'Enter a tracking number',
+    'enter_the_instruction'=>'Enter the instruction',
 
     //resources/views/template/prealertalist
 
@@ -209,7 +211,7 @@ return [
     'enter_the_tracking'=>'Enter the tracking, warehouse or guide number you want to track',
     'warehouse_guide_tracking'=>'Warehouse /Guide/ Tracking',
     'deliver_date'=>'Deliver date',
-
+    'track_your_package_here'=>'Track your package here',
 
     //resources/views/template/resultSearch
 
@@ -225,6 +227,12 @@ return [
     'tax'=>'Tax',
     'collection_weight_volume'=>'Collection Weight/Volume',
     'weight_volume'=>'Weight / Volume',
+    'enter_the_name_of_the_service'=>'Enter the name of the service',
+    'enter_the_rate'=>'Enter the rate',
+    'minimum_value_of_the_rate'=>'Minimum value of the rate',
+    'enter_the_optional_charge'=>'Enter the optional charge',
+    'enter_the_insurance_percentage'=>'Enter the insurance percentage',
+    'enter_the_tax_percentage'=>'Enter the tax percentage',
 
     //resources/views/template/shipper
     
@@ -256,12 +264,15 @@ return [
     'security_settings'=>'Security settings',
     'select_the_credentials'=>'Select the credentials that may use this document *',
     'select_the_additional_functionalities'=>'Select the additional functionalities of the document (optional)',
+    'document_type'=>'Document type',
+    'mail_with_copy_to'=>'Mail with copy to:',
 
      //resources/views/template/tracking
 
      'track_record'=>'Track record',
      'registered_tracking'=>'Registered Tracking',
      'office'=>'Office',
+     'number_of_tracking'=>'Number of tracking',
 
      //resources/views/template/transport
 
@@ -276,6 +287,14 @@ return [
     'state_dpto'=>'State / Dpto',
     'carrier'=>'Carrier',
     'transporters'=>'Transporters',
+    'name_of_the_transporter'=>'Enter the name of the transporter',
+    'enter_the_phone'=>'Enter the phone',
+    'enter_the_email'=>'Enter the email',
+    'enter_the_name_of_the_contact'=>'Enter the name of the contact',
+    'enter_the_city_of_the_transporter'=>'Enter the city of the transporter',
+    'enter_the_status_of_the_transporter'=>'Enter the status of the transporter',
+    'enter_the_carrier_country'=>'Enter the carrier country',
+    'enter_the_transporter_zip_code'=>'Enter the transporter zip-code',
 
     //resources/views/template/user
 

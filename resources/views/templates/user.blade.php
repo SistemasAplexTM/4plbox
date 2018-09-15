@@ -66,7 +66,7 @@
                                             <label for="agencia_id" class="control-label gcore-label-top">@lang('general.agency'):</label>
                                         </div>
                                         <div class="col-sm-7">
-                                            <v-select name="agencia_id" v-model="agencia_id" label="name" :options="agencias" v-validate.disable="'required'" placeholder="Agencias"></v-select>
+                                            <v-select name="agencia_id" v-model="agencia_id" label="name" :options="agencias" v-validate.disable="'required'" placeholder="@lang('general.agency')"></v-select>
                                             <small class="help-block">@{{ errors.first('agencia_id') }}</small>
                                         </div>
                                     </div>
@@ -79,7 +79,7 @@
                                             <label for="name" class="control-label gcore-label-top">@lang('general.name'):</label>
                                         </div>
                                         <div class="col-sm-7">
-                                            <input v-model="name" name="name" placeholder="Nombre del usuario" class="form-control" type="text" v-validate.disable="mostrar_password ? 'required' : 'required'"/>
+                                            <input v-model="name" name="name" placeholder="@lang('general.name')" class="form-control" type="text" v-validate.disable="mostrar_password ? 'required' : 'required'"/>
                                             <small class="help-block">@{{ errors.first('name') }}</small>
                                         </div>
                                     </div>

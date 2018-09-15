@@ -198,6 +198,8 @@ return [
     'enter_the_tracking_and_instruction'=>'Ingrese los tracking y la instrucción de envío de sus paquetes.',
     'dispatch_immediately'=>'Despachar de inmediato',
     'wait_until_you_decide'=>'Esperar hasta que decida ',
+    'enter_a_tracking_number'=>'Ingrese un número de rastreo',
+    'enter_the_instruction'=>'Ingresa la instrucción',
 
     //resources/views/template/prealertalist
 
@@ -211,6 +213,7 @@ return [
     'enter_the_tracking'=>'Ingrese el numero de tracking, warehouse o guia que desea rastrear',
     'warehouse_guide_tracking'=>'Almacén /Guía/ Seguimiento',
     'deliver_date'=>'Fecha entrega',
+    'track_your_package_here'=>'Rastree su paquete aquí',
 
      //resources/views/template/resultSearch
 
@@ -225,6 +228,14 @@ return [
     'tax'=>'Impuesto',
     'collection_weight_volume'=>'Cobro Peso/Volumen',
     'weight_volume'=>'Peso / Volumen',
+    'enter_the_name_of_the_service'=>'Ingrese el nombre del servicio',
+    'enter_the_rate'=>'Ingrese la tarifa',
+    'minimum_value_of_the_rate'=>'Valor mínimo de la tarifa',
+    'enter_the_optional_charge'=>'Ingrese el cobro opcional',
+    'enter_the_insurance_percentage'=>'Ingrese el porcentaje del seguro',
+    'enter_the_tax_percentage'=>'Ingrese el porcentaje del impuesto',
+
+
 
     
     //resources/views/template/shipper
@@ -256,12 +267,16 @@ return [
     'security_settings'=>'Configuración de seguridad',
     'select_the_credentials'=>'Seleccione las credenciales que podrán utilizar este documento *',
     'select_the_additional_functionalities'=>'Seleccione las funcionalidades adicionales del documento (opcional)',
+    'document_type'=>'Tipo documento',
+    'mail_with_copy_to'=>'Correo con copia a:',
+
   
     //resources/views/template/tracking
     
     'track_record'=>'Registro de rastreo',
     'registered_tracking'=>'Rastreo registrado',
     'office'=>'Despacho',
+    'number_of_tracking'=>'Número de rastreo',
 
     //resources/views/template/transport
 
@@ -277,6 +292,16 @@ return [
     'state_dpto'=>'Estado / Dpto',
     'carrier'=>'Portador',
     'transporters'=>'Transportadores',
+    'name_of_the_transporter'=>'Ingrese el nombre del transportador',
+    'transporter_address'=>'Dirección del transportador',
+    'enter_the_phone'=>'Ingrese el teléfono',
+    'enter_the_email'=>'Ingrese el email',
+    'enter_the_name_of_the_contact'=>'Enter the name of the contact',
+    'enter_the_city_of_the_transporter'=>'Ingrese la ciudad del transportador',
+    'enter_the_status_of_the_transporter'=>'Ingrese el estado del transportador',
+    'enter_the_carrier_country'=>'Ingrese el país del transportador',
+    'enter_the_transporter_zip_code'=>'Ingrese el zip-code del transportador',
+
 
     //resources/views/template/user
 
