@@ -48,7 +48,7 @@
                                         <div class="form-group" :class="{'has-error': listErrors.nombre}">
                                         	<label class="col-sm-3 control-label" for="nombre">@lang('general.name'):</label>
                                             <div class="col-sm-9">
-                                                <input type="text" v-model="nombre" placeholder="@lang('general.identification_of_the_messag')" class="form-control" value="" id="nombre" name="nombre" @click="deleteError('nombre')">
+                                                <input type="text" v-model="nombre" placeholder="@lang('general.identification_of_the_message')" class="form-control" value="" id="nombre" name="nombre" @click="deleteError('nombre')">
                                                 <small id="msn1" class="help-block result-nombre" v-show="listErrors.nombre"></small>
                                             </div>
                                         </div>
@@ -62,7 +62,7 @@
                                         <div class="form-group" :class="{'has-error': listErrors.subject}">
                                         	<label class="col-sm-3 control-label">@lang('general.subject'):</label>
                                             <div class="col-sm-9">
-                                                <input type="text" v-model="subject" placeholder=">@lang('general.subject')" class="form-control" value=""  id="subject" name="subject" @click="deleteError('subject')">
+                                                <input type="text" v-model="subject" placeholder="@lang('general.subject')" class="form-control" value=""  id="subject" name="subject" @click="deleteError('subject')">
                                                 <small id="msn1" class="help-block result-subject" v-show="listErrors.subject"></small>
                                             </div>
                                         </div>
