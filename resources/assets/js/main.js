@@ -15,51 +15,33 @@ $(document).ready(function() {
         timeout: 5000
     });
     $.fn.select2.defaults.set("theme", "bootstrap");
-   
-   if(lang == 'es'){
-            $.extend(true, $.fn.dataTable.defaults, {
-                        "language": {
-                            "paginate": {
-                                "previous": "Anterior",
-                                "next": "Siguiente",
-                        },
-                            /*"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",*/
-                            "info": "Registros del _START_ al _END_  de un total de _TOTAL_",
-                            "search": "Buscar",
-                            "lengthMenu": "Mostrar _MENU_ Registros",
-                            "infoEmpty": "Mostrando registros del 0 al 0",
-                            "emptyTable": "No hay datos disponibles en la tabla",
-                            "infoFiltered": "(Filtrando para _MAX_ Registros totales)",
-                            "zeroRecords": "No se encontraron registros coincidentes",
-                        },
-                processing: true,
-                serverSide: true,
-                searching: true,
-            });
-
-   }else{
-
-            $.extend(true, $.fn.dataTable.defaults, {
-                processing: true,
-                serverSide: true,
-                searching: true,
-            });
-
-   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    if (lang == 'es') {
+        $.extend(true, $.fn.dataTable.defaults, {
+            "language": {
+                "paginate": {
+                    "previous": "Anterior",
+                    "next": "Siguiente",
+                },
+                /*"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",*/
+                "info": "Registros del _START_ al _END_  de un total de _TOTAL_",
+                "search": "Buscar",
+                "lengthMenu": "Mostrar _MENU_ Registros",
+                "infoEmpty": "Mostrando registros del 0 al 0",
+                "emptyTable": "No hay datos disponibles en la tabla",
+                "infoFiltered": "(Filtrando para _MAX_ Registros totales)",
+                "zeroRecords": "No se encontraron registros coincidentes",
+            },
+            processing: true,
+            serverSide: true,
+            searching: true,
+        });
+    } else {
+        $.extend(true, $.fn.dataTable.defaults, {
+            processing: true,
+            serverSide: true,
+            searching: true,
+        });
+    }
     /* ESTILO CHOSEN SELECT2 A UN SELECT */
     $('.select2').select2();
     var config = {
