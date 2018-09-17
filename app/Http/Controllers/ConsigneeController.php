@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use JavaScript;
 use App\User;
+use App\Agencia;
 
 class ConsigneeController extends Controller
 {
@@ -330,13 +331,20 @@ class ConsigneeController extends Controller
                     ['a.id', $id],
                 ])
                 ->first();
-            $caracteres      = strlen($data->agencia_id);
+            $pref = '';
+            $prefijo_pobox = Agencia::select('prefijo_pobox')->where('id', Auth::user()->agencia_id)->first();
+            if($prefijo_pobox->prefijo_pobox == null){
+               $pref = $data->agencia_id;
+            }else{
+                $pref = $prefijo_pobox->prefijo_pobox;
+            }
+            $caracteres      = strlen($pref);
             $sumarCaracteres = $caracteres - $caracteres;
             $caracter        = '';
             for ($i = 0; $i <= $sumarCaracteres; $i++) {
                 $caracter = $caracter . '0';
             }
-            $po_box = $caracter . $data->agencia_id . '-' . $id;
+            $po_box = $caracter . $pref . '-' . $id;
             $answer = Consignee::where('id', $id)->update(['po_box' => $prefijo->iso2 . '' . $po_box]);
             return $answer;
         } catch (Exception $e) {

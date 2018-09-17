@@ -231,7 +231,7 @@
                                     <span style="color: coral; display: none;" id="msnEditarCons">@lang('documents.prepared_for_editing')</span>
                                     <label class="po">PO#</label>
                               
-                                    <input type="text" id="poBoxD" name="poBoxD" class="" value="" style="border-color: transparent;">
+                                    <input type="text" id="poBoxD" name="poBoxD" class="" value="{{ isset($documento->po_box) ? $documento->po_box : '' }}" style="border-color: transparent;color: blue;" readonly="">
                                 </h5>
                             </div>
                             <div class="ibox-content col-lg-12" :class="[mostrar.includes(22) ? 'wrh' : 'guia' ]">

@@ -4,7 +4,6 @@
 // @example;
 
 $(document).ready(function() {
-    permissions();
     //toggle `popup` / `inline` mode
     $.fn.editable.defaults.mode = 'inline';
     $.fn.editable.defaults.params = function(params) {
@@ -48,12 +47,45 @@ $(document).ready(function() {
     });
     llenarSelectPersonalizado('documento', 'localizacion', 'localizacion_id', 2); // module, tableName, id_campo
     llenarSelectPersonalizado('documento', 'localizacion', 'localizacion_id_c', 2); // module, tableName, id_campo
-    if ($('#show-totales').prop('checked') === true) {
-        setTimeout(function() {
-            llenarSelectServicio($('#tipo_embarque_id').val());
-        }, 500);
-    }
+    
+});
+$(function() {
 
+    jQuery('#tbl-consolidado').
+    on('mouseover', 'tr', function() {
+        jQuery(this).find('.edit, .delete').show();
+    }).
+    on('mouseout', 'tr', function() {
+        jQuery(this).find('.edit, .delete').hide();
+    });
+
+    $('#show-all-c').change(function() {
+        if ($(this).prop('checked') === true) {
+            objVue.modalConsignee(false);
+        } else {
+            objVue.modalConsignee($('#shipper_id').val());
+        }
+    });
+    $('#show-all').change(function() {
+        if ($(this).prop('checked') === true) {
+            objVue.modalShipper(false);
+        } else {
+            objVue.modalShipper($('#consignee_id').val());
+        }
+    });
+    $('#show-totales').change(function() {
+        if ($(this).prop('checked') === true) {
+            objVue.showTotals(true);
+            setTimeout(function() {
+                llenarSelectServicio($('#tipo_embarque_id').val());
+            }, 500);
+        } else {
+            objVue.showTotals(false);
+        }
+    });
+});
+
+function datatableDetail(){
     $('#whgTable').DataTable({
         ajax: 'getDataDetailDocument',
         "paging":   false,
@@ -208,44 +240,7 @@ $(document).ready(function() {
             $('#valor_declarado_tbl').val(parseFloat(isInteger(dec)));
         },
     });
-
-});
-$(function() {
-
-    jQuery('#tbl-consolidado').
-    on('mouseover', 'tr', function() {
-        jQuery(this).find('.edit, .delete').show();
-    }).
-    on('mouseout', 'tr', function() {
-        jQuery(this).find('.edit, .delete').hide();
-    });
-
-    $('#show-all-c').change(function() {
-        if ($(this).prop('checked') === true) {
-            objVue.modalConsignee(false);
-        } else {
-            objVue.modalConsignee($('#shipper_id').val());
-        }
-    });
-    $('#show-all').change(function() {
-        if ($(this).prop('checked') === true) {
-            objVue.modalShipper(false);
-        } else {
-            objVue.modalShipper($('#consignee_id').val());
-        }
-    });
-    $('#show-totales').change(function() {
-        if ($(this).prop('checked') === true) {
-            objVue.showTotals(true);
-            setTimeout(function() {
-                llenarSelectServicio($('#tipo_embarque_id').val());
-            }, 500);
-        } else {
-            objVue.showTotals(false);
-        }
-    });
-});
-
+}
 function llenarSelectServicio(id_embarque) {
     var url = '../../servicios/getAllServiciosAgencia/' + id_embarque;
     $.ajax({
@@ -418,18 +413,19 @@ function showModalArancel(id) {
     objVue.modalArancel(id);
 }
 
-function permissions() {
+function permissions_f() {
     objVue.permissions = {
-        deleteDetailConsolidado: permission_deleteDetailConsolidado,
-        insertDetail: permission_insertDetail,
-        editDetail: permission_editDetail,
-        removerGuiaAgrupada: permission_removerGuiaAgrupada,
-        pdfContrato: permission_pdfContrato,
-        pdfTsa: permission_pdfTsa,
-        pdf: permission_pdf,
-        pdfLabel: permission_pdfLabel
+        permission_deleteDetailConsolidado: permission_deleteDetailConsolidado,
+        insertDetail:                       permission_insertDetail,
+        editDetail:                         permission_editDetail,
+        removerGuiaAgrupada:                permission_removerGuiaAgrupada,
+        pdfContrato:                        permission_pdfContrato,
+        pdfTsa:                             permission_pdfTsa,
+        pdf:                                permission_pdf,
+        pdfLabel:                           permission_pdfLabel
     };
 }
+
 var objVue = new Vue({
     el: '#documento',
     watch:{
@@ -646,7 +642,15 @@ var objVue = new Vue({
             if ($('#show-totales').prop('checked') === true) {
                 this.showFieldsTotals = true;
             }
-            $('.form_doc').css('display', 'inline-block')
+            $('.form_doc').css('display', 'inline-block');
+            setTimeout(function(){
+                datatableDetail();
+                permissions_f();
+                if ($('#show-totales').prop('checked') === true) {
+                    llenarSelectServicio($('#tipo_embarque_id').val());
+                }
+            }, 500);
+            
         },
         saveDocument: function() {
             $('#date').val(this.getTime());

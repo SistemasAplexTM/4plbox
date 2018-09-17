@@ -321,7 +321,8 @@
                                         <table width="100%" border="0" cellspacing="1" cellpadding="0">
                                             <tr>
                                                 <td><b>@lang('general.value'): (Flete+Impuesto)</b></td>
-                                                <td align="right"> {{ $subtotal = number_format(($total_declarado * $documento->impuesto / 100) + ($total_libras * $documento->valor), 2) }} </td>
+                                                <?php $sub = ($total_declarado * $documento->impuesto / 100) + ($total_libras * $documento->valor); ?>
+                                                <td align="right"> {{ $subtotal = number_format($sub, 2) }} </td>
                                             </tr>                                   
 
                                             <tr>
@@ -339,7 +340,7 @@
                                             </tr>
                                             <tr>
                                                 <td><b>Sub Total:</b></td>
-                                                <td align="right"> {{ $total = number_format($subtotal + $seguro + $documento->cargos_add - $documento->descuento, 2) }}</td>
+                                                <td align="right"> {{ $total = number_format($sub + $seguro + $documento->cargos_add - $documento->descuento, 2) }}</td>
                                             </tr>
                                         </table>
                                     </div>

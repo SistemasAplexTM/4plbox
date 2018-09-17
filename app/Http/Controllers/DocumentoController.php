@@ -220,7 +220,8 @@ class DocumentoController extends Controller
                 'pais.descripcion as pais',
                 'central_destino.nombre as central_destino',
                 'maestra_multiple.nombre as transporte',
-                'maestra_multiple.id as transporte_id'
+                'maestra_multiple.id as transporte_id',
+                'consignee.po_box'
             )
             ->where([
                 ['documento.deleted_at', null],
