@@ -38,7 +38,7 @@
                                             <label for="pa" class="control-label gcore-label-top">P.A:</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="pa" name="pa" id="pa" value="" placeholder="Código de la posicion arancelaria" class="form-control" type="text" @click="deleteError('pa')" @focus="deleteError('pa')" />
+                                            <input v-model="pa" name="pa" id="pa" value="" placeholder="@lang('general.code_of_the_tariff_position')" class="form-control" type="text" @click="deleteError('pa')" @focus="deleteError('pa')" />
                                             <small id="msn1" class="help-block result-pa" v-show="listErrors.pa">@lang('general.obligatory_field')</small>
                                         </div>
                                     </div>
@@ -53,7 +53,7 @@
                                             <label for="descripcion" class="control-label gcore-label-top">@lang('general.description')</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <textarea v-model="descripcion" name="descripcion" id="descripcion" placeholder="Descripcion de la P.A" class="form-control" @click="deleteError('descripcion')" @focus="deleteError('descripcion')"></textarea>
+                                            <textarea v-model="descripcion" name="descripcion" id="descripcion" placeholder="@lang('general.description_of_p_a')" class="form-control" @click="deleteError('descripcion')" @focus="deleteError('descripcion')"></textarea>
                                             <small id="msn1" class="help-block result-descripcion" v-show="listErrors.descripcion">@lang('general.obligatory_field')</small>
                                         </div>
                                     </div>
@@ -68,8 +68,8 @@
                                             <label for="iva" class="control-label gcore-label-top">IVA:</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="iva" name="iva" id="iva" value="" placeholder="Porcentaje arancel EJ: 0.19 => 19%" class="form-control" type="text" @click="deleteError('iva')" @focus="deleteError('iva')"/>
-                                            <small id="msn1" class="help-block result-iva" v-show="listErrors.iva">@lang('general.obligatory_field')o</small>
+                                            <input v-model="iva" name="iva" id="iva" value="" placeholder="@lang('general.percentage_tariff')" class="form-control" type="text" @click="deleteError('iva')" @focus="deleteError('iva')"/>
+                                            <small id="msn1" class="help-block result-iva" v-show="listErrors.iva">@lang('general.obligatory_field')</small>
                                         </div>
                                     </div>
                                 </div>
@@ -83,7 +83,7 @@
                                             <label for="arancel" class="control-label gcore-label-top">@lang('general.tariff')</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="arancel" name="arancel" id="arancel" value="" placeholder="Porcentaje arancel EJ: 0.05 => 5%" class="form-control" type="text" @click="deleteError('arancel')" @focus="deleteError('arancel')"/>
+                                            <input v-model="arancel" name="arancel" id="arancel" value="" placeholder="@lang('general.percentage_tariff1')" class="form-control" type="text" @click="deleteError('arancel')" @focus="deleteError('arancel')"/>
                                             <small id="msn1" class="help-block result-arancel" v-show="listErrors.arancel">@lang('general.obligatory_field')</small>
                                         </div>
                                     </div>

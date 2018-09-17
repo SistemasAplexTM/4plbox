@@ -4,13 +4,13 @@
 {{-- bread crumbs --}}
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Bill of lading</h2>
+        <h2>@lang('general.bill_of_lading')</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#">Inicio</a>
+                <a href="#">@lang('general.home')</a>
             </li>
             <li>
-                <a href="{{ route('bill.index') }}">Bill of lading</a>
+                <a href="{{ route('bill.index') }}">@lang('general.bill_of_lading')</a>
             </li>
             <li class="active">
                 <strong>{{ (isset($bill) and $bill) ? 'Editar Bill of lading' : 'Registro de Bill of lading' }}</strong>
@@ -106,7 +106,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Registro de Bill of lading</h5>
+                    <h5>@lang('general.register_of_bill_of_lading')</h5>
                     <div class="ibox-tools">
                         
                     </div>
@@ -153,7 +153,7 @@
                                         <div class="panel-heading" role="tab" id="headingOne">
                                           <h4 class="panel-title">
                                             <a id="open_collapse" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="color: cornflowerblue;">
-                                              <i class="fa fa-plus"></i> Crear nuevo
+                                              <i class="fa fa-plus"></i> @lang('general.create_new')
                                             </a>
                                           </h4>
                                         </div>
@@ -161,11 +161,11 @@
                                           <div class="panel-body" style="padding: 0;">
                                             <div class="form-group">
                                                 <div class="col-lg-5">
-                                                    <label>Nombre para mostrar</label>
+                                                    <label>@lang('general.display_name')</label>
                                                     <input type="text" name="display_name" id="display_name" v-model="display_name" class="form-control">
                                                 </div>
                                                 <div class="col-lg-4">
-                                                    <label>Número de cuenta</label>
+                                                    <label>@lang('general.account_number')</label>
                                                     <input type="text" name="account_number" id="account_number" v-model="account_number" class="form-control">
                                                 </div>
                                                 <div class="col-lg-3">
@@ -175,13 +175,14 @@
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-lg-9">
-                                                    <label>Datos</label>
+                                                    <label>@lang('general.data')</label>
                                                     <textarea name="text_exporter" id="text_exporter" v-model="text_exporter" class="form-control" rows="4"></textarea>
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <label style="width: 100%;" class="control-label">&nbsp;</label>
                                                     <a class="btn btn-primary" data-toggle="tooltip" title="Crear" @click="addPartie" v-if="!edit_p"><i class="fa fa-plus"></i> Crear</a>
-                                                    <a class="btn btn-warning" data-toggle="tooltip" title="Editar" @click="editPartie" v-else="edit_p"><i class="fa fa-edit"></i> Editar</a>
+                                                    <a class="btn btn-warning" data-toggle="tooltip" title="Editar" @click="editPartie" v-else="edit_p"><i class="fa fa-edit"></i>
+                                                     @lang('general.edit')</a>
                                                 </div>
                                             </div>
                                           </div>
@@ -195,10 +196,10 @@
                                             <table id="tbl-modalParties" class="table table-striped table-hover table-bordered" style="width: 100%;">
                                                 <thead>
                                                     <tr>
-                                                        <th>Nombre</th>
-                                                        <th>Número de cuenta</th>
+                                                        <th>@lang('general.name')</th>
+                                                        <th>@lang('general.account_number')</th>
                                                         <th>Zip</th>
-                                                        <th>Acciones</th>
+                                                        <th>@lang('general.actions')</th>
                                                     </tr>
                                                 </thead>
                                             </table>
@@ -207,7 +208,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">@lang('general.close')</button>
                             </div>
                         </div>
                     </div>

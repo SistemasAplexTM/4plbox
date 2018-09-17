@@ -37,7 +37,7 @@
                                             <label for="nombre" class="control-label gcore-label-top">@lang('general.names'):<samp id="require">*</samp></label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="nombre" name="nombre" id="nombre" value="" placeholder="Names" class="form-control" type="text" style="" @click="deleteError('nombre')" />
+                                            <input v-model="nombre" name="nombre" id="nombre" value="" placeholder="@lang('general.names')" class="form-control" type="text" style="" @click="deleteError('nombre')" />
                                             <small id="msn1" class="help-block result-nombre" v-show="listErrors.nombre"></small>
                                         </div>
                                     </div>
@@ -50,7 +50,7 @@
                                             <label for="direccion" class="control-label gcore-label-top">@lang('general.address'):<samp id="require">*</samp></label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="direccion" name="direccion" id="direccion" value="" placeholder="" class="form-control" type="text" style="" @click="deleteError('direccion')" />
+                                            <input v-model="direccion" name="direccion" id="direccion" value="" placeholder="@lang('general.address')" class="form-control" type="text" style="" @click="deleteError('direccion')" />
                                             <small id="msn1" class="help-block result-direccion" v-show="listErrors.direccion"></small>
                                         </div>
                                     </div>
@@ -63,7 +63,7 @@
                                             <label for="telefono" class="control-label gcore-label-top">@lang('general.phone'):</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="telefono" name="telefono" id="telefono" value="" placeholder="" class="form-control" type="text" style="" @click="deleteError('telefono')" />
+                                            <input v-model="telefono" name="telefono" id="telefono" value="" placeholder="@lang('general.phone')" class="form-control" type="text" style="" @click="deleteError('telefono')" />
                                             <small id="msn1" class="help-block result-telefono" v-show="listErrors.telefono"></small>
                                         </div>
                                     </div>
@@ -76,7 +76,7 @@
                                             <label for="correo" class="control-label gcore-label-top">@lang('general.email')</label>
                                         </div>
                                         <div class="col-sm-8"  :class="{ 'has-error': errors.has('correo') }">
-                                            <input v-model="correo" name="correo" id="correo" value="" placeholder="" class="form-control" type="text" style="" @click="deleteError('correo')" v-validate.disable="'unique'" />
+                                            <input v-model="correo" name="correo" id="correo" value="" placeholder="@lang('general.email')" class="form-control" type="text" style="" @click="deleteError('correo')" v-validate.disable="'unique'" />
                                             <small id="msn1" class="help-block result-correo" v-show="listErrors.correo"></small>
                                             <small class="help-block has-error" :class="{ 'small': errors.has('correo') }">@{{ errors.first('correo') }}</small>
                                         </div>
@@ -107,7 +107,7 @@
                                             <label for="zona" class="control-label gcore-label-top">@lang('general.zone'):</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="zona" name="zona" id="zona" value="" placeholder="" class="form-control" type="text" style="" @click="deleteError('zona')" />
+                                            <input v-model="zona" name="zona" id="zona" value="" placeholder="@lang('general.zone')" class="form-control" type="text" style="" @click="deleteError('zona')" />
                                             <small id="msn1" class="help-block result-zona" v-show="listErrors.zona"></small>
                                         </div>
                                     </div>

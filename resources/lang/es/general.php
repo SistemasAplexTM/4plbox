@@ -2,17 +2,36 @@
 
 return [
 
+    //resources/views/templates/bill/create
+
+    'register_of_bill_of_lading'=>'Registro de conocimiento de embarque',
+    'create_new'=>'Crear nuevo',
+    'display_name'=>'Nombre para mostrar',
+    'account_number'=>'Número de cuenta',
+    'data'=>'Datos',
+    'edit'=>'Editar',
+    'close'=>'Cerrar',
+    'point_of_origin'=>'Punto de origen',
+    'loading_dock'=>'Muelle de carga',
+    'foreign_port_of_discharge'=>'Puerto extranjero de descarga',
+
+
+
     //resources/views/templates/aerolineasInventario
 
     'airline_inventory'=>'Inventario de aerolíneas',
     'home'=>'Inicio',
-    'airline_inventory_record'=>'Registro de inventario de aerolínea',
+    'airline_inventory_record'=>'Reg de inventario de aerolínea',
     'airline'=>'Aerolínea:',
     'quantity'=>'Cantidad:',
     'guide'=>'Guía:',
     'airline_inventories'=>'Inventarios aerolínea',
     'group'=>'Grupo',
     'actions'=>'Acciones',
+    'airlines'=>'Aerolíneas',
+    'guide_number'=>'Número de guía',
+    'repeat_email'=>'Repite el email',
+
 
     //resources/views/templates/agenciaForm
  
@@ -65,6 +84,13 @@ return [
     'description'=>'Descripción:',
     'tariff'=>'Arancel:',
     'code_pa'=>'Codigo P.A',
+    'code_of_the_tariff_position'=>'Código de la posicion arancelaria',
+    'description_of_p_a'=>'Descripcion de la P.A',
+    'percentage_tariff'=>'Porcentaje arancel EJ: 0.19 => 19%',
+    'percentage_tariff1'=>'Porcentaje arancel EJ: 0.05 => 5%',
+
+
+    //resources/views/templates/casillero
     'register_locker'=>'Registrar casillero',
     'general_shipping_data'=>' Datos generales y dirección de envío',
     'there_are_no_results'=>'No hay resultados para la búsqueda',
@@ -76,6 +102,8 @@ return [
     'terms_and_conditions'=>'Términos y condiciones generales.',
     'i_wish_to_receive_information'=>'Deseo recibir información de mi casillero y de mi interés.',
     'create_locker'=>' Crear casillero',
+    'email_be_your_user'=>'Correo electrónico (ser tu usuario)',
+
 
     //resources/views/templates/ciudad
     
@@ -101,6 +129,7 @@ return [
     'document'=>'Documento',
     'second_name'=>'Segundo nombre',
     'surnames'=>'Apellidos',
+    'Surname'=>'Primer apellido',
     'second_surname'=>'Segundo apellido',
     'code_zip'=>'Cód ZIP',
     'client'=>'Cliente',
@@ -140,7 +169,11 @@ return [
     'data_shipper'=>'Datos remitente',
     'data_consignee'=>'Datos destinatarios',
     'signature_data_agency'=>'Datos firma - Agencia',
-    'data_detail_message'=>'Datos Detalle mensaje',
+    'data_detail_message'=>'Datos detalle mensaje',
+    'identification_of_the_message'=>'Identificación del mensaje',
+    'message_overview'=>'Descripción general del mensaje',
+    'other_recipients'=>'Otros destinatarios',
+
 
     //resources/views/template/maestraMultiple
 
@@ -165,6 +198,8 @@ return [
     'enter_the_tracking_and_instruction'=>'Ingrese los tracking y la instrucción de envío de sus paquetes.',
     'dispatch_immediately'=>'Despachar de inmediato',
     'wait_until_you_decide'=>'Esperar hasta que decida ',
+    'enter_a_tracking_number'=>'Ingrese un número de rastreo',
+    'enter_the_instruction'=>'Ingresa la instrucción',
 
     //resources/views/template/prealertalist
 
@@ -178,6 +213,7 @@ return [
     'enter_the_tracking'=>'Ingrese el numero de tracking, warehouse o guia que desea rastrear',
     'warehouse_guide_tracking'=>'Almacén /Guía/ Seguimiento',
     'deliver_date'=>'Fecha entrega',
+    'track_your_package_here'=>'Rastree su paquete aquí',
 
      //resources/views/template/resultSearch
 
@@ -192,6 +228,14 @@ return [
     'tax'=>'Impuesto',
     'collection_weight_volume'=>'Cobro Peso/Volumen',
     'weight_volume'=>'Peso / Volumen',
+    'enter_the_name_of_the_service'=>'Ingrese el nombre del servicio',
+    'enter_the_rate'=>'Ingrese la tarifa',
+    'minimum_value_of_the_rate'=>'Valor mínimo de la tarifa',
+    'enter_the_optional_charge'=>'Ingrese el cobro opcional',
+    'enter_the_insurance_percentage'=>'Ingrese el porcentaje del seguro',
+    'enter_the_tax_percentage'=>'Ingrese el porcentaje del impuesto',
+
+
 
     
     //resources/views/template/shipper
@@ -223,12 +267,16 @@ return [
     'security_settings'=>'Configuración de seguridad',
     'select_the_credentials'=>'Seleccione las credenciales que podrán utilizar este documento *',
     'select_the_additional_functionalities'=>'Seleccione las funcionalidades adicionales del documento (opcional)',
+    'document_type'=>'Tipo documento',
+    'mail_with_copy_to'=>'Correo con copia a:',
+
   
     //resources/views/template/tracking
     
     'track_record'=>'Registro de rastreo',
     'registered_tracking'=>'Rastreo registrado',
     'office'=>'Despacho',
+    'number_of_tracking'=>'Número de rastreo',
 
     //resources/views/template/transport
 
@@ -244,6 +292,16 @@ return [
     'state_dpto'=>'Estado / Dpto',
     'carrier'=>'Portador',
     'transporters'=>'Transportadores',
+    'name_of_the_transporter'=>'Ingrese el nombre del transportador',
+    'transporter_address'=>'Dirección del transportador',
+    'enter_the_phone'=>'Ingrese el teléfono',
+    'enter_the_email'=>'Ingrese el email',
+    'enter_the_name_of_the_contact'=>'Enter the name of the contact',
+    'enter_the_city_of_the_transporter'=>'Ingrese la ciudad del transportador',
+    'enter_the_status_of_the_transporter'=>'Ingrese el estado del transportador',
+    'enter_the_carrier_country'=>'Ingrese el país del transportador',
+    'enter_the_transporter_zip_code'=>'Ingrese el zip-code del transportador',
+
 
     //resources/views/template/user
 

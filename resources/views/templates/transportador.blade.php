@@ -37,7 +37,7 @@
                                             <label for="nombre" class="control-label gcore-label-top">@lang('general.name'):</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="nombre" name="nombre" id="nombre" value="" placeholder="Ingrese el nombre del transportador" class="form-control" type="text" @click="deleteError('nombre')" @focus="deleteError('nombre')" />
+                                            <input v-model="nombre" name="nombre" id="nombre" value="" placeholder="@lang('general.name_of_the_transporter')" class="form-control" type="text" @click="deleteError('nombre')" @focus="deleteError('nombre')" />
                                             <small id="msn1" class="help-block result-nombre" v-show="listErrors.nombre"></small>
                                         </div>
                                     </div>
@@ -50,7 +50,7 @@
                                             <label for="direccion" class="control-label gcore-label-top">@lang('general.address'):</label>
                                         </div>
                                         <div class="col-sm-8">
-		                                    <input v-model="direccion" name="direccion" id="direccion" value="" placeholder="Dirección del transportador" class="form-control" type="text" @click="deleteError('direccion')" @focus="deleteError('direccion')" />
+		                                    <input v-model="direccion" name="direccion" id="direccion" value="" placeholder="@lang('general.transporter_address')" class="form-control" type="text" @click="deleteError('direccion')" @focus="deleteError('direccion')" />
 		                                    <small id="msn1" class="help-block result-direccion" v-show="listErrors.direccion"></small>
                                         </div>
                                     </div>
@@ -63,7 +63,7 @@
                                             <label for="telefono" class="control-label gcore-label-top">@lang('general.phone'):</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="telefono" name="telefono" id="telefono" value="" placeholder="Ingrese el telefono" class="form-control" type="text" @click="deleteError('telefono')" @focus="deleteError('telefono')" />
+                                            <input v-model="telefono" name="telefono" id="telefono" value="" placeholder="@lang('general.enter_the_phone')" class="form-control" type="text" @click="deleteError('telefono')" @focus="deleteError('telefono')" />
                                             <small id="msn1" class="help-block result-telefono" v-show="listErrors.telefono"></small>
                                         </div>
                                     </div>
@@ -76,7 +76,7 @@
                                             <label for="email" class="control-label gcore-label-top">@lang('general.email'):</label>
                                         </div>
                                         <div class="col-sm-8">
-		                                    <input v-model="email" name="email" id="email" value="" placeholder="Ingrese el email" class="form-control" type="emial" @click="deleteError('email')" @focus="deleteError('email')" />
+		                                    <input v-model="email" name="email" id="email" value="" placeholder="@lang('general.enter_the_email')" class="form-control" type="emial" @click="deleteError('email')" @focus="deleteError('email')" />
 		                                    <small id="msn1" class="help-block result-email" v-show="listErrors.email"></small>
                                         </div>
                                     </div>
@@ -89,7 +89,7 @@
                                             <label for="contacto" class="control-label gcore-label-top">@lang('general.contact'):</label>
                                         </div>
                                         <div class="col-sm-8">
-		                                    <input v-model="contacto" name="contacto" id="contacto" value="" placeholder="Ingrese el nombre del contacto" class="form-control" type="text" @click="deleteError('contacto')" @focus="deleteError('contacto')" />
+		                                    <input v-model="contacto" name="contacto" id="contacto" value="" placeholder="@lang('general.enter_the_name_of_the_contact')" class="form-control" type="text" @click="deleteError('contacto')" @focus="deleteError('contacto')" />
 		                                    <small id="msn1" class="help-block result-contacto" v-show="listErrors.contacto"></small>
                                         </div>
                                     </div>
@@ -102,7 +102,7 @@
                                             <label for="ciudad" class="control-label gcore-label-top">@lang('general.city'):</label>
                                         </div>
                                         <div class="col-sm-8">
-		                                    <input v-model="ciudad" name="ciudad" id="ciudad" value="" placeholder="Ingrese la ciudad del transportador" class="form-control" type="text" @click="deleteError('ciudad')" @focus="deleteError('ciudad')"/>
+		                                    <input v-model="ciudad" name="ciudad" id="ciudad" value="" placeholder="@lang('general.enter_the_city_of_the_transporter')" class="form-control" type="text" @click="deleteError('ciudad')" @focus="deleteError('ciudad')"/>
 		                                    <small id="msn1" class="help-block result-ciudad" v-show="listErrors.ciudad"></small>
                                         </div>
                                     </div>
@@ -115,7 +115,7 @@
                                             <label for="estado" class="control-label gcore-label-top">@lang('general.state_dpto'):</label>
                                         </div>
                                         <div class="col-sm-8">
-		                                    <input v-model="estado" name="estado" id="estado" value="" placeholder="Ingrese el estado del transportador" class="form-control" type="text" @click="deleteError('estado')" @focus="deleteError('estado')" />
+		                                    <input v-model="estado" name="estado" id="estado" value="" placeholder="@lang('general.enter_the_status_of_the_transporter')" class="form-control" type="text" @click="deleteError('estado')" @focus="deleteError('estado')" />
 		                                    <small id="msn1" class="help-block result-estado" v-show="listErrors.estado"></small>
                                         </div>
                                     </div>
@@ -128,7 +128,7 @@
                                             <label for="pais" class="control-label gcore-label-top">@lang('general.country'):</label>
                                         </div>
                                         <div class="col-sm-8">
-		                                    <input v-model="pais" name="pais" id="pais" value="" placeholder="Ingrese el pais del transportador" class="form-control" type="text" @click="deleteError('pais')" @focus="deleteError('pais')" />
+		                                    <input v-model="pais" name="pais" id="pais" value="" placeholder="@lang('general.enter_the_carrier_country')" class="form-control" type="text" @click="deleteError('pais')" @focus="deleteError('pais')" />
 		                                    <small id="msn1" class="help-block result-pais" v-show="listErrors.pais"></small>
                                         </div>
                                     </div>
@@ -141,7 +141,7 @@
                                             <label for="zip" class="control-label gcore-label-top">@lang('general.code_zip'):</label>
                                         </div>
                                         <div class="col-sm-8">
-		                                    <input v-model="zip" name="zip" id="zip" value="" placeholder="Ingrese el zip-code del transportador" class="form-control" type="text" @click="deleteError('zip')" @focus="deleteError('zip')" />
+		                                    <input v-model="zip" name="zip" id="zip" value="" placeholder="@lang('general.enter_the_transporter_zip_code')" class="form-control" type="text" @click="deleteError('zip')" @focus="deleteError('zip')" />
 		                                    <small id="msn1" class="help-block result-zip" v-show="listErrors.zip"></small>
                                         </div>
                                     </div>
@@ -157,7 +157,7 @@
                                         </div>
                                        <div class="checkbox checkbox-success checkbox-inline">
                                             <input type="checkbox" id="consignee" name="consignee" v-model="consignee">
-                                            <label for="consignee"><i class="fa fa-user-o"></i>@lang('general.consigne')</label>
+                                            <label for="consignee"><i class="fa fa-user-o"></i>@lang('general.consignee')</label>
                                         </div>
                                        <div class="checkbox checkbox-success checkbox-inline">
                                             <input type="checkbox" id="carrier" name="carrier" v-model="carrier">

@@ -75,7 +75,7 @@
                                         </label>
                                     </div>
                                     <div class="col-sm-8">
-                                        <v-select :on-change="setTransport" :options="status" @click="deleteError('status_id')" @focus="deleteError('status_id')" label="name" name="status_id" placeholder="Estatus" v-model="status_id">
+                                        <v-select :on-change="setTransport" :options="status" @click="deleteError('status_id')" @focus="deleteError('status_id')" label="name" name="status_id" placeholder=" @lang('general.status')" v-model="status_id">
                                         </v-select>
                                         <small class="help-block result-status_id" id="msn1" v-show="listErrors.status_id">
                                               @lang('general.obligatory_field')
@@ -95,7 +95,7 @@
                                         </label>
                                     </div>
                                     <div class="col-sm-8">
-                                        <input @click="deleteError('transportadora')" @focus="deleteError('transportadora')" class="form-control" id="transportadora" name="transportadora" placeholder="" style="" type="text" v-model="transportadora" value=""/>
+                                        <input @click="deleteError('transportadora')" @focus="deleteError('transportadora')" class="form-control" id="transportadora" name="transportadora" placeholder=" @lang('general.conveyor')" style="" type="text" v-model="transportadora" value=""/>
                                         <small class="help-block result-transportadora" id="msn1" v-show="listErrors.transportadora">
                                             @lang('general.obligatory_field')
                                         </small>
@@ -108,11 +108,11 @@
                                 <div :class="{'has-error': listErrors.num_transportadora}" class="form-group">
                                     <div class="col-sm-4">
                                         <label class="control-label gcore-label-top" for="num_transportadora">
-                                          @lang('general.conveyor_number')():
+                                          @lang('general.conveyor_number'):
                                         </label>
                                     </div>
                                     <div class="col-sm-8">
-                                        <input @click="deleteError('num_transportadora')" @focus="deleteError('num_transportadora')" class="form-control" id="num_transportadora" name="num_transportadora" placeholder="" style="" type="text" v-model="num_transportadora" value=""/>
+                                        <input @click="deleteError('num_transportadora')" @focus="deleteError('num_transportadora')" class="form-control" id="num_transportadora" name="num_transportadora" placeholder="@lang('general.conveyor_number')" style="" type="text" v-model="num_transportadora" value=""/>
                                         <small class="help-block result-num_transportadora" id="msn1" v-show="listErrors.num_transportadora">
                                             @lang('general.obligatory_field')
                                         </small>

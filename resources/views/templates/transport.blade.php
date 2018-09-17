@@ -56,7 +56,7 @@
                                             <label for="nombre" class="control-label gcore-label-top">@lang('general.name'):</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="nombre" name="nombre" id="nombre" value="" placeholder="" class="form-control" type="text" style="" @click="deleteError('nombre')" />
+                                            <input v-model="nombre" name="nombre" id="nombre" value="" placeholder="@lang('general.name')" class="form-control" type="text" style="" @click="deleteError('nombre')" />
                                             <small id="msn1" class="help-block result-nombre" v-show="listErrors.nombre"></small>
                                         </div>
                                     </div>
@@ -68,10 +68,10 @@
                                 <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.direccion}">
                                         <div class="col-sm-4">
-                                            <label for="direccion" class="control-label gcore-label-top">Dirección:</label>
+                                            <label for="direccion" class="control-label gcore-label-top">@lang('general.address'):</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="direccion" name="direccion" id="direccion" value="" placeholder="" class="form-control" type="text" style="" @click="deleteError('direccion')" />
+                                            <input v-model="direccion" name="direccion" id="direccion" value="" placeholder="@lang('general.address')" class="form-control" type="text" style="" @click="deleteError('direccion')" />
                                             <small id="msn1" class="help-block result-direccion" v-show="listErrors.direccion"></small>
                                         </div>
                                     </div>
@@ -86,7 +86,7 @@
                                             <label for="zip" class="control-label gcore-label-top">@lang('general.code_zip'):</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="zip" name="zip" id="zip" value="" placeholder="" class="form-control" type="text" style="" @click="deleteError('zip')" />
+                                            <input v-model="zip" name="zip" id="zip" value="" placeholder="@lang('general.code_zip')" class="form-control" type="text" style="" @click="deleteError('zip')" />
                                             <small id="msn1" class="help-block result-zip" v-show="listErrors.zip"></small>
                                         </div>
                                     </div>
@@ -101,7 +101,7 @@
                                             <label for="codigo" class="control-label gcore-label-top">@lang('general.code'):</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="codigo" name="codigo" id="codigo" class="form-control" type="text" maxlength="5" @click="deleteError('codigo')" />
+                                            <input v-model="codigo" name="codigo" id="codigo" placeholder="@lang('general.code')" class="form-control" type="text" maxlength="5" @click="deleteError('codigo')" />
                                             <small id="msn1" class="help-block result-codigo" v-show="listErrors.codigo"></small>
                                         </div>
                                     </div>

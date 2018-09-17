@@ -52,7 +52,7 @@
                                             <label for="nombre" class="control-label gcore-label-top">@lang('general.name'):</label>
                                         </div>
                                         <div class="col-sm-7">
-                                            <input v-model="nombre" name="nombre" id="nombre" value="" placeholder="Ingrese el nombre del servicio" class="form-control" type="text" @click="deleteError('nombre')" />
+                                            <input v-model="nombre" name="nombre" id="nombre" value="" placeholder="@lang('general.enter_the_name_of_the_service')" class="form-control" type="text" @click="deleteError('nombre')" />
                                             <small id="msn1" class="help-block result-nombre" v-show="listErrors.nombre"></small>
                                         </div>
                                     </div>
@@ -67,7 +67,7 @@
                                         <div class="col-sm-7">
                                         	<div class="input-group">
                                                 <span class="input-group-addon" id="basic-addon1"><li class="fa fa-usd"></li></span>
-		                                            <input v-model="tarifa" name="tarifa" id="tarifa" value="" placeholder="Ingrese la tarifa" class="form-control" type="text" @click="deleteError('tarifa')" />
+		                                            <input v-model="tarifa" name="tarifa" id="tarifa" value="" placeholder="@lang('general.enter_the_rate')" class="form-control" type="text" @click="deleteError('tarifa')" />
                                             </div>
 		                                    <small id="msn1" class="help-block result-tarifa" v-show="listErrors.tarifa"></small>
                                         </div>
@@ -83,7 +83,7 @@
                                         <div class="col-sm-7">
                                             <div class="input-group">
                                                 <span class="input-group-addon" id="basic-addon1"><li class="fa fa-usd"></li></span>
-                                                    <input v-model="peso_minimo" name="peso_minimo" id="peso_minimo" value="" placeholder="Valor minimo de la tarifa" class="form-control" type="text" @click="deleteError('peso_minimo')" />
+                                                    <input v-model="peso_minimo" name="peso_minimo" id="peso_minimo" value="" placeholder="@lang('general.minimum_value_of_the_rate')" class="form-control" type="text" @click="deleteError('peso_minimo')" />
                                             </div>
                                             <small id="msn1" class="help-block result-peso_minimo" v-show="listErrors.peso_minimo"></small>
                                         </div>
@@ -99,7 +99,7 @@
                                         <div class="col-sm-7">
                                         	<div class="input-group">
                                                 <span class="input-group-addon" id="basic-addon1"><li class="fa fa-usd"></li></span>
-		                                            <input v-model="cobro_opcional" name="cobro_opcional" id="cobro_opcional" value="" placeholder="Ingrese el cobro opcional" class="form-control" type="text" @click="deleteError('cobro_opcional')" />
+		                                            <input v-model="cobro_opcional" name="cobro_opcional" id="cobro_opcional" value="" placeholder="@lang('general.enter_the_optional_charge')" class="form-control" type="text" @click="deleteError('cobro_opcional')" />
                                             </div>
 		                                    <small id="msn1" class="help-block result-cobro_opcional" v-show="listErrors.cobro_opcional"></small>
                                         </div>
@@ -115,7 +115,7 @@
                                         <div class="col-sm-7">
                                         	<div class="input-group">
                                                 <span class="input-group-addon" id="basic-addon1"><li class="fa fa-dollar"></li></span>
-		                                            <input v-model="seguro" name="seguro" id="seguro" value="" placeholder="Ingrese el porcentaje del seguro" class="form-control" type="text" @click="deleteError('seguro')" />
+		                                            <input v-model="seguro" name="seguro" id="seguro" value="" placeholder="@lang('general.enter_the_insurance_percentage')" class="form-control" type="text" @click="deleteError('seguro')" />
                                             </div>
 		                                    <small id="msn1" class="help-block result-seguro" v-show="listErrors.seguro"></small>
                                         </div>
@@ -131,7 +131,7 @@
                                         <div class="col-sm-7">
                                         	<div class="input-group">
                                                 <span class="input-group-addon" id="basic-addon1"><li class="fa fa-percent"></li></span>
-		                                            <input v-model="impuesto" name="impuesto" id="impuesto" value="" placeholder="Ingrese el porcentaje del impuesto" class="form-control" type="text" @click="deleteError('impuesto')" />
+		                                            <input v-model="impuesto" name="impuesto" id="impuesto" value="" placeholder="@lang('general.enter_the_tax_percentage')" class="form-control" type="text" @click="deleteError('impuesto')" />
                                             </div>
 		                                    <small id="msn1" class="help-block result-impuesto" v-show="listErrors.impuesto"></small>
                                         </div>
