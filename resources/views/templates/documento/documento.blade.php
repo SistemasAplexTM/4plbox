@@ -133,11 +133,11 @@
                     </div>
                 </div>
                 {{-- FORMULARIO DE CONSOLIDADO --}}
-                @if(!Auth::user()->isRole('bodega'))
+                {{-- @if(!Auth::user()->isRole('bodega'))
                     <formconsolidado-component :app_type="'{{ env('APP_TYPE') }}'" :documento="{{ json_encode($documento) }}" :contactos="contactos" :restore="restoreShipperConsignee" :agrupar="datosAgrupar" :removeragrupado="removerAgrupado" :permission='permissions' v-if="mostrar.includes(24)"></formconsolidado-component>
-                @else
-                    <consol_bodega-component :app_type="'{{ env('APP_TYPE') }}'" :documento="{{ json_encode($documento) }}" :contactos="contactos" :restore="restoreShipperConsignee" :agrupar="datosAgrupar" :removeragrupado="removerAgrupado" :permission='permissions' v-if="mostrar.includes(24)"></consol_bodega-component>
-                @endif
+                @else --}}
+                    <consol_bodega-component :app_type="'{{ env('APP_TYPE') }}'" :documento="{{ json_encode($documento) }}" :contactos="contactos" :restore="restoreShipperConsignee" :agrupar="datosAgrupar" :removeragrupado="removerAgrupado" :permission='permissions' :ref_boxes='refreshBoxes' v-if="mostrar.includes(24)"></consol_bodega-component>
+                {{-- @endif --}}
 
                 {{-- CONSIGNEE Y SHIPPER --}}
                 <div class="col-lg-12 form_doc" style="display: none">

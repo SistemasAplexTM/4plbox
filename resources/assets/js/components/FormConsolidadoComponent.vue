@@ -421,7 +421,7 @@
             },
             removeragrupado:function(option){
                 let me = this;
-                axios.get('removerGuiaAgrupada/' + option.id).then(response => {
+                axios.get('removerGuiaAgrupada/' + option.id + '/' + option.id_guia_detalle).then(response => {
                     toastr.success('Registro quitado correctamente.');
                     me.updateTableDetail();
                 }).catch(function(error) {
@@ -711,6 +711,7 @@
                                 var btn_delete = "<a style='float: right;cursor:pointer;''><i class='material-icons'>clear</i></a>";
                                 if(groupGuias != null && groupGuias != 'null' && groupGuias != ''){
                                     groupGuias = groupGuias.replace(/,/g, "<br>");
+                                    groupGuias = groupGuias.replace(/@/g, ",");//SEPARADOR AL CREAR EL ONCLIC EN EL CONTROLADOR
                                 }else{
                                     groupGuias = '';
                                 }

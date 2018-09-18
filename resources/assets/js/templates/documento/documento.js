@@ -403,9 +403,10 @@ function agruparGuias(id) {
     };
 }
 
-function removerGuiaAgrupada(id) {
+function removerGuiaAgrupada(id, id_guia_detalle) {
     objVue.removerAgrupado = {
-        id: id
+        id: id,
+        id_guia_detalle: id_guia_detalle,
     };
 }
 
@@ -415,7 +416,7 @@ function showModalArancel(id) {
 
 function permissions_f() {
     objVue.permissions = {
-        permission_deleteDetailConsolidado: permission_deleteDetailConsolidado,
+        deleteDetailConsolidado: permission_deleteDetailConsolidado,
         insertDetail:                       permission_insertDetail,
         editDetail:                         permission_editDetail,
         removerGuiaAgrupada:                permission_removerGuiaAgrupada,
@@ -486,6 +487,7 @@ var objVue = new Vue({
         datosAgrupar: {}, //es para poder agrupar guias en el consolidado
         removerAgrupado: {}, //es para poder remover guias agrupadas en el consolidado
         permissions: {}, //es para poder pasar los permisos al consolidado
+        refreshBoxes: false, //variable para refrescar las cajas del consolidado bodega
     },
     methods: {
         totalizeDocument: function(){
@@ -593,6 +595,7 @@ var objVue = new Vue({
         },
         /* FUNCION PARA ELIMINAR DETALLE DE CONSIOLIDADO */
         deleteDetailConsolidado: function(data) {
+            let me = this;
             swal({
                 title: 'Seguro que desea eliminar este registro?',
                 text: "No lo podras recuperar despues!",
@@ -609,6 +612,7 @@ var objVue = new Vue({
                         toastr.options.closeButton = true;
                         var table = $('#tbl-consolidado').DataTable();
                         table.ajax.reload();
+                        me.refreshBoxes = !me.refreshBoxes;
                     });
                 }
             });

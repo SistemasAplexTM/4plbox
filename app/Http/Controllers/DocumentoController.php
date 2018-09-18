@@ -1512,15 +1512,23 @@ class DocumentoController extends Controller
         return $answer;
     }
 
-    public function getAllConsolidadoDetalle($id)
+    public function getAllConsolidadoDetalle($id, $num_bolsa = null)
     {
+        $where = [['a.deleted_at', null], ['a.consolidado_id', $id], ['a.flag', 0]];
+        if($num_bolsa != null){
+            $where[] = ['a.num_bolsa', $num_bolsa];
+        }
+
+        $label_1 = '</label><a style="float:right;cursor:pointer;color:red" title="Quitar" data-toggle="tooltip" onclick="removerGuiaAgrupada(';
+        $label_2 = ')"><i class="fa fa-remove" style="font-size: 15px;"></i></a>';
+
         $detalle = DB::table('consolidado_detalle AS a')
             ->join('documento AS b', 'a.consolidado_id', 'b.id')
             ->join('documento_detalle AS c', 'a.documento_detalle_id', 'c.id')
             ->leftJoin('shipper as d', 'c.shipper_id', 'd.id')
             ->leftJoin('consignee as e', 'c.consignee_id', 'e.id')
             ->leftJoin('posicion_arancelaria as f', 'c.arancel_id2', 'f.id')
-            ->leftJoin(DB::raw("(SELECT
+            ->leftJoin(DB::raw('(SELECT
                                     z.agrupado,
                                     SUM(x.peso) AS peso,
                                     SUM(x.peso2) AS peso2,
@@ -1530,10 +1538,38 @@ class DocumentoController extends Controller
                                             z.flag = 1,
                                             CONCAT(
 
-                                                IF (
+                                             IF (
                                                     x.liquidado = 1,
-                                                    CONCAT('<label>- ', x.num_guia, ' (', x.peso2, ' lbs) ', ' ($ ', x.declarado2, '.00) ', \"</label><a style='float: right;cursor:pointer;color:red' title='Quitar' data-toggle='tooltip' onclick='removerGuiaAgrupada(\",z.id,\")'><i class='fa fa-remove' style='font-size: 15px;'></i></a>\"),
-                                                    CONCAT('<label>- ', x.num_warehouse, ' (', x.peso2, ' lbs) ', ' ($ ', x.declarado2, '.00) ', \"</label><a style='float: right;cursor:pointer;color:red' title='Quitar' data-toggle='tooltip' onclick='removerGuiaAgrupada(\",z.id,\")'><i class='fa fa-remove' style='font-size: 15px;'></i></a>\")
+                                                    CONCAT(
+                                                        "<label>- ",
+                                                        x.num_guia,
+                                                        " (",
+                                                        x.peso2,
+                                                        " lbs) ",
+                                                        " ($ ",
+                                                        x.declarado2,
+                                                        ".00) ",
+                                                        \''.$label_1.'\',
+                                                        z.id,
+                                                        \'@\',
+                                                        X.id,
+                                                        \''.$label_2.'\'
+                                                    ),
+                                                    CONCAT(
+                                                        "<label>- ",
+                                                        x.num_warehouse,
+                                                        " (",
+                                                        x.peso2,
+                                                        " lbs) ",
+                                                        " ($ ",
+                                                        x.declarado2,
+                                                        ".00) </label>",
+                                                        \''.$label_1.'\',
+                                                        z.id,
+                                                        \'@\',
+                                                        X.id,
+                                                        \''.$label_2.'\'
+                                                    )
                                                 )
                                             ),
                                             NULL
@@ -1547,7 +1583,7 @@ class DocumentoController extends Controller
                                 AND x.deleted_at IS NULL
                                 GROUP BY
                                     z.agrupado
-                            ) AS g"), 'a.agrupado', 'g.agrupado')
+                            ) AS g'), 'a.agrupado', 'g.agrupado')
             ->select(
                 'a.id',
                 'c.documento_id',
@@ -1574,11 +1610,7 @@ class DocumentoController extends Controller
                 'c.liquidado',
                 DB::raw('(SELECT Count(z.id) FROM consolidado_detalle AS z WHERE z.agrupado = a.documento_detalle_id AND z.deleted_at IS NULL AND z.flag = 1) AS agrupadas')
             )
-            ->where([
-                ['a.consolidado_id', $id],
-                ['a.deleted_at', null],
-                ['a.flag', 0],
-            ])
+            ->where($where)
             ->get();
         return \DataTables::of($detalle)->make(true);
     }
@@ -2064,11 +2096,11 @@ class DocumentoController extends Controller
         return $answer;
     }
 
-    public function removerGuiaAgrupada($id, $id_detalle)
+    public function removerGuiaAgrupada($id, $id_detalle, $id_guia_detalle)
     {
         DB::table('consolidado_detalle')
             ->where('id', $id_detalle)
-            ->update(['agrupado' => $id_detalle, 'flag' => 0]);
+            ->update(['agrupado' => $id_guia_detalle, 'flag' => 0]);
         $answer = array(
             'code' => 200,
         );
@@ -2157,6 +2189,29 @@ class DocumentoController extends Controller
             );
             return $answer;
         }
+    }
+
+    public function getBoxesConsolidado()
+    {
+        $data = DB::table('consolidado_detalle as a')
+            ->leftJoin('documento_detalle as b', 'a.documento_detalle_id', 'b.id')
+            ->select(
+                DB::raw("a.num_bolsa AS num_bolsa"),
+                DB::raw("FORMAT(Sum(b.peso2),0) AS peso"),
+                DB::raw("FORMAT(ROUND((Sum(b.peso2) * 0.453592)),0) AS peso_kl"),
+                DB::raw("FORMAT(Count(a.id),0) AS cantidad"),
+                DB::raw("FORMAT(ROUND(Sum(b.volumen)),0) AS volumen")
+            )
+            ->where([
+                ['a.deleted_at', null]
+            ])
+            ->groupBy("a.num_bolsa")
+            ->get();
+        $answer = array(
+            'code' => 200,
+            'data' => $data,
+        );
+        return $answer;
     }
 
 }
