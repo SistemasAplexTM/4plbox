@@ -48,7 +48,7 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                         codigo = full.num_warehouse;
                         cant = full.piezas;
                         if (full.liquidado == 1) {
-                            codigo = full.num_guia;
+                            // codigo = full.num_guia;
                             color_badget = 'primary';
                         }
                     }

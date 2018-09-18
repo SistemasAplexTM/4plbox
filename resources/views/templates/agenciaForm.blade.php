@@ -151,6 +151,21 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <div class="col-lg-4">
+                                                    <label for="prefijo_pobox" class="control-label">
+                                                        <div class="col-sm-12" data-trigger="hover"  data-container="body" data-toggle="popover" data-placement="rigth" data-content="Si no se ingresa ningun dato aqui, el PO_BOX de los clientes se creara automaticamente." style="padding-left: 0px; padding-right: 0px;">
+                                                            Prefijo PO_BOX
+                                                            <i class="fa fa-question-circle" style="cursor: pointer; color: coral;"></i>
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                                <div class="col-lg-8">
+                                                    <input type="text" class="form-control" id="prefijo_pobox" name="prefijo_pobox" value="{{ (isset($agencia) and $agencia) ? $agencia->prefijo_pobox : '' }}" placeholder="Para el código de los clientes">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
                                             <div class="form-group {{ $errors->has('url') ? ' has-error' : '' }}">
                                                 <div class="col-lg-4">
                                                     <label for="url" class="control-label">URL:</label>

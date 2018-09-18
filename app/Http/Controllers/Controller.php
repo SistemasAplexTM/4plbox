@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Consignee;
+use App\Agencia;
 use App\Helpers\LogActivity as Logs;
 use App\Shipper;
 use Auth;
@@ -223,9 +224,9 @@ class Controller extends BaseController
                 $dataS->created_at = date('Y-m-d H:i:s');
                 $dataS->save();
                 $shipper_id = $dataS->id;
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 echo 'Error: <pre>';
-                print_r($e->errorInfo);
+                print_r($e);
                 echo '</pre>';
             }
         } else {
@@ -346,13 +347,42 @@ class Controller extends BaseController
                 $dataCons['nombre_full'] = strtoupper($firstNamesFull . ' ' . $lastNamesFull);
                 $dataCons['nombre_old']  = strtoupper($firstNamesFull . ' ' . $lastNamesFull);
 
+
                 $dataC             = (new Consignee)->fill($dataCons);
                 $dataC->created_at = date('Y-m-d H:i:s');
                 $dataC->save();
                 $consig_id = $dataC->id;
-            } catch (\Exception $e) {
+
+                /* CREACION DEL PO_BOX */
+                $prefijo = DB::table('consignee as a')
+                ->join('localizacion as b', 'a.localizacion_id', 'b.id')
+                ->join('deptos as c', 'b.deptos_id', 'c.id')
+                ->join('pais as d', 'c.pais_id', 'd.id')
+                ->select('b.prefijo', 'd.iso2')
+                ->where([
+                    ['a.deleted_at', null],
+                    ['a.id', $consig_id],
+                ])
+                ->first();
+                $pref = '';
+                $prefijo_pobox = Agencia::select('prefijo_pobox')->where('id', Auth::user()->agencia_id)->first();
+                if($prefijo_pobox->prefijo_pobox == null){
+                   $pref = Auth::user()->agencia_id;
+                }else{
+                    $pref = $prefijo_pobox->prefijo_pobox;
+                }
+                $caracteres      = strlen($pref);
+                $sumarCaracteres = $caracteres - $caracteres;
+                $caracter        = '';
+                for ($i = 0; $i <= $sumarCaracteres; $i++) {
+                    $caracter = $caracter . '0';
+                }
+                $po_box = $caracter . $pref . '-' . $consig_id;
+                Consignee::where('id', $consig_id)->update(['po_box' => $prefijo->iso2 . '' . $po_box]);
+
+            } catch (Exception $e) {
                 echo 'Error: <pre>';
-                print_r($e->errorInfo);
+                print_r($e);
                 echo '<pre>';
             }
         } else {

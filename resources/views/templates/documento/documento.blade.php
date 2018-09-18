@@ -133,7 +133,11 @@
                     </div>
                 </div>
                 {{-- FORMULARIO DE CONSOLIDADO --}}
-                <formconsolidado-component :app_type="'{{ env('APP_TYPE') }}'" :documento="{{ json_encode($documento) }}" :contactos="contactos" :restore="restoreShipperConsignee" :agrupar="datosAgrupar" :removeragrupado="removerAgrupado" :permission='permissions' v-if="mostrar.includes(24)"></formconsolidado-component>
+                @if(!Auth::user()->isRole('bodega'))
+                    <formconsolidado-component :app_type="'{{ env('APP_TYPE') }}'" :documento="{{ json_encode($documento) }}" :contactos="contactos" :restore="restoreShipperConsignee" :agrupar="datosAgrupar" :removeragrupado="removerAgrupado" :permission='permissions' v-if="mostrar.includes(24)"></formconsolidado-component>
+                @else
+                    <consol_bodega-component :app_type="'{{ env('APP_TYPE') }}'" :documento="{{ json_encode($documento) }}" :contactos="contactos" :restore="restoreShipperConsignee" :agrupar="datosAgrupar" :removeragrupado="removerAgrupado" :permission='permissions' v-if="mostrar.includes(24)"></consol_bodega-component>
+                @endif
 
                 {{-- CONSIGNEE Y SHIPPER --}}
                 <div class="col-lg-12 form_doc" style="display: none">
@@ -230,8 +234,7 @@
                                     <span class="fa fa-arrow-circle-down"> </span>@lang('documents.addressee_consignee')  
                                     <span style="color: coral; display: none;" id="msnEditarCons">@lang('documents.prepared_for_editing')</span>
                                     <label class="po">PO#</label>
-                              
-                                 <!--   <input type="text" id="poBoxD" name="poBoxD" class="" value="" style="border-color: transparent;">-->
+                                    <input type="text" id="poBoxD" name="poBoxD" class="" value="{{ isset($documento->po_box) ? $documento->po_box : '' }}" style="border-color: transparent;color: blue;" readonly="">
                                 </h5>
                             </div>
                             <div class="ibox-content col-lg-12" :class="[mostrar.includes(22) ? 'wrh' : 'guia' ]">
