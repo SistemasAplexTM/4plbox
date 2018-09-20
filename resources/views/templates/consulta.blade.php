@@ -43,13 +43,13 @@
                             <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for="shipper_id" class="control-label gcore-label-top">@lang('general.shipper'):</label>
-                                    <v-select name="shipper" v-model="shipper_id" label="name" :filterable="false" :options="shippers" @search="onSearchShippers" placeholder="Shipper"></v-select>
+                                    <v-select name="shipper" v-model="shipper_id" label="name" :filterable="false" :options="shippers" @search="onSearchShippers" placeholder="@lang('general.shipper')"></v-select>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for="consignee_id" class="control-label gcore-label-top">@lang('general.consignee'):</label>
-                                    <v-select name="consignee" v-model="consignee_id" label="name" :filterable="false" :options="consignees" @search="onSearchConsignees" placeholder="Consignee"></v-select>
+                                    <v-select name="consignee" v-model="consignee_id" label="name" :filterable="false" :options="consignees" @search="onSearchConsignees" placeholder="@lang('general.consignee')"></v-select>
                                 </div>
                             </div>
                             <div class="col-lg-2">

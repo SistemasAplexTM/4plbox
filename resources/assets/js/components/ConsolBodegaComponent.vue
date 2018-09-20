@@ -24,6 +24,22 @@
         font-weight: bold;
         /*color: orangered;*/
     }
+    .client-detail{
+    	height: 300px;
+    	box-shadow: inset -2px -1px 13px -7px #000000
+    }
+    .btn-cajas{
+        font-size: 35px!important;
+        margin-right: 0px;
+    }
+    .btn-large-dim{
+    	width: 60px;
+    	height: 60px;
+    }
+    hr{
+    	margin-top: 10px;
+    	margin-bottom: 10px;
+    }
 </style>
 <template>
 	<div>
@@ -104,77 +120,87 @@
                                     </div>
                                 </div>
                                 <div class="row"><div class="hr-line-dashed"></div></div>
-                                <div class="row">
-                                	<div class="col-sm-2">
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label for="num_bolsa" class="">N° Bolsa</label>
-												    <div class="input-group">
-													    <span class="input-group-btn">
-													        <button @click="increaseBoxes()" class="btn btn-info" type="button" data-toggle="tooltip" title="Agregar bolsa" style="padding: 8px 12px;"><li class="fa fa-cubes"></li></button>
-													    </span>
-													    <input type="number" min="1" class="form-control" style="" v-model="num_bolsa" name="num_bolsa" id="num_bolsa"  value="1">
-												    </div><!-- /input-group -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label for="num_guia" class="">Número de Guía/WRH</label>
-                                                <div class="input-group">
-		                                        		<input type="text" class="form-control" v-model="num_guia" @keyup.enter="addGuiasToConsolidado()" name="num_guia">
-													    <span class="input-group-btn">
-													        <button class="btn btn-info" @click="addGuiasToConsolidado()" type="button" id="agregarBolsa" data-toggle="tooltip" title="Agregar guia" style="padding: 8px 12px;"><li class="fa fa-plus"></li></button>
-													    </span>
-												    </div><!-- /input-group -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-12">&nbsp;</label>
-		                                        <button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" data-placement="top" title="Guias Disponobles" id="btn_buscarGuias" @click="getModalGuias()"><i class="fa fa-search-plus"></i> Buscar guias</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="col-sm-12">
-                                            <div class="form-group" style="padding-top: 15px;margin-bottom: -15px;" v-if="msn !== ''">
-		                                        <div class="alert alert-warning alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button> <strong>Atención!</strong> {{ msn }} </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                	<div class="col-sm-12">
-                                    	<table id="tbl-consolidado" class="table table-striped table-hover table-bordered dataTable" style="width: 100%;margin-top: 30px;">
-                                    		<thead>
-				                                <tr>
-				                                    <th>Bolsa</th>
-				                                    <th>#Guia/WRH</th>
-				                                    <th>Remitente</th>
-				                                    <th>Destinatario</th>
-				                                    <th>P.A</th>
-				                                    <th>Descripción</th>
-				                                    <th>Declarado</th>
-                                                    <th>Lb</th>
-				                                    <th>Lb R</th>
-				                                    <th>Acciónes</th>
-				                                </tr>
-				                            </thead>
-				                            <tbody>
-	                                        </tbody>
-	                                        <tfoot>
-				                                <tr>
-				                                    <th style="text-align:right;font-size: 25px;" colspan="6">Totales de esta página:</th>
-				                                    <th id="Tdeclarado"></th>
-                                                    <th id="Tpeso"></th>
-				                                    <th id="TpesoR"></th>
-				                                    <th id="TpesoK"></th>
-				                                </tr>
-				                            </tfoot>
-                                    	</table>
-                                    </div>
+                                
+                                <div class="row" style="margin-bottom: 50px;">
+						                <div class="col-sm-4">
+						                	<div class="row">
+			                                	<div class="col-sm-4">
+			                                        <div class="col-sm-12">
+			                                            <div class="form-group">
+			                                                <label for="num_bolsa" class="">N° Bolsa</label>
+															    <div class="input-group">
+																    <span class="input-group-btn">
+																        <button @click="increaseBoxes()" class="btn btn-info" type="button" data-toggle="tooltip" title="Agregar bolsa" style="padding: 8px 12px;"><li class="fa fa-cubes"></li></button>
+																    </span>
+																    <input type="number" min="1" class="form-control" style="" v-model="num_bolsa" name="num_bolsa" id="num_bolsa"  value="1">
+															    </div>
+			                                            </div>
+			                                        </div>
+			                                    </div>
+			                                </div>
+				                            <div class="tab-content">
+				                                <div id="contact-1" class="tab-pane active">
+				                                    <div class="client-detail">
+					                                    <div class="full-height-scroll">
+					                                        <ul class="list-group clear-list">
+					                                        	<template v-for="box in boxes">
+						                                            <li class="list-group-item fist-item">
+						                                            	<div class="col-sm-4">
+							                                                <button class="btn btn-success dim btn-large-dim btn-outline btn-cajas" type="button" @click="getDataDetail(box.num_bolsa)">
+													                            {{ box.num_bolsa }}
+													                        </button>
+						                                            	</div>
+						                                            	<div class="cols-sm-8">
+						                                            		<div><strong>Cajas: </strong><span>{{ box.cantidad }}</span></div>
+						                                            		<div><strong>Kilos: </strong><span>{{ box.peso_kl }}</span><strong> - Libras: </strong><span>{{ box.peso }}</span></div>
+						                                            		<div><strong>Volumen: </strong><span>{{ box.volumen }}</span></div>
+						                                            	</div>
+						                                            </li><hr>
+					                                            </template>					                                            
+					                                        </ul>
+					                                    </div>
+				                                    </div>
+				                                </div>
+				                            </div>
+						                </div>
+						                <div class="col-sm-8">
+						                	<div class="row">
+							                	<div class="col-sm-4">
+			                                        <div class="col-sm-12">
+			                                            <div class="form-group">
+			                                                <label for="num_guia" class="">Número de Guía/WRH</label>
+			                                                <div class="input-group">
+					                                        		<input type="text" class="form-control" v-model="num_guia" @keyup.enter="addGuiasToConsolidado()" name="num_guia">
+																    <span class="input-group-btn">
+																        <button class="btn btn-info" @click="addGuiasToConsolidado()" type="button" id="agregarBolsa" data-toggle="tooltip" title="Agregar guia" style="padding: 8px 12px;"><li class="fa fa-plus"></li></button>
+																    </span>
+															    </div>
+			                                            </div>
+			                                        </div>
+			                                    </div>
+			                                    <div class="col-sm-4">
+			                                        <div class="col-sm-12">
+			                                            <div class="form-group">
+			                                                <label class="control-label col-lg-12">&nbsp;</label>
+					                                        <button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" data-placement="top" title="Guias Disponobles" id="btn_buscarGuias" @click="getModalGuias()"><i class="fa fa-search-plus"></i> Buscar guias</button>
+			                                            </div>
+			                                        </div>
+			                                    </div>
+		                                    </div>
+				                            <span class="small pull-right" style="color: orangered;" v-if="msn !== ''"><strong><i class="fa fa-exclamation-triangle"></i> Atención!</strong> {{ msn }}</span>
+				                            <h2># Bolsa {{ n_bolsa }}</h2>
+		                                    	<table id="tbl-consolidado" class="table table-striped table-hover table-bordered dataTable" style="width: 100%;margin-top: 30px;">
+		                                    		<thead>
+						                                <tr>
+						                                    <th>#Recibo</th>
+						                                    <th>Peso</th>
+						                                    <th>Volumen</th>
+						                                    <th>Consignee</th>
+						                                    <th>Acciónes</th>
+						                                </tr>
+						                            </thead>
+		                                    	</table>
+				                        </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group">
@@ -343,9 +369,14 @@
             },app_type: {
               type: String,
               required: true
+            },ref_boxes: {
+              type: Boolean
             },
     	},
     	watch:{
+    		ref_boxes:function(values){
+                this.getBoxesConsolidado();
+            },
             permission:function(values){
                 this.permissions = values;
             },
@@ -387,20 +418,6 @@
                     $('#tbl-modalagrupar').dataTable().fnDestroy();
                 }
                 var table = $('#tbl-modalagrupar').DataTable({
-                    "language": {
-                        "paginate": {
-                            "previous": "Anterior",
-                            "next": "Siguiente",
-                        },
-                        /*"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",*/
-                        "info": "Registros del _START_ al _END_  de un total de _TOTAL_",
-                        "search": "Buscar",
-                        "lengthMenu": "Mostrar _MENU_ Registros",
-                        "infoEmpty": "Mostrando registros del 0 al 0",
-                        "emptyTable": "No hay datos disponibles en la tabla",
-                        "infoFiltered": "(Filtrando para _MAX_ Registros totales)",
-                        "zeroRecords": "No se encontraron registros coincidentes",
-                    },
                     processing: true,
                     serverSide: true,
                     searching: true,
@@ -437,6 +454,7 @@
 			this.getDataDetail();
             this.getTransportes();
 			this.getStatus();
+			this.getBoxesConsolidado();
 			if(this.documento.pais_id != null){
 				this.pais_id = {id: this.documento.pais_id, name: this.documento.pais}
 				this.disabled_pais = true;
@@ -493,10 +511,22 @@
 	        	disabled_agencia: false,
 	        	disabled_pais: false,
 	        	msn:'',
-	        	tituloModal:''
+	        	tituloModal:'',
+	        	n_bolsa: null,
+	        	boxes: {}
 	        }
 	    },
 		methods: {
+			getBoxesConsolidado(){
+				let me = this;
+                axios.get('getBoxesConsolidado').then(function (response) { 
+                    me.boxes = response.data.data;
+                }).catch(function (error) {
+                    console.log(error);
+                    toastr.warning('Error.');
+                    toastr.options.closeButton = true;
+                });
+			},
             agruparGuiasConsolidado: function(){
                 $('#modalagrupar').modal('hide');
                 let me = this;
@@ -693,18 +723,22 @@
                 	toastr.options.closeButton = true;
 		        });
 		    },
-			getDataDetail(){
+			getDataDetail(num_bolsa){
+				if ($.fn.DataTable.isDataTable('#tbl-consolidado')) {
+					var dataTable = $('#tbl-consolidado').DataTable();
+                    dataTable.clear();
+                    $('#tbl-consolidado').dataTable().fnDestroy();
+                }
 				let me=this;
+				me.n_bolsa = num_bolsa;
 				var href_print_label = '';
 				/* SOLO SI ES EL DOCUMNTO CONSOLIDADO*/
 			    var table = $('#tbl-consolidado').DataTable({
-			        // keys: true,
 			        processing: true,
 			        serverSide: true,
 			        responsive: true,
-			        ajax: 'getAllConsolidadoDetalle',
+			        ajax: 'getAllConsolidadoDetalle/' + num_bolsa,
 			        columns: [
-			            {data: 'num_bolsa', name: 'num_bolsa'},
 			            {
 			                "render": function (data, type, full, meta) {
                                 var groupGuias = full.guias_agrupadas;
@@ -752,21 +786,12 @@
                                 }
 			                }
 			            },
-			            {
-			                "render": function (data, type, full, meta) {
-			                	var nom_ship = full.shipper;
-			                	var json = '';
-			                	if(full.shipper == null){
-			                		nom_ship = '';
-			                	}
-			                	if(full.shipper_json != null){
-									json = JSON.parse(full.shipper_json.replace(/&quot;/g, '"'));
-									nom_ship = json.nombre;
-			                	}
-			                	me.shipper_contactos[full.shipper_id] = full.shipper_contactos;
-			                	return nom_ship + ' <a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalShipperConsigneeConsolidado('+full.id+', '+full.shipper_id+', \'shipper\')"><i class="material-icons">&#xE254;</i></a> <a onclick=\"restoreShipperConsignee('+full.id+', \'shipper\')\" class="delete" title="Restaurar original" data-toggle="tooltip" style="float:right;color:#2196F3;"><i class="material-icons">cached</i></a>';
-			                }
-			            },
+                        {
+                            "render": function (data, type, full, meta) {
+                                return '<a data-name="peso2" data-pk="'+full.documento_detalle_id+'" class="td_edit" data-type="text" data-placement="right" data-title="Peso">'+full.peso2+'</a>';
+                            }
+                        },
+                        {data: 'peso', name: 'peso'},
 			            {
 			                "render": function (data, type, full, meta) {
 			                	var nom_cons = full.consignee;
@@ -782,29 +807,6 @@
 			                	return nom_cons + ' <a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalShipperConsigneeConsolidado('+full.id+', '+full.consignee_id+',\'consignee\')"><i class="material-icons">&#xE254;</i></a> <a onclick=\"restoreShipperConsignee('+full.id+',\'consignee\')\" class="delete" title="Restaurar original" data-toggle="tooltip" style="float:right;color:#2196F3;"><i class="material-icons">cached</i></a>';
 			                }
 			            },
-                        // {data: 'pa', name: 'pa'},
-			            {
-                            "render": function (data, type, full, meta) {
-                                var pa = full.pa;
-                                return pa + '<a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalArancel('+full.documento_detalle_id+')"><i class="material-icons">&#xE254;</i></a>';
-                            }
-                        },
-                        {
-                            "render": function (data, type, full, meta) {
-                                return '<a data-name="contenido2" data-pk="'+full.documento_detalle_id+'" class="td_edit" data-type="text" data-placement="right" data-title="Contenido">'+full.contenido2+'</a>';
-                            }
-                        },
-                        {
-                            "render": function (data, type, full, meta) {
-                                return '<a data-name="declarado2" data-pk="'+full.documento_detalle_id+'" class="td_edit" data-type="text" data-placement="right" data-title="Declarado">'+full.declarado2+'</a>';
-                            }
-                        },
-                        {
-                            "render": function (data, type, full, meta) {
-                                return '<a data-name="peso2" data-pk="'+full.documento_detalle_id+'" class="td_edit" data-type="text" data-placement="right" data-title="Peso">'+full.peso2+'</a>';
-                            }
-                        },
-                        {data: 'peso', name: 'peso'},
                         {
                             sortable: false,
                             "render": function (data, type, full, meta) {
@@ -838,20 +840,14 @@
                                 // return btn_invoice + btn_label + btn_delete;
                                 return btn_group;
                             }
-                        },
-                        {data: 'contenido2', name: 'contenido2'},
-                        {data: 'peso2', name: 'peso2'},
-                        {data: 'declarado2', name: 'declarado2'},
+                        }
 			        ],
 			        'columnDefs': [
-			        	{ className: "text-center", "targets": [ 0 ], width: 50, },
-			        	{ "targets": [ 1 ], width: 50, },
-			        	{ className: "text-center", "targets": [ 4 ], width: 50, },
-			            { className: "text-center", "targets": [ 6,7,8 ], width: 50, },
-                        { className: "text-center", "targets": [ 9 ], width: 10, },
-			            { "targets": [ 10,11,12 ], visible: false },
+			        	{ "targets": [ 0 ], width: 40, },
+			        	{ "targets": [ 3 ], width: 60, },
+			        	{ "targets": [ 4 ], width: 10, },
 			        ],
-                    "drawCallback": function () {
+			        "drawCallback": function () {
                         $('.edit, .delete').hide().children('i').css('font-size', '17px');
                         /* EDITABLE FIELD */
                         if (me.permissions.editDetail) {
@@ -888,67 +884,6 @@
                                 }, 300);
                         });
                     },
-			        "footerCallback": function (row, data, start, end, display) {
-	                    var api = this.api(), data;
-	                    /*Remove the formatting to get integer data for summation*/
-	                    var intVal = function (i) {
-	                        return typeof i === 'string' ?
-	                                i.replace(/[\$,]/g, '') * 1 :
-	                                typeof i === 'number' ?
-	                                i : 0;
-	                    };
-	                    /*Total over all pages*/
-	                    var total_cantidad = api
-	                            .column(8)
-	                            .data()
-	                            .reduce(function (a, b) {
-	                                return intVal(a) + intVal(b);
-	                            }, 0);
-                        var librasR= api
-                                .column(8, {page: 'current'})
-                                .data()
-                                .reduce(function (a, b) {
-                                    return intVal(a) + intVal(b);
-                                }, 0);
-                        var libras= api
-                                .column(11, {page: 'current'})
-                                .data()
-                                .reduce(function (a, b) {
-                                    return intVal(a) + intVal(b);
-                                }, 0);
-                        var declarado= api
-                                .column(12, {page: 'current'})
-                                .data()
-                                .reduce(function (a, b) {
-                                    return intVal(a) + intVal(b);
-                                }, 0);
-                         var pesoK = libras * 0.453592;
-                         var pesoKR = librasR * 0.453592;
-
-                         var diferenciaL = librasR - libras;
-                         var color1 = 'rgb(203, 23, 30)';
-                         if(diferenciaL === 0){
-                            color1 = '#4caf50';
-                         }
-                         var color2 = 'rgb(203, 23, 30)';
-                         var diferenciaK = pesoKR - pesoK;
-                         if(diferenciaK === 0){
-                            color2 = '#4caf50';
-                         }
-
-	                    /*Update footer formatCurrency()*/
-                        $(api.column(6).footer()).html('<spam id="totalDeclarado">$ ' + declarado + '</spam><br>USD');
-	                    $(api.column(7).footer()).html('<spam id="totalPeso">' + libras + ' (Lbs)<br><spam id="totalPesoK">' + isInteger(pesoK) + ' (Kl)</spam></spam>');
-	                    $(api.column(8).footer()).html('<spam id="totalPesoR">' + librasR + ' (Lbs)<br><spam id="totalPesoKR">' + isInteger(pesoKR) + ' (Kl)</spam></spam>');
-	                    $(api.column(9).footer()).html('<spam id="diferenciaL" style="color:'+color1+'">Dif: ' + isInteger(diferenciaL) + ' (Lbs)</spam><br><spam id="diferenciaK" style="color:'+color2+'">Dif: ' + isInteger(diferenciaK) + ' (Kl)</spam>');
-	                },
-			    });
-			    table.on('key', function (e, datatable, key, cell, originalEvent) {
-			        if (key == 13) {
-			            cell.data( $(cell.node()).html() ).draw();
-			            var rowData = datatable.row( cell.index().row ).data();
-			            me.updateDataDetail(rowData);
-			        }
 			    });
 			},
 			addGuiasToConsolidado: function(num_guia){
@@ -972,6 +907,7 @@
 									this.disabled_transporte = true;
 								}
 			                	me.updateTableDetail();
+			                	me.getBoxesConsolidado();
 			                	toastr.success('Registro agregado correctamente.');
 		                    	toastr.options.closeButton = true;
 		                    	this.num_guia = '';

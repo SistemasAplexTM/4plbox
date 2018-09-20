@@ -191,7 +191,7 @@
             <td style="width:15%;">{{ $total_piezas }} Pcs</td>
             <td style="width:15%;">{{ $total_libras }} Lb</td>
             <td style="width:15%;">{{ number_format($total_libras / 2.20462,2) }} Kl</td>
-            <td style="width:15%;">{{ isset($total_volumen) ? $total_volumen : 0 }} Lb</td>
+            <td style="width:15%;">{{ number_format((isset($total_volumen) ? $total_volumen : 0),0) }} Lb</td>
             <td style="width:15%;">{{ number_format(((isset($total_volumen) ? $total_volumen : 0) / 2.204622), 2) }} Kl</td>
             <td style="width:15%;">{{ $pie = number_format(($total_volumen * 166 / 1728), 2) }} cuft</td>
             <td style="width:10%;">{{ number_format(($pie / 35.315), 2) }} cbm</td>

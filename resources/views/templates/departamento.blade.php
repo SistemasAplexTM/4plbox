@@ -38,7 +38,7 @@
                                             <label for="descripcion" class="control-label gcore-label-top">@lang('general.description'):</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="descripcion" name="descripcion[]" id="descripcion" value="" placeholder="" class="form-control" type="text" style="" @click="deleteError('descripcion')" />
+                                            <input v-model="descripcion" name="descripcion[]" id="descripcion" value="" placeholder="@lang('general.description')" class="form-control" type="text" style="" @click="deleteError('descripcion')" />
                                             <small id="msn1" class="help-block result-descripcion" v-show="listErrors.descripcion"></small>
                                         </div>
                                     </div>
@@ -53,7 +53,7 @@
                                             <label for="pais_id" class="control-label gcore-label-top">@lang('general.country'):</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input type="hidden" id="pais_id_input" value="">
+                                            <input type="hidden" id="pais_id_input" value=""  >
                                             <select v-model="pais_id" name="pais_id" id="pais_id" class="form-control js-data-example-ajax select2-container" @click="deleteError('pais_id')">
                                             </select>
                                             <small id="msn1" class="help-block result-pais_id" v-show="listErrors.pais_id"></small>

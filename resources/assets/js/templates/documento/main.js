@@ -12,7 +12,7 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
     /* MOSTRAR LABELS DE ESTADOS SI ES WAREHOUSE */
     var labels = '';
     if(tipo_doc_id == '1'){
-        labels = ' <label class="lb_status badge badge-default">Creado</label> '+
+        labels =    '<label class="lb_status badge badge-default">Creado</label> '+
                     '<label class="lb_status badge badge-success">Pendiente</label> '+
                     '<label class="lb_status badge badge-primary">Liquidado</label> '+
                     '<label class="lb_status badge badge-warning">Consolidado</label> '+
@@ -48,6 +48,7 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                         codigo = full.num_warehouse;
                         cant = full.piezas;
                         if (full.liquidado == 1) {
+                            // codigo = full.num_guia;
                             color_badget = 'primary';
                         }
                     }

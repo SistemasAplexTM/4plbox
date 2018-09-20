@@ -39,7 +39,7 @@
                                             <label for="nombre" class="control-label gcore-label-top">@lang('general.name'):</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="nombre" name="nombre[]" id="nombre" value="" placeholder="" class="form-control" type="text" @click="deleteError('nombre')" />
+                                            <input v-model="nombre" name="nombre[]" id="nombre" value="" placeholder="@lang('general.name')" class="form-control" type="text" @click="deleteError('nombre')" />
                                             <small id="msn1" class="help-block result-nombre" v-show="listErrors.nombre">@lang('general.obligatory_field')</small>
                                         </div>
                                     </div>
@@ -54,7 +54,7 @@
                                             <label for="descripcion" class="control-label gcore-label-top">{{ ($type != '1' and $type != '2') ? 'Descripción:' : 'Abreviatura:' }}</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="descripcion" name="descripcion[]" id="descripcion" value="" placeholder="" class="form-control" type="text" @click="deleteError('descripcion')" />
+                                            <input v-model="descripcion" name="descripcion[]" id="descripcion" value="" placeholder="@lang('general.description')" class="form-control" type="text" @click="deleteError('descripcion')" />
                                             <small id="msn1" class="help-block result-descripcion" v-show="listErrors.descripcion"> @lang('general.obligatory_field')</small>
                                         </div>
                                     </div>

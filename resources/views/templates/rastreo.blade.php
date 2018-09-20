@@ -71,7 +71,7 @@
                                             <div class="form-group">
                                                 <label class="control-label" for="codigo">@lang('general.warehouse_guide_tracking')</label>
                                                 <div class="input-group" :class="{ 'has-error': errors.has('codigo') }">
-                                                    <input type="text" placeholder="Rastree su paquete aquí" class="form-control" name="codigo" v-model="codigo" v-validate.disabled="'required'">
+                                                    <input type="text" placeholder="@lang('general.track_your_package_here')" class="form-control" name="codigo" v-model="codigo" v-validate.disabled="'required'">
                                                     <span class="input-group-btn">
                                                     <button @click.prevent="getData()" type="button" class="ladda-button btn btn-primary" data-style="expand-right" title=""><span class="ladda-label"> Rastrear <i class="fa fa-map-marker" aria-hidden="true"></i></span><span class="ladda-spinner"></span></button>
                                                     </span>

@@ -38,7 +38,7 @@
                                             <label for="descripcion" class="control-label gcore-label-top">@lang('general.description'):</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="descripcion" name="descripcion[]" id="descripcion" value="" placeholder="" class="form-control" type="text" style="" @click="deleteError('descripcion')" />
+                                            <input v-model="descripcion" name="descripcion[]" id="descripcion" value="" placeholder="@lang('general.descripcion')" class="form-control" type="text" style="" @click="deleteError('descripcion')" />
                                             <small id="msn1" class="help-block result-descripcion" v-show="listErrors.descripcion">@lang('general.obligatory_field')</small>
                                         </div>
                                     </div>
@@ -53,7 +53,7 @@
                                             <label for="prefijo" class="control-label gcore-label-top">@lang('general.prefix'):</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="prefijo" name="prefijo" id="prefijo" value="" placeholder="" class="form-control" type="text" style="" @click="deleteError('prefijo')" />
+                                            <input v-model="prefijo" name="prefijo" id="prefijo" value="" placeholder="@lang('general.prefix')" class="form-control" type="text" style="" @click="deleteError('prefijo')" />
                                             <small id="msn1" class="help-block result-prefijo" v-show="listErrors.prefijo">@lang('general.obligatory_field')</small>
                                         </div>
                                     </div>

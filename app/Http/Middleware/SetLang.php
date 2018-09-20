@@ -6,6 +6,7 @@ use Closure;
 use Session;
 use App;
 use Config;
+use JavaScript;
  
 class SetLang
 {
@@ -28,6 +29,9 @@ class SetLang
                 $lang = 'en';
             }
         }
+        JavaScript::put([
+            'lang' => $lang   
+        ]);
         App::setLocale($lang);
         return $next($request);
     }

@@ -4,13 +4,13 @@
 {{-- bread crumbs --}}
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Bill of lading</h2>
+        <h2>@lang('general.bill_of_lading')</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="#">Home</a>
+                <a href="#">@lang('general.home')</a>
             </li>
             <li class="active">
-                <strong>Bill of lading</strong>
+                <strong>@lang('general.bill_of_lading')</strong>
             </li>
         </ol>
     </div>
@@ -28,7 +28,7 @@
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <h5>
-                    Bill of lading
+                    @lang('general.bill_of_lading')
                 </h5>
                 <div class="ibox-tools">
                     <a href="{{ url('bill/create') }}" data-toggle="tooltip" title="Crear bill of lading" class="btn btn-primary" >Nuevo <i class="fa fa-plus" style="font-size: small;"></i></a>
@@ -40,13 +40,13 @@
                     <table id="tbl-bill" class="table table-striped table-hover table-bordered" style="width: 100%;">
                         <thead>
                             <tr>
-                                <th>Bill of lading</th>
-                                <th>Fecha</th>
-                                <th>Punto de origen</th>
-                                <th>Muelle de carga</th>
-                                <th>Puerto extranjero de descarga</th>
-                                <th>Peso Kl</th>
-                                <th>Acciones</th>
+                                <th>@lang('general.bill_of_lading')</th>
+                                <th>@lang('general.date')</th>
+                                <th>@lang('general.point_of_origin')</th>
+                                <th>@lang('general.loading_dock')</th>
+                                <th>@lang('general.foreign_port_of_discharge')</th>
+                                <th>@lang('general.weight') Kl</th>
+                                <th>@lang('general.actions')</th>
                             </tr>
                         </thead>
                     </table>

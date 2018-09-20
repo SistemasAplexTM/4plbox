@@ -22,6 +22,7 @@ class Agencia extends Model
         'observacion',
         'logo',
         'tipo_agencia',
+        'prefijo_pobox',
         'file_id',
         'email',
         'email_host',

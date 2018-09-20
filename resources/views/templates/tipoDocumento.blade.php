@@ -72,7 +72,7 @@
                                             <label for="nombre" class="control-label gcore-label-top">@lang('general.name'):</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input v-model="nombre" name="nombre" id="nombre" value="" placeholder="Tipo documento" class="form-control" type="text" @click="deleteError('nombre')" @focus="deleteError('nombre')" />
+                                            <input v-model="nombre" name="nombre" id="nombre" value="" placeholder="@lang('general.document_type')" class="form-control" type="text" @click="deleteError('nombre')" @focus="deleteError('nombre')" />
                                             <small id="msn1" class="help-block result-nombre" v-show="listErrors.nombre">@lang('general.obligatory_field')</small>
                                         </div>
                                     </div>
@@ -112,7 +112,7 @@
                                         <label for="email_plantilla_id" class="control-label gcore-label-top">@lang('general.mail_template'):</label>
                                     </div>
                                     <div class="col-sm-8">
-                                        <v-select :options="plantillas" name="email_plantilla_id" v-model="email_plantilla_id" label="name" placeholder="Plantilla para correo">
+                                        <v-select :options="plantillas" name="email_plantilla_id" v-model="email_plantilla_id" label="name" placeholder="@lang('general.mail_template')">
                                             <template slot="option" slot-scope="option">
                                                 <span class="fa fa-envelope"></span>
                                                 <label style="font-size: 15px;"> @{{ option.name }}</label>
@@ -131,7 +131,7 @@
                                         <label for="email_copia" class="control-label gcore-label-top">CC:</label>
                                     </div>
                                     <div class="col-sm-8">
-                                        <input v-model="email_copia" class="email_copia" id="email_copia" name="email_copia" class="form-control" type="text" placeholder="Correo con copia a:" value="" />
+                                        <input v-model="email_copia" class="email_copia" id="email_copia" name="email_copia" class="form-control" type="text" placeholder="@lang('general.mail_with_copy_to')" value="" />
                                     </div>
                                 </div>
                             </div>
@@ -141,7 +141,7 @@
                                         <label for="email_copia_oculta" class="control-label gcore-label-top">BCC:</label>
                                     </div>
                                     <div class="col-sm-8">
-                                        <input v-model="email_copia_oculta" class="email_copia" id="email_copia_oculta" name="email_copia_oculta" class="form-control" type="text" placeholder="Correo con copia oculta a:" value="" />
+                                        <input v-model="email_copia_oculta" class="email_copia" id="email_copia_oculta" name="email_copia_oculta" class="form-control" type="text" placeholder="@lang('general.mail_with_copy_to')" value="" />
                                     </div>
                                 </div>
                             </div>

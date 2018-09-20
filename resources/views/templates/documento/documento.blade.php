@@ -133,7 +133,11 @@
                     </div>
                 </div>
                 {{-- FORMULARIO DE CONSOLIDADO --}}
-                <formconsolidado-component :app_type="'{{ env('APP_TYPE') }}'" :documento="{{ json_encode($documento) }}" :contactos="contactos" :restore="restoreShipperConsignee" :agrupar="datosAgrupar" :removeragrupado="removerAgrupado" :permission='permissions' v-if="mostrar.includes(24)"></formconsolidado-component>
+                {{-- @if(!Auth::user()->isRole('bodega'))
+                    <formconsolidado-component :app_type="'{{ env('APP_TYPE') }}'" :documento="{{ json_encode($documento) }}" :contactos="contactos" :restore="restoreShipperConsignee" :agrupar="datosAgrupar" :removeragrupado="removerAgrupado" :permission='permissions' v-if="mostrar.includes(24)"></formconsolidado-component>
+                @else --}}
+                    <consol_bodega-component :app_type="'{{ env('APP_TYPE') }}'" :documento="{{ json_encode($documento) }}" :contactos="contactos" :restore="restoreShipperConsignee" :agrupar="datosAgrupar" :removeragrupado="removerAgrupado" :permission='permissions' :ref_boxes='refreshBoxes' v-if="mostrar.includes(24)"></consol_bodega-component>
+                {{-- @endif --}}
 
                 {{-- CONSIGNEE Y SHIPPER --}}
                 <div class="col-lg-12 form_doc" style="display: none">
@@ -150,7 +154,7 @@
                                             <label class="control-label col-sm-2">@lang('documents.name'): </label> 
                                             <div class="col-sm-10">
                                                 <div class="input-group"  style="margin-bottom: 5px;" :class="{ 'has-error': errors.has('nombreR') }">
-                                                    <input type="search" data-id="nomBuscarShipper" id="nombreR" name="nombreR" placeholder="Digite para buscar..." class="form-control" onkeyup="deleteError($(this).parent());" v-model="nombreR" v-validate="'required'">
+                                                    <input type="search" data-id="nomBuscarShipper" id="nombreR" name="nombreR" placeholder="@lang('documents.type_to_search')" class="form-control" onkeyup="deleteError($(this).parent());" v-model="nombreR" v-validate="'required'">
                                                     <span class="input-group-btn">
                                                         <button id="btnBuscarShipper" @click="modalShipper(true)" class="btn btn-primary" type="button" data-toggle='tooltip' title="Buscar Shipper"><span class="fa fa-search"></span> @lang('documents.search')</button>
                                                         <button id="btnEditShipper" @click="editFormsShipperConsignee(0)" class="btn btn-success" type="button" data-toggle='tooltip' title="Editar Shipper"><span class="fa fa-edit"></span>&nbsp;</button>
@@ -165,7 +169,7 @@
                                 <div class="row">
                                     <label class="control-label col-sm-2">@lang('documents.address'): </label> 
                                     <div class="col-sm-10" :class="{ 'has-error': errors.has('direccionR') }">
-                                        <input type="text" id="direccionR" name="direccionR" placeholder="Dirección" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());" v-model="direccionR" v-validate="'required'">
+                                        <input type="text" id="direccionR" name="direccionR" placeholder="@lang('documents.address')" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());" v-model="direccionR" v-validate="'required'">
                                         <small class="help-block has-error">@{{ errors.first('direccionR') }}</small>
                                     </div>
                                 </div>
@@ -179,7 +183,7 @@
                                         </div>
                                         <label class="control-label col-sm-1">@lang('documents.phone'): </label>
                                         <div class="col-sm-4">
-                                            <input type="tel" data-mask="(999) 999-9999" placeholder="Teléfono" id="telR" name="telR" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());">
+                                            <input type="tel" data-mask="(999) 999-9999" placeholder="@lang('documents.phone')" id="telR" name="telR" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());">
                                             <small class="help-block has-error">@{{ errors.first('telR') }}</small>
                                         </div>
                                         <small class="help-block" style="display: none;"></small>
@@ -230,8 +234,7 @@
                                     <span class="fa fa-arrow-circle-down"> </span>@lang('documents.addressee_consignee')  
                                     <span style="color: coral; display: none;" id="msnEditarCons">@lang('documents.prepared_for_editing')</span>
                                     <label class="po">PO#</label>
-                              
-                                    <input type="text" id="poBoxD" name="poBoxD" class="" value="" style="border-color: transparent;">
+                                    <input type="text" id="poBoxD" name="poBoxD" class="" value="{{ isset($documento->po_box) ? $documento->po_box : '' }}" style="border-color: transparent;color: blue;" readonly="">
                                 </h5>
                             </div>
                             <div class="ibox-content col-lg-12" :class="[mostrar.includes(22) ? 'wrh' : 'guia' ]">
@@ -242,7 +245,7 @@
                                             <div class="col-sm-10">
                                                 <input type="hidden" value="" id="urlBuscarConsignee">
                                                 <div class="input-group" style="margin-bottom: 5px;" :class="{ 'has-error': errors.has('nombreD') }">
-                                                    <input type="search" data-id="nomBuscarConsignee" class="form-control" id="nombreD" name="nombreD" placeholder="Digite para buscar..." onkeyup="deleteError($(this).parent());" v-model="nombreD" v-validate="'required'">
+                                                    <input type="search" data-id="nomBuscarConsignee" class="form-control" id="nombreD" name="nombreD" placeholder="@lang('documents.type_to_search')" onkeyup="deleteError($(this).parent());" v-model="nombreD" v-validate="'required'">
                                                     <span class="input-group-btn">
                                                         <button class="btn btn-primary" @click="modalConsignee(true)" id="btnBuscarConsignee" type="button" data-toggle='tooltip' title="Buscar consignee"><span class="fa fa-search"></span>@lang('documents.search')</button>
                                                         <button id="btnEditConsignee" @click="editFormsShipperConsignee(1)" class="btn btn-success" type="button" data-toggle='tooltip' title="Editar consignee"><span class="fa fa-edit"></span>&nbsp;</button>
@@ -258,7 +261,7 @@
                                         <div class="form-group">
                                             <label class="control-label col-sm-2">@lang('documents.address'): </label> 
                                             <div class="col-sm-10" :class="{ 'has-error': errors.has('direccionD') }">
-                                                <input type="text" placeholder="Dirección" id="direccionD" name="direccionD" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());" v-model="direccionD" v-validate="'required'">
+                                                <input type="text" placeholder="@lang('documents.address')" id="direccionD" name="direccionD" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());" v-model="direccionD" v-validate="'required'">
                                                 <small class="help-block has-error">@{{ errors.first('direccionD') }}</small>
                                             </div>
                                         </div>
@@ -272,7 +275,7 @@
                                         </div>
                                         <label class="control-label col-sm-1">@lang('documents.phone'):</label>
                                         <div class="col-sm-4">
-                                            <input type="tel" data-mask="(999) 999-9999" id="telD" name="telD" placeholder="Teléfono" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());">
+                                            <input type="tel" data-mask="(999) 999-9999" id="telD" name="telD" placeholder="@lang('documents.phone')" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());">
                                             <small class="help-block has-error">@{{ errors.first('telD') }}</small>
                                         </div>
                                     <!-- /Fin Grupo Doble 1 -->
@@ -293,7 +296,7 @@
                                             <label class="control-label col-sm-1">C.P: </label>
                                             <div class="col-sm-4">
                                                 <div class="input-group">
-                                                    <input type="number" placeholder="Código Postal" id="zipD" name="zipD" class="form-control" onkeyup="deleteError($(this).parent());">
+                                                    <input type="number" placeholder="@lang('general.postal_code')" id="zipD" name="zipD" class="form-control" onkeyup="deleteError($(this).parent());">
                                                     <span class="input-group-btn">
                                                         <button class="btn btn-primary" id="buttonPostalCode" data-toggle="tooltip" data-placement="top" title="Generar" type="button"><span class="fa fa-map-marker"></span></button>
                                                     </span>
@@ -360,7 +363,7 @@
                                                 <label class="contiene">@lang('documents.content')</label>
                                                     <div class="form-group"  id="Valconti">
                                                         <label class="contiene" style="display: none;"></label>
-                                                        <input type="text" onkeyup="deleteError($(this).parent());" id="contiene" name="contiene" class="form-control" value="" placeholder="Contenido">
+                                                        <input type="text" onkeyup="deleteError($(this).parent());" id="contiene" name="contiene" class="form-control" value="" placeholder="@lang('documents.content')">
                                                         <small class="help-block" id="Hcontiene" style="display: none">@lang('documents.obligatory_field')</small>
                                                     </div>
                                             </div>
@@ -371,7 +374,7 @@
                                                 <label class="valDeclarado">@lang('documents.declared')</label>
                                                     <div class="form-group" id="ValDecla">
                                                         <label style="display: none;" for="" class=""></label>
-                                                        <input type="number" onkeyup="deleteError($(this).parent());" placeholder=" Declarado" onkeyup="deleteError($(this).parent());" id="valDeclarado" name="valDeclarado" class="form-control" value="">
+                                                        <input type="number" onkeyup="deleteError($(this).parent());" placeholder="@lang('documents.declared')" onkeyup="deleteError($(this).parent());" id="valDeclarado" name="valDeclarado" class="form-control" value="">
                                                         <small class="help-block" id="HvalDeclarado" style="display: none">@lang('documents.obligatory_field')</small>
                                                     </div>
                                             </div>
@@ -379,7 +382,7 @@
                                                 <label class="valDeclarado">@lang('documents.pieces')</label>
                                                     <div class="form-group" id="ValDecla">
                                                         <label style="display: none;" for="" class=""></label>
-                                                        <input type="number" onkeyup="deleteError($(this).parent());" placeholder=" Piezas" onkeyup="deleteError($(this).parent());" id="valPiezas" name="valPiezas" class="form-control" value="1">
+                                                        <input type="number" onkeyup="deleteError($(this).parent());" placeholder="@lang('documents.pieces')" onkeyup="deleteError($(this).parent());" id="valPiezas" name="valPiezas" class="form-control" value="1">
                                                         <small class="help-block" id="Hpiezas" style="display: none">>@lang('documents.obligatory_field')</small>
                                                     </div>
                                             </div>
@@ -405,7 +408,7 @@
                                                             <span class="input-group-btn" onclick="deleteError($(this).parent());">
                                                                 <button class="btn btn-primary" id="btnBuscarPA" type="button" @click="modalArancel()"><small><span class="fa fa-search"></span> P.A (Adu.)</small></button>
                                                             </span>
-                                                            <input type="text" placeholder="seleccionar" class="form-control" readonly="" value="" id="pa" name="pa" onkeyup="deleteError($(this).parent());">
+                                                            <input type="text" placeholder="@lang('documents.select')" class="form-control" readonly="" value="" id="pa" name="pa" onkeyup="deleteError($(this).parent());">
                                                         </div><!-- /input-group -->
                                                         <small class="help-block" id="Hpa" style="display: none">
                                                         @lang('documents.obligatory_field')</small>
@@ -798,7 +801,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">@lang('documents.close')</span></button>
-                    <h2 class="modal-title" id="myModalLabel"><i class="fa fa-barcode"></i>>@lang('documents.add_trackings')</h2>
+                    <h2 class="modal-title" id="myModalLabel"><i class="fa fa-barcode"></i>@lang('documents.add_trackings')</h2>
                 </div>
                 <div class="modal-body">
                     <div class="row">

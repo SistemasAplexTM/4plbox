@@ -71,11 +71,11 @@
                                         </div>
                                         <div class="col-lg-6 col-md-12 col-sm-12" v-show="!corporativo">
                                             <div class="form-group" :class="{'has-error': errors.has('primer_apellido') }">
-                                                <label class="control-label" for="primer_apellido">Primer Apellido <span class="asterisco">*</span></label> 
+                                                <label class="control-label" for="primer_apellido">@lang('general.surname')<span class="asterisco">*</span></label> 
                                                 <input 
                                                     v-model="primer_apellido" 
                                                     v-validate.disable="corporativo ? '' : 'required'" 
-                                                    type="text" required="" placeholder="Primer Apellido" class="form-control" id="primer_apellido" name="primer_apellido" value="">
+                                                    type="text" required="" placeholder="@lang('general.surname')" class="form-control" id="primer_apellido" name="primer_apellido" value="">
                                                 <label v-show="errors.has('primer_apellido')" class="error">@{{ errors.first('primer_apellido') }}</label>
                                             </div>
                                         </div>
@@ -110,7 +110,7 @@
                                                 <input 
                                                     v-model="direccion"
                                                     v-validate.disable="'required'" 
-                                                    type="text" required="" placeholder="Dirección" class="form-control" id="direccion" name="direccion" value="">
+                                                    type="text" required="" placeholder="@lang('general.address')" class="form-control" id="direccion" name="direccion" value="">
                                                 <label v-show="errors.has('direccion')" class="error">@{{ errors.first('direccion') }}</label>
                                             </div>
                                         </div>
@@ -147,12 +147,12 @@
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                             <div class="form-group" :class="{'has-error': errors.has('email') }">
-                                                <label class="control-label" for="email">@lang('general.email')) <span class="asterisco">*</span></label> 
+                                                <label class="control-label" for="email">@lang('general.email') <span class="asterisco">*</span></label> 
                                                 <input
                                                  v-model="email" 
                                                  v-validate.disable="'required|email|unique'"
                                                  type="email" 
-                                                 required="" placeholder="Email (será tu usuario)" class="form-control" id="email" name="email">
+                                                 required="" placeholder="@lang('general.email_be_your_user')" class="form-control" id="email" name="email">
                                                 <label v-show="errors.has('email')" class="error">@{{ errors.first('email') }}</label>
                                             </div>
                                         </div>
@@ -161,7 +161,7 @@
                                                 <label class="control-label" for="email_confirmation">@lang('general.confirm_email')<span class="asterisco">*</span></label>
                                                 <input
                                                 v-validate="'required|confirmed:email'"
-                                                 type="email" required="" placeholder="Repite el Email" class="form-control" id="email_confirmation" name="email_confirmation" value="" >
+                                                 type="email" required="" placeholder="@lang('general.repeat_email')" class="form-control" id="email_confirmation" name="email_confirmation" value="" >
                                                 <label v-show="errors.has('email_confirmation')" class="error">@{{ errors.first('email_confirmation') }}</label>
                                             </div>
                                         </div>

@@ -26,3 +26,4 @@ Vue.component('modalguias-component', 		require('./components/ModalGuiasComponen
 Vue.component('modaltagdocument-component', require('./components/ModalTagDocumentComponent.vue'));
 Vue.component('autocomplete-component', 	require('./components/AutocompleteComponent.vue'));
 Vue.component('rigthsidebar-component', 	require('./components/RigthSidebarComponent.vue'));
+Vue.component('consol_bodega-component', 	require('./components/ConsolBodegaComponent.vue'));

@@ -2,6 +2,20 @@
 
 return [
 
+    //resources/views/templates/bill/create
+    
+    'register_of_bill_of_lading'=>'Register of bill of lading',
+    'create_new'=>'Create new',
+    'display_name'=>'Display name',
+    'account_number'=>'Account number',
+    'data'=>'Data',
+    'edit'=>'Edit',
+    'close'=>'Close',
+    'point_of_origin'=>'Point of origin',
+    'loading_dock'=>'Loading dock',
+    'foreign_port_of_discharge'=>'Foreign port of discharge',
+
+
     //resources/views/templates/aerolineasInventario
 
     'airline_inventory'=>'Airline inventory',
@@ -13,6 +27,9 @@ return [
     'airline_inventories'=>'Airline inventories',
     'group'=>'Group',
     'actions'=>'Actions',
+    'airlines'=>'Airlines',
+    'guide_number'=>'Guide number',
+
 
     //resources/views/templates/agenciaForm
     
@@ -66,6 +83,10 @@ return [
     'description'=>'Description:',
     'tariff'=>'Tariff:',
     'code_pa'=>'Code P.A',
+    'code_of_the_tariff_position'=>'Code of the tariff position',
+    'description_of_p_a'=>'Description of P.A',
+    'percentage_tariff'=>'Percentage tariff EJ: 0.19 => 19%',
+    'percentage_tariff1'=>'Percentage tariff EJ: 0.05 => 5%',
 
     //resources/views/templates/casillero
     'register_locker'=>'Register locker',
@@ -79,6 +100,8 @@ return [
     'terms_and_conditions'=>'General terms and conditions.',
     'i_wish_to_receive_information'=>'I want to receive information from my locker and my interest.',
     'create_locker'=>'Create locker',
+    'email_be_your_user'=>'Email (be your user)',
+    'repeat_email'=>'Repeat email',
    
     //resources/views/templates/ciudad
    
@@ -104,6 +127,7 @@ return [
     'document'=>'Document',
     'second_name'=>'Second name',
     'surnames'=>'Surnames',
+    'Surname'=>'Surname',
     'second_surname'=>'Second surname',
     'code_zip'=>'Cod ZIP',
     'client'=>'Client',
@@ -143,7 +167,10 @@ return [
     'data_shipper'=>'Data shipper',
     'data_consignee'=>'Data consignee',
     'signature_data_agency'=>'Signature data - Agency',
-    'data_detail_message'=>'Data Detail message',
+    'data_detail_message'=>'Data detail message',
+    'identification_of_the_message'=>'Identification of the message',
+    'message_overview'=>'Message overview',
+    'other_recipients'=>'Other recipients',
 
     //resources/views/template/maestraMultiple
 
@@ -170,6 +197,8 @@ return [
     'dispatch_immediately'=>'Dispatch immediately',
     'wait_until_you_decide'=>'Wait until you decide',
     'instruction'=>'Instruction',
+    'enter_a_tracking_number'=>'Enter a tracking number',
+    'enter_the_instruction'=>'Enter the instruction',
 
     //resources/views/template/prealertalist
 
@@ -182,7 +211,7 @@ return [
     'enter_the_tracking'=>'Enter the tracking, warehouse or guide number you want to track',
     'warehouse_guide_tracking'=>'Warehouse /Guide/ Tracking',
     'deliver_date'=>'Deliver date',
-
+    'track_your_package_here'=>'Track your package here',
 
     //resources/views/template/resultSearch
 
@@ -198,6 +227,12 @@ return [
     'tax'=>'Tax',
     'collection_weight_volume'=>'Collection Weight/Volume',
     'weight_volume'=>'Weight / Volume',
+    'enter_the_name_of_the_service'=>'Enter the name of the service',
+    'enter_the_rate'=>'Enter the rate',
+    'minimum_value_of_the_rate'=>'Minimum value of the rate',
+    'enter_the_optional_charge'=>'Enter the optional charge',
+    'enter_the_insurance_percentage'=>'Enter the insurance percentage',
+    'enter_the_tax_percentage'=>'Enter the tax percentage',
 
     //resources/views/template/shipper
     
@@ -229,12 +264,15 @@ return [
     'security_settings'=>'Security settings',
     'select_the_credentials'=>'Select the credentials that may use this document *',
     'select_the_additional_functionalities'=>'Select the additional functionalities of the document (optional)',
+    'document_type'=>'Document type',
+    'mail_with_copy_to'=>'Mail with copy to:',
 
      //resources/views/template/tracking
 
      'track_record'=>'Track record',
      'registered_tracking'=>'Registered Tracking',
      'office'=>'Office',
+     'number_of_tracking'=>'Number of tracking',
 
      //resources/views/template/transport
 
@@ -249,6 +287,14 @@ return [
     'state_dpto'=>'State / Dpto',
     'carrier'=>'Carrier',
     'transporters'=>'Transporters',
+    'name_of_the_transporter'=>'Enter the name of the transporter',
+    'enter_the_phone'=>'Enter the phone',
+    'enter_the_email'=>'Enter the email',
+    'enter_the_name_of_the_contact'=>'Enter the name of the contact',
+    'enter_the_city_of_the_transporter'=>'Enter the city of the transporter',
+    'enter_the_status_of_the_transporter'=>'Enter the status of the transporter',
+    'enter_the_carrier_country'=>'Enter the carrier country',
+    'enter_the_transporter_zip_code'=>'Enter the transporter zip-code',
 
     //resources/views/template/user
 

@@ -19,6 +19,9 @@ function totalizeDocument(elemento) {
     // setTimeout(function(){
         var cont = 1;
             flete = $('#servicios_id option:selected').data('tarifamin');
+            if(typeof flete === 'undefined'){
+                flete = 0;
+            }
             $('#flete').val(flete);
             $(elemento).css('border-color', '');
             peso = $('#pesoDim').val();

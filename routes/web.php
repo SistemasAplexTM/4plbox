@@ -233,7 +233,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('documento/{id}/createContactsConsolidadoDetalle', 'DocumentoController@createContactsConsolidadoDetalle');
     Route::post('documento/{id}/addStatusToGuias', 'DocumentoController@addStatusToGuias')->name('documento.addStatusToGuias');
     Route::post('documento/{id}/agruparGuiasConsolidadoCreate', 'DocumentoController@agruparGuiasConsolidadoCreate');
-    Route::get('documento/{id}/removerGuiaAgrupada/{id_detalle}', 'DocumentoController@removerGuiaAgrupada')->name('documento.removerGuiaAgrupada');
+    Route::get('documento/{id}/removerGuiaAgrupada/{id_detalle}/{id_guia_detalle}', 'DocumentoController@removerGuiaAgrupada')->name('documento.removerGuiaAgrupada');
     Route::get('documento/sendEmailDocument/{id}', 'DocumentoController@sendEmailDocument');
     Route::get('documento/{id}/deleteDetailConsolidado/{id_detail}/{logical}', 'DocumentoController@deleteDetailConsolidado')->name('documento.deleteDetailConsolidado');
     Route::get('documento/{id}/liquidar', 'DocumentoController@liquidar');
@@ -250,7 +250,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('documento/create/{document}', 'DocumentoController@create')->name('documento.create');
     Route::get('documento/{id}/buscarGuias/{num_guia}/{num_bolsa}/{pais_id}', 'DocumentoController@buscarGuias');
     Route::get('documento/{id}/getAllGuiasDisponibles/{pais_id?}/{transporte_id?}', 'DocumentoController@getAllGuiasDisponibles');
-    Route::get('documento/{id}/getAllConsolidadoDetalle/', 'DocumentoController@getAllConsolidadoDetalle');
+    Route::get('documento/{id}/getAllConsolidadoDetalle/{num_bolsa?}', 'DocumentoController@getAllConsolidadoDetalle');
     Route::get('documento/{id}/restoreShipperConsignee/{id_detalle}/{table}', 'DocumentoController@restoreShipperConsignee');
     Route::get('documento/getDataSelectWarehousesModalTagGuia/{id}', 'DocumentoController@getDataSelectWarehousesModalTagGuia');
     Route::get('documento/getAllGridNotas/{id_documento}', 'DocumentoController@getAllGridNotas');
@@ -260,6 +260,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('documento/{id}/getGuiasAgrupar/{id_detalle}', 'DocumentoController@getGuiasAgrupar');
     Route::put('documento/{id}/updatePositionArancel', 'DocumentoController@updatePositionArancel');
     Route::get('documento/{id}/getDataDetailDocument', 'DocumentoController@getDataDetailDocument');
+    Route::get('documento/{id}/getBoxesConsolidado', 'DocumentoController@getBoxesConsolidado');
 
     /*  REPORTES - IMPRESIONES EN PDF */
     Route::get('impresion-documento/{id}/{document}/{id_detalle?}', 'DocumentoController@pdf')->name('documento.pdf');

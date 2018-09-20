@@ -53,7 +53,7 @@
                                         <div class="col-lg-12">
                                             <div class="form-group" :class="{ 'has-error': errors.has('tracking') }">
                                                     <label class="control-label" for="email">@lang('general.tracking') </label> 
-                                                    <input type="text" name="tracking" class="form-control" placeholder="Ingresa un numero de tracking" v-model="tracking" v-validate.disable="'required|unique'">
+                                                    <input type="text" name="tracking" class="form-control" placeholder="@lang('general.enter_a_tracking_number')" v-model="tracking" v-validate.disable="'required|unique'">
                                                     <small class="help-block">@{{ errors.first('tracking') }}</small>
                                             </div>
                                         </div>
@@ -71,7 +71,7 @@
                                         <div class="col-lg-12">
                                             <div class="form-group" :class="{ 'has-error': errors.has('instruccion') }">
                                                     <label class="control-label" for="instruccion">@lang('general.instruction') </label> 
-                                                    <input type="text" placeholder="Ingresa la instrucción" class="form-control" name="instruccion" v-model="instruccion">
+                                                    <input type="text" placeholder="@lang('general.enter_the_instruction')" class="form-control" name="instruccion" v-model="instruccion">
                                                     <small class="help-block">@{{ errors.first('instruccion') }}</small>
                                             </div>
                                         </div>
