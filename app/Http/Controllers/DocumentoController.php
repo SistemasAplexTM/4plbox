@@ -1428,7 +1428,7 @@ class DocumentoController extends Controller
             ->get();
 
         $this->AddToLog('Impresion labels (' . $documento->id . ')');
-        if (env('APP_TYPE') === 'courier') {
+        if (env('APP_LABEL') === '4x4') {
             $pdf = PDF::loadView('pdf.labelWG', compact('documento', 'detalle', 'document'))
                 ->setPaper(array(25, -25, 260, 360), 'landscape');
 
@@ -1824,6 +1824,7 @@ class DocumentoController extends Controller
 
         $cont       = 0;
         $datosEnvio = '';
+        $tracks = '<strong style="font-size:15px;">Trackings:</strong><br>';
         $trackings  = array();
         foreach ($detalle as $objD) {
             $trackings[] = DB::table('tracking as a')
@@ -1834,6 +1835,7 @@ class DocumentoController extends Controller
             $datosEnvio .= $cont + 1 . '. <strong>Peso:</strong>' . $objD->peso . " Lbs | <strong>Contenido:</strong> " . $objD->contenido . "<br>";
             $datosEnvio .= '<strong>Trackings:</strong><br>';
             foreach ($trackings[$cont] as $t) {
+                $tracks .= '🚚  <span style="font-size:15px;">- ' . $t->codigo . '<span><br>';
                 $datosEnvio .= '🚚 ' . $t->codigo . ' / ' . $t->contenido . '<br>';
             }
             $datosEnvio .= '<br><br>';
@@ -1853,9 +1855,9 @@ class DocumentoController extends Controller
         $plantilla = $this->getDataEmailPlantillaById($id_plantilla);
 
         if (isset($objConsignee->correo) and $objConsignee->correo != '') {
-            if (filter_var($objConsignee->correo, FILTER_VALIDATE_EMAIL)) {
+            if (filter_var(trim($objConsignee->correo), FILTER_VALIDATE_EMAIL)) {
                 /* ENVIO DE EMAIL REPLACEMENT($id_documento, $objAgencia, $objDocumento, $objShipper, $objConsignee, $datosEnvio)*/
-                $replacements = $this->replacements($id_documet, $objAgencia, $objDocumento, $objShipper, $objConsignee, $datosEnvio);
+                $replacements = $this->replacements($id_documet, $objAgencia, $objDocumento, $objShipper, $objConsignee, $datosEnvio, $tracks);
 
                 $cuerpo_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->mensaje);
                 $asunto_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->subject);
@@ -1876,7 +1878,7 @@ class DocumentoController extends Controller
                     );
                 }
 
-                return Mail::to($objConsignee->correo)
+                return Mail::to(trim($objConsignee->correo))
                 // ->cc($moreUsers)
                 // ->bcc($evenMoreUsers)
                     ->send(new \App\Mail\WarehouseEmail($cuerpo_correo, $pdf, $from_self, $asunto_correo));

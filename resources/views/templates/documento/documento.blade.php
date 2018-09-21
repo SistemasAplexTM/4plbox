@@ -85,10 +85,9 @@
 @endsection
 
 @section('content')
-{{-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQTpXj82d8UpCi97wzo_nKXL7nYrd4G70"></script> --}}
-{{-- <script type="text/javascript" src="{{ asset('css/plugins/dataTables/keyTable.dataTables.min.css') }}"></script> --}}
+
     {{-- DEFAULT VALUES --}}
-    <?php $id_pa = 234; ?> {{-- id de la posicion por defecto --}}
+    <?php $id_pa = ((env('APP_CLIENT') != 'worldcargo') ? 234 : 1) ?> {{-- id de la posicion por defecto --}}
     <div class="row" id="documento">
         <modalshipper-component></modalshipper-component>
         <modalconsignee-component></modalconsignee-component>
@@ -133,11 +132,11 @@
                     </div>
                 </div>
                 {{-- FORMULARIO DE CONSOLIDADO --}}
-                {{-- @if(!Auth::user()->isRole('bodega'))
+                @if(!Auth::user()->isRole('bodega'))
                     <formconsolidado-component :app_type="'{{ env('APP_TYPE') }}'" :documento="{{ json_encode($documento) }}" :contactos="contactos" :restore="restoreShipperConsignee" :agrupar="datosAgrupar" :removeragrupado="removerAgrupado" :permission='permissions' v-if="mostrar.includes(24)"></formconsolidado-component>
-                @else --}}
+                @else
                     <consol_bodega-component :app_type="'{{ env('APP_TYPE') }}'" :documento="{{ json_encode($documento) }}" :contactos="contactos" :restore="restoreShipperConsignee" :agrupar="datosAgrupar" :removeragrupado="removerAgrupado" :permission='permissions' :ref_boxes='refreshBoxes' v-if="mostrar.includes(24)"></consol_bodega-component>
-                {{-- @endif --}}
+                @endif
 
                 {{-- CONSIGNEE Y SHIPPER --}}
                 <div class="col-lg-12 form_doc" style="display: none">

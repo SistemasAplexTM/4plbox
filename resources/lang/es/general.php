@@ -62,7 +62,7 @@ return [
     'use_mailchimp'=>'Usar MailChimp',
     'use_zopim '=>'Usar Zopim ',
     'description'=>'Descripción',
-    'tracking'=>'Rastreo',
+    'tracking'=>'Tracking',
     'locker_registration'=>'Registro casillero ',
     'pre_alert'=>'Pre alert',
     'locker'=>'Casillero',
@@ -198,7 +198,7 @@ return [
     'enter_the_tracking_and_instruction'=>'Ingrese los tracking y la instrucción de envío de sus paquetes.',
     'dispatch_immediately'=>'Despachar de inmediato',
     'wait_until_you_decide'=>'Esperar hasta que decida ',
-    'enter_a_tracking_number'=>'Ingrese un número de rastreo',
+    'enter_a_tracking_number'=>'Ingrese un número de tracking',
     'enter_the_instruction'=>'Ingresa la instrucción',
 
     //resources/views/template/prealertalist
@@ -273,10 +273,10 @@ return [
   
     //resources/views/template/tracking
     
-    'track_record'=>'Registro de rastreo',
-    'registered_tracking'=>'Rastreo registrado',
+    'track_record'=>'Registro de tracking',
+    'registered_tracking'=>'Tracking registrado',
     'office'=>'Despacho',
-    'number_of_tracking'=>'Número de rastreo',
+    'number_of_tracking'=>'Número de racking',
 
     //resources/views/template/transport
 

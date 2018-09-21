@@ -186,8 +186,9 @@
 	                                                <i class="fa fa-print"></i>  Imprmir <span class="caret"></span>
 	                                            </button>
 	                                            <ul class="dropdown-menu">
-		                                            <li><a href="" id="printDocument" class="printDocument" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> Imprimir Manifiesto</a></li>
-		                                            <li><a href="" id="printDocumentGuias" class="printDocumentGuias" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> Imprimir Guias</a></li>
+		                                            <li v-if="app_type == 'courier'"><a href="" id="printDocument" class="printDocument" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> Imprimir Manifiesto</a></li>
+                                                    <li v-if="app_type == 'courier'"><a href="" id="printDocumentGuias" class="printDocumentGuias" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> Imprimir Guias</a></li>
+		                                            <li><a href="#" id="" class=""><i class="fa fa-print fa-fw"></i> Instrucciones</a></li>
 	                                            </ul>
 	                                        </div>
 		                                     <a @click="cancelDocument()" type="button" class="btn btn-white"><i class="fa fa-times fa-fw"></i> Cancelar </a>

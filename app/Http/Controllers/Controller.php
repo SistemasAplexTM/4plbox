@@ -508,7 +508,7 @@ class Controller extends BaseController
         }
 
     }
-    public function replacements($id, $objAgencia, $objWarehouse = null, $objShipper = null, $objConsignee = null, $datosEnvio = null)
+    public function replacements($id, $objAgencia, $objWarehouse = null, $objShipper = null, $objConsignee = null, $datosEnvio = null, $tracking = null)
     {
         $replacements = array(
             //URL del sistema
@@ -542,6 +542,7 @@ class Controller extends BaseController
             '({total})'           => ($objWarehouse) ? (($objWarehouse->valor_declarado * $objWarehouse->impuesto / 100) + $objWarehouse->cargos_add + $objWarehouse->flete + $objWarehouse->seguro - $objWarehouse->descuento) : '',
             //Datos Detalle mensaje
             '({datos_detalle})'   => $datosEnvio,
+            '({tracking})'        => $tracking,
             //Datos firma - Agencia
             '({id_agencia})'      => ($objAgencia) ? $objAgencia->id : '',
             '({nom_agencia})'     => ($objAgencia) ? $objAgencia->descripcion : '',

@@ -84,12 +84,6 @@ class AgenciaController extends Controller
             $detalle->seguro           = $request->input('seguro')[$i];
             $detalle->save();
         }
-        /* GUARDAR LAS URLS PUBLICAS DE LA AGENCIA */
-        // DB::table('agencia_urls_publicas')->insert([
-        //     ['agencia_id' => $agencia_id , 'descripcion' => 'Casillero', 'url' => url('/').'/casillero/'.$agencia_id, 'created_at' => date('Y-m-d')],
-        //     ['agencia_id' => $agencia_id , 'descripcion' => 'Prealerta', 'url' => url('/').'/prealerta/'.$agencia_id, 'created_at' => date('Y-m-d')],
-        //     ['agencia_id' => $agencia_id , 'descripcion' => 'Rastreo', 'url' => url('/').'/rastreo', 'created_at' => date('Y-m-d')]
-        // ]);
         return redirect()->route('agencia.index');
     }
 
@@ -146,10 +140,6 @@ class AgenciaController extends Controller
             \Storage::disk('public')->put('storage/'.$requestData['logo'], \File::get($request->file('logo'))); //se guardara en 'public/storage'
         }
 
-            // echo '<pre>';
-            // print_r($data->logo);
-            // echo '</pre>';
-            // exit();
         $data->update($requestData);
 
         /* REGISTRAR EL DETALLE */

@@ -175,16 +175,20 @@
     </tr>
     <tr>
         <td>
-            <div class="remitente">
-                {{ $value->ship_nomfull }}
-            </div>
+            @if(env('APP_CLIENT') != 'worldcargo')
+                <div class="remitente">
+                    {{ $value->ship_nomfull }}
+                </div>
+            @endif
         </td>
     </tr>
     <tr>
         <td>
             <div class="telefono">
-                @lang('general.phone'):
-                {{ $value->ship_tel }}
+                @if(env('APP_CLIENT') != 'worldcargo')
+                    @lang('general.phone'):
+                    {{ $value->ship_tel }}
+                @endif
             </div>
         </td>
     </tr>
@@ -226,9 +230,13 @@
                     </div>
                     <?php $leng = strlen($value->contenido); ?>
                     <div class="des">
-                        Desc:
+                        @if(env('APP_CLIENT') != 'worldcargo')
+                            Desc:
+                            <span id="descripcion">
+                                {{ (($leng > 215) ? str_replace(',', '-', substr($value->contenido, 0, 215)) : str_replace(',', ', ', $value->contenido)) }}
+                            </span>
+                        @endif
                         <span id="descripcion">
-                            {{ (($leng > 215) ? str_replace(',', '-', substr($value->contenido, 0, 215)) : str_replace(',', ', ', $value->contenido)) }}
                             <br>
                                 **- trackings ({{ str_replace(',', ', ', $value->tracking) }})
                         </span>
@@ -246,8 +254,13 @@
     <tr>
         <td>
             <div class="codebar2">
+                @if(env('APP_CLIENT') === 'worldcargo')
+                <img id="barcode" style="height: 50px;padding: 15px;" src="data:image/png;base64, {{ DNS1D::getBarcodePNG($value->id, "C128",2,40) }}" alt="barcode" />
+                <div id="barcode-name">{{ $value->id }}</div>
+                @else
             	<img id="barcode" style="height: 50px;padding: 5px;" src="data:image/png;base64, {{ DNS1D::getBarcodePNG($value->codigo, "C128",2,40) }}" alt="barcode" />
             	<div id="barcode-name">{{ $value->codigo }}</div>
+                @endif
             </div>
         </td>
     </tr>

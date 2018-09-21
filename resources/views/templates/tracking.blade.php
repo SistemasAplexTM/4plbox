@@ -74,21 +74,23 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="form-group" :class="{ 'has-error': errors.has('contenido') }">
-                                    <div class="col-sm-4">
-                                        <label for="contenido" class="control-label gcore-label-top">@lang('general.content'):</label>
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <input class="form-control" name="contenido" placeholder="@lang('general.content')" type="text" v-model="contenido" v-validate.disable="'required'">
-                                        <small class="help-block error" v-show="errors.has('contenido')">
-                                            @{{ errors.first('contenido') }}
-                                        </small>
+                        @if(env('APP_CLIENT') != 'worldcargo')
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group" :class="{ 'has-error': errors.has('contenido') }">
+                                        <div class="col-sm-4">
+                                            <label for="contenido" class="control-label gcore-label-top">@lang('general.content'):</label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <input class="form-control" name="contenido" placeholder="@lang('general.content')" type="text" v-model="contenido" v-validate.disable="'required'">
+                                            <small class="help-block error" v-show="errors.has('contenido')">
+                                                @{{ errors.first('contenido') }}
+                                            </small>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                         <div class="row">           
                             <div class="col-lg-12">
                                 <div class="form-group" :class="{ 'has-error': errors.has('consignee_id') }">

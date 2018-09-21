@@ -80,7 +80,7 @@ $toalRegistros = count($detalleConsolidado);
                                                     <table style="width: 100%;">
                                                         <tr>
                                                             <td colspan="2">
-                                                                <div id="shipper" style="font-weight: bold;font-size: 15px;">{{ ($value->shipper_json != '') ? $shipper_json->nombre : ((isset($value->ship_nomfull)) ? $value->ship_nomfull : '&nbsp;') }}</div>
+                                                                <div id="shipper" style="font-weight: bold;font-size: 13px;">{{ ($value->shipper_json != '') ? $shipper_json->nombre : ((isset($value->ship_nomfull)) ? $value->ship_nomfull : '&nbsp;') }}</div>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -95,7 +95,7 @@ $toalRegistros = count($detalleConsolidado);
                                                         </tr>
                                                         <tr>
                                                             <td width="40%">
-                                                                <div style="margin-left: 10px;">@alng('general.phone')</div>
+                                                                <div style="margin-left: 10px;">@lang('general.phone')</div>
                                                             </td>
                                                             <td>
                                                                 <div style="margin-left: 10px;">@lang('genela.city') - @lang('general.state')</div>
@@ -115,7 +115,7 @@ $toalRegistros = count($detalleConsolidado);
                                                     <table style="width: 100%;">
                                                         <tr>
                                                             <td colspan="2">
-                                                                <div id="consignee"  style="font-weight: bold;font-size: 15px;">{{ ($value->consignee_json != '') ? $consignee_json->nombre : ((isset($value->cons_nomfull)) ? $value->cons_nomfull : '&nbsp;') }}</div>
+                                                                <div id="consignee"  style="font-weight: bold;font-size: 13px;">{{ ($value->consignee_json != '') ? $consignee_json->nombre : ((isset($value->cons_nomfull)) ? $value->cons_nomfull : '&nbsp;') }}</div>
                                                             </td>
                                                         </tr>
                                                         <tr>

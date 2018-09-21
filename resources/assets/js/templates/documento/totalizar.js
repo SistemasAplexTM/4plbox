@@ -78,7 +78,7 @@ function calculateFlete(flete) {
     // }
     var cOpcional = $('#servicios_id option:selected').data('c_opcional');
     /* SE EVALUA SI SE COBRARA POR PESO O VOLUMEN (PESO = 1 - VOLUMEN = 0)*/
-    if ($('#servicios_id option:selected').data('cobvol') == 0) {
+    if ($('#servicios_id option:selected').data('cobvol') == 0 && app_client != 'worldcargo') {
         if (parseFloat(peso) >= 0 && parseFloat(peso) <= 8) {
             $('#cobrarPor').text('Pes');
             return flete;

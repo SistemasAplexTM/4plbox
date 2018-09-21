@@ -200,6 +200,7 @@
 												<!-- List group -->
 												  <ul class="list-group">
 												    <li class="list-group-item">{datos_detalle}</li>
+												    <li class="list-group-item">{tracking}</li>
 												  </ul>
 											</div>
 										</div>
