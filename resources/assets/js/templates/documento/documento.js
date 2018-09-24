@@ -50,6 +50,14 @@ $(document).ready(function() {
     
 });
 $(function() {
+    //aparecer botones de accion en las bolsas del consolidado
+    jQuery('.list-group').
+    on('mouseover', 'li', function() {
+        jQuery(this).find('.boxEdit, .boxDelete').show();
+    }).
+    on('mouseout', 'li', function() {
+        jQuery(this).find('.boxEdit, .boxDelete').hide();
+    });
 
     jQuery('#tbl-consolidado').
     on('mouseover', 'tr', function() {

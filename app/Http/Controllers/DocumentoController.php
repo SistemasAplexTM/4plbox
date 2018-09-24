@@ -2200,10 +2200,16 @@ class DocumentoController extends Controller
         }
     }
 
-    public function getBoxesConsolidado()
+    public function getBoxesConsolidado($id)
     {
+        $where = [['a.consolidado_id', $id], ['a.deleted_at', null]];
+        if(!Auth::user()->isRole('admin')){
+            $where[] = ['c.agencia_id', Auth::user()->agencia_id];
+        }
+
         $data = DB::table('consolidado_detalle as a')
             ->leftJoin('documento_detalle as b', 'a.documento_detalle_id', 'b.id')
+            ->leftJoin('documento as c', 'b.documento_id', 'c.id')
             ->select(
                 DB::raw("a.num_bolsa AS num_bolsa"),
                 DB::raw("FORMAT(Sum(b.peso2),0) AS peso"),
@@ -2211,9 +2217,7 @@ class DocumentoController extends Controller
                 DB::raw("FORMAT(Count(a.id),0) AS cantidad"),
                 DB::raw("FORMAT(ROUND(Sum(b.volumen)),0) AS volumen")
             )
-            ->where([
-                ['a.deleted_at', null]
-            ])
+            ->where($where)
             ->groupBy("a.num_bolsa")
             ->get();
         $answer = array(
@@ -2221,6 +2225,71 @@ class DocumentoController extends Controller
             'data' => $data,
         );
         return $answer;
+    }
+
+    public function removeBoxConsolidado($id, $num_bolsa)
+    {
+        try {
+            $data = Documento::findOrFail($id);
+            $detail = DB::table('consolidado_detalle')->where([['consolidado_id', $id], ['num_bolsa', $num_bolsa]])->get();
+            
+            if(count($detail) > 0){
+                foreach ($detail as $key) {
+                    $this->deleteDetailConsolidado($id, $key->id, false);
+                }
+            }
+
+            $this->AddToLog('Bolsa eliminada de consolidado ('.$data->consecutivo.') N° bolsa(' . $num_bolsa . ')');
+            $answer = array(
+                "datos"  => $id,
+                "code"   => 200,
+                "status" => 200,
+            );
+            return $answer;
+        } catch (Exception $e) {
+            $error = '';
+            if (isset($e->errorInfo) and $e->errorInfo) {
+                foreach ($e->errorInfo as $key => $value) {
+                    $error .= $key . ' - ' . $value . ' <br> ';
+                }
+            } else { $error = $e;}
+            $answer = array(
+                "error"  => $error,
+                "code"   => 600,
+                "status" => 500,
+            );
+            return $answer;
+        }
+    }
+
+    public function changeBoxConsolidado($id, $num_bolsa, $consol_id)
+    {
+        try {
+            $data = Documento::findOrFail($id);
+            $data2 = Documento::findOrFail($consol_id);
+            DB::table('consolidado_detalle')->where([['consolidado_id', $id], ['num_bolsa', $num_bolsa]])->update(['consolidado_id' => $consol_id]);
+
+            $this->AddToLog('Bolsa trasladada del consolidado ('.$data->consecutivo.') al consolidado (' . $data2->consecutivo . ')');
+            $answer = array(
+                "datos"  => $id,
+                "code"   => 200,
+                "status" => 200,
+            );
+            return $answer;
+        } catch (Exception $e) {
+            $error = '';
+            if (isset($e->errorInfo) and $e->errorInfo) {
+                foreach ($e->errorInfo as $key => $value) {
+                    $error .= $key . ' - ' . $value . ' <br> ';
+                }
+            } else { $error = $e;}
+            $answer = array(
+                "error"  => $error,
+                "code"   => 600,
+                "status" => 500,
+            );
+            return $answer;
+        }
     }
 
 }

@@ -360,15 +360,19 @@ class MasterController extends Controller
 
     public function vueSelectConsolidados($data)
     {
+        $where = [
+                ['a.pais_id', '<>', null],
+                ['a.master_id', null],
+                ['a.deleted_at', null],
+            ];
+        if(!Auth::user()->isRole('admin')){
+            $where[] = ['a.agencia_id', Auth::user()->agencia_id];
+        }
         $term = $data;
         $tags = DB::table('documento AS a')->leftJoin('pais AS b', 'a.pais_id', 'b.id')
             ->select(['a.id', 'a.consecutivo AS consolidado', DB::raw('SUBSTRING_INDEX(`a`.`created_at`, " ", 1) as fecha'), 'b.descripcion AS pais'])
             ->whereRaw("(a.consecutivo like '%" . $term . "%' OR b.descripcion like '%" . $term . "%')")
-            ->where([
-                ['a.pais_id', '<>', null],
-                ['a.master_id', null],
-                ['a.deleted_at', null],
-            ])->get();
+            ->where($where)->get();
         $answer = array(
             'code'  => 200,
             'items' => $tags,

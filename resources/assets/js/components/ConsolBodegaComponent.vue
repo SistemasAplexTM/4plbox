@@ -124,7 +124,7 @@
                                 <div class="row" style="margin-bottom: 50px;">
 						                <div class="col-sm-4">
 						                	<div class="row">
-			                                	<div class="col-sm-4">
+			                                	<div class="col-sm-4 pull-right">
 			                                        <div class="col-sm-12">
 			                                            <div class="form-group">
 			                                                <label for="num_bolsa" class="">N° Bolsa</label>
@@ -143,20 +143,32 @@
 				                                    <div class="client-detail">
 					                                    <div class="full-height-scroll">
 					                                        <ul class="list-group clear-list">
-					                                        	<template v-for="box in boxes">
+					                                        	<template  v-if="boxes.length > 0" v-for="box in boxes">
 						                                            <li class="list-group-item fist-item">
-						                                            	<div class="col-sm-4">
-							                                                <button class="btn btn-success dim btn-large-dim btn-outline btn-cajas" type="button" @click="getDataDetail(box.num_bolsa)">
-													                            {{ box.num_bolsa }}
-													                        </button>
-						                                            	</div>
-						                                            	<div class="cols-sm-8">
-						                                            		<div><strong>Cajas: </strong><span>{{ box.cantidad }}</span></div>
-						                                            		<div><strong>Kilos: </strong><span>{{ box.peso_kl }}</span><strong> - Libras: </strong><span>{{ box.peso }}</span></div>
-						                                            		<div><strong>Volumen: </strong><span>{{ box.volumen }}</span></div>
+						                                            	<div class="row">
+							                                            	<div class="col-sm-4">
+								                                                <button class="btn btn-success dim btn-large-dim btn-outline btn-cajas" data-toggle="tooltip" title="Bolsa" data-placement="right" type="button" @click="getDataDetail(box.num_bolsa)">
+														                            {{ box.num_bolsa }}
+														                        </button>
+							                                            	</div>
+							                                            	<div class="col-sm-5">
+							                                            		<div><strong>Cajas: </strong><span>{{ box.cantidad }}</span></div>
+							                                            		<div><strong>Kilos: </strong><span>{{ box.peso_kl }}</span><strong> - Libras: </strong><span>{{ box.peso }}</span></div>
+							                                            		<div><strong>Volumen: </strong><span>{{ box.volumen }}</span></div>
+							                                            	</div>
+							                                            	<div class="col-sm-3" style="text-align: center;">
+							                                            		<br>
+							                                            		<a onclick="" class="boxEdit" title="Trasladar" data-toggle="tooltip" style="color:#FFC107;display: none;" @click="chageBoxModal(box.num_bolsa)"><i class="material-icons">import_export</i></a>
+							                                            		<a onclick="" class="boxDelete" title="Eliminar" data-toggle="tooltip" style="color:#E34724;display: none;" @click="removeBox(box.num_bolsa)"><i class="material-icons">&#xE872;</i></a>
+							                                            	</div>
 						                                            	</div>
 						                                            </li><hr>
-					                                            </template>					                                            
+					                                            </template>
+					                                            <template v-if="boxes.length == 0">
+					                                            	<li class="list-group-item fist-item">
+						                                            	<h1>No hay bolsas ingresadas</h1>
+						                                            </li>
+					                                            </template>				                                            
 					                                        </ul>
 					                                    </div>
 				                                    </div>
@@ -341,6 +353,43 @@
                 </div>
             </div>
         </div>
+        <!-- MODAL PARA TRASLADAR BOLSA DE UN CONSOLIDADO A OTRO -->
+        <div class="modal fade bs-example-modal-lg" id="modalaTrasladarBolsa" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="width: 30%!important;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            <i class="fa fa-exchange"></i> Trasladar bolsa
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                            	<p>Selecione el numero de consolidado al que desea trasladar esta bolsa.</p>
+                                <div class="form-group">
+			                      <label for="consolidado_id">Consolidado</label>
+			                      <v-select name="consolidado_id" v-model="consolidado_id" label="consolidado" :filterable="false" :options="consolidados" @search="onSearchConsolidados" placeholder="# Consolidado">
+			                        <template slot="option" slot-scope="option">
+			                            {{ option.consolidado }} | <i class="fa fa-calendar"></i> {{ option.fecha }} | <i class="fa fa-globe"></i> {{ option.pais }}
+			                        </template>
+			                        <template slot="selected-option" slot-scope="option">
+			                          <div class="selected d-center">
+			                            {{ option.consolidado }} | <i class="fa fa-calendar"></i> {{ option.fecha }} | <i class="fa fa-globe"></i> {{ option.pais }}
+			                          </div>
+			                        </template>
+			                      </v-select>
+			                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="" @click="chageBox()" class="btn btn-primary" data-dismiss="modal">Trasladar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 	</div>
 </template>
 
@@ -513,10 +562,66 @@
 	        	msn:'',
 	        	tituloModal:'',
 	        	n_bolsa: null,
-	        	boxes: {}
+	        	boxes: {},
+	        	boxChangeC: null,
+	        	consolidados: [],
+		        consolidado_id:{
+		          id: null,
+		          consolidado: null
+		        },
 	        }
 	    },
 		methods: {
+			chageBoxModal(bolsa){
+				console.log(bolsa);
+				this.boxChangeC = bolsa;
+				$('#modalaTrasladarBolsa').modal('show');
+			},
+			chageBox(){
+				let me = this;
+                axios.get('changeBoxConsolidado/'+ me.boxChangeC + '/' + me.consolidado_id.id).then(function (response) { 
+                	if(response.data.code === 200){
+                    	me.getBoxesConsolidado();
+                    	toastr.success('Bolsa trasladada correctamente.');
+		                toastr.options.closeButton = true;
+                    }else{
+                    	toastr.warning('Atención! ha ocurrido un error.');
+                    }
+                }).catch(function (error) {
+                    console.log(error);
+                    toastr.warning('Error.');
+                    toastr.options.closeButton = true;
+                });
+			},
+			removeBox(bolsa){
+				let me = this;
+				swal({
+                title: "<div><span style='color: rgb(212, 103, 82);'>Atención!</span><br> La bolsa sera removida de este consolidado y no podra recuperarse despues.</div>",
+                text: "¿Desea Continuar?",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: "Si, Crear",
+                cancelButtonText: "No, Cancelar!",
+	            }).then((result) => {
+	                if (result.value) {
+		                axios.get('removeBoxConsolidado/' + bolsa).then(function (response) { 
+		                    if(response.data.code === 200){
+		                    	me.getBoxesConsolidado();
+		                    	toastr.success('Bolsa eliminada correctamente.');
+				                toastr.options.closeButton = true;
+		                    }else{
+		                    	toastr.warning('Atención! ha ocurrido un error.');
+		                    }
+		                }).catch(function (error) {
+		                    console.log(error);
+		                    toastr.warning('Error.');
+		                    toastr.options.closeButton = true;
+		                });
+	                }
+	            });
+			},
 			getBoxesConsolidado(){
 				let me = this;
                 axios.get('getBoxesConsolidado').then(function (response) { 
@@ -958,6 +1063,18 @@
 		        loading(false);
 		      });
 		    }, 350),
+		    onSearchConsolidados(search, loading) {
+	          loading(true);
+	          this.searchConsolidados(loading, search, this);
+	        },
+	        searchConsolidados: _.debounce((loading, search, vm) => {
+	            fetch(
+	              `../../master/vueSelectConsolidados/${escape(search)}`
+	            ).then(res => {
+	              res.json().then(json => (vm.consolidados = json.items));
+	              loading(false);
+	            });
+	        }, 350)
 		}
     }
 </script>

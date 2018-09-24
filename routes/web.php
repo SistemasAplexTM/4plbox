@@ -261,6 +261,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('documento/{id}/updatePositionArancel', 'DocumentoController@updatePositionArancel');
     Route::get('documento/{id}/getDataDetailDocument', 'DocumentoController@getDataDetailDocument');
     Route::get('documento/{id}/getBoxesConsolidado', 'DocumentoController@getBoxesConsolidado');
+    Route::get('documento/{id}/removeBoxConsolidado/{num_bolsa}', 'DocumentoController@removeBoxConsolidado');
+    Route::get('documento/{id}/changeBoxConsolidado/{num_bolsa}/{consol_id}', 'DocumentoController@changeBoxConsolidado');
 
     /*  REPORTES - IMPRESIONES EN PDF */
     Route::get('impresion-documento/{id}/{document}/{id_detalle?}', 'DocumentoController@pdf')->name('documento.pdf');
