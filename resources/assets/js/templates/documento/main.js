@@ -44,12 +44,11 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                     }
                     color_badget = 'default';
                 }else{
-                    console.log(full.tipo_documento_id);
                     if (full.tipo_documento_id != 3) {
                         codigo = full.num_warehouse;
                         cant = full.piezas;
                         if (full.liquidado == 1) {
-                            // codigo = full.num_guia;
+                            if(app_type === 'courier'){codigo = full.num_guia;}
                             color_badget = 'primary';
                         }
                     }
@@ -57,7 +56,7 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                         color_badget = 'warning';
                     }
                 }
-                return '<strong>' + codigo + '<strong> <span style="float: right;" class="badge badge-' + color_badget + '" data-toggle="tooltip" data-placement="top" title="" data-original-title="Total piezas">' + cant + '</span>';
+                return '<strong>' + ((codigo == null) ? '' : codigo) + '<strong> <span style="float: right;" class="badge badge-' + color_badget + '" data-toggle="tooltip" data-placement="top" title="" data-original-title="Total piezas">' + cant + '</span>';
             }
         }, {
             data: 'fecha',
@@ -88,14 +87,14 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                     var btn_edit = '<a href="documento/' + full.id + '/edit" class="edit" title="Editar" data-toggle="tooltip" style="color:#FFC107;"><i class="material-icons">&#xE254;</i></a>';
                 }
                 if (permission_delete && (parseInt(full.consolidado_status) === 0) || full.consolidado_status == null) {
-                    btn_delete = '<a onclick=\"modalEliminar()\" class="delete" title="Eliminar" data-toggle="tooltip" style="color:#E34724;"><i class="material-icons">&#xE872;</i></a>';
+                    btn_delete = '<a onclick=\"modalEliminar(' + full.id + ')\" class="delete" title="Eliminar" data-toggle="tooltip" style="color:#E34724;"><i class="material-icons">&#xE872;</i></a>';
                 }
 
 
                 if (full.tipo_documento_id == 3) { //consolidado = 3
                     btn_delete = '';
                     if (permission_delete && (parseInt(full.cantidad) === 0)) {
-                        btn_delete = '<a onclick=\"modalEliminar()\" class="delete" title="Eliminar" data-toggle="tooltip" style="color:#E34724;"><i class="material-icons">&#xE872;</i></a>';
+                        btn_delete = '<a onclick=\"modalEliminar(' + full.id + ')\" class="delete" title="Eliminar" data-toggle="tooltip" style="color:#E34724;"><i class="material-icons">&#xE872;</i></a>';
                     }
                     var btns = "<div class='btn-group'>" + "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + "<i class='material-icons' style='vertical-align:  middle;'>print</i><span class='caret'></span>" + "</button>" + "<ul class='dropdown-menu'>" + "<li><a href='impresion-documento/" + full.id + "/consolidado' target='_blank'> <spam class='fa fa-print'></spam> Imprimir manifiesto</a></li>" + "<li><a href='impresion-documento/" + full.id + "/consolidado_guias' target='_blank'> <spam class='fa fa-print'></spam> Imprimir Guias</a></li>" + "<li role='separator' class='divider'></li> " + "<li><a href='impresion-documento/pdfContrato' target='_blank'> <spam class='fa fa-print'></spam> Imprimir contrato</a></li>" + "<li><a href='impresion-documento/pdfTsa' target='_blank'> <spam class='fa fa-print'></spam> Imprimir TSA</a></li>" + "</ul></div>";
                     return btns + ' ' + btn_edit + btn_delete;
@@ -132,6 +131,10 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
     }
     $('#icono_doc').removeClass(className).addClass('fa fa-' + icon);
     $('#crearDoc').attr('onclick', 'createNewDocument_(' + tipo_doc_id + ',\'' + nom + '\',\'' + funcionalidades + '\')');
+}
+
+function modalEliminar(id) {
+    objVue.deleteDocument(id);
 }
 
 function sendMail(id) {
@@ -182,6 +185,35 @@ var objVue = new Vue({
         params: {},
     },
     methods: {
+        deleteDocument(id){
+            let me = this;
+            swal({
+            title: "<div><span style='color: rgb(212, 103, 82);'>Atención!</span></div>",
+            text: "¿Desea eliminar este documento?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: "Si",
+            cancelButtonText: "No, Cancelar!",
+            }).then((result) => {
+                if (result.value) {
+                    axios.delete('documento/' + id).then(function (response) { 
+                        if(response.data.code === 200){
+                            refreshTable('tbl-documento');
+                            toastr.success('Documento eliminado exitosamente.');
+                            toastr.options.closeButton = true;
+                        }else{
+                            toastr.warning('Atención! ha ocurrido un error.');
+                        }
+                    }).catch(function (error) {
+                        console.log(error);
+                        toastr.warning('Error.');
+                        toastr.options.closeButton = true;
+                    });
+                }
+            });
+        },
         printDocument: function(){
             if( $('#documentoIndex').data('id_print') != '' && $('#documentoIndex').data('doc_print') != ''){
                 window.open('impresion-documento/' + $('#documentoIndex').data('id_print') + '/'+$('#documentoIndex').data('doc_print'), '_blank');

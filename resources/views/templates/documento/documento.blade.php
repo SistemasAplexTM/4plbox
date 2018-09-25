@@ -422,15 +422,15 @@
                                                 
                                             </div>
                                             <!--</div>-->
-                                            <div class="col-lg-2">
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <label for="btn_add" class="control-label" style="padding-top: 2px;">&nbsp;</label>
-                                                        <!--para quitar el efecto de bloqueo del boton, quitar la clase btnBlock-->
-                                                        <button class="btn btn-info btn-sm btnBlock" type="button" id="btn_add" value="0" @click="addDetail()" style="width: 100%"><span class="fa fa-plus" ></span> @lang('documents.add')</button>
+                                                <div class="col-lg-2" v-show="cantidad_detalle" style="display:{{ (count($detalle) == 0 and env('APP_TYPE') === 'courier') ? 'inline-block;' : 'none;' }}">
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <label for="btn_add" class="control-label" style="padding-top: 2px;">&nbsp;</label>
+                                                            <!--para quitar el efecto de bloqueo del boton, quitar la clase btnBlock-->
+                                                            <button class="btn btn-info btn-sm btnBlock" type="button" id="btn_add" value="0" @click="addDetail()" style="width: 100%;"><span class="fa fa-plus" ></span> @lang('documents.add')</button>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
                                         </div>
                                         </div>
                                         <div class="row pasos_guia" id="grilla_guia">

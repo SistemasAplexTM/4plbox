@@ -128,34 +128,34 @@
             <td class="separador">
             <table>
           <tr>
-            <td style="width:50%; border-bottom: 1px solid #000;"><strong>Consignee:</strong></td>
-            <td style="width:3px;">&nbsp;</td>
             <td style="width:50%; border-bottom: 1px solid #000;"><strong>Shipper:</strong></td>
+            <td style="width:3px;">&nbsp;</td>
+            <td style="width:50%; border-bottom: 1px solid #000;"><strong>Consignee:</strong></td>
           </tr>
           <tr>
-            <td>{{ ((isset($documento->cons_nomfull) and $documento->cons_nomfull != '') ? $documento->cons_nomfull : '') }}</td>
-            <td>&nbsp;</td>
             <td>{{ ((isset($documento->ship_nomfull) and $documento->ship_nomfull != '') ? $documento->ship_nomfull : '') }}</td>
+            <td>&nbsp;</td>
+            <td>{{ ((isset($documento->cons_nomfull) and $documento->cons_nomfull != '') ? $documento->cons_nomfull : '') }}</td>
           </tr>
           <tr>
-            <td>{{ ((isset($documento->cons_dir) and $documento->cons_dir != '') ? $documento->cons_dir : '') }}</td>
-            <td>&nbsp;</td>
             <td>{{ ((isset($documento->ship_dir) and $documento->ship_dir != '') ? $documento->ship_dir : '') }}</td>
+            <td>&nbsp;</td>
+            <td>{{ ((isset($documento->cons_dir) and $documento->cons_dir != '') ? $documento->cons_dir : '') }}</td>
           </tr>
           <tr>
-            <td>{{ ((isset($documento->cons_ciudad) and $documento->cons_ciudad != '') ? $documento->cons_ciudad : '') }}, {{ ((isset($documento->cons_zip) and $documento->cons_zip != '') ? $documento->cons_zip : '') }}</td>
-            <td>&nbsp;</td>
             <td>{{ ((isset($documento->ship_ciudad) and $documento->ship_ciudad != '') ? $documento->ship_ciudad : '') }}, {{ ((isset($documento->ship_zip) and $documento->ship_zip != '') ? $documento->ship_zip : '') }}</td>
+            <td>&nbsp;</td>
+            <td>{{ ((isset($documento->cons_ciudad) and $documento->cons_ciudad != '') ? $documento->cons_ciudad : '') }}, {{ ((isset($documento->cons_zip) and $documento->cons_zip != '') ? $documento->cons_zip : '') }}</td>
           </tr>
           <tr>
-            <td>{{ ((isset($documento->cons_tel) and $documento->cons_tel != '') ? $documento->cons_tel : '') }}</td>
-            <td>&nbsp;</td>
             <td>{{ ((isset($documento->ship_tel) and $documento->ship_tel != '') ? $documento->ship_tel : '') }}</td>
+            <td>&nbsp;</td>
+            <td>{{ ((isset($documento->cons_tel) and $documento->cons_tel != '') ? $documento->cons_tel : '') }}</td>
           </tr>
           <tr>
-            <td>{{ ((isset($documento->cons_email) and $documento->cons_email != '') ? $documento->cons_email : '') }}</td>
-            <td>&nbsp;</td>
             <td>{{ ((isset($documento->ship_email) and $documento->ship_email != '') ? $documento->ship_email : '') }}</td>
+            <td>&nbsp;</td>
+            <td>{{ ((isset($documento->cons_email) and $documento->cons_email != '') ? $documento->cons_email : '') }}</td>
           </tr>
         </table>
             </td>

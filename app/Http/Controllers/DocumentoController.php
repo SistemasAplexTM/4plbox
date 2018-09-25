@@ -523,11 +523,23 @@ class DocumentoController extends Controller
         if ($table) {
             $data = DocumentoDetalle::findOrFail($id);
             $data->delete();
-            $this->AddToLog('Documento detalle eliminado (' . $id . ')');
+            $this->AddToLog('Documento detalle eliminado (' . $id . ') WRH ('. $data->num_warehouse.')');
         } else {
             $data = Documento::findOrFail($id);
+            $detail = DB::table('documento_detalle')->where([['documento_id', $id]])->get();
+            
+            if(count($detail) > 0){
+                foreach ($detail as $key) {
+                    $this->destroy($key->id, 'detalle');
+                }
+            }
             $data->delete();
-            $this->AddToLog('Documento eliminado (' . $id . ')');
+            $this->AddToLog('Documento eliminado (' . $id . ') consecutivo ('. $data->consecutivo.')');
+            $answer = array(
+                "datos" => 'Eliminación exitosa.',
+                "code"  => 200,
+            );
+            return $answer;
         }
     }
 
@@ -626,6 +638,14 @@ class DocumentoController extends Controller
                 ->orderBy('documento.created_at', 'DESC');
         } else {
             /* CODIGO PARA TRAER LOS DOCUMENTOS DIFERENTES A CONSOLIDADOS */
+            if(env('APP_TYPE') == 'courier'){
+                //con esto se muestra en la grilla de documentos, e detalle y no la cabecera
+                $qr_guia = DB::raw("(SELECT documento_detalle.num_guia FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as num_guia");
+                $qr_wrh = DB::raw("(SELECT documento_detalle.num_warehouse FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as num_warehouse");
+            }else{
+                $qr_guia = DB::raw("0 as num_guia");
+                $qr_wrh = "documento.num_warehouse";
+            }
 
             $sql = DB::table('documento')
                 ->leftJoin('shipper', 'documento.shipper_id', '=', 'shipper.id')
@@ -641,11 +661,13 @@ class DocumentoController extends Controller
                                             z.documento_id,
                                             z.consolidado
                                     ) AS t"), "documento.id", "t.documento_id")
-                ->select('documento.id as id', 'documento.liquidado', 'documento.tipo_documento_id as tipo_documento_id', 'documento.consecutivo as codigo', 'documento.num_warehouse', 'documento.created_at as fecha', 'shipper.nombre_full as ship_nomfull', 'consignee.nombre_full as cons_nomfull', 'consignee.correo as email_cons', 'agencia.descripcion as agencia',
+                ->select('documento.id as id', 'documento.liquidado', 'documento.tipo_documento_id as tipo_documento_id', 'documento.consecutivo as codigo', 'documento.created_at as fecha', 'shipper.nombre_full as ship_nomfull', 'consignee.nombre_full as cons_nomfull', 'consignee.correo as email_cons', 'agencia.descripcion as agencia',
                     DB::raw("(SELECT Count(a.id) AS cantidad FROM documento_detalle AS a WHERE a.documento_id = documento.id AND a.deleted_at IS NULL) as cantidad"),
                     DB::raw("(SELECT IFNULL(SUM(a.piezas), 0) AS piezas FROM documento_detalle AS a WHERE a.documento_id = documento.id AND a.deleted_at IS NULL) as piezas"),
                     DB::raw("(SELECT Sum(documento_detalle.peso) FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as peso"),
                     DB::raw("(SELECT Sum(documento_detalle.volumen) FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as volumen"),
+                    $qr_wrh,
+                    $qr_guia,
                     't.consolidado',
                     DB::raw("SUM(t.consolidado_status) AS consolidado_status")
                 )

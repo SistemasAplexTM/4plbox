@@ -247,6 +247,15 @@ function datatableDetail(){
             $('#pesoDim').val(parseFloat(isInteger(peso)));
             $('#valor_declarado_tbl').val(parseFloat(isInteger(dec)));
         },
+    }).on('xhr.dt', function ( e, settings, json, xhr ) {
+        if(app_type === 'courier'){
+            if(json.data.length === 0){
+                objVue.cantidad_detalle = true;
+            }else{
+                objVue.cantidad_detalle = false;
+            }
+        }
+        // console.log(json.data);
     });
 }
 function llenarSelectServicio(id_embarque) {
@@ -496,6 +505,7 @@ var objVue = new Vue({
         removerAgrupado: {}, //es para poder remover guias agrupadas en el consolidado
         permissions: {}, //es para poder pasar los permisos al consolidado
         refreshBoxes: false, //variable para refrescar las cajas del consolidado bodega
+        cantidad_detalle: true, //para mostrar u ocultar el boton de agregar (funcionalidad para courier)
     },
     methods: {
         totalizeDocument: function(){
@@ -567,7 +577,7 @@ var objVue = new Vue({
                 });
                 $('#modalTrackingsAdd').modal('show');
             } else {
-                swal('Atención!', 'Necesita seleccionar un shipper para continuar.', 'warning');
+                swal('Atención!', 'Necesita seleccionar un Consignee para continuar.', 'warning');
             }
         },
         addTrackingToDocument(data) {
@@ -626,6 +636,7 @@ var objVue = new Vue({
             });
         },
         showHiddeFields: function() {
+            let me = this;
             var json = functionalities_doc;
             var arreglo = [];
             $.each(json, function(key, value) {
@@ -661,8 +672,7 @@ var objVue = new Vue({
                 if ($('#show-totales').prop('checked') === true) {
                     llenarSelectServicio($('#tipo_embarque_id').val());
                 }
-            }, 500);
-            
+            }, 500);            
         },
         saveDocument: function() {
             $('#date').val(this.getTime());
