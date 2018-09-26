@@ -4,6 +4,7 @@
 // @example;
 
 $(document).ready(function() {
+     $('#tracking').tagsinput();
     //toggle `popup` / `inline` mode
     $.fn.editable.defaults.mode = 'inline';
     $.fn.editable.defaults.params = function(params) {
@@ -67,6 +68,14 @@ $(function() {
         jQuery(this).find('.edit, .delete').hide();
     });
 
+    jQuery('#whgTable').
+    on('mouseover', 'tr', function() {
+        jQuery(this).find('.edit').show();
+    }).
+    on('mouseout', 'tr', function() {
+        jQuery(this).find('.edit').hide();
+    });
+
     $('#show-all-c').change(function() {
         if ($(this).prop('checked') === true) {
             objVue.modalConsignee(false);
@@ -86,6 +95,9 @@ $(function() {
             objVue.showTotals(true);
             setTimeout(function() {
                 llenarSelectServicio($('#tipo_embarque_id').val());
+                if($('#pa_id').val() == '' || $('#arancel').val() == '' || $('#iva').val() == ''){
+                    objVue.getPositionById($('#pa_id').val());
+                }
             }, 500);
         } else {
             objVue.showTotals(false);
@@ -120,10 +132,18 @@ function datatableDetail(){
                 return '<a data-name="contenido" data-pk="'+full.id+'" data-value="'+full.contenido+'" class="td_edit" data-type="text" data-placement="right" data-title="Contenido">'+full.contenido+'</a>';
             }
         }, {
-            data: 'nom_pa',
-            name: 'nom_pa',
+            "render": function (data, type, full, meta) {
+                var pa = full.nom_pa;
+                return pa + '<a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalArancel('+full.id+', \'whgTable\')"><i class="material-icons">&#xE254;</i></a>';
+            },
             visible: (objVue.mostrar.includes(16)) ? true : false
-        }, {
+        }, 
+        // {
+        //     data: 'nom_pa',
+        //     name: 'nom_pa',
+        //     visible: (objVue.mostrar.includes(16)) ? true : false
+        // }, 
+        {
             "render": function (data, type, full, meta) {
                 return '<a data-name="declarado" data-pk="'+full.id+'" class="td_edit" data-type="text" data-placement="left" data-title="Declarado">'+full.valor+'</a>';
             }
@@ -427,8 +447,8 @@ function removerGuiaAgrupada(id, id_guia_detalle) {
     };
 }
 
-function showModalArancel(id) {
-    objVue.modalArancel(id);
+function showModalArancel(id, table) {
+    objVue.modalArancel(id, table);
 }
 
 function permissions_f() {
@@ -461,7 +481,6 @@ var objVue = new Vue({
     created: function() {
         this.liquidado = $('#document_type').data('liquidado');
         this.showHiddeFields();
-        this.getPositionById($('#pa_id').val());
         this.searchShipperConsignee($('#shipper_id').val(), 'shipper');
         this.searchShipperConsignee($('#consignee_id').val(), 'consignee');
         /* CUSTOM MESSAGES VE-VALIDATOR*/
@@ -517,13 +536,14 @@ var objVue = new Vue({
             this.showFieldsTotals = value;
         },
         addTrackings(id) {
-            if ($('#consignee_id').val() != '') {
+            // if ($('#consignee_id').val() != '') {
+                var consig_id = ($('#consignee_id').val() != '') ? $('#consignee_id').val() : null;
                 if ($.fn.DataTable.isDataTable('#tbl-trackings')) {
                     $('#tbl-trackings' + ' tbody').empty();
                     $('#tbl-trackings').dataTable().fnDestroy();
                 }
                 var table = $('#tbl-trackings').DataTable({
-                    ajax: '../../tracking/all/' + $('#consignee_id').val(),
+                    ajax: '../../tracking/all/' + false + '/' + consig_id,
                     columns: [{
                         sortable: false,
                         "render": function(data, type, full, meta) {
@@ -552,7 +572,7 @@ var objVue = new Vue({
                     $('#tbl-trackings-used').dataTable().fnDestroy();
                 }
                 var table = $('#tbl-trackings-used').DataTable({
-                    ajax: '../../tracking/all/' + $('#consignee_id').val() + '/' + id,
+                    ajax: '../../tracking/all/' + false + '/' + null + '/' + id + '/' + true,
                     columns: [{
                         sortable: false,
                         "render": function(data, type, full, meta) {
@@ -560,7 +580,11 @@ var objVue = new Vue({
                             if (full.documento_detalle_id == id) {
                                 checked = "checked='checked'"
                             }
-                            return '<div class="checkbox checkbox-danger" data-toggle="tooltip" title="Quitar"><input type="checkbox" ' + checked + ' id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '" onclick="addTrackingToDocument(' + full.id + ', ' + id + ')"></label></div>';
+                            if(full.consignee_id == null){
+                                return null;
+                            }else{
+                                return '<div class="checkbox checkbox-danger" data-toggle="tooltip" title="Quitar"><input type="checkbox" ' + checked + ' id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '" onclick="addTrackingToDocument(' + full.id + ', ' + id + ')"></label></div>';
+                            }
                         }
                     }, {
                         data: "codigo",
@@ -576,9 +600,9 @@ var objVue = new Vue({
                     }]
                 });
                 $('#modalTrackingsAdd').modal('show');
-            } else {
-                swal('Atención!', 'Necesita seleccionar un Consignee para continuar.', 'warning');
-            }
+            // } else {
+            //     swal('Atención!', 'Necesita seleccionar un Consignee para continuar.', 'warning');
+            // }
         },
         addTrackingToDocument(data) {
             let me = this;
@@ -670,6 +694,7 @@ var objVue = new Vue({
                 datatableDetail();
                 permissions_f();
                 if ($('#show-totales').prop('checked') === true) {
+                    me.getPositionById($('#pa_id').val());
                     llenarSelectServicio($('#tipo_embarque_id').val());
                 }
             }, 500);            
@@ -1021,7 +1046,7 @@ var objVue = new Vue({
                 }]
             });
         },
-        modalArancel: function(id) {
+        modalArancel: function(id, table_) {
             let me = this;
             $('#modalArancel').modal('show');
             if ($('#tbl-modalArancel tbody').length > 0) {
@@ -1051,7 +1076,7 @@ var objVue = new Vue({
                 var data = table.row(this).data();
                 if(id){
                     /* SE EJECUTA ESTA FUNCION CUANDO LA MODAL SE ABRE DESDE EL CONSOLIDADO */
-                    me.updatePADetailConsolidado(id, data['id']);
+                    me.updatePADetailConsolidado(id, data['id'], table_);
                     $( "#tbl-modalArancel tbody" ).off('click', 'tr');
                 }else{
                     $('#pa_id').val(data['id']);
@@ -1279,18 +1304,19 @@ var objVue = new Vue({
                 toastr.options.closeButton = true;
             });
         },
-        updatePADetailConsolidado: function(id_detalle, id_pa) {
+        updatePADetailConsolidado: function(id_detalle, id_pa, table_) {
             var me = this;
             var rowData = {
                 id_detalle: id_detalle,
-                id_pa: id_pa
+                id_pa: id_pa,
+                tabla: table_,
             }
             axios.put('updatePositionArancel', {
                 rowData
             }).then(function(response) {
                 toastr.success('Registro actualizado correctamente.');
                 toastr.options.closeButton = true;
-                var table = $('#tbl-consolidado').DataTable();
+                var table = $('#'+table_).DataTable();
                 table.ajax.reload();
                 $('#modalArancel').modal('hide');
             }).catch(function(error) {
