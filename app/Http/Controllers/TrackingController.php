@@ -120,18 +120,26 @@ class TrackingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getAll($add = null, $id = false)
+    public function getAll($grid =false, $add = null, $id = false,  $req_consignee = false)
     {
-        if ($add == null and $id == false) {
-            $where = [['tracking.deleted_at', null], ['tracking.documento_detalle_id', null], ['tracking.agencia_id', Auth::user()->agencia_id]];
-        } else {
-            if ($id) {
-                $where = [['tracking.deleted_at', null], ['tracking.consignee_id', $add], ['tracking.documento_detalle_id', $id], ['tracking.agencia_id', Auth::user()->agencia_id]];
-            } else {
-                $where = [['tracking.deleted_at', null], ['tracking.consignee_id', $add], ['tracking.documento_detalle_id', null], ['tracking.agencia_id', Auth::user()->agencia_id]];
+        $where = [['tracking.deleted_at', null], ['tracking.agencia_id', Auth::user()->agencia_id]];
+
+        if($grid == false || $grid == 'false'){
+            if ($id != '') {
+                $where[] = array('tracking.documento_detalle_id', $id);
+            }else{
+                $where[] = array('tracking.documento_detalle_id', null);
+            }
+
+            if($add != null and $add != 'null') {
+                $where[] = array('tracking.consignee_id', $add);
+            }else{
+                if($req_consignee == false){
+                    $where[] = array('tracking.consignee_id', null);
+                }
             }
         }
-        $data = Tracking::join('consignee AS b', 'tracking.consignee_id', 'b.id')
+        $data = Tracking::leftJoin('consignee AS b', 'tracking.consignee_id', 'b.id')
             ->select(
                 'tracking.id',
                 'tracking.consignee_id',

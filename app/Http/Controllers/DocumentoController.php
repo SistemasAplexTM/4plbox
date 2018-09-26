@@ -457,6 +457,8 @@ class DocumentoController extends Controller
                         'consignee_id' => $data->consignee_id,
                         'num_guia'     => $num_guia,
                     ]);
+                    /* ACTUALIZAR CONSIGNEE EN EL TRACKING */
+                    DB::table('tracking')->where([['documento_detalle_id', $val->id]])->update(['consignee_id' => $data->consignee_id]);
                 }
 
                 /* INSERCION EN LA TABLA PIVOT DE GUIA_WRH */
@@ -685,7 +687,7 @@ class DocumentoController extends Controller
                     'agencia.descripcion',
                     't.consolidado'
                 )
-                ->orderBy('documento.created_at', 'DESC');
+                ->orderBy('documento.created_a', 'DESC');
         }
 
         return \DataTables::of($sql)->make(true);
@@ -855,6 +857,20 @@ class DocumentoController extends Controller
             }
 
             if ($data->save()) {
+                /* INSERTAR TRAKCING*/
+                if($data->tracking != ''){
+                    DB::table('tracking')->insert([
+                        [
+                            'agencia_id'            => Auth::user()->agencia_id,
+                            'documento_detalle_id'  => $data->id,
+                            'consignee_id'          => $request->consignee_id,
+                            'codigo'                => $data->tracking,
+                            'contenido'             => $data->contenido,
+                            'created_at'            => date('Y-m-d H:i:s'),
+                        ],
+                    ]);
+                }
+
                 /* INSERTAR EN STATUS_DETALLE*/
                 DB::table('status_detalle')->insert([
                     [
@@ -2140,9 +2156,15 @@ class DocumentoController extends Controller
 
     public function updatePositionArancel(Request $request)
     {
-        DB::table('documento_detalle')
+        $tabla = 'documento_detalle';
+        $update = ['arancel_id2' => $request->rowData['id_pa']];
+        if(isset($request->rowData['tabla']) and $request->rowData['tabla'] == 'whgTable'){
+            $tabla = 'documento_detalle';
+            $update = ['arancel_id2' => $request->rowData['id_pa'], 'posicion_arancelaria_id' => $request->rowData['id_pa']];
+        }
+        DB::table($tabla)
             ->where('id', $request->rowData['id_detalle'])
-            ->update(['arancel_id2' => $request->rowData['id_pa']]);
+            ->update($update);
         $answer = array(
             'code' => 200,
         );

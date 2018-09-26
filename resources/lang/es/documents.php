@@ -65,11 +65,11 @@ return [
 		'Discount'                 => 'Descuento',
 		'Total'                    => 'Total',
 		'close'                    => 'Cerrar',
-		'add_trackings'            => 'Agregar seguimiento', 
-		'tracks available'         => 'Rastreos disponibles',
-		'tracking'                 => 'Rastreo',
-		'associated_trackings'     => 'Seguimiento asociado',
-		'type_to_search'=>'Digite para buscar..',
+		'add_trackings'            => 'Agregar trackings', 
+		'tracks_available'         => 'Trackings disponibles',
+		'tracking'                 => 'Tracking',
+		'associated_trackings'     => 'Trackings asociado',
+		'type_to_search'			=>'Digite para buscar..',
 
 // templaces/documento/index
 

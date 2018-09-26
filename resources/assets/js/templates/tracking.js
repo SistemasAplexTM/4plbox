@@ -3,7 +3,7 @@ $(document).ready(function() {
         processing: true,
         serverSide: true,
         responsive: true,
-        ajax: 'tracking/all',
+        ajax: 'tracking/all/' + true,
         columns: [{
             data: "fecha",
             name: 'fecha'
