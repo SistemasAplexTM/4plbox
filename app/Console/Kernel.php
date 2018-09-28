@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        'App\Console\Commands\BackupDb',
     ];
 
     /**
@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
 
         // GENERAR BACKUP AUTOMATICO DE LA APLICACION (--only-db = solo base de datos)
-        // $schedule->command('backup:run --only-db')->everyMinute();
+        $schedule->command('backup:run --only-db')->hourly();
     }
 
     /**

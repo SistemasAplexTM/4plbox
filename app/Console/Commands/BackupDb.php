@@ -11,14 +11,14 @@ class BackupDb extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'backup:db';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Realizar backup de la base de datos del sistema';
 
     /**
      * Create a new command instance.
