@@ -687,7 +687,7 @@ class DocumentoController extends Controller
                     'agencia.descripcion',
                     't.consolidado'
                 )
-                ->orderBy('documento.created_a', 'DESC');
+                ->orderBy('documento.created_at', 'DESC');
         }
 
         return \DataTables::of($sql)->make(true);
@@ -1597,7 +1597,7 @@ class DocumentoController extends Controller
                                                         \''.$label_1.'\',
                                                         z.id,
                                                         \'@\',
-                                                        X.id,
+                                                        x.id,
                                                         \''.$label_2.'\'
                                                     ),
                                                     CONCAT(
@@ -1612,7 +1612,7 @@ class DocumentoController extends Controller
                                                         \''.$label_1.'\',
                                                         z.id,
                                                         \'@\',
-                                                        X.id,
+                                                        x.id,
                                                         \''.$label_2.'\'
                                                     )
                                                 )

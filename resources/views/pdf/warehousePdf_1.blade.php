@@ -303,7 +303,7 @@
             </tr>
             <tr>
               <td style="margin: 0 auto;font-size: 13px;font-weight: bold;color: red;padding: 5px;">
-                NO NOS HACEMOS RESPONSABLES DE DAÑOS EN TELEVISORESNO QUE NO VIAJEN EN CAJA DE MADERA.
+                NO NOS HACEMOS RESPONSABLES DE DAÑOS EN TELEVISORES QUE NO VIAJEN EN CAJA DE MADERA.
               </td>
             </tr>
           </table>

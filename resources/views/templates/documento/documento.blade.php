@@ -591,7 +591,7 @@
                                                             <i class="fa fa-print"></i>@lang('documents.to_print')<span class="caret"></span>
                                                         </button>
                                                         <ul class="dropdown-menu">
-                                                            <li><a href="" id="printDocument" class="" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> @lang('documents.to_print') {{ ($documento->liquidado == 1) ? 'Guia' : $documento->tipo_nombre }}</a></li>
+                                                            <li><a href="" id="printDocument" class="" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> @lang('documents.to_print') {{ ($documento->liquidado == 1) ? 'Recibo' : $documento->tipo_nombre }}</a></li>
                                                             <li><a href="" id="printLabel" class="" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> @lang('documents.print_label')</a></li>
                                                             <li role="separator" class="divider"></li>
                                                             <li><a href="" id="invoice" class="" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> @lang('documents.invoice')</a></li>

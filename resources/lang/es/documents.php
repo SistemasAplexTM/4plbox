@@ -83,7 +83,7 @@ return [
 		'actions'                  => 'Acciones',
 // // templaces/documento/viewGuiaWarehouse	
 		'see'                      => 'Ver',
-		'visualize_guide'          => 'Visualizar Guía',
+		'visualize_guide'          => 'Visualizar Recibo',
 		'print_document'           => 'Imprimir documento',
 		'add_status'               => 'Agregar estado',
 		'user'                     => 'Usuario',
