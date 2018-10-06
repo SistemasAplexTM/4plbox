@@ -418,7 +418,6 @@
                                                     <label for="pa" class="">@lang('documents.tariff_position')</label>
                                                         <div class="form-group" id="Errpa">
                                                             <label style="display: none;" for="" class=""></label>
-                                                            <input type="hidden" value="" id="urlBuscarPA">
                                                             <div class="input-group">
                                                                 <span class="input-group-btn" onclick="deleteError($(this).parent());">
                                                                     <button class="btn btn-primary" id="btnBuscarPA" type="button" @click="modalArancel()"><small><span class="fa fa-search"></span> P.A (Adu.)</small></button>
@@ -429,7 +428,7 @@
                                                             @lang('documents.obligatory_field')</small>
                                                         </div>
                                                    
-                                                    <input type="hidden" placeholder="0" class="form-control" readonly="" value="{{ $id_pa }}" id="pa_id" name="pa_id">
+                                                    <input type="hidden" placeholder="0" class="form-control" readonly="" value="" id="pa_id" name="pa_id">
                                                     <!--<div class="col-sm-2">-->
                                                     <input type="hidden" placeholder="0" class="form-control" readonly="" value="" id="arancel" name="arancel">
                                                     <!--</div>-->
@@ -637,7 +636,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label for="servicios_id" class="">@lang('documents.type_of_service')</label>
-                                                        <select onchange="calculateServiceType();" id="servicios_id" name="servicios_id" class="form-control" onchange="deleteError($(this).parent());"  onclick="deleteError($(this).parent());">
+                                                        <select onchange="calculateServiceType();" id="servicios_id" name="servicios_id" class="form-control">
                                                             <option value="">@lang('documents.select_type_of_boarding')</option>
                                                             @if(isset($servicios) and $servicios)
                                                                 @foreach($servicios as $servicio)

@@ -9,110 +9,126 @@ var seguro = 0;
 var descuento = 0;
 var total = 0;
 $(window).load(function() {
-    setTimeout(function(){
+    setTimeout(function() {
         totalizeDocument();
-    },1000);
+    }, 1000);
 });
 $(document).ready(function() {});
 
 function totalizeDocument(elemento) {
     // setTimeout(function(){
-        var cont = 1;
-            flete = $('#servicios_id option:selected').data('tarifamin');
-            if(typeof flete === 'undefined'){
-                flete = 0;
-            }
-            $('#flete').val(flete);
-            $(elemento).css('border-color', '');
-            peso = $('#pesoDim').val();
-            piezas = $('#piezas').val();
-            volumen = $('#volumen').val();
-            declarado = $('#valor_declarado_tbl').val();
-            var cargos_add = 0;
-            cargos_add = $('#cargos_add').val();
-            if ($('#valor_libra2').val() == '0') {
-                $('#valor_libra').val($('#servicios_id option:selected').data('tarifa'));
-                $('#valor_libra2').val($('#servicios_id option:selected').data('tarifa'));
-                $('#valorLibra').html($('#servicios_id option:selected').data('tarifa')); // *********  label
-            }
-            if ($('#impuesto').val() == '0') {
-                if ($('#servicios_id option:selected').data('impuesto_age')) {
-                    $('#impuesto').val($('#servicios_id option:selected').data('impuesto_age'));
-                }
-            }
-            $('#peso_total').val(parseFloat(peso));
-            $('#peso_cobrado').val(parseFloat(peso));
-            if ($('#impuesto').val() == '') {
-                impuesto = $('#servicios_id option:selected').data('impuesto_age');
-                $('#impuesto').val(impuesto);
-            } else {
-                impuesto = $('#impuesto').val();
-            }
-            $('#valor_declarado').val(parseFloat(declarado));
-            // $('#valor_declarado_tbl').val(parseFloat(declarado));
-            pa_aduana = isInteger((parseFloat(declarado) * parseFloat(impuesto) / 100));
-            $('#pa_aduana').val(pa_aduana);
-            flete = parseFloat(calculateFlete(flete));
-            $('#flete').val(isInteger(flete));
-            seguro = calculateInsurance(seguro);
-            $('#seguro').val(seguro);
-            if ($('#descuento').val() === '') {
-                descuento = 0;
-            } else {
-                descuento = $('#descuento').val();
-            }
-            total = parseFloat(pa_aduana) + parseFloat(flete) + parseFloat(seguro) + parseFloat(cargos_add) - parseFloat(descuento);
-            $('#total').val(isInteger(total));
+    var cont = 1;
+    flete = $('#servicios_id option:selected').data('tarifamin');
+    if (typeof flete === 'undefined') {
+        flete = 0;
+    }
+    $('#flete').val(flete);
+    $(elemento).css('border-color', '');
+    peso = $('#pesoDim').val();
+    piezas = $('#piezas').val();
+    volumen = $('#volumen').val();
+    declarado = $('#valor_declarado_tbl').val();
+    var cargos_add = 0;
+    cargos_add = $('#cargos_add').val();
+    if ($('#valor_libra2').val() == '0') {
+        $('#valor_libra').val($('#servicios_id option:selected').data('tarifa'));
+        $('#valor_libra2').val($('#servicios_id option:selected').data('tarifa'));
+        $('#valorLibra').html($('#servicios_id option:selected').data('tarifa')); // *********  label
+    }
+    if ($('#impuesto').val() == '0') {
+        if ($('#servicios_id option:selected').data('impuesto_age')) {
+            $('#impuesto').val($('#servicios_id option:selected').data('impuesto_age'));
+        }
+    }
+    $('#peso_total').val(parseFloat(peso));
+    $('#peso_cobrado').val(parseFloat(peso));
+    if ($('#impuesto').val() == '') {
+        impuesto = $('#servicios_id option:selected').data('impuesto_age');
+        $('#impuesto').val(impuesto);
+    } else {
+        impuesto = $('#impuesto').val();
+    }
+    $('#valor_declarado').val(parseFloat(declarado));
+    // $('#valor_declarado_tbl').val(parseFloat(declarado));
+    pa_aduana = isInteger((parseFloat(declarado) * parseFloat(impuesto) / 100));
+    $('#pa_aduana').val(pa_aduana);
+    flete = parseFloat(calculateFlete(flete));
+    $('#flete').val(isInteger(flete));
+    seguro = calculateInsurance(seguro);
+    $('#seguro').val(seguro);
+    if ($('#descuento').val() === '') {
+        descuento = 0;
+    } else {
+        descuento = $('#descuento').val();
+    }
+    total = parseFloat(pa_aduana) + parseFloat(flete) + parseFloat(seguro) + parseFloat(cargos_add) - parseFloat(descuento);
+    $('#total').val(isInteger(total));
     // },1000);
 }
 
 function calculateFlete(flete) {
     var tarifa = parseFloat($('#valor_libra2').val());
+    var pie = parseFloat($('#pie_ft').val());
+    var metro = parseFloat(pie / 35.315);
     /* VALIDA QUE NO SOBREPASE LA TARIFA DEL SERVICIO */
     // if (parseFloat($('#valor_libra2').val()) < parseFloat($('#valor_libra').val())) {
-        if($('#valor_libra').val() == ''){
-            tarifa =  0;
-        }else{
-            tarifa = parseFloat($('#valor_libra').val());
-        }
+    if ($('#valor_libra').val() == '') {
+        tarifa = 0;
+    } else {
+        tarifa = parseFloat($('#valor_libra').val());
+    }
     // }
     var cOpcional = $('#servicios_id option:selected').data('c_opcional');
-    /* SE EVALUA SI SE COBRARA POR PESO O VOLUMEN (PESO = 1 - VOLUMEN = 0)*/
-    if ($('#servicios_id option:selected').data('cobvol') == 0 && app_client != 'worldcargo') {
-        if (parseFloat(peso) >= 0 && parseFloat(peso) <= 8) {
-            $('#cobrarPor').text('Pes');
-            return flete;
+
+    /* DEFINO SI ES AEREO O MARITIMO 8 = MARITIMO*/
+    if ($('#tipo_embarque_id').val() == 8) {
+        /* SE COBRA POR PIE 3 SI LA POSICION ARANCELARIA ES CERO = 0 O SIN POSICION */
+        if($('#pa_id').val() == 1){
+            $('#cobrarPor').text('cuft');
+            var flete = parseFloat(pie) * parseFloat(tarifa);
+        }else{
+            $('#cobrarPor').text('cbm');
+            var flete = parseFloat(metro) * parseFloat(tarifa);
         }
-        if (parseFloat(peso) > 8) {
-            /*PESO * LA TARIFA */
-            $('#cobrarPor').text('Pes');
-            var flete = parseFloat(peso) * parseFloat(tarifa);
-            var diferen = parseFloat(volumen) - parseFloat(peso);
-            if (parseFloat(diferen) > 0) {
-                /* SE COBRA POR VOLUMEN */
-                res = parseFloat(cOpcional) * parseFloat(diferen);
-                flete = parseFloat(flete) + parseFloat(res);
+        return flete;
+    } else {
+        /* SE EVALUA SI SE COBRARA POR PESO O VOLUMEN (PESO = 1 - VOLUMEN = 0)*/
+        if ($('#servicios_id option:selected').data('cobvol') == 0 && app_client != 'worldcargo') {
+            if (parseFloat(peso) >= 0 && parseFloat(peso) <= 8) {
+                $('#cobrarPor').text('Pes');
+                return flete;
+            }
+            if (parseFloat(peso) > 8) {
+                /*PESO * LA TARIFA */
+                $('#cobrarPor').text('Pes');
+                var flete = parseFloat(peso) * parseFloat(tarifa);
+                var diferen = parseFloat(volumen) - parseFloat(peso);
+                if (parseFloat(diferen) > 0) {
+                    /* SE COBRA POR VOLUMEN */
+                    res = parseFloat(cOpcional) * parseFloat(diferen);
+                    flete = parseFloat(flete) + parseFloat(res);
+                    $('#cobrarPor').text('Vol');
+                }
+                return flete;
+            }
+        } else {
+            if (parseFloat(peso) > parseFloat(volumen)) {
+                $('#cobrarPor').text('Pes');
+                valor = parseFloat(peso);
+            } else {
+                valor = parseFloat(volumen);
                 $('#cobrarPor').text('Vol');
             }
-            return flete;
-        }
-    } else {
-        if (parseFloat(peso) > parseFloat(volumen)) {
-            $('#cobrarPor').text('Pes');
-            valor = parseFloat(peso);
-        } else {
-            valor = parseFloat(volumen);
-            $('#cobrarPor').text('Vol');
-        }
-        if (parseFloat(valor) * parseFloat(tarifa) <= 10) {
-            return flete;
-        } else {
-            if (parseFloat(peso) >= 0 && parseFloat(peso) <= 8) {
+            if (parseFloat(valor) * parseFloat(tarifa) <= 10) {
                 return flete;
             } else {
-                if (parseFloat(peso) > 8) {
-                    flete = isInteger((parseFloat(valor) * parseFloat(tarifa)));
+                if (parseFloat(peso) >= 0 && parseFloat(peso) <= 8) {
                     return flete;
+                } else {
+                    if (parseFloat(peso) > 8) {
+                        flete = isInteger((parseFloat(valor) * parseFloat(tarifa)));
+                        return flete;
+                    }
                 }
             }
         }
@@ -133,7 +149,6 @@ function calculateInsurance() {
             /*multiplicamos condicionSeg * calculoS para determinar el valor que se evaluara con el dato inresado por el usuario Ej: 100*1=100;*/
             cantAsegu = condicionSeg * calculoS;
         }
-        
         if (parseFloat(seguroUsu)) {
             /*el seguro: Por cada 100 USD que ingrese el usuario en el valor asegurado se incrementara de 5 USD en 5 USD el seguro a pagar*/
             seguro = (valorAsegurado * (Math.ceil(seguroUsu / 100)));
@@ -150,5 +165,7 @@ function calculateServiceType() {
     $('#valor_libra').val($('#servicios_id option:selected').data('tarifa'));
     $('#valor_libra2').val($('#servicios_id option:selected').data('tarifa'));
     $('#valorLibra').html($('#servicios_id option:selected').data('tarifa')); // *********  label
+    $('#pa_id').val($('#servicios_id option:selected').data('pa_id'));
+    objVue.getPositionById($('#servicios_id option:selected').data('pa_id'));
     totalizeDocument();
 }

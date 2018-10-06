@@ -52,7 +52,9 @@ $(document).ready(function() {
                         full.seguro,
                         full.impuesto,
                         full.cobro_peso_volumen,
-                        full.tipo_embarque_id
+                        full.tipo_embarque_id,
+                        full.pa_id,
+                        "'" + full.pa + "'"
                     ];
                     var btn_edit = "<a onclick=\"edit(" + params + ")\" class='btn btn-outline btn-success btn-xs' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit'></i></a> ";
                 }
@@ -94,17 +96,19 @@ function llenarSelect(tableModule, tableName, idSelect, length) {
     });
 }
 
-function edit(id, nombre, tarifa, peso_minimo, cobro_opcional, seguro, impuesto, cobro_peso_volumen, tipo_embarque_id) {
+function edit(id, nombre, tarifa, peso_minimo, cobro_opcional, seguro, impuesto, cobro_peso_volumen, tipo_embarque_id, pa_id, pa) {
     var data = {
-        id: id,
-        nombre: nombre,
-        tarifa: tarifa,
-        peso_minimo: peso_minimo,
-        cobro_opcional: cobro_opcional,
-        seguro: seguro,
-        impuesto: impuesto,
+        id:                 id,
+        nombre:             nombre,
+        tarifa:             tarifa,
+        peso_minimo:        peso_minimo,
+        cobro_opcional:     cobro_opcional,
+        seguro:             seguro,
+        impuesto:           impuesto,
         cobro_peso_volumen: cobro_peso_volumen,
-        tipo_embarque_id: tipo_embarque_id
+        tipo_embarque_id:   tipo_embarque_id,
+        pa_id:              pa_id,
+        pa:                 pa
     };
     objVue.edit(data);
 }
@@ -126,6 +130,47 @@ var objVue = new Vue({
         listErrors: {},
     },
     methods: {
+        modalArancel: function(id, table_) {
+            let me = this;
+            $('#modalArancel').modal('show');
+            if ($('#tbl-modalArancel tbody').length > 0) {
+                var table = $('#tbl-modalArancel').DataTable().ajax.reload();
+            } else {
+                var table = $('#tbl-modalArancel').DataTable({
+                    ajax: 'arancel/all',
+                    columns: [{
+                        data: 'pa',
+                        name: 'pa'
+                    }, {
+                        data: 'descripcion',
+                        name: 'descripcion'
+                    }, {
+                        data: 'iva',
+                        name: 'iva',
+                        "render": $.fn.dataTable.render.number(',', '.', 2, '% ')
+                    }, {
+                        data: 'arancel',
+                        name: 'arancel',
+                        "render": $.fn.dataTable.render.number(',', '.', 2, '% ')
+                    }, ]
+                });
+            }
+
+            $('#tbl-modalArancel tbody').on('click', 'tr', function() {
+                var data = table.row(this).data();
+                if(id){
+                    /* SE EJECUTA ESTA FUNCION CUANDO LA MODAL SE ABRE DESDE EL CONSOLIDADO */
+                    me.updatePADetailConsolidado(id, data['id'], table_);
+                    $( "#tbl-modalArancel tbody" ).off('click', 'tr');
+                }else{
+                    $('#pa_id').val(data['id']);
+                    $('#pa').val(data['pa']);
+                    $('#arancel').val(data['arancel']);
+                    $('#iva').val(data['iva']);
+                    $('#modalArancel').modal('hide');
+                }
+            });
+        },
         checkbox: function() {
             $('#cobro_peso_volumen').change(function() {
                 alert($(this).prop('checked'));
@@ -144,6 +189,8 @@ var objVue = new Vue({
             this.formErrors = {};
             this.listErrors = {};
             $('#cobro_peso_volumen').bootstrapToggle('off');
+            $('#pa_id').val('');
+            $('#pa').val('');
         },
         /* metodo para eliminar el error de los campos del formulario cuando dan clic sobre el */
         deleteError: function(element) {
@@ -200,6 +247,7 @@ var objVue = new Vue({
                 'impuesto': this.impuesto,
                 'cobro_peso_volumen': this.cobro_peso_volumen,
                 'tipo_embarque_id': $('#tipo_embarque_id').val(),
+                'posicion_arancel_id': $('#pa_id').val(),
             }).then(function(response) {
                 if (response.data['code'] == 200) {
                     toastr.success('Registro creado correctamente.');
@@ -240,6 +288,7 @@ var objVue = new Vue({
                 'impuesto': this.impuesto,
                 'cobro_peso_volumen': this.cobro_peso_volumen,
                 'tipo_embarque_id': $('#tipo_embarque_id').val(),
+                'posicion_arancel_id': $('#pa_id').val(),
             }).then(function(response) {
                 if (response.data['code'] == 200) {
                     toastr.success('Registro Actualizado correctamente');
@@ -278,6 +327,14 @@ var objVue = new Vue({
                 $('#cobro_peso_volumen').bootstrapToggle('off');
             } else {
                 $('#cobro_peso_volumen').bootstrapToggle('on');
+            }
+            $('#pa_id').val('');
+            $('#pa').val('');
+            if(data['pa_id'] != ''){
+                $('#pa_id').val(data['pa_id']);
+            }
+            if(data['pa'] != ''){
+                $('#pa').val(data['pa']);
             }
             this.editar = 1;
             this.formErrors = {};

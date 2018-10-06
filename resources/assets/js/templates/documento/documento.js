@@ -4,7 +4,7 @@
 // @example;
 
 $(document).ready(function() {
-     $('#tracking').tagsinput();
+    $('#tracking').tagsinput();
     //toggle `popup` / `inline` mode
     $.fn.editable.defaults.mode = 'inline';
     $.fn.editable.defaults.params = function(params) {
@@ -95,9 +95,6 @@ $(function() {
             objVue.showTotals(true);
             setTimeout(function() {
                 llenarSelectServicio($('#tipo_embarque_id').val());
-                if($('#pa_id').val() == '' || $('#arancel').val() == '' || $('#iva').val() == ''){
-                    objVue.getPositionById($('#pa_id').val());
-                }
             }, 500);
         } else {
             objVue.showTotals(false);
@@ -280,6 +277,7 @@ function datatableDetail(){
 }
 function llenarSelectServicio(id_embarque) {
     var url = '../../servicios/getAllServiciosAgencia/' + id_embarque;
+    var pa_id = 1;// POSICION ARANCELARIA POR DEFECTO
     $.ajax({
         url: url,
         dataType: 'json',
@@ -302,7 +300,8 @@ function llenarSelectServicio(id_embarque) {
                             data-c_opcional="' + value.cobro_opcional + '"\n\
                              data-t_age="' + value.tarifa_agencia + '"\n\
                               data-seg_age="' + value.seguro_agencia + '"\n\
-                               data-impuesto_age="' + value.impuesto + '">' + value.nombre + '</option>');
+                               data-impuesto_age="' + value.impuesto + '"\n\
+                               data-pa_id="' + value.pa_id + '">' + value.nombre + '</option>');
                 });
             }
             objVue.totalizeDocument();
@@ -316,6 +315,13 @@ function llenarSelectServicio(id_embarque) {
             $('#modalError').modal({
                 show: true
             });
+        },
+        complete: function(){
+            if($('#servicios_id option:selected').data('pa_id') != null){
+                pa_id = $('#servicios_id option:selected').data('pa_id');
+            }
+            $('#pa_id').val(pa_id);
+            objVue.getPositionById(pa_id);
         }
     });
 }

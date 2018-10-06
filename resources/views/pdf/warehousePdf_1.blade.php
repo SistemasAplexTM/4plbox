@@ -80,6 +80,7 @@
     $total_volumen = 0;
     $total_volumen_cft = 0;
     $total_cmt = 0;
+    
     ?>
     <body>
         @if(count($detalle) > 0)
@@ -201,29 +202,60 @@
           </tr>
         </table>
         <table border="1" class="table_grid separador_interno">
-          <tr>
-            <th scope="col" style="width:10%;">Length</th>
-            <th scope="col" style="width:10%;">Width</th>
-            <th scope="col" style="width:10%;">Heigth</th>
-            <th scope="col" style="width:10%;">Pieces</th>
-            <th scope="col" style="width:10%;">Weight</th>
-            <th scope="col">Description Of Content</th>
-          </tr>
-          <tbody>
-            @foreach($detalle as $val)
+          @if(env('APP_CLIENT') == 'worldcargo')
+            <thead>
               <tr>
-                <td>{{ $val->largo }}</td>
-                <td>{{ $val->ancho }}</td>
-                <td>{{ $val->alto }}</td>
-                <td>{{ $val->piezas }}</td>
-                <td>{{ $val->peso2 }}</td>
-                <td style="text-align:left;">{{ $val->contenido }}</td>
+                <th scope="col" style="width:10%;">Quantity</th>
+                <th scope="col">Dimensions</th>
+                <th scope="col" style="width:10%;">Tracking</th>
+                <th scope="col" style="width:10%;">Weight lb</th>
+                <th scope="col" style="width:10%;">Weight kg</th>
+                <th scope="col" style="width:10%;">Vol lb</th>
+                <th scope="col" style="width:10%;">Vol kg</th>
+                <th scope="col" style="width:10%;">Weight ft3</th>
+                <th scope="col" style="width:10%;">vol mt3</th>
               </tr>
-            @endforeach
-          </tbody>
+            </thead>
+            <tbody>
+              @foreach($detalle as $val)
+                <tr>
+                  <td>{{ $val->piezas }}</td>
+                  <td>{{ $val->largo . 'x'.$val->ancho. 'x'. $val->alto }}</td>
+                  <td>{{ $val->alto }}</td>
+                  <td>{{ $val->peso2 }}</td>
+                  <td>{{ number_format($val->peso2 / 2.205,2) }}</td>
+                  <td>{{ $val->volumen }}</td>
+                  <td>{{ number_format($val->volumen / 2.204622, 2) }}</td>
+                  <td>{{ number_format($val->volumen * 166 / 1728, 2) }}</td>
+                  <td>{{ number_format(($val->volumen * 166 / 1728) / 35.315, 2) }}</td>
+                </tr>
+              @endforeach
+            </tbody>
+          @else
+            <tr>
+              <th scope="col" style="width:10%;">Length</th>
+              <th scope="col" style="width:10%;">Width</th>
+              <th scope="col" style="width:10%;">Heigth</th>
+              <th scope="col" style="width:10%;">Pieces</th>
+              <th scope="col" style="width:10%;">Weight</th>
+              <th scope="col">Description Of Content</th>
+            </tr>
+            <tbody>
+              @foreach($detalle as $val)
+                <tr>
+                  <td>{{ $val->largo }}</td>
+                  <td>{{ $val->ancho }}</td>
+                  <td>{{ $val->alto }}</td>
+                  <td>{{ $val->piezas }}</td>
+                  <td>{{ $val->peso2 }}</td>
+                  <td style="text-align:left;">{{ $val->contenido }}</td>
+                </tr>
+              @endforeach
+            </tbody>
+          @endif
           <tfoot>
             <tr>
-              <td colspan="6">&nbsp;</td>
+              <td colspan="{{ (env('APP_CLIENT') == 'worldcargo') ? '9' : '6' }}">&nbsp;</td>
             </tr>
             @if(env('APP_CLIENT') == 'worldcargo')
             <tr>
@@ -274,7 +306,7 @@
                   </tr>
                 </table>
               </td>
-              <td colspan="2" valign="top">
+              <td colspan="{{ (env('APP_CLIENT') == 'worldcargo') ? '5' : '2' }}" valign="top">
                 <table>
                   <tr>
                     <td style="height: 60px;color: #5e5e5e;font-size: 15px;">Código PoBox del Cliente:</td>

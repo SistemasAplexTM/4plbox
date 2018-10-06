@@ -3,6 +3,9 @@
     #tbl-modalArancel_wrapper{
         padding-bottom:0 !important;
     }
+    .modal-dialog {
+        width: 60%!important;
+    }
 </style>
 <template>
     <div class="modal fade bs-example-modal-lg" id="modalArancel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

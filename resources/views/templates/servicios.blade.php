@@ -19,6 +19,7 @@
 
 @section('content')
     <div class="row" id="servicios">
+    <modalarancel-component></modalarancel-component>
         <form id="formservicios" enctype="multipart/form-data" class="form-horizontal" role="form" action="" method="post">
             <div class="col-lg-4">
                 <div class="ibox float-e-margins">
@@ -138,7 +139,6 @@
                                     </div>
                             </div>
                         </div>
-                        
                         <div class="row">                            
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.cobro_peso_volumen}">
@@ -155,6 +155,26 @@
                                             <small id="msn1" class="help-block result-cobro_peso_volumen" v-show="listErrors.cobro_peso_volumen"></small>
                                         </div>
                                     </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group" id="Errpa">
+                                    <div class="col-sm-5">
+                                        <label for="pa" class="">@lang('documents.tariff_position')</label>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <div class="input-group">
+                                            <span class="input-group-btn" onclick="deleteError($(this).parent());">
+                                                <button class="btn btn-primary" id="btnBuscarPA" type="button" @click="modalArancel()" style="height: 33px;"><small><span class="fa fa-search"></span></small></button>
+                                            </span>
+                                            <input type="text" placeholder="@lang('general.select')" class="form-control" readonly="" value="" id="pa" name="pa" onkeyup="deleteError($(this).parent());">
+                                        </div><!-- /input-group -->
+                                        <small class="help-block" id="Hpa" style="display: none">
+                                        @lang('documents.obligatory_field')</small>
+                                    </div>
+                                </div>
+                                <input type="hidden" placeholder="0" class="form-control" readonly="" value="" id="pa_id" name="pa_id">
                             </div>
                         </div>
 

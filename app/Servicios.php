@@ -20,6 +20,7 @@ class Servicios extends Model
         'peso_minimo',
         'seguro',
         'impuesto',
-        'tipo_embarque_id'
+        'tipo_embarque_id',
+        'posicion_arancel_id',
     ];
 }

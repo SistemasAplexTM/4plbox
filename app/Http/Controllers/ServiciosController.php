@@ -3,13 +3,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ServiciosRequest;
 use App\Servicios;
+use Auth;
 use DataTables;
 use Illuminate\Http\Request;
-use Auth;
 
 class ServiciosController extends Controller
 {
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('permission:servicios.index')->only('index');
         $this->middleware('permission:servicios.store')->only('store');
         $this->middleware('permission:servicios.update')->only('update');
@@ -168,7 +169,8 @@ class ServiciosController extends Controller
             $where[] = array('servicios.tipo_embarque_id', $id_embarque);
         }
         $data = Servicios::join('maestra_multiple as b', 'servicios.tipo_embarque_id', 'b.id')
-            ->select('servicios.*', 'b.nombre as tipo_embarque')
+            ->leftJoin('posicion_arancelaria as c', 'servicios.posicion_arancel_id', 'c.id')
+            ->select('servicios.*', 'b.nombre as tipo_embarque', 'c.id as pa_id', 'c.pa')
             ->where($where)
             ->get();
         return \DataTables::of($data)->make(true);
@@ -177,12 +179,13 @@ class ServiciosController extends Controller
     public function getAllServiciosAgencia($id_embarque)
     {
         $data = Servicios::join('agencia_detalle as b', 'servicios.id', '=', 'b.servicios_id')
-            ->select('servicios.id', 'servicios.tipo_embarque_id', 'servicios.nombre', 'servicios.tarifa', 'servicios.cobro_opcional', 'servicios.cobro_peso_volumen', 'servicios.peso_minimo', 'servicios.seguro', 'servicios.impuesto', 'b.tarifa_principal', 'b.tarifa_agencia', 'b.seguro_principal', 'b.seguro as seguro_agencia')
+            ->leftJoin('posicion_arancelaria as c', 'servicios.posicion_arancel_id', 'c.id')
+            ->select('servicios.id', 'servicios.tipo_embarque_id', 'servicios.nombre', 'servicios.tarifa', 'servicios.cobro_opcional', 'servicios.cobro_peso_volumen', 'servicios.peso_minimo', 'servicios.seguro', 'servicios.impuesto', 'b.tarifa_principal', 'b.tarifa_agencia', 'b.seguro_principal', 'b.seguro as seguro_agencia', 'c.id as pa_id', 'c.pa')
             ->where([
                 ['servicios.deleted_at', null],
                 ['b.deleted_at', null],
                 ['b.agencia_id', Auth::user()->agencia_id],
-                ['servicios.tipo_embarque_id', $id_embarque]
+                ['servicios.tipo_embarque_id', $id_embarque],
             ])
             ->get();
         return \DataTables::of($data)->make(true);
