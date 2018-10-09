@@ -40,7 +40,7 @@ class WarehouseEmail extends Mailable
     public function build()
     {
         if($this->pdf){
-            return $this->from($this->from_self)
+            return $this->from($this->from_self['address'])
             ->subject($this->subject_msn)
             ->view('prueba')
             ->attachData(base64_decode($this->pdf), $this->pdf_name.'.pdf', [

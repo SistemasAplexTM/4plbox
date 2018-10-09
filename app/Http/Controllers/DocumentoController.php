@@ -1915,6 +1915,8 @@ class DocumentoController extends Controller
                         'pdf' => $this->pdf($id_documet, 'warehouse'), 'pdf_name' => $objDocumento->num_warehouse
                     );
                 }
+                // print_r($from_self);
+                // exit();
 
                 return Mail::to(trim($objConsignee->correo))
                 // ->cc($moreUsers)

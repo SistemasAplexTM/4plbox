@@ -194,9 +194,9 @@
           <tr>
             <td style="width:15%;">{{ $total_piezas }} Pcs</td>
             <td style="width:15%;">{{ $total_libras }} Lb</td>
-            <td style="width:15%;">{{ number_format($total_libras / 2.20462,2) }} Kl</td>
-            <td style="width:15%;">{{ number_format((isset($total_volumen) ? ceil($total_volumen) : 0),0) }} Lb</td>
-            <td style="width:15%;">{{ number_format(((isset($total_volumen) ? ceil($total_volumen) : 0) / 2.204622), 2) }} Kl</td>
+            <td style="width:15%;">{{ ceil(number_format($total_libras / 2.20462,2)) }} Kl</td>
+            <td style="width:15%;">{{ ceil(number_format((isset($total_volumen) ? ceil($total_volumen) : 0),0)) }} Lb</td>
+            <td style="width:15%;">{{ ceil(number_format(((isset($total_volumen) ? ceil($total_volumen) : 0) / 2.204622), 2)) }} Kl</td>
             <td style="width:15%;">{{ $pie = ceil(number_format(($total_volumen * 166 / 1728), 2)) }} cuft</td>
             <td style="width:10%;">{{ ceil(number_format(($pie / 35.315), 2)) }} cbm</td>
           </tr>
@@ -221,13 +221,13 @@
                 <tr>
                   <td>{{ $val->piezas }}</td>
                   <td>{{ $val->largo . 'x'.$val->ancho. 'x'. $val->alto }}</td>
-                  <td>{{ $val->alto }}</td>
+                  <td>{{ 0 }}</td>
                   <td>{{ $val->peso2 }}</td>
-                  <td>{{ number_format($val->peso2 / 2.205,2) }}</td>
-                  <td>{{ $val->volumen }}</td>
-                  <td>{{ number_format($val->volumen / 2.204622, 2) }}</td>
-                  <td>{{ number_format($val->volumen * 166 / 1728, 2) }}</td>
-                  <td>{{ number_format(($val->volumen * 166 / 1728) / 35.315, 2) }}</td>
+                  <td>{{ ceil(number_format($val->peso2 / 2.205)) }}</td>
+                  <td>{{ ceil($val->volumen) }}</td>
+                  <td>{{ ceil(number_format($val->volumen / 2.204622)) }}</td>
+                  <td>{{ ceil(number_format($val->volumen * 166 / 1728)) }}</td>
+                  <td>{{ ceil(number_format(($val->volumen * 166 / 1728) / 35.315)) }}</td>
                 </tr>
               @endforeach
             </tbody>
@@ -267,7 +267,13 @@
                             <table width="100%" border="0" cellspacing="1" cellpadding="0">
                                 <tr>
                                     <td><b>@lang('general.value'): (Flete+Impuesto)</b></td>
-                                    <?php $sub = ($total_declarado * $documento->impuesto / 100) + ($total_libras * $documento->valor); ?>
+                                    <?php 
+                                    if($total_libras > $total_volumen){
+                                      $sub = ($total_declarado * $documento->impuesto / 100) + (ceil($total_libras) * $documento->valor); 
+                                    }else{
+                                      $sub = ($total_declarado * $documento->impuesto / 100) + (ceil($total_volumen) * $documento->valor); 
+                                    }
+                                    ?>
                                     <td align="right">$ {{ $subtotal = number_format($sub, 2) }} </td>
                                 </tr>                                   
 
