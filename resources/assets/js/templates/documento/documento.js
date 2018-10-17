@@ -103,10 +103,18 @@ $(function() {
 });
 
 function datatableDetail(){
+    //     if ($.fn.DataTable.isDataTable('#whgTable')) {
+    // var table = $('#whgTable').DataTable();
+    //     table.clear();
+    //         $('#whgTable tbody').empty();
+    //         $('#whgTable').dataTable().fnDestroy();
+    //     }
     $('#whgTable').DataTable({
         ajax: 'getDataDetailDocument',
-        "paging":   false,
-        "info":     false,
+        // "paging":   false,
+        // "info":     false,
+        processing: false,
+        serverSide: false,
         "searching": false,
         columns: [{
             data: 'num_warehouse',
@@ -272,6 +280,7 @@ function datatableDetail(){
                 objVue.cantidad_detalle = false;
             }
         }
+        objVue.totalizeDocument();
         // console.log(json.data);
     });
 }
@@ -533,6 +542,10 @@ var objVue = new Vue({
         cantidad_detalle: true, //para mostrar u ocultar el boton de agregar (funcionalidad para courier)
     },
     methods: {
+        refreshTableDetail: function(){
+            var table = $('#whgTable').DataTable();
+            table.ajax.reload();
+        },
         totalizeDocument: function(){
             setTimeout(function(){
                 totalizeDocument();
@@ -888,9 +901,9 @@ var objVue = new Vue({
             var me = this;
             axios.get('../restaurar/' + data.id + '/documento_detalle').then(response => {
                 toastr.success('Registro restaurado.');
-                refreshTable('whgTable');
-                me.totalizeDocument();
-                // me.refreshTableDetail(response.data.datos);
+                // refreshTable('whgTable');
+                // me.totalizeDocument();
+                me.refreshTableDetail();
             });
         },
         delete: function(data) {
@@ -902,16 +915,18 @@ var objVue = new Vue({
                         timeOut: 15000
                     });
                     toastr.options.closeButton = true;
-                    refreshTable('whgTable');
-                    me.totalizeDocument();
+                    me.refreshTableDetail();
+                    // refreshTable('whgTable');
+                    // me.totalizeDocument();
                     // $('#fila' + data.id).remove();
                 });
             } else {
                 axios.delete('../delete/' + data.id).then(response => {
                     toastr.success('Registro eliminado correctamente.');
                     toastr.options.closeButton = true;
-                    refreshTable('whgTable');
-                    me.totalizeDocument();
+                    me.refreshTableDetail();
+                    // refreshTable('whgTable');
+                    // me.totalizeDocument();
                     // $('#fila' + data.id).remove();
                 });
             }
@@ -1130,7 +1145,7 @@ var objVue = new Vue({
                 cont = piezas;
                 piezas = 1;
             }
-            for (var i = 0; i < cont; i++) {
+            // for (var i = 0; i < cont; i++) {
                 axios.post('../insertDetail', {
                     'documento_id': id_documento,
                     'tipo_empaque_id': tipoEmpaque,
@@ -1151,7 +1166,8 @@ var objVue = new Vue({
                     'peso': peso,
                     'peso2': peso,
                     'piezas': piezas,
-                    'created_at': this.getTime()
+                    'created_at': this.getTime(),
+                    'contador': parseInt(cont)
                 }).then(function(response) {
                     if (response.data['code'] == 200) {
                         toastr.success('Registro creado correctamente.');
@@ -1168,9 +1184,9 @@ var objVue = new Vue({
                     $('#tracking').tagsinput('removeAll');
                     $('#contiene').val('');
                     $('#valDeclarado').val('');
-                    refreshTable('whgTable');
-                    me.totalizeDocument();
-                    // me.refreshTableDetail(response.data.datos);
+                    // refreshTable('whgTable');
+                    
+                    me.refreshTableDetail();
                 }).catch(function(error) {
                     console.log(error);
                     if (error.response.status === 422) {
@@ -1184,59 +1200,7 @@ var objVue = new Vue({
                         timeOut: 50000
                     });
                 });
-            }
-        },
-        refreshTableDetail: function(data) {
-            var me = this;
-            var campo_pa = '';
-            var campo_declarado = '';
-            if (me.document_type === 'guia') {
-                campo_pa = '<td><input type="text" id="numGuia' + data['id'] + '" name="numGuia[]" value="' + data['num_warehouse'] + '" class="form-control" readonly style="font-size: small;"></td>';
-                campo_declarado = '<td>\n\
-                <input onkeyup="totalizeDocument(this);"  type="text" id="valorDeclarado' + data['id'] + '" name="valorDeclarado[]" class="form-control cp_declarado" value="' + data['valor'] + '" readonly="readonly">\n\
-                <input type="hidden" id="arancel' + data['id'] + '" name="arancel[]" class="form-control" value="' + data['id'] + '" readonly>\n\
-                <input type="hidden" id="iva' + data['id'] + '" name="iva[]" class="form-control" value="' + data['id'] + '" readonly></td>';
-            }
-            if (data['tracking'] == null || data['tracking'] == '') {
-                data['tracking'] = '';
-            }
-            var fila = '<tr id="fila' + data['id'] + '">\n\
-            ' + campo_pa + '\n\
-            <td>\n\
-            <input type="text" onkeyup="totalizeDocument(this);" id="pesoD' + data['id'] + '" name="pesoD[]" class="form-control cp_peso" value="' + data['peso'] + '" readonly="readonly">\n\
-            <input type="hidden" id="volumen' + data['id'] + '" name="volumen[]" class="form-control cp_volumen" value="' + data['volumen'].toFixed(2) + '">\n\
-            <input type="hidden" style="font-size: small;" id="dimensiones' + data['id'] + '" name="dimensiones[]" class="form-control" value="' + data['dimensiones'] + '" readonly></td>\n\
-            <td>\n\
-            <input type="text" style="font-size: small;" id="contiene' + data['id'] + '" name="contiene[]" class="form-control" value="' + data['contenido'] + '" readonly="readonly">\n\
-            <input type="hidden" id="tempaque' + data['id'] + '" name="tempaque[]" class="form-control" value="' + data['tipo_empaque_id'] + '" readonly>\n\
-            <td>\n\
-            <input type="text" style="font-size: small;" id="pa' + data['id'] + '" name="pa[]" class="form-control" value="' + data['nom_pa'] + '" readonly="readonly">\n\
-            <input type="hidden" id="id_pa' + data['id'] + '" name="id_pa[]" value="' + data['id_pa'] + '" class="form-control" readonly >\n\
-            </td>\n\
-            ' + campo_declarado + '\n\
-            <td>\n\
-            <a class="btn btn-info btn-xs btn-actions addTrackings" type="button" id="btn_addtracking' + data['id'] + '" data-toggle="tooltip" title="Agregar tracking" onclick="addTrackings(' + data['id'] + ')"><i class="fa fa-barcode"></i> <span id="cant_tracking' + data['id'] + '">' + data['cantidad'] + '</span></a>\n\
-            <a class="btn btn-primary btn-xs" type="button" id="btn_confirm' + data['id'] + '" onclick="saveTableDetail(' + data['id'] + ')" data-toggle="tooltip" title="Guardar" style="display:none;padding:5px;">\n\
-            <i class="fa fa-check"></i></a>\n\
-            <a class="btn btn-success btn-xs" type="button" id="btn_edit' + data['id'] + '" onclick="editTableDetail(' + data['id'] + ')" data-toggle="tooltip" title="Editar" style="padding:5px;">\n\
-            <i class="fa fa-edit"></i></a>\n\
-            <a class="btn btn-danger btn-xs" type="button" id="btn_remove' + data['id'] + '" onclick="eliminar(' + data['id'] + ', true)" data-toggle="tooltip" title="Eliminar" style="padding:5px;">\n\
-            <i class="fa fa-times"></i></a>\n\
-            </td></tr>';
-            //coloca una nueva fila en la tabla
-            $('#whgTable').append(fila);
-            $(".tracking_guia").each(function(index, value) {
-                $(this).tagsinput({
-                    tagClass: 'label label-primary'
-                });
-            });
-            /* poner readonly al campo tracking */
-            $(".table .bootstrap-tagsinput .tag").each(function() {
-                $(this).removeClass('label-primary').css('color', '#555');
-                $(this).children('span').remove();
-            });
-            $('.table .bootstrap-tagsinput').children('input').attr('readonly', true);
-            me.totalizeDocument();
+            // }
         },
         editTableDetail: function(data) {
             $('#pesoD' + data.id).attr('readonly', false);

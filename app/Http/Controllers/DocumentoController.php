@@ -801,109 +801,113 @@ class DocumentoController extends Controller
     public function insertDetail(Request $request)
     {
         try {
-            $data = (new DocumentoDetalle)->fill($request->all());
 
-            if ($request->valor == '') {
-                $data->valor = 0;
-            }
-            if ($request->piezas == '') {
-                $data->piezas = 1;
-            }
-            if ($request->declarado2 == '') {
-                $data->declarado2 = 0;
-            }
+            for ($z=1; $z <= $request->contador; $z++) { 
+                $data = (new DocumentoDetalle)->fill($request->all());
 
-            $data->created_at = $request->created_at;
-            if ($data->tracking == '') {
-                $data->tracking = null;
-            }
-
-            /* OBTENER EL PREFIJO DE LA CIUDAD DEL CONSIGNEE PARA HACER EL NUMERO DE GUIA */
-            $prefijoGuia = DB::table('consignee as a')
-                ->join('localizacion as b', 'a.localizacion_id', 'b.id')
-                ->join('deptos as c', 'b.deptos_id', 'c.id')
-                ->join('pais as d', 'c.pais_id', 'd.id')
-                ->select('b.prefijo', 'd.iso2')
-                ->where([
-                    ['a.deleted_at', null],
-                    ['a.id', $request->consignee_id],
-                ])
-                ->first();
-
-            $documento = Documento::findOrFail($data->documento_id);
-
-            $documentoD = DocumentoDetalle::select('documento_detalle.id')
-                ->where([
-                    ['documento_detalle.documento_id', $data->documento_id],
-                ])->get();
-            // $data->num_guia      = $documento->num_guia . '' . (count($documentoD) + 1);
-
-            /* GENERAR NUMERO DE GUIA */
-            $caracteres      = strlen($documento->consecutivo);
-            $sumarCaracteres = 7 - $caracteres;
-            $carcater        = '0';
-            $prefijo         = (isset($prefijoGuia->prefijo) and $prefijoGuia->prefijo != '') ? $prefijoGuia->prefijo : '';
-            $prefijoPais     = (isset($prefijoGuia->iso2) and $prefijoGuia->iso2 != '') ? $prefijoGuia->iso2 : '';
-            for ($i = 1; $i <= $sumarCaracteres; $i++) {
-                $prefijo = $prefijo . $carcater;
-            }
-            $data->num_guia = $prefijo . $documento->consecutivo . (count($documentoD) + 1) . $prefijoPais;
-            $data->paquete  = (count($documentoD) + 1);
-
-            /* GENERAR NUMERO DE WAREHOUSE */
-            $data->num_warehouse = $documento->num_warehouse . '' . (count($documentoD) + 1);
-            if ($documento->liquidado === 1) {
-                $data->liquidado = 1;
-            }
-
-            if ($data->save()) {
-                /* INSERTAR TRAKCING*/
-                if($data->tracking != ''){
-                    DB::table('tracking')->insert([
-                        [
-                            'agencia_id'            => Auth::user()->agencia_id,
-                            'documento_detalle_id'  => $data->id,
-                            'consignee_id'          => $request->consignee_id,
-                            'codigo'                => $data->tracking,
-                            'contenido'             => $data->contenido,
-                            'created_at'            => date('Y-m-d H:i:s'),
-                        ],
-                    ]);
+                if ($request->valor == '') {
+                    $data->valor = 0;
+                }
+                if ($request->piezas == '') {
+                    $data->piezas = 1;
+                }
+                if ($request->declarado2 == '') {
+                    $data->declarado2 = 0;
                 }
 
-                /* INSERTAR EN STATUS_DETALLE*/
-                DB::table('status_detalle')->insert([
-                    [
-                        'status_id'            => 2,
-                        'usuario_id'           => Auth::user()->id,
-                        'documento_detalle_id' => $data->id,
-                        'codigo'               => $data->num_warehouse,
-                        'fecha_status'         => date('Y-m-d H:i:s'),
-                        'created_at'           => date('Y-m-d H:i:s'),
-                    ],
-                ]);
+                $data->created_at = $request->created_at;
+                if ($data->tracking == '') {
+                    $data->tracking = null;
+                }
 
-                $detalle = DocumentoDetalle::join('documento', 'documento_detalle.documento_id', '=', 'documento.id')
-                    ->leftJoin('shipper', 'documento_detalle.shipper_id', '=', 'shipper.id')
-                    ->leftJoin('consignee', 'documento_detalle.consignee_id', '=', 'consignee.id')
-                    ->join('agencia', 'documento.agencia_id', '=', 'agencia.id')
-                    ->leftJoin('posicion_arancelaria', 'documento_detalle.posicion_arancelaria_id', '=', 'posicion_arancelaria.id')
-                    ->join('maestra_multiple', 'documento_detalle.tipo_empaque_id', '=', 'maestra_multiple.id')
-                    ->select('documento_detalle.*', 'agencia.descripcion AS nom_agencia', 'posicion_arancelaria.pa AS nom_pa', 'posicion_arancelaria.id AS id_pa', 'shipper.nombre_full AS ship_nomfull', 'consignee.nombre_full AS cons_nomfull', 'maestra_multiple.nombre AS empaque', DB::raw("(SELECT Count(a.id) FROM tracking AS a WHERE a.documento_detalle_id = documento_detalle.id AND a.deleted_at IS NULL) as cantidad"))
-                    ->where([['documento_detalle.deleted_at', null], ['documento_detalle.id', $data->id]])
+                /* OBTENER EL PREFIJO DE LA CIUDAD DEL CONSIGNEE PARA HACER EL NUMERO DE GUIA */
+                $prefijoGuia = DB::table('consignee as a')
+                    ->join('localizacion as b', 'a.localizacion_id', 'b.id')
+                    ->join('deptos as c', 'b.deptos_id', 'c.id')
+                    ->join('pais as d', 'c.pais_id', 'd.id')
+                    ->select('b.prefijo', 'd.iso2')
+                    ->where([
+                        ['a.deleted_at', null],
+                        ['a.id', $request->consignee_id],
+                    ])
                     ->first();
-                $this->AddToLog('Documento detalle insertado (' . $data->id . ')');
-                $answer = array(
-                    "datos"  => $detalle,
-                    "code"   => 200,
-                    "status" => 200,
-                );
-            } else {
-                $answer = array(
-                    "error"  => 'Error al intentar Eliminar el registro.',
-                    "code"   => 600,
-                    "status" => 500,
-                );
+
+                $documento = Documento::findOrFail($data->documento_id);
+
+                $documentoD = DocumentoDetalle::select('documento_detalle.id')
+                    ->where([
+                        ['documento_detalle.documento_id', $data->documento_id],
+                    ])->get();
+                // $data->num_guia      = $documento->num_guia . '' . (count($documentoD) + 1);
+
+
+                /* GENERAR NUMERO DE GUIA */
+                $caracteres      = strlen($documento->consecutivo);
+                $sumarCaracteres = 7 - $caracteres;
+                $carcater        = '0';
+                $prefijo         = (isset($prefijoGuia->prefijo) and $prefijoGuia->prefijo != '') ? $prefijoGuia->prefijo : '';
+                $prefijoPais     = (isset($prefijoGuia->iso2) and $prefijoGuia->iso2 != '') ? $prefijoGuia->iso2 : '';
+                for ($i = 1; $i <= $sumarCaracteres; $i++) {
+                    $prefijo = $prefijo . $carcater;
+                }
+                $data->num_guia = $prefijo . $documento->consecutivo . (count($documentoD) + 1) . $prefijoPais;
+                $data->paquete  = (count($documentoD) + 1);
+
+                /* GENERAR NUMERO DE WAREHOUSE */
+                $data->num_warehouse = $documento->num_warehouse . '' . (count($documentoD) + 1);
+                if ($documento->liquidado === 1) {
+                    $data->liquidado = 1;
+                }
+                // $data->save();
+                if ($data->save()) {
+                    /* INSERTAR TRAKCING*/
+                    if($data->tracking != ''){
+                        DB::table('tracking')->insert([
+                            [
+                                'agencia_id'            => Auth::user()->agencia_id,
+                                'documento_detalle_id'  => $data->id,
+                                'consignee_id'          => $request->consignee_id,
+                                'codigo'                => $data->tracking,
+                                'contenido'             => $data->contenido,
+                                'created_at'            => date('Y-m-d H:i:s'),
+                            ],
+                        ]);
+                    }
+
+                    /* INSERTAR EN STATUS_DETALLE*/
+                    DB::table('status_detalle')->insert([
+                        [
+                            'status_id'            => 2,
+                            'usuario_id'           => Auth::user()->id,
+                            'documento_detalle_id' => $data->id,
+                            'codigo'               => $data->num_warehouse,
+                            'fecha_status'         => date('Y-m-d H:i:s'),
+                            'created_at'           => date('Y-m-d H:i:s'),
+                        ],
+                    ]);
+
+                    $detalle = DocumentoDetalle::join('documento', 'documento_detalle.documento_id', '=', 'documento.id')
+                        ->leftJoin('shipper', 'documento_detalle.shipper_id', '=', 'shipper.id')
+                        ->leftJoin('consignee', 'documento_detalle.consignee_id', '=', 'consignee.id')
+                        ->join('agencia', 'documento.agencia_id', '=', 'agencia.id')
+                        ->leftJoin('posicion_arancelaria', 'documento_detalle.posicion_arancelaria_id', '=', 'posicion_arancelaria.id')
+                        ->join('maestra_multiple', 'documento_detalle.tipo_empaque_id', '=', 'maestra_multiple.id')
+                        ->select('documento_detalle.*', 'agencia.descripcion AS nom_agencia', 'posicion_arancelaria.pa AS nom_pa', 'posicion_arancelaria.id AS id_pa', 'shipper.nombre_full AS ship_nomfull', 'consignee.nombre_full AS cons_nomfull', 'maestra_multiple.nombre AS empaque', DB::raw("(SELECT Count(a.id) FROM tracking AS a WHERE a.documento_detalle_id = documento_detalle.id AND a.deleted_at IS NULL) as cantidad"))
+                        ->where([['documento_detalle.deleted_at', null], ['documento_detalle.id', $data->id]])
+                        ->first();
+                    $this->AddToLog('Documento detalle insertado (' . $data->id . ')');
+                    $answer = array(
+                        "datos"  => $detalle,
+                        "code"   => 200,
+                        "status" => 200,
+                    );
+                } else {
+                    $answer = array(
+                        "error"  => 'Error al intentar Eliminar el registro.',
+                        "code"   => 600,
+                        "status" => 500,
+                    );
+                }
             }
             return $answer;
         } catch (\Exception $e) {
