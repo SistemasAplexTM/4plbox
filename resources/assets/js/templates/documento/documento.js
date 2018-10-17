@@ -259,8 +259,8 @@ function datatableDetail(){
 
             /*Update footer formatCurrency()*/
             $('#piezas').val(parseFloat(isInteger(piezas)));
-            $('#volumen').val(parseFloat(isInteger(vol)));
-            $('#pie_ft').val(parseFloat(isInteger(vol * 166 / 1728)));
+            $('#volumen').val(Math.ceil(parseFloat(isInteger(vol))));
+            $('#pie_ft').val(Math.ceil(parseFloat(isInteger(vol * 166 / 1728))));
             $('#pesoDim').val(parseFloat(isInteger(peso)));
             $('#valor_declarado_tbl').val(parseFloat(isInteger(dec)));
         },
@@ -700,7 +700,7 @@ var objVue = new Vue({
                 datatableDetail();
                 permissions_f();
                 if ($('#show-totales').prop('checked') === true) {
-                    me.getPositionById($('#pa_id').val());
+                    // me.getPositionById($('#pa_id').val());
                     llenarSelectServicio($('#tipo_embarque_id').val());
                 }
             }, 500);            
@@ -991,16 +991,16 @@ var objVue = new Vue({
                     }
                 }, {
                     data: 'nombre_full',
-                    data: 'nombre_full',
+                    name: 'shipper.nombre_full',
                 }, {
                     data: 'telefono',
-                    data: 'telefono',
+                    name: 'shipper.telefono',
                 }, {
                     data: 'ciudad',
                     name: 'localizacion.nombre'
                 }, {
                     data: 'zip',
-                    data: 'zip',
+                    name: 'shipper.zip',
                 }, {
                     data: 'agencia',
                     name: 'agencia.descripcion'
@@ -1025,6 +1025,7 @@ var objVue = new Vue({
             if ($.fn.DataTable.isDataTable('#tbl-modalconsignee')) {
                 $('#tbl-modalconsignee tbody').empty();
                 $('#tbl-modalconsignee').dataTable().fnDestroy();
+               
             }
             if ($('#nombreD').val() != '') {
                 nom = $('#nombreD').val();
@@ -1038,14 +1039,17 @@ var objVue = new Vue({
                         return btn_selet;
                     }
                 }, {
-                    data: 'nombre_full'
+                    data: 'nombre_full',
+                    name: 'consignee.nombre_full'
                 }, {
-                    data: 'telefono'
+                    data: 'telefono',
+                    name: 'consignee.telefono'
                 }, {
                     data: 'ciudad',
                     name: 'localizacion.nombre'
                 }, {
-                    data: 'zip'
+                    data: 'zip',
+                    name: 'consignee.zip'
                 }, {
                     data: 'agencia',
                     name: 'agencia.descripcion'
@@ -1100,7 +1104,7 @@ var objVue = new Vue({
             }
             $('#modalCargosAdd').modal('show');
         },
-        addDetail: function() {
+        addDetail: function(tipo) {
             var id_documento = $('#id_documento').val();
             var consignee_id = $('#consignee_id').val();
             var shipper_id = $('#shipper_id').val();
@@ -1118,61 +1122,69 @@ var objVue = new Vue({
             var resArancel = 0;
             var resIva = 0;
             var piezas = $('#valPiezas').val();
+            var cont = 1;
             /* insercion del detalle */
             var me = this;
-            axios.post('../insertDetail', {
-                'documento_id': id_documento,
-                'tipo_empaque_id': tipoEmpaque,
-                'posicion_arancelaria_id': paId,
-                'arancel_id2': paId,
-                'consignee_id': consignee_id,
-                'shipper_id': shipper_id,
-                'dimensiones': peso + ' Vol=' + largo + 'x' + ancho + 'x' + alto,
-                'largo': largo,
-                'ancho': ancho,
-                'alto': alto,
-                'contenido': contiene,
-                'contenido2': contiene,
-                'tracking': tracking,
-                'volumen': (largo * ancho * alto / 166).toFixed(2),
-                'valor': valDeclarado,
-                'declarado2': valDeclarado,
-                'peso': peso,
-                'peso2': peso,
-                'piezas': piezas,
-                'created_at': this.getTime()
-            }).then(function(response) {
-                if (response.data['code'] == 200) {
-                    toastr.success('Registro creado correctamente.');
-                    toastr.options.closeButton = true;
-                } else {
-                    toastr.warning(response.data['error']);
-                    toastr.options.closeButton = true;
-                }
-                $('#valPiezas').val(1);
-                $('#peso').val('');
-                $('#largo').val(0);
-                $('#ancho').val(0);
-                $('#alto').val(0);
-                $('#tracking').tagsinput('removeAll');
-                $('#contiene').val('');
-                $('#valDeclarado').val('');
-                refreshTable('whgTable');
-                me.totalizeDocument();
-                // me.refreshTableDetail(response.data.datos);
-            }).catch(function(error) {
-                console.log(error);
-                if (error.response.status === 422) {
-                    me.formErrors = error.response.data; //guardo los errores
-                    me.listErrors = me.formErrors.errors; //genero lista de errores
-                }
-                $.each(me.formErrors.errors, function(key, value) {
-                    $('.result-' + key).html(value);
+            // alert('registrar '+ tipo);
+            if(typeof tipo != 'undefined'){
+                cont = piezas;
+                piezas = 1;
+            }
+            for (var i = 0; i < cont; i++) {
+                axios.post('../insertDetail', {
+                    'documento_id': id_documento,
+                    'tipo_empaque_id': tipoEmpaque,
+                    'posicion_arancelaria_id': paId,
+                    'arancel_id2': paId,
+                    'consignee_id': consignee_id,
+                    'shipper_id': shipper_id,
+                    'dimensiones': peso + ' Vol=' + largo + 'x' + ancho + 'x' + alto,
+                    'largo': largo,
+                    'ancho': ancho,
+                    'alto': alto,
+                    'contenido': contiene,
+                    'contenido2': contiene,
+                    'tracking': tracking,
+                    'volumen': (largo * ancho * alto / 166).toFixed(2),
+                    'valor': valDeclarado,
+                    'declarado2': valDeclarado,
+                    'peso': peso,
+                    'peso2': peso,
+                    'piezas': piezas,
+                    'created_at': this.getTime()
+                }).then(function(response) {
+                    if (response.data['code'] == 200) {
+                        toastr.success('Registro creado correctamente.');
+                        toastr.options.closeButton = true;
+                    } else {
+                        toastr.warning(response.data['error']);
+                        toastr.options.closeButton = true;
+                    }
+                    $('#valPiezas').val(1);
+                    $('#peso').val('');
+                    $('#largo').val(0);
+                    $('#ancho').val(0);
+                    $('#alto').val(0);
+                    $('#tracking').tagsinput('removeAll');
+                    $('#contiene').val('');
+                    $('#valDeclarado').val('');
+                    refreshTable('whgTable');
+                    me.totalizeDocument();
+                    // me.refreshTableDetail(response.data.datos);
+                }).catch(function(error) {
+                    console.log(error);
+                    if (error.response.status === 422) {
+                        me.formErrors = error.response.data; //guardo los errores
+                        me.listErrors = me.formErrors.errors; //genero lista de errores
+                    }
+                    $.each(me.formErrors.errors, function(key, value) {
+                        $('.result-' + key).html(value);
+                    });
+                    toastr.error("Porfavor completa los campos obligatorios.", {
+                        timeOut: 50000
+                    });
                 });
-                toastr.error("Porfavor completa los campos obligatorios.", {
-                    timeOut: 50000
-                });
-            });
+            }
         },
         refreshTableDetail: function(data) {
             var me = this;

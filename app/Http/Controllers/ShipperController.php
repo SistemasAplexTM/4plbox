@@ -193,33 +193,33 @@ class ShipperController extends Controller
                 ->orderBy($table . '.nombre_full');
         } else {
 
-            $where = [['a.deleted_at', null], ['b.deleted_at', null]];
+            $where = [['a.deleted_at', null], ['shipper.deleted_at', null]];
             if ($data != null and $data != 'null') {
-                $where[] = array('b.nombre_full', 'like', '%' . $data . '%');
+                $where[] = array('shipper.nombre_full', 'like', '%' . $data . '%');
             }
             if ($id_consignee != null) {
                 $where[] = array('a.consignee_id', $id_consignee);
             }
             if(!Auth::user()->isRole('admin')){
-                $where[] = ['d.id', $id_agencia];
+                $where[] = ['agencia.id', $id_agencia];
             }
 
             $sql = DB::table('shipper_consignee AS a')
-                ->join('shipper AS b', 'a.shipper_id', 'b.id')
-                ->join('localizacion AS c', 'b.localizacion_id', 'c.id')
-                ->join('agencia AS d', 'b.agencia_id', 'd.id')
+                ->join('shipper', 'a.shipper_id', 'shipper.id')
+                ->join('localizacion', 'shipper.localizacion_id', 'localizacion.id')
+                ->join('agencia', 'shipper.agencia_id', 'agencia.id')
                 ->select(
-                    'b.id',
-                    'b.telefono',
-                    'b.nombre_full',
-                    'b.agencia_id',
-                    'c.id AS localizacion_id',
-                    'c.nombre AS ciudad',
-                    'd.descripcion AS agencia',
-                    'b.zip'
+                    'shipper.id',
+                    'shipper.telefono',
+                    'shipper.nombre_full',
+                    'shipper.agencia_id',
+                    'localizacion.id AS localizacion_id',
+                    'localizacion.nombre AS ciudad',
+                    'agencia.descripcion AS agencia',
+                    'shipper.zip'
                 )
                 ->where($where)
-                ->orderBy('b.nombre_full');
+                ->orderBy('shipper.nombre_full');
         }
         return \DataTables::of($sql)->make(true);
     }

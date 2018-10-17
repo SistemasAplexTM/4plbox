@@ -266,7 +266,7 @@
                         <div id="apDiv10">
                             <table width="100%" border="0" cellspacing="1" cellpadding="0">
                                 <tr>
-                                    <td><b>@lang('general.value'): (Flete+Impuesto)</b></td>
+                                    <td><b>@lang('general.value'): (Flete+Impuesto) {{ $total_volumen }} - {{ $documento->valor }}</b></td>
                                     <?php 
                                     if($total_libras > $total_volumen){
                                       $sub = ($total_declarado * $documento->impuesto / 100) + (ceil($total_libras) * $documento->valor); 
@@ -315,8 +315,8 @@
               <td colspan="{{ (env('APP_CLIENT') == 'worldcargo') ? '5' : '2' }}" valign="top">
                 <table>
                   <tr>
-                    <td style="height: 60px;color: #5e5e5e;font-size: 15px;">Código PoBox del Cliente:</td>
-                    <td style="font-size: 15px;font-weight: bold;"><div>{{ ((isset($documento->cons_pobox) and $documento->cons_pobox != '') ? $documento->cons_pobox : '') }}</div></td>
+                    <td style="height: 60px;color: #5e5e5e;font-size: 13px;width: 55%;">Código PoBox del Cliente:</td>
+                    <td style="font-size: 25px;font-weight: bold;"><div>{{ ((isset($documento->cons_pobox) and $documento->cons_pobox != '') ? $documento->cons_pobox : '') }}</div></td>
                   </tr>
                   <tr>
                     <td colspan="2">

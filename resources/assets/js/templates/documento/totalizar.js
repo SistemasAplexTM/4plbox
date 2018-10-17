@@ -52,7 +52,7 @@ function totalizeDocument(elemento) {
     // $('#valor_declarado_tbl').val(parseFloat(declarado));
     pa_aduana = isInteger((parseFloat(declarado) * parseFloat(impuesto) / 100));
     $('#pa_aduana').val(pa_aduana);
-    flete = parseFloat(calculateFlete(flete));
+    flete = Math.ceil(parseFloat(calculateFlete(flete)));
     $('#flete').val(isInteger(flete));
     seguro = calculateInsurance(seguro);
     $('#seguro').val(seguro);
@@ -70,6 +70,7 @@ function calculateFlete(flete) {
     var tarifa = parseFloat($('#valor_libra2').val());
     var pie = parseFloat($('#pie_ft').val());
     var metro = parseFloat(pie / 35.315);
+    console.log(metro);
     /* VALIDA QUE NO SOBREPASE LA TARIFA DEL SERVICIO */
     // if (parseFloat($('#valor_libra2').val()) < parseFloat($('#valor_libra').val())) {
     if ($('#valor_libra').val() == '') {

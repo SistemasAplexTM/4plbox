@@ -333,280 +333,6 @@
                     </div>
                 </div>                
                 <div class="col-lg-12 form_doc" style="display: none" v-if="mostrar.includes(22) || mostrar.includes(23)">
-                    <div class="col-lg-8">
-                        <div class="ibox float-e-margins">
-                            <div class="ibox-title">
-                                <h5>@lang('documents.load_data')</h5>
-                                <div class="ibox-tools">
-                                    
-                                </div>
-                            </div>
-                            <!--************************************* DATOS DE CARGA PARA GUIA ****************************-->
-                            <div class="form-horizontal">
-                                <div class="ibox-content col-lg-12" :class="[mostrar.includes(22) ? 'wrh' : 'guia' ]">
-                                    <div class="col-lg-12">
-                                        <div class="row pasos_guia" id="detalle_guia">
-                                            <div class="row">
-                                            <div class="col-sm-2">
-                                                    <div class="form-group"  id="Valpeso">
-                                                        <label class="peso">@lang('documents.weight')</label>
-                                                        <input type="number" class="form-control" onkeyup="deleteError($(this).parent());" id="peso" name="peso" maxlength="4" placeholder="Lb" value="">
-                                                        <small class="help-block" id="Hpeso" style="display: none">@lang('documents.these_data_are_required')</small>
-                                                    </div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                    <div class="form-group"  id="Valdim">
-                                                        <label class="dimensiones">@lang('documents.dimensions') (L x W x H)</label>
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control" placeholder="L" maxlength="4" id="largo" onkeyup="deleteError($(this).parent());" name="largo" value="0">
-                                                            <span class="input-group-addon">x</span>
-                                                            <input type="text" class="form-control" placeholder="W" maxlength="4" id="ancho" onkeyup="deleteError($(this).parent());" name="ancho" value="0">
-                                                            <span class="input-group-addon">x</span>
-                                                            <input type="text" class="form-control" placeholder="H" maxlength="4" id="alto" onkeyup="deleteError($(this).parent());" name="alto" value="0">                                                    
-                                                        </div>
-                                                        <small class="help-block" id="Hdim" style="display: none">@lang('documents.these_data_are_required')</small>
-                                                    </div>
-                                            </div>
-                                            <div :class="[mostrar.includes(22) ? 'col-sm-6' : 'col-sm-6' ]">
-                                                <label class="contiene">@lang('documents.content')</label>
-                                                    <div class="form-group"  id="Valconti">
-                                                        <label class="contiene" style="display: none;"></label>
-                                                        <input type="text" onkeyup="deleteError($(this).parent());" id="contiene" name="contiene" class="form-control" value="" placeholder="@lang('documents.content')">
-                                                        <small class="help-block" id="Hcontiene" style="display: none">@lang('documents.obligatory_field')</small>
-                                                    </div>
-                                            </div>
-                                            
-                                        </div>
-                                        <div class="row">
-                                           <div class="col-sm-2" v-if="mostrar.includes(34)">
-                                                <label class="valDeclarado">@lang('documents.pieces')</label>
-                                                    <div class="form-group" id="ValDecla">
-                                                        <label style="display: none;" for="" class=""></label>
-                                                        <input type="number" onkeyup="deleteError($(this).parent());" placeholder="@lang('documents.pieces')" onkeyup="deleteError($(this).parent());" id="valPiezas" name="valPiezas" class="form-control" value="1">
-                                                        <small class="help-block" id="Hpiezas" style="display: none">>@lang('documents.obligatory_field')</small>
-                                                    </div>
-                                            </div>
-                                            <div class="col-sm-2">
-                                                    <div class="form-group" id="Valtipoem">
-                                                        <label for="tipo_empaque_id" class="">@lang('documents.packing')</label>
-                                                        <select  onchange="deleteError($(this).parent());" id="tipo_empaque_id" name="tipo_empaque_id" class="form-control">
-                                                            @if(isset($empaques) and $empaques)
-                                                                @foreach($empaques as $empaque)
-                                                                    <option value="{{ $empaque['id'] }}">{{ $empaque['nombre'] }}</option>
-                                                                @endforeach
-                                                            @endif
-                                                        </select>
-                                                        <small class="help-block" id="HtipoE" style="display: none">@lang('documents.obligatory_field')</small>
-                                                    </div>
-                                            </div>                                    
-                                            <template v-show="mostrar.includes(16)">
-                                               <div class="col-sm-2" v-show="showFieldsTotals">
-                                                    <label class="valDeclarado">@lang('documents.declared')</label>
-                                                        <div class="form-group" id="ValDecla">
-                                                            <label style="display: none;" for="" class=""></label>
-                                                            <input type="number" onkeyup="deleteError($(this).parent());" placeholder="@lang('documents.declared')" onkeyup="deleteError($(this).parent());" id="valDeclarado" name="valDeclarado" class="form-control" value="">
-                                                            <small class="help-block" id="HvalDeclarado" style="display: none">@lang('documents.obligatory_field')</small>
-                                                        </div>
-                                                </div>
-                                               <div class="col-sm-6" v-show="!showFieldsTotals">
-                                                    <label class="tracking">Tracking</label>
-                                                        <div class="form-group">
-                                                            <input type="text" onkeyup="deleteError($(this).parent());" placeholder="Numero de tracking" onkeyup="deleteError($(this).parent());" id="tracking" name="tracking" class="form-control" value="">
-                                                        </div>
-                                                </div>
-                                                <div class="col-sm-4" v-show="showFieldsTotals">
-                                                    <label for="pa" class="">@lang('documents.tariff_position')</label>
-                                                        <div class="form-group" id="Errpa">
-                                                            <label style="display: none;" for="" class=""></label>
-                                                            <div class="input-group">
-                                                                <span class="input-group-btn" onclick="deleteError($(this).parent());">
-                                                                    <button class="btn btn-primary" id="btnBuscarPA" type="button" @click="modalArancel()"><small><span class="fa fa-search"></span> P.A (Adu.)</small></button>
-                                                                </span>
-                                                                <input type="text" placeholder="@lang('general.select')" class="form-control" readonly="" value="" id="pa" name="pa" onkeyup="deleteError($(this).parent());">
-                                                            </div><!-- /input-group -->
-                                                            <small class="help-block" id="Hpa" style="display: none">
-                                                            @lang('documents.obligatory_field')</small>
-                                                        </div>
-                                                   
-                                                    <input type="hidden" placeholder="0" class="form-control" readonly="" value="" id="pa_id" name="pa_id">
-                                                    <!--<div class="col-sm-2">-->
-                                                    <input type="hidden" placeholder="0" class="form-control" readonly="" value="" id="arancel" name="arancel">
-                                                    <!--</div>-->
-                                                    <!--<div class="col-sm-2">-->
-                                                    <input type="hidden" placeholder="0" class="form-control" readonly="" value="" id="iva" name="iva">
-                                                </div>
-                                            </template>
-                                            <!--</div>-->
-                                                <div class="col-lg-2">
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            <label for="btn_add" class="control-label" style="padding-top: 2px;">&nbsp;</label>
-                                                            <!--para quitar el efecto de bloqueo del boton, quitar la clase btnBlock-->
-                                                            <button class="btn btn-info btn-sm btnBlock" type="button" id="btn_add" value="0" @click="addDetail()" style="width: 100%;"><span class="fa fa-plus" ></span> @lang('documents.add')</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                        </div>
-                                        </div>
-                                        <div class="row pasos_guia" id="grilla_guia">
-                                            <div class="col-lg-12">
-                                                    <div class="form-group">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-striped  table-hover" id="whgTable" style="width: 100%;">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th style="width: 10%;">@lang('documents.code')</th>
-                                                                        <th style="width: 7%;">@lang('documents.pieces')</th>
-                                                                        <th style="width: 17%;">@lang('documents.weight')(Lb)</th>
-                                                                        <th style="">@lang('documents.contains')</th>
-                                                                        <th style="width: 15%;">PA</th>
-                                                                        <th style="width: 10%;">@lang('documents.value') US$</th>
-                                                                        <th style="width: 13%;">@lang('documents.action')</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tfoot style="background-color: paleturquoise;">
-                                                                    <tr>
-                                                                        <td colspan="7">
-                                                                            <table style="width: 100%;">
-                                                                                <tr>
-                                                                                    <td>
-                                                                                        <div class="col-lg-12">
-                                                                                        <label class="">@lang('documents.pieces')(s)</label>
-                                                                                            <input type="text" onkeyup="deleteError($(this).parent());" id="piezas" name="piezas" class="form-control" readonly="" value="{{ isset($documento->piezas) ? $documento->piezas : 0 }}" style="width: 100px;">
-                                                                                        </div>
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <div class="col-sm-12">
-                                                                                            <label class="">@lang('documents.weight') total</label>
-                                                                                            <input type="text" onkeyup="deleteError($(this).parent());" id="pesoDim" name="pesoDim" class="form-control" readonly="" value="{{ isset($documento->peso) ? $documento->peso : 0 }}" style="width: 100px;">
-                                                                                        </div> 
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <div class="col-sm-12">
-                                                                                            <label class="">@lang('documents.volume')</label>
-                                                                                            <input type="text" onkeyup="deleteError($(this).parent());" id="volumen" name="volumen" class="form-control" readonly="" value="{{ isset($documento->volumen) ? $documento->volumen : 0 }}" style="width: 100px;">
-                                                                                        </div> 
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <div class="col-sm-12">
-                                                                                            <label class="">@lang('documents.cubic_foot')</label>
-                                                                                            <input type="text" id="pie_ft" name="pie_ft" class="form-control" readonly="" value="{{ (isset($documento->volumen)) ? number_format(($documento->volumen * 166 / 1728), 2) : 0 }}" style="width: 100px;">
-                                                                                        </div> 
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <div class="col-lg-12">
-                                                                                            <label class="">$ 
-                                                                                            @lang('documents.declared') total</label>
-                                                                                            <input type="text" onkeyup="deleteError($(this).parent());" id="valor_declarado_tbl" class="form-control" readonly="" value="0" style="width: 100px;">
-                                                                                        </div>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </table>
-                                                                        </td>
-                                                                    </tr>
-                                                                </tfoot>
-                                                            </table>
-                                                            <div id="noEnviar" class="col-lg-12" style="text-align: center; color: red; display: none;">@lang('documents.message_register')</div>
-
-                                                        </div>
-                                                    </div>
-                                            </div>
-                                        </div>
-                                        <div class="row pasos_guia" id="generales_guia">
-                                            <div class="col-lg-4" v-if="mostrar.includes(17)">
-                                                    <div class="form-group">
-                                                        <label for="" class="">@lang('documents.payment_type')</label>
-                                                        <select id="tipo_pago_id" name="tipo_pago_id" class="form-control" onchange="deleteError($(this).parent());">
-                                                           @if(isset($tipoPagos) and $tipoPagos)
-                                                                @foreach($tipoPagos as $tipoPago)
-                                                                    <option {{ (isset($documento->tipo_pago_id) and $documento->tipo_pago_id === $tipoPago['id']) ? 'selected' : '' }} value="{{ $tipoPago['id'] }}">{{ $tipoPago['descripcion'] }}</option>
-                                                                @endforeach
-                                                            @endif
-                                                        </select>
-                                                    </div>
-                                            </div>
-                                            <div class="col-lg-4" v-if="mostrar.includes(12)">
-                                                    <div class="form-group">
-                                                        <label for="forma_pago_id" class="">@lang('documents.way_to_pay')</label>
-                                                        <select id="forma_pago_id" name="forma_pago_id" class="form-control" onchange="deleteError($(this).parent());">
-                                                            @if(isset($formaPagos) and $formaPagos)
-                                                                @foreach($formaPagos as $formaPago)
-                                                                    <option {{ (isset($documento->forma_pago_id) and $documento->forma_pago_id === $formaPago['id']) ? 'selected' : '' }} value="{{ $formaPago['id'] }}">{{ $formaPago['nombre'] }}</option>
-                                                                @endforeach
-                                                            @endif
-                                                        </select>
-                                                    </div>
-                                            </div>
-                                            <div class="col-lg-4" v-if="mostrar.includes(18)">
-                                                    <div class="form-group">
-                                                        <label for="grupo_id" class="">@lang('documents.group')</label>
-                                                        <select id="grupo_id" name="grupo_id" class="form-control" onchange="deleteError($(this).parent());">
-                                                            @if(isset($grupos) and $grupos)
-                                                                @foreach($grupos as $grupo)
-                                                                    <option {{ (isset($documento->grupo_id) and $documento->grupo_id === $grupo['id']) ? 'selected' : '' }} value="{{ $grupo['id'] }}">{{ $grupo['nombre'] }}</option>
-                                                                @endforeach
-                                                            @endif
-                                                        </select>
-                                                    </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                    <div class="form-group">
-                                                        <label>@lang('documents.comments'): </label>
-                                                        <textarea class="form-control" rows="3" style="height: 65px;" id="observaciones" name="observaciones">{{ isset($documento->observaciones) ? $documento->observaciones : '' }}</textarea>
-                                                    </div>
-                                            </div>
-                                            <div class="col-sm-12">
-                                                <div class="checkbox checkbox-success checkbox-inline">
-                                                    <input type="checkbox" id="inlineCheckbox1" name="factura" value="1" {{ (isset($documento->factura) and $documento->factura != 0) ? 'checked' : '' }}>
-                                                    <label for="inlineCheckbox1"> @lang('documents.bill') </label>
-                                                </div>
-                                                <div class="checkbox checkbox-success checkbox-inline">
-                                                    <input type="checkbox" id="inlineCheckbox2" name="carga_peligrosa" value="1" {{ (isset($documento->carga_peligrosa) and $documento->carga_peligrosa != 0) ? 'checked' : '' }}>
-                                                    <label for="inlineCheckbox2">@lang('documents.dangerous_load')</label>
-                                                </div>
-                                                <div class="checkbox checkbox-success checkbox-inline">
-                                                    <input type="checkbox" id="inlineCheckbox3" name="re_empacado" value="1" {{ (isset($documento->re_empacado) and $documento->re_empacado != 0) ? 'checked' : '' }}>
-                                                    <label for="inlineCheckbox3">@lang('documents.packed') </label>
-                                                </div>
-                                                <div class="checkbox checkbox-success checkbox-inline">
-                                                    <input type="checkbox" id="inlineCheckbox4" name="mal_empacado" value="1" {{ (isset($documento->mal_empacado) and $documento->mal_empacado != 0) ? 'checked' : '' }}>
-                                                    <label for="inlineCheckbox4"> @lang('documents.badly_packed')</label>
-                                                </div>
-                                                <div class="checkbox checkbox-success checkbox-inline">
-                                                    <input type="checkbox" id="inlineCheckbox5" name="rota" value="1" {{ (isset($documento->rota) and $documento->rota != 0) ? 'checked' : '' }}>
-                                                    <label for="inlineCheckbox5"> @lang('documents.broken')</label>
-                                                </div>
-                                            </div>                                            
-                                        </div>
-                                        <input type="hidden" id="id" name="id" value="">
-                                        <div class="row">
-                                            <div class="form-group">
-                                                <div class="col-sm-12 col-sm-offset-0 guardar">
-                                                    <button type="button" id="saveForm" class="ladda-button btn btn-success" data-style="expand-right" @click="saveDocument()"><i class="fa fa-save fa-fw"></i>@lang('documents.save_changes')</button>
-                                                    {{-- el href de la impresion lo pongo desde la funcion showHiddeFields desde vue --}}
-                                                    
-                                                    <div class="btn-group dropup">
-                                                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <i class="fa fa-print"></i>@lang('documents.to_print')<span class="caret"></span>
-                                                        </button>
-                                                        <ul class="dropdown-menu">
-                                                            <li><a href="" id="printDocument" class="" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> @lang('documents.to_print') {{ ($documento->liquidado == 1) ? 'Recibo' : $documento->tipo_nombre }}</a></li>
-                                                            <li><a href="" id="printLabel" class="" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> @lang('documents.print_label')</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="" id="invoice" class="" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> @lang('documents.invoice')</a></li>
-                                                        </ul>
-                                                    </div>
-
-                                                    <a href="{{ route('documento.index') }}" type="button" class="btn btn-white"><i class="fa fa-times fa-fw"></i> @lang('documents.cancel') </a>
-                                                </div>
-                                            </div>                                            
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="col-lg-4">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
@@ -806,6 +532,294 @@
                             </transition>
                         </div>
                     </div>
+                    <div class="col-lg-8">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>@lang('documents.load_data')</h5>
+                                <div class="ibox-tools">
+                                    
+                                </div>
+                            </div>
+                            <!--************************************* DATOS DE CARGA PARA GUIA ****************************-->
+                            <div class="form-horizontal">
+                                <div class="ibox-content col-lg-12" :class="[mostrar.includes(22) ? 'wrh' : 'guia' ]">
+                                    <div class="col-lg-12">
+                                        <div class="row pasos_guia" id="detalle_guia">
+                                            <div class="row">
+                                            <div class="col-sm-2">
+                                                    <div class="form-group"  id="Valpeso">
+                                                        <label class="peso">@lang('documents.weight')</label>
+                                                        <input type="number" class="form-control" onkeyup="deleteError($(this).parent());" id="peso" name="peso" maxlength="4" placeholder="Lb" value="">
+                                                        <small class="help-block" id="Hpeso" style="display: none">@lang('documents.these_data_are_required')</small>
+                                                    </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                    <div class="form-group"  id="Valdim">
+                                                        <label class="dimensiones">@lang('documents.dimensions') (L x W x H)</label>
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" placeholder="L" maxlength="4" id="largo" onkeyup="deleteError($(this).parent());" name="largo" value="0">
+                                                            <span class="input-group-addon">x</span>
+                                                            <input type="text" class="form-control" placeholder="W" maxlength="4" id="ancho" onkeyup="deleteError($(this).parent());" name="ancho" value="0">
+                                                            <span class="input-group-addon">x</span>
+                                                            <input type="text" class="form-control" placeholder="H" maxlength="4" id="alto" onkeyup="deleteError($(this).parent());" name="alto" value="0">                                                    
+                                                        </div>
+                                                        <small class="help-block" id="Hdim" style="display: none">@lang('documents.these_data_are_required')</small>
+                                                    </div>
+                                            </div>
+                                            <div :class="[mostrar.includes(22) ? 'col-sm-6' : 'col-sm-6' ]">
+                                                <label class="contiene">@lang('documents.content')</label>
+                                                    <div class="form-group"  id="Valconti">
+                                                        <label class="contiene" style="display: none;"></label>
+                                                        <input type="text" onkeyup="deleteError($(this).parent());" id="contiene" name="contiene" class="form-control" value="" placeholder="@lang('documents.content')">
+                                                        <small class="help-block" id="Hcontiene" style="display: none">@lang('documents.obligatory_field')</small>
+                                                    </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="row">
+                                           <div class="col-sm-2" v-if="mostrar.includes(34)">
+                                                <label class="valDeclarado">@lang('documents.pieces')</label>
+                                                    <div class="form-group" id="ValDecla">
+                                                        <label style="display: none;" for="" class=""></label>
+                                                        <input type="number" onkeyup="deleteError($(this).parent());" placeholder="@lang('documents.pieces')" onkeyup="deleteError($(this).parent());" id="valPiezas" name="valPiezas" class="form-control" value="1">
+                                                        <small class="help-block" id="Hpiezas" style="display: none">>@lang('documents.obligatory_field')</small>
+                                                    </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                    <div class="form-group" id="Valtipoem">
+                                                        <label for="tipo_empaque_id" class="">@lang('documents.packing')</label>
+                                                        <select  onchange="deleteError($(this).parent());" id="tipo_empaque_id" name="tipo_empaque_id" class="form-control">
+                                                            @if(isset($empaques) and $empaques)
+                                                                @foreach($empaques as $empaque)
+                                                                    <option value="{{ $empaque['id'] }}">{{ $empaque['nombre'] }}</option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                        <small class="help-block" id="HtipoE" style="display: none">@lang('documents.obligatory_field')</small>
+                                                    </div>
+                                            </div>                                    
+                                            <template v-show="mostrar.includes(16)">
+                                               <div class="col-sm-2" v-show="showFieldsTotals">
+                                                    <label class="valDeclarado">@lang('documents.declared')</label>
+                                                        <div class="form-group" id="ValDecla">
+                                                            <label style="display: none;" for="" class=""></label>
+                                                            <input type="number" onkeyup="deleteError($(this).parent());" placeholder="@lang('documents.declared')" onkeyup="deleteError($(this).parent());" id="valDeclarado" name="valDeclarado" class="form-control" value="">
+                                                            <small class="help-block" id="HvalDeclarado" style="display: none">@lang('documents.obligatory_field')</small>
+                                                        </div>
+                                                </div>
+                                               <div class="col-sm-6" v-show="!showFieldsTotals">
+                                                    <label class="tracking">Tracking</label>
+                                                        <div class="form-group">
+                                                            <input type="text" onkeyup="deleteError($(this).parent());" placeholder="Numero de tracking" onkeyup="deleteError($(this).parent());" id="tracking" name="tracking" class="form-control" value="">
+                                                        </div>
+                                                </div>
+                                                <div class="col-sm-4" v-show="showFieldsTotals">
+                                                    <label for="pa" class="">@lang('documents.tariff_position')</label>
+                                                        <div class="form-group" id="Errpa">
+                                                            <label style="display: none;" for="" class=""></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-btn" onclick="deleteError($(this).parent());">
+                                                                    <button class="btn btn-primary" id="btnBuscarPA" type="button" @click="modalArancel()"><small><span class="fa fa-search"></span> P.A (Adu.)</small></button>
+                                                                </span>
+                                                                <input type="text" placeholder="@lang('general.select')" class="form-control" readonly="" value="" id="pa" name="pa" onkeyup="deleteError($(this).parent());">
+                                                            </div><!-- /input-group -->
+                                                            <small class="help-block" id="Hpa" style="display: none">
+                                                            @lang('documents.obligatory_field')</small>
+                                                        </div>
+                                                   
+                                                    <input type="hidden" placeholder="0" class="form-control" readonly="" value="" id="pa_id" name="pa_id">
+                                                    <!--<div class="col-sm-2">-->
+                                                    <input type="hidden" placeholder="0" class="form-control" readonly="" value="" id="arancel" name="arancel">
+                                                    <!--</div>-->
+                                                    <!--<div class="col-sm-2">-->
+                                                    <input type="hidden" placeholder="0" class="form-control" readonly="" value="" id="iva" name="iva">
+                                                </div>
+                                            </template>
+                                            <!--</div>-->
+                                                <div class="col-lg-2">
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <!--para quitar el efecto de bloqueo del boton, quitar la clase btnBlock-->
+                                                            {{-- <button class="btn btn-info btn-sm btnBlock" type="button" id="btn_add" value="0" @click="addDetail()" style="width: 100%;"><span class="fa fa-plus" ></span> @lang('documents.add')</button> --}}
+                                                        
+
+                                                        <!-- Split button -->
+                                                            <label for="btn_add" class="control-label" style="padding-top: 2px;width: 100%">&nbsp;</label>
+                                                            <div class="btn-group">
+                                                              <button type="button" class="btn btn-info btn-sm btnBlock" id="btn_add" value="0" @click="addDetail()">@lang('documents.add')</button>
+                                                              <button type="button" class="btn btn-info btn-sm dropdown-toggle btnBlock" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 35px;">
+                                                                <span class="caret"></span>
+                                                                <span class="sr-only">Toggle Dropdown</span>
+                                                              </button>
+                                                              <ul class="dropdown-menu">
+                                                                <li><a @click="addDetail(true)">Agregar por cantidad</a></li>
+                                                              </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                        </div>
+                                        <div class="row pasos_guia" id="grilla_guia">
+                                            <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped  table-hover" id="whgTable" style="width: 100%;">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style="width: 10%;">@lang('documents.code')</th>
+                                                                        <th style="width: 7%;">@lang('documents.pieces')</th>
+                                                                        <th style="width: 17%;">@lang('documents.weight')(Lb)</th>
+                                                                        <th style="">@lang('documents.contains')</th>
+                                                                        <th style="width: 15%;">PA</th>
+                                                                        <th style="width: 10%;">@lang('documents.value') US$</th>
+                                                                        <th style="width: 13%;">@lang('documents.action')</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tfoot style="background-color: paleturquoise;">
+                                                                    <tr>
+                                                                        <td colspan="7">
+                                                                            <table style="width: 100%;">
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <div class="col-lg-12">
+                                                                                        <label class="">@lang('documents.pieces')(s)</label>
+                                                                                            <input type="text" onkeyup="deleteError($(this).parent());" id="piezas" name="piezas" class="form-control" readonly="" value="{{ isset($documento->piezas) ? $documento->piezas : 0 }}" style="width: 100px;">
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div class="col-sm-12">
+                                                                                            <label class="">@lang('documents.weight') total</label>
+                                                                                            <input type="text" onkeyup="deleteError($(this).parent());" id="pesoDim" name="pesoDim" class="form-control" readonly="" value="{{ isset($documento->peso) ? $documento->peso : 0 }}" style="width: 100px;">
+                                                                                        </div> 
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div class="col-sm-12">
+                                                                                            <label class="">@lang('documents.volume')</label>
+                                                                                            <input type="text" onkeyup="deleteError($(this).parent());" id="volumen" name="volumen" class="form-control" readonly="" value="{{ isset($documento->volumen) ? $documento->volumen : 0 }}" style="width: 100px;">
+                                                                                        </div> 
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div class="col-sm-12">
+                                                                                            <label class="">@lang('documents.cubic_foot')</label>
+                                                                                            <input type="text" id="pie_ft" name="pie_ft" class="form-control" readonly="" value="{{ (isset($documento->volumen)) ? number_format(($documento->volumen * 166 / 1728), 2) : 0 }}" style="width: 100px;">
+                                                                                        </div> 
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div class="col-lg-12">
+                                                                                            <label class="">$ 
+                                                                                            @lang('documents.declared') total</label>
+                                                                                            <input type="text" onkeyup="deleteError($(this).parent());" id="valor_declarado_tbl" class="form-control" readonly="" value="0" style="width: 100px;">
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tfoot>
+                                                            </table>
+                                                            <div id="noEnviar" class="col-lg-12" style="text-align: center; color: red; display: none;">@lang('documents.message_register')</div>
+
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="row pasos_guia" id="generales_guia">
+                                            <div class="col-lg-4" v-if="mostrar.includes(17)">
+                                                    <div class="form-group">
+                                                        <label for="" class="">@lang('documents.payment_type')</label>
+                                                        <select id="tipo_pago_id" name="tipo_pago_id" class="form-control" onchange="deleteError($(this).parent());">
+                                                           @if(isset($tipoPagos) and $tipoPagos)
+                                                                @foreach($tipoPagos as $tipoPago)
+                                                                    <option {{ (isset($documento->tipo_pago_id) and $documento->tipo_pago_id === $tipoPago['id']) ? 'selected' : '' }} value="{{ $tipoPago['id'] }}">{{ $tipoPago['descripcion'] }}</option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                    </div>
+                                            </div>
+                                            <div class="col-lg-4" v-if="mostrar.includes(12)">
+                                                    <div class="form-group">
+                                                        <label for="forma_pago_id" class="">@lang('documents.way_to_pay')</label>
+                                                        <select id="forma_pago_id" name="forma_pago_id" class="form-control" onchange="deleteError($(this).parent());">
+                                                            @if(isset($formaPagos) and $formaPagos)
+                                                                @foreach($formaPagos as $formaPago)
+                                                                    <option {{ (isset($documento->forma_pago_id) and $documento->forma_pago_id === $formaPago['id']) ? 'selected' : '' }} value="{{ $formaPago['id'] }}">{{ $formaPago['nombre'] }}</option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                    </div>
+                                            </div>
+                                            <div class="col-lg-4" v-if="mostrar.includes(18)">
+                                                    <div class="form-group">
+                                                        <label for="grupo_id" class="">@lang('documents.group')</label>
+                                                        <select id="grupo_id" name="grupo_id" class="form-control" onchange="deleteError($(this).parent());">
+                                                            @if(isset($grupos) and $grupos)
+                                                                @foreach($grupos as $grupo)
+                                                                    <option {{ (isset($documento->grupo_id) and $documento->grupo_id === $grupo['id']) ? 'selected' : '' }} value="{{ $grupo['id'] }}">{{ $grupo['nombre'] }}</option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                    </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <label>@lang('documents.comments'): </label>
+                                                        <textarea class="form-control" rows="3" style="height: 65px;" id="observaciones" name="observaciones">{{ isset($documento->observaciones) ? $documento->observaciones : '' }}</textarea>
+                                                    </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="checkbox checkbox-success checkbox-inline">
+                                                    <input type="checkbox" id="inlineCheckbox1" name="factura" value="1" {{ (isset($documento->factura) and $documento->factura != 0) ? 'checked' : '' }}>
+                                                    <label for="inlineCheckbox1"> @lang('documents.bill') </label>
+                                                </div>
+                                                <div class="checkbox checkbox-success checkbox-inline">
+                                                    <input type="checkbox" id="inlineCheckbox2" name="carga_peligrosa" value="1" {{ (isset($documento->carga_peligrosa) and $documento->carga_peligrosa != 0) ? 'checked' : '' }}>
+                                                    <label for="inlineCheckbox2">@lang('documents.dangerous_load')</label>
+                                                </div>
+                                                <div class="checkbox checkbox-success checkbox-inline">
+                                                    <input type="checkbox" id="inlineCheckbox3" name="re_empacado" value="1" {{ (isset($documento->re_empacado) and $documento->re_empacado != 0) ? 'checked' : '' }}>
+                                                    <label for="inlineCheckbox3">@lang('documents.packed') </label>
+                                                </div>
+                                                <div class="checkbox checkbox-success checkbox-inline">
+                                                    <input type="checkbox" id="inlineCheckbox4" name="mal_empacado" value="1" {{ (isset($documento->mal_empacado) and $documento->mal_empacado != 0) ? 'checked' : '' }}>
+                                                    <label for="inlineCheckbox4"> @lang('documents.badly_packed')</label>
+                                                </div>
+                                                <div class="checkbox checkbox-success checkbox-inline">
+                                                    <input type="checkbox" id="inlineCheckbox5" name="rota" value="1" {{ (isset($documento->rota) and $documento->rota != 0) ? 'checked' : '' }}>
+                                                    <label for="inlineCheckbox5"> @lang('documents.broken')</label>
+                                                </div>
+                                            </div>                                            
+                                        </div>
+                                        <input type="hidden" id="id" name="id" value="">
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <div class="col-sm-12 col-sm-offset-0 guardar">
+                                                    <button type="button" id="saveForm" class="ladda-button btn btn-success" data-style="expand-right" @click="saveDocument()"><i class="fa fa-save fa-fw"></i>@lang('documents.save_changes')</button>
+                                                    {{-- el href de la impresion lo pongo desde la funcion showHiddeFields desde vue --}}
+                                                    
+                                                    <div class="btn-group dropup">
+                                                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <i class="fa fa-print"></i>@lang('documents.to_print')<span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a href="" id="printDocument" class="" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> @lang('documents.to_print') {{ ($documento->liquidado == 1) ? 'Recibo' : $documento->tipo_nombre }}</a></li>
+                                                            <li><a href="" id="printLabel" class="" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> @lang('documents.print_label')</a></li>
+                                                            <li role="separator" class="divider"></li>
+                                                            <li><a href="" id="invoice" class="" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> @lang('documents.invoice')</a></li>
+                                                        </ul>
+                                                    </div>
+
+                                                    <a href="{{ route('documento.index') }}" type="button" class="btn btn-white"><i class="fa fa-times fa-fw"></i> @lang('documents.cancel') </a>
+                                                </div>
+                                            </div>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
                 </div>
             </form>
         </div>

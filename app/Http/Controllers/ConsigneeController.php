@@ -202,33 +202,33 @@ class ConsigneeController extends Controller
                 ->where($where)
                 ->orderBy($table . '.primer_nombre');
         } else {
-            $where = [['a.deleted_at', null], ['b.deleted_at', null]];
+            $where = [['a.deleted_at', null], ['consignee.deleted_at', null]];
             if ($data != null and  $data != 'null') {
-                $where[] = array('b.nombre_full', 'like', '%' . $data . '%');
+                $where[] = array('consignee.nombre_full', 'like', '%' . $data . '%');
             }
             if ($id_shipper != null) {
                 $where[] = array('a.shipper_id', $id_shipper);
             }
             if(!Auth::user()->isRole('admin')){
-                $where[] = ['d.id', $id_agencia];
+                $where[] = ['agencia.id', $id_agencia];
             }
             $sql = DB::table('shipper_consignee AS a')
-                ->join('consignee AS b', 'a.consignee_id', 'b.id')
-                ->join('localizacion AS c', 'b.localizacion_id', 'c.id')
-                ->join('agencia AS d', 'b.agencia_id', 'd.id')
+                ->join('consignee', 'a.consignee_id', 'consignee.id')
+                ->join('localizacion', 'consignee.localizacion_id', 'localizacion.id')
+                ->join('agencia', 'consignee.agencia_id', 'agencia.id')
                 ->select(
-                    'b.id',
-                    'b.telefono',
-                    'b.celular',
-                    'b.nombre_full',
-                    'b.agencia_id',
-                    'c.id AS localizacion_id',
-                    'c.nombre AS ciudad',
-                    'd.descripcion AS agencia',
-                    'b.zip'
+                    'consignee.id',
+                    'consignee.telefono',
+                    'consignee.celular',
+                    'consignee.nombre_full',
+                    'consignee.agencia_id',
+                    'localizacion.id AS localizacion_id',
+                    'localizacion.nombre AS ciudad',
+                    'agencia.descripcion AS agencia',
+                    'consignee.zip'
                 )
                 ->where($where)
-                ->orderBy('b.nombre_full');
+                ->orderBy('consignee.nombre_full');
         }
 
         return \DataTables::of($sql)->make(true);
