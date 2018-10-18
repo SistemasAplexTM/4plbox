@@ -24,7 +24,6 @@ class TrackingRequest extends FormRequest
     public function rules()
     {
         return [
-            'consignee_id' => 'required',
             'codigo' => 'required',
         ];
     }

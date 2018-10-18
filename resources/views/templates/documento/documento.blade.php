@@ -599,18 +599,18 @@
                                                     </div>
                                             </div>                                    
                                             <template v-show="mostrar.includes(16)">
+                                               {{-- <div class="col-sm-6" v-show="!showFieldsTotals">
+                                                    <label class="tracking">Tracking</label>
+                                                        <div class="form-group">
+                                                            <input type="text" onkeyup="deleteError($(this).parent());" placeholder="Numero de tracking" onkeyup="deleteError($(this).parent());" id="tracking" name="tracking" class="form-control" value="">
+                                                        </div>
+                                                </div> --}}
                                                <div class="col-sm-2" v-show="showFieldsTotals">
                                                     <label class="valDeclarado">@lang('documents.declared')</label>
                                                         <div class="form-group" id="ValDecla">
                                                             <label style="display: none;" for="" class=""></label>
                                                             <input type="number" onkeyup="deleteError($(this).parent());" placeholder="@lang('documents.declared')" onkeyup="deleteError($(this).parent());" id="valDeclarado" name="valDeclarado" class="form-control" value="">
                                                             <small class="help-block" id="HvalDeclarado" style="display: none">@lang('documents.obligatory_field')</small>
-                                                        </div>
-                                                </div>
-                                               <div class="col-sm-6" v-show="!showFieldsTotals">
-                                                    <label class="tracking">Tracking</label>
-                                                        <div class="form-group">
-                                                            <input type="text" onkeyup="deleteError($(this).parent());" placeholder="Numero de tracking" onkeyup="deleteError($(this).parent());" id="tracking" name="tracking" class="form-control" value="">
                                                         </div>
                                                 </div>
                                                 <div class="col-sm-4" v-show="showFieldsTotals">

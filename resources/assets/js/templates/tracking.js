@@ -46,9 +46,9 @@ var objVue = new Vue({
         /* CUSTOM MESSAGES VE-VALIDATOR*/
         const dict = {
             custom: {
-                consignee_id: {
-                    required: 'El cliente es obligatorio.'
-                },
+                // consignee_id: {
+                //     required: 'El cliente es obligatorio.'
+                // },
                 tracking: {
                     required: 'El tracking es obligatorio.'
                 }
@@ -94,11 +94,12 @@ var objVue = new Vue({
                     me.email = datos.data['correo'];
                     me.confirmedSend = (datos.data['despachar'] == 1) ? true : false;
                 } else {
-                    this.instruccion = false;
-                    this.contenido = null;
-                    this.email = null;
-                    this.consignee_id = null;
-                    this.confirmedSend = false;
+                    me.create();
+                    // this.instruccion = false;
+                    // this.contenido = null;
+                    // this.email = null;
+                    // this.consignee_id = null;
+                    // this.confirmedSend = false;
                 }
             });
         },
@@ -155,7 +156,7 @@ var objVue = new Vue({
             this.$validator.validateAll().then((result) => {
                 if (result) {
                     axios.post('tracking', {
-                        'consignee_id': this.consignee_id.id,
+                        'consignee_id': (this.consignee_id != null) ? this.consignee_id.id : null,
                         'codigo': this.tracking,
                         'contenido': this.contenido,
                         'confirmed_send': this.confirmedSend,

@@ -59,21 +59,23 @@
                     </div>
                     <div class="ibox-content">
                         <!--***** contenido ******-->
-                        <div class="row">
+                        <div class="row">           
                             <div class="col-lg-12">
-                                <div class="form-group" :class="{ 'has-error': errors.has('tracking') }">
+                                <div class="form-group" :class="{ 'has-error': errors.has('consignee_id') }">
                                     <div class="col-sm-4">
-                                        <label for="tracking" class="control-label gcore-label-top">@lang('general.tracking'):</label>
+                                        <label for="consignee_id" class="control-label gcore-label-top">@lang('general.client'):</label>
                                     </div>
                                     <div class="col-sm-8">
-	                                    <input class="form-control" name="tracking" placeholder="@lang('general.number_of_tracking')" type="text" v-model="tracking" v-validate.disable="'required|unique'" v-on:keyup.enter="searchTracking()">
-                                            <small class="help-block error" v-show="errors.has('tracking')">
-                                                @{{ errors.first('tracking') }}
-                                            </small>
+                                        <v-select name="consignee_id" :options="consignees" placeholder="@lang('general.client')" label="name" v-model="consignee_id">
+                                        </v-select>
+                                         <small class="help-block error" v-show="errors.has('consignee_id')">
+                                            @{{ errors.first('consignee_id') }}
+                                        </small>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        
                         @if(env('APP_CLIENT') != 'worldcargo')
                             <div class="row">
                                 <div class="col-lg-12">
@@ -91,18 +93,17 @@
                                 </div>
                             </div>
                         @endif
-                        <div class="row">           
+                        <div class="row">
                             <div class="col-lg-12">
-                                <div class="form-group" :class="{ 'has-error': errors.has('consignee_id') }">
+                                <div class="form-group" :class="{ 'has-error': errors.has('tracking') }">
                                     <div class="col-sm-4">
-                                        <label for="consignee_id" class="control-label gcore-label-top">@lang('general.client'):</label>
+                                        <label for="tracking" class="control-label gcore-label-top">@lang('general.tracking'):</label>
                                     </div>
                                     <div class="col-sm-8">
-                                        <v-select name="consignee_id" :options="consignees" placeholder="@lang('general.client')" label="name" v-model="consignee_id" v-validate.disable="'required'">
-                                        </v-select>
-                                         <small class="help-block error" v-show="errors.has('consignee_id')">
-                                            @{{ errors.first('consignee_id') }}
-                                        </small>
+                                        <input class="form-control" name="tracking" placeholder="@lang('general.number_of_tracking')" type="text" v-model="tracking" v-validate.disable="'required|unique'" v-on:keyup.enter="searchTracking()">
+                                            <small class="help-block error" v-show="errors.has('tracking')">
+                                                @{{ errors.first('tracking') }}
+                                            </small>
                                     </div>
                                 </div>
                             </div>
