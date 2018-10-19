@@ -73,19 +73,23 @@
     </style>
 
     </head>
-    <?php 
+    <?php
     $total_declarado = 0;
     $total_piezas = 0;
     $total_libras = 0;
     $total_volumen = 0;
     $total_volumen_cft = 0;
     $total_cmt = 0;
-    
+
     ?>
     <body>
+      <pre>
+        <?php //var_dump($documento); ?>
+
+      </pre>
         @if(count($detalle) > 0)
             @foreach($detalle as $val)
-                <?php 
+                <?php
                     $total_piezas += $val->piezas;
                     $total_declarado += $val->valor;
                     $total_libras += $val->peso;
@@ -165,22 +169,18 @@
 
         <table class="datos_company separador_interno">
           <tr>
-            <td style="width:15%;"><strong>Agent:</strong></td>
-            <td style="width:45%;">{{ $documento->cliente }}</td>
-            <td style="width:20%;"><strong>Zone:</strong></td>
-            <td style="width:20%;">{{ $documento->cliente_zona }}</td>
-          </tr>
-          <tr>
-            <td><strong>Destination:</strong></td>
-            <td>{{ $documento->cliente_ciudad }}</td>
-            <td><strong>Declared Value:</strong></td>
-            <td>$ {{ $total_declarado }}</td>
-          </tr>
-          <tr>
-            <td><strong>Country:</strong></td>
-            <td>{{ $documento->cliente_pais }}</td>
-            <td><strong>User:</strong></td>
-            <td>{{ ((isset($documento->usuario) and $documento->usuario != '') ? $documento->usuario : '') }}</td>
+            <td style="width:50%;">
+              <strong>Observaciones:</strong>
+              <br>
+              {{ $documento->observaciones }}
+            </td>
+            <td>
+              <strong>Destination:</strong> {{ $documento->cliente_ciudad }}
+              <br>
+              <strong>Declared Value:</strong> $ {{ $total_declarado }}
+              <br>
+              <strong>Forma de pago:</strong> {{ ((isset($documento->usuario) and $documento->usuario != '') ? $documento->usuario : '') }}
+            </td>
           </tr>
         </table>
 
@@ -266,33 +266,33 @@
                         <div id="apDiv10">
                             <table width="100%" border="0" cellspacing="1" cellpadding="0">
                                 <tr>
-                                    <td><b>@lang('general.value'): (Flete+Impuesto) {{ $total_volumen }} - {{ $documento->valor }}</b></td>
-                                    <?php 
+                                    <td><b>@lang('general.value'): (Flete+Impuesto) </b></td>
+                                    <?php
                                     if($total_libras > $total_volumen){
-                                      $sub = ($total_declarado * $documento->impuesto / 100) + (ceil($total_libras) * $documento->valor); 
+                                      $sub = ($total_declarado * $documento->impuesto / 100) + (ceil($total_libras) * $documento->valor);
                                     }else{
-                                      $sub = ($total_declarado * $documento->impuesto / 100) + (ceil($total_volumen) * $documento->valor); 
+                                      $sub = ($total_declarado * $documento->impuesto / 100) + (ceil($total_volumen) * $documento->valor);
                                     }
                                     ?>
-                                    <td align="right">$ {{ $subtotal = number_format($sub, 2) }} </td>
-                                </tr>                                   
+                                    <td align="right">$ {{ $subtotal = ceil(number_format($sub, 2)) }} </td>
+                                </tr>
 
                                 <tr>
                                     <td><b>@lang('general.insurance'): </b></td>
                                     <?php $seguro = $documento->seguro_cobrado; ?>
-                                    <td align="right">$ {{ number_format($seguro, 2) }} </td>
+                                    <td align="right">$ {{ ceil(number_format($seguro, 2)) }} </td>
                                 </tr>
                                 <tr>
                                     <td><b>@lang('general.discount'):</b></td>
-                                    <td align="right">$ {{ number_format($documento->descuento, 2) }} </td>
+                                    <td align="right">$ {{ ceil(number_format($documento->descuento, 2)) }} </td>
                                 </tr>
                                 <tr>
                                     <td><b>@lang('general.others'):</b></td>
-                                    <td align="right">$ {{ number_format($documento->cargos_add, 2) }} </td>
+                                    <td align="right">$ {{ ceil(number_format($documento->cargos_add, 2)) }} </td>
                                 </tr>
                                 <tr>
                                     <td><b>Sub Total:</b></td>
-                                    <td align="right">$ {{ $total = number_format($sub + $seguro + $documento->cargos_add - $documento->descuento, 2) }}</td>
+                                    <td align="right">$ {{ $total = ceil(number_format($sub + $seguro + $documento->cargos_add - $documento->descuento, 2)) }}</td>
                                 </tr>
                             </table>
                         </div>
@@ -302,12 +302,12 @@
 
                                     <tr>
                                         <td><b>Total:</b></td>
-                                        <td align="right"><b><span style="font-size:14px;color:#F00">$ {{ $total }}</span></b>
+                                        <td align="right"><b><span style="font-size:14px;color:#F00">$ {{ ceil($total) }}</span></b>
                                         </td>
                                     </tr>
                                 </table>
                             </div>
-                        </div>  
+                        </div>
                     </td>
                   </tr>
                 </table>
@@ -320,7 +320,7 @@
                   </tr>
                   <tr>
                     <td colspan="2">
-                      <div style="width: 75%;margin: 0 auto;text-align: center;color: red;font-weight: bold;">SUS PAQUETES SE ENVIARÁN A VENEZUELA UNA VEZ CUMPLIDO 10 DÍAS EN NUESTRA BODEGA</div>
+                      <div style="width: 75%;margin: 0 auto;text-align: center;color: red;font-weight: bold;">Pago a nombre de WorldDCargo</div>
                     </td>
                   </tr>
                 </table>
@@ -336,12 +336,12 @@
             </tr>
             <tr>
               <td style="margin: 0 auto;font-size: 13px;font-weight: bold;padding: 5px;">
-                Todo lo que venga por correo interno de los estados unidos USPS, no nos hacemos responsables, ya que no hay manera de hacer rastreo no tiene prueba de entrega 
+                Todo lo que venga por correo interno de los estados unidos USPS, no nos hacemos responsables, ya que no hay manera de hacer rastreo no tiene prueba de entrega
               </td>
             </tr>
             <tr>
               <td style="margin: 0 auto;font-size: 13px;font-weight: bold;color: red;padding: 5px;">
-                NO NOS HACEMOS RESPONSABLES DE DAÑOS EN TELEVISORES QUE NO VIAJEN EN CAJA DE MADERA.
+                SUS PAQUETES SE ENVIARÁN A VENEZUELA UNA VEZ CUMPLIDO 10 DÍAS EN NUESTRA BODEGA
               </td>
             </tr>
           </table>
@@ -371,14 +371,14 @@
         <table class="table_firma separador_interno" style="{{ (env('APP_CLIENT') == 'worldcargo') ? 'padding-top:30px;' : '' }}">
           <tr>
             <td><strong>Printed:</strong></td>
-            <td style="width:22%">{{ date('m-d-y h:i:s a', time()) }}</td>    
+            <td style="width:22%">{{ date('m-d-y h:i:s a', time()) }}</td>
           </tr>
           <tr style="height:40px;">
             <td><strong>Sign: </strong></td>
-            <td style="border-bottom: 1px solid #000; vertical-align:text-bottom !important;">&nbsp;</td>    
+            <td style="border-bottom: 1px solid #000; vertical-align:text-bottom !important;">&nbsp;</td>
           </tr>
         </table>
-        
+
         @if(env('APP_CLIENT') != 'worldcargo')
           <table class="acuerdo separador_interno">
             <tr>
