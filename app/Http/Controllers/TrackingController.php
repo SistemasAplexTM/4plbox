@@ -187,18 +187,46 @@ class TrackingController extends Controller
 
     public function addOrDeleteDocument(Request $request)
     {
-        if ($request->option == 'delete') {
-            DB::table('tracking')
-                ->where('id', $request->id_tracking)
-                ->update(['documento_detalle_id' => null]);
-        } else {
-            DB::table('tracking')
-                ->where('id', $request->id_tracking)
-                ->update(['documento_detalle_id' => $request->id_document]);
+        $data = DB::table('tracking AS a')
+            ->select('a.codigo', 'b.num_warehouse')
+            ->leftjoin('documento_detalle as b', 'a.documento_detalle_id', 'b.id')
+            ->where([
+                ['a.deleted_at', null],
+                ['a.codigo', $request->tracking],
+                ['a.agencia_id', Auth::user()->agencia_id],
+            ])
+            ->first();
+        if($data != null){
+            if($data->num_warehouse == null){
+               // DB::table('tracking')
+               //  ->where('id', $request->id_tracking)
+               //  ->update(['documento_detalle_id' => $request->id_document]); 
+                $answer = array(
+                    'code' => 200,
+                    'data' => $data
+                );
+            }else{
+                $answer = array(
+                    'code' => 600,
+                    'error' => 'El numero de warehouse ingresado, ya esta asociado al documento (<strong>'. $data->num_warehouse .'</strong>).'
+                ); 
+            }
+        }else{
+            $answer = array(
+                'code' => 600,
+                'error' => 'El numero de warehouse ingresado, no esta en la base de datos.'
+            );
         }
-        $answer = array(
-            'code' => 200,
-        );
+        // if ($request->option == 'delete') {
+        //     DB::table('tracking')
+        //         ->where('id', $request->id_tracking)
+        //         ->update(['documento_detalle_id' => null]);
+        // } else {
+        //     DB::table('tracking')
+        //         ->where('id', $request->id_tracking)
+        //         ->update(['documento_detalle_id' => $request->id_document]);
+        // }
+        
         return $answer;
     }
 

@@ -540,6 +540,8 @@ var objVue = new Vue({
         permissions: {}, //es para poder pasar los permisos al consolidado
         refreshBoxes: false, //variable para refrescar las cajas del consolidado bodega
         cantidad_detalle: true, //para mostrar u ocultar el boton de agregar (funcionalidad para courier)
+        tracking_number: null,
+        id_detalle: null
     },
     methods: {
         refreshTableDetail: function(){
@@ -555,36 +557,7 @@ var objVue = new Vue({
             this.showFieldsTotals = value;
         },
         addTrackings(id) {
-            // if ($('#consignee_id').val() != '') {
-                var consig_id = ($('#consignee_id').val() != '') ? $('#consignee_id').val() : null;
-                if ($.fn.DataTable.isDataTable('#tbl-trackings')) {
-                    $('#tbl-trackings' + ' tbody').empty();
-                    $('#tbl-trackings').dataTable().fnDestroy();
-                }
-                var table = $('#tbl-trackings').DataTable({
-                    ajax: '../../tracking/all/' + false + '/' + consig_id,
-                    columns: [{
-                        sortable: false,
-                        "render": function(data, type, full, meta) {
-                            var checked = '';
-                            if (full.documento_detalle_id == id) {
-                                checked = "checked='checked'"
-                            }
-                            return '<div class="checkbox checkbox-success" data-toggle="tooltip" title="Agregar"><input type="checkbox" ' + checked + ' id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '" onclick="addTrackingToDocument(' + full.id + ', ' + id + ')"></label></div>';
-                        }
-                    }, {
-                        data: "codigo",
-                        name: 'codigo'
-                    }, {
-                        data: "contenido",
-                        name: 'contenido'
-                    }],
-                    'columnDefs': [{
-                        className: "text-center",
-                        "targets": [0],
-                        width: 10,
-                    }]
-                });
+            this.id_detalle = id;
                 /* TBL-TRACKING-USED */
                 if ($.fn.DataTable.isDataTable('#tbl-trackings-used')) {
                     $('#tbl-trackings-used' + ' tbody').empty();
@@ -596,6 +569,7 @@ var objVue = new Vue({
                         sortable: false,
                         "render": function(data, type, full, meta) {
                             var checked = '';
+
                             if (full.documento_detalle_id == id) {
                                 checked = "checked='checked'"
                             }
@@ -618,41 +592,56 @@ var objVue = new Vue({
                         width: 10,
                     }]
                 });
-                $('#modalTrackingsAdd').modal('show');
-            // } else {
-            //     swal('Atención!', 'Necesita seleccionar un Consignee para continuar.', 'warning');
-            // }
+                $('#modalTrackingsAdd2').modal('show');
         },
-        addTrackingToDocument(data) {
+        addTrackingToDocument() {
             let me = this;
-            if (!$('#chk' + data.idTracking).is(':checked')) {
-                axios.post('../../tracking/addOrDeleteDocument', {
-                    'option': 'create',
-                    'id_tracking': data.idTracking,
-                    'id_document': data.idDocument
-                }).then(response => {
+
+            axios.post('../../tracking/addOrDeleteDocument', {
+                'option': 'create',
+                'tracking': me.tracking_number,
+                'id_detail': me.id_detalle
+            }).then(response => {
+                if(response.data.code == 200){
                     refreshTable('whgTable');
-                    // var cant = $('#cant_tracking' + data.idDocument).html();
-                    // $('#cant_tracking' + data.idDocument).html(parseInt(cant) + 1);
                     toastr.success('Tracking agregado a este documento.');
                     toastr.options.closeButton = true;
-                });
-            } else {
-                axios.post('../../tracking/addOrDeleteDocument', {
-                    'option': 'delete',
-                    'id_tracking': data.idTracking,
-                    'id_document': data.idDocument
-                }).then(response => {
-                    refreshTable('whgTable');
-                    // var cant = $('#cant_tracking' + data.idDocument).html();
-                    // $('#cant_tracking' + data.idDocument).html(parseInt(cant) - 1);
-                    toastr.warning('Tracking retirado de este documento.');
-                    toastr.options.closeButton = true;
-                });
-            }
-            setTimeout(function() {
-                me.addTrackings(data.idDocument);
-            }, 200);
+                }else{
+                    toastr.warning('Error: -' + response.data.error);
+                }
+            }).catch(function(error) {
+                console.log(error);
+                toastr.warning('Error: -' + error);
+            });
+
+            // if (!$('#chk' + data.idTracking).is(':checked')) {
+            //     axios.post('../../tracking/addOrDeleteDocument', {
+            //         'option': 'create',
+            //         'id_tracking': data.idTracking,
+            //         'id_document': data.idDocument
+            //     }).then(response => {
+            //         refreshTable('whgTable');
+            //         // var cant = $('#cant_tracking' + data.idDocument).html();
+            //         // $('#cant_tracking' + data.idDocument).html(parseInt(cant) + 1);
+            //         toastr.success('Tracking agregado a este documento.');
+            //         toastr.options.closeButton = true;
+            //     });
+            // } else {
+            //     axios.post('../../tracking/addOrDeleteDocument', {
+            //         'option': 'delete',
+            //         'id_tracking': data.idTracking,
+            //         'id_document': data.idDocument
+            //     }).then(response => {
+            //         refreshTable('whgTable');
+            //         // var cant = $('#cant_tracking' + data.idDocument).html();
+            //         // $('#cant_tracking' + data.idDocument).html(parseInt(cant) - 1);
+            //         toastr.warning('Tracking retirado de este documento.');
+            //         toastr.options.closeButton = true;
+            //     });
+            // }
+            // setTimeout(function() {
+            //     me.addTrackings(data.idDocument);
+            // }, 200);
         },
         /* FUNCION PARA ELIMINAR DETALLE DE CONSIOLIDADO */
         deleteDetailConsolidado: function(data) {

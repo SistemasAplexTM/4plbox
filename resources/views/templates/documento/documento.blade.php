@@ -87,7 +87,7 @@
       opacity: 0;
     }
     #trackings{
-        width: 80% !important;
+        width: 50% !important;
     }
 </style>
 <link href="{{ asset('css/plugins/dataTables/keyTable.dataTables.min.css') }}">
@@ -339,7 +339,8 @@
                                 <h5>@lang('documents.totals')</h5>
                                 <div class="ibox-tools">
                                     <label>@lang('documents.liquidate')</label>
-                                    <input type='checkbox' data-toggle="toggle" id='show-totales' name="liquidar" @click="showTotals()" data-size='mini' data-on="Si" data-off="No" data-width="50" data-style="ios" data-onstyle="primary" data-offstyle="danger" {{ ($documento->liquidado != 0) ? 'checked="checked"' : '' }}>
+                                    {{-- <input type='checkbox' data-toggle="toggle" id='show-totales' name="liquidar" @click="showTotals()" data-size='mini' data-on="Si" data-off="No" data-width="50" data-style="ios" data-onstyle="primary" data-offstyle="danger" {{ ($documento->liquidado != 0) ? 'checked="checked"' : '' }}> --}}
+                                    <input type='checkbox' data-toggle="toggle" id='show-totales' name="liquidar" @click="showTotals()" data-size='mini' data-on="Si" data-off="No" data-width="50" data-style="ios" data-onstyle="primary" data-offstyle="danger" checked="checked">
                                 </div>
                             </div>
                             <!-- TOTALES -->
@@ -570,7 +571,7 @@
                                                 <label class="contiene">@lang('documents.content')</label>
                                                     <div class="form-group"  id="Valconti">
                                                         <label class="contiene" style="display: none;"></label>
-                                                        <input type="text" onkeyup="deleteError($(this).parent());" id="contiene" name="contiene" class="form-control" value="" placeholder="@lang('documents.content')">
+                                                        <input type="text" onkeyup="deleteError($(this).parent());" id="contiene" name="contiene" class="form-control" value="" placeholder="@lang('documents.content')" autocomplete="off">
                                                         <small class="help-block" id="Hcontiene" style="display: none">@lang('documents.obligatory_field')</small>
                                                     </div>
                                             </div>
@@ -823,10 +824,54 @@
                 </div>
             </form>
         </div>
+        {{-- MODAL AGREGAR TRACKINGS 2 --}}
+    <div class="modal fade bs-example" id="modalTrackingsAdd2" tabindex="" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" id="trackings">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">@lang('documents.close')</span></button>
+                    <h2 class="modal-title" id="myModalLabel"><i class="fa fa-barcode"></i>@lang('documents.add_trackings')</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <label class="control-label">Ingrese el numero de tracking</label>
+                            <input type="text" placeholder="Tracking" id="tracking_number" class="form-control" v-model="tracking_number" @keyup.enter="addTrackingToDocument()">
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="control-label" style="width: 100%;">&nbsp;</label>
+                            <button type="button" id="tracking_save" class="btn btn-primary" @click="addTrackingToDocument()">Agregar</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2>@lang('documents.associated_trackings')</h2>
+                            <div class="form-group">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover" id="tbl-trackings-used" style="width: 100%">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>@lang('documents.tracking')</th>
+                                                <th>@lang('documents.content')</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">@lang('documents.close')</button>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
 
-    {{-- MODAL AGREGAR TRACKINGS --}}
-    <div class="modal fade bs-example" id="modalTrackingsAdd" tabindex="" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{-- MODAL AGREGAR TRACKINGS 1 --}}
+   {{--  <div class="modal fade bs-example" id="modalTrackingsAdd" tabindex="" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" id="trackings">
             <div class="modal-content">
                 <div class="modal-header">
@@ -874,7 +919,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
 @section('scripts')

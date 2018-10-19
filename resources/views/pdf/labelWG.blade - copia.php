@@ -18,13 +18,11 @@
             margin: 0 auto;
         }
         .fecha{
-            /*color: #FFFFFF;
-            background-color: #000;*/
-            /*width: 188px;*/
-            font-size: 11px;
-            /*height: 19px;*/
-            width: 100%;
-            text-align: center;
+            color: #FFFFFF;
+            background-color: #000;
+            width: 188px;
+            font-size: 15px;
+            height: 19px;
         }
         .peso{
             font-size: 26px;
@@ -33,8 +31,7 @@
             padding-top: 15px;
         }
         .paginacion{
-            padding-top: 40px;
-            font-size: 30px;
+            font-size: 20px;
             text-align: center;
         }
         .warehouse{
@@ -51,35 +48,34 @@
             height: 16px;
         }
         .agencia{
-            font-size: 25px;
-            width: 100%;
-            text-align: center;
-            /*color: #FFFFFF;*/
-            /*position: absolute;*/
-            /*background-color: #000;*/
+            font-size: 15px;
+            width: 200px;
+            text-align: right;
+            color: #FFFFFF;
+            position: absolute;
+            background-color: #000;
             height: 19px;
             font-weight: bold;
-            /*margin-left: 220px;*/
-            /*margin-top: -28px;*/
+            margin-left: 220px;
+            margin-top: -28px;
         }
         #destinatario{
-            margin-top: 20px;
-            margin-bottom: 15px;
+            margin-top: 5px;
         }
         .recibe{
             height: 18px;
             background-color: #000;
             color: #FFFFFF;
-            width: 95px;
+            width: 55px;
             font-size: 15px;
             font-weight: bold;
         }
         .nomDesti{
             position: absolute;
-            height: 17px;
-            margin-left: 100px;
+            height: 15px;
+            margin-left: 60px;
             width: 310px;
-            font-size: 20px;
+            font-size: 11px;
         }
         .dirDesti{
             margin-left: 60px;
@@ -150,10 +146,10 @@
             height: 90px;
         }
         .des{
-            height: 72px;
+            height: 82px;
         }
         #descripcion{
-            font-size: 11px;            
+            font-size: 11px;
         }
         #barcode-name{
         	font-size: 30px;
@@ -169,18 +165,14 @@
 <table border="0" cellpadding="0" cellspacing="0" id="reciboWarehouse" style="page-break-after:{{ ($contRegistros === $toalRegistros) ? 'avoid' : 'always' }}" width="100%">
     <tr>
         <td>
+            <div class="fecha">
+                {{ $value->created_at->toFormattedDateString() }}
+            </div>
             <div class="agencia">
                 {{ $documento->agencia }}
             </div>
         </td>
     </tr>
-    {{-- <tr>
-        <td>
-            <div class="fecha">
-                {{ $value->created_at->toFormattedDateString() }}
-            </div>
-        </td>
-    </tr> --}}
     <tr>
         <td>
             @if(env('APP_CLIENT') != 'worldcargo')
@@ -192,12 +184,25 @@
     </tr>
     <tr>
         <td>
+            <div class="telefono">
+                @if(env('APP_CLIENT') != 'worldcargo')
+                    @lang('general.phone'):
+                    {{ $value->ship_tel }}
+                @endif
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
             <div id="destinatario">
                 <div class="recibe">
                      @lang('general.consignee'):
                 </div>
                 <div class="nomDesti">
                     {{ $value->cons_nomfull }}
+                </div>
+                <div class="dirDesti">
+                    {{ $value->cons_dir }}
                 </div>
             </div>
         </td>
@@ -213,8 +218,9 @@
         <td>
             <div class="datosAdd">
                 <div class="codebar1">
+                    <div class="peso">{{ $value->peso }} Lb</div>
                     <div class="paginacion">{{ $cont + 1 . '-' . count($detalle) }}</div>
-                    <div class="fecha">{{ $value->created_at->toFormattedDateString() }}</div>
+                    <div class="warehouse">Rec: </div>
                 </div>
                 <div class="datos">
                     <div class="pkgs">Pkgs: 1 </div>
@@ -223,9 +229,16 @@
                         {{ number_format($value->valor,2) }}
                     </div>
                     <?php $leng = strlen($value->contenido); ?>
-                    <div class="des" style="border-top: 1px solid #000;margin-top: 10px;">
+                    <div class="des">
+                        @if(env('APP_CLIENT') != 'worldcargo')
+                            Desc:
+                            <span id="descripcion">
+                                {{ (($leng > 215) ? str_replace(',', '-', substr($value->contenido, 0, 215)) : str_replace(',', ', ', $value->contenido)) }}
+                            </span>
+                        @endif
                         <span id="descripcion">
-                            {{ (($leng > 215) ? str_replace(',', '-', substr($value->contenido, 0, 215)) : str_replace(',', ', ', $value->contenido)) }}
+                            <br>
+                                **- trackings ({{ str_replace(',', ', ', $value->tracking) }})
                         </span>
                     </div>
                     <div class="servicio">
@@ -242,8 +255,8 @@
         <td>
             <div class="codebar2">
                 @if(env('APP_CLIENT') === 'worldcargo')
-                <img id="barcode" style="height: 50px;padding-top: 15px;" src="data:image/png;base64, {{ DNS1D::getBarcodePNG($value->num_warehouse, "C128",2,40) }}" alt="barcode" />
-                <div id="barcode-name">{{ $value->num_warehouse }}</div>
+                <img id="barcode" style="height: 50px;padding-top: 15px;" src="data:image/png;base64, {{ DNS1D::getBarcodePNG($value->codigo, "C128",2,40) }}" alt="barcode" />
+                <div id="barcode-name">{{ $value->codigo }}</div>
                 @else
             	<img id="barcode" style="height: 50px;padding-top: 5px;" src="data:image/png;base64, {{ DNS1D::getBarcodePNG($value->codigo, "C128",2,40) }}" alt="barcode" />
             	<div id="barcode-name">{{ $value->codigo }}</div>
