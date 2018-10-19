@@ -74,8 +74,8 @@
                                     <div class="col-sm-4">
                                         <div class="col-sm-12">
                                             <label class="control-label col-lg-12">&nbsp;</label>
-                                            <a v-if="app_type == 'courier'" hfer="#" target="blank_" class="btn btn-info btn-sm printDocument" data-toggle="tooltip" data-placement="top" title="Imprimir manifiesto"><i class="fa fa-print"></i> Manifiesto</a>
-                                            <a v-if="app_type == 'courier'" hfer="#" target="blank_" class="btn btn-info btn-sm printDocumentGuias" data-toggle="tooltip" data-placement="top" title="Imprimir guias hijas"><i class="fa fa-print"></i> Guias hijas</a>
+                                            <a hfer="#" target="blank_" class="btn btn-info btn-sm printDocument" data-toggle="tooltip" data-placement="top" title="Imprimir manifiesto"><i class="fa fa-print"></i> Manifiesto</a>
+                                            <a hfer="#" target="blank_" class="btn btn-info btn-sm printDocumentGuias" data-toggle="tooltip" data-placement="top" title="Imprimir guias hijas"><i class="fa fa-print"></i> Guias hijas</a>
                                             <a hfer="#" target="blank_" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Imprimir instrucciones"><i class="fa fa-print"></i> Instrucciones</a>
                                         </div>
                                     </div>
@@ -186,8 +186,8 @@
 	                                                <i class="fa fa-print"></i>  Imprmir <span class="caret"></span>
 	                                            </button>
 	                                            <ul class="dropdown-menu">
-		                                            <li v-if="app_type == 'courier'"><a href="" id="printDocument" class="printDocument" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> Imprimir Manifiesto</a></li>
-                                                    <li v-if="app_type == 'courier'"><a href="" id="printDocumentGuias" class="printDocumentGuias" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> Imprimir Guias</a></li>
+		                                            <li><a href="" id="printDocument" class="printDocument" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> Imprimir Manifiesto</a></li>
+                                                    <li><a href="" id="printDocumentGuias" class="printDocumentGuias" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> Imprimir Guias</a></li>
 		                                            <li><a href="#" id="" class=""><i class="fa fa-print fa-fw"></i> Instrucciones</a></li>
 	                                            </ul>
 	                                        </div>

@@ -4,13 +4,13 @@
             border: 1px solid;
         }
         #page-wrapper{
-            margin-top: -10px;
+            /*margin-top: -10px;*/
         }
         #reciboWarehouse{
             background-color: #ffffff;
-            /*margin-top: -30px;*/
-            /*        margin-left: -20px;
-                    margin-top: -25px;*/
+            /*margin-top: -30px;
+            margin-left: -20px;
+            margin-top: -25px;*/
         }
         *{
             font-weight: bold;

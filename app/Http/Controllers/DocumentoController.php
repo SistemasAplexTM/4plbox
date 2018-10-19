@@ -1176,7 +1176,7 @@ class DocumentoController extends Controller
                 'consignee.zip as cons_zip',
                 'consignee.po_box as cons_pobox',
                 'ciudad_consignee.nombre AS cons_ciudad',
-                'deptos_consignee.descripcion AS cons_depto'
+                'deptos_consignee.descripcio AS cons_depto'
             )
             ->where($where)
             ->get();
@@ -1323,6 +1323,7 @@ class DocumentoController extends Controller
                                     'a.consignee AS consignee_json',
                                     'b.num_warehouse',
                                     'b.num_guia',
+                                    'b.volumen',
                                     DB::raw('CONCAT_WS(" ", c . primer_nombre, c . segundo_nombre, c . primer_apellido, c . segundo_apellido) as nom_ship'),
                                     'c.direccion as dir_ship',
                                     'c.telefono as tel_ship',
@@ -1343,6 +1344,7 @@ class DocumentoController extends Controller
                                     'b.liquidado'
                                 )
                                 ->where([['a.deleted_at', null], ['a.consolidado_id', $id], ['a.flag', 0]])
+                                ->orderBy('b.created_at', 'ASC')
                                 ->get();
                             $this->AddToLog('Impresion Consolidado (' . $id . ')');
                             if (env('APP_TYPE') === 'courier') {

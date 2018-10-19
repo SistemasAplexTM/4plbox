@@ -836,11 +836,11 @@
                     <div class="row">
                         <div class="col-lg-8">
                             <label class="control-label">Ingrese el numero de tracking</label>
-                            <input type="text" placeholder="Tracking" id="tracking_number" class="form-control" v-model="tracking_number" @keyup.enter="addTrackingToDocument()">
+                            <input type="text" placeholder="Tracking" id="tracking_number" class="form-control" v-model="tracking_number" @keyup.enter="addTrackingToDocument('create')">
                         </div>
                         <div class="col-lg-4">
                             <label class="control-label" style="width: 100%;">&nbsp;</label>
-                            <button type="button" id="tracking_save" class="btn btn-primary" @click="addTrackingToDocument()">Agregar</button>
+                            <button type="button" id="tracking_save" class="btn btn-primary" @click="addTrackingToDocument('create')">Agregar</button>
                         </div>
                     </div>
                     <div class="row">
@@ -851,9 +851,9 @@
                                     <table class="table table-striped table-bordered table-hover" id="tbl-trackings-used" style="width: 100%">
                                         <thead>
                                             <tr>
-                                                <th></th>
-                                                <th>@lang('documents.tracking')</th>
+                                                <th style="width: 50%">@lang('documents.tracking')</th>
                                                 <th>@lang('documents.content')</th>
+                                                <th>@lang('general.actions')</th>
                                             </tr>
                                         </thead>
                                     </table>

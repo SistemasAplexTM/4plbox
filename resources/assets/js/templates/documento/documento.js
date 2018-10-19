@@ -244,7 +244,7 @@ function datatableDetail(){
                     .column(7)
                     .data()
                     .reduce(function (a, b) {
-                        return intVal(a) + intVal(b);
+                        return intVal(Math.ceil(a)) + intVal(Math.ceil(b));
                     }, 0);
             var piezas = api
                     .column(8)
@@ -256,7 +256,7 @@ function datatableDetail(){
                     .column(9)
                     .data()
                     .reduce(function (a, b) {
-                        return intVal(a) + intVal(b);
+                        return intVal(Math.ceil(a)) + intVal(Math.ceil(b));
                     }, 0);
             var dec = api
                     .column(10)
@@ -267,8 +267,8 @@ function datatableDetail(){
 
             /*Update footer formatCurrency()*/
             $('#piezas').val(parseFloat(isInteger(piezas)));
-            $('#volumen').val(Math.ceil(parseFloat(isInteger(vol))));
-            $('#pie_ft').val(Math.ceil(parseFloat(isInteger(vol * 166 / 1728))));
+            $('#volumen').val(parseFloat(isInteger(Math.ceil(vol))));
+            $('#pie_ft').val(parseFloat(isInteger(Math.ceil(vol * 166 / 1728))));
             $('#pesoDim').val(parseFloat(isInteger(peso)));
             $('#valor_declarado_tbl').val(parseFloat(isInteger(dec)));
         },
@@ -433,12 +433,8 @@ function restoreShipperConsignee(id, table) {
     };;
 }
 
-function addTrackingToDocument(idTracking, idDocument) {
-    var data = {
-        idTracking: idTracking,
-        idDocument: idDocument,
-    }
-    objVue.addTrackingToDocument(data);
+function addTrackingToDocument(tracking, option) {
+    objVue.addTrackingToDocument(option, tracking);
 }
 
 function showModalShipperConsigneeConsolidado(id, idShipCons, opcion) {
@@ -566,45 +562,38 @@ var objVue = new Vue({
                 var table = $('#tbl-trackings-used').DataTable({
                     ajax: '../../tracking/all/' + false + '/' + null + '/' + id + '/' + true,
                     columns: [{
-                        sortable: false,
-                        "render": function(data, type, full, meta) {
-                            var checked = '';
-
-                            if (full.documento_detalle_id == id) {
-                                checked = "checked='checked'"
-                            }
-                            if(full.consignee_id == null){
-                                return null;
-                            }else{
-                                return '<div class="checkbox checkbox-danger" data-toggle="tooltip" title="Quitar"><input type="checkbox" ' + checked + ' id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '" onclick="addTrackingToDocument(' + full.id + ', ' + id + ')"></label></div>';
-                            }
-                        }
-                    }, {
                         data: "codigo",
                         name: 'codigo'
                     }, {
                         data: "contenido",
                         name: 'contenido'
+                    }, {
+                        sortable: false,
+                        "render": function(data, type, full, meta) {
+                            var btn_delete = '';
+                            btn_delete = '<a class="btn btn-danger btn-xs" type="button" id="btn_remove_t'+full.id+'" onclick="addTrackingToDocument('+full.codigo+', \'delete\')" data-toggle="tooltip" title="Retirar"><i class="fa fa-times"></i></a> ';
+                            return btn_delete;
+                        }
                     }],
                     'columnDefs': [{
                         className: "text-center",
                         "targets": [0],
-                        width: 10,
                     }]
                 });
                 $('#modalTrackingsAdd2').modal('show');
         },
-        addTrackingToDocument() {
+        addTrackingToDocument(option, codigo) {
             let me = this;
-
             axios.post('../../tracking/addOrDeleteDocument', {
-                'option': 'create',
-                'tracking': me.tracking_number,
+                'option': option,
+                'tracking': (codigo) ? codigo : me.tracking_number,
                 'id_detail': me.id_detalle
             }).then(response => {
                 if(response.data.code == 200){
+                    me.tracking_number = null;
+                    me.addTrackings(me.id_detalle)
                     refreshTable('whgTable');
-                    toastr.success('Tracking agregado a este documento.');
+                    toastr.success(response.data.message);
                     toastr.options.closeButton = true;
                 }else{
                     toastr.warning('Error: -' + response.data.error);

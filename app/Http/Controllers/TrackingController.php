@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\DB;
 
 class TrackingController extends Controller
 {
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('permission:tracking.index')->only('index');
         $this->middleware('permission:tracking.store')->only('store');
         $this->middleware('permission:tracking.update')->only('update');
@@ -120,21 +121,21 @@ class TrackingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getAll($grid =false, $add = null, $id = false,  $req_consignee = false)
+    public function getAll($grid = false, $add = null, $id = false, $req_consignee = false)
     {
         $where = [['tracking.deleted_at', null], ['tracking.agencia_id', Auth::user()->agencia_id]];
 
-        if($grid == false || $grid == 'false'){
+        if ($grid == false || $grid == 'false') {
             if ($id != '') {
                 $where[] = array('tracking.documento_detalle_id', $id);
-            }else{
+            } else {
                 $where[] = array('tracking.documento_detalle_id', null);
             }
 
-            if($add != null and $add != 'null') {
+            if ($add != null and $add != 'null') {
                 $where[] = array('tracking.consignee_id', $add);
-            }else{
-                if($req_consignee == false){
+            } else {
+                if ($req_consignee == false) {
                     $where[] = array('tracking.consignee_id', null);
                 }
             }
@@ -188,7 +189,7 @@ class TrackingController extends Controller
     public function addOrDeleteDocument(Request $request)
     {
         $data = DB::table('tracking AS a')
-            ->select('a.codigo', 'b.num_warehouse')
+            ->select('a.id', 'a.codigo', 'b.num_warehouse')
             ->leftjoin('documento_detalle as b', 'a.documento_detalle_id', 'b.id')
             ->where([
                 ['a.deleted_at', null],
@@ -196,27 +197,41 @@ class TrackingController extends Controller
                 ['a.agencia_id', Auth::user()->agencia_id],
             ])
             ->first();
-        if($data != null){
-            if($data->num_warehouse == null){
-               // DB::table('tracking')
-               //  ->where('id', $request->id_tracking)
-               //  ->update(['documento_detalle_id' => $request->id_document]); 
+        if ($data != null) {
+            if ($request->option === 'create') {
+                if ($data->num_warehouse == null) {
+                    DB::table('tracking')
+                        ->where('id', $data->id)
+                        ->update(['documento_detalle_id' => $request->id_detail]);
+                    $answer = array(
+                        'code' => 200,
+                        'data' => $data,
+                        'message' => 'Tracking agregado a este documento.'
+                    );
+
+                } else {
+                    $answer = array(
+                        'code'  => 600,
+                        'error' => 'El numero de warehouse ingresado, ya esta asociado al documento (<strong>' . $data->num_warehouse . '</strong>).',
+                    );
+                }
+            } else {
+                DB::table('tracking')
+                    ->where('id', $data->id)
+                    ->update(['documento_detalle_id' => null]);
                 $answer = array(
                     'code' => 200,
-                    'data' => $data
+                    'data' => $data,
+                    'message' => 'Tracking retirado de este documento.'
                 );
-            }else{
-                $answer = array(
-                    'code' => 600,
-                    'error' => 'El numero de warehouse ingresado, ya esta asociado al documento (<strong>'. $data->num_warehouse .'</strong>).'
-                ); 
             }
-        }else{
+        } else {
             $answer = array(
-                'code' => 600,
-                'error' => 'El numero de warehouse ingresado, no esta en la base de datos.'
+                'code'  => 600,
+                'error' => 'El numero de warehouse ingresado, no esta en la base de datos.',
             );
         }
+
         // if ($request->option == 'delete') {
         //     DB::table('tracking')
         //         ->where('id', $request->id_tracking)
@@ -226,7 +241,7 @@ class TrackingController extends Controller
         //         ->where('id', $request->id_tracking)
         //         ->update(['documento_detalle_id' => $request->id_document]);
         // }
-        
+
         return $answer;
     }
 
