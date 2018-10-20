@@ -1176,7 +1176,13 @@ class DocumentoController extends Controller
                 'consignee.zip as cons_zip',
                 'consignee.po_box as cons_pobox',
                 'ciudad_consignee.nombre AS cons_ciudad',
-                'deptos_consignee.descripcio AS cons_depto'
+                'deptos_consignee.descripcion AS cons_depto',
+                DB::raw('(SELECT
+                group_concat(a.codigo) AS trackings
+                FROM
+                tracking AS a
+                WHERE
+                a.documento_detalle_id = documento_detalle.id) AS trackings')
             )
             ->where($where)
             ->get();

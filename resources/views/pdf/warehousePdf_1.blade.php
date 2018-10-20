@@ -221,7 +221,7 @@
                 <tr>
                   <td>{{ $val->piezas }}</td>
                   <td>{{ $val->largo . 'x'.$val->ancho. 'x'. $val->alto }}</td>
-                  <td>{{ 0 }}</td>
+                  <td>{{ str_replace(',', ' ',$val->trackings) }}</td>
                   <td>{{ $val->peso2 }}</td>
                   <td>{{ ceil(number_format($val->peso2 / 2.205)) }}</td>
                   <td>{{ ceil($val->volumen) }}</td>
