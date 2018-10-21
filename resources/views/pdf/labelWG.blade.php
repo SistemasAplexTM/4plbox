@@ -64,7 +64,11 @@
         }
         #destinatario{
             margin-top: 20px;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
+        }
+        .po_box{
+            font-size: 15px;
+            font-weight: bold;
         }
         .recibe{
             height: 18px;
@@ -76,10 +80,10 @@
         }
         .nomDesti{
             position: absolute;
-            height: 17px;
+            height: 18px;
             margin-left: 100px;
             width: 310px;
-            font-size: 20px;
+            font-size: 15px;
         }
         .dirDesti{
             margin-left: 60px;
@@ -132,7 +136,7 @@
             font-weight: bold;
             position: absolute;
             height: 25px;
-            margin-left:200px;
+            margin-left:220px;
 
         }
         .codebar2{
@@ -150,7 +154,7 @@
             height: 90px;
         }
         .des{
-            height: 72px;
+            height: 85px;
         }
         #descripcion{
             font-size: 11px;            
@@ -204,6 +208,11 @@
     </tr>
     <tr>
         <td>
+            PoBox: <label class="po_box">{{ $value->cons_pobox }}</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
             <div class="ciudad">
                 {{ $value->cons_ciudad }}
             </div>
@@ -218,10 +227,7 @@
                 </div>
                 <div class="datos">
                     <div class="pkgs">Pkgs: 1 </div>
-                    <div class="fob">
-                        Fob:
-                        {{ number_format($value->valor,2) }}
-                    </div>
+                    
                     <?php $leng = strlen($value->contenido); ?>
                     <div class="des" style="border-top: 1px solid #000;margin-top: 10px;">
                         <span id="descripcion">

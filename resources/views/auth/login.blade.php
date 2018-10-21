@@ -99,9 +99,7 @@
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
                                     @lang('auth.forgot_pass')
                                 </a>
-                                <br>
-                                <p><small>Usuario: admin@admin.com</small></p>
-                                <p><small>Contraseña: admin123</small></p>
+                                
                                 {{-- <a href="{{ url('/register') }}">Registrarme</a> --}}
                             </div>
                             <p class="m-t"> <small>Power by AplexTM &copy;</small> </p>

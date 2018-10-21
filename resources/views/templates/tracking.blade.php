@@ -146,7 +146,8 @@
                                     <th>@lang('general.date')</th>
                                     <th>@lang('general.client')</th>
                                     <th>@lang('general.tracking')</th>
-                                    <th>@lang('general.content')</th>
+                                    <th>Warehouse</th>
+                                    {{-- <th>@lang('general.content')</th> --}}
                                     <th>@lang('general.office')</th>
                                     <th>@lang('general.actions')</th>
                                 </tr>
@@ -156,7 +157,8 @@
                                     <th>@lang('general.date')</th>
                                     <th>@lang('general.client')</th>
                                     <th>@lang('general.tracking')</th>
-                                    <th>@lang('general.content')</th>
+                                    <th>Warehouse</th>
+                                    {{-- <th>@lang('general.content')</th> --}}
                                     <th>@lang('general.office')</th>
                                     <th>@lang('general.actions')</th>
                                 </tr>

@@ -7,18 +7,11 @@ $(document).ready(function() {
         $('#ajaxCreate').remove();
     }
 });
-var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialite) {
+var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialite, filter) {
     var href_print = '';
     var href_print_label = '';
     /* MOSTRAR LABELS DE ESTADOS SI ES WAREHOUSE */
     var labels = '';
-    if(tipo_doc_id == '1'){
-        labels =    '<label class="lb_status badge badge-default">Creado</label> '+
-                    '<label class="lb_status badge badge-success">Pendiente</label> '+
-                    '<label class="lb_status badge badge-primary">Liquidado</label> '+
-                    '<label class="lb_status badge badge-warning">Consolidado</label> '+
-                    '<label class="lb_status badge badge-danger">Anulado</label>';
-    }
     if (reinitialite) {
         $('#tbl-documento').dataTable().fnDestroy();
     }
@@ -121,16 +114,26 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
             width: 180,
         }]
     });
-    if (typeof tipo_doc_id == "undefined") {
-        tipo_doc_id = 1;
+    if(){
+        if(tipo_doc_id == '1'){
+            labels =    '<label for="creado" class="lb_status badge badge-default">Creado</label> ' + 
+                        '<label for="bodega" class="lb_status badge badge-success">En bodega</label> '+ 
+                        '<label for="liquidado" class="lb_status badge badge-primary">Liquidado</label> '+ 
+                        '<label for="consolidado" class="lb_status badge badge-warning">Consolidado</label> ' + 
+                        '<label for="anulado" class="lb_status badge badge-danger">Anulado</label> ';
+        }
+        if (typeof tipo_doc_id == "undefined") {
+            tipo_doc_id = 1;
+        }
+        $('#nombre_doc').html(nom + ' ' + labels);
+        var className = $('#icono_doc').attr('class');
+        if (icon == null) {
+            var icon = 'file-text-o';
+        }
+        $('#icono_doc').removeClass(className).addClass('fa fa-' + icon);
+        $('#crearDoc').attr('onclick', 'createNewDocument_(' + tipo_doc_id + ',\'' + nom + '\',\'' + funcionalidades + '\')'); 
     }
-    $('#nombre_doc').html(nom + labels);
-    var className = $('#icono_doc').attr('class');
-    if (icon == null) {
-        var icon = 'file-text-o';
-    }
-    $('#icono_doc').removeClass(className).addClass('fa fa-' + icon);
-    $('#crearDoc').attr('onclick', 'createNewDocument_(' + tipo_doc_id + ',\'' + nom + '\',\'' + funcionalidades + '\')');
+    
 }
 
 function modalEliminar(id) {
@@ -174,17 +177,36 @@ function deleteStatusNota(id, table) {
 /* objetos VUE index */
 var objVue = new Vue({
     el: '#documentoIndex',
+    watch:{
+        status_id:function(value){
+            console.log(value);
+            listDocument(value.id, value.nombre, value.icono, value.funcionalidades);
+        },
+    },
     mounted: function() {
         this.typeDocumentList();
         this.printDocument();
+        this.getStatus();
         $('#date').val(this.getTime());
     },
     data: {
         id_status: null,
         tableDelete: null,
         params: {},
+        status: [],
+        status_id: null,
     },
     methods: {
+        getStatus: function(){
+            let me = this;
+            axios.get('status/all').then(function (response) { 
+                me.status = response.data.data;
+            }).catch(function (error) {
+                console.log(error);
+                toastr.warning('Error.');
+                toastr.options.closeButton = true;
+            });
+        },
         deleteDocument(id){
             let me = this;
             swal({

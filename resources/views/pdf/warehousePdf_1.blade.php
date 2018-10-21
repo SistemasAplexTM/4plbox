@@ -83,10 +83,11 @@
 
     ?>
     <body>
-      <pre>
-        <?php //var_dump($documento); ?>
+      {{-- <pre> --}}
+        <?php //print_r($documento); ?>
 
-      </pre>
+      {{-- </pre> --}}
+      <?php //exit(); ?>
         @if(count($detalle) > 0)
             @foreach($detalle as $val)
                 <?php
@@ -175,11 +176,11 @@
               {{ $documento->observaciones }}
             </td>
             <td>
-              <strong>Destination:</strong> {{ $documento->cliente_ciudad }}
+              <strong>Destination:</strong> {{ $documento->cliente_ciudad }}  - {{ $documento->tipo_embarque }}
               <br>
               <strong>Declared Value:</strong> $ {{ $total_declarado }}
               <br>
-              <strong>Forma de pago:</strong> {{ ((isset($documento->usuario) and $documento->usuario != '') ? $documento->usuario : '') }}
+              <strong>Forma de pago:</strong> {{ ((isset($documento->forma_pago) and $documento->forma_pago != '') ? $documento->forma_pago : '') }}  - {{ $documento->tipo_pago }}
             </td>
           </tr>
         </table>

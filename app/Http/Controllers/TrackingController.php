@@ -141,6 +141,7 @@ class TrackingController extends Controller
             }
         }
         $data = Tracking::leftJoin('consignee AS b', 'tracking.consignee_id', 'b.id')
+            ->leftJoin('documento_detalle AS c', 'tracking.documento_detalle_id', 'c.id')
             ->select(
                 'tracking.id',
                 'tracking.consignee_id',
@@ -149,7 +150,8 @@ class TrackingController extends Controller
                 'tracking.contenido',
                 'tracking.confirmed_send',
                 'tracking.created_at as fecha',
-                'b.nombre_full as cliente'
+                'b.nombre_full as cliente',
+                'c.num_warehouse'
             )
             ->where($where)
             ->get();

@@ -17,6 +17,15 @@
     #icon_close{
         right: 0px;
     }
+    .lb_status{
+        cursor: pointer;
+    }
+    .dropdown-toggle>input[type="search"] {
+    width: 100px !important;
+    }
+    .dropdown-toggle>input[type="search"]:focus:valid {
+        width: 5% !important;
+    }
 </style>
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
@@ -59,16 +68,13 @@
                                 </div>
                             </div>
                             <div class="col-lg-10">
-                                <div class="col-lg-12" style="font-size: 30px; font-weight:800;border-bottom: 1px solid #CDCDCD;"><i aria-hidden="true" id="icono_doc" class="fa fa-file-text-o"></i>&nbsp; 
+                                <div class="col-lg-8" style="font-size: 30px; font-weight:800;border-bottom: 1px solid #CDCDCD;"><i aria-hidden="true" id="icono_doc" class="fa fa-file-text-o"></i>&nbsp; 
                                     <div style="display:inline;" id="nombre_doc">
                                        @lang('documents.warehouse')
                                     </div>
-                                     @if (session()->has('sendemail'))
-                                            {{-- <div class="alert alert-success alert-dismissible" role="alert" id="msn_sendmail">
-                                              <button type="button" class="close" data-dismiss="alert" aria-label="Close" id="icon_close"><span aria-hidden="true">&times;</span></button>
-                                              <strong>Perfecto!</strong> {{ session()->get('sendemail') }}
-                                            </div> --}}
-                                    @endif
+                                </div>
+                                <div class="col-lg-4">
+                                    <v-select name="status_id" v-model="status_id" label="descripcion" :filterable="false" :options="status" placeholder="Status"></v-select>
                                 </div>
                             </div>
                             <div class="col-lg-4">

@@ -14,8 +14,8 @@ $(document).ready(function() {
             data: "codigo",
             name: 'codigo'
         }, {
-            data: "contenido",
-            name: 'contenido'
+            data: "num_warehouse",
+            name: 'num_warehouse'
         }, {
             sortable: false,
             "render": function(data, type, full, meta) {

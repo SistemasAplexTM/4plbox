@@ -786,7 +786,7 @@
                         // {data: 'pa', name: 'pa'},
 			            {
                             "render": function (data, type, full, meta) {
-                                var pa = full.pa;
+                                var pa = (full.pa == null) ? '' : full.pa;
                                 return pa + '<a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalArancel('+full.documento_detalle_id+', \'tbl-consolidado\')"><i class="material-icons">&#xE254;</i></a>';
                             }
                         },
