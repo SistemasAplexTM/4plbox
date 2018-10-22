@@ -26,6 +26,9 @@
     .dropdown-toggle>input[type="search"]:focus:valid {
         width: 5% !important;
     }
+    .actions_btn{
+        text-align: center;
+    }
 </style>
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">

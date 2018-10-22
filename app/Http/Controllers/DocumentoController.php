@@ -648,17 +648,63 @@ class DocumentoController extends Controller
                 $qr_guia = DB::raw("0 as num_guia");
                 $qr_wrh = "documento.num_warehouse";
             }
-
-            $sql = DB::table('documento')
+            if($request->status_id == null){
+                $sql = DB::table('documento')
+                    ->leftJoin('shipper', 'documento.shipper_id', '=', 'shipper.id')
+                    ->leftJoin('consignee', 'documento.consignee_id', '=', 'consignee.id')
+                    ->join('agencia', 'documento.agencia_id', '=', 'agencia.id')
+                    ->leftJoin(DB::raw("(SELECT
+                                                Count(DISTINCT z.consolidado) AS consolidado,
+                                                z.consolidado AS consolidado_status,
+                                                z.documento_id
+                                            FROM
+                                                documento_detalle AS z
+                                            WHERE
+                                                z.deleted_at IS NULL
+                                            GROUP BY
+                                                z.documento_id,
+                                                z.consolidado
+                                        ) AS t"), "documento.id", "t.documento_id")
+                    ->select('documento.id as id', 'documento.liquidado', 'documento.tipo_documento_id as tipo_documento_id', 'documento.consecutivo as codigo', 'documento.created_at as fecha', 'shipper.nombre_full as ship_nomfull', 'consignee.nombre_full as cons_nomfull', 'consignee.correo as email_cons', 'agencia.descripcion as agencia',
+                        DB::raw("(SELECT Count(a.id) AS cantidad FROM documento_detalle AS a WHERE a.documento_id = documento.id AND a.deleted_at IS NULL) as cantidad"),
+                        DB::raw("(SELECT IFNULL(SUM(a.piezas), 0) AS piezas FROM documento_detalle AS a WHERE a.documento_id = documento.id AND a.deleted_at IS NULL) as piezas"),
+                        DB::raw("(SELECT Sum(documento_detalle.peso) FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as peso"),
+                        DB::raw("(SELECT Sum(documento_detalle.volumen) FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as volumen"),
+                        $qr_wrh,
+                        $qr_guia,
+                        't.consolidado',
+                        DB::raw("SUM(t.consolidado_status) AS consolidado_status")
+                    )
+                    ->where($filter)
+                    ->groupBy(
+                        'documento.id',
+                        'documento.liquidado',
+                        'documento.tipo_documento_id',
+                        'documento.consecutivo',
+                        'documento.num_warehouse',
+                        'documento.created_at',
+                        'shipper.nombre_full',
+                        'consignee.nombre_full',
+                        'consignee.correo',
+                        'agencia.descripcion',
+                        't.consolidado'
+                    )
+                    ->orderBy('documento.created_at', 'DESC');
+            }else{
+                /* SQL CUANDO SE MANDA UN STATUS (SE CAMBIA EL LEFTJOIN DEL SELECT DEL ESTATUS POR UN JOIN )*/
+                $sql = DB::table('documento')
                 ->leftJoin('shipper', 'documento.shipper_id', '=', 'shipper.id')
                 ->leftJoin('consignee', 'documento.consignee_id', '=', 'consignee.id')
                 ->join('agencia', 'documento.agencia_id', '=', 'agencia.id')
-                ->leftJoin(DB::raw("(SELECT
+                ->join(DB::raw("(SELECT
                                             Count(DISTINCT z.consolidado) AS consolidado,
                                             z.consolidado AS consolidado_status,
                                             z.documento_id
                                         FROM
                                             documento_detalle AS z
+                                        WHERE
+                                            z.deleted_at IS NULL
+                                            AND z.status_id = $request->status_id
                                         GROUP BY
                                             z.documento_id,
                                             z.consolidado
@@ -688,6 +734,7 @@ class DocumentoController extends Controller
                     't.consolidado'
                 )
                 ->orderBy('documento.created_at', 'DESC');
+            }
         }
 
         return \DataTables::of($sql)->make(true);
@@ -805,6 +852,7 @@ class DocumentoController extends Controller
             for ($z=1; $z <= $request->contador; $z++) { 
                 $data = (new DocumentoDetalle)->fill($request->all());
 
+                $data->status_id = 2;
                 if ($request->valor == '') {
                     $data->valor = 0;
                 }
@@ -877,7 +925,7 @@ class DocumentoController extends Controller
                     /* INSERTAR EN STATUS_DETALLE*/
                     DB::table('status_detalle')->insert([
                         [
-                            'status_id'            => 2,
+                            'status_id'            => $data->status_id,
                             'usuario_id'           => Auth::user()->id,
                             'documento_detalle_id' => $data->id,
                             'codigo'               => $data->num_warehouse,
@@ -1762,8 +1810,13 @@ class DocumentoController extends Controller
 
     public function getDataSelectWarehousesModalTagGuia($id)
     {
+        if(env('APP_CLIENT') == 'worldcargo'){
+            $codigo = 'documento_detalle.num_warehouse AS name';
+        }else{
+            $codigo = DB::raw('(CASE WHEN b.liquidado = 1 THEN documento_detalle.num_guia ELSE documento_detalle.num_warehouse END) AS name');
+        }
         $data = DocumentoDetalle::join('documento as b', 'documento_detalle.documento_id', 'b.id')
-            ->select('documento_detalle.id', DB::raw('(CASE WHEN b.liquidado = 1 THEN documento_detalle.num_guia ELSE documento_detalle.num_warehouse END) AS name'))
+            ->select('documento_detalle.id', $codigo)
             ->where([
                 ['documento_detalle.deleted_at', null],
                 ['documento_detalle.documento_id', $id],
@@ -2071,6 +2124,7 @@ class DocumentoController extends Controller
                     'observacion'          => 'Se agrego desde el consolidado',
                 ],
             ]);
+            DocumentoDetalle::where('id', $key->documento_detalle_id)->update(['status_id' => $request->status_id]);
         }
         $this->AddToLog('Estatus agregado a guias. Conolidado id (' . $id . ')');
 

@@ -8,12 +8,17 @@ $(document).ready(function() {
     }
 });
 var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialite, filter) {
+    objVue.type_document = tipo_doc_id;
     var href_print = '';
     var href_print_label = '';
+    var status_id = '';
     /* MOSTRAR LABELS DE ESTADOS SI ES WAREHOUSE */
     var labels = '';
     if (reinitialite) {
         $('#tbl-documento').dataTable().fnDestroy();
+    }
+    if(typeof filter != 'undefined'){
+        status_id = filter;
     }
     $('#tbl-documento').DataTable({
         processing: true,
@@ -22,6 +27,7 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
             "url": 'documento/all/documento_detalle',
             "data": function(d) {
                 d.id_tipo_doc = tipo_doc_id;
+                d.status_id = status_id;
             }
         },
         columns: [{
@@ -73,10 +79,11 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
             name: 'agencia.descripcion'
         }, {
             sortable: false,
+            className: 'actions_btn',
             "render": function(data, type, full, meta) {
                 var btn_edit = '';
                 var btn_delete = '';
-                if (permission_update) {
+                if (permission_update && (parseInt(full.consolidado_status) === 0) || full.consolidado_status == null) {
                     var btn_edit = '<a href="documento/' + full.id + '/edit" class="edit" title="Editar" data-toggle="tooltip" style="color:#FFC107;"><i class="material-icons">&#xE254;</i></a>';
                 }
                 if (permission_delete && (parseInt(full.consolidado_status) === 0) || full.consolidado_status == null) {
@@ -114,7 +121,8 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
             width: 180,
         }]
     });
-    if(){
+
+    if(typeof filter == 'undefined'){
         if(tipo_doc_id == '1'){
             labels =    '<label for="creado" class="lb_status badge badge-default">Creado</label> ' + 
                         '<label for="bodega" class="lb_status badge badge-success">En bodega</label> '+ 
@@ -179,8 +187,11 @@ var objVue = new Vue({
     el: '#documentoIndex',
     watch:{
         status_id:function(value){
-            console.log(value);
-            listDocument(value.id, value.nombre, value.icono, value.funcionalidades);
+            var status_id = '';
+            if(value != null){
+                status_id = value.id;
+            }
+            listDocument(this.type_document, null, null, null, true, status_id);
         },
     },
     mounted: function() {
@@ -195,6 +206,7 @@ var objVue = new Vue({
         params: {},
         status: [],
         status_id: null,
+        type_document: null
     },
     methods: {
         getStatus: function(){

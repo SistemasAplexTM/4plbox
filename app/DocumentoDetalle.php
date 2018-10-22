@@ -18,6 +18,7 @@ class DocumentoDetalle extends Model
         'documento_id',
         'tipo_empaque_id',
         'posicion_arancelaria_id',
+        'status_id',
         'piezas',
         'dimensiones',
         'largo',

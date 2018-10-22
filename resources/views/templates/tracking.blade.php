@@ -128,46 +128,47 @@
                     </div>
                 </div>
             </div>
-        </form>
-        <div class="col-lg-8">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>@lang('general.registered_tracking')</h5>
-                    <div class="ibox-tools">
+            <div class="col-lg-8">
+                <div class="ibox float-e-margins">
+            
+                    <div class="ibox-title">
+                        <h5>@lang('general.registered_tracking')</h5>
+                        <div class="ibox-tools">
 
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <!--***** contenido ******-->
+                        <div class="table-responsive">
+                            <table id="tbl-tracking" class="table table-striped table-hover table-bordered" style="width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>@lang('general.date')</th>
+                                        <th>@lang('general.client')</th>
+                                        <th>@lang('general.tracking')</th>
+                                        <th>Warehouse</th>
+                                        {{-- <th>@lang('general.content')</th> --}}
+                                        <th>@lang('general.office')</th>
+                                        <th>@lang('general.actions')</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>@lang('general.date')</th>
+                                        <th>@lang('general.client')</th>
+                                        <th>@lang('general.tracking')</th>
+                                        <th>Warehouse</th>
+                                        {{-- <th>@lang('general.content')</th> --}}
+                                        <th>@lang('general.office')</th>
+                                        <th>@lang('general.actions')</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>             
                     </div>
                 </div>
-                <div class="ibox-content">
-                    <!--***** contenido ******-->
-                    <div class="table-responsive">
-                        <table id="tbl-tracking" class="table table-striped table-hover table-bordered" style="width: 100%;">
-                            <thead>
-                                <tr>
-                                    <th>@lang('general.date')</th>
-                                    <th>@lang('general.client')</th>
-                                    <th>@lang('general.tracking')</th>
-                                    <th>Warehouse</th>
-                                    {{-- <th>@lang('general.content')</th> --}}
-                                    <th>@lang('general.office')</th>
-                                    <th>@lang('general.actions')</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>@lang('general.date')</th>
-                                    <th>@lang('general.client')</th>
-                                    <th>@lang('general.tracking')</th>
-                                    <th>Warehouse</th>
-                                    {{-- <th>@lang('general.content')</th> --}}
-                                    <th>@lang('general.office')</th>
-                                    <th>@lang('general.actions')</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>             
-                </div>
             </div>
-        </div>
+        </form>
     </div>
 @endsection
 

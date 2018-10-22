@@ -95,8 +95,8 @@
                     </div>
 
                     <div class="col-lg-3 text-center">
-                        <button class="btn btn-info dim btn-large-dim btn-outline btn-inicio" type="button" id="backup">
-                            <i class="fa fa-user-circle">
+                        <button class="btn btn-primary dim btn-large-dim btn-outline btn-inicio" type="button" id="backup">
+                            <i class="fa fa-cloud-download">
                             </i>
                         </button>
                         <div style="font-size: 20px;">

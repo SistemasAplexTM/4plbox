@@ -70,7 +70,7 @@ function calculateFlete(flete) {
     var tarifa = parseFloat($('#valor_libra2').val());
     var pie = parseFloat($('#pie_ft').val());
     var metro = parseFloat(pie / 35.315);
-    console.log(metro);
+    // console.log(metro);
     /* VALIDA QUE NO SOBREPASE LA TARIFA DEL SERVICIO */
     // if (parseFloat($('#valor_libra2').val()) < parseFloat($('#valor_libra').val())) {
     if ($('#valor_libra').val() == '') {
@@ -86,12 +86,16 @@ function calculateFlete(flete) {
         /* SE COBRA POR PIE 3 SI LA POSICION ARANCELARIA ES CERO = 0 O SIN POSICION */
         if($('#pa_id').val() == 1){
             $('#cobrarPor').text('cuft');
-            var flete = parseFloat(pie) * parseFloat(tarifa);
+            var tot = parseFloat(pie) * parseFloat(tarifa);
         }else{
             $('#cobrarPor').text('cbm');
-            var flete = parseFloat(metro) * parseFloat(tarifa);
+            var tot = parseFloat(metro) * parseFloat(tarifa);
         }
-        return flete;
+        if (parseFloat(tot) <= parseFloat(flete)) {
+            return flete;
+        }else{
+            return tot;  
+        }
     } else {
         /* SE EVALUA SI SE COBRARA POR PESO O VOLUMEN (PESO = 1 - VOLUMEN = 0)*/
         if ($('#servicios_id option:selected').data('cobvol') == 0 && app_client != 'worldcargo') {
@@ -102,6 +106,7 @@ function calculateFlete(flete) {
             if (parseFloat(peso) > 8) {
                 /*PESO * LA TARIFA */
                 $('#cobrarPor').text('Pes');
+                
                 var flete = parseFloat(peso) * parseFloat(tarifa);
                 var diferen = parseFloat(volumen) - parseFloat(peso);
                 if (parseFloat(diferen) > 0) {
@@ -110,6 +115,7 @@ function calculateFlete(flete) {
                     flete = parseFloat(flete) + parseFloat(res);
                     $('#cobrarPor').text('Vol');
                 }
+
                 return flete;
             }
         } else {
@@ -120,7 +126,7 @@ function calculateFlete(flete) {
                 valor = parseFloat(volumen);
                 $('#cobrarPor').text('Vol');
             }
-            if (parseFloat(valor) * parseFloat(tarifa) <= 10) {
+            if (parseFloat(valor) * parseFloat(tarifa) <= parseFloat(flete)) {
                 return flete;
             } else {
                 if (parseFloat(peso) >= 0 && parseFloat(peso) <= 8) {

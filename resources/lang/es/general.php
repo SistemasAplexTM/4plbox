@@ -317,7 +317,7 @@ return [
     //home
 
     'warehouse'=>'Almacén',
-    'backup'=>'Apoyo', 
+    'backup'=>'Backup', 
 
     //logActivity
     'users_logs'=>'Registros de usuarios',
