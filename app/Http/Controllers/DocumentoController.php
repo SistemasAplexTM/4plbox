@@ -1174,6 +1174,7 @@ class DocumentoController extends Controller
                 'deptos_agencia.abreviatura AS agencia_depto_prefijo',
                 'pais_agencia.descripcion AS agencia_pais',
                 'embarque.nombre as tipo_embarque',
+                'embarque.id as tipo_embarque_id',
                 'forma_pago.nombre as forma_pago',
                 'tipo_pago.nombre as tipo_pago',
                 'grupo.nombre as grupo',
@@ -1240,7 +1241,8 @@ class DocumentoController extends Controller
             if (env('APP_TYPE') === 'courier') {
                 $pdf = PDF::loadView('pdf.guiaPdf', compact('documento', 'detalle'));
             } else {
-                $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
+                // $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
+                $pdf = PDF::loadView('pdf.warehousePdfJexpress', compact('documento', 'detalle'));
             }
             $nameDocument = $documento->num_warehouse;
         } else {
@@ -1249,7 +1251,8 @@ class DocumentoController extends Controller
                 if (env('APP_TYPE') === 'courier') {
                     $pdf = PDF::loadView('pdf.warehousePdf', compact('documento', 'detalle'));
                 } else {
-                    $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
+                    // $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
+                    $pdf = PDF::loadView('pdf.warehousePdfJexpress', compact('documento', 'detalle'));
                 }
                 $nameDocument = $documento->num_warehouse;
             } else {

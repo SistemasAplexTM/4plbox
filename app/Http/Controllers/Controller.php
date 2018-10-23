@@ -378,7 +378,8 @@ class Controller extends BaseController
                     $caracter = $caracter . '0';
                 }
                 $po_box = $caracter . $pref . '-' . $consig_id;
-                Consignee::where('id', $consig_id)->update(['po_box' => $prefijo->iso2 . '' . $po_box]);
+                // Consignee::where('id', $consig_id)->update(['po_box' => $prefijo->iso2 . '' . $po_box]);
+                Consignee::where('id', $consig_id)->update(['po_box' => $po_box]);
 
             } catch (Exception $e) {
                 echo 'Error: <pre>';

@@ -345,7 +345,8 @@ class ConsigneeController extends Controller
                 $caracter = $caracter . '0';
             }
             $po_box = $caracter . $pref . '-' . $id;
-            $answer = Consignee::where('id', $id)->update(['po_box' => $prefijo->iso2 . '' . $po_box]);
+            // $answer = Consignee::where('id', $id)->update(['po_box' => $prefijo->iso2 . '' . $po_box]);
+            $answer = Consignee::where('id', $id)->update(['po_box' => $po_box]);
             return $answer;
         } catch (Exception $e) {
             return $e;

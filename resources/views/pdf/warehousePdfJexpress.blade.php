@@ -73,31 +73,22 @@
     </style>
 
     </head>
-    <?php
+    <?php 
     $total_declarado = 0;
     $total_piezas = 0;
     $total_libras = 0;
     $total_volumen = 0;
     $total_volumen_cft = 0;
     $total_cmt = 0;
-    $pa_id = '';
-
     ?>
     <body>
-      {{-- <pre> --}}
-        <?php //print_r($documento); ?>
-        <?php //print_r($detalle); ?>
-
-      {{-- </pre> --}}
-      <?php //exit(); ?>
         @if(count($detalle) > 0)
             @foreach($detalle as $val)
-                <?php
+                <?php 
                     $total_piezas += $val->piezas;
                     $total_declarado += $val->valor;
                     $total_libras += $val->peso;
                     $total_volumen += $val->volumen;
-                    $pa_id = $val->posicion_arancelaria_id;
                     //cft = lxhxw / 1728 (pie cubico)
                     //cmt = cft/35.315 (metro cubico)
                 ?>
@@ -105,23 +96,20 @@
         @endif
         <table>
           <tr>
-            <td colspan="2" rowspan="5" style="width:300px;height: 100px;">
-                <img src="{{ asset('storage/') }}/{{ ((isset($documento->agencia_logo) and $documento->agencia_logo != '') ? trim($documento->agencia_logo) : 'logo.png') }}" style="width: 100%"/>
+            <td colspan="2" rowspan="5" style="">
+                <img src="{{ asset('storage/') }}/{{ ((isset($documento->agencia_logo) and $documento->agencia_logo != '') ? trim($documento->agencia_logo) : 'logo.png') }}" style="width: 150px"/>
             </td>
             <td colspan="2" class="agency_title title_doc" style="">{{ ((isset($documento->agencia) and $documento->agencia != '') ? $documento->agencia : '') }}</td>
           </tr>
           <tr>
-            <td colspan="2" class="agency_title">{{ ((isset($documento->agencia_dir) and $documento->agencia_dir != '') ? $documento->agencia_dir : '') }}</td>
+            <td colspan="2" rowspan="3" class="agency_title">
+                <div>{{ ((isset($documento->agencia_dir) and $documento->agencia_dir != '') ? $documento->agencia_dir : '') }}</div>
+                <div>{{ ((isset($documento->agencia_ciudad) and $documento->agencia_ciudad != '') ? $documento->agencia_ciudad : '') }}, {{ ((isset($documento->agencia_depto_prefijo) and $documento->agencia_depto_prefijo != '') ? $documento->agencia_depto_prefijo : $documento->agencia_depto) }} {{ ((isset($documento->agencia_zip) and $documento->agencia_zip != '') ? $documento->agencia_zip : '') }}</div>
+                <div>{{ ((isset($documento->agencia_tel) and $documento->agencia_tel != '') ? $documento->agencia_tel : '') }}</div>
+                <div>{{ ((isset($documento->agencia_email) and $documento->agencia_email != '') ? $documento->agencia_email : '') }}</div>
+            </td>
           </tr>
-          <tr>
-            <td colspan="2" class="agency_title">{{ ((isset($documento->agencia_ciudad) and $documento->agencia_ciudad != '') ? $documento->agencia_ciudad : '') }}, {{ ((isset($documento->agencia_depto_prefijo) and $documento->agencia_depto_prefijo != '') ? $documento->agencia_depto_prefijo : $documento->agencia_depto) }} {{ ((isset($documento->agencia_zip) and $documento->agencia_zip != '') ? $documento->agencia_zip : '') }}</td>
-          </tr>
-          <tr>
-            <td colspan="2" class="agency_title">{{ ((isset($documento->agencia_tel) and $documento->agencia_tel != '') ? $documento->agencia_tel : '') }}</td>
-          </tr>
-          <tr>
-            <td colspan="2" class="agency_title">{{ ((isset($documento->agencia_email) and $documento->agencia_email != '') ? $documento->agencia_email : '') }}</td>
-          </tr>
+          
         </table>
         <table class="table_numero">
           <tr>
@@ -173,18 +161,22 @@
 
         <table class="datos_company separador_interno">
           <tr>
-            <td style="width:50%;">
-              <strong>Observaciones:</strong>
-              <br>
-              {{ $documento->observaciones }}
-            </td>
-            <td>
-              <strong>Destination:</strong> {{ $documento->cliente_ciudad }}  - {{ $documento->tipo_embarque }}
-              <br>
-              <strong>Declared Value:</strong> $ {{ $total_declarado }}
-              <br>
-              <strong>Payment Method:</strong> {{ ((isset($documento->forma_pago) and $documento->forma_pago != '') ? $documento->forma_pago : '') }}  - {{ $documento->tipo_pago }}
-            </td>
+            <td style="width:15%;"><strong>Agent:</strong></td>
+            <td style="width:45%;">{{ $documento->cliente }}</td>
+            <td style="width:20%;"><strong>Zone:</strong></td>
+            <td style="width:20%;">{{ $documento->cliente_zona }}</td>
+          </tr>
+          <tr>
+            <td><strong>Destination:</strong></td>
+            <td>{{ $documento->cliente_ciudad }}</td>
+            <td><strong>Declared Value:</strong></td>
+            <td>$ {{ $total_declarado }}</td>
+          </tr>
+          <tr>
+            <td><strong>Country:</strong></td>
+            <td>{{ $documento->cliente_pais }}</td>
+            <td><strong>User:</strong></td>
+            <td>{{ ((isset($documento->usuario) and $documento->usuario != '') ? $documento->usuario : '') }}</td>
           </tr>
         </table>
 
@@ -198,68 +190,35 @@
           <tr>
             <td style="width:15%;">{{ $total_piezas }} Pcs</td>
             <td style="width:15%;">{{ $total_libras }} Lb</td>
-            <td style="width:15%;">{{ ceil(number_format($total_libras / 2.20462,2)) }} Kl</td>
-            <td style="width:15%;">{{ ceil(number_format((isset($total_volumen) ? ceil($total_volumen) : 0),0)) }} Lb</td>
-            <td style="width:15%;">{{ ceil(number_format(((isset($total_volumen) ? ceil($total_volumen) : 0) / 2.204622), 2)) }} Kl</td>
+            <td style="width:15%;">{{ number_format($total_libras / 2.20462,2) }} Kl</td>
+            <td style="width:15%;">{{ number_format((isset($total_volumen) ? ceil($total_volumen) : 0),0) }} Lb</td>
+            <td style="width:15%;">{{ number_format(((isset($total_volumen) ? ceil($total_volumen) : 0) / 2.204622), 2) }} Kl</td>
             <td style="width:15%;">{{ $pie = ceil(number_format(($total_volumen * 166 / 1728), 2)) }} cuft</td>
-            <td style="width:10%;">{{ $metro = ceil(number_format(($pie / 35.315), 2)) }} cbm</td>
+            <td style="width:10%;">{{ ceil(number_format(($pie / 35.315), 2)) }} cbm</td>
           </tr>
         </table>
         <table border="1" class="table_grid separador_interno">
-          @if(env('APP_CLIENT') == 'worldcargo')
-            <thead>
+          <tr>
+            <th scope="col" style="width:7%;">Pieces</th>
+            <th scope="col" style="width:7%;">Weight</th>
+            <th scope="col" style="width:15%;">L x W x H</th>
+            <th scope="col">Description Of Content</th>
+            <th scope="col">Tracking</th>
+          </tr>
+          <tbody>
+            @foreach($detalle as $val)
               <tr>
-                <th scope="col" style="width:10%;">Quantity</th>
-                <th scope="col">Dimensions</th>
-                <th scope="col" style="width:10%;">Tracking</th>
-                <th scope="col" style="width:10%;">Weight lb</th>
-                <th scope="col" style="width:10%;">Weight kg</th>
-                <th scope="col" style="width:10%;">Vol lb</th>
-                <th scope="col" style="width:10%;">Vol kg</th>
-                <th scope="col" style="width:10%;">Weight ft3</th>
-                <th scope="col" style="width:10%;">vol mt3</th>
+                <td>{{ $val->piezas }}</td>
+                <td>{{ $val->peso2 }}</td>
+                <td>{{ $val->largo }} x {{ $val->ancho }} x {{ $val->alto }}</td>
+                <td style="text-align:left;">{{ $val->contenido }}</td>
+                <td style="text-align:left;">{{ str_replace(',', ', ',$val->trackings) }}</td>
               </tr>
-            </thead>
-            <tbody>
-              @foreach($detalle as $val)
-                <tr>
-                  <td>{{ $val->piezas }}</td>
-                  <td>{{ $val->largo . 'x'.$val->ancho. 'x'. $val->alto }}</td>
-                  <td>{{ str_replace(',', ' ',$val->trackings) }}</td>
-                  <td>{{ $val->peso2 }}</td>
-                  <td>{{ ceil(number_format($val->peso2 / 2.205)) }}</td>
-                  <td>{{ ceil($val->volumen) }}</td>
-                  <td>{{ ceil(number_format($val->volumen / 2.204622)) }}</td>
-                  <td>{{ ceil(number_format($val->volumen * 166 / 1728)) }}</td>
-                  <td>{{ ceil(number_format(($val->volumen * 166 / 1728) / 35.315)) }}</td>
-                </tr>
-              @endforeach
-            </tbody>
-          @else
-            <tr>
-              <th scope="col" style="width:10%;">Length</th>
-              <th scope="col" style="width:10%;">Width</th>
-              <th scope="col" style="width:10%;">Heigth</th>
-              <th scope="col" style="width:10%;">Pieces</th>
-              <th scope="col" style="width:10%;">Weight</th>
-              <th scope="col">Description Of Content</th>
-            </tr>
-            <tbody>
-              @foreach($detalle as $val)
-                <tr>
-                  <td>{{ $val->largo }}</td>
-                  <td>{{ $val->ancho }}</td>
-                  <td>{{ $val->alto }}</td>
-                  <td>{{ $val->piezas }}</td>
-                  <td>{{ $val->peso2 }}</td>
-                  <td style="text-align:left;">{{ $val->contenido }}</td>
-                </tr>
-              @endforeach
-            </tbody>
-          @endif
+            @endforeach
+          </tbody>
           <tfoot>
             <tr>
-              <td colspan="{{ (env('APP_CLIENT') == 'worldcargo') ? '9' : '6' }}">&nbsp;</td>
+              <td colspan="5">&nbsp;</td>
             </tr>
             @if(env('APP_CLIENT') == 'worldcargo')
             <tr>
@@ -270,41 +229,27 @@
                         <div id="apDiv10">
                             <table width="100%" border="0" cellspacing="1" cellpadding="0">
                                 <tr>
-                                    <?php
-                                      if($documento->tipo_embarque_id == '8'){
-                                        if($pa_id == '1'){
-                                          $sub = $pie * $documento->valor_libra;
-                                        }else{
-                                          $sub = $metro * $documento->valor_libra;
-                                        }
-                                      }else{
-                                        if($total_libras > $total_volumen){
-                                          $sub = ($total_declarado * $documento->impuesto / 100) + (ceil($total_libras) * $documento->valor);
-                                        }else{
-                                          $sub = ($total_declarado * $documento->impuesto / 100) + (ceil($total_volumen) * $documento->valor);
-                                        }
-                                      }
-                                    ?>
                                     <td><b>@lang('general.value'): (Flete+Impuesto)</b></td>
-                                    <td align="right">$ {{ $subtotal = ceil(number_format($sub, 2)) }} </td>
-                                </tr>
+                                    <?php $sub = ($total_declarado * $documento->impuesto / 100) + ($total_libras * $documento->valor); ?>
+                                    <td align="right">$ {{ $subtotal = number_format($sub, 2) }} </td>
+                                </tr>                                   
 
                                 <tr>
                                     <td><b>@lang('general.insurance'): </b></td>
                                     <?php $seguro = $documento->seguro_cobrado; ?>
-                                    <td align="right">$ {{ ceil(number_format($seguro, 2)) }} </td>
+                                    <td align="right">$ {{ number_format($seguro, 2) }} </td>
                                 </tr>
                                 <tr>
                                     <td><b>@lang('general.discount'):</b></td>
-                                    <td align="right">$ {{ ceil(number_format($documento->descuento, 2)) }} </td>
+                                    <td align="right">$ {{ number_format($documento->descuento, 2) }} </td>
                                 </tr>
                                 <tr>
                                     <td><b>@lang('general.others'):</b></td>
-                                    <td align="right">$ {{ ceil(number_format($documento->cargos_add, 2)) }} </td>
+                                    <td align="right">$ {{ number_format($documento->cargos_add, 2) }} </td>
                                 </tr>
                                 <tr>
                                     <td><b>Sub Total:</b></td>
-                                    <td align="right">$ {{ $total = ceil(number_format($sub + $seguro + $documento->cargos_add - $documento->descuento, 2)) }}</td>
+                                    <td align="right">$ {{ $total = number_format($sub + $seguro + $documento->cargos_add - $documento->descuento, 2) }}</td>
                                 </tr>
                             </table>
                         </div>
@@ -314,25 +259,25 @@
 
                                     <tr>
                                         <td><b>Total:</b></td>
-                                        <td align="right"><b><span style="font-size:14px;color:#F00">$ {{ ceil($total) }}</span></b>
+                                        <td align="right"><b><span style="font-size:14px;color:#F00">$ {{ $total }}</span></b>
                                         </td>
                                     </tr>
                                 </table>
                             </div>
-                        </div>
+                        </div>  
                     </td>
                   </tr>
                 </table>
               </td>
-              <td colspan="{{ (env('APP_CLIENT') == 'worldcargo') ? '5' : '2' }}" valign="top">
+              <td colspan="2" valign="top">
                 <table>
                   <tr>
-                    <td style="height: 60px;color: #5e5e5e;font-size: 13px;width: 55%;">Código PoBox del Cliente:</td>
-                    <td style="font-size: 25px;font-weight: bold;"><div>{{ ((isset($documento->cons_pobox) and $documento->cons_pobox != '') ? $documento->cons_pobox : '') }}</div></td>
+                    <td style="height: 60px;color: #5e5e5e;font-size: 15px;">Código PoBox del Cliente:</td>
+                    <td style="font-size: 15px;font-weight: bold;"><div>{{ ((isset($documento->cons_pobox) and $documento->cons_pobox != '') ? $documento->cons_pobox : '') }}</div></td>
                   </tr>
                   <tr>
                     <td colspan="2">
-                      <div style="width: 75%;margin: 0 auto;text-align: center;color: red;font-weight: bold;">Pago a nombre de World Cargo</div>
+                      <div style="width: 75%;margin: 0 auto;text-align: center;color: red;font-weight: bold;">SUS PAQUETES SE ENVIARÁN A VENEZUELA UNA VEZ CUMPLIDO 10 DÍAS EN NUESTRA BODEGA</div>
                     </td>
                   </tr>
                 </table>
@@ -348,12 +293,12 @@
             </tr>
             <tr>
               <td style="margin: 0 auto;font-size: 13px;font-weight: bold;padding: 5px;">
-                Todo lo que venga por correo interno de los estados unidos USPS, no nos hacemos responsables, ya que no hay manera de hacer rastreo no tiene prueba de entrega
+                Todo lo que venga por correo interno de los estados unidos USPS, no nos hacemos responsables, ya que no hay manera de hacer rastreo no tiene prueba de entrega 
               </td>
             </tr>
             <tr>
               <td style="margin: 0 auto;font-size: 13px;font-weight: bold;color: red;padding: 5px;">
-                SUS PAQUETES SE ENVIARÁN A VENEZUELA UNA VEZ CUMPLIDO 10 DÍAS EN NUESTRA BODEGA
+                NO NOS HACEMOS RESPONSABLES DE DAÑOS EN TELEVISORESNO QUE NO VIAJEN EN CAJA DE MADERA.
               </td>
             </tr>
           </table>
@@ -383,14 +328,14 @@
         <table class="table_firma separador_interno" style="{{ (env('APP_CLIENT') == 'worldcargo') ? 'padding-top:30px;' : '' }}">
           <tr>
             <td><strong>Printed:</strong></td>
-            <td style="width:22%">{{ date('m-d-y h:i:s a', time()) }}</td>
+            <td style="width:22%">{{ date('m-d-y h:i:s a', time()) }}</td>    
           </tr>
           <tr style="height:40px;">
             <td><strong>Sign: </strong></td>
-            <td style="border-bottom: 1px solid #000; vertical-align:text-bottom !important;">&nbsp;</td>
+            <td style="border-bottom: 1px solid #000; vertical-align:text-bottom !important;">&nbsp;</td>    
           </tr>
         </table>
-
+        
         @if(env('APP_CLIENT') != 'worldcargo')
           <table class="acuerdo separador_interno">
             <tr>
