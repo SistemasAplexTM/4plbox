@@ -811,10 +811,10 @@
                             "render": function (data, type, full, meta) {
                                 var btn_delete = '';
                                 if(full.liquidado == 0){
-                                    href_print_label = "../../impresion-documento-label/"+ full.documento_id + "/warehouse/"+full.documento_detalle_id+"";
+                                    href_print_label = "../../impresion-documento-label/"+ full.documento_id + "/warehouse/"+full.documento_detalle_id+"/consolidado";
                                 }else{
                                     if(full.liquidado == 1){
-                                        href_print_label = "../../impresion-documento-label/"+ full.documento_id + "/guia/"+full.documento_detalle_id+"";
+                                        href_print_label = "../../impresion-documento-label/"+ full.documento_id + "/guia/"+full.documento_detalle_id+"/consolidado";
                                     }
                                 }
 

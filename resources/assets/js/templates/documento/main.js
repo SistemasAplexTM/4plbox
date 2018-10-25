@@ -47,7 +47,7 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                         codigo = full.num_warehouse;
                         cant = full.piezas;
                         if (full.liquidado == 1) {
-                            if(app_type === 'courier'){codigo = full.num_guia;}
+                            // if(app_type === 'courier'){codigo = full.num_guia;}
                             color_badget = 'primary';
                         }
                     }
@@ -97,7 +97,7 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                         btn_delete = '<a onclick=\"modalEliminar(' + full.id + ')\" class="delete" title="Eliminar" data-toggle="tooltip" style="color:#E34724;"><i class="material-icons">&#xE872;</i></a>';
                     }
                     var btns = "<div class='btn-group'>" + "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + "<i class='material-icons' style='vertical-align:  middle;'>print</i><span class='caret'></span>" + "</button>" + "<ul class='dropdown-menu'>" + "<li><a href='impresion-documento/" + full.id + "/consolidado' target='_blank'> <spam class='fa fa-print'></spam> Imprimir manifiesto</a></li>" + "<li><a href='impresion-documento/" + full.id + "/consolidado_guias' target='_blank'> <spam class='fa fa-print'></spam> Imprimir Guias</a></li>" + "<li role='separator' class='divider'></li> " + "<li><a href='impresion-documento/pdfContrato' target='_blank'> <spam class='fa fa-print'></spam> Imprimir contrato</a></li>" + "<li><a href='impresion-documento/pdfTsa' target='_blank'> <spam class='fa fa-print'></spam> Imprimir TSA</a></li>" + "</ul></div>";
-                    return btns + ' ' + btn_edit + btn_delete;
+                    return btn_edit + ' ' + btns + ' ' +  btn_delete;
                 } else {
                     var codigo = full.num_warehouse;
                     if (full.liquidado == 1) {

@@ -89,6 +89,21 @@
     #trackings{
         width: 50% !important;
     }
+    #window-load{
+        background-color: #f2f2f2;
+        height: 316.539px;
+        opacity: 0.7;
+        position: absolute;
+        width: 98%;
+        z-index: 9999;
+    }
+    #loading{
+        font-size: 50;
+        /*background-color: aquamarine;*/
+        position: absolute;
+        left: 35%;
+        top: 40%;
+    }
 </style>
 <link href="{{ asset('css/plugins/dataTables/keyTable.dataTables.min.css') }}">
 @endsection
@@ -825,101 +840,51 @@
             </form>
         </div>
         {{-- MODAL AGREGAR TRACKINGS 2 --}}
-    <div class="modal fade bs-example" id="modalTrackingsAdd2" tabindex="" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog" id="trackings">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">@lang('documents.close')</span></button>
-                    <h2 class="modal-title" id="myModalLabel"><i class="fa fa-barcode"></i>@lang('documents.add_trackings')</h2>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <label class="control-label">Ingrese el numero de tracking</label>
-                            <input type="text" placeholder="Tracking" id="tracking_number" class="form-control" v-model="tracking_number" @keyup.enter="addTrackingToDocument('create')">
-                        </div>
-                        <div class="col-lg-4">
-                            <label class="control-label" style="width: 100%;">&nbsp;</label>
-                            <button type="button" id="tracking_save" class="btn btn-primary" @click="addTrackingToDocument('create')">Agregar</button>
-                        </div>
+        <div class="modal fade bs-example" id="modalTrackingsAdd2" tabindex="" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" id="trackings">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">@lang('documents.close')</span></button>
+                        <h2 class="modal-title" id="myModalLabel"><i class="fa fa-barcode"></i>@lang('documents.add_trackings')</h2>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <h2>@lang('documents.associated_trackings')</h2>
-                            <div class="form-group">
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered table-hover" id="tbl-trackings-used" style="width: 100%">
-                                        <thead>
-                                            <tr>
-                                                <th style="width: 50%">@lang('documents.tracking')</th>
-                                                <th>@lang('documents.content')</th>
-                                                <th>@lang('general.actions')</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
+                    <div class="modal-body">
+                        <div class="row" id="window-load"><div id="loading">loading.....</div></div>
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <label class="control-label">Ingrese el numero de tracking</label>
+                                <input type="text" placeholder="Tracking" id="tracking_number" class="form-control" v-model="tracking_number" @keyup.enter="addTrackingToDocument('create')">
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="control-label" style="width: 100%;">&nbsp;</label>
+                                <button type="button" id="tracking_save" class="btn btn-primary" @click="addTrackingToDocument('create')">Agregar</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h2>@lang('documents.associated_trackings')</h2>
+                                <div class="form-group">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered table-hover" id="tbl-trackings-used" style="width: 100%">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 50%">@lang('documents.tracking')</th>
+                                                    <th>@lang('documents.content')</th>
+                                                    <th>@lang('general.actions')</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">@lang('documents.close')</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">@lang('documents.close')</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
-
-    {{-- MODAL AGREGAR TRACKINGS 1 --}}
-   {{--  <div class="modal fade bs-example" id="modalTrackingsAdd" tabindex="" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog" id="trackings">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">@lang('documents.close')</span></button>
-                    <h2 class="modal-title" id="myModalLabel"><i class="fa fa-barcode"></i>@lang('documents.add_trackings')</h2>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <h2>@lang('documents.tracks_available')</h2>
-                            <div class="form-group">
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered table-hover" id="tbl-trackings"  style="width: 100%">
-                                        <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th>@lang('documents.tracking')</th>
-                                                <th>@lang('documents.content')</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <h2>@lang('documents.associated_trackings')</h2>
-                            <div class="form-group">
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered table-hover" id="tbl-trackings-used" style="width: 100%">
-                                        <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th>@lang('documents.tracking')</th>
-                                                <th>@lang('documents.content')</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">@lang('documents.close')</button>
-                </div>
-            </div>
-        </div>
-    </div> --}}
 @endsection
 
 @section('scripts')

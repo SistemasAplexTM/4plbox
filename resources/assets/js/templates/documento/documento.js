@@ -571,7 +571,7 @@ var objVue = new Vue({
                         sortable: false,
                         "render": function(data, type, full, meta) {
                             var btn_delete = '';
-                            btn_delete = '<a class="btn btn-danger btn-xs" type="button" id="btn_remove_t'+full.id+'" onclick="addTrackingToDocument('+full.codigo+', \'delete\')" data-toggle="tooltip" title="Retirar"><i class="fa fa-times"></i></a> ';
+                            btn_delete = '<a class="btn btn-danger btn-xs" type="button" id="btn_remove_t'+full.id+'" onclick="addTrackingToDocument(\''+full.codigo+'\', \'delete\')" data-toggle="tooltip" title="Retirar"><i class="fa fa-times"></i></a> ';
                             return btn_delete;
                         }
                     }],
@@ -596,41 +596,36 @@ var objVue = new Vue({
                     toastr.success(response.data.message);
                     toastr.options.closeButton = true;
                 }else{
-                    toastr.warning('Error: -' + response.data.error);
+                    me.createTracking();
+                    // toastr.warning('Error: -' + response.data.error);
                 }
             }).catch(function(error) {
                 console.log(error);
                 toastr.warning('Error: -' + error);
             });
-
-            // if (!$('#chk' + data.idTracking).is(':checked')) {
-            //     axios.post('../../tracking/addOrDeleteDocument', {
-            //         'option': 'create',
-            //         'id_tracking': data.idTracking,
-            //         'id_document': data.idDocument
-            //     }).then(response => {
-            //         refreshTable('whgTable');
-            //         // var cant = $('#cant_tracking' + data.idDocument).html();
-            //         // $('#cant_tracking' + data.idDocument).html(parseInt(cant) + 1);
-            //         toastr.success('Tracking agregado a este documento.');
-            //         toastr.options.closeButton = true;
-            //     });
-            // } else {
-            //     axios.post('../../tracking/addOrDeleteDocument', {
-            //         'option': 'delete',
-            //         'id_tracking': data.idTracking,
-            //         'id_document': data.idDocument
-            //     }).then(response => {
-            //         refreshTable('whgTable');
-            //         // var cant = $('#cant_tracking' + data.idDocument).html();
-            //         // $('#cant_tracking' + data.idDocument).html(parseInt(cant) - 1);
-            //         toastr.warning('Tracking retirado de este documento.');
-            //         toastr.options.closeButton = true;
-            //     });
-            // }
-            // setTimeout(function() {
-            //     me.addTrackings(data.idDocument);
-            // }, 200);
+        },
+        createTracking(){
+            let me = this;
+            axios.post('../../tracking', {
+                'consignee_id': null,
+                'codigo': me.tracking_number,
+                'contenido': null,
+                'confirmed_send': false,
+            }).then(function(response) {
+                if (response.data['code'] == 200) {
+                    toastr.success('Registro creado correctamente.');
+                    toastr.options.closeButton = true;
+                    me.addTrackingToDocument('create');
+                } else {
+                    toastr.warning(response.data['error']);
+                    toastr.options.closeButton = true;
+                }
+            }).catch(function(error) {
+                console.log(error);
+                toastr.warning("Error: " + error, {
+                    timeOut: 50000
+                });
+            });
         },
         /* FUNCION PARA ELIMINAR DETALLE DE CONSIOLIDADO */
         deleteDetailConsolidado: function(data) {

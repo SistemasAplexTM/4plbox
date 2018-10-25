@@ -206,7 +206,7 @@
           </tr>
         </table>
         <table border="1" class="table_grid separador_interno">
-          @if(env('APP_CLIENT') == 'worldcargo')
+          @if(env('APP_CLIENT') == 'worldcargo' || env('APP_CLIENT') == 'colombiana')
             <thead>
               <tr>
                 <th scope="col" style="width:10%;">Quantity</th>
@@ -259,9 +259,9 @@
           @endif
           <tfoot>
             <tr>
-              <td colspan="{{ (env('APP_CLIENT') == 'worldcargo') ? '9' : '6' }}">&nbsp;</td>
+              <td colspan="{{ (env('APP_CLIENT') == 'worldcargo' || env('APP_CLIENT') == 'colombiana') ? '9' : '6' }}">&nbsp;</td>
             </tr>
-            @if(env('APP_CLIENT') == 'worldcargo')
+            @if(env('APP_CLIENT') == 'worldcargo' || env('APP_CLIENT') == 'colombiana')
             <tr>
               <td colspan="4">
                 <table>
@@ -324,7 +324,7 @@
                   </tr>
                 </table>
               </td>
-              <td colspan="{{ (env('APP_CLIENT') == 'worldcargo') ? '5' : '2' }}" valign="top">
+              <td colspan="{{ (env('APP_CLIENT') == 'worldcargo' || env('APP_CLIENT') == 'colombiana') ? '5' : '2' }}" valign="top">
                 <table>
                   <tr>
                     <td style="height: 60px;color: #5e5e5e;font-size: 13px;width: 55%;">Código PoBox del Cliente:</td>
@@ -341,7 +341,7 @@
             @endif
           </tfoot>
         </table>
-        @if(env('APP_CLIENT') == 'worldcargo')
+        @if(env('APP_CLIENT') == 'worldcargo' || env('APP_CLIENT') == 'colombiana')
           <table border="0">
             <tr>
               <td style="margin: 0 auto;text-align: center;font-size: 13px;font-weight: bold;padding: 5px;"><span style="color: red;">¡IMPORTANTE!</span> EL RECIBO SE COBRARÁ POR EL VALOR MAYOR, (PESO O VOLUMEN) PARA LOS ENVÍOS AÉREOS.</td>
@@ -351,27 +351,37 @@
                 Todo lo que venga por correo interno de los estados unidos USPS, no nos hacemos responsables, ya que no hay manera de hacer rastreo no tiene prueba de entrega
               </td>
             </tr>
+            @if(env('APP_CLIENT') == 'worldcargo')
             <tr>
               <td style="margin: 0 auto;font-size: 13px;font-weight: bold;color: red;padding: 5px;">
                 SUS PAQUETES SE ENVIARÁN A VENEZUELA UNA VEZ CUMPLIDO 10 DÍAS EN NUESTRA BODEGA
               </td>
             </tr>
+            @endif
           </table>
 
           <table class="acuerdo separador_interno">
+             @if(env('APP_CLIENT') == 'worldcargo')
+              <?php  $agencia = 'WORLD CARGO' ?>
+            @endif
+            @if(env('APP_CLIENT') == 'colombiana')
+              <?php  $agencia = 'COLOMBIANA DE CARGA' ?>
+            @endif
             <tr>
               <td style="padding-right: 80px;">
-                <p>La compañía, <span style="font-weight: bold;">WORLDCARGO EXPORT</span>, no es responsable por el contenido de los paquetes, y en caso de perdida el monto máximo que asumirá será de USD$ 100 por warehouse receipt .</p>
+                <p>La compañía, <span style="font-weight: bold;">{{ $agencia }} EXPORT</span>, no es responsable por el contenido de los paquetes, y en caso de perdida el monto máximo que asumirá será de USD$ 100 por warehouse receipt .</p>
               </td>
               <td style="padding-right: 10px;">
-                <p><span style="font-weight: bold;">WORLDCARGO EXPORT</span>, is not responsible for the content of the packages in case of lost or damage of merchandise the maximun payment will be $ 100.00 per WR .</p>
+                <p><span style="font-weight: bold;">{{ $agencia }} EXPORT</span>, is not responsible for the content of the packages in case of lost or damage of merchandise the maximun payment will be $ 100.00 per WR .</p>
               </td>
             </tr>
+            @if(env('APP_CLIENT') == 'worldcargo')
             <tr>
               <td colspan="2" style="text-align: center;font-weight: bold;font-size: 10px;padding-bottom: 5px;">
                 REVISAR LA MERCANCÍA ANTES DE RETIRARLA DE LA OFICINA EN VALENCIA, LUEGO DE ESTO, NO SE ACEPTARÁ NINGÚN RECLAMO.
               </td>
             </tr>
+            @endif
             <tr>
               <td colspan="2" style="text-align: center;font-weight: bold;font-size: 10px;padding-bottom: 5px;">
                 ALL CARGO TENDERED TO WORLD CARGO EXPORT, INC IS SUBJECT TO INSPECTION AND SEARCH PER TSA REGULATIONS
@@ -380,7 +390,7 @@
           </table>
 
         @endif
-        <table class="table_firma separador_interno" style="{{ (env('APP_CLIENT') == 'worldcargo') ? 'padding-top:30px;' : '' }}">
+        <table class="table_firma separador_interno" style="{{ (env('APP_CLIENT') == 'worldcargo' || env('APP_CLIENT') == 'colombiana') ? 'padding-top:30px;' : '' }}">
           <tr>
             <td><strong>Printed:</strong></td>
             <td style="width:22%">{{ date('m-d-y h:i:s a', time()) }}</td>
@@ -391,7 +401,7 @@
           </tr>
         </table>
 
-        @if(env('APP_CLIENT') != 'worldcargo')
+        @if(env('APP_CLIENT') != 'worldcargo' || env('APP_CLIENT') == 'colombiana')
           <table class="acuerdo separador_interno">
             <tr>
               <td><p> @lang('general.i_certify1')<em> @lang('general.i_certify2')</em> @lang('general.i_certify3')</p></td>

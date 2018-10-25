@@ -64,12 +64,12 @@
 	                	<button @click="openUrl(urlSendEmail)" style="color: #23c6c8;" class="btn btn-default dim button_print" type="button" data-toggle="tooltip" title="Enviar email" id="btn-sendEmail">
 	                		<i class="fa fa-envelope fa-lg" style=""></i>
 	                	</button>
-                        <button @click="openUrl(urlPrintLabel)" style="color: #1ab394;" class="btn btn-default dim button_print" type="button" data-toggle="tooltip" title="Imprimir label">
+                        <!-- <button @click="openUrl(urlPrintLabel)" style="color: #1ab394;" class="btn btn-default dim button_print" type="button" data-toggle="tooltip" title="Imprimir label">
 	                		<i class="fa fa-barcode fa-lg" style=""></i>
 	                	</button>
 	                	<button @click="openUrl(urlPrint)" style="color: #ffbb33;" class="btn btn-default dim button_print" type="button" data-toggle="tooltip" title="Imprimir documento">
                         	<i class="fa fa-file-o fa-lg" style=""></i>
-                        </button>
+                        </button> -->
 	                </div>
 	                <div class=""><span><i class="fa fa-envelope "></i> {{ cliente_email }}</span></div>
 	            </div>

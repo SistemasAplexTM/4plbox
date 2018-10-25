@@ -77,10 +77,27 @@
     $toalRegistros = count($detalle);
     $contRegistros = 0;
     $cont=0;
+
+
+    $detalle = $detalleConsolidado;
+    //echo $detalle[$cont]->num_guia;
+    //echo '<pre>';
+    //print_r($detalle);
+    //echo '</pre>';
+    //exit();
     ?>
     <body style="margin-top: -25px;">
     	@foreach($detalle as $val)
-
+                <?php
+                    $shipper_json = '';
+                    $consignee_json = '';
+                    if($val->shipper_json != ''){
+                        $shipper_json = json_decode($val->shipper_json);
+                    }
+                    if($val->consignee_json != ''){
+                        $consignee_json = json_decode($val->consignee_json);
+                    }
+                ?>
     		<?php $contRegistros++ ?>
             <?php for ($i = 0; $i <= 1; $i++): ?>
                 <table width="100%;" border="0" cellspacing="0" cellpadding="0" id="tableContainer" <?php if ($i === 1): ?> style="page-break-after:<?php if ($contRegistros === $toalRegistros): ?>avoid;<?php else: ?>always<?php endif; ?>" <?php endif; ?>>
@@ -129,20 +146,20 @@
                                         <td><div id="ship">@lang('general.shipper')</div></td>
                                     </tr>
                                     <tr>
-                                        <td><div id="nomS"><span id="titulo">@lang('general.name'):</span> {{ (isset($detalle[$cont]->ship_nomfull)) ? $detalle[$cont]->ship_nomfull : '' }}</div></td>
+                                        <td><div id="nomS"><span id="titulo">@lang('general.name'):</span> {{ ($val->shipper_json) ? $shipper_json->nombre : $detalle[$cont]->ship_nomfull }}</div></td>
                                     </tr>
                                     <tr>
-                                        <td><div id="dirS"><span id="titulo">@lang('general.address'):</span> {{ (isset($detalle[$cont]->ship_dir)) ? $detalle[$cont]->ship_dir : '' }}</div></td>
+                                        <td><div id="dirS"><span id="titulo">@lang('general.address'):</span> {{ ($val->shipper_json) ? $shipper_json->direccion : $detalle[$cont]->ship_dir }}</div></td>
                                     </tr>
                                     <tr>
-                                        <td><div id="ciuS"><span id="titulo">@lang('general.country')/@lang('general.city'):</span> {{ (isset($detalle[$cont]->ship_ciudad)) ? $detalle[$cont]->ship_ciudad: '' }}</div></td>
+                                        <td><div id="ciuS"><span id="titulo">@lang('general.country')/@lang('general.city'):</span> {{ ($val->shipper_json) ? $shipper_json->ciudad : $detalle[$cont]->ship_ciudad }}</div></td>
                                     </tr>
                                     <tr>
-                                        <td><div id="telS"><span id="titulo">@lang('general.phone'):</span> {{ (isset($detalle[$cont]->ship_tel)) ? $detalle[$cont]->ship_tel : '' }}</div></td>
+                                        <td><div id="telS"><span id="titulo">@lang('general.phone'):</span> {{ ($val->shipper_json) ? $shipper_json->telefono : $detalle[$cont]->ship_tel }}</div></td>
                                     </tr>
-                                    <tr>
-                                        <td><div id="telS">{{ (isset($detalle[$cont]->ship_email)) ? $detalle[$cont]->ship_email : '' }}</div></td>
-                                    </tr>
+                                    {{-- <tr> --}}
+                                        {{-- <td><div id="telS">{{ (isset($detalle[$cont]->ship_email)) ? $detalle[$cont]->ship_email : '' }}</div></td> --}}
+                                    {{-- </tr> --}}
                                 </table>
                             </div>
                         </td>
@@ -150,27 +167,28 @@
                             <div id="cont1">
                                 <table width="100%;" border="0" cellspacing="0" cellpadding="0" id="table1">
                                     <tr>
-                                        <td><div id="cons">@lang('general.Consignee')</div></td>
+                                        <td><div id="cons">@lang('general.consignee')</div></td>
                                     </tr>
                                     <tr>
-                                        <td><div id="nomC"><span id="titulo">@lang('general.name'):</span> {{ (isset($detalle[$cont]->cons_nomfull)) ? $detalle[$cont]->cons_nomfull : '' }}</div></td>
+                                        <td><div id="nomC"><span id="titulo">@lang('general.name'):</span> {{ ($val->consignee_json) ? $consignee_json->nombre : $detalle[$cont]->cons_nomfull }}</div></td>
                                     </tr>
                                     <tr>
-                                        <td><div id="dirC"><span id="titulo">@lang('general.address'):</span> {{ (isset($detalle[$cont]->cons_dir)) ? $detalle[$cont]->cons_dir : '' }}</div></td>
+                                        <td><div id="dirC"><span id="titulo">@lang('general.address'):</span> {{ ($val->consignee_json) ? $consignee_json->direccion : $detalle[$cont]->cons_dir  }}</div></td>
                                     </tr>
                                     <tr>
-                                        <td><div id="ciuC"><span id="titulo">@lang('general.country')/@lang('general.city'):</span> {{ (isset($detalle[$cont]->cons_ciudad)) ? $detalle[$cont]->cons_ciudad : '' }}</div></td>
+                                        <td><div id="ciuC"><span id="titulo">@lang('general.country')/@lang('general.city'):</span> {{ ($val->consignee_json) ? $consignee_json->ciudad :  $detalle[$cont]->cons_ciudad }}</div></td>
                                     </tr>
                                     <tr>
-                                        <td><div id="telC"><span id="titulo">@lang('general.phone'):</span> {{ (isset($detalle[$cont]->cons_tel)) ? $detalle[$cont]->cons_tel : '' }}</div></td>
+                                        <td><div id="telC"><span id="titulo">@lang('general.phone'):</span> {{ ($val->consignee_json) ? $consignee_json->telefono :  $detalle[$cont]->cons_tel }}</div></td>
                                     </tr>
-                                    <tr>
-                                        <td><div id="telC"><spam style="font-size: 12px;">{{ (isset($detalle[$cont]->cons_email)) ? $detalle[$cont]->cons_email : '' }}</spam></div></td>
-                                    </tr>
+                                    <!-- <tr>
+                                        {{-- <td><div id="telC"><spam style="font-size: 12px;">{{ (isset($detalle[$cont]->cons_email)) ? $detalle[$cont]->cons_email : '' }}</spam></div></td> --}}
+                                    </tr> -->
                                 </table>
                             </div>
                         </td>
                     </tr>
+                    <tr><td colspan="2">&nbsp;</td></tr>
                     <tr>
                         <td align="CENTER" colspan="2">
                             <div>

@@ -164,12 +164,12 @@ $toalRegistros = count($detalleConsolidado);
                                                 <td colspan="4" style="border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;">
                                                     <table style="width: 100%;">
                                                         <tr>
-                                                            <td width="35%" style="text-align: center;{{ ($value->declarado2 == 0) ? 'background-color: black;color: #fff' : ''}}">
+                                                            <td width="35%" style="text-align: center;">
                                                                 <div style="color: #1d1d1e;">{{ '$ '.number_format($value->declarado2, 2) }}</div>
                                                                 <div style="margin-top: 10px;">Master: <span style="color: #1d1d1e;">{{ $documento->num_master }}</span></div>
                                                             </td>
                                                             <td width="30%" style="color: #1d1d1e;text-align: center;">{{ 1 }}</td>
-                                                            <td width="35%" style="text-align: center;"{{ ($value->peso2 == 0) ? 'background-color: black;color: #fff' : ''}}>
+                                                            <td width="35%" style="text-align: center;">
                                                                 <div style="color: #1d1d1e;">{{ $value->peso2 }} Lbs</div>
                                                                 <div style="margin-top: 10px;color: #1d1d1e;">{{ number_format(($value->peso2 * 0.453592), 2) }} Kls</div>
                                                             </td>
@@ -197,7 +197,7 @@ $toalRegistros = count($detalleConsolidado);
                                             </tr>
                                             <tr>
                                                 <td colspan="8" style="border-top: 1px solid #ccc;margin-top:5px;font-size: 8px;text-align: justify;">
-                                        @lang('general.message_goods')
+                                                    @lang('general.message_goods')
                                                 </td>
                                             </tr>
                                             <tr>
