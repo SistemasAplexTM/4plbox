@@ -85,7 +85,7 @@
     ?>
     <body>
       {{-- <pre> --}}
-        <?php //print_r($documento); ?>
+        <?php // print_r($documento); ?>
         <?php //print_r($detalle); ?>
 
       {{-- </pre> --}}
@@ -173,7 +173,7 @@
 
         <table class="datos_company separador_interno">
           <tr>
-            <td style="width:50%;">
+            <td style="width:50%;vertical-align: text-top;">
               <strong>Observaciones:</strong>
               <br>
               {{ $documento->observaciones }}
@@ -279,13 +279,13 @@
                                         }
                                       }else{
                                         if($total_libras > $total_volumen){
-                                          $sub = ($total_declarado * $documento->impuesto / 100) + (ceil($total_libras) * $documento->valor);
+                                          $sub = ($total_declarado * $documento->impuesto / 100) + ($documento->flete);
                                         }else{
-                                          $sub = ($total_declarado * $documento->impuesto / 100) + (ceil($total_volumen) * $documento->valor);
+                                          $sub = ($total_declarado * $documento->impuesto / 100) + ($documento->flete);
                                         }
                                       }
                                     ?>
-                                    <td><b>@lang('general.value'): (Flete+Impuesto)</b></td>
+                                    <td><b>@lang('general.value'): (Flete+Impuesto) </b></td>
                                     <td align="right">$ {{ $subtotal = ceil(number_format($sub, 2)) }} </td>
                                 </tr>
 
@@ -330,11 +330,13 @@
                     <td style="height: 60px;color: #5e5e5e;font-size: 13px;width: 55%;">Código PoBox del Cliente:</td>
                     <td style="font-size: 25px;font-weight: bold;"><div>{{ ((isset($documento->cons_pobox) and $documento->cons_pobox != '') ? $documento->cons_pobox : '') }}</div></td>
                   </tr>
+                  @if(env('APP_CLIENT') == 'worldcargo')
                   <tr>
                     <td colspan="2">
                       <div style="width: 75%;margin: 0 auto;text-align: center;color: red;font-weight: bold;">Pago a nombre de World Cargo</div>
                     </td>
                   </tr>
+                  @endif
                 </table>
               </td>
             </tr>
@@ -346,11 +348,13 @@
             <tr>
               <td style="margin: 0 auto;text-align: center;font-size: 13px;font-weight: bold;padding: 5px;"><span style="color: red;">¡IMPORTANTE!</span> EL RECIBO SE COBRARÁ POR EL VALOR MAYOR, (PESO O VOLUMEN) PARA LOS ENVÍOS AÉREOS.</td>
             </tr>
+            @if(env('APP_CLIENT') == 'worldcargo')
             <tr>
               <td style="margin: 0 auto;font-size: 13px;font-weight: bold;padding: 5px;">
                 Todo lo que venga por correo interno de los estados unidos USPS, no nos hacemos responsables, ya que no hay manera de hacer rastreo no tiene prueba de entrega
               </td>
             </tr>
+            @endif
             @if(env('APP_CLIENT') == 'worldcargo')
             <tr>
               <td style="margin: 0 auto;font-size: 13px;font-weight: bold;color: red;padding: 5px;">
@@ -369,10 +373,10 @@
             @endif
             <tr>
               <td style="padding-right: 80px;">
-                <p>La compañía, <span style="font-weight: bold;">{{ $agencia }} EXPORT</span>, no es responsable por el contenido de los paquetes, y en caso de perdida el monto máximo que asumirá será de USD$ 100 por warehouse receipt .</p>
+                <p>La compañía, <span style="font-weight: bold;">{{ $agencia }} </span>, no es responsable por el contenido de los paquetes, y en caso de perdida el monto máximo que asumirá será de USD$ 100 por warehouse receipt .</p>
               </td>
               <td style="padding-right: 10px;">
-                <p><span style="font-weight: bold;">{{ $agencia }} EXPORT</span>, is not responsible for the content of the packages in case of lost or damage of merchandise the maximun payment will be $ 100.00 per WR .</p>
+                <p><span style="font-weight: bold;">{{ $agencia }} </span>, is not responsible for the content of the packages in case of lost or damage of merchandise the maximun payment will be $ 100.00 per WR .</p>
               </td>
             </tr>
             @if(env('APP_CLIENT') == 'worldcargo')
@@ -384,7 +388,7 @@
             @endif
             <tr>
               <td colspan="2" style="text-align: center;font-weight: bold;font-size: 10px;padding-bottom: 5px;">
-                ALL CARGO TENDERED TO WORLD CARGO EXPORT, INC IS SUBJECT TO INSPECTION AND SEARCH PER TSA REGULATIONS
+                ALL CARGO TENDERED TO {{ $agencia }} IS SUBJECT TO INSPECTION AND SEARCH PER TSA REGULATIONS
               </td>
             </tr>
           </table>

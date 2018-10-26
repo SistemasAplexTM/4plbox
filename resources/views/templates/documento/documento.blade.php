@@ -90,18 +90,18 @@
         width: 50% !important;
     }
     #window-load{
+        display: none;
         background-color: #f2f2f2;
-        height: 316.539px;
-        opacity: 0.7;
+        height: 100%;
+        opacity: 0.8;
         position: absolute;
         width: 98%;
         z-index: 9999;
     }
     #loading{
         font-size: 50;
-        /*background-color: aquamarine;*/
         position: absolute;
-        left: 35%;
+        left: 47%;
         top: 40%;
     }
 </style>
@@ -117,7 +117,7 @@
         <modalconsignee-component></modalconsignee-component>
         <modalarancel-component></modalarancel-component>
         <modalcargosadd-component :showmodal="showmodalAdd"></modalcargosadd-component>
-        <div class="col-lg-12">
+        
             <form class="" id="formDocumento" name="formDocumento" class=" form-horizontal" role="form" action="{{ url('documento/updatedDocument') }}/{{  $documento->id }}" method="post">
                 {{ csrf_field() }}
                 <input type="hidden" class="form-control" id="date" name="date" readonly="">
@@ -360,191 +360,183 @@
                             </div>
                             <!-- TOTALES -->
                             <transition name="fade">
-                            <div class="form-horizontal" v-if="showFieldsTotals">
+                                <div class="form-horizontal" v-if="showFieldsTotals">
                                     <div class="ibox-content col-lg-12" :class="[mostrar.includes(22) ? 'wrh' : 'guia' ]">
-                                        <div class="col-lg-12" style="">
-                                            <div class="col-lg-12">
-                                                <div class="form-group"  style="margin-top: 15px;">
-                                                    <div class="col-sm-6">
-                                                        <label for="tipo_embarque_id" class="">@lang('documents.type_boarding') - <span class="fa fa-ship"></span><span class="fa fa-plane"></span></label>
-                                                        <select id="tipo_embarque_id" name="tipo_embarque_id" class="form-control" onchange="deleteError($(this).parent());llenarSelectServicio($(this).val())">
-                                                            @if(isset($embarques) and $embarques)
-                                                                @foreach($embarques as $embarque)
-                                                                    <option value="{{ $embarque['id'] }}" {{ (isset($documento->tipo_embarque_id) and $documento->tipo_embarque_id === $embarque['id']) ? 'selected' : '' }}>{{ $embarque['nombre'] }}</option>
-                                                                @endforeach
-                                                            @endif
-                                                        </select>
-                                                        <small class="help-block" style="display: none">@lang('documents.type_boarding')</small>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <label for="servicios_id" class="">@lang('documents.type_of_service')</label>
-                                                        <select onchange="calculateServiceType();" id="servicios_id" name="servicios_id" class="form-control">
-                                                            <option value="">@lang('documents.select_type_of_boarding')</option>
-                                                            @if(isset($servicios) and $servicios)
-                                                                @foreach($servicios as $servicio)
-                                                                    <option value="{{ $servicio['id'] }}" data-cobvol="{{ $servicio['cobro_peso_volumen'] }}" data-tarifamin="{{ $servicio['peso_minimo'] }}" data-tarifa="{{ $servicio['tarifa'] }}" data-seguro="{{ $servicio['seguro'] }}" data-c_opcional="{{ $servicio['cobro_opcional'] }}" data-t_age="{{ $servicio['tarifa_agencia'] }}" data-seg_age="{{ $servicio['seguro_agencia'] }}" data-impuesto_age="{{ $servicio['impuesto'] }}" {{ (isset($documento->servicios_id) and $documento->servicios_id === $servicio['id']) ? 'selected' : '' }}>{{ $servicio['nombre'] }}</option>
-                                                                @endforeach
-                                                            @endif
-                                                        </select>
-                                                        <small class="help-block" style="display: none">@lang('documents.obligatory_field')</small>
-                                                    </div>
-                                                </div>
+                                        <div class="form-group"  style="margin-top: 15px;">
+                                            <div class="col-sm-6">
+                                                <label for="tipo_embarque_id" class="">@lang('documents.type_boarding') - <span class="fa fa-ship"></span><span class="fa fa-plane"></span></label>
+                                                <select id="tipo_embarque_id" name="tipo_embarque_id" class="form-control" onchange="deleteError($(this).parent());llenarSelectServicio($(this).val())">
+                                                    @if(isset($embarques) and $embarques)
+                                                        @foreach($embarques as $embarque)
+                                                            <option value="{{ $embarque['id'] }}" {{ (isset($documento->tipo_embarque_id) and $documento->tipo_embarque_id === $embarque['id']) ? 'selected' : '' }}>{{ $embarque['nombre'] }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                                <small class="help-block" style="display: none">@lang('documents.type_boarding')</small>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label for="servicios_id" class="">@lang('documents.type_of_service')</label>
+                                                <select onchange="calculateServiceType();" id="servicios_id" name="servicios_id" class="form-control">
+                                                    <option value="">@lang('documents.select_type_of_boarding')</option>
+                                                    @if(isset($servicios) and $servicios)
+                                                        @foreach($servicios as $servicio)
+                                                            <option value="{{ $servicio['id'] }}" data-cobvol="{{ $servicio['cobro_peso_volumen'] }}" data-tarifamin="{{ $servicio['peso_minimo'] }}" data-tarifa="{{ $servicio['tarifa'] }}" data-seguro="{{ $servicio['seguro'] }}" data-c_opcional="{{ $servicio['cobro_opcional'] }}" data-t_age="{{ $servicio['tarifa_agencia'] }}" data-seg_age="{{ $servicio['seguro_agencia'] }}" data-impuesto_age="{{ $servicio['impuesto'] }}" {{ (isset($documento->servicios_id) and $documento->servicios_id === $servicio['id']) ? 'selected' : '' }}>{{ $servicio['nombre'] }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                                <small class="help-block" style="display: none">@lang('documents.obligatory_field')</small>
+                                            </div>
+                                        </div>
 
-                                                <div class="form-group" v-if="mostrar.includes(22)">
-                                                    <div class="col-sm-4">
-                                                        <label class="">@lang('documents.weight')</label>
-                                                        <input type="text" onkeyup="deleteError($(this).parent());" id="pesoDim" name="pesoDim" class="form-control" readonly="" value="{{ isset($documento->peso) ? $documento->peso : '' }}">
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <label class="">@lang('documents.volume')</label>
-                                                        <input type="text" onkeyup="deleteError($(this).parent());" id="volumen" name="volumen" class="form-control" readonly="" value="{{ isset($documento->volumen) ? $documento->volumen : '' }}">
-                                                    </div>
-                                                    <div class="col-lg-4">
-                                                        <label class="">@lang('documents.pieces')</label>
-                                                        <input type="text" onkeyup="deleteError($(this).parent());" id="piezas" name="piezas" class="form-control" readonly="" value="{{ isset($documento->piezas) ? $documento->piezas : '' }}">
-                                                    </div>
-                                                </div>
+                                        <div class="form-group" v-if="mostrar.includes(22)">
+                                            <div class="col-sm-4">
+                                                <label class="">@lang('documents.weight')</label>
+                                                <input type="text" onkeyup="deleteError($(this).parent());" id="pesoDim" name="pesoDim" class="form-control" readonly="" value="{{ isset($documento->peso) ? $documento->peso : '' }}">
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label class="">@lang('documents.volume')</label>
+                                                <input type="text" onkeyup="deleteError($(this).parent());" id="volumen" name="volumen" class="form-control" readonly="" value="{{ isset($documento->volumen) ? $documento->volumen : '' }}">
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <label class="">@lang('documents.pieces')</label>
+                                                <input type="text" onkeyup="deleteError($(this).parent());" id="piezas" name="piezas" class="form-control" readonly="" value="{{ isset($documento->piezas) ? $documento->piezas : '' }}">
+                                            </div>
+                                        </div>
 
-                                                <div class="form-group"  style="margin-top: 15px;" v-if="mostrar.includes(20)">
-                                                    <div class="col-sm-6">
-                                                        <label class="control-label" for="peso_total">@lang('documents.weight') Lb: </label>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <input type="text" placeholder="0" class="form-control" readonly="" id="peso_total" name="peso_total" value="{{ isset($documento->peso) ? $documento->peso : '' }}">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group" v-if="mostrar.includes(20)">
-                                                    <div class="col-sm-6">
-                                                        <label class="control-label" for="peso_cobrado">@lang('documents.charged_weight') Lb: </label>
-                                                    </div>
+                                        <div class="form-group"  style="margin-top: 15px;" >
+                                            <div class="col-sm-6">
+                                                <label class="control-label" for="peso_total">@lang('documents.weight') Lb: </label>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" placeholder="0" class="form-control" readonly="" id="peso_total" name="peso_total" value="{{ isset($documento->peso) ? $documento->peso : '' }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-6">
+                                                <label class="control-label" for="peso_cobrado">@lang('documents.charged_weight') Lb: </label>
+                                            </div>
 
-                                                    <div class="col-sm-6">
-                                                        <input type="text" placeholder="0" class="form-control" readonly="" id="peso_cobrado" name="peso_cobrado" value="{{ isset($documento->peso_cobrado) ? $documento->peso_cobrado : '' }}">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group" v-if="mostrar.includes(20)">
-                                                    <div class="col-sm-6">
-                                                        <label class="control-label" for="valor_libra">@lang('documents.value') Lb: (<span id="valorLibra">{{ (isset($documento->valor_libra) and $documento->valor_libra != 0)  ? $documento->valor_libra : 0 }}</span>)</label>
-                                                        <input type="hidden" id="valor_libra2" name="valor_libra2" value="{{ (isset($documento->valor_libra) and $documento->valor_libra != 0)  ? $documento->valor_libra : 0 }}">
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="input-group m-b">
-                                                            <span class="input-group-addon">$ </span>
-                                                            <input style="background-color: #FFFF99;" type="number" placeholder="0" value="{{ isset($documento->valor) ? $documento->valor : '' }}" onkeyup="totalizeDocument();" class="form-control" id="valor_libra" name="valor_libra">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group" v-if="mostrar.includes(20)">
-                                                    <div class="col-sm-6">
-                                                        <label class="control-label" for="impuesto"><div class="col-sm-12" data-trigger="hover"  data-container="body" data-toggle="popover" data-placement="left" data-content="Valor por el cual se calculara el impuesto sobre el valor declarado. (Por defecto 28%)" style="padding-left: 0px; padding-right: 0px;"><i class="fa fa-question-circle" style="cursor: pointer; color: coral;"></i> % @lang('documents.tax'): </div></label>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="input-group m-b">
-                                                            <span class="input-group-addon">% </span>
-                                                            <input type="number" placeholder="0" value="{{ isset($documento->impuesto) ? $documento->impuesto : '' }}" onkeyup="totalizeDocument();" class="form-control" id="impuesto" name="impuesto" style="background-color:#FFFF99;border-color: cornflowerblue;">
-                                                        </div>
-                                                    </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" placeholder="0" class="form-control" readonly="" id="peso_cobrado" name="peso_cobrado" value="{{ isset($documento->peso_cobrado) ? $documento->peso_cobrado : '' }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-6">
+                                                <label class="control-label" for="valor_libra">@lang('documents.value') Lb: (<span id="valorLibra">{{ (isset($documento->valor_libra) and $documento->valor_libra != 0)  ? $documento->valor_libra : 0 }}</span>)</label>
+                                                <input type="hidden" id="valor_libra2" name="valor_libra2" value="{{ (isset($documento->valor_libra) and $documento->valor_libra != 0)  ? $documento->valor_libra : 0 }}">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="input-group m-b">
+                                                    <span class="input-group-addon">$ </span>
+                                                    <input style="background-color: #FFFF99;" type="number" placeholder="0" value="{{ isset($documento->valor) ? $documento->valor : '' }}" onkeyup="totalizeDocument();" class="form-control" id="valor_libra" name="valor_libra">
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-12" style="padding-top: 5px;" v-if="mostrar.includes(20)">
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <div class="col-sm-6" style="padding-right: 0px;">
-                                                        <label class="control-label" for="valor_declarado">@lang('documents.declared'): </label>
-                                                    </div>
-                                                    <div class="col-sm-6" style="padding-right: 0px;">
-                                                        <label class="control-label" for="pa_aduana">@lang('documents.tax'): </label>
-                                                    </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-6">
+                                                <label class="control-label" for="impuesto"><div class="col-sm-12" data-trigger="hover"  data-container="body" data-toggle="popover" data-placement="left" data-content="Valor por el cual se calculara el impuesto sobre el valor declarado. (Por defecto 28%)" style="padding-left: 0px; padding-right: 0px;"><i class="fa fa-question-circle" style="cursor: pointer; color: coral;"></i> % @lang('documents.tax'): </div></label>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="input-group m-b">
+                                                    <span class="input-group-addon">% </span>
+                                                    <input type="number" placeholder="0" value="{{ isset($documento->impuesto) ? $documento->impuesto : '' }}" onkeyup="totalizeDocument();" class="form-control" id="impuesto" name="impuesto" style="background-color:#FFFF99;border-color: cornflowerblue;">
                                                 </div>
-                                                <div class="form-group">
-                                                    <div class="col-sm-6" style="padding-right: 0px;">
-                                                        <div class="input-group m-b">
-                                                            <span class="input-group-addon">$</span>
-                                                            <input type="text" readonly="" style="font-size: 12px;" placeholder="$" value="{{ isset($documento->valor_declarado) ? $documento->valor_declarado : '' }}" onkeyup="" class="form-control" id="valor_declarado" name="valor_declarado">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="input-group m-b">
-                                                            <span class="input-group-addon">$</span>
-                                                            <input type="text" placeholder="0" class="form-control" value="{{ isset($documento->pa_aduana) ? $documento->pa_aduana : '' }}" readonly="" id="pa_aduana" name="pa_aduana">
-                                                        </div>
-                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-6" style="padding-right: 0px;">
+                                                <label class="control-label" for="valor_declarado">@lang('documents.declared'): </label>
+                                            </div>
+                                            <div class="col-sm-6" style="padding-right: 0px;">
+                                                <label class="control-label" for="pa_aduana">@lang('documents.tax'): </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-6" style="padding-right: 0px;">
+                                                <div class="input-group m-b">
+                                                    <span class="input-group-addon">$</span>
+                                                    <input type="text" readonly="" style="font-size: 12px;" placeholder="$" value="{{ isset($documento->valor_declarado) ? $documento->valor_declarado : '' }}" onkeyup="" class="form-control" id="valor_declarado" name="valor_declarado">
                                                 </div>
-                                                <div class="form-group">
-                                                    <div class="col-sm-6">
-                                                        <label class="control-label" for="flete"><div class="col-sm-12"  data-container="body" data-trigger="hover"  data-toggle="popover" data-placement="left" data-content="Si el calculo es sobre el volumen (Vol), se evaluara quien es mayor (Peso o Volumen), si es mayor el volumen, se multiplicara por la tarifa. Si es mayor el peso, la diferencia (Peso-Volumen) sera multiplicada por la tarifa." style="padding-left: 0px; padding-right: 0px;"><i class="fa fa-question-circle" style="cursor: pointer; color: coral;"></i> @lang('documents.freight'): (<span id="cobrarPor"></span>)</div></label>
-                                                    </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="input-group m-b">
+                                                    <span class="input-group-addon">$</span>
+                                                    <input type="text" placeholder="0" class="form-control" value="{{ isset($documento->pa_aduana) ? $documento->pa_aduana : '' }}" readonly="" id="pa_aduana" name="pa_aduana">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-6">
+                                                <label class="control-label" for="flete"><div class="col-sm-12"  data-container="body" data-trigger="hover"  data-toggle="popover" data-placement="left" data-content="Si el calculo es sobre el volumen (Vol), se evaluara quien es mayor (Peso o Volumen), si es mayor el volumen, se multiplicara por la tarifa. Si es mayor el peso, la diferencia (Peso-Volumen) sera multiplicada por la tarifa." style="padding-left: 0px; padding-right: 0px;"><i class="fa fa-question-circle" style="cursor: pointer; color: coral;"></i> @lang('documents.freight'): (<span id="cobrarPor"></span>)</div></label>
+                                            </div>
 
-                                                    <div class="col-sm-6">
-                                                        <div class="input-group m-b">
-                                                            <span class="input-group-addon">$</span>
-                                                            <input type="text" placeholder="0" value="{{ isset($documento->flete) ? $documento->flete : '' }}" class="form-control" readonly="" id="flete" name="flete">
-                                                        </div>
-                                                    </div>
+                                            <div class="col-sm-6">
+                                                <div class="input-group m-b">
+                                                    <span class="input-group-addon">$</span>
+                                                    <input type="text" placeholder="0" value="{{ isset($documento->flete) ? $documento->flete : '' }}" class="form-control" readonly="" id="flete" name="flete">
                                                 </div>
-                                                <div class="form-group">
-                                                    <div class="col-sm-6">
-                                                        <label class="control-label" for="seguro_valor">@lang('documents.insured_value') $US: </label>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <label class="control-label" for="seguro">@lang('documents.insurance'): </label>
-                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-6">
+                                                <label class="control-label" for="seguro_valor">@lang('documents.insured_value') $US: </label>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class="control-label" for="seguro">@lang('documents.insurance'): </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-6">
+                                                <div class="input-group m-b">
+                                                    <span class="input-group-addon">$</span>
+                                                    <input style="background-color: #FFFF99;" type="number" onkeyup="totalizeDocument();" class="form-control" placeholder="0" maxlength="4" id="seguro_valor" name="seguro_valor" value="{{ isset($documento->seguro) ? $documento->seguro : '' }}">
                                                 </div>
-                                                <div class="form-group">
-                                                    <div class="col-sm-6">
-                                                        <div class="input-group m-b">
-                                                            <span class="input-group-addon">$</span>
-                                                            <input style="background-color: #FFFF99;" type="number" onkeyup="totalizeDocument();" class="form-control" placeholder="0" maxlength="4" id="seguro_valor" name="seguro_valor" value="{{ isset($documento->seguro) ? $documento->seguro : '' }}">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="input-group m-b">
-                                                            <span class="input-group-addon">$</span>
-                                                            <input type="text" placeholder="0" class="form-control" readonly="" value="" id="seguro" name="seguro">
-                                                        </div>
-                                                    </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="input-group m-b">
+                                                    <span class="input-group-addon">$</span>
+                                                    <input type="text" placeholder="0" class="form-control" readonly="" value="" id="seguro" name="seguro">
                                                 </div>
-                                                <div class="form-group">
-                                                    <div class="col-sm-6">
-                                                        <button class="btn btn-info" id="btnBuscarCargosAdd" type="button" @click="modalAdditionalCharges()"><span class="fa fa-plus"></span> @lang('documents.charges') </button>
-                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-6">
+                                                <button class="btn btn-info" id="btnBuscarCargosAdd" type="button" @click="modalAdditionalCharges()"><span class="fa fa-plus"></span> @lang('documents.charges') </button>
+                                            </div>
 
-                                                    <div class="col-sm-6">
-                                                        <div class="input-group m-b">
-                                                            <span class="input-group-addon">$</span>
-                                                            <input type="text" placeholder="0" class="form-control" readonly="" id="cargos_add" name="cargos_add" value="{{ isset($documento->cargos_add) ? $documento->cargos_add : '' }}" >
-                                                        </div>
-                                                    </div>
+                                            <div class="col-sm-6">
+                                                <div class="input-group m-b">
+                                                    <span class="input-group-addon">$</span>
+                                                    <input type="text" placeholder="0" class="form-control" readonly="" id="cargos_add" name="cargos_add" value="{{ isset($documento->cargos_add) ? $documento->cargos_add : '' }}" >
                                                 </div>
-                                                <div class="form-group">
-                                                    <div class="col-sm-6">
-                                                        <label class="control-label" for="descuento">@lang('documents.discount'): </label>
-                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-6">
+                                                <label class="control-label" for="descuento">@lang('documents.discount'): </label>
+                                            </div>
 
-                                                    <div class="col-sm-6">
-                                                        <div class="input-group m-b">
-                                                            <span class="input-group-addon">$</span>
-                                                            <input style="background-color: #FFFF99;" type="number" placeholder="0" class="form-control" value="{{ isset($documento->descuento) ? $documento->descuento : '' }}" onkeyup="totalizeDocument();" id="descuento" name="descuento">
-                                                        </div>
-                                                    </div>
+                                            <div class="col-sm-6">
+                                                <div class="input-group m-b">
+                                                    <span class="input-group-addon">$</span>
+                                                    <input style="background-color: #FFFF99;" type="number" placeholder="0" class="form-control" value="{{ isset($documento->descuento) ? $documento->descuento : '' }}" onkeyup="totalizeDocument();" id="descuento" name="descuento">
                                                 </div>
-                                                <div class="form-group">
-                                                    <div class="col-sm-6">
-                                                        <label class="control-label" for="total">@lang('documents.total'): </label>
-                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-6">
+                                                <label class="control-label" for="total">@lang('documents.total'): </label>
+                                            </div>
 
-                                                    <div class="col-sm-6">
-                                                        <div class="input-group m-b">
-                                                            <span class="input-group-addon">$</span>
-                                                            <input type="text" placeholder="0" readonly="" value="{{ isset($documento->total) ? $documento->total : '' }}" class="form-control" id="total" name="total">
-                                                        </div>
-                                                    </div>
+                                            <div class="col-sm-6">
+                                                <div class="input-group m-b">
+                                                    <span class="input-group-addon">$</span>
+                                                    <input type="text" placeholder="0" readonly="" value="{{ isset($documento->total) ? $documento->total : '' }}" class="form-control" id="total" name="total">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                            </div>
+                                </div>
                             </transition>
                         </div>
                     </div>
@@ -558,7 +550,8 @@
                             </div>
                             <!--************************************* DATOS DE CARGA PARA GUIA ****************************-->
                             <div class="form-horizontal">
-                                <div class="ibox-content col-lg-12" :class="[mostrar.includes(22) ? 'wrh' : 'guia' ]">
+                                <div class="ibox-content" :class="[mostrar.includes(22) ? 'wrh' : 'guia' ]">
+                                    <div class="row">
                                     <div class="col-lg-12">
                                         <div class="row pasos_guia" id="detalle_guia">
                                             <div class="row">
@@ -830,6 +823,7 @@
                                             </div>                                            
                                         </div>
                                     </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -838,7 +832,7 @@
                     
                 </div>
             </form>
-        </div>
+        
         {{-- MODAL AGREGAR TRACKINGS 2 --}}
         <div class="modal fade bs-example" id="modalTrackingsAdd2" tabindex="" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog" id="trackings">
@@ -848,7 +842,7 @@
                         <h2 class="modal-title" id="myModalLabel"><i class="fa fa-barcode"></i>@lang('documents.add_trackings')</h2>
                     </div>
                     <div class="modal-body">
-                        <div class="row" id="window-load"><div id="loading">loading.....</div></div>
+                        <div class="row" id="window-load"><div id="loading"><Spinner name="circle" color="#66bf33" noFadeIn="true"/></div></div>
                         <div class="row">
                             <div class="col-lg-8">
                                 <label class="control-label">Ingrese el numero de tracking</label>

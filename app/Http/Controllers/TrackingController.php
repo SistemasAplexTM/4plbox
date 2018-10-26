@@ -129,15 +129,15 @@ class TrackingController extends Controller
             if ($id != '') {
                 $where[] = array('tracking.documento_detalle_id', $id);
             } else {
-                $where[] = array('tracking.documento_detalle_id', null);
+                // $where[] = array('tracking.documento_detalle_id', null);
             }
 
             if ($add != null and $add != 'null') {
                 $where[] = array('tracking.consignee_id', $add);
             } else {
-                if ($req_consignee == false) {
-                    $where[] = array('tracking.consignee_id', null);
-                }
+                // if ($req_consignee == false) {
+                //     $where[] = array('tracking.consignee_id', null);
+                // }
             }
         }
         $data = Tracking::leftJoin('consignee AS b', 'tracking.consignee_id', 'b.id')
@@ -229,7 +229,7 @@ class TrackingController extends Controller
             }
         } else {
             $answer = array(
-                'code'  => 600,
+                'code'  => 700,
                 'error' => 'El numero de warehouse ingresado, no esta en la base de datos.',
             );
         }

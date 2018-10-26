@@ -1,10 +1,5 @@
-// @class address;
-// @extends abstractinput;
-// @final;
-// @example;
-
 $(document).ready(function() {
-    $('#tracking').tagsinput();
+    permissions();
     //toggle `popup` / `inline` mode
     $.fn.editable.defaults.mode = 'inline';
     $.fn.editable.defaults.params = function(params) {
@@ -48,17 +43,69 @@ $(document).ready(function() {
     });
     llenarSelectPersonalizado('documento', 'localizacion', 'localizacion_id', 2); // module, tableName, id_campo
     llenarSelectPersonalizado('documento', 'localizacion', 'localizacion_id_c', 2); // module, tableName, id_campo
-    
+    if ($('#show-totales').prop('checked') === true) {
+        setTimeout(function() {
+            llenarSelectServicio($('#tipo_embarque_id').val());
+        }, 500);
+    }
+
+    // $('#whgTable').DataTable({
+    //     ajax: 'getDataDetailDocument',
+    //     "paging":   false,
+    //     "info":     false,
+    //     "searching": false,
+    //     columns: [{
+    //         data: 'num_warehouse',
+    //         name: 'num_warehouse'
+    //     }, {
+    //         data: 'peso',
+    //         name: 'peso',
+    //         class: 'cp_peso'
+    //     }, {
+    //         data: 'contenido',
+    //         name: 'contenido'
+    //     }, {
+    //         data: 'nom_pa',
+    //         name: 'nom_pa'
+    //     }, {
+    //         data: 'valor',
+    //         name: 'valor'
+    //     }, {
+    //         sortable: false,
+    //         "render": function(data, type, full, meta) {
+    //             var btn_addTracking = '';
+    //             var btn_edit = '';
+    //             var btn_save = '';
+    //             var btn_delete = '';
+    //             var display = 'inline-block';
+    //             if(full.consolidado == 1){
+    //                 display = 'none';
+    //             }
+
+    //             btn_addTracking = '<a class="btn btn-info btn-xs btn-actions addTrackings" type="button" id="btn_addtracking'+full.id+'" data-toggle="tooltip" title="Agregar tracking" onclick="addTrackings('+full.id+')"><i class="fa fa-barcode"></i> <span id="cant_tracking'+full.id+'">'+full.cantidad+'</span></a> ';
+
+    //             btn_save = '<a class="btn btn-primary btn-xs btn-actions" type="button" id="btn_confirm'+full.id+'" onclick="saveTableDetail('+full.id+')" data-toggle="tooltip" title="Guardar" style="display:none;"><i class="fa fa-check"></i></a> ';
+
+    //             btn_edit = '<a class="btn btn-success btn-xs btn-actions" type="button" id="btn_edit'+full.id+'" onclick="editTableDetail('+full.id+')" data-toggle="tooltip" title="Editar"><i class="fa fa-edit"></i></a> ';
+
+    //             btn_delete = '<a class="btn btn-danger btn-xs btn-actions" type="button" id="btn_remove'+full.id+'" onclick="eliminar('+full.id+', true)" data-toggle="tooltip" title="Eliminar" style="display: '+display+'"><i class="fa fa-times"></i></a> ';
+
+    //             return btn_addTracking + btn_save + btn_edit + btn_delete;
+    //         }
+    //     }],
+    //     // "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+    //     //     $(nRow).children().each(function (index, td) {
+    //     //         $(this).addClass('cp_peso');
+    //     //     });
+    //     //  }
+    //     // "columnDefs": [{
+    //     //     targets: 1,
+    //     //     className:"cp_peso"
+    //     // }, ]
+    // });
+
 });
 $(function() {
-    //aparecer botones de accion en las bolsas del consolidado
-    jQuery('.list-group').
-    on('mouseover', 'li', function() {
-        jQuery(this).find('.boxEdit, .boxDelete').show();
-    }).
-    on('mouseout', 'li', function() {
-        jQuery(this).find('.boxEdit, .boxDelete').hide();
-    });
 
     jQuery('#tbl-consolidado').
     on('mouseover', 'tr', function() {
@@ -66,14 +113,6 @@ $(function() {
     }).
     on('mouseout', 'tr', function() {
         jQuery(this).find('.edit, .delete').hide();
-    });
-
-    jQuery('#whgTable').
-    on('mouseover', 'tr', function() {
-        jQuery(this).find('.edit').show();
-    }).
-    on('mouseout', 'tr', function() {
-        jQuery(this).find('.edit').hide();
     });
 
     $('#show-all-c').change(function() {
@@ -102,191 +141,8 @@ $(function() {
     });
 });
 
-function datatableDetail(){
-    //     if ($.fn.DataTable.isDataTable('#whgTable')) {
-    // var table = $('#whgTable').DataTable();
-    //     table.clear();
-    //         $('#whgTable tbody').empty();
-    //         $('#whgTable').dataTable().fnDestroy();
-    //     }
-    $('#whgTable').DataTable({
-        ajax: 'getDataDetailDocument',
-        // "paging":   false,
-        // "info":     false,
-        processing: false,
-        serverSide: false,
-        "searching": false,
-        columns: [{
-            data: 'num_warehouse',
-            name: 'num_warehouse'
-        }, {
-            "render": function (data, type, full, meta) {
-                return '<a data-name="piezas" data-pk="'+full.id+'" data-value="'+full.piezas+'" class="td_edit" data-type="text" data-placement="right" data-title="Piezas">'+full.piezas+'</a>';
-            }
-        },  {
-            "render": function (data, type, full, meta) {
-                var cadena  = full.dimensiones;
-                var dimensiones = cadena.split(" ");
-                var arr1 = cadena.split("=");
-                var arrF = arr1[1].split("x");
-                return '<a data-name="peso" data-pk="'+full.id+'" class="td_edit" data-type="text" data-placement="right" data-title="Peso">'+full.peso+'</a> ' + 
-                ' <a data-name="dimensiones" data-pk="'+full.id+'" data-value="'+arrF+'" class="td_edit_d" data-type="address" data-placement="right" data-title="Dimensiones">'+dimensiones[1]+'</a>';;
-            }
-        }, {
-            "render": function (data, type, full, meta) {
-                return '<a data-name="contenido" data-pk="'+full.id+'" data-value="'+full.contenido+'" class="td_edit" data-type="text" data-placement="right" data-title="Contenido">'+full.contenido+'</a>';
-            }
-        }, {
-            "render": function (data, type, full, meta) {
-                var pa = full.nom_pa;
-                return pa + '<a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalArancel('+full.id+', \'whgTable\')"><i class="material-icons">&#xE254;</i></a>';
-            },
-            visible: (objVue.mostrar.includes(16)) ? true : false
-        }, 
-        // {
-        //     data: 'nom_pa',
-        //     name: 'nom_pa',
-        //     visible: (objVue.mostrar.includes(16)) ? true : false
-        // }, 
-        {
-            "render": function (data, type, full, meta) {
-                return '<a data-name="declarado" data-pk="'+full.id+'" class="td_edit" data-type="text" data-placement="left" data-title="Declarado">'+full.valor+'</a>';
-            }
-        }, {
-            sortable: false,
-            "render": function(data, type, full, meta) {
-                var btn_addTracking = '';
-                var btn_edit = '';
-                var btn_save = '';
-                var btn_delete = '';
-                var display = 'inline-block';
-                if(full.consolidado == 1){
-                    display = 'none';
-                }
-
-                btn_addTracking = '<a class="btn btn-info btn-xs btn-actions addTrackings" type="button" id="btn_addtracking'+full.id+'" data-toggle="tooltip" title="Agregar tracking" onclick="addTrackings('+full.id+')"><i class="fa fa-barcode"></i> <span id="cant_tracking'+full.id+'">'+full.cantidad+'</span></a> ';
-
-                btn_save = '<a class="btn btn-primary btn-xs btn-actions" type="button" id="btn_confirm'+full.id+'" onclick="saveTableDetail('+full.id+')" data-toggle="tooltip" title="Guardar" style="display:none;"><i class="fa fa-check"></i></a> ';
-
-                btn_edit = '<a class="btn btn-success btn-xs btn-actions" type="button" id="btn_edit'+full.id+'" onclick="editTableDetail('+full.id+')" data-toggle="tooltip" title="Editar"><i class="fa fa-edit"></i></a> ';
-
-                btn_delete = '<a class="btn btn-danger btn-xs btn-actions" type="button" id="btn_remove'+full.id+'" onclick="eliminar('+full.id+', true)" data-toggle="tooltip" title="Eliminar" style="display: '+display+'"><i class="fa fa-times"></i></a> ';
-
-                return btn_addTracking + btn_delete;
-            }
-        }, {
-            data: 'volumen',
-            name: 'volumen',
-            visible: false
-        }, {
-            data: 'piezas',
-            name: 'piezas',
-            visible: false
-        }, {
-            data: 'peso',
-            name: 'peso',
-            visible: false
-        }, {
-            data: 'valor',
-            name: 'valor',
-            visible: false
-        },],
-        "drawCallback": function () {
-            /* EDITABLE FIELD */
-            // if (me.permissions.editDetail) {
-                $(".td_edit").editable({
-                    ajaxOptions: {
-                        type: 'post',
-                        dataType: 'json'
-                    },
-                    url: "updateDetailDocument",
-                    validate:function(value){
-                        if($.trim(value) == ''){
-                            return 'Este campo es obligatorio!';
-                        }
-                    },
-                    success: function(response, newValue) {
-                        refreshTable('whgTable');
-                        objVue.totalizeDocument();
-                    }
-                });
-
-                $('.td_edit_d').editable({
-                    ajaxOptions: {
-                        type: 'post',
-                        dataType: 'json'
-                    },
-                    mode: 'popup',
-                    url: 'updateDetailDocument',
-                    validate:function(value){
-                        if($.trim(value.largo) == '' || $.trim(value.ancho) == '' || $.trim(value.alto) == ''){
-                            return 'Los campos no pueden ir vacios!';
-                        }
-                    },
-                    success: function(response, newValue) {
-                        refreshTable('whgTable');
-                        objVue.totalizeDocument();
-                    }
-                });
-            // }
-        },
-        "footerCallback": function (row, data, start, end, display) {
-            var api = this.api(), data;
-            /*Remove the formatting to get integer data for summation*/
-            var intVal = function (i) {
-                return typeof i === 'string' ?
-                        i.replace(/[\$,]/g, '') * 1 :
-                        typeof i === 'number' ?
-                        i : 0;
-            };
-            /*Total over all pages*/
-            var vol = api
-                    .column(7)
-                    .data()
-                    .reduce(function (a, b) {
-                        return intVal(Math.ceil(a)) + intVal(Math.ceil(b));
-                    }, 0);
-            var piezas = api
-                    .column(8)
-                    .data()
-                    .reduce(function (a, b) {
-                        return intVal(a) + intVal(b);
-                    }, 0);
-            var peso = api
-                    .column(9)
-                    .data()
-                    .reduce(function (a, b) {
-                        return intVal(Math.ceil(a)) + intVal(Math.ceil(b));
-                    }, 0);
-            var dec = api
-                    .column(10)
-                    .data()
-                    .reduce(function (a, b) {
-                        return intVal(a) + intVal(b);
-                    }, 0);
-
-            /*Update footer formatCurrency()*/
-            $('#piezas').val(parseFloat(isInteger(piezas)));
-            $('#volumen').val(parseFloat(isInteger(Math.ceil(vol))));
-            $('#pie_ft').val(parseFloat(isInteger(Math.ceil(vol * 166 / 1728))));
-            $('#pesoDim').val(parseFloat(isInteger(peso)));
-            $('#valor_declarado_tbl').val(parseFloat(isInteger(dec)));
-        },
-    }).on('xhr.dt', function ( e, settings, json, xhr ) {
-        if(app_type === 'courier'){
-            if(json.data.length === 0){
-                objVue.cantidad_detalle = true;
-            }else{
-                objVue.cantidad_detalle = false;
-            }
-        }
-        objVue.totalizeDocument();
-        // console.log(json.data);
-    });
-}
 function llenarSelectServicio(id_embarque) {
     var url = '../../servicios/getAllServiciosAgencia/' + id_embarque;
-    var pa_id = 1;// POSICION ARANCELARIA POR DEFECTO
     $.ajax({
         url: url,
         dataType: 'json',
@@ -309,11 +165,10 @@ function llenarSelectServicio(id_embarque) {
                             data-c_opcional="' + value.cobro_opcional + '"\n\
                              data-t_age="' + value.tarifa_agencia + '"\n\
                               data-seg_age="' + value.seguro_agencia + '"\n\
-                               data-impuesto_age="' + value.impuesto + '"\n\
-                               data-pa_id="' + value.pa_id + '">' + value.nombre + '</option>');
+                               data-impuesto_age="' + value.impuesto + '">' + value.nombre + '</option>');
                 });
             }
-            objVue.totalizeDocument();
+            totalizeDocument();
         },
         error: function(jqXHR, textStatus, errorThrown) {
             data = {
@@ -324,13 +179,6 @@ function llenarSelectServicio(id_embarque) {
             $('#modalError').modal({
                 show: true
             });
-        },
-        complete: function(){
-            if($('#servicios_id option:selected').data('pa_id') != null){
-                pa_id = $('#servicios_id option:selected').data('pa_id');
-            }
-            $('#pa_id').val(pa_id);
-            objVue.getPositionById(pa_id);
         }
     });
 }
@@ -433,8 +281,12 @@ function restoreShipperConsignee(id, table) {
     };;
 }
 
-function addTrackingToDocument(tracking, option) {
-    objVue.addTrackingToDocument(option, tracking);
+function addTrackingToDocument(idTracking, idDocument) {
+    var data = {
+        idTracking: idTracking,
+        idDocument: idDocument,
+    }
+    objVue.addTrackingToDocument(data);
 }
 
 function showModalShipperConsigneeConsolidado(id, idShipCons, opcion) {
@@ -451,47 +303,37 @@ function agruparGuias(id) {
     };
 }
 
-function removerGuiaAgrupada(id, id_guia_detalle) {
+function removerGuiaAgrupada(id) {
     objVue.removerAgrupado = {
-        id: id,
-        id_guia_detalle: id_guia_detalle,
+        id: id
     };
 }
 
-function showModalArancel(id, table) {
-    objVue.modalArancel(id, table);
+function showModalArancel(id) {
+    objVue.modalArancel(id);
 }
 
-function permissions_f() {
+function permissions() {
     objVue.permissions = {
         deleteDetailConsolidado: permission_deleteDetailConsolidado,
-        insertDetail:                       permission_insertDetail,
-        editDetail:                         permission_editDetail,
-        removerGuiaAgrupada:                permission_removerGuiaAgrupada,
-        pdfContrato:                        permission_pdfContrato,
-        pdfTsa:                             permission_pdfTsa,
-        pdf:                                permission_pdf,
-        pdfLabel:                           permission_pdfLabel
+        insertDetail: permission_insertDetail,
+        editDetail: permission_editDetail,
+        removerGuiaAgrupada: permission_removerGuiaAgrupada,
+        pdfContrato: permission_pdfContrato,
+        pdfTsa: permission_pdfTsa,
+        pdf: permission_pdf,
+        pdfLabel: permission_pdfLabel
     };
 }
-
 var objVue = new Vue({
     el: '#documento',
-    watch:{
-        emailD:function(value){
-            if(value != null && value != ''){
-                this.enviarEmailDestinatario = true;
-            }else{
-                this.enviarEmailDestinatario = false;
-            }
-        },
-    },
     mounted: function() {
-        $('#date').val(this.getTime());
+        //
     },
     created: function() {
         this.liquidado = $('#document_type').data('liquidado');
         this.showHiddeFields();
+        this.getPositionById($('#pa_id').val());
         this.searchShipperConsignee($('#shipper_id').val(), 'shipper');
         this.searchShipperConsignee($('#consignee_id').val(), 'consignee');
         /* CUSTOM MESSAGES VE-VALIDATOR*/
@@ -519,14 +361,13 @@ var objVue = new Vue({
         mostrar: {},
         document_type: '',
         liquidado: null,
-        emailD: null,
+        emailD: '',
         nombreR: null,
         nombreD: null,
         direccionR: null,
         direccionD: null,
         showmodalAdd: false,
         showFieldsTotals: false,
-        enviarEmailDestinatario: false,
         // localizacion_id: null,
         // localizacion_id_c: null,
         contactos: {}, //es para poder elegir los contactos de shippero o consignee en la modal de consolidado
@@ -534,111 +375,108 @@ var objVue = new Vue({
         datosAgrupar: {}, //es para poder agrupar guias en el consolidado
         removerAgrupado: {}, //es para poder remover guias agrupadas en el consolidado
         permissions: {}, //es para poder pasar los permisos al consolidado
-        refreshBoxes: false, //variable para refrescar las cajas del consolidado bodega
-        cantidad_detalle: true, //para mostrar u ocultar el boton de agregar (funcionalidad para courier)
-        tracking_number: null,
-        id_detalle: null
     },
     methods: {
-        refreshTableDetail: function(){
-            var table = $('#whgTable').DataTable();
-            table.ajax.reload();
-        },
-        totalizeDocument: function(){
-            setTimeout(function(){
-                totalizeDocument();
-            },500);
-        },
         showTotals(value) {
             this.showFieldsTotals = value;
         },
         addTrackings(id) {
-            this.id_detalle = id;
+            if ($('#consignee_id').val() != '') {
+                if ($.fn.DataTable.isDataTable('#tbl-trackings')) {
+                    $('#tbl-trackings' + ' tbody').empty();
+                    $('#tbl-trackings').dataTable().fnDestroy();
+                }
+                var table = $('#tbl-trackings').DataTable({
+                    ajax: '../../tracking/all/' + $('#consignee_id').val(),
+                    columns: [{
+                        sortable: false,
+                        "render": function(data, type, full, meta) {
+                            var checked = '';
+                            if (full.documento_detalle_id == id) {
+                                checked = "checked='checked'"
+                            }
+                            return '<div class="checkbox checkbox-success" data-toggle="tooltip" title="Agregar"><input type="checkbox" ' + checked + ' id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '" onclick="addTrackingToDocument(' + full.id + ', ' + id + ')"></label></div>';
+                        }
+                    }, {
+                        data: "codigo",
+                        name: 'codigo'
+                    }, {
+                        data: "contenido",
+                        name: 'contenido'
+                    }],
+                    'columnDefs': [{
+                        className: "text-center",
+                        "targets": [0],
+                        width: 10,
+                    }]
+                });
                 /* TBL-TRACKING-USED */
                 if ($.fn.DataTable.isDataTable('#tbl-trackings-used')) {
                     $('#tbl-trackings-used' + ' tbody').empty();
                     $('#tbl-trackings-used').dataTable().fnDestroy();
                 }
                 var table = $('#tbl-trackings-used').DataTable({
-                    ajax: '../../tracking/all/' + false + '/' + null + '/' + id + '/' + true,
+                    ajax: '../../tracking/all/' + $('#consignee_id').val() + '/' + id,
                     columns: [{
+                        sortable: false,
+                        "render": function(data, type, full, meta) {
+                            var checked = '';
+                            if (full.documento_detalle_id == id) {
+                                checked = "checked='checked'"
+                            }
+                            return '<div class="checkbox checkbox-danger" data-toggle="tooltip" title="Quitar"><input type="checkbox" ' + checked + ' id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '" onclick="addTrackingToDocument(' + full.id + ', ' + id + ')"></label></div>';
+                        }
+                    }, {
                         data: "codigo",
                         name: 'codigo'
                     }, {
                         data: "contenido",
                         name: 'contenido'
-                    }, {
-                        sortable: false,
-                        "render": function(data, type, full, meta) {
-                            var btn_delete = '';
-                            btn_delete = '<a class="btn btn-danger btn-xs" type="button" id="btn_remove_t'+full.id+'" onclick="addTrackingToDocument(\''+full.codigo+'\', \'delete\')" data-toggle="tooltip" title="Retirar"><i class="fa fa-times"></i></a> ';
-                            return btn_delete;
-                        }
                     }],
                     'columnDefs': [{
                         className: "text-center",
                         "targets": [0],
+                        width: 10,
                     }]
                 });
-                $('#modalTrackingsAdd2').modal('show');
+                $('#modalTrackingsAdd').modal('show');
+            } else {
+                swal('Atención!', 'Necesita seleccionar un shipper para continuar.', 'warning');
+            }
         },
-        addTrackingToDocument(option, codigo) {
+        addTrackingToDocument(data) {
             let me = this;
-            $('#window-load').show();
-            axios.post('../../tracking/addOrDeleteDocument', {
-                'option': option,
-                'tracking': (codigo) ? codigo : me.tracking_number,
-                'id_detail': me.id_detalle
-            }).then(response => {
-                if(response.data.code == 200){
-                    me.tracking_number = null;
-                    me.addTrackings(me.id_detalle)
-                    refreshTable('whgTable');
-                    toastr.success(response.data.message);
+            if (!$('#chk' + data.idTracking).is(':checked')) {
+                axios.post('../../tracking/addOrDeleteDocument', {
+                    'option': 'create',
+                    'id_tracking': data.idTracking,
+                    'id_document': data.idDocument
+                }).then(response => {
+                    // refreshTable('whgTable');
+                    var cant = $('#cant_tracking' + data.idDocument).html();
+                    $('#cant_tracking' + data.idDocument).html(parseInt(cant) + 1);
+                    toastr.success('Tracking agregado a este documento.');
                     toastr.options.closeButton = true;
-                    $('#window-load').hide();
-                }else{
-                    if(response.data.code == 700){
-                        me.createTracking();
-                    }else{
-                        toastr.warning('Error: -' + response.data.error);
-                        $('#window-load').hide();
-                    }
-                }
-            }).catch(function(error) {
-                console.log(error);
-                toastr.warning('Error: -' + error);
-                $('#window-load').hide();
-            });
-        },
-        createTracking(){
-            let me = this;
-            axios.post('../../tracking', {
-                'consignee_id': null,
-                'codigo': me.tracking_number,
-                'contenido': null,
-                'confirmed_send': false,
-            }).then(function(response) {
-                if (response.data['code'] == 200) {
-                    toastr.success('Registro creado correctamente.');
-                    toastr.options.closeButton = true;
-                    me.addTrackingToDocument('create');
-                } else {
-                    toastr.warning(response.data['error']);
-                    toastr.options.closeButton = true;
-                    $('#window-load').hide();
-                }
-            }).catch(function(error) {
-                console.log(error);
-                toastr.warning("Error: " + error, {
-                    timeOut: 50000
                 });
-                $('#window-load').hide();
-            });
+            } else {
+                axios.post('../../tracking/addOrDeleteDocument', {
+                    'option': 'delete',
+                    'id_tracking': data.idTracking,
+                    'id_document': data.idDocument
+                }).then(response => {
+                    // refreshTable('whgTable');
+                    var cant = $('#cant_tracking' + data.idDocument).html();
+                    $('#cant_tracking' + data.idDocument).html(parseInt(cant) - 1);
+                    toastr.warning('Tracking retirado de este documento.');
+                    toastr.options.closeButton = true;
+                });
+            }
+            setTimeout(function() {
+                me.addTrackings(data.idDocument);
+            }, 200);
         },
         /* FUNCION PARA ELIMINAR DETALLE DE CONSIOLIDADO */
         deleteDetailConsolidado: function(data) {
-            let me = this;
             swal({
                 title: 'Seguro que desea eliminar este registro?',
                 text: "No lo podras recuperar despues!",
@@ -655,13 +493,11 @@ var objVue = new Vue({
                         toastr.options.closeButton = true;
                         var table = $('#tbl-consolidado').DataTable();
                         table.ajax.reload();
-                        me.refreshBoxes = !me.refreshBoxes;
                     });
                 }
             });
         },
         showHiddeFields: function() {
-            let me = this;
             var json = functionalities_doc;
             var arreglo = [];
             $.each(json, function(key, value) {
@@ -690,18 +526,9 @@ var objVue = new Vue({
             if ($('#show-totales').prop('checked') === true) {
                 this.showFieldsTotals = true;
             }
-            $('.form_doc').css('display', 'inline-block');
-            setTimeout(function(){
-                datatableDetail();
-                permissions_f();
-                if ($('#show-totales').prop('checked') === true) {
-                    // me.getPositionById($('#pa_id').val());
-                    llenarSelectServicio($('#tipo_embarque_id').val());
-                }
-            }, 500);            
+            $('.form_doc').css('display', 'inline-block')
         },
         saveDocument: function() {
-            $('#date').val(this.getTime());
             const isUnique = (value) => {
                 if ($('#shipper_id').val() == '' || $('#shipper_id').val() == null) {
                     return axios.post('../../shipper/existEmail', {
@@ -813,7 +640,7 @@ var objVue = new Vue({
                     $('#direccionD').attr('readonly', true);
                     $('#emailD').attr('readonly', true);
                     $('#telD').attr('readonly', true);
-                    $('#localizacion_id_c').select2({'disabled': true});
+                    $('#localizacion_id_c').attr('disable', true);
                     $('#zipD').attr('readonly', true);
                     $('#btnBuscarConsignee').attr('readonly', false);
                 } else {
@@ -822,8 +649,7 @@ var objVue = new Vue({
                     $('#direccionD').attr('readonly', false);
                     $('#emailD').attr('readonly', false);
                     $('#telD').attr('readonly', false);
-                    $('#localizacion_id_c').select2({'disabled': false});
-                    llenarSelectPersonalizado('documento', 'localizacion', 'localizacion_id_c', 2);
+                    $('#localizacion_id_c').attr('disable', false);
                     $('#zipD').attr('readonly', false);
                     $('#btnBuscarConsignee').attr('readonly', true);
                 }
@@ -834,7 +660,7 @@ var objVue = new Vue({
                     $('#direccionR').attr('readonly', true);
                     $('#emailR').attr('readonly', true);
                     $('#telR').attr('readonly', true);
-                    $('#localizacion_id').select2({'disabled': true});
+                    $('#localizacion_id').attr('disable', true);
                     $('#zipR').attr('readonly', true);
                     $('#btnBuscarShipper').attr('readonly', false);
                 } else {
@@ -843,8 +669,7 @@ var objVue = new Vue({
                     $('#direccionR').attr('readonly', false);
                     $('#emailR').attr('readonly', false);
                     $('#telR').attr('readonly', false);
-                    $('#localizacion_id').select2({'disabled': false});
-                    llenarSelectPersonalizado('documento', 'localizacion', 'localizacion_id', 2);
+                    $('#localizacion_id').attr('disable', false);
                     $('#zipR').attr('readonly', false);
                     $('#btnBuscarShipper').attr('readonly', true);
                 }
@@ -858,9 +683,8 @@ var objVue = new Vue({
                 this.direccionD = null;
                 $('#direccionD').attr('readonly', false);
                 $('#emailD').val('').attr('readonly', false);
-                this.emailD = null;
                 $('#telD').val('').attr('readonly', false);
-                $('#localizacion_id_c').select2({'disabled': false});
+                $('#localizacion_id_c').attr('disable', false);
                 $('#localizacion_id_c').select2('destroy').empty();
                 llenarSelectPersonalizado('documento', 'localizacion', 'localizacion_id_c', 2); // module, tableName, id_campo
                 $('#zipD').val('').attr('readonly', false);
@@ -872,7 +696,7 @@ var objVue = new Vue({
                 $('#direccionR').attr('readonly', false);
                 $('#emailR').val('').attr('readonly', false);
                 $('#telR').val('').attr('readonly', false);
-                $('#localizacion_id').select2({'disabled': false});
+                $('#localizacion_id').attr('disable', false);
                 $('#localizacion_id').select2('destroy').empty();
                 llenarSelectPersonalizado('documento', 'localizacion', 'localizacion_id', 2); // module, tableName, id_campo
                 $('#zipR').val('').attr('readonly', false);
@@ -884,32 +708,28 @@ var objVue = new Vue({
             axios.get('../restaurar/' + data.id + '/documento_detalle').then(response => {
                 toastr.success('Registro restaurado.');
                 // refreshTable('whgTable');
-                // me.totalizeDocument();
-                me.refreshTableDetail();
+                me.refreshTableDetail(response.data.datos);
             });
         },
         delete: function(data) {
-            var me = this;
-            // console.log(data);
+            console.log(data);
             if (data.logical === true) {
                 axios.get('../delete/' + data.id + '/' + data.logical + '/documento_detalle').then(response => {
                     toastr.success("<div><p>Registro eliminado exitosamente.</p><button type='button' onclick='deshacerEliminar(" + data.id + ")' id='okBtn' class='btn btn-xs btn-danger pull-right'><i class='fa fa-reply'></i> Restaurar</button></div>", '', {
                         timeOut: 15000
                     });
                     toastr.options.closeButton = true;
-                    me.refreshTableDetail();
                     // refreshTable('whgTable');
-                    // me.totalizeDocument();
-                    // $('#fila' + data.id).remove();
+                    $('#fila' + data.id).remove();
+                    totalizeDocument();
                 });
             } else {
                 axios.delete('../delete/' + data.id).then(response => {
                     toastr.success('Registro eliminado correctamente.');
                     toastr.options.closeButton = true;
-                    me.refreshTableDetail();
                     // refreshTable('whgTable');
-                    // me.totalizeDocument();
-                    // $('#fila' + data.id).remove();
+                    $('#fila' + data.id).remove();
+                    totalizeDocument();
                 });
             }
         },
@@ -922,17 +742,16 @@ var objVue = new Vue({
                 $('#emailR').val(data['correo']).attr('readonly', true);
                 $('#telR').val(data['telefono']).attr('readonly', true);
                 $('#localizacion_id').append('<option value="' + data['ciudad_id'] + '" selected="selected">' + data['ciudad'] + '</option>').val([data['ciudad_id']]).trigger('change');
-                // $('#localizacion_id').select2({'disabled': true});
+                $('#localizacion_id').attr('disable', true);
                 $('#zipR').val(data['zip']).attr('readonly', true);
             } else {
                 me.nombreD = data['nombre_full'];
                 me.direccionD = data['direccion'];
                 $('#direccionD').attr('readonly', true);
                 $('#emailD').val(data['correo']).attr('readonly', true);
-                me.emailD = data['correo'];
                 $('#telD').val(data['telefono']).attr('readonly', true);
                 $('#localizacion_id_c').append('<option value="' + data['ciudad_id'] + '" selected="selected">' + data['ciudad'] + '</option>').val([data['ciudad_id']]).trigger('change');
-                // $('#localizacion_id_c').select2({'disabled': true});
+                $('#localizacion_id_c').attr('disable', true);
                 $('#zipD').val(data['zip']).attr('readonly', true);
             }
         },
@@ -988,16 +807,16 @@ var objVue = new Vue({
                     }
                 }, {
                     data: 'nombre_full',
-                    name: 'shipper.nombre_full',
+                    data: 'nombre_full',
                 }, {
                     data: 'telefono',
-                    name: 'shipper.telefono',
+                    data: 'telefono',
                 }, {
                     data: 'ciudad',
                     name: 'localizacion.nombre'
                 }, {
                     data: 'zip',
-                    name: 'shipper.zip',
+                    data: 'zip',
                 }, {
                     data: 'agencia',
                     name: 'agencia.descripcion'
@@ -1022,7 +841,6 @@ var objVue = new Vue({
             if ($.fn.DataTable.isDataTable('#tbl-modalconsignee')) {
                 $('#tbl-modalconsignee tbody').empty();
                 $('#tbl-modalconsignee').dataTable().fnDestroy();
-               
             }
             if ($('#nombreD').val() != '') {
                 nom = $('#nombreD').val();
@@ -1036,24 +854,21 @@ var objVue = new Vue({
                         return btn_selet;
                     }
                 }, {
-                    data: 'nombre_full',
-                    name: 'consignee.nombre_full'
+                    data: 'nombre_full'
                 }, {
-                    data: 'telefono',
-                    name: 'consignee.telefono'
+                    data: 'telefono'
                 }, {
                     data: 'ciudad',
                     name: 'localizacion.nombre'
                 }, {
-                    data: 'zip',
-                    name: 'consignee.zip'
+                    data: 'zip'
                 }, {
                     data: 'agencia',
                     name: 'agencia.descripcion'
                 }]
             });
         },
-        modalArancel: function(id, table_) {
+        modalArancel: function(id) {
             let me = this;
             $('#modalArancel').modal('show');
             if ($('#tbl-modalArancel tbody').length > 0) {
@@ -1083,7 +898,7 @@ var objVue = new Vue({
                 var data = table.row(this).data();
                 if(id){
                     /* SE EJECUTA ESTA FUNCION CUANDO LA MODAL SE ABRE DESDE EL CONSOLIDADO */
-                    me.updatePADetailConsolidado(id, data['id'], table_);
+                    me.updatePADetailConsolidado(id, data['id']);
                     $( "#tbl-modalArancel tbody" ).off('click', 'tr');
                 }else{
                     $('#pa_id').val(data['id']);
@@ -1101,7 +916,7 @@ var objVue = new Vue({
             }
             $('#modalCargosAdd').modal('show');
         },
-        addDetail: function(tipo) {
+        addDetail: function() {
             var id_documento = $('#id_documento').val();
             var consignee_id = $('#consignee_id').val();
             var shipper_id = $('#shipper_id').val();
@@ -1119,70 +934,111 @@ var objVue = new Vue({
             var resArancel = 0;
             var resIva = 0;
             var piezas = $('#valPiezas').val();
-            var cont = 1;
             /* insercion del detalle */
             var me = this;
-            // alert('registrar '+ tipo);
-            if(typeof tipo != 'undefined'){
-                cont = piezas;
-                piezas = 1;
-            }
-            // for (var i = 0; i < cont; i++) {
-                axios.post('../insertDetail', {
-                    'documento_id': id_documento,
-                    'tipo_empaque_id': tipoEmpaque,
-                    'posicion_arancelaria_id': paId,
-                    'arancel_id2': paId,
-                    'consignee_id': consignee_id,
-                    'shipper_id': shipper_id,
-                    'dimensiones': peso + ' Vol=' + largo + 'x' + ancho + 'x' + alto,
-                    'largo': largo,
-                    'ancho': ancho,
-                    'alto': alto,
-                    'contenido': contiene,
-                    'contenido2': contiene,
-                    'tracking': tracking,
-                    'volumen': (largo * ancho * alto / 166).toFixed(2),
-                    'valor': valDeclarado,
-                    'declarado2': valDeclarado,
-                    'peso': peso,
-                    'peso2': peso,
-                    'piezas': piezas,
-                    'created_at': this.getTime(),
-                    'contador': parseInt(cont)
-                }).then(function(response) {
-                    if (response.data['code'] == 200) {
-                        toastr.success('Registro creado correctamente.');
-                        toastr.options.closeButton = true;
-                    } else {
-                        toastr.warning(response.data['error']);
-                        toastr.options.closeButton = true;
-                    }
-                    $('#valPiezas').val(1);
-                    $('#peso').val('');
-                    $('#largo').val(0);
-                    $('#ancho').val(0);
-                    $('#alto').val(0);
-                    $('#tracking').tagsinput('removeAll');
-                    $('#contiene').val('');
-                    $('#valDeclarado').val('');
-                    // refreshTable('whgTable');
-                    
-                    me.refreshTableDetail();
-                }).catch(function(error) {
-                    console.log(error);
-                    if (error.response.status === 422) {
-                        me.formErrors = error.response.data; //guardo los errores
-                        me.listErrors = me.formErrors.errors; //genero lista de errores
-                    }
-                    $.each(me.formErrors.errors, function(key, value) {
-                        $('.result-' + key).html(value);
-                    });
-                    toastr.error("Porfavor completa los campos obligatorios.", {
-                        timeOut: 50000
-                    });
+            axios.post('../insertDetail', {
+                'documento_id': id_documento,
+                'tipo_empaque_id': tipoEmpaque,
+                'posicion_arancelaria_id': paId,
+                'arancel_id2': paId,
+                'consignee_id': consignee_id,
+                'shipper_id': shipper_id,
+                'dimensiones': peso + ' Vol=' + largo + 'x' + ancho + 'x' + alto,
+                'largo': largo,
+                'ancho': ancho,
+                'alto': alto,
+                'contenido': contiene,
+                'contenido2': contiene,
+                'tracking': tracking,
+                'volumen': (largo * ancho * alto / 166).toFixed(2),
+                'valor': valDeclarado,
+                'declarado2': valDeclarado,
+                'peso': peso,
+                'peso2': peso,
+                'piezas': piezas
+            }).then(function(response) {
+                if (response.data['code'] == 200) {
+                    toastr.success('Registro creado correctamente.');
+                    toastr.options.closeButton = true;
+                } else {
+                    toastr.warning(response.data['error']);
+                    toastr.options.closeButton = true;
+                }
+                $('#valPiezas').val(1);
+                $('#peso').val('');
+                $('#largo').val(0);
+                $('#ancho').val(0);
+                $('#alto').val(0);
+                $('#tracking').tagsinput('removeAll');
+                $('#contiene').val('');
+                $('#valDeclarado').val('');
+                // refreshTable('whgTable');
+                me.refreshTableDetail(response.data.datos);
+            }).catch(function(error) {
+                console.log(error);
+                if (error.response.status === 422) {
+                    me.formErrors = error.response.data; //guardo los errores
+                    me.listErrors = me.formErrors.errors; //genero lista de errores
+                }
+                $.each(me.formErrors.errors, function(key, value) {
+                    $('.result-' + key).html(value);
                 });
-            // }
+                toastr.error("Porfavor completa los campos obligatorios.", {
+                    timeOut: 50000
+                });
+            });
+        },
+        refreshTableDetail: function(data) {
+            var me = this;
+            var campo_pa = '';
+            var campo_declarado = '';
+            if (me.document_type === 'guia') {
+                campo_pa = '<td><input type="text" id="numGuia' + data['id'] + '" name="numGuia[]" value="' + data['num_warehouse'] + '" class="form-control" readonly style="font-size: small;"></td>';
+                campo_declarado = '<td>\n\
+                <input onkeyup="totalizeDocument(this);"  type="text" id="valorDeclarado' + data['id'] + '" name="valorDeclarado[]" class="form-control cp_declarado" value="' + data['valor'] + '" readonly="readonly">\n\
+                <input type="hidden" id="arancel' + data['id'] + '" name="arancel[]" class="form-control" value="' + data['id'] + '" readonly>\n\
+                <input type="hidden" id="iva' + data['id'] + '" name="iva[]" class="form-control" value="' + data['id'] + '" readonly></td>';
+            }
+            if (data['tracking'] == null || data['tracking'] == '') {
+                data['tracking'] = '';
+            }
+            var fila = '<tr id="fila' + data['id'] + '">\n\
+            ' + campo_pa + '\n\
+            <td>\n\
+            <input type="text" onkeyup="totalizeDocument(this);" id="pesoD' + data['id'] + '" name="pesoD[]" class="form-control cp_peso" value="' + data['peso'] + '" readonly="readonly">\n\
+            <input type="hidden" id="volumen' + data['id'] + '" name="volumen[]" class="form-control cp_volumen" value="' + data['volumen'].toFixed(2) + '">\n\
+            <input type="hidden" style="font-size: small;" id="dimensiones' + data['id'] + '" name="dimensiones[]" class="form-control" value="' + data['dimensiones'] + '" readonly></td>\n\
+            <td>\n\
+            <input type="text" style="font-size: small;" id="contiene' + data['id'] + '" name="contiene[]" class="form-control" value="' + data['contenido'] + '" readonly="readonly">\n\
+            <input type="hidden" id="tempaque' + data['id'] + '" name="tempaque[]" class="form-control" value="' + data['tipo_empaque_id'] + '" readonly>\n\
+            <td>\n\
+            <input type="text" style="font-size: small;" id="pa' + data['id'] + '" name="pa[]" class="form-control" value="' + data['nom_pa'] + '" readonly="readonly">\n\
+            <input type="hidden" id="id_pa' + data['id'] + '" name="id_pa[]" value="' + data['id_pa'] + '" class="form-control" readonly >\n\
+            </td>\n\
+            ' + campo_declarado + '\n\
+            <td>\n\
+            <a class="btn btn-info btn-xs btn-actions addTrackings" type="button" id="btn_addtracking' + data['id'] + '" data-toggle="tooltip" title="Agregar tracking" onclick="addTrackings(' + data['id'] + ')"><i class="fa fa-barcode"></i> <span id="cant_tracking' + data['id'] + '">' + data['cantidad'] + '</span></a>\n\
+            <a class="btn btn-primary btn-xs" type="button" id="btn_confirm' + data['id'] + '" onclick="saveTableDetail(' + data['id'] + ')" data-toggle="tooltip" title="Guardar" style="display:none;padding:5px;">\n\
+            <i class="fa fa-check"></i></a>\n\
+            <a class="btn btn-success btn-xs" type="button" id="btn_edit' + data['id'] + '" onclick="editTableDetail(' + data['id'] + ')" data-toggle="tooltip" title="Editar" style="padding:5px;">\n\
+            <i class="fa fa-edit"></i></a>\n\
+            <a class="btn btn-danger btn-xs" type="button" id="btn_remove' + data['id'] + '" onclick="eliminar(' + data['id'] + ', true)" data-toggle="tooltip" title="Eliminar" style="padding:5px;">\n\
+            <i class="fa fa-times"></i></a>\n\
+            </td></tr>';
+            //coloca una nueva fila en la tabla
+            $('#whgTable').append(fila);
+            $(".tracking_guia").each(function(index, value) {
+                $(this).tagsinput({
+                    tagClass: 'label label-primary'
+                });
+            });
+            /* poner readonly al campo tracking */
+            $(".table .bootstrap-tagsinput .tag").each(function() {
+                $(this).removeClass('label-primary').css('color', '#555');
+                $(this).children('span').remove();
+            });
+            $('.table .bootstrap-tagsinput').children('input').attr('readonly', true);
+            totalizeDocument();
         },
         editTableDetail: function(data) {
             $('#pesoD' + data.id).attr('readonly', false);
@@ -1223,7 +1079,7 @@ var objVue = new Vue({
                     toastr.warning(response.data['error']);
                     toastr.options.closeButton = true;
                 }
-                // me.resetFieldsDetail();
+                me.resetFieldsDetail();
             }).catch(function(error) {
                 console.log(error);
                 if (error.response.status === 422) {
@@ -1268,19 +1124,18 @@ var objVue = new Vue({
                 toastr.options.closeButton = true;
             });
         },
-        updatePADetailConsolidado: function(id_detalle, id_pa, table_) {
+        updatePADetailConsolidado: function(id_detalle, id_pa) {
             var me = this;
             var rowData = {
                 id_detalle: id_detalle,
-                id_pa: id_pa,
-                tabla: table_,
+                id_pa: id_pa
             }
             axios.put('updatePositionArancel', {
                 rowData
             }).then(function(response) {
                 toastr.success('Registro actualizado correctamente.');
                 toastr.options.closeButton = true;
-                var table = $('#'+table_).DataTable();
+                var table = $('#tbl-consolidado').DataTable();
                 table.ajax.reload();
                 $('#modalArancel').modal('hide');
             }).catch(function(error) {
@@ -1310,154 +1165,3 @@ var objVue = new Vue({
         }, 350),
     }
 });
-
-(function ($) {
-    "use strict";
-    
-    var Address = function (options) {
-        this.init('address', options, Address.defaults);
-    };
-
-    //inherit from Abstract input
-    $.fn.editableutils.inherit(Address, $.fn.editabletypes.abstractinput);
-
-    $.extend(Address.prototype, {
-        /**
-        Renders input from tpl
-
-        @method render() 
-        **/        
-        render: function() {
-           this.$input = this.$tpl.find('input');
-        },
-        
-        /**
-        Default method to show value in element. Can be overwritten by display option.
-        
-        @method value2html(value, element) 
-        **/
-        value2html: function(value, element) {
-            if(!value) {
-                $(element).empty();
-                return; 
-            }
-            var html = 'Vol=' + $('<div>').text(value.largo).html() + 'x' + $('<div>').text(value.ancho).html() + 'x' + $('<div>').text(value.alto).html();
-            $(element).html(html); 
-        },
-        
-        /**
-        Gets value from element's html
-        
-        @method html2value(html) 
-        **/        
-        html2value: function(html) {        
-          /*
-            you may write parsing method to get value by element's html
-            e.g. "Moscow, st. Lenina, bld. 15" => {city: "Moscow", street: "Lenina", building: "15"}
-            but for complex structures it's not recommended.
-            Better set value directly via javascript, e.g. 
-            editable({
-                value: {
-                    city: "Moscow", 
-                    street: "Lenina", 
-                    building: "15"
-                }
-            });
-          */ 
-          // console.log('asdf: '+ html);
-          return null;  
-        },
-      
-       /**
-        Converts value to string. 
-        It is used in internal comparing (not for sending to server).
-        
-        @method value2str(value)  
-       **/
-       value2str: function(value) {
-           var str = '';
-           if(value) {
-               for(var k in value) {
-                   str = str + k + ':' + value[k] + ';';  
-               }
-           }
-           return str;
-       }, 
-       
-       /*
-        Converts string to value. Used for reading value from 'data-value' attribute.
-        
-        @method str2value(str)  
-       */
-       str2value: function(str) {
-           /*
-           this is mainly for parsing value defined in data-value attribute. 
-           If you will always set value by javascript, no need to overwrite it
-           */
-           return str;
-       },                
-       
-       /**
-        Sets value of input.
-        
-        @method value2input(value) 
-        @param {mixed} value
-       **/         
-       value2input: function(value) {
-           if(!value) {
-             return;
-           }else{
-            value = value.split(',');
-           }
-           this.$input.filter('[name="largo"]').val(value[0]);
-           this.$input.filter('[name="ancho"]').val(value[1]);
-           this.$input.filter('[name="alto"]').val(value[2]);
-       },       
-       
-       /**
-        Returns value of input.
-        
-        @method input2value() 
-       **/          
-       input2value: function() { 
-           return {
-              largo: this.$input.filter('[name="largo"]').val(), 
-              ancho: this.$input.filter('[name="ancho"]').val(), 
-              alto: this.$input.filter('[name="alto"]').val()
-           };
-       },        
-       
-        /**
-        Activates input: sets focus on the first field.
-        
-        @method activate() 
-       **/        
-       activate: function() {
-            this.$input.filter('[name="largo"]').focus();
-       },  
-       
-       /**
-        Attaches handler to submit form in case of 'showbuttons=false' mode
-        
-        @method autosubmit() 
-       **/       
-       autosubmit: function() {
-           this.$input.keydown(function (e) {
-                if (e.which === 13) {
-                    $(this).closest('form').submit();
-                }
-           });
-       }       
-    });
-
-    Address.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, {
-        tpl: '<div class="editable-address"><label><span>Length: </span><input type="number" name="largo" class="input-small form-control" autocomplete="off"></label></div>'+
-             '<div class="editable-address"><label><span>Width:  </span><input type="number" name="ancho" class="input-small form-control" autocomplete="off"></label></div>'+
-             '<div class="editable-address"><label><span>Heigth: </span><input type="number" name="alto" class="input-small form-control" autocomplete="off"></label></div>',
-             
-        inputclass: ''
-    });
-
-    $.fn.editabletypes.address = Address;
-
-}(window.jQuery));

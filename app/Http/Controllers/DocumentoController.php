@@ -1246,8 +1246,11 @@ class DocumentoController extends Controller
                     $pdf = PDF::loadView('pdf.guiaPdf', compact('documento', 'detalle'));
                 }
             } else {
-                $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
-                // $pdf = PDF::loadView('pdf.warehousePdfJexpress', compact('documento', 'detalle'));
+                if(env('APP_CLIENT') === 'jexpress'){
+                    $pdf = PDF::loadView('pdf.warehousePdfJexpress', compact('documento', 'detalle'));
+                }else{
+                    $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
+                }
             }
             $nameDocument = $documento->num_warehouse;
         } else {
@@ -1261,8 +1264,11 @@ class DocumentoController extends Controller
                     }
                     // $pdf = PDF::loadView('pdf.guiaPdf', compact('documento', 'detalle'));
                 } else {
-                    $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
-                    // $pdf = PDF::loadView('pdf.warehousePdfJexpress', compact('documento', 'detalle'));
+                    if(env('APP_CLIENT') === 'jexpress'){
+                        $pdf = PDF::loadView('pdf.warehousePdfJexpress', compact('documento', 'detalle'));
+                    }else{
+                        $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
+                    }
                 }
                 $nameDocument = $documento->num_warehouse;
             } else {
@@ -1683,14 +1689,22 @@ class DocumentoController extends Controller
         //         ->get();
         // }
         $this->AddToLog('Impresion labels (' . $documento->id . ')');
-        if (env('APP_LABEL') === '4x4') {
-            $pdf = PDF::loadView('pdf.labelWG', compact('documento', 'detalle', 'document'))
-                ->setPaper(array(25, -25, 260, 360), 'landscape');
+        if(env('APP_CLIENT') === 'colombiana'){
+            $pdf = PDF::loadView('pdf.labelWGcolombiana', compact('documento', 'detalle', 'document'))
+                ->setPaper(array(25, -25, 300, 300), 'landscape');
 
             $nameDocument = 'Label' . $document . '-' . $documento->id;
             return $pdf->stream($nameDocument . '.pdf');
         }else{
-            return view('pdf/labelWG_2', compact('documento', 'detalle', 'document'));
+            if (env('APP_LABEL') === '4x4') {
+                $pdf = PDF::loadView('pdf.labelWG', compact('documento', 'detalle', 'document'))
+                    ->setPaper(array(25, -25, 260, 360), 'landscape');
+
+                $nameDocument = 'Label' . $document . '-' . $documento->id;
+                return $pdf->stream($nameDocument . '.pdf');
+            }else{
+                return view('pdf/labelWG_2', compact('documento', 'detalle', 'document'));
+            }
         }
     }
 

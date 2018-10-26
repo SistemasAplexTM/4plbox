@@ -73,7 +73,7 @@
                       v-model="shipper.name"
                       type="s" 
                       @change-select="setData" 
-                      url="master/buscar"
+                      url="4plbox/public/master/buscar"
                       ></autocomplete-component>
                     <small v-show="errors.has('nombre')" class="bg-danger">{{ errors.first('nombre') }}</small>
                   </div>
@@ -143,7 +143,7 @@
                     v-model="consignee.name"
                     type="c" 
                     @change-select="setData" 
-                    url="master/buscar"
+                    url="4plbox/public/master/buscar"
                     ></autocomplete-component>
                     <small v-show="errors.has('nombreC')" class="bg-danger">{{ errors.first('nombreC') }}</small>
                   </div>
@@ -213,7 +213,7 @@
                       v-model="carrier.name"
                       type="cr" 
                       @change-select="setData" 
-                      url="master/buscar"
+                      url="4plbox/public/master/buscar"
                       ></autocomplete-component>
                     <small v-show="errors.has('nombreCR')" class="bg-danger">{{ errors.first('nombreCR') }}</small>
                   </div>
@@ -743,18 +743,6 @@
       this.getOtherCharges();
     },
     methods: {
-      // onSearchShipper(search, loading) {
-      //     loading(true);
-      //     this.searchShipper(loading, search, this);
-      //   },
-      //   searchShipper: _.debounce((loading, search, vm) => {
-      //     fetch(
-      //       `buscar/${escape(search)}/s`
-      //     ).then(res => {
-      //       res.json().then(json => (vm.shippers = json.items));
-      //       loading(false);
-      //     });
-      //   }, 350),
       addOtherChargue: function(){
         this.other_c.push({
           oc_description: null,
@@ -812,7 +800,6 @@
         this.errorMsg = errorMsg
       },
       setData: function(data, tipo){
-        console.log(data);
         if (data.type) {
           if (data.type == 'c') {
             this.consignee = data;
@@ -983,7 +970,6 @@
           this.num_master = response.data.data.num_master;
           this.consolidado_id = response.data.data.consolidado_id;
           this.account_information = response.data.data.account_information;
-          this.handing_information = response.data.data.handing_information;
           this.agent_iata_data = response.data.data.agent_iata_data;
           this.num_account = response.data.data.num_account;
           this.reference_num = response.data.data.reference_num;

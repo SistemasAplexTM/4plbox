@@ -1,5 +1,5 @@
 <template>
-    <v-select v-model="selected" label="name" :filterable="false" :options="findDatas" @search="onSearchData" placeholder="Buscar" :on-change="changeSelect">
+    <v-select v-model="selectedj" label="name" :filterable="false" :options="findDatas" @search="onSearchData" placeholder="Buscar">
     	<template slot="option" slot-scope="option">
     		<div v-if="type == 'navbar'">
 		        <span class="fa fa-barcode"></span>
@@ -20,12 +20,18 @@
 
 <script>
     export default {
+		props: ["url", "type", "selected"],
         data () {
 	        return {
-	            findDatas: []
+	            findDatas: [],
+				selectedj: null
 		    }
 		},
-		props: ["url", "type", "selected"],
+		watch:{
+			selectedj:function(value){
+				this.changeSelect(value);
+			}
+		},
         methods:{
             onSearchData(search, loading) {
 		      loading(true);
