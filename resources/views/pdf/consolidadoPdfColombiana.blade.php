@@ -182,7 +182,7 @@
                     <div style="margin-top:5px;text-align: center;font-size: 14px;color:#1d1d1e;">{{ $peso }} Lb</div>
                 </th>
                 <th>
-                    <div style="margin-top:5px;text-align: center;font-size: 14px;color:#1d1d1e;">$ {{ $declarado }}</div>
+                    <div style="margin-top:5px;text-align: center;font-size: 14px;color:#1d1d1e;"></div>
                 </th>
             </tr>
             <tr>

@@ -380,8 +380,8 @@ return [
 
     //consolidadoGuiasPdf2
 
-    'from_shipper'=>'Del remitente',
-    'to_consigned'=>'Para consignados',
+    'from_shipper'=>'Remitente',
+    'to_consigned'=>'Destinatario',
 
 
     //consolidadPdf

@@ -71,11 +71,11 @@
                                         </div>
                                         <div class="col-lg-6 col-md-12 col-sm-12" v-show="!corporativo">
                                             <div class="form-group" :class="{'has-error': errors.has('primer_apellido') }">
-                                                <label class="control-label" for="primer_apellido">@lang('general.surname')<span class="asterisco">*</span></label> 
+                                                <label class="control-label" for="primer_apellido">@lang('general.surnames')<span class="asterisco">*</span></label> 
                                                 <input 
                                                     v-model="primer_apellido" 
                                                     v-validate.disable="corporativo ? '' : 'required'" 
-                                                    type="text" required="" placeholder="@lang('general.surname')" class="form-control" id="primer_apellido" name="primer_apellido" value="">
+                                                    type="text" required="" placeholder="@lang('general.surnames')" class="form-control" id="primer_apellido" name="primer_apellido" value="">
                                                 <label v-show="errors.has('primer_apellido')" class="error">@{{ errors.first('primer_apellido') }}</label>
                                             </div>
                                         </div>

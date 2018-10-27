@@ -173,7 +173,7 @@ var objVue = new Vue({
                     toastr.options.closeButton = true;
                 });
             } else {
-                axios.delete('transport/' + data.id).then(response => {
+                axios.get('transport/delete/' + data.id + '/' + data.logical).then(response => {
                     if(response.data.code == 200){
                         this.updateTable();
                         toastr.success('Registro eliminado correctamente.');

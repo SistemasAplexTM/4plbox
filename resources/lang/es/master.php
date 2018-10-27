@@ -5,9 +5,9 @@ return [
 //    resources/templates/create
 
 'start' => 'Inicio',
-'master_guide'=>'Guía maestra',
+'master_guide'=>'Guía master',
 'masters'=>'Masters',
-'master_guide_record'=>'Registro de guía maestro',
+'master_guide_record'=>'Registro de guía master',
 
 //    resources/templates/imprimir
 

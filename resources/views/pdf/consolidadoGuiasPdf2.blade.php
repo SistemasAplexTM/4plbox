@@ -10,7 +10,8 @@
     }
     #spaceTable{
         border-bottom: dashed 1px #000;
-        margin-bottom: 5px;
+        margin-top: 40px;
+        margin-bottom: 40px;
     }
     .agencia{
         text-align: center;
@@ -52,7 +53,7 @@ $toalRegistros = count($detalleConsolidado);
                ?>>
                         <thead>
                             <tr>
-                                <th colspan="2" width="300px"><img alt="image" class="img-circle" id="logo" height="120px" style="width: 100%;margin-bottom: 10px;" src="{{ asset('storage/') }}/{{ ((isset($documento->agencia_logo) and $documento->agencia_logo != '') ? $documento->agencia_logo : 'logo.png') }}"/></th>
+                                <th colspan="2" width="300px"><img alt="image" class="img-circle" id="logo" style="height: 50px;margin-bottom: 10px;" src="{{ asset('storage/') }}/{{ ((isset($documento->agencia_logo) and $documento->agencia_logo != '') ? $documento->agencia_logo : 'logo.png') }}"/></th>
                                 <th width="250px" style="text-align: right;">
                                     <div class="agencia" id="nomAgencia" style="font-size: 20px;">{{ $documento->agencia }}</div>
                                     <div class="agencia" id="dirAgencia"><span style="color: #1d1d1e;">{{ $documento->agencia_dir }} - {{ $documento->agencia_ciudad }} - {{ $documento->agencia_depto }}</span></div>
@@ -98,7 +99,7 @@ $toalRegistros = count($detalleConsolidado);
                                                                 <div style="margin-left: 10px;">@lang('general.phone')</div>
                                                             </td>
                                                             <td>
-                                                                <div style="margin-left: 10px;">@lang('genela.city') - @lang('general.state')</div>
+                                                                <div style="margin-left: 10px;">@lang('general.city') - @lang('general.state')</div>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -133,7 +134,7 @@ $toalRegistros = count($detalleConsolidado);
                                                                 <div style="margin-left: 10px;">@lang('general.phone')</div>
                                                             </td>
                                                             <td>
-                                                                <div style="margin-left: 10px;">@lang('general.city') - @lang('general.staye')</div>
+                                                                <div style="margin-left: 10px;">@lang('general.city') - @lang('general.state')</div>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -193,7 +194,7 @@ $toalRegistros = count($detalleConsolidado);
 
                                                 <td colspan="2"></td>
                                                 <td>@lang('general.date')</td>
-                                                <td>@lang('general.time()')</td>
+                                                <td>@lang('general.time')</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="8" style="border-top: 1px solid #ccc;margin-top:5px;font-size: 8px;text-align: justify;">
@@ -215,7 +216,7 @@ $toalRegistros = count($detalleConsolidado);
                                             </tr>
                                             <tr>
                                                 <th colspan="8" style="text-align: center;font-size: 10px;">
-                                              @lang('general.the_cargo_can_be_inspecte')
+                                              @lang('general.the_cargo_can_be_inspected')
                                                 </th>
                                             </tr>
                                         </table>
@@ -235,3 +236,13 @@ $toalRegistros = count($detalleConsolidado);
 @else
     <div id="noDatos">@lang('general.there_is_no_data')</div>
 @endif
+<script  type="text/javascript">
+        function printHTML() {
+               if (window.print) {
+                   window.print();
+               }
+            }
+            document.addEventListener("DOMContentLoaded", function (event) {
+                printHTML();
+        });
+</script>

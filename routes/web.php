@@ -86,6 +86,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('master/imprimir/{id_master}/{simple?}', 'MasterController@imprimir');
     Route::get('master/getOtherCharges/{id}', 'MasterController@getOtherCharges');
     Route::get('master/imprimirLabel/{id_master}', 'MasterController@imprimirLabel');
+    Route::get('master/imprimirGuias/{consolidado_id}/{option?}', 'MasterController@imprimirGuias');
 
     /*--- MODULO TRACKINGS ---*/
     Route::resource('tracking', 'TrackingController', ['except' => ['show', 'create', 'edit', 'update']]);

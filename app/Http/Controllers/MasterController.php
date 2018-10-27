@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\AerolineaInventario;
 use App\Master;
 use App\MasterDetalle;
+use App\DocumentoDetalle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;
@@ -17,23 +18,11 @@ class MasterController extends Controller
         $this->middleware('permission:master.update')->only('update');
         $this->middleware('permission:master.destroy')->only('destroy');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $this->assignPermissionsJavascript('master');
         return view('templates.master.list');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $success = true;
@@ -99,23 +88,11 @@ class MasterController extends Controller
         return array('data' => $data, 'detalle' => $detalle);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function create($master = null)
     {
         $master = $master;
         return view('templates.master.create', compact('master'));
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $master)
     {
         DB::beginTransaction();
@@ -344,6 +321,7 @@ class MasterController extends Controller
                 'e.nombre AS ciudad',
                 'a.num_master',
                 'f.consecutivo',
+                'f.id AS consolidado_id',
                 'b.peso',
                 'b.peso_kl',
                 'b.tarifa',
@@ -421,5 +399,12 @@ class MasterController extends Controller
         $pdf     = \PDF::loadView('pdf.masterLabelPdf', compact('data', 'detalle'))
         ->setPaper(array(0, 0, 360, 576)); //multiplicar pulgadas por 72 (5 x 8 pulgadas en este label)
         return $pdf->stream('master.pdf');
+    }
+
+    public function imprimirGuias($consolidado_id, $option = null)
+    {
+        $detalle = DB::select("CALL getDataGuiasDetalleByConsolidadoId(?)", array($consolidado_id));
+
+        return view('pdf/labels/guiasHijasColombiana', compact('detalle'));
     }
 }

@@ -120,19 +120,19 @@
                 ?>
                 <tr>
                     <td id="detalle" style="width: 13%;text-align: center;">{{ $val->num_warehouse }}</td>
-                    <td style="width: 15%">
+                    <td style="width: 15%" valign="top">
                         <div id="detalle" >{{ ($val->shipper_json) ? $shipper_json->nombre : $val->nom_ship }}</div>
                         <div id="detalle" >{{ ($val->shipper_json) ? $shipper_json->direccion : $val->dir_ship }}</div>
                         <div id="detalle" >{{ ($val->shipper_json) ? $shipper_json->telefono : $val->tel_ship }}</div>
                         {{-- <div id="detalle" >{{ ($val->shipper_json) ? $shipper_json->ciudad : $val->ciu_ship }} / {{ ($val->shipper_json) ? $shipper_json->pais : $val->pais_ship }}, {{ $val->zip_ship }}</div> --}}
                     </td>
-                    <td id="detalle" style="width: 22%">
+                    <td id="detalle" style="width: 22%" valign="top">
                         <div id="detalle" >{{ ($val->consignee_json) ? $consignee_json->nombre : $val->nom_cons }}</div>
                         <div id="detalle" >{{ ($val->consignee_json) ? $consignee_json->direccion : $val->dir_cons }}</div>
                         <div id="detalle" >{{ ($val->consignee_json) ? $consignee_json->telefono : $val->tel_cons }}</div>
                         {{-- <div id="detalle" >{{ ($val->consignee_json) ? $consignee_json->ciudad : $val->ciu_cons }} / {{ ($val->consignee_json) ? $consignee_json->pais : $val->pais_cons }}, {{ $val->zip_cons }}</div> --}}
                     </td>
-                    <td id="detalle" style="width: 20%">{{ $val->contenido2 }}</td>
+                    <td id="detalle" style="width: 20%">{{ str_replace(",", ", ", $val->contenido2) }}</td>
                     {{-- <td id="detalle" style="text-align: center;"></td> --}}
                     <td id="detalle" style="text-align: center;">{{ number_format($piezas = 1) }}</td>
                     <td id="detalle" style="text-align: center;">

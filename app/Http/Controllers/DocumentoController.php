@@ -1411,7 +1411,8 @@ class DocumentoController extends Controller
                         $this->AddToLog('Impresion Consolidado guias (' . $id . ')');
                         if (env('APP_TYPE') === 'courier') {
                             if(env('APP_CLIENT') === 'colombiana'){
-                                $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                                return view('pdf/consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                                // $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
                             }else{
                                 $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf', compact('documento', 'detalle', 'detalleConsolidado'));
                             }
@@ -1549,6 +1550,7 @@ class DocumentoController extends Controller
                 'ciudad_consignee.nombre as cons_ciudad',
                 'deptos_consignee.descripcion as cons_depto',
                 'agencia.descripcion as agencia',
+                'agencia.logo as agencia_logo',
                 'agencia.telefono as agencia_tel',
                 'agencia.direccion as agencia_dir',
                 'agencia.email as agencia_email',

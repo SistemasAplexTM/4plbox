@@ -649,10 +649,7 @@
         crearS: false,
         crearC: false,
         consolidados: [],
-        consolidado_id:{
-          id: null,
-          consolidado: null
-        },
+        consolidado_id:null,
         transportador: {},
         aerolineas: [],
         aerolineas_inventario: [],
@@ -787,7 +784,6 @@
         if (this.editing) {
           url = '../getOtherCharges/'+this.master;
           axios.get(url).then(response => {
-            console.log(response.data.data);
             var obj = response.data.data;
             if(Object.keys(obj).length !== 0){
               this.other_c = obj;
@@ -812,7 +808,6 @@
         this.errorMsg = errorMsg
       },
       setData: function(data, tipo){
-        console.log(data);
         if (data.type) {
           if (data.type == 'c') {
             this.consignee = data;
@@ -1004,11 +999,13 @@
           this.descripcion = response.data.detalle.descripcion;
           this.total_other_charge_due_agent = response.data.data.total_other_charge_due_agent;
           this.total_other_charge_due_carrier = response.data.data.total_other_charge_due_carrier;
-          this.consolidado_id = {
-            id: response.data.data.consolidado_id, 
-            consolidado: response.data.data.consolidado, 
-            fecha: response.data.data.fecha, 
-            pais: response.data.data.pais
+          if(response.data.data.consolidado_id != null){
+            this.consolidado_id = {
+              id: response.data.data.consolidado_id, 
+              consolidado: response.data.data.consolidado, 
+              fecha: response.data.data.fecha, 
+              pais: response.data.data.pais
+            }
           }
         });
       },

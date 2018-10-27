@@ -209,15 +209,15 @@
           @if(env('APP_CLIENT') == 'worldcargo' || env('APP_CLIENT') == 'colombiana')
             <thead>
               <tr>
-                <th scope="col" style="width:10%;">Quantity</th>
-                <th scope="col">Dimensions</th>
-                <th scope="col" style="width:10%;">Tracking</th>
-                <th scope="col" style="width:10%;">Weight lb</th>
-                <th scope="col" style="width:10%;">Weight kg</th>
-                <th scope="col" style="width:10%;">Vol lb</th>
-                <th scope="col" style="width:10%;">Vol kg</th>
-                <th scope="col" style="width:10%;">Weight ft3</th>
-                <th scope="col" style="width:10%;">vol mt3</th>
+                <th scope="col">Qty.</th>
+                <th scope="col" >Dimensions</th>
+                <th scope="col" >Tracking</th>
+                <th scope="col" style="width: 7%">Weight<br>Lb</th>
+                <th scope="col" style="width: 7%">Weight<br>Kg</th>
+                <th scope="col" style="width: 7%">Vol<br>Lb</th>
+                <th scope="col" style="width: 7%">Vol<br>Kg</th>
+                <th scope="col" style="width: 7%">Weight<br>Ft3</th>
+                <th scope="col" style="width: 7%">Vol<br>Mt3</th>
               </tr>
             </thead>
             <tbody>
@@ -225,7 +225,7 @@
                 <tr>
                   <td>{{ $val->piezas }}</td>
                   <td>{{ $val->largo . 'x'.$val->ancho. 'x'. $val->alto }}</td>
-                  <td>{{ str_replace(',', ' ',$val->trackings) }}</td>
+                  <td style="text-align: left;">{{ str_replace(',', ' ',$val->trackings) }}</td>
                   <td>{{ $val->peso2 }}</td>
                   <td>{{ ceil(number_format($val->peso2 / 2.205)) }}</td>
                   <td>{{ ceil($val->volumen) }}</td>
@@ -263,7 +263,7 @@
             </tr>
             @if(env('APP_CLIENT') == 'worldcargo' || env('APP_CLIENT') == 'colombiana')
             <tr>
-              <td colspan="4">
+              <td colspan="3">
                 <table>
                   <tr>
                     <td>
@@ -324,10 +324,10 @@
                   </tr>
                 </table>
               </td>
-              <td colspan="{{ (env('APP_CLIENT') == 'worldcargo' || env('APP_CLIENT') == 'colombiana') ? '5' : '2' }}" valign="top">
+              <td colspan="{{ (env('APP_CLIENT') == 'worldcargo' || env('APP_CLIENT') == 'colombiana') ? '6' : '3' }}" valign="top">
                 <table>
                   <tr>
-                    <td style="height: 60px;color: #5e5e5e;font-size: 13px;width: 55%;">Código PoBox del Cliente:</td>
+                    <td style="height: 60px;color: #5e5e5e;font-size: 13px;width: 55%;">PoBox:</td>
                     <td style="font-size: 25px;font-weight: bold;"><div>{{ ((isset($documento->cons_pobox) and $documento->cons_pobox != '') ? $documento->cons_pobox : '') }}</div></td>
                   </tr>
                   @if(env('APP_CLIENT') == 'worldcargo')
