@@ -167,13 +167,18 @@ var objVue = new Vue({
             this.formErrors = {};
             this.listErrors = {};
             if (data.logical === true) {
-                axios.get('transport/delete/' + data.id + '/' + data.logical).then(response => {
+                axios.get('../transport/delete/' + data.id + '/' + data.logical).then(response => {
                     this.updateTable();
                     toastr.success("<div><p>Registro eliminado exitosamente.</p><button type='button' onclick='deshacerEliminar(" + data.id + ")' id='okBtn' class='btn btn-xs btn-danger pull-right'><i class='fa fa-reply'></i> Restaurar</button></div>");
                     toastr.options.closeButton = true;
+                }).catch(function(error) {
+                    console.log(error);
+                    toastr.error("Error: "+ error, {
+                        timeOut: 50000
+                    });
                 });
             } else {
-                axios.get('transport/delete/' + data.id + '/' + data.logical).then(response => {
+                axios.delete('../transport/' + data.id).then(response => {
                     if(response.data.code == 200){
                         this.updateTable();
                         toastr.success('Registro eliminado correctamente.');
@@ -181,6 +186,11 @@ var objVue = new Vue({
                     }else{
                         toastr.error("Error: " + response.data.error, {timeOut: 50000});
                     }
+                }).catch(function(error) {
+                    console.log(error);
+                    toastr.error("Error: "+ error, {
+                        timeOut: 50000
+                    });
                 });
             }
         },

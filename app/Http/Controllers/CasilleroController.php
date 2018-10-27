@@ -106,7 +106,6 @@ class CasilleroController extends Controller
 
             $cuerpo_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->mensaje);
             $asunto_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->subject);
-            $url = DB::table('agencia')->select('url')->where('id', $agencia->id)->first();
             if ($request->recibir_info) {
                 $listId = "c963896f86";
                 if (!\Mailchimp::check($listId, $request->correo)) {
@@ -132,7 +131,7 @@ class CasilleroController extends Controller
         if($success){
             return array(
                 'code' => 200,
-                'url' => $url->url,
+                'url' => url()->current().'/'.$request->agencia_id,
                 'error' => false
             );
         }else{

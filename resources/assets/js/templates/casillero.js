@@ -1,8 +1,7 @@
 $(document).ready( () => {
     var pathname = window.location.pathname;
-    var pizza = "porción1 porción2 porción3 porción4 porción5 porción6";
-    var porciones = pathname.split('/');
-    objVue.agencia_id = porciones.pop();
+    var data = pathname.split('/');
+    objVue.agencia_id = data.pop();
     $("#corporativo").change(() => {
         objVue.corporativo = (objVue.corporativo) ? false : true;
     });

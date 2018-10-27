@@ -7,8 +7,8 @@
         font-family: sans-serif;  
     }
     #imgLogo{
-        width: 100%;
-        height: 120px;
+        width: 250;
+        /*height: 120px;*/
         margin-top: 20px;
     }
     #center{

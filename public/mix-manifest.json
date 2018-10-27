@@ -1,9 +1,4 @@
 {
     "/js/app.js": "/js/app.js",
-    "/js/plantilla.js": "/js/plantilla.js",
-    "/css/plantilla.css": "/css/plantilla.css",
-    "/js/main.js": "/js/main.js",
-    "/css/main.css": "/css/main.css",
-    "/css/green.png": "/css/green.png",
-    "/css/green@2x.png": "/css/green@2x.png"
+    "/js/main.js": "/js/main.js"
 }

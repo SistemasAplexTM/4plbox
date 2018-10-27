@@ -205,11 +205,11 @@ class CiudadController extends Controller
         if(isset($id_condition) and $id_condition){
         	$tags = DB::table($tableName)->select(['id', 'descripcion as text'])->where([
         		['pais_id', '=', $id_condition],
-                ['descripcion', 'like', $term.'%'],
+                ['descripcion', 'like', '%'.$term.'%'],
             ])->get();
         }else{
 	        $tags = DB::table($tableName)->select(['id', 'descripcion as text'])->where([
-	                ['descripcion', 'like', $term.'%'],
+	                ['descripcion', 'like', '%'.$term.'%'],
                     [$tableName.'.deleted_at', '=', NULL]
 	            ])->get();        	
         }

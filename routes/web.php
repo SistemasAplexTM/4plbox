@@ -135,15 +135,15 @@ Route::group(['middleware' => 'auth'], function () {
 
     /*--- MODULO AEROLINES - AEROPUERTOS ---*/
 /*    Route::resource('transport/{type}', 'AerolineasAeropuertosController', ['except' => ['show', 'create', 'edit', 'update']]);*/
-    Route::get('transport/{type}', 'AerolineasAeropuertosController@index')->name('transport.index');
-    Route::post('transport/{type}', 'AerolineasAeropuertosController@store')->name('transport.store');
-    Route::put('transport/{type}/{id}', 'AerolineasAeropuertosController@update')->name('transport.update');
     Route::delete('transport/{id}', 'AerolineasAeropuertosController@destroy')->name('transport.destroy');
+    Route::post('transport/{type}', 'AerolineasAeropuertosController@store')->name('transport.store');
+    Route::put('transport/{type}/{id}', 'AerolineasAeropuertosController@update');
+    Route::get('transport/{type}', 'AerolineasAeropuertosController@index')->name('transport.index');
+    Route::put('transport/{type}/{id}', 'AerolineasAeropuertosController@update')->name('transport.update');
     Route::get('transport/{type}/all', 'AerolineasAeropuertosController@getAll')->name('datatable/all');
-    Route::get('transport/{type}/delete/{id}/{logical?}', 'AerolineasAeropuertosController@delete')->name('transport.delete');
+    Route::get('transport/delete/{id}/{logical?}', 'AerolineasAeropuertosController@delete')->name('transport.delete');
     Route::get('transport/{type}/restaurar/{id}', 'AerolineasAeropuertosController@restaurar');
     Route::get('transport/selectInput/{tableName}', 'AerolineasAeropuertosController@selectInput');
-    Route::put('transport/{type}/{id}', 'AerolineasAeropuertosController@update');
 
     /*--- MODULO SERVICIOS ---*/
     Route::resource('servicios', 'ServiciosController', ['except' => ['show', 'create', 'edit']]);

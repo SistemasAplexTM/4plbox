@@ -20,7 +20,7 @@
 
 <script>
     export default {
-		props: ["url", "type", "selected"],
+		props: ["url", "type", "selection"],
         data () {
 	        return {
 	            findDatas: [],
@@ -31,6 +31,16 @@
 			selectedj:function(value){
 				this.changeSelect(value);
 			}
+		},
+		mounted(){
+			let me = this;
+			setTimeout(function() {
+				if(me.selection.id != null){
+					me.selectedj = me.selection;
+				}else{
+					me.selectedj = null;
+				}
+			}, 2000);
 		},
         methods:{
             onSearchData(search, loading) {

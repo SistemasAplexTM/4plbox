@@ -69,7 +69,7 @@
                       <autocomplete-component 
                       v-validate="'required'"
                       name="nombre"
-                      :selected="shipper"
+                      :selection="shipper"
                       v-model="shipper.name"
                       type="s" 
                       @change-select="setData" 
@@ -139,7 +139,7 @@
                     <autocomplete-component 
                      v-validate="'required'"
                     name="nombreC" 
-                    :selected="consignee"
+                    :selection="consignee"
                     v-model="consignee.name"
                     type="c" 
                     @change-select="setData" 
@@ -209,7 +209,7 @@
                       <autocomplete-component 
                        v-validate="'required'"
                       name="nombreCR" 
-                      :selected="carrier"
+                      :selection="carrier"
                       v-model="carrier.name"
                       type="cr" 
                       @change-select="setData" 
@@ -943,7 +943,7 @@
           this.shipper.disabled = false;
 
           this.shipper.id = response.data.data.shipper_id;
-          this.shipper.nombre = response.data.data.nombre_shipper;
+          this.shipper.name = response.data.data.nombre_shipper;
           this.shipper.name = response.data.data.nombre_shipper;
 
           this.shipper.direccion = response.data.data.direccion_shipper;

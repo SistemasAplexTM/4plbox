@@ -119,14 +119,9 @@ class AerolineasAeropuertosController extends Controller
                 "datos" => 'Eliminación exitosa.',
                 "code"  => 200,
             );
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $error = '';
-            foreach ($e->errorInfo as $key => $value) {
-                // $error .= $key . ' - ' . $value . ' <br> ';
-                if($value == '23000'){
-                    $error .= 'No es posible eliminar el registro, esta asociado con otro registro <br> ';
-                }
-            }
+            
             $answer = array(
                 "error"  => $error,
                 "code"   => 600,
@@ -143,7 +138,7 @@ class AerolineasAeropuertosController extends Controller
      * @param  boolean  $deleteLogical
      * @return \Illuminate\Http\Response
      */
-    public function delete($type, $id,$logical)
+    public function delete($id,$logical)
     {
         
         if(isset($logical) and $logical == 'true'){
@@ -204,14 +199,14 @@ class AerolineasAeropuertosController extends Controller
 
 
     public function selectInput(Request  $request, $tableName){
-        $term = $request->term ?: '';
+        $term = (isset($request->term)) ? $request->term : '';
 
         $tags = DB::table($tableName)
         ->join('deptos', 'localizacion.deptos_id', '=', 'deptos.id')
         ->join('pais', 'deptos.pais_id', '=', 'pais.id')
             ->select(['localizacion.id', 'localizacion.nombre as text', 'deptos.descripcion as deptos', 'deptos.id as deptos_id', 'pais.descripcion as pais', 'pais.id as pais_id'])
         ->where([
-                ['localizacion.nombre', 'like', $term.'%'],
+                ['localizacion.nombre', 'like', '%'.$term.'%'],
                 ['localizacion.deleted_at', '=', NULL]
             ])->get();
         $answer = array(

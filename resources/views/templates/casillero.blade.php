@@ -84,7 +84,7 @@
                                         <div class="col-md-6 col-sm-6">
                                             <div class="form-group" :class="{'has-error': errors.has('localizacion_id') }">
                                                 <label class="control-label">Ciudad: <span class="asterisco">*</span></label>
-                                                <v-select name="localizacion_id" v-model="localizacion_id" label="name" :filterable="false" :options="ciudades" @search="onSearch" v-validate="'required'" :on-change="setPhoneCode">
+                                                <v-select autocomplete="off"  name="localizacion_id" v-model="localizacion_id" label="name" :filterable="false" :options="ciudades" @search="onSearch" v-validate="'required'" :on-change="setPhoneCode">
                                                     <template slot="no-options">
                                                   @lang('general.there_are_no_results')
                                                     </template>
