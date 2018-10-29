@@ -435,7 +435,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-6">
-                                                <label class="control-label" for="impuesto"><div class="col-sm-12" data-trigger="hover"  data-container="body" data-toggle="popover" data-placement="left" data-content="Valor por el cual se calculara el impuesto sobre el valor declarado. (Por defecto 28%)" style="padding-left: 0px; padding-right: 0px;"><i class="fa fa-question-circle" style="cursor: pointer; color: coral;"></i> % @lang('documents.tax'): </div></label>
+                                                <label class="control-label" for="impuesto"><div class="col-sm-12" data-trigger="hover"  data-container="body" data-toggle="popover" data-placement="right" data-content="Valor por el cual se calculara el impuesto sobre el valor declarado. (Por defecto 28%)" style="padding-left: 0px; padding-right: 0px;"><i class="fa fa-question-circle" style="cursor: pointer; color: coral;"></i> % @lang('documents.tax'): </div></label>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="input-group m-b">
@@ -468,7 +468,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-6">
-                                                <label class="control-label" for="flete"><div class="col-sm-12"  data-container="body" data-trigger="hover"  data-toggle="popover" data-placement="left" data-content="Si el calculo es sobre el volumen (Vol), se evaluara quien es mayor (Peso o Volumen), si es mayor el volumen, se multiplicara por la tarifa. Si es mayor el peso, la diferencia (Peso-Volumen) sera multiplicada por la tarifa." style="padding-left: 0px; padding-right: 0px;"><i class="fa fa-question-circle" style="cursor: pointer; color: coral;"></i> @lang('documents.freight'): (<span id="cobrarPor"></span>)</div></label>
+                                                <label class="control-label" for="flete"><div class="col-sm-12"  data-container="body" data-trigger="hover"  data-toggle="popover" data-placement="right" data-content="Si el calculo es sobre el volumen (Vol), se evaluara quien es mayor (Peso o Volumen), si es mayor el volumen, se multiplicara por la tarifa. Si es mayor el peso, la diferencia (Peso-Volumen) sera multiplicada por la tarifa." style="padding-left: 0px; padding-right: 0px;"><i class="fa fa-question-circle" style="cursor: pointer; color: coral;"></i> @lang('documents.freight'): (<span id="cobrarPor"></span>)</div></label>
                                             </div>
 
                                             <div class="col-sm-6">
@@ -811,8 +811,9 @@
                                                             <span class="sr-only">Toggle Dropdown</span>
                                                         </button>
                                                         <ul class="dropdown-menu">
-                                                            <li><a @click="saveDocument('print')"><i class="fa fa-print"></i> Guardar e imprimir</a></li>
-                                                            <li><a @click="saveDocument('email')"><i class="fa fa-envelope-o"></i> Guardar y enviar email</a></li>
+                                                            <li><a @click="saveDocument('print')"><i class="fa fa-print"></i> @lang('documents.save_changes_print')</a></li>
+                                                            <li><a @click="saveDocument('email')"><i class="fa fa-envelope-o"></i> @lang('documents.save_changes_email')</a></li>
+                                                            <li><a @click="saveDocument('all')"><i class="fa fa-send"></i> @lang('documents.save_changes_email_print')</a></li>
                                                         </ul>
                                                     </div>
                                                     
