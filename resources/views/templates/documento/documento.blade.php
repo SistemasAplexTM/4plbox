@@ -122,6 +122,7 @@
                 {{ csrf_field() }}
                 <input type="hidden" class="form-control" id="date" name="date" readonly="">
                 <input type="hidden" class="form-control" id="id_documento" name="id_documento"  value="{{ $documento->id }}" readonly="">
+                <input type="hidden" class="form-control" id="option" name="option"  value="" readonly="">
                 <input type="hidden" class="form-control" name="document_type" id="document_type" data-liquidado="{{ $documento->liquidado }}"  value="consolidado" readonly="" v-model="document_type">
                 <div class="col-lg-12" style="">
                     <div class="col-lg-12">
@@ -254,7 +255,7 @@
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
                                 <h5>
-                                    <span class="fa fa-arrow-circle-down"> </span>@lang('documents.addressee_consignee')  
+                                    <span class="fa fa-arrow-circle-down"> </span> @lang('documents.addressee_consignee')  
                                     <span style="color: coral; display: none;" id="msnEditarCons">@lang('documents.prepared_for_editing')</span>
                                     <label class="po">PO#</label>
                                     <input type="text" id="poBoxD" name="poBoxD" class="" value="{{ isset($documento->po_box) ? $documento->po_box : '' }}" style="border-color: transparent;color: blue;" readonly="">
@@ -803,18 +804,25 @@
                                         <div class="row">
                                             <div class="form-group">
                                                 <div class="col-sm-12 col-sm-offset-0 guardar">
-                                                    <button type="button" id="saveForm" class="ladda-button btn btn-success" data-style="expand-right" @click="saveDocument()"><i class="fa fa-save fa-fw"></i>@lang('documents.save_changes')</button>
-                                                    {{-- el href de la impresion lo pongo desde la funcion showHiddeFields desde vue --}}
+                                                    <div class="btn-group dropup">
+                                                        <button type="button" class="btn btn-success ladda-button" id="saveForm" data-style="expand-right" @click="saveDocument()"><i class="fa fa-save fa-fw"></i>@lang('documents.save_changes')</button>
+                                                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 37px;">
+                                                            <span class="caret"></span>
+                                                            <span class="sr-only">Toggle Dropdown</span>
+                                                        </button>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a @click="saveDocument('print')"><i class="fa fa-print"></i> Guardar e imprimir</a></li>
+                                                            <li><a @click="saveDocument('email')"><i class="fa fa-envelope-o"></i> Guardar y enviar email</a></li>
+                                                        </ul>
+                                                    </div>
                                                     
                                                     <div class="btn-group dropup">
                                                         <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <i class="fa fa-print"></i>@lang('documents.to_print')<span class="caret"></span>
+                                                            <i class="fa fa-print"></i> @lang('documents.to_print') <span class="caret"></span>
                                                         </button>
                                                         <ul class="dropdown-menu">
                                                             <li><a href="" id="printDocument" class="" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> @lang('documents.to_print') {{ ($documento->liquidado == 1) ? 'Recibo' : $documento->tipo_nombre }}</a></li>
                                                             <li><a href="" id="printLabel" class="" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> @lang('documents.print_label')</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="" id="invoice" class="" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> @lang('documents.invoice')</a></li>
                                                         </ul>
                                                     </div>
 

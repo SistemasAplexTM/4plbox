@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "3c4b08bc3f1c7cea5a0d22002437856d",
@@ -2218,16 +2218,16 @@
         },
         {
             "name": "spatie/laravel-backup",
-            "version": "5.11.0",
+            "version": "5.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-backup.git",
-                "reference": "a85badbee23be41afc2190621e3c71b9fc8dbc49"
+                "reference": "fc5aa95db8868c9615ffa4cb2060214f95f1d5ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-backup/zipball/a85badbee23be41afc2190621e3c71b9fc8dbc49",
-                "reference": "a85badbee23be41afc2190621e3c71b9fc8dbc49",
+                "url": "https://api.github.com/repos/spatie/laravel-backup/zipball/fc5aa95db8868c9615ffa4cb2060214f95f1d5ce",
+                "reference": "fc5aa95db8868c9615ffa4cb2060214f95f1d5ce",
                 "shasum": ""
             },
             "require": {
@@ -2282,7 +2282,7 @@
                 "laravel-backup",
                 "spatie"
             ],
-            "time": "2018-10-18T22:07:07+00:00"
+            "time": "2018-10-20T07:24:26+00:00"
         },
         {
             "name": "spatie/temporary-directory",
@@ -3488,16 +3488,16 @@
         },
         {
             "name": "filp/whoops",
-            "version": "2.2.1",
+            "version": "2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "e79cd403fb77fc8963a99ecc30e80ddd885b3311"
+                "reference": "bc0fd11bc455cc20ee4b5edabc63ebbf859324c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/e79cd403fb77fc8963a99ecc30e80ddd885b3311",
-                "reference": "e79cd403fb77fc8963a99ecc30e80ddd885b3311",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/bc0fd11bc455cc20ee4b5edabc63ebbf859324c7",
+                "reference": "bc0fd11bc455cc20ee4b5edabc63ebbf859324c7",
                 "shasum": ""
             },
             "require": {
@@ -3545,7 +3545,7 @@
                 "throwable",
                 "whoops"
             ],
-            "time": "2018-06-30T13:14:06+00:00"
+            "time": "2018-10-23T09:00:00+00:00"
         },
         {
             "name": "fzaninotto/faker",
