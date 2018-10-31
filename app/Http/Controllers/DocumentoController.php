@@ -386,7 +386,7 @@ class DocumentoController extends Controller
                             DocumentoDetalle::where('documento_id', $id)->update([
                                 'liquidado' => 0,
                             ]);
-                            $request->session()->flash('print_document', array('id' => $id, 'document' => 'warehouse'));
+                            $request->session()->flash('print_document', array('id' => $id, 'document' => ($request->option == 'print' || $request->option == 'all') ? 'warehouse' : ''));
                         } else {
                             $data->liquidado       = 1;
                             $data->peso            = $request->peso_total;
@@ -405,7 +405,7 @@ class DocumentoController extends Controller
                             DocumentoDetalle::where('documento_id', $id)->update([
                                 'liquidado' => 1,
                             ]);
-                            $request->session()->flash('print_document', array('id' => $id, 'document' => 'guia'));
+                            $request->session()->flash('print_document', array('id' => $id, 'document' => ($request->option == 'print' || $request->option == 'all') ? 'guia' : ''));
                         }
                         $data->piezas            = $request->piezas;
                         $data->volumen           = $request->volumen;
@@ -486,18 +486,20 @@ class DocumentoController extends Controller
                 $this->validateRelationShipperConsignee($data->shipper_id, $data->consignee_id);
             });
             $msn = false;
-            if ($request->enviarEmailRemitente) {
-                $this->sendEmailDocument($id);
-                $msn = ' Email remitente enviado!';
+            if($request->option == 'email' || $request->option == 'all'){
+                if ($request->enviarEmailRemitente) {
+                    $this->sendEmailDocument($id);
+                    $msn = ' Email remitente enviado!';
+                }
+                if ($request->enviarEmailDestinatario) {
+                    $this->sendEmailDocument($id);
+                    $msn .= ' Email destinatario enviado!';
+                }
+                if ($msn) {
+                    $request->session()->put('sendemail', $msn);
+                }
             }
-            if ($request->enviarEmailDestinatario) {
-                $this->sendEmailDocument($id);
-                $msn .= ' Email destinatario enviado!';
-            }
-            if ($msn) {
-                $request->session()->put('sendemail', $msn);
-            }
-
+            
             $this->AddToLog('Documento WRH/Guia actualizado (' . $id . ')');
         }
 

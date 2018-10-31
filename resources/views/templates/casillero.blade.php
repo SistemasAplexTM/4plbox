@@ -36,14 +36,7 @@
                         <form id="formCasillero" enctype="multipart/form-data" class="form-horizontal casillero_form" role="form" action="#" method="post">          
                             <div class="ibox float-e-margins">
                                 <div class="ibox-content">
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4  col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2 text-center">
-                                            {{-- <img src="{{ asset($img->logo)}}" alt=""  class="img-responsive"> --}}
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <hr>
+                                    
                                     <!--***** contenido ******-->
                                     <div class="row">
                                         <div class="col-lg-12">
@@ -57,7 +50,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6 col-sm-6" :class="[corporativo ? 'col-lg-12' : 'col-lg-6']">
+                                        <div class="col-md-6 col-sm-12" :class="[corporativo ? 'col-lg-12' : 'col-lg-6']">
                                             <div class="form-group" :class="{'has-error': errors.has('primer_nombre') }">
                                                 <label class="control-label" for="primer_nombre">
                                                         @{{ !corporativo ? 'Primer Nombre' : 'Razón social' }} <span class="asterisco">*</span>
@@ -69,7 +62,7 @@
                                                 <label v-show="errors.has('primer_nombre')" class="error">@{{ errors.first('primer_nombre') }}</label>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6 col-md-12 col-sm-12" v-show="!corporativo">
+                                        <div class="col-lg-6 col-md-6 col-sm-12" v-show="!corporativo">
                                             <div class="form-group" :class="{'has-error': errors.has('primer_apellido') }">
                                                 <label class="control-label" for="primer_apellido">@lang('general.surnames')<span class="asterisco">*</span></label> 
                                                 <input 
@@ -97,7 +90,7 @@
                                                     <template slot="selected-option" slot-scope="option">
                                                         <div>
                                                             @{{ option.name }}
-                                                        </div>
+                                                        </div>&nbsp;
                                                         <small>@{{ option.depto }} - @{{ option.pais }}</small>
                                                     </template>
                                                 </v-select>
@@ -116,7 +109,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-lg-6 col-md-12 col-sm-12">
+                                        <div class="col-lg-6 col-md-6 col-sm-12">
                                             <div class="form-group" :class="{'has-error': errors.has('zip') }">
                                                 <label class="control-label" for="zip">@lang('general.postal_code')  <span class="asterisco">*</span></label>
                                                 <div class="input-group">
@@ -124,12 +117,12 @@
                                                     v-model="zip"
                                                     v-validate.disable="'required'" 
                                                     type="number" placeholder="Zip" id="zip" name="zip" class="form-control" value="">
-                                                    <label v-show="errors.has('zip')" class="error">@{{ errors.first('zip') }}</label>
-                                                    <span class="input-group-addon" @click="setZip" style="cursor: pointer;">@lang('general.calculate')</span>
+                                                    <span class="input-group-addon" @click="setZip" style="cursor: pointer;"><i class="fa fa-map-marker"></i> @lang('general.calculate')</span>
                                                 </div>
+                                                <label v-show="errors.has('zip')" class="error">@{{ errors.first('zip') }}</label>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6 col-md-12 col-sm-12">
+                                        <div class="col-lg-6 col-md-6 col-sm-12">
                                             <div class="form-group" :class="{'has-error': errors.has('celular') }">
                                                 <label class="control-label" for="celular">@lang('general.cell_phone') <span class="asterisco">*</span></label> 
                                                 <div class="input-group">

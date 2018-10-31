@@ -691,8 +691,8 @@ fieldset[disabled] .btn-primary.active {
     border-color: #1a7bb9;*/
     color: #FFFFFF;
     /* colores bootstrap*/
-    background-color: #0d87e9;
-    border-color: #0d87e9;
+    background-color: #0d87e9 !important;
+    border-color: #0d87e9 !important;
     box-shadow: rgba(0, 0, 0, 0.4) 2px 2px 4px;
 }
 .btn-success:active,

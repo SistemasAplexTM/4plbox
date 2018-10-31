@@ -1,5 +1,5 @@
 <style type="text/css">
-  .dropdown-toggle>input[type="search"] {
+  /*.dropdown-toggle>input[type="search"] {
     width: 120px !important;
   }
   .input-group-btn select {
@@ -8,7 +8,7 @@
     margin-bottom: 0px;
     padding-top: 7px;
     padding-bottom: 5px;
-  }
+  }*/
 </style>
 <template>  
   <form-wizard @on-complete="onComplete"

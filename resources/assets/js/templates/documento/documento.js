@@ -700,7 +700,7 @@ var objVue = new Vue({
                 }
             }, 500);            
         },
-        saveDocument: function() {
+        saveDocument: function(option) {
             $('#date').val(this.getTime());
             const isUnique = (value) => {
                 if ($('#shipper_id').val() == '' || $('#shipper_id').val() == null) {
@@ -789,6 +789,7 @@ var objVue = new Vue({
                     }
                 }
                 if (result) {
+                    $('#option').val(option);
                     $('#formDocumento').submit();
                 } else {
                     toastr.warning("Error. Porfavor verifica los datos ingresados.<br><br>" + msn);
