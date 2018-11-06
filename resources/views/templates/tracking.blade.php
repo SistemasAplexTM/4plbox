@@ -83,7 +83,7 @@
                                             <label for="contenido" class="control-label gcore-label-top">@lang('general.content'):</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input class="form-control" name="contenido" placeholder="@lang('general.content')" type="text" v-model="contenido" v-validate.disable="'required'">
+                                            <input class="form-control" name="contenido" placeholder="@lang('general.content')" type="text" v-model="contenido">
                                             <small class="help-block error" v-show="errors.has('contenido')">
                                                 @{{ errors.first('contenido') }}
                                             </small>

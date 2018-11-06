@@ -47,7 +47,7 @@ return [
 		'badly_packed'     => 'Mal empacada',
 		'broken'           => 'Rota',
 	    'save_changes'             => 'Guardar Cambios',
-	    'save_changes_print'       => 'Save and print',
+	    'save_changes_print'       => 'Guardar e imprimir',
 	    'save_changes_email'       => 'Guardar y enviar email',
 	    'save_changes_email_print' => 'Guardar, enviar email e imprimir',
 		'to_print'				   => 'Imprimir',

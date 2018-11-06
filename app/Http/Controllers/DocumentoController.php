@@ -1701,8 +1701,13 @@ class DocumentoController extends Controller
             return $pdf->stream($nameDocument . '.pdf');
         }else{
             if (env('APP_LABEL') === '4x4') {
-                $pdf = PDF::loadView('pdf.labelWG', compact('documento', 'detalle', 'document'))
+                if(env('APP_CLIENT') === 'jyg'){
+                    $pdf = PDF::loadView('pdf.labelWGJyg', compact('documento', 'detalle', 'document'))
                     ->setPaper(array(25, -25, 260, 360), 'landscape');
+                }else{
+                    $pdf = PDF::loadView('pdf.labelWG', compact('documento', 'detalle', 'document'))
+                    ->setPaper(array(25, -25, 260, 360), 'landscape');
+                }
 
                 $nameDocument = 'Label' . $document . '-' . $documento->id;
                 return $pdf->stream($nameDocument . '.pdf');

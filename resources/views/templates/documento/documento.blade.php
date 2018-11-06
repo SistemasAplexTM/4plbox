@@ -355,8 +355,8 @@
                                 <h5>@lang('documents.totals')</h5>
                                 <div class="ibox-tools">
                                     <label>@lang('documents.liquidate')</label>
-                                    {{-- <input type='checkbox' data-toggle="toggle" id='show-totales' name="liquidar" @click="showTotals()" data-size='mini' data-on="Si" data-off="No" data-width="50" data-style="ios" data-onstyle="primary" data-offstyle="danger" {{ ($documento->liquidado != 0) ? 'checked="checked"' : '' }}> --}}
-                                    <input type='checkbox' data-toggle="toggle" id='show-totales' name="liquidar" @click="showTotals()" data-size='mini' data-on="Si" data-off="No" data-width="50" data-style="ios" data-onstyle="primary" data-offstyle="danger" checked="checked">
+                                    <input type='checkbox' data-toggle="toggle" id='show-totales' name="liquidar" @click="showTotals()" data-size='mini' data-on="Si" data-off="No" data-width="50" data-style="ios" data-onstyle="primary" data-offstyle="danger" {{ ($documento->liquidado != 0) ? 'checked="checked"' : '' }}>
+                                    {{-- <input type='checkbox' data-toggle="toggle" id='show-totales' name="liquidar" @click="showTotals()" data-size='mini' data-on="Si" data-off="No" data-width="50" data-style="ios" data-onstyle="primary" data-offstyle="danger" checked="checked"> --}}
                                 </div>
                             </div>
                             <!-- TOTALES -->
