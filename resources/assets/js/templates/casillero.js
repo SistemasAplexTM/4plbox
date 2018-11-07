@@ -9,57 +9,27 @@ $(document).ready( () => {
 
 var objVue = new Vue({
     el: '#casillero',
+    watch: {
+            'email' : function(v) {
+                this.email = v.toLowerCase().trim();
+            },
+            'email_confirmation' : function(v) {
+                this.email_confirmation = v.toLowerCase().trim();
+            },
+            'primer_nombre' : function(v) {
+                this.primer_nombre = v.toUpperCase();
+            },
+            'primer_apellido' : function(v) {
+                this.primer_apellido = v.toUpperCase();
+            },
+            'direccion' : function(v) {
+                this.direccion = v.toUpperCase();
+            }
+    },
     mounted: function(){
-        //
-    },
-    data:{
-        id: null,
-        tipo_identificacion_id: null,
-        agencia_id: null,
-        localizacion_id: null,
-        documento: null,
-        primer_nombre: null,
-        segundo_nombre: null,
-        primer_apellido: null,
-        segundo_apellido: null,
-        direccion: null,
-        telefono: null,
-        celular: null,
-        email: null,
-        email_confirmation: null,
-        zip: null,
-        tarifa: 0,
-        po_box: null,
-        estatus: 1,
-        nombre_full: null,
-        casillero: 0,
-        password: null,
-        direccion2: null,
-        acepta_condiciones: null,
-        recibir_info: null,
-        phone_code: null,
-        success: false,
-        corporativo: false,
-        ciudades: []
-    },
-    methods:{
-        resetForm: function(){
-            this.id = '';
-        },
-        /* metodo para eliminar el error de los campos del formulario cuando dan clic sobre el */
-        deleteError: function(element){
-            let me = this;
-            $.each(me.listErrors, function (key, value) {
-                if(key !== element){
-                   me.listErrors[key] = value; 
-               }else{
-                me.listErrors[key] = false; 
-               }
-            });
-        },
-        create: function(){
-            let me=this;
-            /* CUSTOM MESSAGES VE-VALIDATOR*/
+        this.configuration('agency_mc');
+        let me=this;
+        /* CUSTOM MESSAGES VE-VALIDATOR*/
             const dict = {
               custom: {
                 primer_nombre: {
@@ -119,11 +89,71 @@ var objVue = new Vue({
                     return data.message;
                 }
             });
+    },
+    data:{
+        id: null,
+        tipo_identificacion_id: null,
+        agencia_id: null,
+        localizacion_id: null,
+        documento: null,
+        primer_nombre: null,
+        segundo_nombre: null,
+        primer_apellido: null,
+        segundo_apellido: null,
+        direccion: null,
+        telefono: null,
+        celular: null,
+        email: null,
+        email_confirmation: null,
+        zip: null,
+        tarifa: 0,
+        po_box: null,
+        estatus: 1,
+        nombre_full: null,
+        casillero: 0,
+        password: null,
+        direccion2: null,
+        acepta_condiciones: null,
+        recibir_info: null,
+        phone_code: null,
+        success: false,
+        corporativo: false,
+        ciudades: [],
+        listId: null
+    },
+    methods:{
+        configuration: function(key){
+            let me = this;
+            axios.get('../aplexConfig/config/'+key).then(response => {
+                let config = JSON.parse(response.data.value);
+                me.listId = config.list.find(function(element){
+                    return element.id_agency == me.agencia_id
+                });
+            });
+        },
+        resetForm: function(){
+            this.id = '';
+        },
+        /* metodo para eliminar el error de los campos del formulario cuando dan clic sobre el */
+        deleteError: function(element){
+            let me = this;
+            $.each(me.listErrors, function (key, value) {
+                if(key !== element){
+                   me.listErrors[key] = value; 
+               }else{
+                me.listErrors[key] = false; 
+               }
+            });
+        },
+        create: function(){
+            let me=this;
+            
             this.$validator.validateAll().then((result) => {
                 if (result) {
                     let me = this;
                     axios.post('../casillero',{
                         'agencia_id': this.agencia_id,
+                        'listId': this.listId.id_list,
                         'localizacion_id': this.localizacion_id,
                         'documento': this.documento,
                         'primer_nombre': this.primer_nombre,

@@ -57,7 +57,7 @@
                                                 </label> 
                                                 <input 
                                                     v-model="primer_nombre"
-                                                    v-validate.disable="'required'"
+                                                    v-validate="'required'"
                                                     type="text" required="" :placeholder="[corporativo ? 'Razón social' : 'Primer nombre']" class="form-control" id="primer_nombre" name="primer_nombre" value="">
                                                 <label v-show="errors.has('primer_nombre')" class="error">@{{ errors.first('primer_nombre') }}</label>
                                             </div>
@@ -67,7 +67,7 @@
                                                 <label class="control-label" for="primer_apellido">@lang('general.surnames')<span class="asterisco">*</span></label> 
                                                 <input 
                                                     v-model="primer_apellido" 
-                                                    v-validate.disable="corporativo ? '' : 'required'" 
+                                                    v-validate="corporativo ? '' : 'required'" 
                                                     type="text" required="" placeholder="@lang('general.surnames')" class="form-control" id="primer_apellido" name="primer_apellido" value="">
                                                 <label v-show="errors.has('primer_apellido')" class="error">@{{ errors.first('primer_apellido') }}</label>
                                             </div>
@@ -102,7 +102,7 @@
                                                 <label class="control-label" for="direccion">@lang('general.address') <span class="asterisco">*</span></label>
                                                 <input 
                                                     v-model="direccion"
-                                                    v-validate.disable="'required'" 
+                                                    v-validate="'required'" 
                                                     type="text" required="" placeholder="@lang('general.address')" class="form-control" id="direccion" name="direccion" value="">
                                                 <label v-show="errors.has('direccion')" class="error">@{{ errors.first('direccion') }}</label>
                                             </div>
@@ -115,7 +115,7 @@
                                                 <div class="input-group">
                                                     <input 
                                                     v-model="zip"
-                                                    v-validate.disable="'required'" 
+                                                    v-validate="'required'" 
                                                     type="number" placeholder="Zip" id="zip" name="zip" class="form-control" value="">
                                                     <span class="input-group-addon" @click="setZip" style="cursor: pointer;"><i class="fa fa-map-marker"></i> @lang('general.calculate')</span>
                                                 </div>
@@ -129,7 +129,7 @@
                                                     <span class="input-group-addon">(+@{{ phone_code }})</span>
                                                     <input 
                                                         v-model="celular"
-                                                        v-validate.disable="'required'"
+                                                        v-validate="'required'"
                                                         type="tel" required="" placeholder="999-9999" class="form-control" id="celular" name="celular" value="">
                                                 </div>
                                                 <label v-show="errors.has('celular')" class="error">@{{ errors.first('celular') }}</label>
@@ -143,9 +143,10 @@
                                                 <label class="control-label" for="email">@lang('general.email') <span class="asterisco">*</span></label> 
                                                 <input
                                                  v-model="email" 
-                                                 v-validate.disable="'required|email|unique'"
+                                                 v-validate="'required|email|unique'"
                                                  type="email" 
-                                                 required="" placeholder="@lang('general.email_be_your_user')" class="form-control" id="email" name="email">
+                                                 ref="email"
+                                                 required="" placeholder="@lang('general.email_be_your_user')" class="form-control" name="email">
                                                 <label v-show="errors.has('email')" class="error">@{{ errors.first('email') }}</label>
                                             </div>
                                         </div>
@@ -153,8 +154,8 @@
                                             <div class="form-group" :class="{'has-error': errors.has('email') }">
                                                 <label class="control-label" for="email_confirmation">@lang('general.confirm_email')<span class="asterisco">*</span></label>
                                                 <input
-                                                v-validate.disable="'required|confirmed:email'"
-                                                 type="email" required="" placeholder="@lang('general.repeat_email')" class="form-control" id="email_confirmation" name="email_confirmation" value="" v-model="email_confirmation">
+                                                v-validate="'required|confirmed:email'"
+                                                 type="email" required="" placeholder="@lang('general.repeat_email')" class="form-control" name="email_confirmation" id="email_confirmation" v-model="email_confirmation">
                                                 <label v-show="errors.has('email_confirmation')" class="error">@{{ errors.first('email_confirmation') }}</label>
                                             </div>
                                         </div>
@@ -165,11 +166,13 @@
                                                 <div class="checkbox checkbox-success checkbox-inline">
                                                         <input 
                                                     v-model="acepta_condiciones" 
-                                                    v-validate.disable="'required'" 
-                                                    type="checkbox" id="acepta_condiciones" name="acepta_condiciones" value="f" style="">
+                                                    v-validate="'required'" 
+                                                    type="checkbox" id="acepta_condiciones" name="acepta_condiciones" value="f">
                                                     <label for="acepta_condiciones">@lang('general.i_have_read_the') <strong><a href="#" data-toggle="modal" data-target="#modalTerminosCondiciones" data-original-title="" title="">@lang('general.terms_and_conditions')</a></strong></label>
                                                 </div>
-                                                <label v-show="errors.has('acepta_condiciones')" class="error">@{{ errors.first('acepta_condiciones') }}</label>
+                                                <div>
+                                                    <label v-show="errors.has('acepta_condiciones')" class="error">@{{ errors.first('acepta_condiciones') }}</label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

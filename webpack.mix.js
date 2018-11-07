@@ -64,7 +64,6 @@ mix.copyDirectory('resources/assets/js/templates', 'public/js/templates');
 
 
 
-
  // mix.copyDirectory('resources/assets/js/plugins', 'public/js/plugins');
  // mix.copyDirectory('resources/assets/css/plugins', 'public/css/plugins');
  // mix.copyDirectory('resources/assets/img', 'public/img');

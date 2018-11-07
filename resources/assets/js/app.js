@@ -29,3 +29,4 @@ Vue.component('modalguias-component', 		require('./components/ModalGuiasComponen
 Vue.component('modaltagdocument-component', require('./components/ModalTagDocumentComponent.vue'));
 Vue.component('rigthsidebar-component', 	require('./components/RigthSidebarComponent.vue'));
 Vue.component('consol_bodega-component', 	require('./components/ConsolBodegaComponent.vue'));
+Vue.component('index-config', 				require('./components/config/Index.vue'));

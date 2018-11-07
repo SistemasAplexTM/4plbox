@@ -443,6 +443,13 @@
                                 @lang('layouts.access_controls')   
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('config.index') }}">
+                            <spam class="fa fa-cogs">
+                            </spam>
+                                @lang('general.configuration')   
+                        </a>
+                    </li>
                     {{-- @endcan --}}
                     @endcan
                 </ul>

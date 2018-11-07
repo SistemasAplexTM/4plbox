@@ -1,6 +1,8 @@
 <?php
 
 return [
+    //resources/views/templates/aplexConfig
+    'configuration' => 'Configuración',
 
     //resources/views/templates/bill/create
 

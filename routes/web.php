@@ -300,7 +300,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('bill/createPartie', 'BillLadingController@createPartie');
     Route::put('bill/editPartie/{id}', 'BillLadingController@editPartie');
     Route::delete('bill/destroyPartie/{id}', 'BillLadingController@destroyPartie');
+
+    /* MODULO APLEXCONFIG */
+    Route::get('aplexConfig', 'AplexConfigController@index')->name('config.index');
 });
+Route::get('aplexConfig/config/{key}', 'AplexConfigController@get')->name('config.config');
+
 Route::get('consignee/vueSelect/{term}', 'ConsigneeController@vueSelect');
 Route::get('shipper/vueSelect/{term}', 'ShipperController@vueSelect');
 

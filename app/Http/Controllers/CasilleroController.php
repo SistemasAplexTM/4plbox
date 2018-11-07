@@ -108,13 +108,12 @@ class CasilleroController extends Controller
             $cuerpo_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->mensaje);
             $asunto_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->subject);
             if ($request->recibir_info) {
-                $listId = "c963896f86";
+                $listId = $request->listId;
                 if (!\Mailchimp::check($listId, $request->correo)) {
                     \Mailchimp::subscribe(
                         $listId,
                         $request->correo,
-                        [], 
-                        // ['FNAME' => $request->nombre, 'LNAME' => $request->primer_apellido], 
+                        ['FNAME' => $request->primer_nombre, 'LNAME' => $request->primer_apellido, 'POBOX' => $po_box], 
                         false
                     );
                 }
@@ -191,4 +190,5 @@ class CasilleroController extends Controller
             return $e;
         }
     }
+
 }
