@@ -26,6 +26,7 @@ var objVue = new Vue({
         telefono: null,
         celular: null,
         email: null,
+        email_confirmation: null,
         zip: null,
         tarifa: 0,
         po_box: null,
@@ -73,9 +74,9 @@ var objVue = new Vue({
                 password_confirmation: {
                   required: 'La confirmación de la contraseña es obligatoria.'
                 },
-                password_confirmation: {
+                email_confirmation: {
                   required: 'La confirmación de email es obligatoria.',
-                  confirmed: 'La confirmación de la contraseña no coincide.'
+                  confirmed: 'El email ingresado no coincide.'
                 },
                 email: {
                   required: 'El email es obligatorio.'

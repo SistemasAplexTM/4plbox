@@ -153,8 +153,8 @@
                                             <div class="form-group" :class="{'has-error': errors.has('email') }">
                                                 <label class="control-label" for="email_confirmation">@lang('general.confirm_email')<span class="asterisco">*</span></label>
                                                 <input
-                                                v-validate="'required|confirmed:email'"
-                                                 type="email" required="" placeholder="@lang('general.repeat_email')" class="form-control" id="email_confirmation" name="email_confirmation" value="" >
+                                                v-validate.disable="'required|confirmed:email'"
+                                                 type="email" required="" placeholder="@lang('general.repeat_email')" class="form-control" id="email_confirmation" name="email_confirmation" value="" v-model="email_confirmation">
                                                 <label v-show="errors.has('email_confirmation')" class="error">@{{ errors.first('email_confirmation') }}</label>
                                             </div>
                                         </div>

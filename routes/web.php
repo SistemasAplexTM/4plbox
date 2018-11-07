@@ -319,7 +319,7 @@ Route::post('clientes/existEmail', 'ClienteController@existEmail');
 /* VALIDAR EMAIL DE CONSIGNEE */
 Route::post('consignee/existEmail', 'ConsigneeController@existEmail');
 
-/* VALIDAR EMAIL DE CONSIGNEE */
+/* VALIDAR EMAIL DE SHIPPER */
 Route::post('shipper/existEmail', 'ShipperController@existEmail');
 
 /* VALIDAR USERNAME */
