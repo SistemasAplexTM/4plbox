@@ -118,8 +118,7 @@ class CasilleroController extends Controller
                     );
                 }
             }
-            // return new \App\Mail\CasilleroEmail($cuerpo_correo);
-            // Mail::to($request->correo)->send(new \App\Mail\CasilleroEmail($cuerpo_correo));
+            Mail::to($request->correo)->send(new \App\Mail\CasilleroEmail($cuerpo_correo));
 
             DB::commit();
         } catch (\Exception $e) {
