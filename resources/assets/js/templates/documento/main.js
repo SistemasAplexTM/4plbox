@@ -138,7 +138,9 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
         if (icon == null) {
             var icon = 'file-text-o';
         }
-        $('#icono_doc').removeClass(className).addClass('fa fa-' + icon);
+        console.log(icon);
+        // $('#icono_doc').removeClass(className).addClass(icon);
+        $('#icono_doc').empty().append('<i class="fa '+icon+'"></i>');
         $('#crearDoc').attr('onclick', 'createNewDocument_(' + tipo_doc_id + ',\'' + nom + '\',\'' + funcionalidades + '\')'); 
     }
     
@@ -266,7 +268,7 @@ var objVue = new Vue({
         typeDocumentList: function() {
             axios.get('tipoDocumento/all').then(function(response) {
                 $.each(response.data.data, function(key, value) {
-                    var lista = '<button type="button" id="btn' + value.id + '" ' + ' onclick="listDocument(' + value.id + ',\'' + value.nombre + '\',\'' + value.icono + '\',\'' + value.funcionalidades + '\',\'' + true + '\')"' + ' class="btn btn-default btn-block" style="text-align:left;">' + ' <i class="fa fa-' + value.icono + '" aria-hidden="true"></i>  ' + value.nombre +'</button>';
+                    var lista = '<button type="button" id="btn' + value.id + '" ' + ' onclick="listDocument(' + value.id + ',\'' + value.nombre + '\',\'' + value.icono + '\',\'' + value.funcionalidades + '\',\'' + true + '\')"' + ' class="btn btn-default btn-block" style="text-align:left;">' + ' <i class="fa ' + value.icono + '" aria-hidden="true"></i>  ' + value.nombre +'</button>';
                     if (value.id == 1) {
                         listDocument(value.id, value.nombre, value.icono, value.funcionalidades);
                     }

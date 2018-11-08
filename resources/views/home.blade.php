@@ -48,7 +48,7 @@
                 <div class="col-lg-6">
                     <div class="col-lg-3 text-center">
                         <button class="btn btn-warning dim btn-large-dim btn-outline btn-inicio" type="button" id="documento">
-                            <i class="fa fa-dropbox">
+                            <i class="fa fa-box-open">
                             </i>
                         </button>
                         <div style="font-size: 20px;">
@@ -77,7 +77,7 @@
                 <div class="col-lg-6">
                     <div class="col-lg-3 text-center">
                         <button class="btn btn-success dim btn-large-dim btn-outline btn-inicio" type="button" id="shipper">
-                            <i class="fa fa-user-circle-o">
+                            <i class="far fa-user-circle">
                             </i>
                         </button>
                         <div style="font-size: 20px;">
@@ -86,7 +86,7 @@
                     </div>
                     <div class="col-lg-3 text-center">
                         <button class="btn btn-info dim btn-large-dim btn-outline btn-inicio" type="button" id="consignee">
-                            <i class="fa fa-user-circle">
+                            <i class="fas fa-user-circle">
                             </i>
                         </button>
                         <div style="font-size: 20px;">
@@ -96,7 +96,7 @@
 
                     <div class="col-lg-3 text-center">
                         <button class="btn btn-primary dim btn-large-dim btn-outline btn-inicio" type="button" id="backup">
-                            <i class="fa fa-cloud-download">
+                            <i class="fa fa-cloud-download-alt">
                             </i>
                         </button>
                         <div style="font-size: 20px;">

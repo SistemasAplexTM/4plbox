@@ -34,7 +34,7 @@ $(document).ready(function() {
                     var btn_delete = " <a onclick=\"eliminar(" + full.id + "," + true + ")\" class='btn btn-outline btn-danger btn-xs' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-trash'></i></a> ";
                 }
                 var btn_add_contact = "<button onclick=\"pasar_id(" + full.id + ")\" type='button' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#mdl-contactos'><i data-toggle='tooltip' data-placement='top' title='Agregar contactos' class='fa fa-user-plus'></i></button> ";
-                var btn_casillero = " <a onclick=\"generarCasillero(" + full.id + ")\" class='btn btn-outline btn-info btn-xs' data-toggle='tooltip' data-placement='top' title='Generar casillero'><i class='fa fa-vcard'></i></a> ";
+                var btn_casillero = " <a onclick=\"generarCasillero(" + full.id + ")\" class='btn btn-outline btn-info btn-xs' data-toggle='tooltip' data-placement='top' title='Generar casillero'><i class='fa fa-address-card'></i></a> ";
                 return btn_edit + btn_casillero + btn_add_contact + btn_delete;
             }
         }]
