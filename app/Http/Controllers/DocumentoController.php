@@ -633,7 +633,7 @@ class DocumentoController extends Controller
                 ->leftJoin('shipper', 'documento.shipper_id', '=', 'shipper.id')
                 ->leftJoin('consignee', 'documento.consignee_id', '=', 'consignee.id')
                 ->join('agencia', 'documento.agencia_id', '=', 'agencia.id')
-                ->select('documento.id as id', 'documento.liquidado', 'documento.tipo_documento_id as tipo_documento_id', 'documento.' . $codigo . ' as codigo', 'documento.created_at as fecha', 'shipper.nombre_full as ship_nomfull', 'consignee.nombre_full as cons_nomfull', 'consignee.correo as email_cons', 'agencia.descripcion as agencia', $codigo,
+                ->select('documento.id as id', 'valor_libra', 'documento.liquidado', 'documento.tipo_documento_id as tipo_documento_id', 'documento.' . $codigo . ' as codigo', 'documento.created_at as fecha', 'shipper.nombre_full as ship_nomfull', 'consignee.nombre_full as cons_nomfull', 'consignee.correo as email_cons', 'agencia.descripcion as agencia', $codigo,
                     DB::raw("(SELECT IFNULL(COUNT(consolidado_detalle.id),0) FROM consolidado_detalle WHERE consolidado_detalle.deleted_at IS NULL AND consolidado_detalle.consolidado_id = documento.id) as cantidad"),
                     DB::raw("(SELECT IFNULL(Sum(documento_detalle.peso2),0) FROM consolidado_detalle INNER JOIN documento_detalle ON consolidado_detalle.documento_detalle_id = documento_detalle.id WHERE consolidado_detalle.deleted_at IS NULL AND consolidado_detalle.consolidado_id = documento.id) as peso"),
                     DB::raw("(SELECT IFNULL(Sum(documento_detalle.volumen),0) FROM consolidado_detalle INNER JOIN documento_detalle ON consolidado_detalle.documento_detalle_id = documento_detalle.id WHERE consolidado_detalle.deleted_at IS NULL AND consolidado_detalle.consolidado_id = documento.id) as volumen")
@@ -669,7 +669,7 @@ class DocumentoController extends Controller
                                                 z.documento_id,
                                                 z.consolidado
                                         ) AS t"), "documento.id", "t.documento_id")
-                    ->select('documento.id as id', 'documento.liquidado', 'documento.tipo_documento_id as tipo_documento_id', 'documento.consecutivo as codigo', 'documento.created_at as fecha', 'shipper.nombre_full as ship_nomfull', 'consignee.nombre_full as cons_nomfull', 'consignee.correo as email_cons', 'agencia.descripcion as agencia',
+                    ->select('documento.id as id', 'documento.valor_libra', 'documento.liquidado', 'documento.tipo_documento_id as tipo_documento_id', 'documento.consecutivo as codigo', DB::raw("DATE_FORMAT(documento.created_at, '%Y-%m-%d') AS fecha"), 'shipper.nombre_full as ship_nomfull', 'consignee.nombre_full as cons_nomfull', 'consignee.correo as email_cons', 'agencia.descripcion as agencia',
                         DB::raw("(SELECT Count(a.id) AS cantidad FROM documento_detalle AS a WHERE a.documento_id = documento.id AND a.deleted_at IS NULL) as cantidad"),
                         DB::raw("(SELECT IFNULL(SUM(a.piezas), 0) AS piezas FROM documento_detalle AS a WHERE a.documento_id = documento.id AND a.deleted_at IS NULL) as piezas"),
                         DB::raw("(SELECT Sum(documento_detalle.peso) FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as peso"),
@@ -685,6 +685,7 @@ class DocumentoController extends Controller
                         'documento.liquidado',
                         'documento.tipo_documento_id',
                         'documento.consecutivo',
+                        'documento.valor_libra',
                         'documento.num_warehouse',
                         'documento.created_at',
                         'shipper.nombre_full',
@@ -1961,7 +1962,7 @@ class DocumentoController extends Controller
                 ['a.deleted_at', null],
                 ['b.deleted_at', null],
                 ['a.consolidado', 0],
-                ['guia_wrh_pivot.tipo_embarque_id', $transporte_id],
+                ['f.tipo_embarque_id', $transporte_id],
                 ['e.pais_id', $pais_id],
             ];
         if(!Auth::user()->isRole('admin')){
@@ -1970,10 +1971,10 @@ class DocumentoController extends Controller
 
         $detalle = DB::table('documento_detalle AS a')
             ->join('documento as b', 'a.documento_id', 'b.id')
-            ->leftJoin('guia_wrh_pivot', 'b.id', '=', 'guia_wrh_pivot.documento_id')
             ->join('consignee as c', 'b.consignee_id', 'c.id')
             ->join('localizacion as d', 'c.localizacion_id', 'd.id')
             ->join('deptos as e', 'd.deptos_id', 'e.id')
+            ->leftJoin('guia_wrh_pivot AS f', 'b.id', '=', 'f.documento_id')
             ->select(
                 'a.id',
                 'a.created_at',
@@ -1983,6 +1984,13 @@ class DocumentoController extends Controller
                 'a.peso2',
                 DB::raw('IFNULL(a.declarado2,0) as declarado2')
             )
+            ->groupBy(
+                'a.id',
+                'a.created_at',
+                'a.num_guia',
+                'a.num_warehouse',
+                'a.liquidado',
+                'a.peso2')
             ->where($filter)
             ->get();
         return \DataTables::of($detalle)->make(true);

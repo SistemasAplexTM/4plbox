@@ -85,7 +85,7 @@
     ?>
     <body>
       {{-- <pre> --}}
-        <?php // print_r($documento); ?>
+        <?php //print_r($documento); ?>
         <?php //print_r($detalle); ?>
 
       {{-- </pre> --}}

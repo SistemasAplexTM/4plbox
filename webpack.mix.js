@@ -1,5 +1,5 @@
 let mix = require('laravel-mix');
- // mix.scripts([
+//  mix.scripts([
 // 	/*-- Scripts de la plantilla --*/
 //  	'resources/assets/js/jquery/jquery-2.1.1.js',
 //   	'resources/assets/js/bootstrap/bootstrap.min.js',

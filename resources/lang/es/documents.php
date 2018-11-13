@@ -82,7 +82,7 @@ return [
 		'warehouse'                => 'Almacén',
 		'types_of_documents'       => 'Tipos de Documentos', 
 		'date'                     => 'Date',
-		'client_consignee'         => 'Cliente/Destinatario',
+		'client_consignee'         => 'Cliente',
 		'actions'                  => 'Acciones',
 // // templaces/documento/viewGuiaWarehouse	
 		'see'                      => 'Ver',

@@ -82,7 +82,7 @@ return [
 		'warehouse'                => 'Warehouse',
 		'types_of_documents'       => 'Types of documents',
 		'date'                     => 'Date',
-		'client_consignee'         => 'Client/Consignee',
+		'client_consignee'         => 'Client',
 		'actions'                  => 'Actions',
 
 // templaces/documento/viewGuiaWarehouse	

@@ -104,11 +104,11 @@
                                                     <th><i class="fa fa-file-text-o" aria-hidden="true" id="icono-doc-table"></i> #@lang('documents.documents')</th>
                                                     <th><i class="fa fa-calendar" aria-hidden="true"></i> @lang('documents.date')</th>
                                                     <th><i class="fa fa-user" aria-hidden="true"></i> @lang('documents.client_consignee')</th>
-                                                    <th><i class="fa fa-balance-scale" aria-hidden="true"></i> 
-                                                    @lang('documents.weight')</th>
+                                                    <th><i class="fa fa-dollar" aria-hidden="true"></i> @lang('general.rate')</th>
+                                                    <th><i class="fa fa-balance-scale" aria-hidden="true"></i> @lang('documents.weight')</th>
                                                     <th><i class="fa fa-cubes" aria-hidden="true"></i> @lang('documents.volume')</th>
-                                                    <th><i class="fa fa-building" aria-hidden="true"></i>@lang('documents.agency')</th>
-                                                    <th><i class="fa fa-bolt" aria-hidden="true"></i>@lang('documents.actions')</th>
+                                                    <th><i class="fa fa-building" aria-hidden="true"></i> @lang('documents.agency')</th>
+                                                    <th><i class="fa fa-bolt" aria-hidden="true"></i> @lang('documents.actions')</th>
                                                 </tr>
                                             </thead>
                                         </table>

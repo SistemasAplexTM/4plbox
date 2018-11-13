@@ -59,11 +59,16 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
             }
         }, {
             data: 'fecha',
-            name: 'documento.created_at'
+            name: 'documento.created_at',
+            width: 80
         }, {
             data: 'cons_nomfull',
             name: 'consignee.nombre_full'
-        }, {
+        },{
+            data: 'valor_libra',
+            name: 'documento.valor_libra',
+            visible: (tipo_doc_id != 3) ? true : false
+        },  {
             data: 'peso',
             name: 'documento.peso'
         }, {
@@ -113,12 +118,13 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                     var btns = "<div class='btn-group'>" + "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + "<i class='material-icons' style='vertical-align:  middle;'>print</i> <span class='caret'></span>" + "</button>" + "<ul class='dropdown-menu dropdown-menu-right pull-right'><li><a href='" + href_print + "' target='_blank'> <spam class='fa fa-print'></spam> Imprimir</a></li>" + "<li><a href='" + href_print_label + "' target='_blank'> <spam class='fa fa-print'></spam> Labels "+label+"</a></li>" + "<li><a href='#' onclick=\"sendMail(" + full.id + ")\"> <spam class='fa fa-envelope'></spam> Enviar Mail</a></li>" + "</ul></div>";
                     return btn_edit + btns + ' ' + btn_tags + btn_delete;
                 }
-            }
+            },
+            width: 100
         }],
         'columnDefs': [{
-            // className: "text-center",
+            className: "text-center",
             "targets": [6],
-            width: 180,
+            // width: 180,
         }]
     });
 

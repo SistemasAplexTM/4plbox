@@ -159,7 +159,7 @@
 				                                    <th>Declarado</th>
                                                     <th>Lb</th>
 				                                    <th>Lb R</th>
-				                                    <th>Acciónes</th>
+				                                    <th></th>
 				                                </tr>
 				                            </thead>
 				                            <tbody>
@@ -285,7 +285,7 @@
     	</div>
         <!-- MODAL AGRUPAR GUIAS -->
         <div class="modal fade bs-example-modal-lg" id="modalagrupar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog" style="width: 30%!important;">
+            <div class="modal-dialog" style="width: 40%!important;">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -849,7 +849,7 @@
 			        	{ "targets": [ 1 ], width: 50, },
 			        	{ className: "text-center", "targets": [ 4 ], width: 50, },
 			            { className: "text-center", "targets": [ 6,7,8 ], width: 50, },
-                        { className: "text-center", "targets": [ 9 ], width: 10, },
+                        { className: "text-center", "targets": [ 9 ]},
 			            { "targets": [ 10,11,12 ], visible: false },
 			        ],
                     "drawCallback": function () {
