@@ -56,7 +56,7 @@
             </li>
             <li>
                 <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                    <i class="fa fa-sign-out"></i> @lang('layouts.log_out')
+                    <i class="fas fa-sign-out-alt"></i> @lang('layouts.log_out')
                 </a>
                 <li>
                     <a class="right-sidebar-toggle" id="sidebar-rigth">

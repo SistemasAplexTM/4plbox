@@ -818,18 +818,18 @@
                                     }
                                 }
 
-                                var btn_invoice =  "<a href='../../impresion-documento/" + full.documento_id + "/invoice/"+full.documento_detalle_id+"' target='blank_' class=''><i class='fa fa-file' style='padding: 3px 2px;'></i> Imprimir invoice</a> ";
+                                var btn_invoice =  "<a href='../../impresion-documento/" + full.documento_id + "/invoice/"+full.documento_detalle_id+"' target='blank_' class=''><i class='fa fa-file' ></i> Imprimir invoice</a> ";
                                 if (me.permissions.pdfLabel) {
-                                    var btn_label =  "<a href='"+href_print_label+"' target='blank_' class=''><i class='fa fa-barcode' style='padding: 3px 2px;'></i> Imprimir label</a> ";
+                                    var btn_label =  "<a href='"+href_print_label+"' target='blank_' class=''><i class='fa fa-barcode'></i> Imprimir label</a> ";
                                 }
                                 if (me.permissions.deleteDetailConsolidado) {
-                                    var btn_delete = " <a onclick=\"eliminarConsolidado(" + full.id + ","+false+")\" class='' style='color:#E34724;'><i class='fa fa-trash' style='padding: 3px 2px;'></i> Eliminar</a> ";
+                                    var btn_delete = " <a onclick=\"eliminarConsolidado(" + full.id + ","+false+")\" class='' style='color:#E34724;'><i class='fa fa-trash'></i> Eliminar</a> ";
                                 }
                                 var btn_group = '<div class="btn-group" data-toggle="tooltip" title="Acciones">'+
                                         '<button type="button" class="btn btn-default btn-outline dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
                                           '<i class="fa fa-cog"></i>'+
                                         '</button>'+
-                                        '<ul class="dropdown-menu dropdown-menu-right pull-right">'+
+                                        '<ul class="dropdown-menu dropdown-menu-right pull-right" style="font-size: 15px!important;">'+
                                           '<li>'+btn_invoice+'</li>'+
                                           '<li>'+btn_label+'</li>'+
                                           '<li role="separator" class="divider"></li>'+

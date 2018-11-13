@@ -157,7 +157,7 @@
                                         </div>
                                        <div class="checkbox checkbox-success checkbox-inline">
                                             <input type="checkbox" id="consignee" name="consignee" v-model="consignee">
-                                            <label for="consignee"><i class="fa fa-user-o"></i>@lang('general.consignee')</label>
+                                            <label for="consignee"><i class="far fa-user"></i> @lang('general.consignee')</label>
                                         </div>
                                        <div class="checkbox checkbox-success checkbox-inline">
                                             <input type="checkbox" id="carrier" name="carrier" v-model="carrier">

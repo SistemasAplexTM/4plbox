@@ -130,7 +130,7 @@
                                         </button>
                                     </template>
                                     <button type="button" class="btn btn-white" @click.prevent="cancel()">
-                                        <i class="fa fa-remove"></i>  @lang('layouts.cancel') 
+                                        <i class="fa fa-times"></i>  @lang('layouts.cancel') 
                                     </button>
                                 </div>
                             </div>

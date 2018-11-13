@@ -71,7 +71,8 @@
                                 </div>
                             </div>
                             <div class="col-lg-10">
-                                <div class="col-lg-8" style="font-size: 30px; font-weight:800;border-bottom: 1px solid #CDCDCD;"><i aria-hidden="true" id="icono_doc" class="fa fa-file-text-o"></i>&nbsp; 
+                                <div class="col-lg-8" style="font-size: 30px; font-weight:800;border-bottom: 1px solid #CDCDCD;">
+                                    <span id="icono_doc"></span>&nbsp; 
                                     <div style="display:inline;" id="nombre_doc">
                                        @lang('documents.warehouse')
                                     </div>
@@ -101,7 +102,7 @@
                                         <table id="tbl-documento" class="table table-striped table-hover table-bordered" style="width: 100%;">
                                             <thead>
                                                 <tr>
-                                                    <th><i class="fa fa-file-text-o" aria-hidden="true" id="icono-doc-table"></i> #@lang('documents.documents')</th>
+                                                    <th><i class="fa fa-file" aria-hidden="true" id="icono-doc-table"></i> #@lang('documents.documents')</th>
                                                     <th><i class="fa fa-calendar" aria-hidden="true"></i> @lang('documents.date')</th>
                                                     <th><i class="fa fa-user" aria-hidden="true"></i> @lang('documents.client_consignee')</th>
                                                     <th><i class="fa fa-dollar" aria-hidden="true"></i> @lang('general.rate')</th>

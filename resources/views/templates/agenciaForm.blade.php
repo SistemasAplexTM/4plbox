@@ -21,6 +21,43 @@
 @endsection
 
 @section('content')
+<style type="text/css">
+    #heading_paypal{
+        /*color: #fefefe;*/
+        background: rgba(145,195,242,1);
+background: -moz-radial-gradient(center, ellipse cover, rgba(145,195,242,1) 0%, rgba(95,161,236,1) 100%);
+background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(145,195,242,1)), color-stop(100%, rgba(95,161,236,1)));
+background: -webkit-radial-gradient(center, ellipse cover, rgba(145,195,242,1) 0%, rgba(95,161,236,1) 100%);
+background: -o-radial-gradient(center, ellipse cover, rgba(145,195,242,1) 0%, rgba(95,161,236,1) 100%);
+background: -ms-radial-gradient(center, ellipse cover, rgba(145,195,242,1) 0%, rgba(95,161,236,1) 100%);
+background: radial-gradient(ellipse at center, rgba(145,195,242,1) 0%, rgba(95,161,236,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#91c3f2', endColorstr='#5fa1ec', GradientType=1 );
+    }
+
+    #heading_mail{
+        /*color: #282828;*/
+        background: rgba(252,250,222,1);
+background: -moz-radial-gradient(center, ellipse cover, rgba(252,250,222,1) 0%, rgba(255,231,194,1) 100%);
+background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(252,250,222,1)), color-stop(100%, rgba(255,231,194,1)));
+background: -webkit-radial-gradient(center, ellipse cover, rgba(252,250,222,1) 0%, rgba(255,231,194,1) 100%);
+background: -o-radial-gradient(center, ellipse cover, rgba(252,250,222,1) 0%, rgba(255,231,194,1) 100%);
+background: -ms-radial-gradient(center, ellipse cover, rgba(252,250,222,1) 0%, rgba(255,231,194,1) 100%);
+background: radial-gradient(ellipse at center, rgba(252,250,222,1) 0%, rgba(255,231,194,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfade', endColorstr='#ffe7c2', GradientType=1 );
+    }
+
+    #heading_zoopim{
+        /*color: #fefefe;*/
+        background: rgba(194,227,235,1);
+background: -moz-radial-gradient(center, ellipse cover, rgba(194,227,235,1) 0%, rgba(194,227,235,1) 26%, rgba(0,196,240,1) 100%);
+background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(194,227,235,1)), color-stop(26%, rgba(194,227,235,1)), color-stop(100%, rgba(0,196,240,1)));
+background: -webkit-radial-gradient(center, ellipse cover, rgba(194,227,235,1) 0%, rgba(194,227,235,1) 26%, rgba(0,196,240,1) 100%);
+background: -o-radial-gradient(center, ellipse cover, rgba(194,227,235,1) 0%, rgba(194,227,235,1) 26%, rgba(0,196,240,1) 100%);
+background: -ms-radial-gradient(center, ellipse cover, rgba(194,227,235,1) 0%, rgba(194,227,235,1) 26%, rgba(0,196,240,1) 100%);
+background: radial-gradient(ellipse at center, rgba(194,227,235,1) 0%, rgba(194,227,235,1) 26%, rgba(0,196,240,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c2e3eb', endColorstr='#00c4f0', GradientType=1 );
+    }
+</style>
     <div class="row" id="agenciaform">
     	<form id="formaagencia" enctype="multipart/form-data" class="form-horizontal" role="form" action="{{ (isset($agencia) and $agencia) ? route('agencia.update', [$agencia->id]) : route('agencia.store') }}" method="{{ (isset($agencia) and $agencia) ? 'POST' : 'POST' }}">
             {{ csrf_field() }}
@@ -236,7 +273,7 @@
                                             <div class="form-group" id="classTarifaP">
                                                 <label for="seguroP" class="">@lang('general.insurance')</label>
                                                 <div class="input-group">
-                                                    <span class="input-group-addon"><li class="fa fa-dollar"></li></span>
+                                                    <span class="input-group-addon">$</span>
                                                     <input type="text" readonly="" class="form-control" id="seguroP" name="seguroP" placeholder="0">
                                                 </div>
                                                 <small id="msn1" class="help-block"></small>
@@ -256,7 +293,7 @@
                                             <div class="form-group" id="classSeguro">
                                                 <label for="seguro" class="" >@lang('general.insurance')</label>
                                                 <div class="input-group">
-                                                    <span class="input-group-addon"><li class="fa fa-dollar"></li></span>
+                                                    <span class="input-group-addon">$</span>
                                                     <input type="text" class="form-control" id="seguro" name="seg" value="0">
                                                 </div>
                                                 <small id="msn1" class="help-block"></small>
@@ -283,7 +320,7 @@
                                                             <th>@lang('general.rate_min') $</th>
                                                             <th>@lang('general.insurance')</th>
                                                             <th>@lang('general.agency_rate')</th>
-                                                            <th><li class="fa fa-dollar"></li> @lang('general.insurance')</th>
+                                                            <th>$ @lang('general.insurance')</th>
                                                             <th>@lang('general.actions')</th>
                                                         </tr>
                                                     </thead>
@@ -333,22 +370,103 @@
                                             <div class="col-lg-12">
                                                 <div class="form-group">
                                                         <h3>@lang('general.select_the_integrations')</h3>
-                                                    <div class="checkbox checkbox-success checkbox-inline">
-                                                        <input type="checkbox" id="paypal" name="usar_paypal" {{ (isset($agencia->usar_paypal) and $agencia->usar_paypal == '1') ? 'checked=""' : '' }}>
-                                                        <label for="paypal"><i class="fa fa-paypal"></i>@lang('general.use_paypal') </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="panel-group" id="accordion">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading" id="heading_paypal">
+                                                      <h4 class="panel-title">
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                                          <i class="fab fa-paypal"></i> @lang('general.use_paypal')
+                                                        </a>
+                                                        <label v-show="paypal" class="badge badge-primary pull-right" style="background-color: rgb(6, 165, 114)">Activado <i class="fa fa-check"></i></label>
+                                                      </h4>
                                                     </div>
-                                                    <div class="checkbox checkbox-success checkbox-inline">
-                                                        <input type="checkbox" id="mail" name="usar_mail_chimp" {{ (isset($agencia->usar_mail_chimp) and $agencia->usar_mail_chimp == '1') ? 'checked=""' : '' }}>
-                                                        <label for="mail"><i class="fa fa-mail-reply-all"></i> @lang('general.use_mailchimp') </label>
+                                                    <div id="collapseOne" class="panel-collapse collapse in">
+                                                        <div class="panel-body">
+                                                            <div class="col-lg-12">
+                                                                <div class="col-sm-3">
+                                                                    <i class="fab fa-paypal fa-7x"></i>
+                                                                </div>
+                                                                <div class="col-lg-9">
+                                                                    <div class="checkbox checkbox-success checkbox-inline"  @click="functionalities('pp', 'paypal')">
+                                                                        <input type="checkbox" id="paypal" name="usar_paypal" {{ (isset($agencia->usar_paypal) and $agencia->usar_paypal == '1') ? 'checked=""' : '' }}>
+                                                                        <label for="paypal"> @lang('general.use_paypal') </label>
+                                                                    </div>
+                                                                    <div class="form-group" v-show="paypal">
+                                                                        <label>Ingrese el correo electronico</label>
+                                                                        <input type="mail" name="email_pp" id="email_pp" class="form-control" placeholder="Email PayPal">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="checkbox checkbox-success checkbox-inline">
-                                                        <input type="checkbox" id="zopim" name="usar_zopim" {{ (isset($agencia->usar_zopim) and $agencia->usar_zopim == '1') ? 'checked=""' : '' }}>
-                                                        <label for="zopim"><i class="fa fa-comments"></i>@lang('general.usar_zopim')</label>
+                                                </div>
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading" id="heading_mail">
+                                                      <h4 class="panel-title">
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                                          <i class="fab fa-mailchimp"></i> @lang('general.use_mailchimp')
+                                                        </a>
+                                                        <label v-show="mailchimp" class="badge badge-primary pull-right" style="background-color: rgb(6, 165, 114)">Activado <i class="fa fa-check"></i></label>
+                                                      </h4>
+                                                    </div>
+                                                    <div id="collapseTwo" class="panel-collapse collapse">
+                                                        <div class="panel-body">
+                                                            <div class="col-lg-12">
+                                                                <div class="col-sm-3">
+                                                                    <i class="fab fa-mailchimp fa-7x"></i>
+                                                                </div>
+                                                                <div class="col-lg-9">
+                                                                    <div class="checkbox checkbox-success checkbox-inline" @click="functionalities('mc', 'mail')">
+                                                                        <input type="checkbox" id="mail" name="usar_mail_chimp" {{ (isset($agencia->usar_mail_chimp) and $agencia->usar_mail_chimp == '1') ? 'checked=""' : '' }}>
+                                                                        <label for="mail"> @lang('general.use_mailchimp') </label>
+                                                                    </div>
+                                                                    <div class="form-group" v-show="mailchimp">
+                                                                        <label>Ingrese el ID de la lista de clientes de MailChimp</label>
+                                                                        <input type="tex" name="listId" id="listId" class="form-control" placeholder="ID Cliente">
+                                                                    </div>
+                                                                    <div class="form-group" v-show="mailchimp">
+                                                                        <label>Ingrese MC_KEY de MailChimp</label>
+                                                                        <input type="tex" name="mc_key" id="mc_key" class="form-control" placeholder="MC_KEY">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading" id="heading_zoopim">
+                                                        <h4 class="panel-title">
+                                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                                              <i class="fas fa-comments"></i> @lang('general.usar_zopim')
+                                                            </a>
+                                                            <label v-show="zopim" class="badge badge-primary pull-right" style="background-color: rgb(6, 165, 114)">Activado <i class="fa fa-check"></i></label>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapseThree" class="panel-collapse collapse">
+                                                        <div class="panel-body">
+                                                            <div class="col-sm-3">
+                                                                <i class="far fa-comments fa-7x"></i>
+                                                            </div>
+                                                            <div class="col-lg-9">
+                                                                <div class="checkbox checkbox-success checkbox-inline" @click="functionalities('zp', 'zopim')">
+                                                                    <input type="checkbox" id="zopim" name="usar_zopim" {{ (isset($agencia->usar_zopim) and $agencia->usar_zopim == '1') ? 'checked=""' : '' }}>
+                                                                    <label for="zopim"> @lang('general.usar_zopim')</label>
+                                                                </div>
+                                                                <textarea v-show="zopim" class="form-control" id="zopim_script" name="zopim_script" placeholder="Ingresa el script aqui"></textarea>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row" style="margin-top: 20px;"></div>
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="tab3">
                                     <div class="row">
@@ -397,7 +515,7 @@
                                                     <i class="fa fa-mail-reply"></i> @lang('general.return')
                                                 </a>
                                                 <a class="btn btn-white" href="{{ route('agencia.index') }}"  style="display: {{ (isset($agencia) and $agencia) ? 'inline-block' : 'none' }}">
-                                                    <i class="fa fa-remove"></i> @lang('general.cancel')
+                                                    <i class="fa fa-times"></i> @lang('general.cancel')
                                                 </a>
                                                 <a class="ladda-button btn btn-primary" id="saveForm" style="display: {{ (isset($agencia) and $agencia) ? 'none' : 'inline-block' }}">
                                                     <i class="fa fa-save"></i> @lang('general.save')

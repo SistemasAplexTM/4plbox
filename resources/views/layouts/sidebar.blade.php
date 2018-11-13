@@ -64,7 +64,8 @@
                     <span class="nav-label">
                          @lang('layouts.load') 
                     </span>
-                    <span class="fa arrow">
+                    <span class="arrow">
+                        <i class="fas fa-angle-down"></i>
                     </span>
                 </a>
                 <ul class="nav nav-second-level">
@@ -114,7 +115,8 @@
                             <span class="nav-label">
                                 @lang('layouts.account')
                             </span>
-                    <span class="fa arrow">
+                    <span class="arrow">
+                        <i class="fas fa-angle-down"></i>
                     </span>
                 </a>
                 <ul class="nav nav-second-level">
@@ -153,7 +155,7 @@
                     {{-- @can('shipper.index') --}}
                     <li>
                         <a href="{{ route('consulta.index') }}">
-                            <spam class="fa fa-file-o">
+                            <spam class="fa fa-file">
                             </spam> 
                              @lang('layouts.reports')
                         </a>
@@ -164,12 +166,13 @@
             @if(env('APP_TYPE') === 'courier')
                 <li class="active">
                     <a href="" style="background-color: brown; color: white;">
-                        <i class="fa fa-vcard">
+                        <i class="fa fa-address-card">
                         </i>
                         <span class="nav-label">
                              @lang('layouts.lockens')    
                         </span>
-                        <span class="fa arrow">
+                        <span class="arrow">
+                            <i class="fas fa-angle-down"></i>
                         </span>
                     </a>
                     <ul class="nav nav-second-level">
@@ -192,7 +195,8 @@
                     <span class="nav-label">
                       @lang('layouts.maintenances')   
                     </span>
-                    <span class="fa arrow">
+                    <span class="arrow">
+                        <i class="fas fa-angle-down"></i>
                     </span>
                 </a>
                 <ul class="nav nav-second-level">
@@ -208,7 +212,7 @@
                     @can('administracion.index')
                     <li>
                         <a href="{{ url('administracion/1') }}">
-                            <spam class="fa fa-paypal">
+                            <spam class="fa fa-hand-holding-usd">
                             </spam>
                                 @lang('layouts.payment_methods')   
                         </a>
@@ -272,7 +276,7 @@
                     @can('administracion.index')
                     <li>
                         <a href="{{ url('administracion/5') }}">
-                            <spam class="fa fa-mail-reply-all">
+                            <spam class="fa fa-reply-all">
                             </spam>
                                  @lang('layouts.type_boardings')  
                         </a>
@@ -297,7 +301,8 @@
                     <span class="nav-label">
                              @lang('layouts.administration') 
                     </span>
-                    <span class="fa arrow">
+                    <span class="arrow">
+                        <i class="fas fa-angle-down"></i>
                     </span>
                 </a>
                 <ul class="nav nav-second-level collapse">
@@ -313,7 +318,7 @@
                     @can('arancel.index')
                     <li>
                         <a href="{{ route('arancel.index') }}">
-                            <spam class="fa fa-money">
+                            <spam class="fa fa-money-bill">
                             </spam>
                                     @lang('layouts.tariffs') 
                         </a>
@@ -412,7 +417,8 @@
                     @lang('layouts.security') 
                      
                     </span>
-                    <span class="fa arrow">
+                    <span class="arrow">
+                        <i class="fas fa-angle-down"></i>
                     </span>
                 </a>
                 <ul class="nav nav-second-level collapse">

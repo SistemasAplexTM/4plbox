@@ -106,7 +106,7 @@
                             
                             <small style="float: left;"><a href="rastreo" target="_blank" data-toggle="tooltip" title="Rastrear mercancia"><i class="fa fa-map-marker"></i> @lang('auth.tracking')</a></small>
 
-                            <small style=""><a href="casillero/1" target="_blank" data-toggle="tooltip" title="Casillero"><i class="fa fa-address-book-o"></i> @lang('auth.registry')</a></small>
+                            <small style=""><a href="casillero/1" target="_blank" data-toggle="tooltip" title="Casillero"><i class="fa fa-address-book"></i> @lang('auth.registry')</a></small>
 
                             <small style="float: right;"><a href="prealerta/1" target="_blank" data-toggle="tooltip" title="Prealertar mercancia"><i class="fa fa-bell"></i> @lang('auth.pre-alert')</a></small>
                         </div>

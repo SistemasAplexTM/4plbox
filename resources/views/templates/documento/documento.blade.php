@@ -182,7 +182,7 @@
                                                     <span class="input-group-btn">
                                                         <button id="btnBuscarShipper" @click="modalShipper(true)" class="btn btn-primary" type="button" data-toggle='tooltip' title="Buscar Shipper"><span class="fa fa-search"></span> @lang('documents.search')</button>
                                                         <button id="btnEditShipper" @click="editFormsShipperConsignee(0)" class="btn btn-success" type="button" data-toggle='tooltip' title="Editar Shipper"><span class="fa fa-edit"></span>&nbsp;</button>
-                                                        <button id="btnResetShipper" @click="resetFormsShipperConsignee(0)" class="btn btn-default" type="button" data-toggle='tooltip' title="Reset Shipper"><span class="fa fa-refresh"></span>&nbsp;</button>
+                                                        <button id="btnResetShipper" @click="resetFormsShipperConsignee(0)" class="btn btn-default" type="button" data-toggle='tooltip' title="Reset Shipper"><span class="fa fa-sync"></span>&nbsp;</button>
                                                     </span>
                                                 </div>
                                                 <small class="help-block has-error">@{{ errors.first('nombreR') }}</small>
@@ -273,7 +273,7 @@
                                                     <span class="input-group-btn">
                                                         <button class="btn btn-primary" @click="modalConsignee(true)" id="btnBuscarConsignee" type="button" data-toggle='tooltip' title="Buscar consignee"><span class="fa fa-search"></span>@lang('documents.search')</button>
                                                         <button id="btnEditConsignee" @click="editFormsShipperConsignee(1)" class="btn btn-success" type="button" data-toggle='tooltip' title="Editar consignee"><span class="fa fa-edit"></span>&nbsp;</button>
-                                                        <button id="btnResetConsignee" @click="resetFormsShipperConsignee(1)" class="btn btn-default" type="button" data-toggle='tooltip' title="Reset consignee"><span class="fa fa-refresh"></span>&nbsp;</button>
+                                                        <button id="btnResetConsignee" @click="resetFormsShipperConsignee(1)" class="btn btn-default" type="button" data-toggle='tooltip' title="Reset consignee"><span class="fa fa-sync"></span>&nbsp;</button>
                                                         </span>
                                                 </div><!-- /input-group -->
                                                 <small class="help-block has-error">@{{ errors.first('nombreD') }}</small>

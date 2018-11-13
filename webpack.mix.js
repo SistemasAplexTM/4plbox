@@ -7,6 +7,7 @@ let mix = require('laravel-mix');
 //   	'resources/assets/js/plugins/slimscroll/jquery.slimscroll.min.js',
 //   	'resources/assets/js/inspinia.js',
 //   	'resources/assets/js/plugins/pace/pace.min.js',
+//   	'resources/assets/js/plugins/fontAwesome5/all.min.js',
 
 //   	'resources/assets/js/plugins/toastr/toastr.min.js',
 //   	'resources/assets/js/plugins/iCheck/icheck.min.js',
@@ -35,7 +36,7 @@ let mix = require('laravel-mix');
 //  	'resources/assets/css/plugins/toastr/toastr.min.css',
 //  	'resources/assets/css/animate.css',
 //  	'resources/assets/css/style.css',
-//  	'resources/assets/css/font-awesome/css/font-awesome.css',
+//  	// 'resources/assets/css/font-awesome/css/font-awesome.css',
 //  	'resources/assets/css/plugins/dataTables/datatables.min.css',
 //  	'resources/assets/css/plugins/iCheck/custom.css',
 //  	'resources/assets/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css',

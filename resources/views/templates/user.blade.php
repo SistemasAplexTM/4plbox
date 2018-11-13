@@ -117,7 +117,7 @@
                                             <label for="password" class="control-label gcore-label-top">@lang('general.password'):</label>
                                         </div>
                                         <div class="col-sm-7">
-                                            <input v-model="password" name="password" value="" placeholder="**********" class="form-control" type="password" v-validate="'required|min:6'"/>
+                                            <input v-model="password" name="password"ref="password" placeholder="**********" class="form-control" type="password" v-validate="'required|min:6'"/>
                                             <small class="help-block">@{{ errors.first('password') }}</small>
                                         </div>
                                     </div>
