@@ -1990,7 +1990,8 @@ class DocumentoController extends Controller
                 'a.num_guia',
                 'a.num_warehouse',
                 'a.liquidado',
-                'a.peso2')
+                'a.peso2',
+                'a.declarado2')
             ->where($filter)
             ->get();
         return \DataTables::of($detalle)->make(true);

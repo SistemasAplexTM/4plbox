@@ -1049,7 +1049,7 @@
                     </div>
                     <div style="position:absolute;top:9.6in;left:2.47in;width:2in;line-height:0.15in;font-size:14pt;">
                         <span style="font-style:normal;font-weight:normal;font-family:Helvetica;color:#000000">
-                            {{ date('d-m-y', strtotime($data->fecha_vuelo1)) }}
+                            {{ (env('APP_CLIENT') != 'jexpress') ? date('d-m-y', strtotime($data->fecha_vuelo1)) : date('m-d-y', strtotime($data->fecha_vuelo1)) }}
                         </span>
                     </div>
                     <div style="position:absolute;top:9.37in;left:4.7in;width:2.8in;font-size:8pt;">
