@@ -42,7 +42,7 @@
 	    width: 100% !important;
 	}
 	button.dim{
-		margin-bottom: 0px!important;
+		/*margin-bottom: 0px!important;*/
 	}
 	.button_print{
 		margin-top: -5px;

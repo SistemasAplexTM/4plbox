@@ -69,7 +69,7 @@ class LoginController extends Controller
         }
         \Session::put('agencia', $objAgencia->descripcion);
        
-        return '/home';
+        return 'documento';
     }
 
     // public function authenticate(Request $request)

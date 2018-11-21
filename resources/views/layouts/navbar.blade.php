@@ -1,16 +1,83 @@
+<style type="text/css">
+    .btn-inicio{
+        font-size: 30px!important;
+        margin-right: 0px;
+        margin-bottom: 5px !important;
+    }
+</style>
 <div  id="navbar">
 <div class="row border-bottom">
     <nav class="navbar navbar-fixed-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header" style="width: 60%;">
             <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-            <a class="minimalize-styl-2" href="{{ route('home') }}" style="font-size: 30px;margin-top: 5px;margin-bottom: 0px;" data-toggle="tooltip" title="Inicio" data-placement="right"><i class="fa fa-home"></i> </a>
-            <span class="minimalize-styl-2" style="font-size: 15px;font-weight: bold;">
-                {{-- {{ session('agencia_name_global') }} --}}
-            </span>
-            <span class="minimalize-styl-2" style="font-size: 15px;font-weight: bold;width: 50%;">
-                <autocomplete-component type="navbar" @change-select="showRigthSidebar" url="4plbox/public/documento/searchDataByNavbar"></autocomplete-component>
-                {{-- <autocomplete-component type="navbar" @change-select="showRigthSidebar" url="documento/searchDataByNavbar"></autocomplete-component> --}}
-            </span>
+            {{-- <a class="minimalize-styl-2" href="{{ route('home') }}" style="font-size: 30px;margin-top: 5px;margin-bottom: 0px;" data-toggle="tooltip" title="Inicio" data-placement="right"><i class="fa fa-home"></i> </a> --}}
+        <ul class="nav metismenu" id="homeIndex">
+            <li class="dropdown navbar minimalize-styl-2" style="margin-top: 0px;margin-left: 0px;">
+                <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #7b7171;"><i class="fa fa-home fa-lg"></i> <span class="caret"></span></a>
+                <ul role="menu" class="dropdown-menu" style="left: auto;width: 600px;">
+                    <li>
+                        <div class="col-lg-12" style="margin-top:20px; margin-bottom: 10px;">
+                            <div class="col-lg-2 text-center">
+                                <button class="btn btn-warning dim btn-outline btn-inicio" type="button" id="in_documento" style="margin:auto;">
+                                    <i class="fa fa-box-open">
+                                    </i>
+                                </button>
+                                <div style="font-size: 12px; font-weight:bold;">
+                                    @lang('general.warehouse')
+                                </div>
+                            </div>
+                            <div class="col-lg-2 text-center">
+                                <button class="btn btn-primary dim btn-outline btn-inicio" type="button" id="in_master" style="margin:auto;">
+                                    <i class="fa fa-paste">
+                                    </i>
+                                </button>
+                                <div style="font-size: 12px; font-weight:bold;">
+                                    Master
+                                </div>
+                            </div>
+                            <div class="col-lg-2 text-center">
+                                <button class="btn btn-default dim btn-outline btn-inicio" type="button" id="in_tracking" style="margin:auto;">
+                                    <i class="fa fa-cubes">
+                                    </i>
+                                </button>
+                                <div style="font-size: 12px; font-weight:bold;">
+                                   @lang('general.tracking')
+                                </div>
+                            </div>
+                            <div class="col-lg-2 text-center">
+                                <button class="btn btn-success dim btn-outline btn-inicio" type="button" id="in_shipper" style="margin:auto;">
+                                    <i class="far fa-user-circle">
+                                    </i>
+                                </button>
+                                <div style="font-size: 12px; font-weight:bold;">
+                                     @lang('general.shipper')
+                                </div>
+                            </div>
+                            <div class="col-lg-2 text-center">
+                                <button class="btn btn-info dim btn-outline btn-inicio" type="button" id="in_consignee" style="margin:auto;">
+                                    <i class="fas fa-user-circle">
+                                    </i>
+                                </button>
+                                <div style="font-size: 12px; font-weight:bold;">
+                                     @lang('general.consignee')
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2 text-center">
+                                <button class="btn btn-primary dim btn-outline btn-inicio" type="button" id="in_backup" style="margin:auto;">
+                                    <i class="fa fa-cloud-download-alt">
+                                    </i>
+                                </button>
+                                <div style="font-size: 12px; font-weight:bold;">
+                                    @lang('general.backup')
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+            
         </div>
 
         <ul class="nav navbar-top-links navbar-right">

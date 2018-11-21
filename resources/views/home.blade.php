@@ -10,15 +10,6 @@
 </div>
 @endsection
 @section('content')
-<style type="text/css">
-    .btn-inicio{
-        font-size: 45px!important;
-        margin-right: 0px;
-    }
-    .feed-element, .feed-element .media{
-        padding-bottom: 0px;
-    }
-</style>
 <div class="row" id="homeIndex">
     <div class="col-lg-12">
         <div class="wrapper wrapper-content animated fadeInRight" style="padding-top: 0px;">
@@ -146,97 +137,5 @@
 </div>
 @endsection
 @section('scripts')
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('#documento').on('click', function(){
-            window.location.href = '{{ route('documento.index') }}';
-        });
-        $('#master').on('click', function(){
-            window.location.href = '{{ route('master.index') }}';
-        });
-        $('#tracking').on('click', function(){
-            window.location.href = '{{ route('tracking.index') }}';
-        });
-        $('#shipper').on('click', function(){
-            window.location.href = '{{ route('shipper.index') }}';
-        });
-        $('#consignee').on('click', function(){
-            window.location.href = '{{ route('consignee.index') }}';
-        });
-        $('#mantenimiento').on('click', function(){
-            {{-- window.location.href = '{{ route('mantenimiento.index') }}'; --}}
-        });
-        $('#administracion').on('click', function(){
-            {{-- window.location.href = '{{ route('administracion.index') }}'; --}}
-        });
-        $('#backup').on('click', function(){
-            objVue.generateBackup();
-        });
-    });
 
-    function createNewDocument_(tipo_doc_id, name, functionalities) {
-    var data = {
-        tipo_doc_id: tipo_doc_id,
-        name: name,
-        functionalities: functionalities,
-    };
-    objVue.createNewDocument(data);
-}
-/* objetos VUE index */
-var objVue = new Vue({
-        el: '#homeIndex',
-        data: {
-            id_status: null,
-            tableDelete: null,
-            params: {},
-        },
-        methods: {
-            createNewDocument: function(data) {
-                swal({
-                    title: "Se creará un(a) <spam style='color: rgb(212, 103, 82);'>" + data.name + ".</spam><br>\n¿Desea Continuar?.",
-                    // text: "You won't be able to revert this!",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: "Si, Crear",
-                    cancelButtonText: "No, Cancelar!",
-                }).then((result) => {
-                    if (result.value) {
-                        axios.post('documento/ajaxCreate/' + data.tipo_doc_id, {
-                            'tipo_documento_id': data.tipo_doc_id,
-                            'funcionalidaddes': data.functionalities
-                        }).then(function(response) {
-                            var res = response.data;
-                            if (response.data['code'] == 200) {
-                                toastr.success('Registro creado correctamente.');
-                                window.location.href = 'documento/' + res.datos['id'] + '/edit';
-                            } else {
-                                toastr.warning(response.data['error']);
-                            }
-                        }).catch(function(error) {
-                            console.log(error);
-                            if (error.response.status === 422) {
-                                me.formErrors = error.response.data; //guardo los errores
-                                me.listErrors = me.formErrors.errors; //genero lista de errores
-                            }
-                            $.each(me.formErrors.errors, function(key, value) {
-                                $('.result-' + key).html(value);
-                            });
-                            toastr.error("Porfavor completa los campos obligatorios.", {
-                                timeOut: 50000
-                            });
-                        });
-                    }
-                })
-            },
-            generateBackup: function() {
-                var url = 'commandBackup';
-                axios.get(url).then(response => {
-                    toastr.success('Backup generado.');
-                });
-            },
-        }
-    })
-</script>
 @endsection

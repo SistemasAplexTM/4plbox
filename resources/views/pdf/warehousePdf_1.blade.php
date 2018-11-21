@@ -209,15 +209,16 @@
           @if(env('APP_CLIENT') == 'worldcargo' || env('APP_CLIENT') == 'colombiana')
             <thead>
               <tr>
-                <th scope="col">Qty.</th>
-                <th scope="col" >Dimensions</th>
-                <th scope="col" >Tracking</th>
-                <th scope="col" style="width: 7%">Weight<br>Lb</th>
-                <th scope="col" style="width: 7%">Weight<br>Kg</th>
-                <th scope="col" style="width: 7%">Vol<br>Lb</th>
-                <th scope="col" style="width: 7%">Vol<br>Kg</th>
-                <th scope="col" style="width: 7%">Weight<br>Ft3</th>
-                <th scope="col" style="width: 7%">Vol<br>Mt3</th>
+                <th scope="col" width="3%">Qty.</th>
+                <th scope="col" width="10%">Dimensions</th>
+                <th scope="col" width="30%">Tracking</th>
+                <th scope="col" >Content</th>
+                <th scope="col" style="width: 10%">Weight<br>Lb / Kg</th>
+                {{-- <th scope="col" style="width: 7%">Weight<br>Kg</th> --}}
+                <th scope="col" style="width: 10%">Vol<br>Lb / Kg</th>
+                {{-- <th scope="col" style="width: 7%">Vol<br>Kg</th> --}}
+                {{-- <th scope="col" style="width: 7%">Weight<br>Ft3</th> --}}
+                <th scope="col" style="width: 10%">Vol<br>Ft3 / Mt3</th>
               </tr>
             </thead>
             <tbody>
@@ -226,12 +227,13 @@
                   <td>{{ $val->piezas }}</td>
                   <td>{{ $val->largo . 'x'.$val->ancho. 'x'. $val->alto }}</td>
                   <td style="text-align: left;">{{ str_replace(',', ' ',$val->trackings) }}</td>
-                  <td>{{ $val->peso2 }}</td>
-                  <td>{{ ceil(number_format($val->peso2 / 2.205)) }}</td>
-                  <td>{{ ceil($val->volumen) }}</td>
-                  <td>{{ ceil(number_format($val->volumen / 2.204622)) }}</td>
-                  <td>{{ ceil(number_format($val->volumen * 166 / 1728)) }}</td>
-                  <td>{{ ceil(number_format(($val->volumen * 166 / 1728) / 35.315)) }}</td>
+                  <td style="text-align: left;">{{ str_replace(',', ' ',$val->contenido) }} </td>
+                  <td>{{ $val->peso2 }} / {{ ceil(number_format($val->peso2 / 2.205)) }}</td>
+                  {{-- <td>{{ ceil(number_format($val->peso2 / 2.205)) }}</td> --}}
+                  <td>{{ ceil($val->volumen) }} / {{ ceil(number_format($val->volumen / 2.204622)) }}</td>
+                  {{-- <td>{{ ceil(number_format($val->volumen / 2.204622)) }}</td> --}}
+                  {{-- <td>{{ ceil(number_format($val->volumen * 166 / 1728)) }}</td> --}}
+                  <td>{{ ceil(number_format($val->volumen * 166 / 1728)) }} / {{ ceil(number_format(($val->volumen * 166 / 1728) / 35.315)) }}</td>
                 </tr>
               @endforeach
             </tbody>
@@ -259,7 +261,7 @@
           @endif
           <tfoot>
             <tr>
-              <td colspan="{{ (env('APP_CLIENT') == 'worldcargo' || env('APP_CLIENT') == 'colombiana') ? '9' : '6' }}">&nbsp;</td>
+              <td colspan="{{ (env('APP_CLIENT') == 'worldcargo' || env('APP_CLIENT') == 'colombiana') ? '7' : '6' }}">&nbsp;</td>
             </tr>
             @if(env('APP_CLIENT') == 'worldcargo' || env('APP_CLIENT') == 'colombiana')
             <tr>
@@ -286,25 +288,25 @@
                                       }
                                     ?>
                                     <td><b>@lang('general.value'): (Flete+Impuesto) </b></td>
-                                    <td align="right">$ {{ $subtotal = ceil(number_format($sub, 2)) }} </td>
+                                    <td align="right">$ {{ $subtotal = number_format(ceil($sub), 2) }} </td>
                                 </tr>
 
                                 <tr>
                                     <td><b>@lang('general.insurance'): </b></td>
                                     <?php $seguro = $documento->seguro_cobrado; ?>
-                                    <td align="right">$ {{ ceil(number_format($seguro, 2)) }} </td>
+                                    <td align="right">$ {{ number_format(ceil($seguro), 2) }} </td>
                                 </tr>
                                 <tr>
                                     <td><b>@lang('general.discount'):</b></td>
-                                    <td align="right">$ {{ ceil(number_format($documento->descuento, 2)) }} </td>
+                                    <td align="right">$ {{ number_format(ceil($documento->descuento), 2) }} </td>
                                 </tr>
                                 <tr>
                                     <td><b>@lang('general.others'):</b></td>
-                                    <td align="right">$ {{ ceil(number_format($documento->cargos_add, 2)) }} </td>
+                                    <td align="right">$ {{ number_format(ceil($documento->cargos_add), 2) }} </td>
                                 </tr>
                                 <tr>
                                     <td><b>Sub Total:</b></td>
-                                    <td align="right">$ {{ $total = ceil(number_format($sub + $seguro + $documento->cargos_add - $documento->descuento, 2)) }}</td>
+                                    <td align="right">$ {{ $total = number_format(ceil($sub + $seguro + $documento->cargos_add - $documento->descuento), 2) }}</td>
                                 </tr>
                             </table>
                         </div>
@@ -314,7 +316,7 @@
 
                                     <tr>
                                         <td><b>Total:</b></td>
-                                        <td align="right"><b><span style="font-size:14px;color:#F00">$ {{ ceil($total) }}</span></b>
+                                        <td align="right"><b><span style="font-size:14px;color:#F00">$ {{ $total }}</span></b>
                                         </td>
                                     </tr>
                                 </table>
@@ -324,7 +326,7 @@
                   </tr>
                 </table>
               </td>
-              <td colspan="{{ (env('APP_CLIENT') == 'worldcargo' || env('APP_CLIENT') == 'colombiana') ? '6' : '3' }}" valign="top">
+              <td colspan="{{ (env('APP_CLIENT') == 'worldcargo' || env('APP_CLIENT') == 'colombiana') ? '4' : '3' }}" valign="top">
                 <table>
                   <tr>
                     <td style="height: 60px;color: #5e5e5e;font-size: 13px;width: 55%;">PoBox:</td>

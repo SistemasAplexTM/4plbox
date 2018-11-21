@@ -73,6 +73,7 @@
     $total_volumen = 0;
     $total_volumen_cft = 0;
     $total_volumen_cmt = 0;
+    
     ?>
     @if(count($detalle) > 0)
         <?php $total_piezas = count($detalle); ?>
