@@ -20,3 +20,5 @@ use Illuminate\Http\Request;
 Route::get('paises', function () {
     return datatables()->eloquent(App\Pais::query())->toJson();
 });
+
+Route::get('rastreo/getStatusReport/{data}', 'RastreoController@getStatusReport')->middleware('auth:api');
