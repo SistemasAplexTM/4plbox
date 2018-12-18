@@ -1,4 +1,11 @@
 <?php return array (
+  'barryvdh/laravel-cors' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Barryvdh\\Cors\\ServiceProvider',
+    ),
+  ),
   'barryvdh/laravel-dompdf' => 
   array (
     'providers' => 
@@ -44,6 +51,13 @@
     'aliases' => 
     array (
       'JavaScript' => 'Laracasts\\Utilities\\JavaScript\\JavaScriptFacade',
+    ),
+  ),
+  'laravel/passport' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Laravel\\Passport\\PassportServiceProvider',
     ),
   ),
   'laravel/tinker' => 

@@ -2,13 +2,14 @@
 
 namespace App;
 
+use Laravel\Passport\HasApiTokens;
 use Caffeinated\Shinobi\Traits\ShinobiTrait;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable, ShinobiTrait;
+    use Notifiable, ShinobiTrait, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -16,8 +17,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 
-        'email', 
+        'name',
+        'email',
         'password',
         'actived',
         'agencia_id',

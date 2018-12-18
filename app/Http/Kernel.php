@@ -39,6 +39,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
+          \Barryvdh\Cors\HandleCors::class,
             'throttle:60,1',
             'bindings',
         ],
@@ -61,5 +62,6 @@ class Kernel extends HttpKernel
 
         'role' =>\Caffeinated\Shinobi\Middleware\UserHasRole::class,
         'permission' =>\Caffeinated\Shinobi\Middleware\UserHasPermission::class,
+        'cors' => \Barryvdh\Cors\HandleCors::class,
     ];
 }
