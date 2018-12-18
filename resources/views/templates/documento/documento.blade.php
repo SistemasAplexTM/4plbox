@@ -807,6 +807,9 @@
                                         <div class="row">
                                             <div class="form-group">
                                                 <div class="col-sm-12 col-sm-offset-0 guardar">
+                                                    @if(env('APP_CLIENT') == 'jexpress')
+                                                        <button type="button" class="btn btn-success ladda-button" id="saveForm" data-style="expand-right" @click="saveDocument('all')"><i class="fa fa-save fa-fw"></i>@lang('documents.save_changes')</button>
+                                                    @else
                                                     <div class="btn-group dropup">
                                                         <button type="button" class="btn btn-success ladda-button" id="saveForm" data-style="expand-right" @click="saveDocument()"><i class="fa fa-save fa-fw"></i>@lang('documents.save_changes')</button>
                                                         <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 37px;">
@@ -819,7 +822,7 @@
                                                             <li><a @click="saveDocument('all')"><i class="fa fa-send"></i> @lang('documents.save_changes_email_print')</a></li>
                                                         </ul>
                                                     </div>
-                                                    
+                                                    @endif
                                                     <div class="btn-group dropup">
                                                         <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                             <i class="fa fa-print"></i> @lang('documents.to_print') <span class="caret"></span>

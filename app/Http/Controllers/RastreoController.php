@@ -33,6 +33,7 @@ class RastreoController extends Controller
             ->select(
                 'a.id',
                 'b.descripcion as estado',
+                'b.color',
                 'c.peso',
                 'c.num_warehouse',
                 'c.num_guia',
@@ -57,6 +58,7 @@ class RastreoController extends Controller
                 'a.id',
                 'c.id',
                 'b.descripcion',
+                'b.color',
                 'c.peso',
                 'c.num_warehouse',
                 'c.num_guia',

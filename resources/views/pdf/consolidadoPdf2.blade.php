@@ -132,7 +132,7 @@
                         <div id="detalle" >{{ ($val->consignee_json) ? $consignee_json->telefono : $val->tel_cons }}</div>
                         {{-- <div id="detalle" >{{ ($val->consignee_json) ? $consignee_json->ciudad : $val->ciu_cons }} / {{ ($val->consignee_json) ? $consignee_json->pais : $val->pais_cons }}, {{ $val->zip_cons }}</div> --}}
                     </td>
-                    <td id="detalle" style="width: 20%">{{ str_replace(",", ", ", $val->contenido2) }}</td>
+                    <td id="detalle" style="width: 20%">{{ str_replace(",", ", ", str_replace("/", "/ ",$val->contenido2)) }}</td>
                     {{-- <td id="detalle" style="text-align: center;"></td> --}}
                     <td id="detalle" style="text-align: center;">{{ number_format($piezas = 1) }}</td>
                     <td id="detalle" style="text-align: center;">

@@ -73,7 +73,7 @@
     </style>
 
     </head>
-    <?php 
+    <?php
     $total_declarado = 0;
     $total_piezas = 0;
     $total_libras = 0;
@@ -84,11 +84,11 @@
     <body>
         @if(count($detalle) > 0)
             @foreach($detalle as $val)
-                <?php 
+                <?php
                     $total_piezas += $val->piezas;
                     $total_declarado += $val->valor;
                     $total_libras += $val->peso;
-                    $total_volumen += $val->volumen;
+                    $total_volumen += $val->volumen * $val->piezas;
                     //cft = lxhxw / 1728 (pie cubico)
                     //cmt = cft/35.315 (metro cubico)
                 ?>
@@ -109,7 +109,7 @@
                 <div>{{ ((isset($documento->agencia_email) and $documento->agencia_email != '') ? $documento->agencia_email : '') }}</div>
             </td>
           </tr>
-          
+
         </table>
         <table class="table_numero">
           <tr>
@@ -191,8 +191,10 @@
             <td style="width:15%;">{{ $total_piezas }} Pcs</td>
             <td style="width:15%;">{{ $total_libras }} Lb</td>
             <td style="width:15%;">{{ number_format($total_libras / 2.20462,2) }} Kl</td>
+
             <td style="width:15%;">{{ number_format((isset($total_volumen) ? ceil($total_volumen) : 0),0) }} Lb</td>
             <td style="width:15%;">{{ number_format(((isset($total_volumen) ? ceil($total_volumen) : 0) / 2.204622), 2) }} Kl</td>
+
             <td style="width:15%;">{{ $pie = ceil(number_format(($total_volumen * 166 / 1728), 2)) }} cuft</td>
             <td style="width:10%;">{{ ceil(number_format(($pie / 35.315), 2)) }} cbm</td>
           </tr>
@@ -232,7 +234,7 @@
                                     <td><b>@lang('general.value'): (Flete+Impuesto)</b></td>
                                     <?php $sub = ($total_declarado * $documento->impuesto / 100) + ($total_libras * $documento->valor); ?>
                                     <td align="right">$ {{ $subtotal = number_format($sub, 2) }} </td>
-                                </tr>                                   
+                                </tr>
 
                                 <tr>
                                     <td><b>@lang('general.insurance'): </b></td>
@@ -264,7 +266,7 @@
                                     </tr>
                                 </table>
                             </div>
-                        </div>  
+                        </div>
                     </td>
                   </tr>
                 </table>
@@ -293,7 +295,7 @@
             </tr>
             <tr>
               <td style="margin: 0 auto;font-size: 13px;font-weight: bold;padding: 5px;">
-                Todo lo que venga por correo interno de los estados unidos USPS, no nos hacemos responsables, ya que no hay manera de hacer rastreo no tiene prueba de entrega 
+                Todo lo que venga por correo interno de los estados unidos USPS, no nos hacemos responsables, ya que no hay manera de hacer rastreo no tiene prueba de entrega
               </td>
             </tr>
             <tr>
@@ -328,14 +330,14 @@
         <table class="table_firma separador_interno" style="{{ (env('APP_CLIENT') == 'worldcargo') ? 'padding-top:30px;' : '' }}">
           <tr>
             <td><strong>Printed:</strong></td>
-            <td style="width:22%">{{ date('m-d-y h:i:s a', time()) }}</td>    
+            <td style="width:22%">{{ date('m-d-y h:i:s a', time()) }}</td>
           </tr>
           <tr style="height:40px;">
             <td><strong>Sign: </strong></td>
-            <td style="border-bottom: 1px solid #000; vertical-align:text-bottom !important;">&nbsp;</td>    
+            <td style="border-bottom: 1px solid #000; vertical-align:text-bottom !important;">&nbsp;</td>
           </tr>
         </table>
-        
+
         @if(env('APP_CLIENT') != 'worldcargo')
           <table class="acuerdo separador_interno">
             <tr>

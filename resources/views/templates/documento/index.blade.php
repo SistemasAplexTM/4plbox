@@ -56,7 +56,7 @@
                     <modaltagdocument-component :params='params' :id_status='id_status' :table_delete="tableDelete"></modaltagdocument-component>
                     <div class="row">
                         <div class="row">
-                            
+
                             <div id="msn-documento" class="col-lg-12" style="text-align: left;display: none;">
                                 <div class="col-lg-12">
                                     <div class="alert alert-danger alert-dismissible" role="alert" id="msnP">
@@ -72,7 +72,7 @@
                             </div>
                             <div class="col-lg-10">
                                 <div class="col-lg-8" style="font-size: 30px; font-weight:800;border-bottom: 1px solid #CDCDCD;">
-                                    <span id="icono_doc"></span>&nbsp; 
+                                    <span id="icono_doc"></span>&nbsp;
                                     <div style="display:inline;" id="nombre_doc">
                                        @lang('documents.warehouse')
                                     </div>
@@ -105,7 +105,7 @@
                                                     <th><i class="fa fa-file" aria-hidden="true" id="icono-doc-table"></i> #@lang('documents.documents')</th>
                                                     <th><i class="fa fa-calendar" aria-hidden="true"></i> @lang('documents.date')</th>
                                                     <th><i class="fa fa-user" aria-hidden="true"></i> @lang('documents.client_consignee')</th>
-                                                    <th><i class="fa fa-dollar" aria-hidden="true"></i> @lang('general.rate')</th>
+                                                    <th><i class="fa fa-dollar-sign" aria-hidden="true"></i> @lang('general.rate')</th>
                                                     <th><i class="fa fa-balance-scale" aria-hidden="true"></i> @lang('documents.weight')</th>
                                                     <th><i class="fa fa-cubes" aria-hidden="true"></i> @lang('documents.volume')</th>
                                                     <th><i class="fa fa-building" aria-hidden="true"></i> @lang('documents.agency')</th>

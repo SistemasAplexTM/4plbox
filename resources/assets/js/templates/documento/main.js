@@ -119,7 +119,7 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                     return btn_edit + btns + ' ' + btn_tags + btn_delete;
                 }
             },
-            width: 100
+            width: 180
         }],
         'columnDefs': [{
             className: "text-center",
@@ -130,10 +130,10 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
 
     if(typeof filter == 'undefined'){
         if(tipo_doc_id == '1'){
-            labels =    '<label for="creado" class="lb_status badge badge-default">Creado</label> ' + 
-                        '<label for="bodega" class="lb_status badge badge-success">En bodega</label> '+ 
-                        '<label for="liquidado" class="lb_status badge badge-primary">Liquidado</label> '+ 
-                        '<label for="consolidado" class="lb_status badge badge-warning">Consolidado</label> ' + 
+            labels =    '<label for="creado" class="lb_status badge badge-default">Creado</label> ' +
+                        '<label for="bodega" class="lb_status badge badge-success">En bodega</label> '+
+                        '<label for="liquidado" class="lb_status badge badge-primary">Liquidado</label> '+
+                        '<label for="consolidado" class="lb_status badge badge-warning">Consolidado</label> ' +
                         '<label for="anulado" class="lb_status badge badge-danger">Anulado</label> ';
         }
         if (typeof tipo_doc_id == "undefined") {
@@ -147,9 +147,9 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
         console.log(icon);
         // $('#icono_doc').removeClass(className).addClass(icon);
         $('#icono_doc').empty().append('<i class="fa '+icon+'"></i>');
-        $('#crearDoc').attr('onclick', 'createNewDocument_(' + tipo_doc_id + ',\'' + nom + '\',\'' + funcionalidades + '\')'); 
+        $('#crearDoc').attr('onclick', 'createNewDocument_(' + tipo_doc_id + ',\'' + nom + '\',\'' + funcionalidades + '\')');
     }
-    
+
 }
 
 function modalEliminar(id) {
@@ -219,7 +219,7 @@ var objVue = new Vue({
     methods: {
         getStatus: function(){
             let me = this;
-            axios.get('status/all').then(function (response) { 
+            axios.get('status/all').then(function (response) {
                 me.status = response.data.data;
             }).catch(function (error) {
                 console.log(error);
@@ -240,7 +240,7 @@ var objVue = new Vue({
             cancelButtonText: "No, Cancelar!",
             }).then((result) => {
                 if (result.value) {
-                    axios.delete('documento/' + id).then(function (response) { 
+                    axios.delete('documento/' + id).then(function (response) {
                         if(response.data.code === 200){
                             refreshTable('tbl-documento');
                             toastr.success('Documento eliminado exitosamente.');

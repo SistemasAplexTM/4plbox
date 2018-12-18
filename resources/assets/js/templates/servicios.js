@@ -53,7 +53,7 @@ $(document).ready(function() {
                         full.impuesto,
                         full.cobro_peso_volumen,
                         full.tipo_embarque_id,
-                        full.pa_id,
+                        (full.pa_id == '') ? null : full.pa_id,
                         "'" + full.pa + "'"
                     ];
                     var btn_edit = "<a onclick=\"edit(" + params + ")\" class='btn btn-outline btn-success btn-xs' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit'></i></a> ";

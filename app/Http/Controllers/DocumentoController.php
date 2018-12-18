@@ -173,7 +173,7 @@ class DocumentoController extends Controller
         return $this->edit($id, true);
     }
 
-    
+
     public function edit($id, $liquidar = false)
     {
         $this->assignPermissionsJavascript('documento');
@@ -499,7 +499,7 @@ class DocumentoController extends Controller
                     $request->session()->put('sendemail', $msn);
                 }
             }
-            
+
             $this->AddToLog('Documento WRH/Guia actualizado (' . $id . ')');
         }
 
@@ -531,7 +531,7 @@ class DocumentoController extends Controller
         } else {
             $data = Documento::findOrFail($id);
             $detail = DB::table('documento_detalle')->where([['documento_id', $id]])->get();
-            
+
             if(count($detail) > 0){
                 foreach ($detail as $key) {
                     $this->destroy($key->id, 'detalle');
@@ -669,7 +669,12 @@ class DocumentoController extends Controller
                                                 z.documento_id,
                                                 z.consolidado
                                         ) AS t"), "documento.id", "t.documento_id")
-                    ->select('documento.id as id', 'documento.valor_libra', 'documento.liquidado', 'documento.tipo_documento_id as tipo_documento_id', 'documento.consecutivo as codigo', DB::raw("DATE_FORMAT(documento.created_at, '%Y-%m-%d') AS fecha"), 'shipper.nombre_full as ship_nomfull', 'consignee.nombre_full as cons_nomfull', 'consignee.correo as email_cons', 'agencia.descripcion as agencia',
+                    ->select('documento.id as id', 'documento.valor_libra', 'documento.liquidado', 'documento.tipo_documento_id as tipo_documento_id',
+                    'documento.consecutivo as codigo',
+                     // DB::raw("DATE_FORMAT(documento.created_at, '%Y-%m-%d') AS fecha"),
+                     'documento.created_at AS fecha',
+                     'shipper.nombre_full as ship_nomfull', 'consignee.nombre_full as cons_nomfull',
+                     'consignee.correo as email_cons', 'agencia.descripcion as agencia',
                         DB::raw("(SELECT Count(a.id) AS cantidad FROM documento_detalle AS a WHERE a.documento_id = documento.id AND a.deleted_at IS NULL) as cantidad"),
                         DB::raw("(SELECT IFNULL(SUM(a.piezas), 0) AS piezas FROM documento_detalle AS a WHERE a.documento_id = documento.id AND a.deleted_at IS NULL) as piezas"),
                         DB::raw("(SELECT Sum(documento_detalle.peso) FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as peso"),
@@ -714,7 +719,9 @@ class DocumentoController extends Controller
                                             z.documento_id,
                                             z.consolidado
                                     ) AS t"), "documento.id", "t.documento_id")
-                ->select('documento.id as id', 'documento.liquidado', 'documento.tipo_documento_id as tipo_documento_id', 'documento.consecutivo as codigo', 'documento.created_at as fecha', 'shipper.nombre_full as ship_nomfull', 'consignee.nombre_full as cons_nomfull', 'consignee.correo as email_cons', 'agencia.descripcion as agencia',
+                ->select('documento.id as id', 'documento.liquidado', 'documento.tipo_documento_id as tipo_documento_id', 'documento.consecutivo as codigo',
+                'documento.created_at as fecha', 'shipper.nombre_full as ship_nomfull', 'consignee.nombre_full as cons_nomfull',
+                'consignee.correo as email_cons', 'agencia.descripcion as agencia',
                     DB::raw("(SELECT Count(a.id) AS cantidad FROM documento_detalle AS a WHERE a.documento_id = documento.id AND a.deleted_at IS NULL) as cantidad"),
                     DB::raw("(SELECT IFNULL(SUM(a.piezas), 0) AS piezas FROM documento_detalle AS a WHERE a.documento_id = documento.id AND a.deleted_at IS NULL) as piezas"),
                     DB::raw("(SELECT Sum(documento_detalle.peso) FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as peso"),
@@ -854,7 +861,7 @@ class DocumentoController extends Controller
     {
         try {
 
-            for ($z=1; $z <= $request->contador; $z++) { 
+            for ($z=1; $z <= $request->contador; $z++) {
                 $data = (new DocumentoDetalle)->fill($request->all());
 
                 $data->status_id = 2;
@@ -2533,7 +2540,7 @@ class DocumentoController extends Controller
         try {
             $data = Documento::findOrFail($id);
             $detail = DB::table('consolidado_detalle')->where([['consolidado_id', $id], ['num_bolsa', $num_bolsa]])->get();
-            
+
             if(count($detail) > 0){
                 foreach ($detail as $key) {
                     $this->deleteDetailConsolidado($id, $key->id, false);

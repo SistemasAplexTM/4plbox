@@ -26,12 +26,12 @@
                     <div class="ibox-title">
                         <h5>@lang('general.registration_of _services')</h5>
                         <div class="ibox-tools">
-                            
+
                         </div>
                     </div>
                     <div class="ibox-content">
                         <!--***** contenido ******-->
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="col-sm-5" :class="{'has-error': listErrors.tipo_embarque_id}">
@@ -46,7 +46,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.nombre}">
                                         <div class="col-sm-5">
@@ -59,7 +59,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.tarifa}">
                                         <div class="col-sm-5">
@@ -67,7 +67,7 @@
                                         </div>
                                         <div class="col-sm-7">
                                         	<div class="input-group">
-                                                <span class="input-group-addon" id="basic-addon1"><li class="fa fa-usd"></li></span>
+                                                <span class="input-group-addon" id="basic-addon1"><li class="fa fa-dollar-sign"></li></span>
 		                                            <input v-model="tarifa" name="tarifa" id="tarifa" value="" placeholder="@lang('general.enter_the_rate')" class="form-control" type="text" @click="deleteError('tarifa')" />
                                             </div>
 		                                    <small id="msn1" class="help-block result-tarifa" v-show="listErrors.tarifa"></small>
@@ -75,7 +75,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.peso_minimo}">
                                         <div class="col-sm-5">
@@ -83,7 +83,7 @@
                                         </div>
                                         <div class="col-sm-7">
                                             <div class="input-group">
-                                                <span class="input-group-addon" id="basic-addon1"><li class="fa fa-usd"></li></span>
+                                                <span class="input-group-addon" id="basic-addon1"><li class="fa fa-dollar-sign"></li></span>
                                                     <input v-model="peso_minimo" name="peso_minimo" id="peso_minimo" value="" placeholder="@lang('general.minimum_value_of_the_rate')" class="form-control" type="text" @click="deleteError('peso_minimo')" />
                                             </div>
                                             <small id="msn1" class="help-block result-peso_minimo" v-show="listErrors.peso_minimo"></small>
@@ -91,7 +91,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.cobro_opcional}">
                                         <div class="col-sm-5">
@@ -99,7 +99,7 @@
                                         </div>
                                         <div class="col-sm-7">
                                         	<div class="input-group">
-                                                <span class="input-group-addon" id="basic-addon1"><li class="fa fa-usd"></li></span>
+                                                <span class="input-group-addon" id="basic-addon1"><li class="fa fa-dollar-sign"></li></span>
 		                                            <input v-model="cobro_opcional" name="cobro_opcional" id="cobro_opcional" value="" placeholder="@lang('general.enter_the_optional_charge')" class="form-control" type="text" @click="deleteError('cobro_opcional')" />
                                             </div>
 		                                    <small id="msn1" class="help-block result-cobro_opcional" v-show="listErrors.cobro_opcional"></small>
@@ -107,7 +107,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.seguro}">
                                         <div class="col-sm-5">
@@ -115,7 +115,7 @@
                                         </div>
                                         <div class="col-sm-7">
                                         	<div class="input-group">
-                                                <span class="input-group-addon" id="basic-addon1"><li class="fa fa-dollar"></li></span>
+                                                <span class="input-group-addon" id="basic-addon1"><li class="fa fa-dollar-sign"></li></span>
 		                                            <input v-model="seguro" name="seguro" id="seguro" value="" placeholder="@lang('general.enter_the_insurance_percentage')" class="form-control" type="text" @click="deleteError('seguro')" />
                                             </div>
 		                                    <small id="msn1" class="help-block result-seguro" v-show="listErrors.seguro"></small>
@@ -123,7 +123,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.impuesto}">
                                         <div class="col-sm-5">
@@ -139,7 +139,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.cobro_peso_volumen}">
                                         <div class="col-sm-5">
@@ -201,10 +201,10 @@
                                 <tr>
                                     <th><li class="fa fa-ship"></li><li class="fa fa-plane"></li> @lang('general.boarding_type')</th>
                                     <th><li class="fa fa-cubes"></li>@lang('general.services')</th>
-                                    <th><li class="fa fa-dollar"></li>@lang('general.rate')</th>
-                                    <th><li class="fa fa-dollar"></li>@lang('general.minimum_fee')</th>
-                                    <th><li class="fa fa-dollar"></li>@lang('general.optional_charge')</th>
-                                    <th><li class="fa fa-dollar"></li>@lang('general.insurance')</th>
+                                    <th><li class="fa fa-dollar-sign"></li>@lang('general.rate')</th>
+                                    <th><li class="fa fa-dollar-sign"></li>@lang('general.minimum_fee')</th>
+                                    <th><li class="fa fa-dollar-sign"></li>@lang('general.optional_charge')</th>
+                                    <th><li class="fa fa-dollar-sign"></li>@lang('general.insurance')</th>
                                     <th><li class="fa fa-percent"></li>@lang('general.tax')</th>
                                     <th>@lang('general.weight_volume')</th>
                                     <th>@lang('general.actions')</th>
@@ -217,17 +217,17 @@
                                 <tr>
                                     <th><li class="fa fa-ship"></li><li class="fa fa-plane"></li> @lang('general.boarding_type')</th>
                                     <th><li class="fa fa-cubes"></li>@lang('general.services')</th>
-                                    <th><li class="fa fa-dollar"></li>@lang('general.rate')</th>
-                                    <th><li class="fa fa-dollar"></li>@lang('general.minimum_fee')</th>
-                                    <th><li class="fa fa-dollar"></li>@lang('general.optional_charge')</th>
-                                    <th><li class="fa fa-dollar"></li>@lang('general.insurance')</th>
+                                    <th><li class="fa fa-dollar-sign"></li>@lang('general.rate')</th>
+                                    <th><li class="fa fa-dollar-sign"></li>@lang('general.minimum_fee')</th>
+                                    <th><li class="fa fa-dollar-sign"></li>@lang('general.optional_charge')</th>
+                                    <th><li class="fa fa-dollar-sign"></li>@lang('general.insurance')</th>
                                     <th><li class="fa fa-percent"></li>@lang('general.tax')</th>
                                     <th>@lang('general.weight_volume')</th>
                                     <th>@lang('general.actions')</th>
                                 </tr>
                             </tfoot>
                         </table>
-                    </div>             
+                    </div>
                 </div>
             </div>
         </div>
