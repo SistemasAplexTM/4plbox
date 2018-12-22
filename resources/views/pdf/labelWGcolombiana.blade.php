@@ -27,7 +27,7 @@
         </style>
     </head>
     <body>
-    	<?php 
+    	<?php
             $cont = 0;
             $toalRegistros = count($detalle);
             $toalRegistros = 0;
@@ -106,7 +106,7 @@
 	            <tr>
 	                <td class="border_bottom" colspan="4">
 	                    <div style="text-align:center">
-	                       <strong> COLOMBIANA DE CARGA</strong>
+	                       <strong>{{ ((isset($documento->agencia) and $documento->agencia != '') ? trim($documento->agencia) : '') }}</strong>
 	                    </div>
 	                    <div style="text-align:center">
 	                       <strong> Su mejor opción</strong>
