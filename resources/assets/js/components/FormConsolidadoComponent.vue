@@ -24,6 +24,12 @@
         font-weight: bold;
         /*color: orangered;*/
     }
+		.text-danger{
+			color: #ed5565;
+		}
+		.table.table td a{
+			margin: 0;
+		}
 </style>
 <template>
 	<div>
@@ -33,7 +39,7 @@
                     <div class="ibox-title">
                         <h5>{{ documento.tipo_nombre }}</h5>
                         <div class="ibox-tools">
-                            
+
                         </div>
                     </div>
                     <div class="form-horizontal">
@@ -72,12 +78,15 @@
                                     </div>
                                     <!-- BOTONES DE IMPRESION -->
                                     <div class="col-sm-4">
-                                        <div class="col-sm-12">
+                                        <div class="col-sm-12" v-show="show_buttons">
                                             <label class="control-label col-lg-12">&nbsp;</label>
                                             <a hfer="#" target="blank_" class="btn btn-info btn-sm printDocument" data-toggle="tooltip" data-placement="top" title="Imprimir manifiesto"><i class="fa fa-print"></i> Manifiesto</a>
-                                            <a hfer="#" target="blank_" class="btn btn-info btn-sm printDocumentGuias" data-toggle="tooltip" data-placement="top" title="Imprimir guias hijas"><i class="fa fa-print"></i> Guias hijas</a>
+                                            <a hfer="#" target="blank_" class="btn btn-info btn-sm printDocumentGuias" data-toggle="tooltip" data-placement="top" title="Imprimir guias hijas" ><i class="fa fa-print"></i> Guias hijas</a>
                                             <a hfer="#" target="blank_" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Imprimir instrucciones"><i class="fa fa-print"></i> Instrucciones</a>
                                         </div>
+																				<div class="col-sm-12" v-show="!show_buttons" style="color: #E34724">
+																					<label class="control-label col-lg-12">&nbsp;</label>
+																					<span>Hay valores declarados en cero (0) o no hay guias ingresadas</span></div>
                                     </div>
 
                                     <div class="col-sm-8">
@@ -157,7 +166,7 @@
 				                                    <th>P.A</th>
 				                                    <th>Descripción</th>
 				                                    <th>Declarado</th>
-                                                    <th>Lb</th>
+                                            <th>Lb</th>
 				                                    <th>Lb R</th>
 				                                    <th></th>
 				                                </tr>
@@ -181,7 +190,7 @@
                                         <div class="col-sm-12 col-sm-offset-0 guardar">
                                             <button type="button" id="saveForm" class="ladda-button btn btn-success" data-style="expand-right" @click="saveConsolidado()"><i class="fa fa-save fa-fw"></i> Guardar Cambios</button>
 
-                                        	<div class="btn-group dropup">
+                                        	<div class="btn-group dropup"  v-show="show_buttons">
 	                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	                                                <i class="fa fa-print"></i>  Imprmir <span class="caret"></span>
 	                                            </button>
@@ -193,7 +202,7 @@
 	                                        </div>
 		                                     <a @click="cancelDocument()" type="button" class="btn btn-white"><i class="fa fa-times fa-fw"></i> Cancelar </a>
                                         </div>
-                                    </div>                                            
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -204,7 +213,7 @@
         <div class="modal fade bs-example-modal-lg" id="modalguiasconsolidado" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		    <div class="modal-dialog modal-lg">
 		        <div class="modal-content">
-		            <!--Este input es para cuando se haga el llamado desde el consolidado.. 
+		            <!--Este input es para cuando se haga el llamado desde el consolidado..
 		            se llenara con el valor del contador del detalle o el id del campo -->
 		            <input type="hidden" id="op" value="">
 		            <div class="modal-header">
@@ -275,7 +284,7 @@
                                 	</tr>
                                 </tbody>
                             </table>
-                        </div> 
+                        </div>
     	            </div>
     	            <div class="modal-footer">
     	                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -320,7 +329,7 @@
 </template>
 
 <script>
-	
+
     export default {
     	props: {
 			documento: {
@@ -452,7 +461,7 @@
 			}
 			if(this.documento.observaciones != null){
 				this.observacion = this.documento.observaciones;
-			}		
+			}
 		},
 		created(){
 			/* CUSTOM MESSAGES VE-VALIDATOR*/
@@ -473,17 +482,17 @@
 	    },
 		data () {
 	        return {
-                transporte_id: {id: 7, nombre: 'Aereo'},
+            transporte_id: null,
 	        	status_id: {id: 5, descripcion: 'Consolidada'},
-                status: [],
+            status: [],
 	        	transportes: [],
 	        	countries: [],
 	        	branchs: [],
 	        	services: [],
 	        	details: [],
-                contactos_fields: [],
-                shipper_contactos: {},
-                consignee_contactos: {},
+            contactos_fields: [],
+            shipper_contactos: {},
+            consignee_contactos: {},
 	        	permissions: {},
 	        	num_bolsa: 1,
 	        	pais_id: null,
@@ -494,7 +503,8 @@
 	        	disabled_agencia: false,
 	        	disabled_pais: false,
 	        	msn:'',
-	        	tituloModal:''
+	        	tituloModal:'',
+						show_buttons: true
 	        }
 	    },
 		methods: {
@@ -511,7 +521,7 @@
                 axios.post('agruparGuiasConsolidadoCreate',{
                     'id_detalle': me.agrupar.id,
                     'ids_guias': ids
-                }).then(function (response) { 
+                }).then(function (response) {
                     toastr.success('Se agrupo correctamente.');
                     me.updateTableDetail();
                 }).catch(function (error) {
@@ -524,7 +534,7 @@
                 let me = this;
                 axios.post('addStatusToGuias',{
                     'status_id': me.status_id.id
-                }).then(function (response) { 
+                }).then(function (response) {
                     toastr.success('Registro Exitoso.');
                 }).catch(function (error) {
                     console.log(error);
@@ -537,7 +547,7 @@
 		        axios.post('createContactsConsolidadoDetalle',{
 		        	'campos': campos,
 		        	'data': me.contactos
-		        }).then(function (response) { 
+		        }).then(function (response) {
 		            toastr.success('Cambio Exitoso.');
                     $('#modalShipperConsigneeConsolidado').modal('hide');
                     me.updateTableDetail();
@@ -549,7 +559,7 @@
 			},
             getStatus: function(){
                 let me = this;
-                axios.get('../../status/all').then(function (response) { 
+                axios.get('../../status/all').then(function (response) {
                     me.status = response.data.data;
                 }).catch(function (error) {
                     console.log(error);
@@ -559,7 +569,7 @@
             },
 			getTransportes: function(){
 				let me = this;
-		        axios.get('../../administracion/5/all').then(function (response) { 
+		        axios.get('../../administracion/5/all').then(function (response) {
 		            me.transportes = response.data.data;
 		        }).catch(function (error) {
 		        	console.log(error);
@@ -652,7 +662,7 @@
 		                'status_id': me.status_id.id,
 		                'observacion': me.observacion
 		            }
-		            axios.put('../'+$('#id_documento').val(), rowData).then(function (response) {    
+		            axios.put('../'+$('#id_documento').val(), rowData).then(function (response) {
 			            toastr.success('Registro actualizado correctamente.');
 	                	toastr.options.closeButton = true;
 	                	me.disabled_agencia = true;
@@ -685,7 +695,7 @@
 	        },
 			updateDataDetail(rowData) {
 		        var me = this;
-		        axios.put('updateDetailConsolidado', {rowData}).then(function (response) {    
+		        axios.put('updateDetailConsolidado', {rowData}).then(function (response) {
 		            toastr.success('Registro actualizado correctamente.');
                 	toastr.options.closeButton = true;
                 	me.updateTableDetail();
@@ -708,6 +718,10 @@
 			            {data: 'num_bolsa', name: 'num_bolsa'},
 			            {
 			                "render": function (data, type, full, meta) {
+															let classText = '';
+																if(parseFloat(full.declarado_total) > 2000 || parseFloat(full.peso_total) > 50){
+																	classText = 'text-danger';
+																}
                                 var groupGuias = full.guias_agrupadas;
                                 var btn_delete = "<a style='float: right;cursor:pointer;''><i class='material-icons'>clear</i></a>";
                                 if(groupGuias != null && groupGuias != 'null' && groupGuias != ''){
@@ -722,7 +736,7 @@
                                 }
                                 if(me.app_type === 'courier'){
                                     if(full.liquidado == 0){
-                                        return full.num_warehouse + '<a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" role="button" \n\
+                                        return '<span class="'+classText+'">' + full.num_warehouse + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" role="button" \n\
                                             data-html="true" \n\
                                             data-toggle="popover" \n\
                                             data-trigger="hover" \n\
@@ -731,7 +745,7 @@
                                             onclick="agruparGuias('+full.id+')">'+full.agrupadas+'</a>';
                                     }else{
                                         if(full.liquidado == 1){
-                                            return full.num_guia + '<a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" \n\
+                                            return '<span class="'+classText+'">' + full.num_guia + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" \n\
                                             role="button" \n\
                                             data-html="true" \n\
                                             data-toggle="popover" \n\
@@ -739,11 +753,11 @@
                                             title="<b>Guias agrupadas</b>" \n\
                                             data-content="'+groupGuias+'" \n\
                                             onclick="agruparGuias('+full.id+')">'+full.agrupadas+'</a>';
-                                            
+
                                         }
                                     }
                                 }else{
-                                    return full.num_warehouse + '<a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" role="button" \n\
+                                    return '<span class="'+classText+'">' + full.num_warehouse + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" role="button" \n\
                                             data-html="true" \n\
                                             data-toggle="popover" \n\
                                             data-trigger="hover" \n\
@@ -761,8 +775,8 @@
 			                		nom_ship = '';
 			                	}
 			                	if(full.shipper_json != null){
-									json = JSON.parse(full.shipper_json.replace(/&quot;/g, '"'));
-									nom_ship = json.nombre;
+										json = JSON.parse(full.shipper_json.replace(/&quot;/g, '"'));
+										nom_ship = json.nombre;
 			                	}
 			                	me.shipper_contactos[full.shipper_id] = full.shipper_contactos;
 			                	return nom_ship + ' <a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalShipperConsigneeConsolidado('+full.id+', '+full.shipper_id+', \'shipper\')"><i class="material-icons">&#xE254;</i></a> <a onclick=\"restoreShipperConsignee('+full.id+', \'shipper\')\" class="delete" title="Restaurar original" data-toggle="tooltip" style="float:right;color:#2196F3;"><i class="material-icons">cached</i></a>';
@@ -776,81 +790,90 @@
 			                		nom_cons = '';
 			                	}
 			                	if(full.consignee_json != null){
-									json = JSON.parse(full.consignee_json.replace(/&quot;/g, '"'));
-									nom_cons = json.nombre;
+											json = JSON.parse(full.consignee_json.replace(/&quot;/g, '"'));
+											nom_cons = json.nombre;
 			                	}
 			                	me.consignee_contactos[full.consignee_id] = full.consignee_contactos;
 			                	return nom_cons + ' <a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalShipperConsigneeConsolidado('+full.id+', '+full.consignee_id+',\'consignee\')"><i class="material-icons">&#xE254;</i></a> <a onclick=\"restoreShipperConsignee('+full.id+',\'consignee\')\" class="delete" title="Restaurar original" data-toggle="tooltip" style="float:right;color:#2196F3;"><i class="material-icons">cached</i></a>';
 			                }
 			            },
-                        // {data: 'pa', name: 'pa'},
 			            {
-                            "render": function (data, type, full, meta) {
-                                var pa = (full.pa == null) ? '' : full.pa;
-                                return pa + '<a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalArancel('+full.documento_detalle_id+', \'tbl-consolidado\')"><i class="material-icons">&#xE254;</i></a>';
-                            }
-                        },
-                        {
-                            "render": function (data, type, full, meta) {
-                                return '<a data-name="contenido2" data-pk="'+full.documento_detalle_id+'" class="td_edit" data-type="text" data-placement="right" data-title="Contenido">'+full.contenido2+'</a>';
-                            }
-                        },
-                        {
-                            "render": function (data, type, full, meta) {
-                                return '<a data-name="declarado2" data-pk="'+full.documento_detalle_id+'" class="td_edit" data-type="text" data-placement="right" data-title="Declarado">'+full.declarado2+'</a>';
-                            }
-                        },
-                        {
-                            "render": function (data, type, full, meta) {
-                                return '<a data-name="peso2" data-pk="'+full.documento_detalle_id+'" class="td_edit" data-type="text" data-placement="right" data-title="Peso">'+full.peso2+'</a>';
-                            }
-                        },
-                        {data: 'peso', name: 'peso'},
-                        {
-                            sortable: false,
-                            "render": function (data, type, full, meta) {
-                                var btn_delete = '';
-                                if(full.liquidado == 0){
-                                    href_print_label = "../../impresion-documento-label/"+ full.documento_id + "/warehouse/"+full.documento_detalle_id+"/consolidado";
-                                }else{
-                                    if(full.liquidado == 1){
-                                        href_print_label = "../../impresion-documento-label/"+ full.documento_id + "/guia/"+full.documento_detalle_id+"/consolidado";
-                                    }
-                                }
+                      "render": function (data, type, full, meta) {
+                          var pa = (full.pa == null) ? '' : full.pa;
+                          return pa + '<a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalArancel('+full.documento_detalle_id+', \'tbl-consolidado\')"><i class="material-icons">&#xE254;</i></a>';
+                      }
+                  },
+                  {
+                      "render": function (data, type, full, meta) {
+                          return '<a data-name="contenido2" data-pk="'+full.documento_detalle_id+'" class="td_edit" data-type="text" data-placement="right" data-title="Contenido">'+full.contenido2+'</a>';
+                      }
+                  },
+                  {
+                      "render": function (data, type, full, meta) {
+												let classText = '';
+													if(parseFloat(full.declarado_total) > 2000){
+														classText = 'text-danger';
+													}
+                          return '<a data-name="declarado2" data-pk="'+full.documento_detalle_id+'" class="td_edit '+ classText +'" data-type="text" data-placement="right" data-title="Declarado">'+full.declarado2+'</a>';
+                      }
+                  },
+                  {
+                      "render": function (data, type, full, meta) {
+												let classText = '';
+													if(parseFloat(full.peso_total) > 50){
+														classText = 'text-danger';
+													}
+                          return '<a data-name="peso2" data-pk="'+full.documento_detalle_id+'" class="td_edit '+ classText +'" data-type="text" data-placement="right" data-title="Peso">'+full.peso2+'</a>';
+                      }
+                  },
+                  {data: 'peso', name: 'peso'},
+                  {
+                      sortable: false,
+                      "render": function (data, type, full, meta) {
+                          var btn_delete = '';
+                          if(full.liquidado == 0){
+                              href_print_label = "../../impresion-documento-label/"+ full.documento_id + "/warehouse/"+full.documento_detalle_id+"/consolidado";
+                          }else{
+                              if(full.liquidado == 1){
+                                  href_print_label = "../../impresion-documento-label/"+ full.documento_id + "/guia/"+full.documento_detalle_id+"/consolidado";
+                              }
+                          }
 
-                                var btn_invoice =  "<a href='../../impresion-documento/" + full.documento_id + "/invoice/"+full.documento_detalle_id+"' target='blank_' class=''><i class='fa fa-file' ></i> Imprimir invoice</a> ";
-                                if (me.permissions.pdfLabel) {
-                                    var btn_label =  "<a href='"+href_print_label+"' target='blank_' class=''><i class='fa fa-barcode'></i> Imprimir label</a> ";
-                                }
-                                if (me.permissions.deleteDetailConsolidado) {
-                                    var btn_delete = " <a onclick=\"eliminarConsolidado(" + full.id + ","+false+")\" class='' style='color:#E34724;'><i class='fa fa-trash'></i> Eliminar</a> ";
-                                }
-                                var btn_group = '<div class="btn-group" data-toggle="tooltip" title="Acciones">'+
-                                        '<button type="button" class="btn btn-default btn-outline dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
-                                          '<i class="fa fa-cog"></i>'+
-                                        '</button>'+
-                                        '<ul class="dropdown-menu dropdown-menu-right pull-right" style="font-size: 15px!important;">'+
-                                          '<li>'+btn_invoice+'</li>'+
-                                          '<li>'+btn_label+'</li>'+
-                                          '<li role="separator" class="divider"></li>'+
-                                          '<li>'+btn_delete+'</li>'+
-                                        '</ul>'+
-                                      '</div>';
-                                // return btn_invoice + btn_label + btn_delete;
-                                return btn_group;
-                            }
-                        },
-                        {data: 'contenido2', name: 'contenido2'},
-                        {data: 'peso2', name: 'peso2'},
-                        {data: 'declarado2', name: 'declarado2'},
+                          var btn_invoice =  "<a href='../../impresion-documento/" + full.documento_id + "/invoice/"+full.documento_detalle_id+"' target='blank_' class=''><i class='fa fa-file' ></i> Imprimir invoice</a> ";
+                          if (me.permissions.pdfLabel) {
+                              var btn_label =  "<a href='"+href_print_label+"' target='blank_' class=''><i class='fa fa-barcode'></i> Imprimir label</a> ";
+                          }
+                          if (me.permissions.deleteDetailConsolidado) {
+                              var btn_delete = " <a onclick=\"eliminarConsolidado(" + full.id + ","+false+")\" class='' style='color:#E34724;'><i class='fa fa-trash'></i> Eliminar</a> ";
+                          }
+                          var btn_group = '<div class="btn-group" data-toggle="tooltip" title="Acciones">'+
+                                  '<button type="button" class="btn btn-default btn-outline dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
+                                    '<i class="fa fa-cog"></i>'+
+                                  '</button>'+
+                                  '<ul class="dropdown-menu dropdown-menu-right pull-right" style="font-size: 15px!important;">'+
+                                    '<li>'+btn_invoice+'</li>'+
+                                    '<li>'+btn_label+'</li>'+
+                                    '<li role="separator" class="divider"></li>'+
+                                    '<li>'+btn_delete+'</li>'+
+                                  '</ul>'+
+                                '</div>';
+                          // return btn_invoice + btn_label + btn_delete;
+                          return btn_group;
+                      }
+                  },
+                  {data: 'contenido2', name: 'contenido2'},
+                  {data: 'peso2', name: 'peso2'},
+                  {data: 'declarado2', name: 'declarado2'},
 			        ],
 			        'columnDefs': [
-			        	{ className: "text-center", "targets": [ 0 ], width: 50, },
-			        	{ "targets": [ 1 ], width: 50, },
-			        	{ className: "text-center", "targets": [ 4 ], width: 50, },
-			            { className: "text-center", "targets": [ 6,7,8 ], width: 50, },
-                        { className: "text-center", "targets": [ 9 ]},
-			            { "targets": [ 10,11,12 ], visible: false },
+			        	{ className: "text-center", "targets": [ 0 ], width: 20, },
+			        	{ "targets": [ 1 ], width: 140},
+			        	{ "targets": [ 2,3 ], width: 200},
+			        	{ className: "text-center", "targets": [ 4 ], width: 100 },
+			        	{ "targets": [ 5 ],  width: 400},
+			         	{ className: "text-center", "targets": [ 6,7,8 ],  },
+                { className: "text-center", "targets": [ 9 ],  },
+			          { "targets": [ 10,11,12 ], visible: false },
 			        ],
                     "drawCallback": function () {
                         $('.edit, .delete').hide().children('i').css('font-size', '17px');
@@ -943,6 +966,21 @@
 	                    $(api.column(8).footer()).html('<spam id="totalPesoR">' + librasR + ' (Lbs)<br><spam id="totalPesoKR">' + isInteger(pesoKR) + ' (Kl)</spam></spam>');
 	                    $(api.column(9).footer()).html('<spam id="diferenciaL" style="color:'+color1+'">Dif: ' + isInteger(diferenciaL) + ' (Lbs)</spam><br><spam id="diferenciaK" style="color:'+color2+'">Dif: ' + isInteger(diferenciaK) + ' (Kl)</spam>');
 	                },
+			    }).on('xhr.dt', function ( e, settings, json, xhr ) {
+						let datos = json.data;
+						let cont = 0;
+						if(app_type === 'courier'){
+							for (var i = 0; i < datos.length; i++) {
+								if(parseFloat(datos[i].declarado2) == 0){
+									cont += 1;
+								}
+							}
+							if(cont === 0 && datos.length > 0){
+								me.show_buttons = true;
+							}else{
+								me.show_buttons = false;
+							}
+						}
 			    });
 			    table.on('key', function (e, datatable, key, cell, originalEvent) {
 			        if (key == 13) {

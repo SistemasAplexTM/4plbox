@@ -303,6 +303,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* MODULO APLEXCONFIG */
     Route::get('aplexConfig', 'AplexConfigController@index')->name('config.index');
+
+    /* MODULO INFORMES */
+    Route::get('report', 'ReportController@index')->name('report.index');
 });
 Route::get('aplexConfig/config/{key}', 'AplexConfigController@get')->name('config.config');
 

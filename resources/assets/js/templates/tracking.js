@@ -14,8 +14,9 @@ $(document).ready(function() {
             data: "codigo",
             name: 'codigo'
         }, {
-            data: "num_warehouse",
-            name: 'num_warehouse'
+          "render": function(data, type, full, meta) {
+            return '<div>'+ ((full.num_warehouse === null) ? '' : full.num_warehouse) +'</div><small style="color:#2196F3">'+ ((full.estatus === null) ? '' : full.estatus) +'</small>'
+          }
         }, {
             sortable: false,
             "render": function(data, type, full, meta) {

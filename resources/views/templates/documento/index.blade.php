@@ -71,15 +71,15 @@
                                 </div>
                             </div>
                             <div class="col-lg-10">
-                                <div class="col-lg-8" style="font-size: 30px; font-weight:800;border-bottom: 1px solid #CDCDCD;">
+                                <div class="col-lg-12" style="font-size: 30px; font-weight:800;border-bottom: 1px solid #CDCDCD;">
                                     <span id="icono_doc"></span>&nbsp;
                                     <div style="display:inline;" id="nombre_doc">
                                        @lang('documents.warehouse')
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                {{-- <div class="col-lg-4">
                                     <v-select name="status_id" v-model="status_id" label="descripcion" :filterable="false" :options="status" placeholder="Status"></v-select>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="col-lg-4">
                                 &nbsp;

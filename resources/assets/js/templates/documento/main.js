@@ -65,8 +65,8 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
             data: 'cons_nomfull',
             name: 'consignee.nombre_full'
         },{
-            data: 'valor_libra',
-            name: 'documento.valor_libra',
+            data: 'valor',
+            name: 'documento.valor',
             visible: (tipo_doc_id != 3) ? true : false
         },  {
             data: 'peso',

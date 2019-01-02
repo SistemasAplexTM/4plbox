@@ -2,14 +2,14 @@
 
 return [
 
-// Button  --> Buttons.blade.php    
+// Button  --> Buttons.blade.php
 
     'save'     =>  'Save',
     'cancel'   =>  'Cancel',
     'update'   =>  'Update',
     'print'    =>  'Print',
 
-// Navbar  --> Navbar.bade.php  
+// Navbar  --> Navbar.bade.php
  	'message'        => 'Message',
  	'no_records'     => 'No records',
  	'see_all_alerts' => 'See all alerts',
@@ -42,7 +42,7 @@ return [
     'airlines'=>'Airlines',
     'airports'=>'Airports',
     'services'=>'Services',
-    'type_boardings'=>'Type boardings',   
+    'type_boardings'=>'Type boardings',
     'type_packagings'=>'Type packagings',
     'administration'=>'Administration' ,
     'agencies'=>'Agencies',
@@ -61,7 +61,8 @@ return [
     'roles'=>'Roles',
     'access_controls'=>'Access controls',
     'change_agency'  =>'changea_agency',
+    'reports'  =>'Reports',
+    'load_reports'  =>'Load reports',
 
 
-   
 ];

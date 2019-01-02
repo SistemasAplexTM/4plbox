@@ -1,7 +1,7 @@
 <?php
 
 return [
-    
+
 // Button  --> Buttons.blade.php
 
     'save'    =>  'Guardar',
@@ -9,7 +9,7 @@ return [
     'update'  =>  'Actualizar',
     'print'   =>  'Imprimir',
 
-// Navbar  --> Navbar.bade.php    
+// Navbar  --> Navbar.bade.php
 
     'message'         =>  'Mensaje',
     'no_records'      =>  'No hay registros',
@@ -62,8 +62,10 @@ return [
     'roles'=>'Roles',
     'access_controls'=>'Control de accesos',
     'change_agency'  =>'Cambiar de Agencia',
+    'reports'  =>'Informes',
+    'load_reports'  =>'Informe de carga',
 
 
 
-   
+
 ];
