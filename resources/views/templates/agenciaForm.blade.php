@@ -25,37 +25,37 @@
     #heading_paypal{
         /*color: #fefefe;*/
         background: rgba(145,195,242,1);
-background: -moz-radial-gradient(center, ellipse cover, rgba(145,195,242,1) 0%, rgba(95,161,236,1) 100%);
-background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(145,195,242,1)), color-stop(100%, rgba(95,161,236,1)));
-background: -webkit-radial-gradient(center, ellipse cover, rgba(145,195,242,1) 0%, rgba(95,161,236,1) 100%);
-background: -o-radial-gradient(center, ellipse cover, rgba(145,195,242,1) 0%, rgba(95,161,236,1) 100%);
-background: -ms-radial-gradient(center, ellipse cover, rgba(145,195,242,1) 0%, rgba(95,161,236,1) 100%);
-background: radial-gradient(ellipse at center, rgba(145,195,242,1) 0%, rgba(95,161,236,1) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#91c3f2', endColorstr='#5fa1ec', GradientType=1 );
+        background: -moz-radial-gradient(center, ellipse cover, rgba(145,195,242,1) 0%, rgba(95,161,236,1) 100%);
+        background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(145,195,242,1)), color-stop(100%, rgba(95,161,236,1)));
+        background: -webkit-radial-gradient(center, ellipse cover, rgba(145,195,242,1) 0%, rgba(95,161,236,1) 100%);
+        background: -o-radial-gradient(center, ellipse cover, rgba(145,195,242,1) 0%, rgba(95,161,236,1) 100%);
+        background: -ms-radial-gradient(center, ellipse cover, rgba(145,195,242,1) 0%, rgba(95,161,236,1) 100%);
+        background: radial-gradient(ellipse at center, rgba(145,195,242,1) 0%, rgba(95,161,236,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#91c3f2', endColorstr='#5fa1ec', GradientType=1 );
     }
 
     #heading_mail{
         /*color: #282828;*/
         background: rgba(252,250,222,1);
-background: -moz-radial-gradient(center, ellipse cover, rgba(252,250,222,1) 0%, rgba(255,231,194,1) 100%);
-background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(252,250,222,1)), color-stop(100%, rgba(255,231,194,1)));
-background: -webkit-radial-gradient(center, ellipse cover, rgba(252,250,222,1) 0%, rgba(255,231,194,1) 100%);
-background: -o-radial-gradient(center, ellipse cover, rgba(252,250,222,1) 0%, rgba(255,231,194,1) 100%);
-background: -ms-radial-gradient(center, ellipse cover, rgba(252,250,222,1) 0%, rgba(255,231,194,1) 100%);
-background: radial-gradient(ellipse at center, rgba(252,250,222,1) 0%, rgba(255,231,194,1) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfade', endColorstr='#ffe7c2', GradientType=1 );
+        background: -moz-radial-gradient(center, ellipse cover, rgba(252,250,222,1) 0%, rgba(255,231,194,1) 100%);
+        background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(252,250,222,1)), color-stop(100%, rgba(255,231,194,1)));
+        background: -webkit-radial-gradient(center, ellipse cover, rgba(252,250,222,1) 0%, rgba(255,231,194,1) 100%);
+        background: -o-radial-gradient(center, ellipse cover, rgba(252,250,222,1) 0%, rgba(255,231,194,1) 100%);
+        background: -ms-radial-gradient(center, ellipse cover, rgba(252,250,222,1) 0%, rgba(255,231,194,1) 100%);
+        background: radial-gradient(ellipse at center, rgba(252,250,222,1) 0%, rgba(255,231,194,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfade', endColorstr='#ffe7c2', GradientType=1 );
     }
 
     #heading_zoopim{
         /*color: #fefefe;*/
         background: rgba(194,227,235,1);
-background: -moz-radial-gradient(center, ellipse cover, rgba(194,227,235,1) 0%, rgba(194,227,235,1) 26%, rgba(0,196,240,1) 100%);
-background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(194,227,235,1)), color-stop(26%, rgba(194,227,235,1)), color-stop(100%, rgba(0,196,240,1)));
-background: -webkit-radial-gradient(center, ellipse cover, rgba(194,227,235,1) 0%, rgba(194,227,235,1) 26%, rgba(0,196,240,1) 100%);
-background: -o-radial-gradient(center, ellipse cover, rgba(194,227,235,1) 0%, rgba(194,227,235,1) 26%, rgba(0,196,240,1) 100%);
-background: -ms-radial-gradient(center, ellipse cover, rgba(194,227,235,1) 0%, rgba(194,227,235,1) 26%, rgba(0,196,240,1) 100%);
-background: radial-gradient(ellipse at center, rgba(194,227,235,1) 0%, rgba(194,227,235,1) 26%, rgba(0,196,240,1) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c2e3eb', endColorstr='#00c4f0', GradientType=1 );
+        background: -moz-radial-gradient(center, ellipse cover, rgba(194,227,235,1) 0%, rgba(194,227,235,1) 26%, rgba(0,196,240,1) 100%);
+        background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(194,227,235,1)), color-stop(26%, rgba(194,227,235,1)), color-stop(100%, rgba(0,196,240,1)));
+        background: -webkit-radial-gradient(center, ellipse cover, rgba(194,227,235,1) 0%, rgba(194,227,235,1) 26%, rgba(0,196,240,1) 100%);
+        background: -o-radial-gradient(center, ellipse cover, rgba(194,227,235,1) 0%, rgba(194,227,235,1) 26%, rgba(0,196,240,1) 100%);
+        background: -ms-radial-gradient(center, ellipse cover, rgba(194,227,235,1) 0%, rgba(194,227,235,1) 26%, rgba(0,196,240,1) 100%);
+        background: radial-gradient(ellipse at center, rgba(194,227,235,1) 0%, rgba(194,227,235,1) 26%, rgba(0,196,240,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c2e3eb', endColorstr='#00c4f0', GradientType=1 );
     }
 </style>
     <div class="row" id="agenciaform">
@@ -69,7 +69,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c2e3eb', end
                     <div class="ibox-title">
                         <h5>{{ (isset($agencia) and $agencia) ? 'Editar agencia' : 'Registro de agencias' }}</h5><!--No se puede traducir-->
                         <div class="ibox-tools">
-                            
+
                         </div>
                     </div>
                     <div class="ibox-content">
@@ -141,7 +141,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c2e3eb', end
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">                            
+                                    <div class="row">
                                         <div class="col-lg-12">
                                             <div class="form-group {{ $errors->has('localizacion_id') ? ' has-error' : '' }}">
                                                 <div class="col-sm-4">
@@ -284,7 +284,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c2e3eb', end
                                                 <label for="tarifaA" class="">Tarifa Agencia</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon">$</span>
-                                                    <input type="text" class="form-control" id="tarifaA" name="tarifaA" placeholder="Ej: 0.1">                    
+                                                    <input type="text" class="form-control" id="tarifaA" name="tarifaA" placeholder="Ej: 0.1">
                                                 </div>
                                                 <small id="msn1" class="help-block"></small>
                                             </div>
@@ -335,9 +335,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c2e3eb', end
                                                                 <td><input type="text" id="segup" name="" value="{{ $data->seguro_principal }}" class="form-control" readonly></td>
                                                                 <td><input type="text" id="tariA{{ $data->id }}" name="" value="{{ $data->tarifa_agencia }}" class="form-control" readonly></td>
                                                                 <td><input type="text" id="segu{{ $data->id }}" name="" value="{{ $data->seguro }}" class="form-control" readonly></td>
-                                                                
+
                                                                 <td>
-                                                                    <button class="btn btn-xs btn_edit btn-warning" type="button" id="btn_edit{{ $data->id }}" onclick="editRowServices({{ $count }}, {{ $data->id }})"><i class="fa fa-edit" data-toggle="tooltip" data-placement="top" title="Editar"></i></button> 
+                                                                    <button class="btn btn-xs btn_edit btn-warning" type="button" id="btn_edit{{ $data->id }}" onclick="editRowServices({{ $count }}, {{ $data->id }})"><i class="fa fa-edit" data-toggle="tooltip" data-placement="top" title="Editar"></i></button>
                                                                     <button class="btn btn-danger btn-xs btn_remove" type="button" onclick="removeRowServices({{ $count }}, {{ $data->id }})" id="{{ $data->id }}"><i class="fa fa-times" data-toggle="tooltip" data-placement="top" title="Eliminar"></i></button></td>
                                                               </tr>
                                                               <?php $count++; ?>
@@ -362,7 +362,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c2e3eb', end
                                     </div>
                                     <!--**************** Detalle Agencia  *******************************-->
                                      <!--****************Aquí*******************************-->
-                                    
+
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="tab2">
                                     <div class="row">
@@ -427,12 +427,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c2e3eb', end
                                                                         <label for="mail"> @lang('general.use_mailchimp') </label>
                                                                     </div>
                                                                     <div class="form-group" v-show="mailchimp">
-                                                                        <label>Ingrese el ID de la lista de clientes de MailChimp</label>
-                                                                        <input type="tex" name="listId" id="listId" class="form-control" placeholder="ID Cliente">
+                                                                      <label>Ingrese MC_KEY de MailChimp</label>
+                                                                      <input type="tex" name="mc_key" id="mc_key" class="form-control" placeholder="MC_KEY">
                                                                     </div>
                                                                     <div class="form-group" v-show="mailchimp">
-                                                                        <label>Ingrese MC_KEY de MailChimp</label>
-                                                                        <input type="tex" name="mc_key" id="mc_key" class="form-control" placeholder="MC_KEY">
+                                                                        <label>Ingrese el ID de la lista</label>
+                                                                        <input type="tex" name="listId" id="listId" class="form-control" placeholder="ID Cliente">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -506,7 +506,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c2e3eb', end
                                 </div>
                             </div>
 
-                            
+
                             <div class="row">
                                 <div class="col-lg-12">
                                         <div class="form-group">

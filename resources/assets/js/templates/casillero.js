@@ -10,24 +10,27 @@ $(document).ready( () => {
 var objVue = new Vue({
     el: '#casillero',
     watch: {
-            'email' : function(v) {
-                this.email = v.toLowerCase().trim();
-            },
-            'email_confirmation' : function(v) {
-                this.email_confirmation = v.toLowerCase().trim();
-            },
-            'primer_nombre' : function(v) {
-                this.primer_nombre = v.toUpperCase();
-            },
-            'primer_apellido' : function(v) {
-                this.primer_apellido = v.toUpperCase();
-            },
-            'direccion' : function(v) {
-                this.direccion = v.toUpperCase();
-            }
+        agencia_id:function(value){
+            this.configuration('agency_mc');
+        },
+        'email' : function(v) {
+            this.email = v.toLowerCase().trim();
+        },
+        'email_confirmation' : function(v) {
+            this.email_confirmation = v.toLowerCase().trim();
+        },
+        'primer_nombre' : function(v) {
+            this.primer_nombre = v.toUpperCase();
+        },
+        'primer_apellido' : function(v) {
+            this.primer_apellido = v.toUpperCase();
+        },
+        'direccion' : function(v) {
+            this.direccion = v.toUpperCase();
+        }
     },
     mounted: function(){
-        this.configuration('agency_mc');
+
         let me=this;
         /* CUSTOM MESSAGES VE-VALIDATOR*/
             const dict = {
@@ -130,6 +133,10 @@ var objVue = new Vue({
                     return element.id_agency == me.agencia_id
                 });
             });
+            console.log(me.agencia_id);
+            axios.get('../aplexConfig/getDataAgencyById/'+me.agencia_id).then(response => {
+                me.recibir_info = (response.data.usar_mail_chimp == 1) ? true : false;
+            });
         },
         resetForm: function(){
             this.id = '';
@@ -139,15 +146,15 @@ var objVue = new Vue({
             let me = this;
             $.each(me.listErrors, function (key, value) {
                 if(key !== element){
-                   me.listErrors[key] = value; 
+                   me.listErrors[key] = value;
                }else{
-                me.listErrors[key] = false; 
+                me.listErrors[key] = false;
                }
             });
         },
         create: function(){
             let me=this;
-            
+
             this.$validator.validateAll().then((result) => {
                 if (result) {
                     let me = this;
@@ -187,7 +194,7 @@ var objVue = new Vue({
                     });
                 }
             });
-                    
+
         },
         cancel: function(){
             var me = this;

@@ -308,6 +308,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('report', 'ReportController@index')->name('report.index');
 });
 Route::get('aplexConfig/config/{key}', 'AplexConfigController@get')->name('config.config');
+Route::get('aplexConfig/getDataAgencyById/{id}', 'AplexConfigController@getDataAgencyById')->name('aplexConfig.getDataAgencyById');
 
 Route::get('consignee/vueSelect/{term}', 'ConsigneeController@vueSelect');
 Route::get('shipper/vueSelect/{term}', 'ShipperController@vueSelect');

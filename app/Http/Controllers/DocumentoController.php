@@ -636,7 +636,27 @@ class DocumentoController extends Controller
                 ->select('documento.id as id', 'valor_libra', 'documento.valor', 'documento.liquidado', 'documento.tipo_documento_id as tipo_documento_id', 'documento.' . $codigo . ' as codigo', 'documento.created_at as fecha', 'shipper.nombre_full as ship_nomfull', 'consignee.nombre_full as cons_nomfull', 'consignee.correo as email_cons', 'agencia.descripcion as agencia', $codigo,
                     DB::raw("(SELECT IFNULL(COUNT(consolidado_detalle.id),0) FROM consolidado_detalle WHERE consolidado_detalle.deleted_at IS NULL AND consolidado_detalle.consolidado_id = documento.id) as cantidad"),
                     DB::raw("(SELECT IFNULL(Sum(documento_detalle.peso2),0) FROM consolidado_detalle INNER JOIN documento_detalle ON consolidado_detalle.documento_detalle_id = documento_detalle.id WHERE consolidado_detalle.deleted_at IS NULL AND consolidado_detalle.consolidado_id = documento.id) as peso"),
-                    DB::raw("(SELECT IFNULL(Sum(documento_detalle.volumen),0) FROM consolidado_detalle INNER JOIN documento_detalle ON consolidado_detalle.documento_detalle_id = documento_detalle.id WHERE consolidado_detalle.deleted_at IS NULL AND consolidado_detalle.consolidado_id = documento.id) as volumen")
+                    DB::raw("(SELECT IFNULL(Sum(documento_detalle.volumen),0) FROM consolidado_detalle INNER JOIN documento_detalle ON consolidado_detalle.documento_detalle_id = documento_detalle.id WHERE consolidado_detalle.deleted_at IS NULL AND consolidado_detalle.consolidado_id = documento.id) as volumen"),
+                    DB::raw('(SELECT
+                  			ROUND(Sum(b.peso2) * 0.453592) AS peso_total
+                  		FROM
+                  			consolidado_detalle AS a
+                  		INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
+                  		WHERE
+                  			a.deleted_at IS NULL
+                  		AND b.deleted_at IS NULL
+                  		AND a.consolidado_id = documento.id
+                  	) AS peso_total'),
+                    DB::raw('(SELECT
+                  			Sum(b.declarado2) AS declarado_total
+                  		FROM
+                  			consolidado_detalle AS a
+                  		INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
+                  		WHERE
+                  			a.deleted_at IS NULL
+                  		AND b.deleted_at IS NULL
+                  		AND a.consolidado_id = documento.id
+                  	) AS declarado_total')
                 )
                 ->where($filter)
                 ->orderBy('documento.created_at', 'DESC');

@@ -85,8 +85,7 @@
                                             <a hfer="#" target="blank_" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Imprimir instrucciones"><i class="fa fa-print"></i> Instrucciones</a>
                                         </div>
 																				<div class="col-sm-12" v-show="!show_buttons" style="color: #E34724">
-																					<label class="control-label col-lg-12">&nbsp;</label>
-																					<span>Hay valores declarados en cero (0) o no hay guias ingresadas</span></div>
+																					<span>Hay valores declarados en cero (0) o valores que superan lo permitido para COURIER o no hay guias ingresadas</span></div>
                                     </div>
 
                                     <div class="col-sm-8">
@@ -875,7 +874,7 @@
                 { className: "text-center", "targets": [ 9 ],  },
 			          { "targets": [ 10,11,12 ], visible: false },
 			        ],
-                    "drawCallback": function () {
+              "drawCallback": function () {
                         $('.edit, .delete').hide().children('i').css('font-size', '17px');
                         /* EDITABLE FIELD */
                         if (me.permissions.editDetail) {
@@ -972,6 +971,12 @@
 						if(app_type === 'courier'){
 							for (var i = 0; i < datos.length; i++) {
 								if(parseFloat(datos[i].declarado2) == 0){
+									cont += 1;
+								}
+								if(parseFloat(datos[i].declarado_total) > 2000){
+									cont += 1;
+								}
+								if(parseFloat(datos[i].peso_total) > 50){
 									cont += 1;
 								}
 							}
