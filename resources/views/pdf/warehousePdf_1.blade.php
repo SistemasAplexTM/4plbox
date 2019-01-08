@@ -89,7 +89,7 @@
         <?php //print_r($detalle); ?>
 
       {{-- </pre> --}}
-      <?php //exit(); ?>
+      <?php exit(); ?>
         @if(count($detalle) > 0)
             @foreach($detalle as $val)
                 <?php
@@ -283,7 +283,7 @@
                                         }
                                       }else{
                                         // if($total_libras > $total_volumen){
-                                          $flete = ($documento->flete)
+                                          $flete = ($documento->flete);
                                           $impuesto = ($total_declarado * $documento->impuesto / 100);
                                         // }else{
                                         //   $sub = ($total_declarado * $documento->impuesto / 100) + ($documento->flete);
@@ -318,7 +318,7 @@
                                 </tr>
                                 <tr>
                                     <td><b>Sub Total:</b></td>
-                                    <td align="right">$ {{ $total = number_format(ceil($sub + $seguro + $documento->cargos_add - $documento->descuento), 2) }}</td>
+                                    <td align="right">$ {{ $total = number_format(ceil($flete + $seguro + $documento->cargos_add - $documento->descuento), 2) }}</td>
                                 </tr>
                             </table>
                         </div>

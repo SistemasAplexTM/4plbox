@@ -336,7 +336,7 @@ class DocumentoController extends Controller
                     $idsShipCons        = $this->createOrUpdateShipperConsignee($request->all());
                     $data->consignee_id = $idsShipCons['consig_id'];
                 } else {
-                    if ($request->consignee_id == '' and $data->shipper_id != '') {
+                    if ($request->consignee_id == '' and  $data->consignee_id == '' and $data->shipper_id != '') {
                         $idsShipCons        = $this->createOrUpdateShipperConsignee($request->all());
                         $data->consignee_id = $idsShipCons['consig_id'];
                     } else {

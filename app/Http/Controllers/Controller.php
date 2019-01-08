@@ -375,7 +375,7 @@ class Controller extends BaseController
                 $sumarCaracteres = $caracteres - $caracteres;
                 $caracter        = '';
                 for ($i = 0; $i <= $sumarCaracteres; $i++) {
-                    $caracter = $caracter . '0';
+                    $caracter = $caracter . '';
                 }
                 $po_box = $caracter . $pref . '-' . $consig_id;
                 // Consignee::where('id', $consig_id)->update(['po_box' => $prefijo->iso2 . '' . $po_box]);

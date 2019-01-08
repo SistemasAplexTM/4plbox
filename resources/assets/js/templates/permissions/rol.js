@@ -11,7 +11,7 @@ $(document).ready(function() {
                 var btn_delete = '';
                 if (permission_update) {
                     var params = [
-                        full.id, "'" + full.name + "'", "'" + full.slug + "'", "'" + full.description + "'", "'" + full.special + "'"
+                        full.id, "'" + full.name + "'", "'" + full.slug + "'", "'" + full.description + "'", "'" + full.special + "'" , full.is_agency
                     ];
                     var btn_edit = "<a onclick=\"edit(" + params + ")\" class='btn btn-outline btn-success btn-xs' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit'></i></a> ";
                 }
@@ -42,13 +42,14 @@ $(document).ready(function() {
     });
 });
 
-function edit(id, name, slug, description, special) {
+function edit(id, name, slug, description, special,is_agency) {
     var data = {
         id: id,
         name: name,
         slug: slug,
         description: description,
         special: special,
+        is_agency: is_agency,
     };
     objVue.edit(data);
 }
@@ -62,6 +63,7 @@ var objVue = new Vue({
         slug: null,
         description: null,
         special: null,
+        is_agency: false,
         editar: 0,
         formErrors: {},
         listErrors: {},
@@ -78,6 +80,7 @@ var objVue = new Vue({
             this.slug = null;
             this.description = null;
             this.special = null,
+            this.is_agency = false,
                 // $('#special').bootstrapToggle('off');
                 this.editar = 0;
             this.formErrors = {};
@@ -126,19 +129,24 @@ var objVue = new Vue({
         	var chk = $('#permissions').serializeArray();
             $.each(chk, function(i,e){
                 if(e.name == 'chk[]'){
-            	   parametros.push(parseInt(e.value)); 
+            	   parametros.push(parseInt(e.value));
                 }
-                   
+
             });
             return parametros;
         },
         create: function() {
+            var is_agency = 0;
+            if (this.is_agency) {
+                is_agency = 1;
+            }
             let me = this;
             axios.post('rol', {
                 'name': this.name,
                 'slug': this.slug,
                 'description': this.description,
                 'special': this.special,
+                'is_agency': is_agency,
                 'permissions': this.getPermissions(),
             }).then(function(response) {
                 if (response.data['code'] == 200) {
@@ -165,12 +173,17 @@ var objVue = new Vue({
             });
         },
         update: function() {
+          var is_agency = 0;
+          if (this.is_agency) {
+              is_agency = 1;
+          }
             var me = this;
             axios.put('rol/' + this.id, {
                 'name': this.name,
                 'slug': this.slug,
                 'description': this.description,
                 'special': this.special,
+                'is_agency': is_agency,
             }).then(function(response) {
                 if (response.data['code'] == 200) {
                     toastr.success('Registro Actualizado correctamente');
@@ -204,6 +217,14 @@ var objVue = new Vue({
             this.special = data['special'];
             if (data['special'] == 'null' || data['special'] == '') {
                 this.special = null;
+            }
+            if (data['description'] == 'null' || data['description'] == '') {
+                this.description = '';
+            }
+            if (data['is_agency'] == 1) {
+                this.is_agency = true;
+            }else{
+              this.is_agency = false;
             }
             this.checkPermissionsRole();
             this.editar = 1;

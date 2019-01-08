@@ -36,9 +36,9 @@ return [
 
 
     //resources/views/templates/agenciaForm
- 
+
     'agencies'=>'Agencias',
-    'registration_data'=>'Datos de registro', 
+    'registration_data'=>'Datos de registro',
     'integrations'=>'Integraciones',
     'url_public'=>'Url publicas',
     'name'=>'Nombre',
@@ -108,7 +108,7 @@ return [
 
 
     //resources/views/templates/ciudad
-    
+
     'cities'=>'Ciudades',
     'registration_of_cities'=>'Registro de ciudades',
     'department_state'=>'Dpto/Estado',
@@ -116,7 +116,7 @@ return [
     'department'=>'Departamento',
 
     //resources/views/templates/clientes
-    
+
     'customers'=>'Clientes',
     'customer_registration'=>'Registro de clientes',
     'names'=>'Nombres',
@@ -239,7 +239,7 @@ return [
 
 
 
-    
+
     //resources/views/template/shipper
     'shipper_registration'=>'Registro de Shipper',
     'status'=>'Estado',
@@ -248,7 +248,7 @@ return [
     'not'=>'No',
 
     //resources/views/template/statusReport
-    
+
     'report_status'=>'Reportar estatus',
     'register_report'=>' Registrar reporte',
     'conveyor'=>'Transportadora',
@@ -272,9 +272,9 @@ return [
     'document_type'=>'Tipo documento',
     'mail_with_copy_to'=>'Correo con copia a:',
 
-  
+
     //resources/views/template/tracking
-    
+
     'track_record'=>'Registro de tracking',
     'registered_tracking'=>'Tracking registrado',
     'office'=>'Despacho',
@@ -285,9 +285,9 @@ return [
     'register_of'=>'Registro de ',
     'code'=>'Código',
 
-    
+
     //resources/views/template/transportador
-    
+
     'transported'=>'Transportador',
     'registration_of_transported'=>'Registro de transportado',
     'contact'=>'Contacto',
@@ -315,11 +315,12 @@ return [
     'role'=>'Rol',
     'activated'=>'Activado',
     'credential'=>'Credencial',
+    'is_agency'=>'Rol de agencia',
 
     //home
 
     'warehouse'=>'Almacén',
-    'backup'=>'Backup', 
+    'backup'=>'Backup',
 
     //logActivity
     'users_logs'=>'Registros de usuarios',
@@ -343,7 +344,7 @@ return [
      'go_to_home'=>'Ir al home',
      'action_does_not_exist'=>'404 - El modulo o la acción no existe',
      'cargo_manifest'=>'Manifiesto de carga.',
-     
+
 
      //Pdf
 

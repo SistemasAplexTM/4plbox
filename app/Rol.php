@@ -13,6 +13,6 @@ class Rol extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'slug', 'description', 'special'
+        'name', 'slug', 'description', 'special', 'is_agency'
     ];
 }

@@ -152,39 +152,38 @@
                         </a>
                     </li>
                     @endcan
-                    {{-- @can('shipper.index') --}}
-                    <li>
-                        <a href="{{ route('consulta.index') }}">
-                            <spam class="fa fa-file">
-                            </spam>
-                             @lang('layouts.reports')
-                        </a>
-                    </li>
-                    {{-- @endcan --}}
                 </ul>
             </li>
-
-            <li class="active">
-                <a href="" style="background-color: #d6c600; color: white;">
-                    <i class="fa fa-puzzle-piece">
-                    </i>
-                            <span class="nav-label">
-                                @lang('layouts.reports')
-                            </span>
-                    <span class="arrow">
-                        <i class="fas fa-angle-down"></i>
-                    </span>
-                </a>
-                <ul class="nav nav-second-level">
-                    <li>
-                        <a href="{{ route('report.index') }}">
-                            <spam class="fa fa-file">
-                            </spam>
-                                 @lang('layouts.load_reports')
-                        </a>
-                    </li>
-                </ul>
-            </li>
+            @can('master.index')
+              <li class="active">
+                  <a href="" style="background-color: #d6c600; color: white;">
+                      <i class="fa fa-puzzle-piece">
+                      </i>
+                              <span class="nav-label">
+                                  @lang('layouts.reports')
+                              </span>
+                      <span class="arrow">
+                          <i class="fas fa-angle-down"></i>
+                      </span>
+                  </a>
+                  <ul class="nav nav-second-level">
+                      <li>
+                          <a href="{{ route('report.index') }}">
+                              <spam class="fa fa-file">
+                              </spam>
+                                   @lang('layouts.load_reports')
+                          </a>
+                      </li>
+                      <li>
+                          <a href="{{ route('consulta.index') }}">
+                              <spam class="fa fa-file">
+                              </spam>
+                               @lang('layouts.reports')
+                          </a>
+                      </li>
+                  </ul>
+              </li>
+            @endcan
 
             @if(env('APP_TYPE') === 'courier')
                 <li class="active">
@@ -199,7 +198,7 @@
                         </span>
                     </a>
                     <ul class="nav nav-second-level">
-                        @can('prealerta.list')
+                        {{-- @can('prealerta.list') --}}
                         <li>
                             <a href="{{ route('prealerta.list') }}">
                                 <spam class="fa fa-exclamation-triangle">
@@ -207,10 +206,11 @@
                                 @lang('layouts.alerts')
                             </a>
                         </li>
-                        @endcan
+                        {{-- @endcan --}}
                     </ul>
                 </li>
             @endif
+            @if(Auth::user()->isRole('admin'))
             <li class="active">
                 <a href="" style="background-color: #0e9aef; color: white;">
                     <i class="fa fa-wrench">
@@ -316,122 +316,125 @@
                     @endcan
                 </ul>
             </li>
+            @endif
             {{-- SOLO LO VE ADMINISTRADOR Y GESTION --}}
-            <li class="active" style="">
-                <a href="#" style="background-color: #017767; color: white;">
-                    <i class="fa fa-cogs">
-                    </i>
-                    <span class="nav-label">
-                             @lang('layouts.administration')
-                    </span>
-                    <span class="arrow">
-                        <i class="fas fa-angle-down"></i>
-                    </span>
-                </a>
-                <ul class="nav nav-second-level collapse">
-                    @can('agencia.index')
-                    <li>
-                        <a href="{{ route('agencia.index') }}">
-                            <spam class="fa fa-home">
-                            </spam>
-                             @lang('layouts.agencies')
-                        </a>
-                    </li>
-                    @endcan
-                    @can('arancel.index')
-                    <li>
-                        <a href="{{ route('arancel.index') }}">
-                            <spam class="fa fa-money-bill">
-                            </spam>
-                                    @lang('layouts.tariffs')
-                        </a>
-                    </li>
-                    @endcan
-                    @can('status.index')
-                    <li>
-                        <a href="{{ route('status.index') }}">
-                            <spam class="fa fa-history">
-                            </spam>
-                              @lang('layouts.status')
-                        </a>
-                    </li>
-                    @endcan
-                    @can('transportador.index')
-                    <li>
-                        <a href="{{ route('transportador.index') }}">
-                            <spam class="fa fa-truck">
-                            </spam>
-                               @lang('layouts.transporters')
-                        </a>
-                    </li>
-                    @endcan
-                    @can('ciudad.index')
-                    <li>
-                        <a href="{{ route('ciudad.index') }}">
-                            <spam class="fa fa-street-view">
-                            </spam>
-                               @lang('layouts.cities')
-                        </a>
-                    </li>
-                    @endcan
-                    @can('departamento.index')
-                    <li>
-                        <a href="{{ route('departamento.index') }}">
-                            <spam class="fa fa-globe">
-                            </spam>
-                              @lang('layouts.dptos_states')
+            @if(Auth::user()->isRole('admin'))
+              <li class="active" style="">
+                  <a href="#" style="background-color: #017767; color: white;">
+                      <i class="fa fa-cogs">
+                      </i>
+                      <span class="nav-label">
+                               @lang('layouts.administration')
+                      </span>
+                      <span class="arrow">
+                          <i class="fas fa-angle-down"></i>
+                      </span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                      @can('agencia.index')
+                      <li>
+                          <a href="{{ route('agencia.index') }}">
+                              <spam class="fa fa-home">
+                              </spam>
+                               @lang('layouts.agencies')
+                          </a>
+                      </li>
+                      @endcan
+                      @can('arancel.index')
+                      <li>
+                          <a href="{{ route('arancel.index') }}">
+                              <spam class="fa fa-money-bill">
+                              </spam>
+                                      @lang('layouts.tariffs')
+                          </a>
+                      </li>
+                      @endcan
+                      @can('status.index')
+                      <li>
+                          <a href="{{ route('status.index') }}">
+                              <spam class="fa fa-history">
+                              </spam>
+                                @lang('layouts.status')
+                          </a>
+                      </li>
+                      @endcan
+                      @can('transportador.index')
+                      <li>
+                          <a href="{{ route('transportador.index') }}">
+                              <spam class="fa fa-truck">
+                              </spam>
+                                 @lang('layouts.transporters')
+                          </a>
+                      </li>
+                      @endcan
+                      @can('ciudad.index')
+                      <li>
+                          <a href="{{ route('ciudad.index') }}">
+                              <spam class="fa fa-street-view">
+                              </spam>
+                                 @lang('layouts.cities')
+                          </a>
+                      </li>
+                      @endcan
+                      @can('departamento.index')
+                      <li>
+                          <a href="{{ route('departamento.index') }}">
+                              <spam class="fa fa-globe">
+                              </spam>
+                                @lang('layouts.dptos_states')
 
-                        </a>
-                    </li>
-                    @endcan
-                    @can('pais.index')
-                    <li>
-                        <a href="{{ route('pais.index') }}">
-                            <spam class="fa fa-globe">
-                            </spam>
-                              @lang('layouts.countrieses')
+                          </a>
+                      </li>
+                      @endcan
+                      @can('pais.index')
+                      <li>
+                          <a href="{{ route('pais.index') }}">
+                              <spam class="fa fa-globe">
+                              </spam>
+                                @lang('layouts.countrieses')
 
-                        </a>
-                    </li>
-                    @endcan
-                    @can('tipoDocumento.index')
-                    <li>
-                        <a href="{{ route('tipoDocumento.index') }}">
-                            <spam class="fa fa-file">
-                            </spam>
-                                      @lang('layouts.document_types')
-                        </a>
-                    </li>
-                    @endcan
-                    {{-- @can('logActivity.index') --}}
-                    <li>
-                        <a href="{{ route('logActivity.index') }}">
-                            <spam class="fa fa-history">
-                            </spam>
-                             @lang('layouts.logs')
+                          </a>
+                      </li>
+                      @endcan
+                      @can('tipoDocumento.index')
+                      <li>
+                          <a href="{{ route('tipoDocumento.index') }}">
+                              <spam class="fa fa-file">
+                              </spam>
+                                        @lang('layouts.document_types')
+                          </a>
+                      </li>
+                      @endcan
+                      @can('logActivity.index')
+                      <li>
+                          <a href="{{ route('logActivity.index') }}">
+                              <spam class="fa fa-history">
+                              </spam>
+                               @lang('layouts.logs')
 
-                        </a>
-                    </li>
-                    {{-- @endcan --}}
-                    @if(Auth::user()->email === 'jhonnyalejo2212@gmail.com')
-                    <li>
-                        <a href="{{ url('administracion/7') }}">
-                            <spam class="fa fa-code-fork">
-                            </spam>
-                                  @lang('layouts.functions')
+                          </a>
+                      </li>
+                      @endcan
+                      @if(Auth::user()->email === 'jhonnyalejo2212@gmail.com')
+                      <li>
+                          <a href="{{ url('administracion/7') }}">
+                              <spam class="fa fa-code-fork">
+                              </spam>
+                                    @lang('layouts.functions')
 
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('modulo.index') }}">
-                            <spam class="fa fa-window-restore">
-                            </spam>
-                           @lang('layouts.modules')
-                        </a>
-                    </li>
-                    @endif
-                </ul>
-            </li>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="{{ route('modulo.index') }}">
+                              <spam class="fa fa-window-restore">
+                              </spam>
+                             @lang('layouts.modules')
+                          </a>
+                      </li>
+                      @endif
+                  </ul>
+              </li>
+            @endif
             <li class="active" style="">
                 <a href="#" style="background-color: #ff1d1d; color: white;">
                     <i class="fa fa-key">

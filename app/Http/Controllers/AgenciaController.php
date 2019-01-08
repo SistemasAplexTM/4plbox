@@ -94,18 +94,18 @@ class AgenciaController extends Controller
 
       $configMC = $this->getAplexConfig('agency_mc');
       $value = array(
-        'mc' => [array(
+        'list' => [array(
           'id_agency' => $id,
           'id_list' => $request->all()['listId']
         )]
       );
-      $this->createAplexConfig('agency_mc', $value);
-
-      echo '<pre>';
-      print_r($request->all());
-      // print_r($configMC->value);
-      echo '<pre>';
-      exit();
+      // $this->createAplexConfig('agency_mc', $value, $configMC);
+      //
+      // echo '<pre>';
+      // print_r($request->all());
+      // // print_r($configMC->value);
+      // echo '<pre>';
+      // exit();
         $data = Agencia::findOrFail($id);
         /* LE ASIGNO UNA VARIABLE AL REQUEST PARA PODER ACTUALIZAR LOS CAMPOS BOLEANOS*/
         $requestData = $request->all();
@@ -146,11 +146,19 @@ class AgenciaController extends Controller
         return redirect()->route('agencia.index');
     }
 
-    public function createAplexConfig($key, $value){
+    public function createAplexConfig($key, $value, $configMC){
       $data         = new AplexConfig;
       $data->key    = $key;
       $data->value  = json_encode($value);
+
+      // VALIDO SI EL CAMPO VALUE EN LA BD ESTA VACIO
+      if($configMC->value === null || $configMC->value === ''){
+        $data->save();
+      }else{
+
+      }
       echo '<pre>';
+      print_r($configMC);
       print_r($data);
       echo '<pre>';
       exit();
