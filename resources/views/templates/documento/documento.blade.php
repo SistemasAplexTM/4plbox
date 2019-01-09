@@ -158,9 +158,9 @@
                 </div>
                 {{-- FORMULARIO DE CONSOLIDADO --}}
                 @if(!Auth::user()->isRole('bodega'))
-                    <formconsolidado-component :app_type="'{{ env('APP_TYPE') }}'" :documento="{{ json_encode($documento) }}" :contactos="contactos" :restore="restoreShipperConsignee" :agrupar="datosAgrupar" :removeragrupado="removerAgrupado" :permission='permissions' v-if="mostrar.includes(24)"></formconsolidado-component>
+                    <formconsolidado-component :app_type="'{{ env('APP_TYPE') }}'" :documento="{{ json_encode($documento) }}" :contactos="contactos" :restore="restoreShipperConsignee" :agrupar="datosAgrupar" :removeragrupado="removerAgrupado" :permission='permissions' v-if="mostrar.includes(24)" :close_document="close"></formconsolidado-component>
                 @else
-                    <consol_bodega-component :app_type="'{{ env('APP_TYPE') }}'" :documento="{{ json_encode($documento) }}" :contactos="contactos" :restore="restoreShipperConsignee" :agrupar="datosAgrupar" :removeragrupado="removerAgrupado" :permission='permissions' :ref_boxes='refreshBoxes' v-if="mostrar.includes(24)"></consol_bodega-component>
+                    <consol_bodega-component :app_type="'{{ env('APP_TYPE') }}'" :documento="{{ json_encode($documento) }}" :contactos="contactos" :restore="restoreShipperConsignee" :agrupar="datosAgrupar" :removeragrupado="removerAgrupado" :permission='permissions' :ref_boxes='refreshBoxes' v-if="mostrar.includes(24)" :close_document="close"></consol_bodega-component>
                 @endif
 
                 {{-- CONSIGNEE Y SHIPPER --}}
@@ -549,7 +549,7 @@
                             <div class="ibox-title">
                                 <h5>@lang('documents.load_data')</h5>
                                 <div class="ibox-tools">
-                                  
+
                                 </div>
                             </div>
                             <!--************************************* DATOS DE CARGA PARA GUIA ****************************-->

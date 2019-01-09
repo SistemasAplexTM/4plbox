@@ -1435,22 +1435,60 @@ class DocumentoController extends Controller
                                 'b.declarado2',
                                 'j.peso2',
                                 'b.contenido2',
-                                'b.liquidado'
+                                'b.liquidado',
+                                DB::raw('(SELECT
+                                    ROUND(Sum(b.peso2) * 0.453592) AS peso_total
+                                  FROM
+                                    consolidado_detalle AS a
+                                  INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
+                                  WHERE
+                                    a.deleted_at IS NULL
+                                  AND b.deleted_at IS NULL
+                                  AND b.consignee_id = d.id
+                                ) AS peso_total'),
+                                DB::raw('(SELECT
+                                    Sum(b.declarado2) AS declarado_total
+                                  FROM
+                                    consolidado_detalle AS a
+                                  INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
+                                  WHERE
+                                    a.deleted_at IS NULL
+                                  AND b.deleted_at IS NULL
+                                  AND b.consignee_id = d.id
+                                ) AS declarado_total')
                             )
                             ->where([['a.deleted_at', null], ['a.consolidado_id', $id], ['a.flag', 0]])
                             ->get();
-                        $this->AddToLog('Impresion Consolidado guias (' . $id . ')');
-                        if (env('APP_TYPE') === 'courier') {
-                            if(env('APP_CLIENT') === 'colombiana'){
-                                return view('pdf/consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
-                                // $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
-                            }else{
-                                $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf', compact('documento', 'detalle', 'detalleConsolidado'));
+                        // VALIDAR QUE EL PESO Y EL DECLARADO NO SUPEREN LO MAXIMO ESTABLECIDO
+                        $peso_t = 0;
+                        $decla_t = 0;
+                        if (count($detalleConsolidado) > 0) {
+                          foreach ($detalleConsolidado as $key) {
+                            if($key->peso_total > 50){
+                              $peso_t++;
                             }
-                        }else{
-                            $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                            if($key->declarado_total > 2000){
+                              $decla_t++;
+                            }
+                          }
                         }
-                        $nameDocument = 'Guias -' . $documento->id;
+                        if($peso_t === 0 and $decla_t === 0){
+                          $this->AddToLog('Impresion Consolidado guias (' . $id . ')');
+                          if (env('APP_TYPE') === 'courier') {
+                              if(env('APP_CLIENT') === 'colombiana'){
+                                  return view('pdf/consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                                  // $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                              }else{
+                                  $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf', compact('documento', 'detalle', 'detalleConsolidado'));
+                              }
+                          }else{
+                              $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                          }
+                          $nameDocument = 'Guias -' . $documento->id;
+                        }else{
+                          $error = 'El peso o valor declarado supera lo permitido por cliente. Por favor revisar.';
+                          return view('errors/generalError', compact('error'));
+                        }
                     } else {
                         if ($document === 'consolidado') {
                             $detalleConsolidado = DB::table('consolidado_detalle as a')
@@ -1516,23 +1554,62 @@ class DocumentoController extends Controller
                                     'j.peso2',
                                     'b.contenido2',
                                     'b.liquidado',
-                                    'b.piezas'
+                                    'b.piezas',
+                                    DB::raw('(SELECT
+                                  			ROUND(Sum(b.peso2) * 0.453592) AS peso_total
+                                  		FROM
+                                  			consolidado_detalle AS a
+                                  		INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
+                                  		WHERE
+                                  			a.deleted_at IS NULL
+                                  		AND b.deleted_at IS NULL
+                                  		AND b.consignee_id = d.id
+                                  	) AS peso_total'),
+                                    DB::raw('(SELECT
+                                  			Sum(b.declarado2) AS declarado_total
+                                  		FROM
+                                  			consolidado_detalle AS a
+                                  		INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
+                                  		WHERE
+                                  			a.deleted_at IS NULL
+                                  		AND b.deleted_at IS NULL
+                                  		AND b.consignee_id = d.id
+                                  	) AS declarado_total')
                                 )
                                 ->where([['a.deleted_at', null], ['a.consolidado_id', $id], ['a.flag', 0]])
                                 ->orderBy('b.created_at', 'ASC')
                                 ->get();
-                            $this->AddToLog('Impresion Consolidado (' . $id . ')');
-                                if (env('APP_TYPE') === 'courier') {
-                                    if(env('APP_CLIENT') === 'colombiana'){
-                                    $pdf          = PDF::loadView('pdf.consolidadoPdfColombiana', compact('documento', 'detalle', 'detalleConsolidado'));
-                                }else{
-                                    $pdf          = PDF::loadView('pdf.consolidadoPdf', compact('documento', 'detalle', 'detalleConsolidado'));
+
+                            // VALIDAR QUE EL PESO Y EL DECLARADO NO SUPEREN LO MAXIMO ESTABLECIDO
+                            $peso_t = 0;
+                            $decla_t = 0;
+                            if (count($detalleConsolidado) > 0) {
+                              foreach ($detalleConsolidado as $key) {
+                                if($key->peso_total > 50){
+                                  $peso_t++;
                                 }
-                            }else{
-                              // return view('pdf/consolidadoPdfColombiana', compact('documento', 'detalle', 'detalleConsolidado'));
-                                $pdf          = PDF::loadView('pdf.consolidadoPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                                if($key->declarado_total > 2000){
+                                  $decla_t++;
+                                }
+                              }
                             }
-                            $nameDocument = $documento->tipo_documento . '-' . $documento->id;
+                            if($peso_t === 0 and $decla_t === 0){
+                              $this->AddToLog('Impresion Consolidado (' . $id . ')');
+                              if (env('APP_TYPE') === 'courier') {
+                                  if(env('APP_CLIENT') === 'colombiana'){
+                                      $pdf          = PDF::loadView('pdf.consolidadoPdfColombiana', compact('documento', 'detalle', 'detalleConsolidado'));
+                                  }else{
+                                      $pdf          = PDF::loadView('pdf.consolidadoPdf', compact('documento', 'detalle', 'detalleConsolidado'));
+                                  }
+                              }else{
+                                // return view('pdf/consolidadoPdfColombiana', compact('documento', 'detalle', 'detalleConsolidado'));
+                                  $pdf          = PDF::loadView('pdf.consolidadoPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                              }
+                              $nameDocument = $documento->tipo_documento . '-' . $documento->id;
+                            }else{
+                              $error = 'El peso o valor declarado supera lo permitido por cliente. Por favor revisar.';
+                              return view('errors/generalError', compact('error'));
+                            }
                         }
                     }
                 }
@@ -2641,6 +2718,12 @@ class DocumentoController extends Controller
             );
             return $answer;
         }
+    }
+
+    public function closeDocument($id)
+    {
+      Documento::where('id', $id)->update(['close_document' => 1]);
+      return $data = array('code' => 200, );
     }
 
 }

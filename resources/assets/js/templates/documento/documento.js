@@ -480,6 +480,10 @@ function permissions_f() {
     };
 }
 
+function closeDocument() {
+  objVue.closeDocument();
+}
+
 var objVue = new Vue({
     el: '#documento',
     watch:{
@@ -542,9 +546,30 @@ var objVue = new Vue({
         refreshBoxes: false, //variable para refrescar las cajas del consolidado bodega
         cantidad_detalle: true, //para mostrar u ocultar el boton de agregar (funcionalidad para courier)
         tracking_number: null,
-        id_detalle: null
+        id_detalle: null,
+        close: false
     },
     methods: {
+      closeDocument: function() {
+        let me = this;
+        swal({
+            title: 'Seguro que desea CERRAR este documento?',
+            text: "No lo podras abrir nuevamente!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No, cancelar!'
+        }).then((result) => {
+            if (result.value) {
+                axios.get('./closeDocument').then(response => {
+                  me.close = true;
+                  toastr.success("Documento cerrado exitosamente.");
+                });
+            }
+        });
+      },
         refreshTableDetail: function(){
             var table = $('#whgTable').DataTable();
             table.ajax.reload();
