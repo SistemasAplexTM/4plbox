@@ -664,10 +664,10 @@ class DocumentoController extends Controller
             /* CODIGO PARA TRAER LOS DOCUMENTOS DIFERENTES A CONSOLIDADOS */
             if(env('APP_TYPE') == 'courier'){
                 //con esto se muestra en la grilla de documentos, el detalle y no la cabecera
-                // $qr_guia = DB::raw("(SELECT documento_detalle.num_guia FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as num_guia");
-                // $qr_wrh = DB::raw("(SELECT documento_detalle.num_warehouse FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as num_warehouse");
-                $qr_guia = DB::raw("0 as num_guia");
-                $qr_wrh = "documento.num_warehouse";
+                $qr_guia = DB::raw("(SELECT documento_detalle.num_guia FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as num_guia");
+                $qr_wrh = DB::raw("(SELECT documento_detalle.num_warehouse FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as num_warehouse");
+                // $qr_guia = DB::raw("0 as num_guia");
+                // $qr_wrh = "documento.num_warehouse";
             }else{
                 $qr_guia = DB::raw("0 as num_guia");
                 $qr_wrh = "documento.num_warehouse";
@@ -966,6 +966,10 @@ class DocumentoController extends Controller
                             'created_at'           => date('Y-m-d H:i:s'),
                         ],
                     ]);
+
+                    /* INSERTAR CAMPO AGRUPADO */
+                    $data->agrupado = $data->id;
+                    $data->save();
 
                     $detalle = DocumentoDetalle::join('documento', 'documento_detalle.documento_id', '=', 'documento.id')
                         ->leftJoin('shipper', 'documento_detalle.shipper_id', '=', 'shipper.id')
@@ -1289,8 +1293,8 @@ class DocumentoController extends Controller
                 $this->AddToLog('Impresion warehouse (' . $documento->id . ')');
                 if (env('APP_TYPE') === 'courier') {
                     if(env('APP_CLIENT') === 'colombiana'){
-                        $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
-                    }else{
+                    //     $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
+                    // }else{
                         $pdf = PDF::loadView('pdf.warehousePdf', compact('documento', 'detalle'));
                     }
                     // $pdf = PDF::loadView('pdf.guiaPdf', compact('documento', 'detalle'));
@@ -1476,8 +1480,8 @@ class DocumentoController extends Controller
                           $this->AddToLog('Impresion Consolidado guias (' . $id . ')');
                           if (env('APP_TYPE') === 'courier') {
                               if(env('APP_CLIENT') === 'colombiana'){
-                                  return view('pdf/consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
-                                  // $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                                  // return view('pdf/consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                                  $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
                               }else{
                                   $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf', compact('documento', 'detalle', 'detalleConsolidado'));
                               }

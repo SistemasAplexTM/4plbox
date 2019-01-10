@@ -139,7 +139,7 @@ function datatableDetail(){
         }, {
             "render": function (data, type, full, meta) {
                 var pa = full.nom_pa;
-                return pa + '<a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalArancel('+full.id+', \'whgTable\')"><i class="material-icons">&#xE254;</i></a>';
+                return ((pa === null) ? '' : pa) + '<a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalArancel('+full.id+', \'whgTable\')"><i class="material-icons">&#xE254;</i></a>';
             },
             visible: (objVue.mostrar.includes(16)) ? true : false
         },
@@ -339,7 +339,7 @@ function llenarSelectServicio(id_embarque) {
         }
     });
 }
-/*-- Función para llenar select PERSONALIZADO --*/
+  /*-- Función para llenar select PERSONALIZADO --*/
 function llenarSelectPersonalizado(module, tableName, idSelect, length) {
     var url = '../selectInput/' + tableName;
     $('#' + idSelect).select2({
@@ -581,6 +581,14 @@ var objVue = new Vue({
         },
         showTotals(value) {
             this.showFieldsTotals = value;
+            // if(value){
+            //   if(!this.mostrar.includes(16)){
+            //     this.mostrar.push(16);
+            //   }
+            // }else{
+            //   this.mostrar.pop();
+            // }
+            // this.refreshTableDetail();
         },
         addTrackings(id) {
             this.id_detalle = id;

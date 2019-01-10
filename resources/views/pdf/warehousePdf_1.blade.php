@@ -89,7 +89,7 @@
         <?php //print_r($detalle); ?>
 
       {{-- </pre> --}}
-      <?php exit(); ?>
+      <?php //exit(); ?>
         @if(count($detalle) > 0)
             @foreach($detalle as $val)
                 <?php
@@ -271,7 +271,7 @@
                     <td>
                         <div id="apDiv10">
                             <table width="100%" border="0" cellspacing="1" cellpadding="0">
-                                <tr>
+                                {{-- <tr> --}}
                                     <?php
                                     $flete = 0;
                                     $impuesto = 0;
@@ -291,9 +291,9 @@
                                       }
                                       $subtotal = number_format(ceil($flete + $impuesto), 2)
                                     ?>
-                                    <td><b>@lang('general.value'): (Flete+Impuesto) </b></td>
+                                    {{-- <td><b>@lang('general.value'): (Flete+Impuesto) </b></td>
                                     <td align="right">$ {{ $subtotal }} </td>
-                                </tr>
+                                </tr> --}}
                                 <tr>
                                   <td><b>Flete: </b></td>
                                   <td align="right">$ {{ number_format(ceil($documento->flete), 2) }} </td>
@@ -316,10 +316,10 @@
                                     <td><b>@lang('general.others'):</b></td>
                                     <td align="right">$ {{ number_format(ceil($documento->cargos_add), 2) }} </td>
                                 </tr>
-                                <tr>
+                                {{-- <tr>
                                     <td><b>Sub Total:</b></td>
                                     <td align="right">$ {{ $total = number_format(ceil($flete + $seguro + $documento->cargos_add - $documento->descuento), 2) }}</td>
-                                </tr>
+                                </tr> --}}
                             </table>
                         </div>
                         <div >
@@ -328,7 +328,7 @@
 
                                     <tr>
                                         <td><b>Total:</b></td>
-                                        <td align="right"><b><span style="font-size:14px;color:#F00">$ {{ $total }}</span></b>
+                                        <td align="right"><b><span style="font-size:14px;color:#F00">$ {{ $total = number_format(ceil($flete + $impuesto + $seguro + $documento->cargos_add - $documento->descuento), 2) }}</span></b>
                                         </td>
                                     </tr>
                                 </table>
