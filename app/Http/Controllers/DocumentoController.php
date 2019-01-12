@@ -664,10 +664,10 @@ class DocumentoController extends Controller
             /* CODIGO PARA TRAER LOS DOCUMENTOS DIFERENTES A CONSOLIDADOS */
             if(env('APP_TYPE') == 'courier'){
                 //con esto se muestra en la grilla de documentos, el detalle y no la cabecera
-                $qr_guia = DB::raw("(SELECT documento_detalle.num_guia FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as num_guia");
-                $qr_wrh = DB::raw("(SELECT documento_detalle.num_warehouse FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as num_warehouse");
-                // $qr_guia = DB::raw("0 as num_guia");
-                // $qr_wrh = "documento.num_warehouse";
+                // $qr_guia = DB::raw("(SELECT documento_detalle.num_guia FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as num_guia");
+                // $qr_wrh = DB::raw("(SELECT documento_detalle.num_warehouse FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as num_warehouse");
+                $qr_guia = DB::raw("0 as num_guia");
+                $qr_wrh = "documento.num_warehouse";
             }else{
                 $qr_guia = DB::raw("0 as num_guia");
                 $qr_wrh = "documento.num_warehouse";
