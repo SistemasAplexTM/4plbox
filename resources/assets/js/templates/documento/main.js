@@ -55,6 +55,13 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                         color_badget = 'warning';
                     }
                 }
+                // return '<span class="'+classText+'">' + full.num_warehouse + '</span><a style="float: right;cursor:pointer;" class="badge badge-warning pop" role="button"
+                //     data-html="true"
+                //     data-toggle="popover"
+                //     data-trigger="hover"
+                //     title="<b>Guias agrupadas</b>"
+                //     data-content="'+groupGuias+'" ' + group + '>'+full.agrupadas+'</a>';
+
                 return '<strong>' + ((codigo == null) ? '' : codigo) + '<strong> <span style="float: right;" class="badge badge-' + color_badget + '" data-toggle="tooltip" data-placement="top" title="" data-original-title="Total piezas">' + cant + '</span>';
             }
         }, {

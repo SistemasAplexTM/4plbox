@@ -380,13 +380,24 @@
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="servicios_id" class="">@lang('documents.type_of_service')</label>
-                                                <select onchange="calculateServiceType();" id="servicios_id" name="servicios_id" class="form-control">
+                                                <select onchange="calculateServiceType();" id="servicios_id" name="servicios_id" class="form-control" data-servicio_id="{{ $documento->servicios_id }}">
                                                     <option value="">@lang('documents.select_type_of_boarding')</option>
-                                                    @if(isset($servicios) and $servicios)
+                                                    {{-- @if(isset($servicios) and $servicios)
                                                         @foreach($servicios as $servicio)
-                                                            <option value="{{ $servicio['id'] }}" data-cobvol="{{ $servicio['cobro_peso_volumen'] }}" data-tarifamin="{{ $servicio['peso_minimo'] }}" data-tarifa="{{ $servicio['tarifa'] }}" data-seguro="{{ $servicio['seguro'] }}" data-c_opcional="{{ $servicio['cobro_opcional'] }}" data-t_age="{{ $servicio['tarifa_agencia'] }}" data-seg_age="{{ $servicio['seguro_agencia'] }}" data-impuesto_age="{{ $servicio['impuesto'] }}" {{ (isset($documento->servicios_id) and $documento->servicios_id === $servicio['id']) ? 'selected' : '' }}>{{ $servicio['nombre'] }}</option>
+                                                          <option value="{{ $servicio['id'] }}"
+                                                            data-cobvol="{{ $servicio['cobro_peso_volumen'] }}"
+                                                            data-tarifamin="{{ $servicio['peso_minimo'] }}"
+                                                            data-tarifa="{{ $servicio['tarifa'] }}"
+                                                            data-seguro="{{ $servicio['seguro'] }}"
+                                                            data-c_opcional="{{ $servicio['cobro_opcional'] }}"
+                                                            data-t_age="{{ $servicio['tarifa_agencia'] }}"
+                                                            data-seg_age="{{ $servicio['seguro_agencia'] }}"
+                                                            data-impuesto_age="{{ $servicio['impuesto'] }}"
+                                                            {{ (isset($documento->servicios_id) and $documento->servicios_id === $servicio['id']) ? 'selected' : '' }}>
+                                                            {{ $servicio['nombre'] }}
+                                                          </option>
                                                         @endforeach
-                                                    @endif
+                                                    @endif --}}
                                                 </select>
                                                 <small class="help-block" style="display: none">@lang('documents.obligatory_field')</small>
                                             </div>

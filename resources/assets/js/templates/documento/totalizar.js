@@ -174,6 +174,7 @@ function calculateServiceType() {
     $('#valor_libra2').val($('#servicios_id option:selected').data('tarifa'));
     $('#valorLibra').html($('#servicios_id option:selected').data('tarifa')); // *********  label
     $('#pa_id').val($('#servicios_id option:selected').data('pa_id'));
+    $('#impuesto').val($('#servicios_id option:selected').data('impuesto_age'));
     objVue.getPositionById($('#servicios_id option:selected').data('pa_id'));
     totalizeDocument();
 }
