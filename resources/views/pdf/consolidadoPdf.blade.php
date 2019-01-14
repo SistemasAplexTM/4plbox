@@ -3,7 +3,7 @@
         display: none;
     }
     *{
-        font-family: sans-serif;  
+        font-family: sans-serif;
     }
     td{
         border: none;
@@ -92,7 +92,7 @@
     }
     tfoot{
         font-size: 18px;
-        font-weight: bold; 
+        font-weight: bold;
     }
     #noDatos{
         font-size: 20px;
@@ -115,11 +115,11 @@
     </tr>
     <tr>
         <td colspan="2"><div id="dirAgencia">{{ $documento->agencia_dir }}</div></td>
-        <td colspan="2"><div id="masterawb">Master AWB: {{ $documento->master_id }}</div></td>        
+        <td colspan="2"><div id="masterawb">Master AWB: {{ $documento->master_id }}</div></td>
     </tr>
     <tr>
         <td colspan="2"><div id="localAgencia">{{ $documento->agencia_ciudad }}, {{ $documento->agencia_depto }}. {{ $documento->agencia_zip }}</div></td>
-        <td colspan="2"><div id="numManifiesto">N° @lang('general.manifest'): {{ $documento->id }}</div></td> 
+        <td colspan="2"><div id="numManifiesto">N° @lang('general.manifest'): {{ $documento->id }}</div></td>
     </tr>
     <tr>
         <td colspan="2"><div id="paisAgencia">{{ $documento->agencia_pais }}</div></td>
@@ -174,7 +174,7 @@
         </tr>
     </thead>
     <tbody>
-        <?php 
+        <?php
         $totPiezas = 0;
         $piezas = 0;
         $peso = 0;
@@ -206,7 +206,7 @@
                             <img id="barcode" style="height: 30px;padding: 2px;" src="data:image/png;base64, {{ DNS1D::getBarcodePNG($val->num_guia, "C128",1,29,array(1,1,1)) }}" alt="barcode" />
                             <div style="text-align: center;">{{ $val->num_guia }}</div>
                         {{-- @endif --}}
-                        
+
                     </td>
                     <td>
                         <div id="remitente">{{ ($val->shipper_json) ? $shipper_json->nombre : $val->nom_ship }}</div>

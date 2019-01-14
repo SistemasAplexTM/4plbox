@@ -48,7 +48,7 @@ $(document).ready(function() {
     });
     llenarSelectPersonalizado('documento', 'localizacion', 'localizacion_id', 2); // module, tableName, id_campo
     llenarSelectPersonalizado('documento', 'localizacion', 'localizacion_id_c', 2); // module, tableName, id_campo
-    
+
 });
 $(function() {
     //aparecer botones de accion en las bolsas del consolidado
@@ -129,7 +129,7 @@ function datatableDetail(){
                 var dimensiones = cadena.split(" ");
                 var arr1 = cadena.split("=");
                 var arrF = arr1[1].split("x");
-                return '<a data-name="peso" data-pk="'+full.id+'" class="td_edit" data-type="text" data-placement="right" data-title="Peso">'+full.peso+'</a> ' + 
+                return '<a data-name="peso" data-pk="'+full.id+'" class="td_edit" data-type="text" data-placement="right" data-title="Peso">'+full.peso+'</a> ' +
                 ' <a data-name="dimensiones" data-pk="'+full.id+'" data-value="'+arrF+'" class="td_edit_d" data-type="address" data-placement="right" data-title="Dimensiones">'+dimensiones[1]+'</a>';;
             }
         }, {
@@ -139,15 +139,15 @@ function datatableDetail(){
         }, {
             "render": function (data, type, full, meta) {
                 var pa = full.nom_pa;
-                return pa + '<a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalArancel('+full.id+', \'whgTable\')"><i class="material-icons">&#xE254;</i></a>';
+                return ((pa === null) ? '' : pa) + '<a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalArancel('+full.id+', \'whgTable\')"><i class="material-icons">&#xE254;</i></a>';
             },
             visible: (objVue.mostrar.includes(16)) ? true : false
-        }, 
+        },
         // {
         //     data: 'nom_pa',
         //     name: 'nom_pa',
         //     visible: (objVue.mostrar.includes(16)) ? true : false
-        // }, 
+        // },
         {
             "render": function (data, type, full, meta) {
                 return '<a data-name="declarado" data-pk="'+full.id+'" class="td_edit" data-type="text" data-placement="left" data-title="Declarado">'+full.valor+'</a>';
@@ -294,8 +294,13 @@ function llenarSelectServicio(id_embarque) {
         success: function(data) {
             /* llenar select */
             $("#servicios_id").empty();
-            $('#impuesto').val(0);
-            $('#valor_libra2').val(0);
+            if ($('#impuesto').val() === '0' || $('#impuesto').val() === '') {
+              $('#impuesto').val(0);
+            }
+            if ($('#valor_libra2').val() === '0' || $('#valor_libra2').val() === '') {
+              $('#valor_libra2').val(0);
+            }
+            // $('#valor_libra2').val(0);
             if (Object.keys(data.data).length === 0) {
                 $("#servicios_id").attr('readonly', true);
             } else {
@@ -334,7 +339,7 @@ function llenarSelectServicio(id_embarque) {
         }
     });
 }
-/*-- Función para llenar select PERSONALIZADO --*/
+  /*-- Función para llenar select PERSONALIZADO --*/
 function llenarSelectPersonalizado(module, tableName, idSelect, length) {
     var url = '../selectInput/' + tableName;
     $('#' + idSelect).select2({
@@ -475,6 +480,10 @@ function permissions_f() {
     };
 }
 
+function closeDocument() {
+  objVue.closeDocument();
+}
+
 var objVue = new Vue({
     el: '#documento',
     watch:{
@@ -537,9 +546,30 @@ var objVue = new Vue({
         refreshBoxes: false, //variable para refrescar las cajas del consolidado bodega
         cantidad_detalle: true, //para mostrar u ocultar el boton de agregar (funcionalidad para courier)
         tracking_number: null,
-        id_detalle: null
+        id_detalle: null,
+        close: false
     },
     methods: {
+      closeDocument: function() {
+        let me = this;
+        swal({
+            title: 'Seguro que desea CERRAR este documento?',
+            text: "No lo podras abrir nuevamente!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No, cancelar!'
+        }).then((result) => {
+            if (result.value) {
+                axios.get('./closeDocument').then(response => {
+                  me.close = true;
+                  toastr.success("Documento cerrado exitosamente.");
+                });
+            }
+        });
+      },
         refreshTableDetail: function(){
             var table = $('#whgTable').DataTable();
             table.ajax.reload();
@@ -551,6 +581,14 @@ var objVue = new Vue({
         },
         showTotals(value) {
             this.showFieldsTotals = value;
+            // if(value){
+            //   if(!this.mostrar.includes(16)){
+            //     this.mostrar.push(16);
+            //   }
+            // }else{
+            //   this.mostrar.pop();
+            // }
+            // this.refreshTableDetail();
         },
         addTrackings(id) {
             this.id_detalle = id;
@@ -698,7 +736,7 @@ var objVue = new Vue({
                     // me.getPositionById($('#pa_id').val());
                     llenarSelectServicio($('#tipo_embarque_id').val());
                 }
-            }, 500);            
+            }, 500);
         },
         saveDocument: function(option) {
             $('#date').val(this.getTime());
@@ -1023,7 +1061,7 @@ var objVue = new Vue({
             if ($.fn.DataTable.isDataTable('#tbl-modalconsignee')) {
                 $('#tbl-modalconsignee tbody').empty();
                 $('#tbl-modalconsignee').dataTable().fnDestroy();
-               
+
             }
             if ($('#nombreD').val() != '') {
                 nom = $('#nombreD').val();
@@ -1168,7 +1206,7 @@ var objVue = new Vue({
                     $('#contiene').val('');
                     $('#valDeclarado').val('');
                     // refreshTable('whgTable');
-                    
+
                     me.refreshTableDetail();
                 }).catch(function(error) {
                     console.log(error);
@@ -1314,7 +1352,7 @@ var objVue = new Vue({
 
 (function ($) {
     "use strict";
-    
+
     var Address = function (options) {
         this.init('address', options, Address.defaults);
     };
@@ -1326,84 +1364,84 @@ var objVue = new Vue({
         /**
         Renders input from tpl
 
-        @method render() 
-        **/        
+        @method render()
+        **/
         render: function() {
            this.$input = this.$tpl.find('input');
         },
-        
+
         /**
         Default method to show value in element. Can be overwritten by display option.
-        
-        @method value2html(value, element) 
+
+        @method value2html(value, element)
         **/
         value2html: function(value, element) {
             if(!value) {
                 $(element).empty();
-                return; 
+                return;
             }
             var html = 'Vol=' + $('<div>').text(value.largo).html() + 'x' + $('<div>').text(value.ancho).html() + 'x' + $('<div>').text(value.alto).html();
-            $(element).html(html); 
+            $(element).html(html);
         },
-        
+
         /**
         Gets value from element's html
-        
-        @method html2value(html) 
-        **/        
-        html2value: function(html) {        
+
+        @method html2value(html)
+        **/
+        html2value: function(html) {
           /*
             you may write parsing method to get value by element's html
             e.g. "Moscow, st. Lenina, bld. 15" => {city: "Moscow", street: "Lenina", building: "15"}
             but for complex structures it's not recommended.
-            Better set value directly via javascript, e.g. 
+            Better set value directly via javascript, e.g.
             editable({
                 value: {
-                    city: "Moscow", 
-                    street: "Lenina", 
+                    city: "Moscow",
+                    street: "Lenina",
                     building: "15"
                 }
             });
-          */ 
+          */
           // console.log('asdf: '+ html);
-          return null;  
+          return null;
         },
-      
+
        /**
-        Converts value to string. 
+        Converts value to string.
         It is used in internal comparing (not for sending to server).
-        
-        @method value2str(value)  
+
+        @method value2str(value)
        **/
        value2str: function(value) {
            var str = '';
            if(value) {
                for(var k in value) {
-                   str = str + k + ':' + value[k] + ';';  
+                   str = str + k + ':' + value[k] + ';';
                }
            }
            return str;
-       }, 
-       
+       },
+
        /*
         Converts string to value. Used for reading value from 'data-value' attribute.
-        
-        @method str2value(str)  
+
+        @method str2value(str)
        */
        str2value: function(str) {
            /*
-           this is mainly for parsing value defined in data-value attribute. 
+           this is mainly for parsing value defined in data-value attribute.
            If you will always set value by javascript, no need to overwrite it
            */
            return str;
-       },                
-       
+       },
+
        /**
         Sets value of input.
-        
-        @method value2input(value) 
+
+        @method value2input(value)
         @param {mixed} value
-       **/         
+       **/
        value2input: function(value) {
            if(!value) {
              return;
@@ -1413,49 +1451,49 @@ var objVue = new Vue({
            this.$input.filter('[name="largo"]').val(value[0]);
            this.$input.filter('[name="ancho"]').val(value[1]);
            this.$input.filter('[name="alto"]').val(value[2]);
-       },       
-       
+       },
+
        /**
         Returns value of input.
-        
-        @method input2value() 
-       **/          
-       input2value: function() { 
+
+        @method input2value()
+       **/
+       input2value: function() {
            return {
-              largo: this.$input.filter('[name="largo"]').val(), 
-              ancho: this.$input.filter('[name="ancho"]').val(), 
+              largo: this.$input.filter('[name="largo"]').val(),
+              ancho: this.$input.filter('[name="ancho"]').val(),
               alto: this.$input.filter('[name="alto"]').val()
            };
-       },        
-       
+       },
+
         /**
         Activates input: sets focus on the first field.
-        
-        @method activate() 
-       **/        
+
+        @method activate()
+       **/
        activate: function() {
             this.$input.filter('[name="largo"]').focus();
-       },  
-       
+       },
+
        /**
         Attaches handler to submit form in case of 'showbuttons=false' mode
-        
-        @method autosubmit() 
-       **/       
+
+        @method autosubmit()
+       **/
        autosubmit: function() {
            this.$input.keydown(function (e) {
                 if (e.which === 13) {
                     $(this).closest('form').submit();
                 }
            });
-       }       
+       }
     });
 
     Address.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, {
         tpl: '<div class="editable-address"><label><span>Length: </span><input type="number" name="largo" class="input-small form-control" autocomplete="off"></label></div>'+
              '<div class="editable-address"><label><span>Width:  </span><input type="number" name="ancho" class="input-small form-control" autocomplete="off"></label></div>'+
              '<div class="editable-address"><label><span>Heigth: </span><input type="number" name="alto" class="input-small form-control" autocomplete="off"></label></div>',
-             
+
         inputclass: ''
     });
 

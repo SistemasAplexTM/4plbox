@@ -944,7 +944,7 @@
 					    </td>
 					    <td height="35px" valign="bottom" colspan="3" class="left_line rigth_line" style="border-left: 1px solid {{ $color }};border-right: 1px solid {{ $color }};">
 						    {{-- <div id="sign_description" class="text_regular_l margin_div">DESCRIPCIÓN DE LA FIRMA</div> --}}
-						    <div style="width:20%; float:left" class="text_regular_l">{{ date('d-m-y', strtotime($data->fecha_vuelo1)) }}</div>
+						    <div style="width:20%; float:left" class="text_regular_l">{{ date('m-d-y', strtotime($data->fecha_vuelo1)) }}</div>
 						    <div style="width:24%; float:left" class="text_regular_c">{{-- MIA --}}</div>
 						    <div style="width:50%; float:right" class="text_regular_r">
 							    <span>

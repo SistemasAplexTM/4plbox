@@ -151,7 +151,31 @@ class TrackingController extends Controller
                 'tracking.confirmed_send',
                 'tracking.created_at as fecha',
                 'b.nombre_full as cliente',
-                'c.num_warehouse'
+                'c.num_warehouse',
+                DB::raw("(
+              		SELECT
+              			b.descripcion
+              		FROM
+              			status_detalle AS a
+              		INNER JOIN `status` AS b ON a.status_id = b.id
+              		WHERE
+              			a.documento_detalle_id = c.id
+              		ORDER BY
+              			a.id DESC
+              		LIMIT 1
+              	) AS estatus"),
+                DB::raw("(
+              		SELECT
+              			b.color
+              		FROM
+              			status_detalle AS a
+              		INNER JOIN `status` AS b ON a.status_id = b.id
+              		WHERE
+              			a.documento_detalle_id = c.id
+              		ORDER BY
+              			a.id DESC
+              		LIMIT 1
+              	) AS estatus_color")
             )
             ->where($where)
             ->get();

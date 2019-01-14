@@ -10,7 +10,8 @@
 </div>
 @endsection
 @section('content')
-<div class="row" id="homeIndex">
+  @if(Auth::user()->isRole('admin'))
+    <div class="row" id="homeIndex">
     <div class="col-lg-12">
         <div class="wrapper wrapper-content animated fadeInRight" style="padding-top: 0px;">
             <div class="row">
@@ -135,6 +136,7 @@
         </div>
     </div>
 </div>
+  @endif
 @endsection
 @section('scripts')
 

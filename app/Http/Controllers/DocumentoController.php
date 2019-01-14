@@ -343,7 +343,7 @@ class DocumentoController extends Controller
                     $idsShipCons        = $this->createOrUpdateShipperConsignee($request->all());
                     $data->consignee_id = $idsShipCons['consig_id'];
                 } else {
-                    if ($request->consignee_id == '' and $data->shipper_id != '') {
+                    if ($request->consignee_id == '' and  $data->consignee_id == '' and $data->shipper_id != '') {
                         $idsShipCons        = $this->createOrUpdateShipperConsignee($request->all());
                         $data->consignee_id = $idsShipCons['consig_id'];
                     } else {
@@ -640,10 +640,30 @@ class DocumentoController extends Controller
                 ->leftJoin('shipper', 'documento.shipper_id', '=', 'shipper.id')
                 ->leftJoin('consignee', 'documento.consignee_id', '=', 'consignee.id')
                 ->join('agencia', 'documento.agencia_id', '=', 'agencia.id')
-                ->select('documento.id as id', 'valor_libra', 'documento.liquidado', 'documento.tipo_documento_id as tipo_documento_id', 'documento.' . $codigo . ' as codigo', 'documento.created_at as fecha', 'shipper.nombre_full as ship_nomfull', 'consignee.nombre_full as cons_nomfull', 'consignee.correo as email_cons', 'agencia.descripcion as agencia', $codigo,
+                ->select('documento.id as id', 'valor_libra', 'documento.valor', 'documento.liquidado', 'documento.tipo_documento_id as tipo_documento_id', 'documento.' . $codigo . ' as codigo', 'documento.created_at as fecha', 'shipper.nombre_full as ship_nomfull', 'consignee.nombre_full as cons_nomfull', 'consignee.correo as email_cons', 'agencia.descripcion as agencia', $codigo,
                     DB::raw("(SELECT IFNULL(COUNT(consolidado_detalle.id),0) FROM consolidado_detalle WHERE consolidado_detalle.deleted_at IS NULL AND consolidado_detalle.consolidado_id = documento.id) as cantidad"),
                     DB::raw("(SELECT IFNULL(Sum(documento_detalle.peso2),0) FROM consolidado_detalle INNER JOIN documento_detalle ON consolidado_detalle.documento_detalle_id = documento_detalle.id WHERE consolidado_detalle.deleted_at IS NULL AND consolidado_detalle.consolidado_id = documento.id) as peso"),
-                    DB::raw("(SELECT IFNULL(Sum(documento_detalle.volumen),0) FROM consolidado_detalle INNER JOIN documento_detalle ON consolidado_detalle.documento_detalle_id = documento_detalle.id WHERE consolidado_detalle.deleted_at IS NULL AND consolidado_detalle.consolidado_id = documento.id) as volumen")
+                    DB::raw("(SELECT IFNULL(Sum(documento_detalle.volumen),0) FROM consolidado_detalle INNER JOIN documento_detalle ON consolidado_detalle.documento_detalle_id = documento_detalle.id WHERE consolidado_detalle.deleted_at IS NULL AND consolidado_detalle.consolidado_id = documento.id) as volumen"),
+                    DB::raw('(SELECT
+                  			ROUND(Sum(b.peso2) * 0.453592) AS peso_total
+                  		FROM
+                  			consolidado_detalle AS a
+                  		INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
+                  		WHERE
+                  			a.deleted_at IS NULL
+                  		AND b.deleted_at IS NULL
+                  		AND a.consolidado_id = documento.id
+                  	) AS peso_total'),
+                    DB::raw('(SELECT
+                  			Sum(b.declarado2) AS declarado_total
+                  		FROM
+                  			consolidado_detalle AS a
+                  		INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
+                  		WHERE
+                  			a.deleted_at IS NULL
+                  		AND b.deleted_at IS NULL
+                  		AND a.consolidado_id = documento.id
+                  	) AS declarado_total')
                 )
                 ->where($filter)
                 ->orderBy('documento.created_at', 'DESC');
@@ -676,7 +696,12 @@ class DocumentoController extends Controller
                                                 z.documento_id,
                                                 z.consolidado
                                         ) AS t"), "documento.id", "t.documento_id")
-                    ->select('documento.id as id', 'documento.valor_libra', 'documento.liquidado', 'documento.tipo_documento_id as tipo_documento_id', 'documento.consecutivo as codigo', DB::raw("DATE_FORMAT(documento.created_at, '%Y-%m-%d') AS fecha"), 'shipper.nombre_full as ship_nomfull', 'consignee.nombre_full as cons_nomfull', 'consignee.correo as email_cons', 'agencia.descripcion as agencia',
+                    ->select('documento.id as id', 'documento.valor_libra', 'documento.valor', 'documento.liquidado', 'documento.tipo_documento_id as tipo_documento_id',
+                    'documento.consecutivo as codigo',
+                     // DB::raw("DATE_FORMAT(documento.created_at, '%Y-%m-%d') AS fecha"),
+                     'documento.created_at AS fecha',
+                     'shipper.nombre_full as ship_nomfull', 'consignee.nombre_full as cons_nomfull',
+                     'consignee.correo as email_cons', 'agencia.descripcion as agencia',
                         DB::raw("(SELECT Count(a.id) AS cantidad FROM documento_detalle AS a WHERE a.documento_id = documento.id AND a.deleted_at IS NULL) as cantidad"),
                         DB::raw("(SELECT IFNULL(SUM(a.piezas), 0) AS piezas FROM documento_detalle AS a WHERE a.documento_id = documento.id AND a.deleted_at IS NULL) as piezas"),
                         DB::raw("(SELECT Sum(documento_detalle.peso) FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as peso"),
@@ -693,6 +718,7 @@ class DocumentoController extends Controller
                         'documento.tipo_documento_id',
                         'documento.consecutivo',
                         'documento.valor_libra',
+                        'documento.valor',
                         'documento.num_warehouse',
                         'documento.created_at',
                         'shipper.nombre_full',
@@ -721,7 +747,9 @@ class DocumentoController extends Controller
                                             z.documento_id,
                                             z.consolidado
                                     ) AS t"), "documento.id", "t.documento_id")
-                ->select('documento.id as id', 'documento.liquidado', 'documento.tipo_documento_id as tipo_documento_id', 'documento.consecutivo as codigo', 'documento.created_at as fecha', 'shipper.nombre_full as ship_nomfull', 'consignee.nombre_full as cons_nomfull', 'consignee.correo as email_cons', 'agencia.descripcion as agencia',
+                ->select('documento.id as id', 'documento.liquidado', 'documento.tipo_documento_id as tipo_documento_id', 'documento.consecutivo as codigo',
+                'documento.created_at as fecha', 'shipper.nombre_full as ship_nomfull', 'consignee.nombre_full as cons_nomfull',
+                'consignee.correo as email_cons', 'agencia.descripcion as agencia',
                     DB::raw("(SELECT Count(a.id) AS cantidad FROM documento_detalle AS a WHERE a.documento_id = documento.id AND a.deleted_at IS NULL) as cantidad"),
                     DB::raw("(SELECT IFNULL(SUM(a.piezas), 0) AS piezas FROM documento_detalle AS a WHERE a.documento_id = documento.id AND a.deleted_at IS NULL) as piezas"),
                     DB::raw("(SELECT Sum(documento_detalle.peso) FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as peso"),
@@ -945,6 +973,10 @@ class DocumentoController extends Controller
                             'created_at'           => date('Y-m-d H:i:s'),
                         ],
                     ]);
+
+                    /* INSERTAR CAMPO AGRUPADO */
+                    $data->agrupado = $data->id;
+                    $data->save();
 
                     $detalle = DocumentoDetalle::join('documento', 'documento_detalle.documento_id', '=', 'documento.id')
                         ->leftJoin('shipper', 'documento_detalle.shipper_id', '=', 'shipper.id')
@@ -1268,8 +1300,8 @@ class DocumentoController extends Controller
                 $this->AddToLog('Impresion warehouse (' . $documento->id . ')');
                 if (env('APP_TYPE') === 'courier') {
                     if(env('APP_CLIENT') === 'colombiana'){
-                        $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
-                    }else{
+                    //     $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
+                    // }else{
                         $pdf = PDF::loadView('pdf.warehousePdf', compact('documento', 'detalle'));
                     }
                     // $pdf = PDF::loadView('pdf.guiaPdf', compact('documento', 'detalle'));
@@ -1414,22 +1446,60 @@ class DocumentoController extends Controller
                                 'b.declarado2',
                                 'j.peso2',
                                 'b.contenido2',
-                                'b.liquidado'
+                                'b.liquidado',
+                                DB::raw('(SELECT
+                                    ROUND(Sum(b.peso2) * 0.453592) AS peso_total
+                                  FROM
+                                    consolidado_detalle AS a
+                                  INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
+                                  WHERE
+                                    a.deleted_at IS NULL
+                                  AND b.deleted_at IS NULL
+                                  AND b.consignee_id = d.id
+                                ) AS peso_total'),
+                                DB::raw('(SELECT
+                                    Sum(b.declarado2) AS declarado_total
+                                  FROM
+                                    consolidado_detalle AS a
+                                  INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
+                                  WHERE
+                                    a.deleted_at IS NULL
+                                  AND b.deleted_at IS NULL
+                                  AND b.consignee_id = d.id
+                                ) AS declarado_total')
                             )
                             ->where([['a.deleted_at', null], ['a.consolidado_id', $id], ['a.flag', 0]])
                             ->get();
-                        $this->AddToLog('Impresion Consolidado guias (' . $id . ')');
-                        if (env('APP_TYPE') === 'courier') {
-                            if(env('APP_CLIENT') === 'colombiana'){
-                                return view('pdf/consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
-                                // $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
-                            }else{
-                                $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf', compact('documento', 'detalle', 'detalleConsolidado'));
+                        // VALIDAR QUE EL PESO Y EL DECLARADO NO SUPEREN LO MAXIMO ESTABLECIDO
+                        $peso_t = 0;
+                        $decla_t = 0;
+                        if (count($detalleConsolidado) > 0) {
+                          foreach ($detalleConsolidado as $key) {
+                            if($key->peso_total > 50){
+                              $peso_t++;
                             }
-                        }else{
-                            $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                            if($key->declarado_total > 2000){
+                              $decla_t++;
+                            }
+                          }
                         }
-                        $nameDocument = 'Guias -' . $documento->id;
+                        if($peso_t === 0 and $decla_t === 0){
+                          $this->AddToLog('Impresion Consolidado guias (' . $id . ')');
+                          if (env('APP_TYPE') === 'courier') {
+                              if(env('APP_CLIENT') === 'colombiana'){
+                                  // return view('pdf/consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                                  $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                              }else{
+                                  $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf', compact('documento', 'detalle', 'detalleConsolidado'));
+                              }
+                          }else{
+                              $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                          }
+                          $nameDocument = 'Guias -' . $documento->id;
+                        }else{
+                          $error = 'El peso o valor declarado supera lo permitido por cliente. Por favor revisar.';
+                          return view('errors/generalError', compact('error'));
+                        }
                     } else {
                         if ($document === 'consolidado') {
                             $detalleConsolidado = DB::table('consolidado_detalle as a')
@@ -1494,22 +1564,63 @@ class DocumentoController extends Controller
                                     'b.declarado2',
                                     'j.peso2',
                                     'b.contenido2',
-                                    'b.liquidado'
+                                    'b.liquidado',
+                                    'b.piezas',
+                                    DB::raw('(SELECT
+                                  			ROUND(Sum(b.peso2) * 0.453592) AS peso_total
+                                  		FROM
+                                  			consolidado_detalle AS a
+                                  		INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
+                                  		WHERE
+                                  			a.deleted_at IS NULL
+                                  		AND b.deleted_at IS NULL
+                                  		AND b.consignee_id = d.id
+                                  	) AS peso_total'),
+                                    DB::raw('(SELECT
+                                  			Sum(b.declarado2) AS declarado_total
+                                  		FROM
+                                  			consolidado_detalle AS a
+                                  		INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
+                                  		WHERE
+                                  			a.deleted_at IS NULL
+                                  		AND b.deleted_at IS NULL
+                                  		AND b.consignee_id = d.id
+                                  	) AS declarado_total')
                                 )
                                 ->where([['a.deleted_at', null], ['a.consolidado_id', $id], ['a.flag', 0]])
                                 ->orderBy('b.created_at', 'ASC')
                                 ->get();
-                            $this->AddToLog('Impresion Consolidado (' . $id . ')');
-                                if (env('APP_TYPE') === 'courier') {
-                                    if(env('APP_CLIENT') === 'colombiana'){
-                                    $pdf          = PDF::loadView('pdf.consolidadoPdfColombiana', compact('documento', 'detalle', 'detalleConsolidado'));
-                                }else{
-                                    $pdf          = PDF::loadView('pdf.consolidadoPdf', compact('documento', 'detalle', 'detalleConsolidado'));
+
+                            // VALIDAR QUE EL PESO Y EL DECLARADO NO SUPEREN LO MAXIMO ESTABLECIDO
+                            $peso_t = 0;
+                            $decla_t = 0;
+                            if (count($detalleConsolidado) > 0) {
+                              foreach ($detalleConsolidado as $key) {
+                                if($key->peso_total > 50){
+                                  $peso_t++;
                                 }
-                            }else{
-                                $pdf          = PDF::loadView('pdf.consolidadoPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                                if($key->declarado_total > 2000){
+                                  $decla_t++;
+                                }
+                              }
                             }
-                            $nameDocument = $documento->tipo_documento . '-' . $documento->id;
+                            if($peso_t === 0 and $decla_t === 0){
+                              $this->AddToLog('Impresion Consolidado (' . $id . ')');
+                              if (env('APP_TYPE') === 'courier') {
+                                  if(env('APP_CLIENT') === 'colombiana'){
+                                      $pdf          = PDF::loadView('pdf.consolidadoPdfColombiana', compact('documento', 'detalle', 'detalleConsolidado'));
+                                  }else{
+                                      $pdf          = PDF::loadView('pdf.consolidadoPdf', compact('documento', 'detalle', 'detalleConsolidado'));
+                                  }
+                              }else{
+                                // return view('pdf/consolidadoPdfColombiana', compact('documento', 'detalle', 'detalleConsolidado'));
+                                  $pdf          = PDF::loadView('pdf.consolidadoPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                              }
+                              $nameDocument = $documento->tipo_documento . '-' . $documento->id;
+                            }else{
+                              $error = 'El peso o valor declarado supera lo permitido por cliente. Por favor revisar.';
+                              return view('errors/generalError', compact('error'));
+                            }
                         }
                     }
                 }
@@ -1901,7 +2012,27 @@ class DocumentoController extends Controller
                 'g.peso',
                 'g.guias_agrupadas',
                 'c.liquidado',
-                DB::raw('(SELECT Count(z.id) FROM consolidado_detalle AS z WHERE z.agrupado = a.documento_detalle_id AND z.deleted_at IS NULL AND z.flag = 1) AS agrupadas')
+                DB::raw('(SELECT Count(z.id) FROM consolidado_detalle AS z WHERE z.agrupado = a.documento_detalle_id AND z.deleted_at IS NULL AND z.flag = 1) AS agrupadas'),
+                DB::raw('(SELECT
+              			ROUND(Sum(b.peso2) * 0.453592) AS peso_total
+              		FROM
+              			consolidado_detalle AS a
+              		INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
+              		WHERE
+              			a.deleted_at IS NULL
+              		AND b.deleted_at IS NULL
+              		AND b.consignee_id = e.id
+              	) AS peso_total'),
+                DB::raw('(SELECT
+              			Sum(b.declarado2) AS declarado_total
+              		FROM
+              			consolidado_detalle AS a
+              		INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
+              		WHERE
+              			a.deleted_at IS NULL
+              		AND b.deleted_at IS NULL
+              		AND b.consignee_id = e.id
+              	) AS declarado_total')
             )
             ->where($where)
             ->get();
@@ -2598,6 +2729,12 @@ class DocumentoController extends Controller
             );
             return $answer;
         }
+    }
+
+    public function closeDocument($id)
+    {
+      Documento::where('id', $id)->update(['close_document' => 1]);
+      return $data = array('code' => 200, );
     }
 
 }

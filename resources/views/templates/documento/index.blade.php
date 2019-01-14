@@ -75,15 +75,19 @@
                                 </div>
                             </div>
                             <div class="col-lg-10">
+<<<<<<< HEAD
                                 <div class="col-lg-8" style="font-size: 30px; font-weight:800;border-bottom: 1px solid #CDCDCD;">
+=======
+                                <div class="col-lg-12" style="font-size: 30px; font-weight:800;border-bottom: 1px solid #CDCDCD;">
+>>>>>>> 60ecd55e6c18345262982ecec08038019708e52a
                                     <span id="icono_doc"></span>&nbsp;
                                     <div style="display:inline;" id="nombre_doc">
                                        @lang('documents.warehouse')
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                {{-- <div class="col-lg-4">
                                     <v-select name="status_id" v-model="status_id" label="descripcion" :filterable="false" :options="status" placeholder="Status"></v-select>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="col-lg-4">
                                 &nbsp;
@@ -109,7 +113,7 @@
                                                     <th><i class="fa fa-file" aria-hidden="true" id="icono-doc-table"></i> #@lang('documents.documents')</th>
                                                     <th><i class="fa fa-calendar" aria-hidden="true"></i> @lang('documents.date')</th>
                                                     <th><i class="fa fa-user" aria-hidden="true"></i> @lang('documents.client_consignee')</th>
-                                                    <th><i class="fa fa-dollar" aria-hidden="true"></i> @lang('general.rate')</th>
+                                                    <th><i class="fa fa-dollar-sign" aria-hidden="true"></i> @lang('general.rate')</th>
                                                     <th><i class="fa fa-balance-scale" aria-hidden="true"></i> @lang('documents.weight')</th>
                                                     <th><i class="fa fa-cubes" aria-hidden="true"></i> @lang('documents.volume')</th>
                                                     <th><i class="fa fa-building" aria-hidden="true"></i> @lang('documents.agency')</th>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Agencia;
+use App\AplexConfig;
 use App\AgenciaDetalle;
 use App\Http\Requests\AgenciaRequest;
 use DataTables;
@@ -20,34 +21,19 @@ class AgenciaController extends Controller
         $this->middleware('permission:agencia.destroy')->only('destroy');
         $this->middleware('permission:agencia.delete')->only('delete');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $this->assignPermissionsJavascript('agencia');
         return view('templates/agenciaIndex');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $this->assignPermissionsJavascript('agencia');
         return view('templates/agenciaForm');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(AgenciaRequest $request)
     {
 
@@ -87,12 +73,6 @@ class AgenciaController extends Controller
         return redirect()->route('agencia.index');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $agencia = Agencia::join('localizacion', 'agencia.localizacion_id', '=', 'localizacion.id')
@@ -109,15 +89,23 @@ class AgenciaController extends Controller
         return view('templates/agenciaForm', compact('agencia', 'detalle'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(AgenciaRequest $request, $id)
     {
+
+      $configMC = $this->getAplexConfig('agency_mc');
+      $value = array(
+        'list' => [array(
+          'id_agency' => $id,
+          'id_list' => $request->all()['listId']
+        )]
+      );
+      // $this->createAplexConfig('agency_mc', $value, $configMC);
+      //
+      // echo '<pre>';
+      // print_r($request->all());
+      // // print_r($configMC->value);
+      // echo '<pre>';
+      // exit();
         $data = Agencia::findOrFail($id);
         /* LE ASIGNO UNA VARIABLE AL REQUEST PARA PODER ACTUALIZAR LOS CAMPOS BOLEANOS*/
         $requestData = $request->all();
@@ -156,6 +144,29 @@ class AgenciaController extends Controller
         }
 
         return redirect()->route('agencia.index');
+    }
+
+    public function createAplexConfig($key, $value, $configMC){
+      $data         = new AplexConfig;
+      $data->key    = $key;
+      $data->value  = json_encode($value);
+
+      // VALIDO SI EL CAMPO VALUE EN LA BD ESTA VACIO
+      if($configMC->value === null || $configMC->value === ''){
+        $data->save();
+      }else{
+
+      }
+      echo '<pre>';
+      print_r($configMC);
+      print_r($data);
+      echo '<pre>';
+      exit();
+        // return AplexConfig::where('key', $key)->first();
+    }
+
+    public function getAplexConfig($key){
+        return AplexConfig::where('key', $key)->first();
     }
 
     /**

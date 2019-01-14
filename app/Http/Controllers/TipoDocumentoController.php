@@ -7,6 +7,7 @@ use App\TipoDocumento;
 use DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class TipoDocumentoController extends Controller
 {
@@ -236,12 +237,15 @@ class TipoDocumentoController extends Controller
      */
     public function getAll()
     {
+      $where = array(['a.deleted_at', null]);
+
+      if(!Auth::user()->isRole('admin')){
+        $where[] = ['a.id', '<>', 3];
+      }
         $data = DB::table('tipo_documento as a')
             ->leftjoin('plantillas_correo as b', 'a.email_plantilla_id', 'b.id')
             ->select('a.*', 'b.nombre as name_plantilla', 'b.descripcion_plantilla')
-            ->where([
-                ['a.deleted_at', null],
-            ])
+            ->where($where)
             ->get();
         return \DataTables::of($data)->make(true);
     }

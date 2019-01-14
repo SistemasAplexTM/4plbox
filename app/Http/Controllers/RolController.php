@@ -42,9 +42,9 @@ class RolController extends Controller
             $data             = (new Rol)->fill($request->all());
             $data->created_at = date('Y-m-d H:i:s');
             if ($data->save()) {
-                foreach ($request->get('permissions') as $value) {
-                    DB::table('permission_role')->insert(['permission_id' => $value, 'role_id' => $data->id]);
-                }
+                // foreach ($request->get('permissions') as $value) {
+                //     DB::table('permission_role')->insert(['permission_id' => $value, 'role_id' => $data->id]);
+                // }
                 $answer = array(
                     "datos"  => $request->all(),
                     "code"   => 200,
@@ -58,7 +58,7 @@ class RolController extends Controller
                 );
             }
             return $answer;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $error = $e;
             // foreach ($e->errorInfo as $key => $value) {
             //     $error .= $key . ' - ' .  $value . ' <br> ';
@@ -84,9 +84,9 @@ class RolController extends Controller
         try {
             $data = Rol::findOrFail($id);
             $data->update($request->all());
-            foreach ($request->get('permissions') as $value) {
-                DB::table('permission_role')->insert(['permission_id' => $value, 'role_id' => $id]);
-            }
+            // foreach ($request->get('permissions') as $value) {
+            //     DB::table('permission_role')->insert(['permission_id' => $value, 'role_id' => $id]);
+            // }
             $answer = array(
                 "datos"  => $request->all(),
                 "code"   => 200,
@@ -94,13 +94,9 @@ class RolController extends Controller
             );
             return $answer;
 
-        } catch (\Exception $e) {
-            $error = '';
-            foreach ($e->errorInfo as $key => $value) {
-                $error .= $key . ' - ' . $value . ' <br> ';
-            }
+        } catch (Exception $e) {
             $answer = array(
-                "error"  => $error,
+                "error"  => $e,
                 "code"   => 600,
                 "status" => 500,
             );

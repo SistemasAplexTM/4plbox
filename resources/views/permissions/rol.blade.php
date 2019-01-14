@@ -24,12 +24,12 @@
                     <div class="ibox-title">
                         <h5>@lang('general.record_of_roles')</h5>
                         <div class="ibox-tools">
-                            
+
                         </div>
                     </div>
                     <div class="ibox-content">
                         <!--***** contenido ******-->
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-6">
                                     <div class="form-group" :class="{'has-error': listErrors.name}">
                                         <div class="col-sm-12">
@@ -49,7 +49,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.description}">
                                         <div class="col-sm-12">
@@ -60,7 +60,20 @@
                                     </div>
                             </div>
                         </div>
-                        
+                        <div class="row">
+                          <div class="col-lg-12">
+                                  <div class="form-group">
+                                      <div class="col-sm-12">
+                                          <label for="is_agency" class="control-label gcore-label-top">@lang('general.is_agency'):</label>
+                                          <div class="checkbox checkbox-success">
+                                              <input id="is_agency" type="checkbox" v-model="is_agency">
+                                              <label for="checkbox2"></label>
+                                          </div>
+                                      </div>
+                                  </div>
+                          </div>
+                        </div>
+
 
                         <div class="row">
                             @include('layouts.buttons')
@@ -96,7 +109,7 @@
 	                                </tr>
 	                            </tfoot>
 	                        </table>
-	                    </div>             
+	                    </div>
 	                </div>
 	            </div>
 	        </div>

@@ -271,24 +271,36 @@
                     <td>
                         <div id="apDiv10">
                             <table width="100%" border="0" cellspacing="1" cellpadding="0">
-                                <tr>
+                                {{-- <tr> --}}
                                     <?php
+                                    $flete = 0;
+                                    $impuesto = 0;
                                       if($documento->tipo_embarque_id == '8'){
                                         if($pa_id == '1'){
-                                          $sub = $pie * $documento->valor_libra;
+                                          $flete = $pie * $documento->valor_libra;
                                         }else{
-                                          $sub = $metro * $documento->valor_libra;
+                                          $flete = $metro * $documento->valor_libra;
                                         }
                                       }else{
-                                        if($total_libras > $total_volumen){
-                                          $sub = ($total_declarado * $documento->impuesto / 100) + ($documento->flete);
-                                        }else{
-                                          $sub = ($total_declarado * $documento->impuesto / 100) + ($documento->flete);
-                                        }
+                                        // if($total_libras > $total_volumen){
+                                          $flete = ($documento->flete);
+                                          $impuesto = ($total_declarado * $documento->impuesto / 100);
+                                        // }else{
+                                        //   $sub = ($total_declarado * $documento->impuesto / 100) + ($documento->flete);
+                                        // }
                                       }
+                                      $subtotal = number_format(ceil($flete + $impuesto), 2)
                                     ?>
-                                    <td><b>@lang('general.value'): (Flete+Impuesto) </b></td>
-                                    <td align="right">$ {{ $subtotal = number_format(ceil($sub), 2) }} </td>
+                                    {{-- <td><b>@lang('general.value'): (Flete+Impuesto) </b></td>
+                                    <td align="right">$ {{ $subtotal }} </td>
+                                </tr> --}}
+                                <tr>
+                                  <td><b>Flete: </b></td>
+                                  <td align="right">$ {{ number_format(ceil($documento->flete), 2) }} </td>
+                                </tr>
+                                <tr>
+                                  <td><b>Impuesto: </b></td>
+                                  <td align="right">$ {{ number_format(ceil($total_declarado * $documento->impuesto / 100), 2) }} </td>
                                 </tr>
 
                                 <tr>
@@ -304,10 +316,10 @@
                                     <td><b>@lang('general.others'):</b></td>
                                     <td align="right">$ {{ number_format(ceil($documento->cargos_add), 2) }} </td>
                                 </tr>
-                                <tr>
+                                {{-- <tr>
                                     <td><b>Sub Total:</b></td>
-                                    <td align="right">$ {{ $total = number_format(ceil($sub + $seguro + $documento->cargos_add - $documento->descuento), 2) }}</td>
-                                </tr>
+                                    <td align="right">$ {{ $total = number_format(ceil($flete + $seguro + $documento->cargos_add - $documento->descuento), 2) }}</td>
+                                </tr> --}}
                             </table>
                         </div>
                         <div >
@@ -316,7 +328,7 @@
 
                                     <tr>
                                         <td><b>Total:</b></td>
-                                        <td align="right"><b><span style="font-size:14px;color:#F00">$ {{ $total }}</span></b>
+                                        <td align="right"><b><span style="font-size:14px;color:#F00">$ {{ $total = number_format(ceil($flete + $impuesto + $seguro + $documento->cargos_add - $documento->descuento), 2) }}</span></b>
                                         </td>
                                     </tr>
                                 </table>
@@ -367,12 +379,7 @@
           </table>
 
           <table class="acuerdo separador_interno">
-             @if(env('APP_CLIENT') == 'worldcargo')
-              <?php  $agencia = 'WORLD CARGO' ?>
-            @endif
-            @if(env('APP_CLIENT') == 'colombiana')
-              <?php  $agencia = 'COLOMBIANA DE CARGA' ?>
-            @endif
+            <?php  $agencia = ((isset($documento->agencia) and $documento->agencia != '') ? $documento->agencia : '') ?>
             <tr>
               <td style="padding-right: 80px;">
                 <p>La compañía, <span style="font-weight: bold;">{{ $agencia }} </span>, no es responsable por el contenido de los paquetes, y en caso de perdida el monto máximo que asumirá será de USD$ 100 por warehouse receipt .</p>

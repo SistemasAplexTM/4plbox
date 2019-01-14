@@ -90,7 +90,7 @@ class UserController extends Controller
         try {
             $data           = User::findOrFail($id);
             if(isset($request['data']['password']) and $request['data']['password'] != null){
-                $data->password = bcrypt($request['data']['password']);                
+                $data->password = bcrypt($request['data']['password']);
             }
             $data->email = $request['data']['email'];
             $data->actived = $request['data']['actived'];
@@ -212,14 +212,16 @@ class UserController extends Controller
                     ['id', Auth::user()->agencia_id]
                 ])->get();
             }else{
+              $where = array(['deleted_at', null]);
+              if(!Auth::user()->isRole('admin')){
+                $where[] = ['is_agency', 1];
+              }
                 $data = DB::table($table)
                 ->select('id', $field . ' as name')
-                ->where([
-                    ['deleted_at', null],
-                ])->get();
+                ->where($where)->get();
             }
 
-        
+
         $answer = array(
             'data' => $data,
         );

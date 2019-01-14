@@ -13,7 +13,8 @@ $(window).load(function() {
         totalizeDocument();
     }, 1000);
 });
-$(document).ready(function() {});
+$(document).ready(function() {
+});
 
 function totalizeDocument(elemento) {
     // setTimeout(function(){
@@ -35,7 +36,7 @@ function totalizeDocument(elemento) {
         $('#valor_libra2').val($('#servicios_id option:selected').data('tarifa'));
         $('#valorLibra').html($('#servicios_id option:selected').data('tarifa')); // *********  label
     }
-    if ($('#impuesto').val() == '0') {
+    if ($('#impuesto').val() === '0' || $('#impuesto').val() === '') {
         if ($('#servicios_id option:selected').data('impuesto_age')) {
             $('#impuesto').val($('#servicios_id option:selected').data('impuesto_age'));
         }
@@ -73,7 +74,7 @@ function calculateFlete(flete) {
     // console.log(metro);
     /* VALIDA QUE NO SOBREPASE LA TARIFA DEL SERVICIO */
     // if (parseFloat($('#valor_libra2').val()) < parseFloat($('#valor_libra').val())) {
-    if ($('#valor_libra').val() == '') {
+    if ($('#valor_libra').val() === '0' || $('#valor_libra').val() === '') {
         tarifa = 0;
     } else {
         tarifa = parseFloat($('#valor_libra').val());
@@ -94,7 +95,7 @@ function calculateFlete(flete) {
         if (parseFloat(tot) <= parseFloat(flete)) {
             return flete;
         }else{
-            return tot;  
+            return tot;
         }
     } else {
         /* SE EVALUA SI SE COBRARA POR PESO O VOLUMEN (PESO = 1 - VOLUMEN = 0)*/
@@ -106,7 +107,7 @@ function calculateFlete(flete) {
             if (parseFloat(peso) > 8) {
                 /*PESO * LA TARIFA */
                 $('#cobrarPor').text('Pes');
-                
+
                 var flete = parseFloat(peso) * parseFloat(tarifa);
                 var diferen = parseFloat(volumen) - parseFloat(peso);
                 if (parseFloat(diferen) > 0) {

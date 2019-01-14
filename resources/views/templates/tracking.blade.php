@@ -115,7 +115,7 @@
                                     <div class="col-sm-12">
                                         <div class="alert alert-info alert-dismissible" role="alert" id="msn_sendmail" style="margin-bottom: 0px;">
                                           <button type="button" class="close" data-dismiss="alert" aria-label="Close" id="icon_close"><span aria-hidden="true">&times;</span></button>
-                                          <strong>@lang('genral.instruction'):</strong> @{{ instruccion }}<br>
+                                          <strong>@lang('general.instruction'):</strong> @{{ instruccion }}<br>
                                           <strong>@lang('general.email'):</strong> @{{ email }}
                                         </div>
                                     </div>

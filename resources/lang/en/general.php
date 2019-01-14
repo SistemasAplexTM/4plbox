@@ -5,7 +5,7 @@ return [
     'configuration' => 'Configuration',
 
     //resources/views/templates/bill/create
-    
+
     'register_of_bill_of_lading'=>'Register of bill of lading',
     'create_new'=>'Create new',
     'display_name'=>'Display name',
@@ -34,9 +34,9 @@ return [
 
 
     //resources/views/templates/agenciaForm
-    
+
     'agencies'=>'Agencies',
-    'registration_data'=>'Registration data', 
+    'registration_data'=>'Registration data',
     'integrations'=>'Integrations',
     'url_public'=>'Url public',
     'name'=>'Name',
@@ -76,7 +76,7 @@ return [
     'new'=>'New',
     'country'=>'Country',
     'state'=>'State',
-    
+
     //resources/views/templates/arancel
 
     'tariff_positions'=>'Tariff positions',
@@ -104,9 +104,9 @@ return [
     'create_locker'=>'Create locker',
     'email_be_your_user'=>'Email (be your user)',
     'repeat_email'=>'Repeat email',
-   
+
     //resources/views/templates/ciudad
-   
+
     'cities'=>'Cities',
     'registration_of_cities'=>'Registration of cities',
     'department_state'=>'Dpto/State',
@@ -121,7 +121,7 @@ return [
     'zone'=>'Zone',
 
     //resources/views/templates/consignee
-    
+
     'consignee'=>'Consignee',
     'record_of_consignee'=>'Record of consignee',
     'agency'=>'Agency',
@@ -136,7 +136,7 @@ return [
     'send_email'=>'Send email',
     'send_email_with_data'=>'Send email with data from your mailbox.',
     'consult'=>'Consult',
-    
+
     //resources/views/templates/consulta
 
     'consult'=>'Consult',
@@ -150,13 +150,13 @@ return [
     'weight'=>'Weight',
     'volume'=>'Volume',
     'totals'=>'Totals',
- 
+
     //resources/views/templates/departamento
 
     'departments'=>'Departaments / States',
     'registration_of_departments'=>'Registration of departments / State',
     'description'=>'Description',
-    
+
    //resources/views/templates/emailTemplate
 
     'email_templates'=>'Email Templates',
@@ -179,18 +179,18 @@ return [
     'register_of'=>'Register of',
     'existing_records'=>'Existing records',
 
-    
+
     //resources/views/template/modulo
 
     'modules'=>'Modules',
     'register_of_modules'=>'Register of Modules',
 
-       
+
     //resources/views/template/pais
 
     'country_registration'=>'Country registration',
     'countries'=>'Countries',
-    
+
     //resources/views/template/prealerta
 
     'pre_alert'=>'Pre alert',
@@ -237,7 +237,7 @@ return [
     'enter_the_tax_percentage'=>'Enter the tax percentage',
 
     //resources/views/template/shipper
-    
+
     'shipper_registration'=>'Shipper registration',
     'status'=>'Status',
     'state_registration'=>'Registro de estado',
@@ -282,7 +282,7 @@ return [
      'code'=>'Code',
 
     //resources/views/template/transportador
-    
+
     'transported'=>'Transported',
     'registration_of_transported'=>'Registration of transported',
     'contact'=>'Contact',
@@ -308,12 +308,13 @@ return [
     'role'=>'Role',
     'activated'=>'Activated',
     'credential'=>'Credential',
+    'is_agency'=>'Agency role',
 
 
     //home
 
     'warehouse'=>'Warehouse',
-    'backup'=>'Backup', 
+    'backup'=>'Backup',
 
     //logActivity
     'users_logs'=>'users logs',
@@ -430,5 +431,5 @@ return [
 
 
 
-     
+
 ];

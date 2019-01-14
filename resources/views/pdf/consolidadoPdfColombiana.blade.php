@@ -38,6 +38,7 @@
         color: #1d1d1e;
     }
 </style>
+
 {{-- CABECERA --}}
 <table cellspacing="0" cellpadding="0" id="tableContainer" border="0" width="100%">
     <thead>
@@ -96,7 +97,8 @@
         <tr><th colspan="8" style="margin-bottom:10px;font-size:3px;background-color: #ccc">&nbsp;</th></tr>
     </thead>
     <tbody>
-        <?php 
+        <?php
+        $totDocs = 0;
         $totPiezas = 0;
         $piezas = 0;
         $peso = 0;
@@ -106,7 +108,7 @@
         $cont = 0;
         ?>
         @if($detalleConsolidado)
-        
+
             @foreach($detalleConsolidado as $val)
                 <?php
                     $shipper_json = '';
@@ -134,7 +136,7 @@
                     </td>
                     <td id="detalle" style="width: 20%">{{ $val->contenido2 }}</td>
                     <td id="detalle" style="text-align: center;"></td>
-                    <td id="detalle" style="text-align: center;">{{ number_format($piezas = 1) }}</td>
+                    <td id="detalle" style="text-align: center;">{{ $piezas = number_format($val->piezas) }}</td>
                     <td id="detalle" style="text-align: center;">
                         @if($val->peso2 == 0)
                            <div style="background-color:black;color:white;">{{ ceil($val->peso2) }} Lb<div>
@@ -154,6 +156,7 @@
                 </tr>
                 <tr><th colspan="8"><div style="font-size:1px;margin-top:6px;margin-bottom: 6px; background-color: #ccc">&nbsp;</div></th></tr>
                 <?php
+                $totDocs += 1;
                 $totPiezas += $piezas;
                 $peso += ceil($val->peso2);
                 $vol += ceil($val->volumen);
@@ -173,10 +176,11 @@
         @endif
         <tfoot>
             <tr>
-                <th colspan="4"></th>
+                <th>{{ $totDocs }} Docs.</th>
+                <th colspan="3"></th>
                 <th><div style="margin-top:8px;text-align: right;">TOTAL:</div></th>
                 <th>
-                    <div style="margin-top:8px;text-align: center;font-size: 14px;color:#1d1d1e;">{{ $totPiezas }}</div>
+                    <div style="margin-top:8px;text-align: center;font-size: 14px;color:#1d1d1e;">{{ $totPiezas }} pcs</div>
                 </th>
                 <th>
                     <div style="margin-top:5px;text-align: center;font-size: 14px;color:#1d1d1e;">{{ $peso }} Lb</div>

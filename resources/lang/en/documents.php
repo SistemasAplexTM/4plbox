@@ -19,13 +19,13 @@ return [
 		'obligatory_field'        => 'Obligatory field',
 		'zip'			  => 'Zip',
 		'send_email'	  => 'Send email',
-		'addressee_consignee'       => 'Addressee (Consignee)',  
+		'addressee_consignee'       => 'Addressee (Consignee)',
 		'load_data'                 => 'Load data',
 		'weight'          => 'Weight',
 		'dimensions'      => 'Dimensions',
 		'these_data_are_required'    => 'These Data are required',
 		'content'         => 'Content',
-		'declared'        => 'Declared', 
+		'declared'        => 'Declared',
 		'pieces'          => 'Pieces',
 		'packing'         => 'Packing',
 		'tariff_position' => 'Tariff position',
@@ -63,9 +63,9 @@ return [
 		'tax'					   => 'Tax',
 		'freight'                  => 'Freight',
 		'insured_value'            => 'Insured value',
-		'insurance'                => 'Insurance',    
+		'insurance'                => 'Insurance',
 		'charges'                  => 'Charges Ad.',
-		'discount'                 => 'Discount', 
+		'discount'                 => 'Discount',
 		'total'                    => 'Total',
 		'close'                    => 'Close',
 		'add_trackings'            => 'Add trackings',
@@ -84,9 +84,10 @@ return [
 		'date'                     => 'Date',
 		'client_consignee'         => 'Client',
 		'actions'                  => 'Actions',
+		'consolidated'             => 'Consolidado',
 
-// templaces/documento/viewGuiaWarehouse	
-		
+// templaces/documento/viewGuiaWarehouse
+
 		'see'                      => 'See',
 		'visualize_guide'          => 'Visualize guide',
 		'print_document'           => 'Print document',
@@ -95,7 +96,7 @@ return [
 		'shipper'                  => 'Shipper',
 		'state'                    => 'State',
  		'consignee'                => 'Consignee',
- 		'identification_card'      => 'Identification card',  
+ 		'identification_card'      => 'Identification card',
  		'observations'             => 'Observations',
  		'pounds'                   => 'pounds',
  		'important'                => '¡Important!',
@@ -124,7 +125,7 @@ return [
 
 
 
-	
+
 
 
 ];

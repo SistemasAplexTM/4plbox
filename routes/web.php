@@ -264,6 +264,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('documento/{id}/getBoxesConsolidado', 'DocumentoController@getBoxesConsolidado');
     Route::get('documento/{id}/removeBoxConsolidado/{num_bolsa}', 'DocumentoController@removeBoxConsolidado');
     Route::get('documento/{id}/changeBoxConsolidado/{num_bolsa}/{consol_id}', 'DocumentoController@changeBoxConsolidado');
+    Route::get('documento/{id}/closeDocument', 'DocumentoController@closeDocument');
 
     /*  REPORTES - IMPRESIONES EN PDF */
     Route::get('impresion-documento/{id}/{document}/{id_detalle?}', 'DocumentoController@pdf')->name('documento.pdf');
@@ -303,8 +304,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* MODULO APLEXCONFIG */
     Route::get('aplexConfig', 'AplexConfigController@index')->name('config.index');
+
+    /* MODULO INFORMES */
+    Route::get('report', 'ReportController@index')->name('report.index');
 });
 Route::get('aplexConfig/config/{key}', 'AplexConfigController@get')->name('config.config');
+Route::get('aplexConfig/getDataAgencyById/{id}', 'AplexConfigController@getDataAgencyById')->name('aplexConfig.getDataAgencyById');
 
 Route::get('consignee/vueSelect/{term}', 'ConsigneeController@vueSelect');
 Route::get('shipper/vueSelect/{term}', 'ShipperController@vueSelect');
