@@ -331,6 +331,10 @@ function llenarSelectServicio(id_embarque) {
             });
         },
         complete: function(){
+          // ASIGNO EL SERVICIO REGISTRADO EN LA BD
+          if($('#servicios_id').data('servicio_id') != ''){
+            $('#servicios_id').val($('#servicios_id').data('servicio_id'));
+          }
             if($('#servicios_id option:selected').data('pa_id') != null){
                 pa_id = $('#servicios_id option:selected').data('pa_id');
             }

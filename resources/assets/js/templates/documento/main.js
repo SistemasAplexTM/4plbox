@@ -55,7 +55,14 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                         color_badget = 'warning';
                     }
                 }
-                return '<strong>' + ((codigo == null) ? '' : codigo) + '<strong> <span style="float: right;" class="badge badge-' + color_badget + '" data-toggle="tooltip" data-placement="top" title="" data-original-title="Total piezas">' + cant + '</span>';
+                if (full.tipo_documento_id != 3) {
+                  groupGuias = 'group';
+                  group = ' onclick="agruparGuiasIndex('+full.id+')"';
+                  classText = color_badget;
+                  return '<span class="">' + codigo + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+ classText +' pop" role="button" data-html="true" data-toggle="popover" data-trigger="hover" title="<b>Guias agrupadas</b>" data-content="'+groupGuias+'" ' + group + '>'+full.agrupadas+'</a>';
+                }else{
+                  return '<strong>' + ((codigo == null) ? '' : codigo) + '<strong> <span style="float: right;" class="badge badge-' + color_badget + '" data-toggle="tooltip" data-placement="top" title="" data-original-title="Total piezas">' + cant + '</span>';
+                }
             }
         }, {
             data: 'fecha',
@@ -130,7 +137,25 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
             className: "text-center",
             "targets": [6],
             // width: 180,
-        }]
+        }],
+        "drawCallback": function () {
+          /* POPOVER PARA LAS GUIAS AGRUPADAS (BADGED) */
+          $(".pop").popover({ trigger: "manual" , html: true})
+              .on("mouseenter", function () {
+                  var _this = this;
+                  $(this).popover("show");
+                  $(".popover").on("mouseleave", function () {
+                      $(_this).popover('hide');
+                  });
+              }).on("mouseleave", function () {
+                  var _this = this;
+                  setTimeout(function () {
+                      if (!$(".popover:hover").length) {
+                          $(_this).popover("hide");
+                      }
+                  }, 300);
+          });
+        }
     });
 
     if(typeof filter == 'undefined'){
@@ -155,6 +180,12 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
         $('#crearDoc').attr('onclick', 'createNewDocument_(' + tipo_doc_id + ',\'' + nom + '\',\'' + funcionalidades + '\')');
     }
 
+}
+
+function agruparGuiasIndex(id) {
+    objVue.datosAgrupar = {
+        id: id
+    };
 }
 
 function modalEliminar(id) {
@@ -206,6 +237,46 @@ var objVue = new Vue({
             }
             listDocument(this.type_document, null, null, null, true, status_id);
         },
+        datosAgrupar:function(val){
+          console.log(val);
+            let me = this;
+            // if ($.fn.DataTable.isDataTable('#tbl-modalagrupar')) {
+            //     $('#tbl-modalagrupar tbody').empty();
+            //     $('#tbl-modalagrupar').dataTable().fnDestroy();
+            // }
+            // var table = $('#tbl-modalagrupar').DataTable({
+            //     "language": {
+            //         "paginate": {
+            //             "previous": "Anterior",
+            //             "next": "Siguiente",
+            //         },
+            //         /*"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",*/
+            //         "info": "Registros del _START_ al _END_  de un total de _TOTAL_",
+            //         "search": "Buscar",
+            //         "lengthMenu": "Mostrar _MENU_ Registros",
+            //         "infoEmpty": "Mostrando registros del 0 al 0",
+            //         "emptyTable": "No hay datos disponibles en la tabla",
+            //         "infoFiltered": "(Filtrando para _MAX_ Registros totales)",
+            //         "zeroRecords": "No se encontraron registros coincidentes",
+            //     },
+            //     processing: true,
+            //     serverSide: true,
+            //     searching: true,
+            //     ajax: 'getGuiasAgrupar/'+ option.id,
+            //     columns: [{
+            //         "render": function (data, type, full, meta) {
+            //             return '<div class="checkbox checkbox-success"><input type="checkbox" data-id_guia="' + full.documento_detalle_id + '" id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '"></label></div>';
+            //         }
+            //     }, {
+            //         data: 'codigo',
+            //         name: 'codigo'
+            //     }, {
+            //         data: 'peso2',
+            //         name: 'peso2'
+            //     }]
+            // });
+            $('#modalagrupar').modal('show');
+        },
     },
     mounted: function() {
         this.typeDocumentList();
@@ -219,7 +290,8 @@ var objVue = new Vue({
         params: {},
         status: [],
         status_id: null,
-        type_document: null
+        type_document: null,
+        datosAgrupar: {},
     },
     methods: {
         getStatus: function(){
