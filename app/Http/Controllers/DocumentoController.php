@@ -664,11 +664,22 @@ class DocumentoController extends Controller
             /* CODIGO PARA TRAER LOS DOCUMENTOS DIFERENTES A CONSOLIDADOS */
             if(env('APP_TYPE') == 'courier'){
                 //con esto se muestra en la grilla de documentos, el detalle y no la cabecera
-                // $qr_guia = DB::raw("(SELECT documento_detalle.num_guia FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as num_guia");
-                // $qr_wrh = DB::raw("(SELECT documento_detalle.num_warehouse FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as num_warehouse");
-                $qr_guia = DB::raw("0 as num_guia");
-                $qr_wrh = "documento.num_warehouse";
+                $qr_agrupadas = DB::raw('(
+                  SELECT
+                    (SELECT Count(z.id) FROM documento_detalle AS z WHERE z.deleted_at IS NULL AND z.agrupado = x.id AND z.flag = 1) AS agrupada
+                    FROM
+                    documento_detalle AS x
+                    WHERE
+                    x.documento_id = documento.id AND
+                    x.deleted_at IS NULL
+                  ) AS agrupadas');
+                $qr_guia = DB::raw("(SELECT documento_detalle.num_guia FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as num_guia");
+                $qr_wrh = DB::raw("(SELECT documento_detalle.num_warehouse FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as num_warehouse");
+
+                // $qr_guia = DB::raw("0 as num_guia");
+                // $qr_wrh = "documento.num_warehouse";
             }else{
+                $qr_agrupadas = DB::raw("0 as agrupadas");
                 $qr_guia = DB::raw("0 as num_guia");
                 $qr_wrh = "documento.num_warehouse";
             }
@@ -701,6 +712,7 @@ class DocumentoController extends Controller
                         DB::raw("(SELECT Sum(documento_detalle.volumen) FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as volumen"),
                         $qr_wrh,
                         $qr_guia,
+                        $qr_agrupadas,
                         't.consolidado',
                         DB::raw("SUM(t.consolidado_status) AS consolidado_status")
                     )
@@ -721,6 +733,18 @@ class DocumentoController extends Controller
                         't.consolidado'
                     )
                     ->orderBy('documento.created_at', 'DESC');
+                    if(env('APP_TYPE') == 'courier'){
+                      // $qr_agrupadas = DB::raw('(
+                      //   SELECT
+                      //     (SELECT Count(z.id) FROM documento_detalle AS z WHERE z.deleted_at IS NULL AND z.agrupado = x.id AND z.flag = 1) AS agrupada
+                      //     FROM
+                      //     documento_detalle AS x
+                      //     WHERE
+                      //     x.documento_id = documento.id AND
+                      //     x.deleted_at IS NULL
+                      //   )');
+                      // $sql = $sql->having($qr_agrupadas, '=', 0);
+                    }
             }else{
                 /* SQL CUANDO SE MANDA UN STATUS (SE CAMBIA EL LEFTJOIN DEL SELECT DEL ESTATUS POR UN JOIN )*/
                 $sql = DB::table('documento')
@@ -749,6 +773,7 @@ class DocumentoController extends Controller
                     DB::raw("(SELECT Sum(documento_detalle.volumen) FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as volumen"),
                     $qr_wrh,
                     $qr_guia,
+                    $qr_agrupadas,
                     't.consolidado',
                     DB::raw("SUM(t.consolidado_status) AS consolidado_status")
                 )
