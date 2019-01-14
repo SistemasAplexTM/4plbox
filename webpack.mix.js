@@ -29,11 +29,7 @@ let mix = require('laravel-mix');
 //  	'resources/assets/js/plugins/summernote/summernote.min.js',
 //  	'resources/assets/js/plugins/bootstrapTagsInput/bootstrap-tagsinput.js'
 //  	], 'public/js/plantilla.js');
-<<<<<<< HEAD
 
-=======
-//
->>>>>>> 60ecd55e6c18345262982ecec08038019708e52a
 //  mix.styles([
 // 	/*-- Estilos de la plantilla --*/
 //  	'resources/assets/css/bootstrap.min.css',
@@ -58,11 +54,8 @@ let mix = require('laravel-mix');
 //  	'resources/assets/css/plugins/summernote/summernote.css',
 //  	'resources/assets/css/plugins/bootstrapTagsInput/bootstrap-tagsinput.css',
 //  	], 'public/css/plantilla.css');
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 60ecd55e6c18345262982ecec08038019708e52a
 
 
 mix.js('resources/assets/js/app.js' , 'public/js');
@@ -72,10 +65,7 @@ mix.copyDirectory('resources/assets/js/templates', 'public/js/templates');
 mix.copyDirectory('resources/assets/js/reports', 'public/js/reports');
 
 
-<<<<<<< HEAD
  //
-=======
->>>>>>> 60ecd55e6c18345262982ecec08038019708e52a
  // mix.copyDirectory('resources/assets/js/plugins', 'public/js/plugins');
  // mix.copyDirectory('resources/assets/css/plugins', 'public/css/plugins');
  // mix.copyDirectory('resources/assets/img', 'public/img');
