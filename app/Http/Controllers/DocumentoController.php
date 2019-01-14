@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+include_once(app_path() . '\WebClientPrint\WebClientPrint.php');
+use Neodynamic\SDK\Web\WebClientPrint;
+use Session;
+
 use App\Agencia;
 use App\Documento;
 use App\DocumentoDetalle;
@@ -43,7 +47,10 @@ class DocumentoController extends Controller
     public function index()
     {
         $this->assignPermissionsJavascript('documento');
-        return view('templates/documento/index');
+        $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('DemoPrintFileController@printFile'), Session::getId());
+
+        // return view('templates/documento/index');
+        return view('templates.documento.index', ['wcpScript' => $wcpScript]);
     }
 
     public function create($tipo_documento_id)
@@ -173,7 +180,7 @@ class DocumentoController extends Controller
         return $this->edit($id, true);
     }
 
-    
+
     public function edit($id, $liquidar = false)
     {
         $this->assignPermissionsJavascript('documento');
@@ -499,7 +506,7 @@ class DocumentoController extends Controller
                     $request->session()->put('sendemail', $msn);
                 }
             }
-            
+
             $this->AddToLog('Documento WRH/Guia actualizado (' . $id . ')');
         }
 
@@ -531,7 +538,7 @@ class DocumentoController extends Controller
         } else {
             $data = Documento::findOrFail($id);
             $detail = DB::table('documento_detalle')->where([['documento_id', $id]])->get();
-            
+
             if(count($detail) > 0){
                 foreach ($detail as $key) {
                     $this->destroy($key->id, 'detalle');
@@ -854,7 +861,7 @@ class DocumentoController extends Controller
     {
         try {
 
-            for ($z=1; $z <= $request->contador; $z++) { 
+            for ($z=1; $z <= $request->contador; $z++) {
                 $data = (new DocumentoDetalle)->fill($request->all());
 
                 $data->status_id = 2;
@@ -2533,7 +2540,7 @@ class DocumentoController extends Controller
         try {
             $data = Documento::findOrFail($id);
             $detail = DB::table('consolidado_detalle')->where([['consolidado_id', $id], ['num_bolsa', $num_bolsa]])->get();
-            
+
             if(count($detail) > 0){
                 foreach ($detail as $key) {
                     $this->deleteDetailConsolidado($id, $key->id, false);

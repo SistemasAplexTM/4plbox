@@ -39,6 +39,10 @@
             </li>
             <li class="active">
                 <strong>@lang('documents.documents')</strong>
+                <a class="btn btn-success btn-lg"
+                  onclick="javascript:jsWebClientPrint.print('useDefaultPrinter=false&printerName=' + encodeURIComponent('Nitro PDF Creator (Pro 10)') + '&filetype=TXT');">
+                  Print File...
+                </a>
             </li>
         </ol>
     </div>
@@ -56,7 +60,7 @@
                     <modaltagdocument-component :params='params' :id_status='id_status' :table_delete="tableDelete"></modaltagdocument-component>
                     <div class="row">
                         <div class="row">
-                            
+
                             <div id="msn-documento" class="col-lg-12" style="text-align: left;display: none;">
                                 <div class="col-lg-12">
                                     <div class="alert alert-danger alert-dismissible" role="alert" id="msnP">
@@ -72,7 +76,7 @@
                             </div>
                             <div class="col-lg-10">
                                 <div class="col-lg-8" style="font-size: 30px; font-weight:800;border-bottom: 1px solid #CDCDCD;">
-                                    <span id="icono_doc"></span>&nbsp; 
+                                    <span id="icono_doc"></span>&nbsp;
                                     <div style="display:inline;" id="nombre_doc">
                                        @lang('documents.warehouse')
                                     </div>
@@ -125,5 +129,6 @@
 @endsection
 
 @section('scripts')
+  {!! $wcpScript; !!}
 <script src="{{ asset('js/templates/documento/main.js') }}"></script>
 @endsection

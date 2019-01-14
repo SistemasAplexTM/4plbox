@@ -93,9 +93,10 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                 }
                 if (permission_delete && (parseInt(full.consolidado_status) === 0) || full.consolidado_status == null) {
                     btn_delete = '<a onclick=\"modalEliminar(' + full.id + ')\" class="delete" title="Eliminar" data-toggle="tooltip" style="color:#E34724;"><i class="material-icons">&#xE872;</i></a>';
+                    var name = "Nitro PDF Creator (Pro 10)";
+                    var format = "PDF";
+                    btn_print = '<a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format +'\')" class="edit" title="Imprimir" data-toggle="tooltip" style="color:#E34724;"><i class="material-icons">&#xE872;</i></a>';
                 }
-
-
                 if (full.tipo_documento_id == 3) { //consolidado = 3
                     btn_delete = '';
                     if (permission_delete && (parseInt(full.cantidad) === 0)) {
@@ -116,7 +117,7 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                     }
                     var btn_tags = ' <a onclick="openModalTagsDocument(' + full.id + ', \'' + codigo + '\', \'' + full.cons_nomfull + '\', \'' + full.email_cons + '\', \'' + full.cantidad + '\', \'' + full.liquidado + '\')" data-toggle="modal" data-target="#modalTagDocument" class="view"><i class="material-icons" data-toggle="tooltip" title="Tareas">&#xE5C8;</i></a>';
                     var btns = "<div class='btn-group'>" + "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + "<i class='material-icons' style='vertical-align:  middle;'>print</i> <span class='caret'></span>" + "</button>" + "<ul class='dropdown-menu dropdown-menu-right pull-right'><li><a href='" + href_print + "' target='_blank'> <spam class='fa fa-print'></spam> Imprimir</a></li>" + "<li><a href='" + href_print_label + "' target='_blank'> <spam class='fa fa-print'></spam> Labels "+label+"</a></li>" + "<li><a href='#' onclick=\"sendMail(" + full.id + ")\"> <spam class='fa fa-envelope'></spam> Enviar Mail</a></li>" + "</ul></div>";
-                    return btn_edit + btns + ' ' + btn_tags + btn_delete;
+                    return btn_edit + btns + ' ' + btn_tags + btn_delete + btn_print;
                 }
             },
             width: 100
@@ -130,10 +131,10 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
 
     if(typeof filter == 'undefined'){
         if(tipo_doc_id == '1'){
-            labels =    '<label for="creado" class="lb_status badge badge-default">Creado</label> ' + 
-                        '<label for="bodega" class="lb_status badge badge-success">En bodega</label> '+ 
-                        '<label for="liquidado" class="lb_status badge badge-primary">Liquidado</label> '+ 
-                        '<label for="consolidado" class="lb_status badge badge-warning">Consolidado</label> ' + 
+            labels =    '<label for="creado" class="lb_status badge badge-default">Creado</label> ' +
+                        '<label for="bodega" class="lb_status badge badge-success">En bodega</label> '+
+                        '<label for="liquidado" class="lb_status badge badge-primary">Liquidado</label> '+
+                        '<label for="consolidado" class="lb_status badge badge-warning">Consolidado</label> ' +
                         '<label for="anulado" class="lb_status badge badge-danger">Anulado</label> ';
         }
         if (typeof tipo_doc_id == "undefined") {
@@ -147,9 +148,9 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
         console.log(icon);
         // $('#icono_doc').removeClass(className).addClass(icon);
         $('#icono_doc').empty().append('<i class="fa '+icon+'"></i>');
-        $('#crearDoc').attr('onclick', 'createNewDocument_(' + tipo_doc_id + ',\'' + nom + '\',\'' + funcionalidades + '\')'); 
+        $('#crearDoc').attr('onclick', 'createNewDocument_(' + tipo_doc_id + ',\'' + nom + '\',\'' + funcionalidades + '\')');
     }
-    
+
 }
 
 function modalEliminar(id) {
@@ -219,7 +220,7 @@ var objVue = new Vue({
     methods: {
         getStatus: function(){
             let me = this;
-            axios.get('status/all').then(function (response) { 
+            axios.get('status/all').then(function (response) {
                 me.status = response.data.data;
             }).catch(function (error) {
                 console.log(error);
@@ -240,7 +241,7 @@ var objVue = new Vue({
             cancelButtonText: "No, Cancelar!",
             }).then((result) => {
                 if (result.value) {
-                    axios.delete('documento/' + id).then(function (response) { 
+                    axios.delete('documento/' + id).then(function (response) {
                         if(response.data.code === 200){
                             refreshTable('tbl-documento');
                             toastr.success('Documento eliminado exitosamente.');

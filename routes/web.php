@@ -349,3 +349,7 @@ Route::post('prealerta/{id_agencia}/validar_tracking', 'PrealertaController@vali
 /* RASTREO */
 Route::get('rastreo', 'RastreoController@index');
 Route::get('rastreo/getStatusReport/{data}', 'RastreoController@getStatusReport');
+
+Route::get('DemoPrintFile', 'DemoPrintFileController@index');
+Route::get('DemoPrintFileController', 'DemoPrintFileController@printFile');
+Route::any('WebClientPrintController', 'WebClientPrintController@processRequest');
