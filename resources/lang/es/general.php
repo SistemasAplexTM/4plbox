@@ -41,6 +41,8 @@ return [
     'registration_data'=>'Datos de registro',
     'integrations'=>'Integraciones',
     'url_public'=>'Url publicas',
+    'config_print'=>'Configuración de impresoras',
+    'print_label'=>'Impresora para labels',
     'name'=>'Nombre',
     'agency_registration'=>'Registro de agencias',
     'responsable'=>'Responsable:',

@@ -78,6 +78,7 @@
                             <li role="agencia" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">@lang('general.registration_data')</a></li>
                             <li role="agencia"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">@lang('general.integrations')</a></li>
                             <li role="agencia"><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">@lang('general.url_public')</a></li>
+                            <li role="agencia"><a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab">@lang('general.config_print')</a></li>
                         </ul>
 
                         <!-- Tab panes -->
@@ -504,6 +505,27 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div role="tabpanel" class="tab-pane fade" id="tab4">
+                                    <div class="row">
+                                        <div class="col-lg-12" style="margin-top: 10px;">
+                                            <div class="col-lg-6">
+                                              <div class="form-group">
+                                                <div id="installedPrinters">
+                                                    <label for="installedPrinterName">@lang('general.print_label'):</label>
+                                                    <select name="installedPrinterName" id="installedPrinterName" class="form-control"></select>
+                                                </div>
+                                              </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-sm-12">
+                                        <a class="ladda-button btn btn-primary" @click="savePrint()">
+                                            <i class="fa fa-save"></i> @lang('general.save')
+                                        </a>
+                                      </div>
+                                    </div>
+                                </div>
                             </div>
 
 
@@ -537,5 +559,38 @@
 @endsection
 
 @section('scripts')
+  {!! $wcpScript; !!}
+
+  <script type="text/javascript">
+  setTimeout(function () {
+
+    Javascript:jsWebClientPrint.getPrinters();
+  }, 300);
+
+      //var wcppGetPrintersDelay_ms = 0;
+      var wcppGetPrintersTimeout_ms = 10000; //10 sec
+      var wcppGetPrintersTimeoutStep_ms = 500; //0.5 sec
+      function wcpGetPrintersOnSuccess() {
+          // Display client installed printers
+          if (arguments[0].length > 0) {
+              var p = arguments[0].split("|");
+              var options = '';
+              for (var i = 0; i < p.length; i++) {
+                  options += '<option>' + p[i] + '</option>';
+              }
+              $('#installedPrinters').css('visibility', 'visible');
+              $('#installedPrinterName').html(options);
+              $('#installedPrinterName').focus();
+              $('#loadPrinters').hide();
+          } else {
+              alert("No printers are installed in your system.");
+          }
+      }
+      function wcpGetPrintersOnFailure() {
+          // Do something if printers cannot be got from the client
+          alert("No printers are installed in your system.");
+      }
+  </script>
+
 <script src="{{ asset('js/templates/agenciaForm.js') }}"></script>
 @endsection

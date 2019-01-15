@@ -1847,10 +1847,13 @@ class DocumentoController extends Controller
                 // ->setPaper(array(25, -25, 300, 300), 'landscape');
 
             $nameDocument = 'Label' . $document . '-' . $documento->id;
+            $name = 'dumaFile.pdf';
+            $pdf->save(public_path(). "/pdf/" . $name);
 
-            $pdf->save(public_path(). '/pdf/dumaFile.pdf');
-
-            return $pdf->stream($nameDocument . '.pdf');
+            // // return $pdf->stream($nameDocument . '.pdf');
+            // $output = $pdf->output();
+            // file_put_contents( $name, $output);
+            return response($name)->header('Content-Type', 'text/plain');
         }else{
             if (env('APP_LABEL') === '4x4') {
                 if(env('APP_CLIENT') === 'jyg'){
