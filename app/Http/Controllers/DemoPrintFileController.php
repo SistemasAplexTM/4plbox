@@ -50,7 +50,7 @@ class DemoPrintFileController extends Controller
             $filePath = '';
             if ($filetype === 'PDF') {
                 // $filePath = public_path().'/files/LoremIpsum.pdf';
-                $filePath = public_path().'\files\LoremIpsum.pdf';
+                $filePath = public_path().'\files\dumaFile.pdf';
             } else if ($filetype === 'TXT') {
                 // $filePath = public_path().'/files/LoremIpsum.txt';
                 $filePath = public_path().'\files\LoremIpsum.txt';
