@@ -100,9 +100,6 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                 }
                 if (permission_delete && (parseInt(full.consolidado_status) === 0) || full.consolidado_status == null) {
                     btn_delete = '<a onclick=\"modalEliminar(' + full.id + ')\" class="delete" title="Eliminar" data-toggle="tooltip" style="color:#E34724;"><i class="material-icons">&#xE872;</i></a>';
-                    var name = "Nitro PDF Creator (Pro 10)";
-                    var format = "PDF";
-                    btn_print = '<a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format +'\')" class="edit" title="Imprimir" data-toggle="tooltip" style="color:#E34724;"><i class="material-icons">&#xE872;</i></a>';
                 }
                 if (full.tipo_documento_id == 3) { //consolidado = 3
                     btn_delete = '';
@@ -123,12 +120,21 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                         // codigo = full.num_guia;
                     } else {
                         href_print = "impresion-documento/" + full.id + "/warehouse";
-                        href_print_label = "impresion-documento-label/" + full.id + "/warehouse";
+                        // href_print_label = "impresion-documento-label/" + full.id + "/warehouse";
+                        var name = "Nitro PDF Creator (Pro 10)";
+                        var format = "PDF";
+                        href_print_label = 'onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format +'&id=' + full.id + '&document=warehouse\')"';
                         // codigo = full.num_warehouse;
                     }
                     var btn_tags = ' <a onclick="openModalTagsDocument(' + full.id + ', \'' + codigo + '\', \'' + full.cons_nomfull + '\', \'' + full.email_cons + '\', \'' + full.cantidad + '\', \'' + full.liquidado + '\')" data-toggle="modal" data-target="#modalTagDocument" class="view"><i class="material-icons" data-toggle="tooltip" title="Tareas">&#xE5C8;</i></a>';
+<<<<<<< HEAD
                     var btns = "<div class='btn-group'>" + "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + "<i class='material-icons' style='vertical-align:  middle;'>print</i> <span class='caret'></span>" + "</button>" + "<ul class='dropdown-menu dropdown-menu-right pull-right'><li><a href='" + href_print + "' target='_blank'> <spam class='fa fa-print'></spam> Imprimir</a></li>" + "<li><a href='" + href_print_label + "' > <spam class='fa fa-print'></spam> Labels "+label+"</a></li>" + "<li><a href='#' onclick=\"sendMail(" + full.id + ")\"> <spam class='fa fa-envelope'></spam> Enviar Mail</a></li>" + "</ul></div>";
                     return btn_edit + btns + ' ' + btn_tags + btn_delete + btn_print;
+=======
+                    var btns = "<div class='btn-group'>" + "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + "<i class='material-icons' style='vertical-align:  middle;'>print</i> <span class='caret'></span>" + "</button>" + "<ul class='dropdown-menu dropdown-menu-right pull-right'><li><a href='" + href_print + "' target='_blank'> <spam class='fa fa-print'></spam> Imprimir</a></li>"
+                    + "<li><a " + href_print_label + " > <spam class='fa fa-print'></spam> Labels "+label+"</a></li>" + "<li><a href='#' onclick=\"sendMail(" + full.id + ")\"> <spam class='fa fa-envelope'></spam> Enviar Mail</a></li>" + "</ul></div>";
+                    return btn_edit + btns + ' ' + btn_tags + btn_delete;
+>>>>>>> 33499f3369b242a3d28b89694051ba81a61e4b35
                 }
             },
             width: 180

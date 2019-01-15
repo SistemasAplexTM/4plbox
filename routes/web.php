@@ -357,5 +357,5 @@ Route::get('rastreo', 'RastreoController@index');
 Route::get('rastreo/getStatusReport/{data}', 'RastreoController@getStatusReport');
 
 Route::get('DemoPrintFile', 'DemoPrintFileController@index');
-Route::get('DemoPrintFileController', 'DemoPrintFileController@printFile');
+Route::get('DemoPrintFileController', 'DocumentoController@printFile');
 Route::any('WebClientPrintController', 'WebClientPrintController@processRequest');
