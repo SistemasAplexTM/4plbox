@@ -175,7 +175,6 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
         if (icon == null) {
             var icon = 'file-text-o';
         }
-        console.log(icon);
         // $('#icono_doc').removeClass(className).addClass(icon);
         $('#icono_doc').empty().append('<i class="fa '+icon+'"></i>');
         $('#crearDoc').attr('onclick', 'createNewDocument_(' + tipo_doc_id + ',\'' + nom + '\',\'' + funcionalidades + '\')');

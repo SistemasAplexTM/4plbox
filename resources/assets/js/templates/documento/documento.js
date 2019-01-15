@@ -276,8 +276,12 @@ function datatableDetail(){
         if(app_type === 'courier'){
             if(json.data.length === 0){
                 objVue.cantidad_detalle = true;
+                $('#btn_add').attr('disabled', false);
+                $('#btn_add').siblings('button').attr('disabled', false);
             }else{
                 objVue.cantidad_detalle = false;
+                $('#btn_add').attr('disabled', true);
+                $('#btn_add').siblings('button').attr('disabled', true);
             }
         }
         objVue.totalizeDocument();

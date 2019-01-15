@@ -860,7 +860,7 @@
 	                          }
 	                          var btn_group = '<div class="btn-group" data-toggle="tooltip" title="Acciones">'+
 	                                  '<button type="button" class="btn btn-default btn-outline dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
-	                                    '<i class="fa fa-cog"></i>'+
+	                                    '<i class="fa fa-ellipsis-v"></i>'+
 	                                  '</button>'+
 	                                  '<ul class="dropdown-menu dropdown-menu-right pull-right" style="font-size: 15px!important;">'+
 	                                    '<li>'+btn_invoice+'</li>'+

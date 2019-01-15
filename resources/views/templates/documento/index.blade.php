@@ -39,10 +39,6 @@
             </li>
             <li class="active">
                 <strong>@lang('documents.documents')</strong>
-                <a class="btn btn-success btn-lg"
-                  onclick="javascript:jsWebClientPrint.print('useDefaultPrinter=false&printerName=' + encodeURIComponent('Nitro PDF Creator (Pro 10)') + '&filetype=TXT');">
-                  Print File...
-                </a>
             </li>
         </ol>
     </div>

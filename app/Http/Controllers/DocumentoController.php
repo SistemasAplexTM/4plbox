@@ -2860,4 +2860,18 @@ class DocumentoController extends Controller
       return $data = array('code' => 200, );
     }
 
+    public function getDataByDocument($id)
+    {
+      $trackings = DB::table('documento_detalle as a')
+        ->leftJoin('tracking as b', 'a.id', 'b.documento_detalle_id')
+          ->select('b.codigo')
+          ->where([['a.deleted_at', null], ['b.deleted_at', null], ['a.documento_id', $id]])
+          ->get();
+      $answer = array(
+          'code' => 200,
+          'trackings' => $trackings,
+      );
+      return $answer;
+    }
+
 }
