@@ -190,6 +190,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('agencia/delete/{id}/{logical?}/{table?}', 'AgenciaController@delete')->name('agencia.delete')->middleware('permission:agencia.delete');
     Route::get('agencia/restaurar/{id}', 'AgenciaController@restaurar');
     Route::get('agencia/selectInput/{tableName}', 'AgenciaController@selectInput');
+    Route::post('agencia/{id}/savePrint', 'AgenciaController@savePrint');
 
     /*--- MODULO REMITENTES ---*/
     Route::resource('shipper', 'ShipperController', ['except' => ['show', 'create', 'edit']]);

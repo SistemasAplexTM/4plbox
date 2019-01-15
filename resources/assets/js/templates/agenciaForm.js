@@ -81,6 +81,7 @@ function llenarSelect(module, tableName, idSelect, length) {
         }
     });
 }
+
 /*-- Función para llenar select PERSONALIZADO --*/
 function llenarSelectPersonalizado(module, tableName, idSelect, length) {
     if ($('#edit').val() == 'edit') {
@@ -230,6 +231,12 @@ var objVue = new Vue({
         zopim: false,
     },
     methods: {
+      savePrint: function() {
+        axios.post('savePrint', { print: $('#installedPrinterName').val() }).then(response => {
+          toastr.success("<div><p>Registrado exitosamente.</p></div>");
+          toastr.options.closeButton = true;
+        }).catch(error => console.log(error))
+      },
         functionalities: function(op, id) {
             let me = this;
             setTimeout(function() {
