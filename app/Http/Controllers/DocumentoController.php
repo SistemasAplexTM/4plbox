@@ -696,16 +696,24 @@ class DocumentoController extends Controller
                     ->leftJoin('consignee', 'documento.consignee_id', '=', 'consignee.id')
                     ->join('agencia', 'documento.agencia_id', '=', 'agencia.id')
                     ->leftJoin(DB::raw("(SELECT
-                                                Count(DISTINCT z.consolidado) AS consolidado,
-                                                z.consolidado AS consolidado_status,
-                                                z.documento_id
-                                            FROM
-                                                documento_detalle AS z
-                                            WHERE
-                                                z.deleted_at IS NULL
-                                            GROUP BY
-                                                z.documento_id,
-                                                z.consolidado
+                                      		Count(DISTINCT z.consolidado) AS consolidado,
+                                      		z.consolidado AS consolidado_status,
+                                      		z.agrupado,
+                                      		z.flag,
+                                      		z.num_guia,
+                                      		z.num_warehouse,
+                                      		z.documento_id
+                                      	FROM
+                                      		documento_detalle AS z
+                                      	WHERE
+                                      		z.deleted_at IS NULL
+                                      	GROUP BY
+                                      		z.documento_id,
+                                      		z.consolidado,
+                                      		z.agrupado,
+                                      		z.num_guia,
+                                      		z.num_warehouse,
+                                      		z.flag
                                         ) AS t"), "documento.id", "t.documento_id")
                     ->select('documento.id as id', 'documento.valor_libra', 'documento.valor', 'documento.liquidado', 'documento.tipo_documento_id as tipo_documento_id',
                     'documento.consecutivo as codigo',
@@ -737,20 +745,15 @@ class DocumentoController extends Controller
                         'consignee.nombre_full',
                         'consignee.correo',
                         'agencia.descripcion',
-                        't.consolidado'
+                        't.consolidado',
+                        't.agrupado',
+                      	't.flag',
+                      	't.num_guia',
+                      	't.num_warehouse'
                     )
                     ->orderBy('documento.created_at', 'DESC');
                     if(env('APP_TYPE') == 'courier'){
-                      // $qr_agrupadas = DB::raw('(
-                      //   SELECT
-                      //     (SELECT Count(z.id) FROM documento_detalle AS z WHERE z.deleted_at IS NULL AND z.agrupado = x.id AND z.flag = 1) AS agrupada
-                      //     FROM
-                      //     documento_detalle AS x
-                      //     WHERE
-                      //     x.documento_id = documento.id AND
-                      //     x.deleted_at IS NULL
-                      //   )');
-                      // $sql = $sql->having($qr_agrupadas, '=', 0);
+                      $sql = $sql->whereRaw('(t.flag = 0 OR t.flag is null)');
                     }
             }else{
                 /* SQL CUANDO SE MANDA UN STATUS (SE CAMBIA EL LEFTJOIN DEL SELECT DEL ESTATUS POR UN JOIN )*/
@@ -1838,10 +1841,15 @@ class DocumentoController extends Controller
         // }
         $this->AddToLog('Impresion labels (' . $documento->id . ')');
         if(env('APP_CLIENT') === 'colombiana'){
-            $pdf = PDF::loadView('pdf.labelWGcolombiana', compact('documento', 'detalle', 'document'))
-                ->setPaper(array(25, -25, 300, 300), 'landscape');
+          $pdf = PDF::loadView('pdf.labelWGJyg', compact('documento', 'detalle', 'document'))
+          ->setPaper(array(25, -25, 260, 360), 'landscape');
+            // $pdf = PDF::loadView('pdf.labelWGcolombiana', compact('documento', 'detalle', 'document'))
+                // ->setPaper(array(25, -25, 300, 300), 'landscape');
 
             $nameDocument = 'Label' . $document . '-' . $documento->id;
+
+            $pdf->save(public_path(). '/pdf/dumaFile.pdf');
+
             return $pdf->stream($nameDocument . '.pdf');
         }else{
             if (env('APP_LABEL') === '4x4') {
