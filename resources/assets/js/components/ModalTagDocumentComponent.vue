@@ -55,6 +55,11 @@
 	}
   .tracking{
         font-size: 20px;
+        padding-bottom: 3px;
+  }
+  .cont-tracking{
+    font-family: 'courier', sans-serif;
+    margin-top: 20px;
   }
 </style>
 <template>
@@ -97,9 +102,9 @@
                 </div> -->
 
                 <div role="tabpanel" class="tab-pane fade active in" id="tracking">
-                  <div class="form-group">
-                    <h2>Tacking asociados en este documento</h2>
-                    <div v-for="val in trackings" class="tracking">- {{ val.codigo }}</div>
+                  <div class="form-group cont-tracking">
+
+                    <div v-for="val in trackings" class="tracking"><i class="fa fa-truck fa-xs"></i> {{ val.codigo }}</div>
                   </div>
                 </div>
 

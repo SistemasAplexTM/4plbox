@@ -690,9 +690,9 @@ class DocumentoController extends Controller
                     x.documento_id = documento.id AND
                     x.deleted_at IS NULL
                   ) AS agrupadas');
-                $qr_guia = DB::raw("(SELECT documento_detalle.num_guia FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as num_guia");
-                $qr_wrh = DB::raw("(SELECT documento_detalle.num_warehouse FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as num_warehouse");
-
+                $qr_guia = DB::raw("t.num_guia as num_guia");
+                $qr_wrh = DB::raw("t.num_warehouse as num_warehouse");
+                exit();
                 // $qr_guia = DB::raw("0 as num_guia");
                 // $qr_wrh = "documento.num_warehouse";
             }else{
@@ -1857,20 +1857,11 @@ class DocumentoController extends Controller
                 // ->setPaper(array(25, -25, 300, 300), 'landscape');
 
             $nameDocument = 'Label' . $document . '-' . $documento->id;
-            $name = 'dumaFile.pdf';
-            $pdf->save(public_path(). "/pdf/" . $name);
 
-<<<<<<< HEAD
-            // // return $pdf->stream($nameDocument . '.pdf');
-            // $output = $pdf->output();
-            // file_put_contents( $name, $output);
-            return response($name)->header('Content-Type', 'text/plain');
-=======
             $pdf->save(public_path(). '/files/dumaFile.pdf');
 
             // return $pdf->stream($nameDocument . '.pdf');
             return true;
->>>>>>> 33499f3369b242a3d28b89694051ba81a61e4b35
         }else{
             if (env('APP_LABEL') === '4x4') {
                 if(env('APP_CLIENT') === 'jyg'){

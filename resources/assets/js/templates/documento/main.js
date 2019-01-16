@@ -55,11 +55,11 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                         color_badget = 'warning';
                     }
                 }
-                if (full.tipo_documento_id != 3) {
+                if (full.tipo_documento_id != 3 && app_type === 'courier') {
                   groupGuias = 'group';
                   group = ' onclick="agruparGuiasIndex('+full.id+')"';
                   classText = color_badget;
-                  return '<span class="">' + codigo + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+ classText +' pop" role="button" data-html="true" data-toggle="popover" data-trigger="hover" title="<b>Guias agrupadas</b>" data-content="'+groupGuias+'" ' + group + '>'+full.agrupadas+'</a>';
+                  return '<span class="">' + ((codigo == null) ? '' : codigo )+ '</span><a style="float: right;cursor:pointer;" class="badge badge-'+ classText +' pop" role="button" data-html="true" data-toggle="popover" data-trigger="hover" title="<b>Guias agrupadas</b>" data-content="'+groupGuias+'" ' + group + '>'+ ((full.agrupadas == null) ? '' : full.agrupadas)+'</a>';
                 }else{
                   return '<strong>' + ((codigo == null) ? '' : codigo) + '<strong> <span style="float: right;" class="badge badge-' + color_badget + '" data-toggle="tooltip" data-placement="top" title="" data-original-title="Total piezas">' + cant + '</span>';
                 }
@@ -116,7 +116,10 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                     var codigo = full.num_warehouse;
                     if (full.liquidado == 1) {
                         href_print = "impresion-documento/" + full.id + "/guia";
-                        href_print_label = "impresion-documento-label/" + full.id + "/guia";
+                        // href_print_label = "impresion-documento-label/" + full.id + "/guia";
+                        var name = "Nitro PDF Creator (Pro 10)";
+                        var format = "PDF";
+                        href_print_label = 'onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format +'&id=' + full.id + '&document=guia\')"';
                         // codigo = full.num_guia;
                     } else {
                         href_print = "impresion-documento/" + full.id + "/warehouse";
@@ -127,14 +130,10 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                         // codigo = full.num_warehouse;
                     }
                     var btn_tags = ' <a onclick="openModalTagsDocument(' + full.id + ', \'' + codigo + '\', \'' + full.cons_nomfull + '\', \'' + full.email_cons + '\', \'' + full.cantidad + '\', \'' + full.liquidado + '\')" data-toggle="modal" data-target="#modalTagDocument" class="view"><i class="material-icons" data-toggle="tooltip" title="Tareas">&#xE5C8;</i></a>';
-<<<<<<< HEAD
-                    var btns = "<div class='btn-group'>" + "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + "<i class='material-icons' style='vertical-align:  middle;'>print</i> <span class='caret'></span>" + "</button>" + "<ul class='dropdown-menu dropdown-menu-right pull-right'><li><a href='" + href_print + "' target='_blank'> <spam class='fa fa-print'></spam> Imprimir</a></li>" + "<li><a href='" + href_print_label + "' > <spam class='fa fa-print'></spam> Labels "+label+"</a></li>" + "<li><a href='#' onclick=\"sendMail(" + full.id + ")\"> <spam class='fa fa-envelope'></spam> Enviar Mail</a></li>" + "</ul></div>";
-                    return btn_edit + btns + ' ' + btn_tags + btn_delete + btn_print;
-=======
+
                     var btns = "<div class='btn-group'>" + "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + "<i class='material-icons' style='vertical-align:  middle;'>print</i> <span class='caret'></span>" + "</button>" + "<ul class='dropdown-menu dropdown-menu-right pull-right'><li><a href='" + href_print + "' target='_blank'> <spam class='fa fa-print'></spam> Imprimir</a></li>"
                     + "<li><a " + href_print_label + " > <spam class='fa fa-print'></spam> Labels "+label+"</a></li>" + "<li><a href='#' onclick=\"sendMail(" + full.id + ")\"> <spam class='fa fa-envelope'></spam> Enviar Mail</a></li>" + "</ul></div>";
                     return btn_edit + btns + ' ' + btn_tags + btn_delete;
->>>>>>> 33499f3369b242a3d28b89694051ba81a61e4b35
                 }
             },
             width: 180
