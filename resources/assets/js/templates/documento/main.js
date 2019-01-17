@@ -55,11 +55,14 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                         color_badget = 'warning';
                     }
                 }
-                if (full.tipo_documento_id != 3) {
+                if (full.tipo_documento_id != 3 && app_type === 'courier') {
                   groupGuias = 'group';
-                  group = ' onclick="agruparGuiasIndex('+full.id+')"';
+                  group = '';
+                  if(full.consolidado_status == 0){
+                    group = ' onclick="agruparGuiasIndex('+full.detalle_id+')"';
+                  }
                   classText = color_badget;
-                  return '<span class="">' + codigo + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+ classText +' pop" role="button" data-html="true" data-toggle="popover" data-trigger="hover" title="<b>Guias agrupadas</b>" data-content="'+groupGuias+'" ' + group + '>'+full.agrupadas+'</a>';
+                  return '<span class="">' + ((codigo == null) ? '' : codigo )+ '</span><a style="float: right;cursor:pointer;" class="badge badge-'+ classText +' pop" role="button" data-html="true" data-toggle="popover" data-trigger="hover" title="<b>Guias agrupadas</b>" data-content="'+groupGuias+'" ' + group + '>'+ ((full.agrupadas == null) ? '' : full.agrupadas)+'</a>';
                 }else{
                   return '<strong>' + ((codigo == null) ? '' : codigo) + '<strong> <span style="float: right;" class="badge badge-' + color_badget + '" data-toggle="tooltip" data-placement="top" title="" data-original-title="Total piezas">' + cant + '</span>';
                 }
@@ -116,7 +119,10 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                     var codigo = full.num_warehouse;
                     if (full.liquidado == 1) {
                         href_print = "impresion-documento/" + full.id + "/guia";
-                        href_print_label = "impresion-documento-label/" + full.id + "/guia";
+                        // href_print_label = "impresion-documento-label/" + full.id + "/guia";
+                        var name = "Nitro PDF Creator (Pro 10)";
+                        var format = "PDF";
+                        href_print_label = 'onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format +'&id=' + full.id + '&document=guia\')"';
                         // codigo = full.num_guia;
                     } else {
                         href_print = "impresion-documento/" + full.id + "/warehouse";
@@ -127,6 +133,10 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                         // codigo = full.num_warehouse;
                     }
                     var btn_tags = ' <a onclick="openModalTagsDocument(' + full.id + ', \'' + codigo + '\', \'' + full.cons_nomfull + '\', \'' + full.email_cons + '\', \'' + full.cantidad + '\', \'' + full.liquidado + '\')" data-toggle="modal" data-target="#modalTagDocument" class="view"><i class="material-icons" data-toggle="tooltip" title="Tareas">&#xE5C8;</i></a>';
+<<<<<<< HEAD
+=======
+
+>>>>>>> 08ef30a43a0405b4257f2938814c5894c3de7f51
                     var btns = "<div class='btn-group'>" + "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + "<i class='material-icons' style='vertical-align:  middle;'>print</i> <span class='caret'></span>" + "</button>" + "<ul class='dropdown-menu dropdown-menu-right pull-right'><li><a href='" + href_print + "' target='_blank'> <spam class='fa fa-print'></spam> Imprimir</a></li>"
                     + "<li><a " + href_print_label + " > <spam class='fa fa-print'></spam> Labels "+label+"</a></li>" + "<li><a href='#' onclick=\"sendMail(" + full.id + ")\"> <spam class='fa fa-envelope'></spam> Enviar Mail</a></li>" + "</ul></div>";
                     return btn_edit + btns + ' ' + btn_tags + btn_delete;
@@ -175,7 +185,6 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
         if (icon == null) {
             var icon = 'file-text-o';
         }
-        console.log(icon);
         // $('#icono_doc').removeClass(className).addClass(icon);
         $('#icono_doc').empty().append('<i class="fa '+icon+'"></i>');
         $('#crearDoc').attr('onclick', 'createNewDocument_(' + tipo_doc_id + ',\'' + nom + '\',\'' + funcionalidades + '\')');
@@ -241,41 +250,42 @@ var objVue = new Vue({
         datosAgrupar:function(val){
           console.log(val);
             let me = this;
-            // if ($.fn.DataTable.isDataTable('#tbl-modalagrupar')) {
-            //     $('#tbl-modalagrupar tbody').empty();
-            //     $('#tbl-modalagrupar').dataTable().fnDestroy();
-            // }
-            // var table = $('#tbl-modalagrupar').DataTable({
-            //     "language": {
-            //         "paginate": {
-            //             "previous": "Anterior",
-            //             "next": "Siguiente",
-            //         },
-            //         /*"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",*/
-            //         "info": "Registros del _START_ al _END_  de un total de _TOTAL_",
-            //         "search": "Buscar",
-            //         "lengthMenu": "Mostrar _MENU_ Registros",
-            //         "infoEmpty": "Mostrando registros del 0 al 0",
-            //         "emptyTable": "No hay datos disponibles en la tabla",
-            //         "infoFiltered": "(Filtrando para _MAX_ Registros totales)",
-            //         "zeroRecords": "No se encontraron registros coincidentes",
-            //     },
-            //     processing: true,
-            //     serverSide: true,
-            //     searching: true,
-            //     ajax: 'getGuiasAgrupar/'+ option.id,
-            //     columns: [{
-            //         "render": function (data, type, full, meta) {
-            //             return '<div class="checkbox checkbox-success"><input type="checkbox" data-id_guia="' + full.documento_detalle_id + '" id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '"></label></div>';
-            //         }
-            //     }, {
-            //         data: 'codigo',
-            //         name: 'codigo'
-            //     }, {
-            //         data: 'peso2',
-            //         name: 'peso2'
-            //     }]
-            // });
+            if ($.fn.DataTable.isDataTable('#tbl-modalagrupar')) {
+                $('#tbl-modalagrupar tbody').empty();
+                $('#tbl-modalagrupar').dataTable().fnDestroy();
+            }
+            var table = $('#tbl-modalagrupar').DataTable({
+                "language": {
+                    "paginate": {
+                        "previous": "Anterior",
+                        "next": "Siguiente",
+                    },
+                    /*"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",*/
+                    "info": "Registros del _START_ al _END_  de un total de _TOTAL_",
+                    "search": "Buscar",
+                    "lengthMenu": "Mostrar _MENU_ Registros",
+                    "infoEmpty": "Mostrando registros del 0 al 0",
+                    "emptyTable": "No hay datos disponibles en la tabla",
+                    "infoFiltered": "(Filtrando para _MAX_ Registros totales)",
+                    "zeroRecords": "No se encontraron registros coincidentes",
+                },
+                "order": [[ 1, "desc" ]],
+                processing: true,
+                serverSide: true,
+                searching: true,
+                ajax: 'documento/0/getGuiasAgrupar/'+ val.id+'/document',
+                columns: [{
+                    "render": function (data, type, full, meta) {
+                        return '<div class="checkbox checkbox-success"><input type="checkbox" data-id_guia="' + full.id + '" id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '"></label></div>';
+                    }
+                }, {
+                    data: 'codigo',
+                    name: 'codigo'
+                }, {
+                    data: 'peso',
+                    name: 'peso'
+                }]
+            });
             $('#modalagrupar').modal('show');
         },
     },
@@ -295,6 +305,28 @@ var objVue = new Vue({
         datosAgrupar: {},
     },
     methods: {
+      agruparDocumentoDetalle: function(){
+          $('#modalagrupar').modal('hide');
+          let me = this;
+          var datos = $("#formGuiasAgrupar").serializeArray();
+          var ids = {};
+          $.each(datos, function(i, field) {
+              if (field.name === 'chk[]') {
+                  ids[i] =  $('#chk' + field.value).data('id_guia');
+              }
+          });
+          axios.post('agruparGuiasConsolidadoCreate',{
+              'id_detalle': me.agrupar.id,
+              'ids_guias': ids
+          }).then(function (response) {
+              toastr.success('Se agrupo correctamente.');
+              me.updateTableDetail();
+          }).catch(function (error) {
+              console.log(error);
+              toastr.warning('Error.');
+              toastr.options.closeButton = true;
+          });
+      },
         getStatus: function(){
             let me = this;
             axios.get('status/all').then(function (response) {

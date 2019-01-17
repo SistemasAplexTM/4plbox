@@ -263,13 +263,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('notas/delete/{id}/{logical?}', 'DocumentoController@deleteNota')->name('documento.deleteNota');
     Route::get('documento/getHistoryConsignee/{id}', 'DocumentoController@getHistoryConsignee');
     Route::get('documento/getHistoryDocument/{document}', 'DocumentoController@getHistoryDocument');
-    Route::get('documento/{id}/getGuiasAgrupar/{id_detalle}', 'DocumentoController@getGuiasAgrupar');
+    Route::get('documento/{id}/getGuiasAgrupar/{id_detalle}/{document?}', 'DocumentoController@getGuiasAgrupar');
     Route::put('documento/{id}/updatePositionArancel', 'DocumentoController@updatePositionArancel');
     Route::get('documento/{id}/getDataDetailDocument', 'DocumentoController@getDataDetailDocument');
     Route::get('documento/{id}/getBoxesConsolidado', 'DocumentoController@getBoxesConsolidado');
     Route::get('documento/{id}/removeBoxConsolidado/{num_bolsa}', 'DocumentoController@removeBoxConsolidado');
     Route::get('documento/{id}/changeBoxConsolidado/{num_bolsa}/{consol_id}', 'DocumentoController@changeBoxConsolidado');
     Route::get('documento/{id}/closeDocument', 'DocumentoController@closeDocument');
+    Route::get('documento/getDataByDocument/{id}', 'DocumentoController@getDataByDocument');
 
     /*  REPORTES - IMPRESIONES EN PDF */
     Route::get('impresion-documento/{id}/{document}/{id_detalle?}', 'DocumentoController@pdf')->name('documento.pdf');

@@ -108,16 +108,19 @@ function calculateFlete(flete) {
                 /*PESO * LA TARIFA */
                 $('#cobrarPor').text('Pes');
 
-                var flete = parseFloat(peso) * parseFloat(tarifa);
+                var flete_c = parseFloat(peso) * parseFloat(tarifa);
                 var diferen = parseFloat(volumen) - parseFloat(peso);
                 if (parseFloat(diferen) > 0) {
                     /* SE COBRA POR VOLUMEN */
                     res = parseFloat(cOpcional) * parseFloat(diferen);
-                    flete = parseFloat(flete) + parseFloat(res);
+                    flete_c = parseFloat(flete_c) + parseFloat(res);
                     $('#cobrarPor').text('Vol');
                 }
-
-                return flete;
+                if(parseFloat(flete) < parseFloat(flete_c)){
+                  return flete_c;
+                }else{
+                  return flete;
+                }
             }
         } else {
             if (parseFloat(peso) > parseFloat(volumen)) {

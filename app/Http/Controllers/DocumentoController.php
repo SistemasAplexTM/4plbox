@@ -690,8 +690,8 @@ class DocumentoController extends Controller
                     x.documento_id = documento.id AND
                     x.deleted_at IS NULL
                   ) AS agrupadas');
-                $qr_guia = DB::raw("(SELECT documento_detalle.num_guia FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as num_guia");
-                $qr_wrh = DB::raw("(SELECT documento_detalle.num_warehouse FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as num_warehouse");
+                $qr_guia = DB::raw("t.num_guia as num_guia");
+                $qr_wrh = DB::raw("t.num_warehouse as num_warehouse");
 
                 // $qr_guia = DB::raw("0 as num_guia");
                 // $qr_wrh = "documento.num_warehouse";
@@ -706,6 +706,7 @@ class DocumentoController extends Controller
                     ->leftJoin('consignee', 'documento.consignee_id', '=', 'consignee.id')
                     ->join('agencia', 'documento.agencia_id', '=', 'agencia.id')
                     ->leftJoin(DB::raw("(SELECT
+                                          z.id As detalle_id,
                                       		Count(DISTINCT z.consolidado) AS consolidado,
                                       		z.consolidado AS consolidado_status,
                                       		z.agrupado,
@@ -719,6 +720,7 @@ class DocumentoController extends Controller
                                       		z.deleted_at IS NULL
                                       	GROUP BY
                                       		z.documento_id,
+                                      		z.id,
                                       		z.consolidado,
                                       		z.agrupado,
                                       		z.num_guia,
@@ -738,6 +740,7 @@ class DocumentoController extends Controller
                         $qr_wrh,
                         $qr_guia,
                         $qr_agrupadas,
+                        't.detalle_id',
                         't.consolidado',
                         DB::raw("SUM(t.consolidado_status) AS consolidado_status")
                     )
@@ -755,6 +758,7 @@ class DocumentoController extends Controller
                         'consignee.nombre_full',
                         'consignee.correo',
                         'agencia.descripcion',
+                        't.detalle_id',
                         't.consolidado',
                         't.agrupado',
                       	't.flag',
@@ -1857,6 +1861,7 @@ class DocumentoController extends Controller
                 // ->setPaper(array(25, -25, 300, 300), 'landscape');
 
             $nameDocument = 'Label' . $document . '-' . $documento->id;
+<<<<<<< HEAD
             $name = 'dumaFile.pdf';
             $pdf->save(public_path(). "/pdf/" . $name);
 
@@ -1864,6 +1869,13 @@ class DocumentoController extends Controller
             // $output = $pdf->output();
             // file_put_contents( $name, $output);
             return response($name)->header('Content-Type', 'text/plain');
+=======
+
+            $pdf->save(public_path(). '/files/dumaFile.pdf');
+
+            // return $pdf->stream($nameDocument . '.pdf');
+            return true;
+>>>>>>> 08ef30a43a0405b4257f2938814c5894c3de7f51
         }else{
             if (env('APP_LABEL') === '4x4') {
                 if(env('APP_CLIENT') === 'jyg'){
@@ -2556,8 +2568,24 @@ class DocumentoController extends Controller
         return $answer;
     }
 
-    public function getGuiasAgrupar($id, $id_detalle)
+    public function getGuiasAgrupar($id, $id_detalle, $document = false)
     {
+      if($document){
+        $detalle = DB::table('documento_detalle AS a')
+            ->select(
+                'a.id',
+                'a.num_warehouse AS codigo',
+                'a.liquidado',
+                'a.peso'
+            )
+            ->where([
+                ['a.deleted_at', null],
+                ['a.id', '<>', $id_detalle],
+                ['a.flag', 0],
+                ['a.consolidado', 0],
+            ])
+            ->get();
+      }else{
         $detalle = DB::table('consolidado_detalle AS a')
             ->join('documento_detalle AS b', 'a.documento_detalle_id', 'b.id')
             ->leftJoin(DB::raw("(SELECT
@@ -2603,7 +2631,7 @@ class DocumentoController extends Controller
                 ['g.guias_agrupadas', null],
             ])
             ->get();
-
+      }
         return \DataTables::of($detalle)->make(true);
     }
 
@@ -2819,6 +2847,20 @@ class DocumentoController extends Controller
     {
       Documento::where('id', $id)->update(['close_document' => 1]);
       return $data = array('code' => 200, );
+    }
+
+    public function getDataByDocument($id)
+    {
+      $trackings = DB::table('documento_detalle as a')
+        ->leftJoin('tracking as b', 'a.id', 'b.documento_detalle_id')
+          ->select('b.codigo')
+          ->where([['a.deleted_at', null], ['b.deleted_at', null], ['a.documento_id', $id]])
+          ->get();
+      $answer = array(
+          'code' => 200,
+          'trackings' => $trackings,
+      );
+      return $answer;
     }
 
 }

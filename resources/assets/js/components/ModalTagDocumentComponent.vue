@@ -1,5 +1,10 @@
 <!-- estilos -->
 <style type="text/css">
+@import url("https://fonts.googleapis.com/css?family=Russo+One");
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+*{
+  /* font-family: 'Roboto Condensed', sans-serif; */
+}
     #tbl-statusReport_wrapper{
         padding-bottom:0 !important;
     }
@@ -48,6 +53,14 @@
 		margin-top: -5px;
     	float: right;
 	}
+  .tracking{
+        font-size: 20px;
+        padding-bottom: 3px;
+  }
+  .cont-tracking{
+    font-family: 'courier', sans-serif;
+    margin-top: 20px;
+  }
 </style>
 <template>
 	<!-- modal shipper -->
@@ -78,41 +91,56 @@
 		            	<div class="col-lg-12">
 		                    <!-- Nav tabs -->
 							  <ul class="nav nav-tabs" role="tablist">
-							    <li role="presentation" class="active"><a href="#status" aria-controls="status" role="tab" data-toggle="tab"><i class="fa fa-clock-o"></i> Status</a></li>
-							    <li role="presentation"><a href="#notas" aria-controls="notas" role="tab" data-toggle="tab"><i class="fa fa-commenting-o"></i> Notas</a></li>
+							    <!-- <li role="presentation" class="active"><a href="#general" aria-controls="general" role="tab" data-toggle="tab"><i class="fa fa-file-signature"></i> General</a></li> -->
+							    <li role="presentation" class="active"><a href="#tracking" aria-controls="tracking" role="tab" data-toggle="tab"><i class="fa fa-truck"></i> Trackings</a></li>
+							    <li role="presentation" @click="is_active = true"><a href="#status" aria-controls="status" role="tab" data-toggle="tab"><i class="fa fa-clock"></i> Status</a></li>
+							    <li role="presentation"><a href="#notas" aria-controls="notas" role="tab" data-toggle="tab"><i class="fa fa-comments"></i> Notas</a></li>
 							  </ul>
 							<div class="tab-content">
-							    <div role="tabpanel" class="tab-pane fade active in" id="status">
+                <!-- <div role="tabpanel" class="tab-pane fade active in" id="general">
+                  General
+                </div> -->
+
+                <div role="tabpanel" class="tab-pane fade active in" id="tracking">
+                  <div class="form-group cont-tracking">
+
+                    <div v-for="val in trackings" class="tracking"><i class="fa fa-truck fa-xs"></i> {{ val.codigo }}</div>
+                  </div>
+                </div>
+
+
+							    <div role="tabpanel" class="tab-pane fade active" id="status">
 							    	<div class="row form-group" id="register">
-										<div class="col-lg-6" :class="{ 'has-error': errors.has('warehouse') }">
-											<v-select name="warehouse" v-model="warehouse_codigo" label="name" :options="warehouses" v-validate.disable="'required'" placeholder="Warehouse/Guia"></v-select>
-											<small class="help-block">{{ errors.first('warehouse') }}</small>
-										</div>
-						        		<div class="col-lg-6" :class="{ 'has-error': errors.has('estatus') }">
-											<v-select name="estatus" v-model="estatus_id" label="name" :options="status" v-validate.disable="'required'" placeholder="Status"></v-select>
-											<small class="help-block">{{ errors.first('estatus') }}</small>
-										</div>
-										<div class="col-lg-10">
-								        	<input type="text" class="form-control" v-model="observacion" placeholder="Observación">
-								        </div>
-										<div class="col-lg-2">
-											<button class="btn btn-primary" data-toggle="tooltip" title="Agregar" @click="createStatusReport()"><i class="fa fa-plus"></i></button>
-										</div>
+    										<div class="col-lg-6" :class="{ 'has-error': errors.has('warehouse') }">
+    											<v-select name="warehouse" v-model="warehouse_codigo" label="name" :options="warehouses" v-validate.disable="'required'" placeholder="Warehouse/Guia"></v-select>
+    											<small class="help-block">{{ errors.first('warehouse') }}</small>
+    										</div>
+    						        		<div class="col-lg-6" :class="{ 'has-error': errors.has('estatus') }">
+    											<v-select name="estatus" v-model="estatus_id" label="name" :options="status" v-validate.disable="'required'" placeholder="Status"></v-select>
+    											<small class="help-block">{{ errors.first('estatus') }}</small>
+    										</div>
+    										<div class="col-lg-10">
+    								        	<input type="text" class="form-control" v-model="observacion" placeholder="Observación">
+    								        </div>
+    										<div class="col-lg-2">
+    											<button class="btn btn-primary" data-toggle="tooltip" title="Agregar" @click="createStatusReport()"><i class="fa fa-plus"></i></button>
+    										</div>
 							        </div>
-									<div class="table-responsive">
-				                        <table id="tbl-statusReport" class="table table-striped table-hover table-bordered" style="width: 100%;">
-				                            <thead>
-				                                <tr>
-				                                    <th>Fecha</th>
-				                                    <th>Estatus</th> 
-				                                    <th>Observación</th>
-				                                    <th>Usuario</th>
-				                                    <th>Accion</th>
-				                                </tr>
-				                            </thead>
-				                        </table>
-				                    </div>
-					            </div>
+					            <div class="table-responsive" v-show="is_active">
+                          <table id="tbl-statusReport" class="table table-striped table-hover table-bordered" style="width: 100%;">
+                              <thead>
+                                  <tr>
+                                      <th>Fecha</th>
+                                      <th>Estatus</th>
+                                      <th>Observación</th>
+                                      <th>Usuario</th>
+                                      <th>Accion</th>
+                                  </tr>
+                              </thead>
+                          </table>
+                      </div>
+					          </div>
+
 						        <div role="tabpanel" class="tab-pane fade " id="notas">
 						        	<div class="row form-group" id="register">
 						        		<div class="col-lg-10" :class="{ 'has-error': errors.has('nota_name') }">
@@ -120,16 +148,16 @@
 								        	<small class="help-block">{{ errors.first('nota_name') }}</small>
 								        </div>
 								        <div class="col-lg-2">
-											<button class="btn btn-primary" data-toggle="tooltip" title="Agregar" @click="createNota()"><i class="fa fa-plus"></i></button>
-										</div>
+    											<button class="btn btn-primary" data-toggle="tooltip" title="Agregar" @click="createNota()"><i class="fa fa-plus"></i></button>
+    										</div>
 							        </div>
-									<div class="table-responsive">
+									          <div class="table-responsive">
 				                        <table id="tbl-notas" class="table table-striped table-hover table-bordered" style="width: 100%;">
 				                            <thead>
 				                                <tr>
 				                                    <th>Fecha</th>
-				                                    <th>Nota</th> 
-				                                    <th>Usuario</th> 
+				                                    <th>Nota</th>
+				                                    <th>Usuario</th>
 				                                    <th>Accion</th>
 				                                </tr>
 				                            </thead>
@@ -158,7 +186,7 @@
 		    table_delete: String,
     	},
         mounted() {
-        	
+
         },
         data () {
 	        return {
@@ -177,7 +205,9 @@
 	        	warehouse_codigo: null,
 	        	status: [],
 	        	warehouses: [],
-	        }
+            trackings: [],
+            is_active: false
+          }
 	    },
 	    watch:{
 	    	params: function (newQuestion) {
@@ -204,6 +234,7 @@
 	        	this.getSelectWarehouses();
 	            this.getStatus();
 	            this.getNotas();
+	            this.getDatas();
 			},
 			id_status: function (newQuestion) {
 				if(newQuestion != null){
@@ -409,6 +440,12 @@
                 toastr.warning('Error: Completa los campos.');
             });
         },
-		}
+      getDatas: function(){
+        axios.get('documento/getDataByDocument/'+ this.id_document).then(response => {
+					this.trackings = response.data.trackings;
+	      });
+			},
     }
+
+  }
 </script>

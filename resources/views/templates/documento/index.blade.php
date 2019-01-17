@@ -39,10 +39,6 @@
             </li>
             <li class="active">
                 <strong>@lang('documents.documents')</strong>
-                <a class="btn btn-success btn-lg"
-                  onclick="javascript:jsWebClientPrint.print('useDefaultPrinter=false&printerName=' + encodeURIComponent('Nitro PDF Creator (Pro 10)') + '&filetype=TXT');">
-                  Print File...
-                </a>
             </li>
         </ol>
     </div>
@@ -153,7 +149,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="" @click="agruparGuiasConsolidado()" class="btn btn-primary" data-dismiss="modal">Agregar</button>
+                        <button type="button" id="" @click="agruparDocumentoDetalle()" class="btn btn-primary" data-dismiss="modal">Agregar</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
