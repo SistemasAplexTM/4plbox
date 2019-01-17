@@ -238,13 +238,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('documento/{id}/createContactsConsolidadoDetalle', 'DocumentoController@createContactsConsolidadoDetalle');
     Route::post('documento/{id}/addStatusToGuias', 'DocumentoController@addStatusToGuias')->name('documento.addStatusToGuias');
     Route::post('documento/{id}/agruparGuiasConsolidadoCreate', 'DocumentoController@agruparGuiasConsolidadoCreate');
-    Route::get('documento/{id}/removerGuiaAgrupada/{id_detalle}/{id_guia_detalle}', 'DocumentoController@removerGuiaAgrupada')->name('documento.removerGuiaAgrupada');
+    Route::get('documento/{id}/removerGuiaAgrupada/{id_detalle}/{id_guia_detalle}/{document?}', 'DocumentoController@removerGuiaAgrupada')->name('documento.removerGuiaAgrupada');
     Route::get('documento/sendEmailDocument/{id}', 'DocumentoController@sendEmailDocument');
     Route::get('documento/{id}/deleteDetailConsolidado/{id_detail}/{logical}', 'DocumentoController@deleteDetailConsolidado')->name('documento.deleteDetailConsolidado');
     Route::get('documento/{id}/liquidar', 'DocumentoController@liquidar');
     Route::get('documento/{id}/additionalChargues/getAll/{documento_id}', 'DocumentoController@additionalCharguesGetAll')->name('documento.charguesGetAll');
     Route::get('documento/{id}/additionalChargues/delete/{chargue_id}', 'DocumentoController@additionalCharguesDelete')->name('documento.additionalCharguesDelete');
-    Route::get('prinFileDocument', 'DocumentoController@printFile');
+
 
     Route::put('documento/updateDetail/{id_detail}', 'DocumentoController@updateDetail')->name('documento.updateDetail');
     Route::post('documento/{id}/updateDetailConsolidado/', 'DocumentoController@updateDetailConsolidado')->name('datatable.updateDetailConsolidado');
@@ -365,3 +365,4 @@ Route::get('rastreo', 'RastreoController@index');
 Route::get('rastreo/getStatusReport/{data}', 'RastreoController@getStatusReport');
 
 Route::any('WebClientPrintController', 'WebClientPrintController@processRequest');
+Route::get('DocumentoController', 'DocumentoController@printFile');

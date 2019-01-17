@@ -19,7 +19,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function assignPermissionsJavascript($table)
+    public function assignPermissionsJavascript($table = null)
     {
         /* PERMISOS PARA JAVASCRIPT */
         JavaScript::put([
@@ -42,6 +42,7 @@ class Controller extends BaseController
             'permission_pdfTsa'                   => ((Auth::user()->can($table . '.pdfTsa')) ? true : false),
             'permission_pdf'                      => ((Auth::user()->can($table . '.pdf')) ? true : false),
             'permission_pdfLabel'                 => ((Auth::user()->can($table . '.pdfLabel')) ? true : false),
+            'agency_id'                           => Auth::user()->agencia_id
         ]);
     }
 

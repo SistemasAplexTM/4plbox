@@ -29,6 +29,10 @@
     .actions_btn{
         text-align: center;
     }
+    #tbl-modalagrupar_wrapper{
+      padding-bottom: 0px;
+      padding-right: 0px;
+    }
 </style>
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
@@ -129,18 +133,18 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <h4 class="modal-title" id="myModalLabel">
-                            <i class="fa fa-cubes"></i> Guias disponibles para agrupar
+                            <i class="fa fa-cubes"></i> Documentos disponibles para agrupar
                         </h4>
                     </div>
                     <div class="modal-body">
                         <form id="formGuiasAgrupar">
-                            <p>Selecione las guias que desea agrupar en este registro.</p>
+                            <p>Selecione los documentos que desea agrupar en este registro.</p>
                             <div class="table-responsive">
                                 <table id="tbl-modalagrupar" class="table table-striped table-hover" style="width: 100%;">
                                     <thead>
                                         <tr>
                                             <th class="text-center" style="width: 20px;"></th>
-                                            <th>Numero Guia</th>
+                                            <th>Numero de documento</th>
                                             <th>Peso lb</th>
                                         </tr>
                                     </thead>

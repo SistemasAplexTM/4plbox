@@ -14,17 +14,27 @@ class PrintConfigController extends Controller
 {
     public function index()
     {
+      $this->assignPermissionsJavascript();
       $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintConfigController@index'), Session::getId());
       return view('templates/printConfig', compact('wcpScript'));
     }
 
     public function save(Request $request)
     {
-      $data = array('id_agency' => Auth::user()->agencia_id, 'prints' => $request->data);
-      AplexConfig::insert([
-        'key' => 'print',
-        'value' => json_encode($data)
-      ]);
+      $key = 'print_'. Auth::user()->agencia_id;
+      $data = array('prints' => $request->data);
+      $id = $this->getConfig($key);
+      if ($id) {
+        AplexConfig::where('id', $id->id)->update([
+          'key' => $key,
+          'value' =>  json_encode($data)
+        ]);
+      }else{
+        AplexConfig::insert([
+          'key' => $key,
+          'value' => json_encode($data)
+        ]);
+      }
       return array('code' => 200);
     }
 

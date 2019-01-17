@@ -10,10 +10,12 @@ function wcpGetPrintersOnSuccess() {
     var p = arguments[0].split("|");
     var options = '';
     for (var i = 0; i < p.length; i++) {
-        options += '<option>' + p[i] + '</option>';
+        options += '<option value="'+p[i]+'">' + p[i] + '</option>';
     }
     $('#installedPrinterName').html(options);
     $('#installedPrinterName1').html(options);
+
+    objVue.getPrint();
 
   } else {
     alert("No printers are installed in your system.");
@@ -30,7 +32,7 @@ var objVue = new Vue({
 
     },
     created(){
-      this.getPrint();
+      // this.getPrint();
     },
     methods: {
       savePrint: function() {
@@ -44,9 +46,10 @@ var objVue = new Vue({
         }).catch(error => console.log(error))
       },
       getPrint: function() {
-        axios.get('getConfig/print').then(({data}) => {
+        axios.get('getConfig/print_' + agency_id).then(({data}) => {
           var printers = JSON.parse(data.value);
-          $('#installedPrinterName1').value(printers.prints.labels)
+          $('#installedPrinterName').val(printers.prints.labels)
+          $('#installedPrinterName1').val(printers.prints.default)
           console.log(printers.prints.labels);
         }).catch(error => console.log(error))
       }

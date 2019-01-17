@@ -59,7 +59,6 @@ class DocumentoController extends Controller
         $this->assignPermissionsJavascript('documento');
         $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('DocumentoController@printFile'), Session::getId());
 
-        // return view('templates/documento/index');
         return view('templates.documento.index', ['wcpScript' => $wcpScript]);
     }
 
@@ -693,6 +692,60 @@ class DocumentoController extends Controller
                 $qr_guia = DB::raw("t.num_guia as num_guia");
                 $qr_wrh = DB::raw("t.num_warehouse as num_warehouse");
 
+                $label_1 = '</label><a style="float:right;cursor:pointer;color:red" title="Quitar" data-toggle="tooltip" onclick="removerDocumentoAgrupado(';
+                $label_2 = ')"><i class="fa fa-times" style="font-size: 15px;"></i></a>';
+
+                $qr_group = DB::raw('(
+                        		SELECT
+                        			GROUP_CONCAT(
+                        				CONCAT(
+                        					"<label>- ",
+                        					x.num_warehouse,
+                        					" (",
+                        					x.peso,
+                        					" lbs) ",
+                        					" ($ ",
+                        					x.valor,
+                        					".00) </label>",
+                        					\''.$label_1.'\',
+                        					x.id,
+                        					\''.$label_2.'\'
+                        				)
+                        			) AS groupy
+                        		FROM
+                        			documento_detalle AS x
+                        		WHERE
+                        			x.deleted_at IS NULL
+                        		AND x.agrupado = z.id
+                        		AND x.flag = 1
+                        	) AS guias_agrupadas');
+
+                $qr_status = DB::raw("(
+                  SELECT
+                    b.descripcion AS estatus
+                  FROM
+                    status_detalle AS a
+                  INNER JOIN `status` AS b ON a.status_id = b.id
+                  WHERE
+                    a.documento_detalle_id = z.id
+                  ORDER BY
+                    a.id DESC
+                  LIMIT 1
+                ) AS estatus");
+
+                $qr_status_color = DB::raw("(
+                  SELECT
+                    b.color AS estatus_color
+                  FROM
+                    status_detalle AS a
+                  INNER JOIN `status` AS b ON a.status_id = b.id
+                  WHERE
+                    a.documento_detalle_id = z.id
+                  ORDER BY
+                    a.id DESC
+                  LIMIT 1
+                ) AS estatus_color");
+
                 // $qr_guia = DB::raw("0 as num_guia");
                 // $qr_wrh = "documento.num_warehouse";
             }else{
@@ -713,7 +766,10 @@ class DocumentoController extends Controller
                                       		z.flag,
                                       		z.num_guia,
                                       		z.num_warehouse,
-                                      		z.documento_id
+                                      		z.documento_id,
+                                          $qr_group,
+                                          $qr_status,
+                                          $qr_status_color
                                       	FROM
                                       		documento_detalle AS z
                                       	WHERE
@@ -725,6 +781,8 @@ class DocumentoController extends Controller
                                       		z.agrupado,
                                       		z.num_guia,
                                       		z.num_warehouse,
+                                      		z.peso,
+                                      		z.valor,
                                       		z.flag
                                         ) AS t"), "documento.id", "t.documento_id")
                     ->select('documento.id as id', 'documento.valor_libra', 'documento.valor', 'documento.liquidado', 'documento.tipo_documento_id as tipo_documento_id',
@@ -742,7 +800,11 @@ class DocumentoController extends Controller
                         $qr_agrupadas,
                         't.detalle_id',
                         't.consolidado',
+                        't.guias_agrupadas',
+                        't.estatus',
+                        't.estatus_color',
                         DB::raw("SUM(t.consolidado_status) AS consolidado_status")
+
                     )
                     ->where($filter)
                     ->groupBy(
@@ -760,10 +822,13 @@ class DocumentoController extends Controller
                         'agencia.descripcion',
                         't.detalle_id',
                         't.consolidado',
+                        't.guias_agrupadas',
                         't.agrupado',
                       	't.flag',
                       	't.num_guia',
-                      	't.num_warehouse'
+                      	't.num_warehouse',
+                      	't.estatus',
+                        't.estatus_color'
                     )
                     ->orderBy('documento.created_at', 'DESC');
                     if(env('APP_TYPE') == 'courier'){
@@ -1885,16 +1950,19 @@ class DocumentoController extends Controller
     }
 
     public function printFile(Request $request){
-      $this->pdfLabel($request->input('id'), $request->input('document'));
+        $this->pdfLabel($request->input('id'), $request->input('document'));
+        $dataPrint = $this->getConfig('print_' . $request->input('agency_id'));
+        $prints = json_decode($dataPrint->value);
+        $print = $prints->prints->labels;
        if ($request->exists(WebClientPrint::CLIENT_PRINT_JOB)) {
-            $this->getPrinterLabel();
             $useDefaultPrinter = ($request->input('useDefaultPrinter') === 'checked');
-            $printerName = urldecode($request->input('printerName'));
+            // $printerName = urldecode($request->input('printerName'));
+            $printerName = urldecode($print);
             $filetype = $request->input('filetype');
             $fileName = uniqid() . '.' . $filetype;
 
             $filePath = '';
-            $filePath = public_path().'/files/dumaFile.pdf';
+            $filePath = public_path().'\files\dumaFile.pdf';
 
             if (!Utils::isNullOrEmptyString($filePath)) {
                 //Create a ClientPrintJob obj that will be processed at the client side by the WCPP
@@ -2223,11 +2291,11 @@ class DocumentoController extends Controller
 
     public function getDataSelectWarehousesModalTagGuia($id)
     {
-        if(env('APP_CLIENT') == 'worldcargo'){
+        // if(env('APP_CLIENT') == 'worldcargo'){
             $codigo = 'documento_detalle.num_warehouse AS name';
-        }else{
-            $codigo = DB::raw('(CASE WHEN b.liquidado = 1 THEN documento_detalle.num_guia ELSE documento_detalle.num_warehouse END) AS name');
-        }
+        // }else{
+        //     $codigo = DB::raw('(CASE WHEN b.liquidado = 1 THEN documento_detalle.num_guia ELSE documento_detalle.num_warehouse END) AS name');
+        // }
         $data = DocumentoDetalle::join('documento as b', 'documento_detalle.documento_id', 'b.id')
             ->select('documento_detalle.id', $codigo)
             ->where([
@@ -2627,6 +2695,13 @@ class DocumentoController extends Controller
 
     public function agruparGuiasConsolidadoCreate(Request $request)
     {
+      if(isset($request->all()['document']) and $request->all()['id_detalle']){
+        for ($i = 1; $i <= count($request->all()['ids_guias']); $i++) {
+            DB::table('documento_detalle')
+                ->where('id', $request->all()['ids_guias'][$i])
+                ->update(['agrupado' => $request->all()['id_detalle'], 'flag' => 1]);
+        }
+      }else{
         $deta_guia = DB::table('consolidado_detalle')->select('documento_detalle_id')->where('id', $request->all()['id_detalle'])->first();
 
         for ($i = 1; $i <= count($request->all()['ids_guias']); $i++) {
@@ -2634,17 +2709,24 @@ class DocumentoController extends Controller
                 ->where('documento_detalle_id', $request->all()['ids_guias'][$i])
                 ->update(['agrupado' => $deta_guia->documento_detalle_id, 'flag' => 1]);
         }
+      }
         $answer = array(
             'code' => 200,
         );
         return $answer;
     }
 
-    public function removerGuiaAgrupada($id, $id_detalle, $id_guia_detalle)
+    public function removerGuiaAgrupada($id, $id_detalle, $id_guia_detalle, $document = false)
     {
+      if($document){
+        DB::table('documento_detalle')
+            ->where('id', $id_detalle)
+            ->update(['agrupado' => $id_detalle, 'flag' => 0]);
+      }else{
         DB::table('consolidado_detalle')
             ->where('id', $id_detalle)
             ->update(['agrupado' => $id_guia_detalle, 'flag' => 0]);
+      }
         $answer = array(
             'code' => 200,
         );

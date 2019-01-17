@@ -297,7 +297,7 @@
 	                }, {
 	                	sortable: false,
 	                	"render": function (data, type, full, meta) {
-		                    return '<span style="color:#439a46;font-weight: 900;">'+full.codigo+'</span><div>'+full.status_name+'</div> ';
+		                    return '<span style="color:#439a46;font-weight: 900;">'+full.num_warehouse+'</span><div>'+full.status_name+'</div> ';
 		                }
 	                }, {
 	                    data: 'observacion',

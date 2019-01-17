@@ -56,13 +56,20 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                     }
                 }
                 if (full.tipo_documento_id != 3 && app_type === 'courier') {
-                  groupGuias = 'group';
+                  var groupGuias = '';
                   group = '';
+                  groupGuias = full.guias_agrupadas;
+                  var btn_delete = "<a style='float: right;cursor:pointer;''><i class='material-icons'>clear</i></a>";
+                  if(groupGuias != null && groupGuias != 'null' && groupGuias != ''){
+                      groupGuias = groupGuias.replace(/,/g, "<br>");
+                  }
+
                   if(full.consolidado_status == 0){
                     group = ' onclick="agruparGuiasIndex('+full.detalle_id+')"';
                   }
                   classText = color_badget;
-                  return '<span class="">' + ((codigo == null) ? '' : codigo )+ '</span><a style="float: right;cursor:pointer;" class="badge badge-'+ classText +' pop" role="button" data-html="true" data-toggle="popover" data-trigger="hover" title="<b>Guias agrupadas</b>" data-content="'+groupGuias+'" ' + group + '>'+ ((full.agrupadas == null) ? '' : full.agrupadas)+'</a>';
+                  var status = '<div style="color:'+full.estatus_color+'"><small>' + ((full.estatus == null) ? '' : full.estatus) + '</small></div>';
+                  return '<span class=""><i class="fa fa-'+ ((full.agrupadas > 0) ? 'boxes' : 'box-open')+' fa-xs"></i> ' + ((codigo == null) ? '' : codigo )+ '</span><a style="float: right;cursor:pointer;" class="badge badge-'+ classText +' pop" role="button" data-html="true" data-toggle="popover" data-trigger="hover" title="<b>Documentos agrupadas</b>" data-content="'+((groupGuias == null) ? '' : groupGuias )+'" ' + group + '>'+ ((full.agrupadas == null) ? '' : full.agrupadas)+'</a>' + status;
                 }else{
                   return '<strong>' + ((codigo == null) ? '' : codigo) + '<strong> <span style="float: right;" class="badge badge-' + color_badget + '" data-toggle="tooltip" data-placement="top" title="" data-original-title="Total piezas">' + cant + '</span>';
                 }
@@ -122,21 +129,17 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                         // href_print_label = "impresion-documento-label/" + full.id + "/guia";
                         var name = "Nitro PDF Creator (Pro 10)";
                         var format = "PDF";
-                        href_print_label = 'onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format +'&id=' + full.id + '&document=guia\')"';
+                        href_print_label = 'onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format +'&id=' + full.id + '&agency_id='+agency_id+'&document=guia\')"';
                         // codigo = full.num_guia;
                     } else {
                         href_print = "impresion-documento/" + full.id + "/warehouse";
                         // href_print_label = "impresion-documento-label/" + full.id + "/warehouse";
                         var name = "Nitro PDF Creator (Pro 10)";
                         var format = "PDF";
-                        href_print_label = 'onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format +'&id=' + full.id + '&document=warehouse\')"';
+                        href_print_label = 'onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format +'&id=' + full.id + '&agency_id='+agency_id+'&document=warehouse\')"';
                         // codigo = full.num_warehouse;
                     }
                     var btn_tags = ' <a onclick="openModalTagsDocument(' + full.id + ', \'' + codigo + '\', \'' + full.cons_nomfull + '\', \'' + full.email_cons + '\', \'' + full.cantidad + '\', \'' + full.liquidado + '\')" data-toggle="modal" data-target="#modalTagDocument" class="view"><i class="material-icons" data-toggle="tooltip" title="Tareas">&#xE5C8;</i></a>';
-<<<<<<< HEAD
-=======
-
->>>>>>> 08ef30a43a0405b4257f2938814c5894c3de7f51
                     var btns = "<div class='btn-group'>" + "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + "<i class='material-icons' style='vertical-align:  middle;'>print</i> <span class='caret'></span>" + "</button>" + "<ul class='dropdown-menu dropdown-menu-right pull-right'><li><a href='" + href_print + "' target='_blank'> <spam class='fa fa-print'></spam> Imprimir</a></li>"
                     + "<li><a " + href_print_label + " > <spam class='fa fa-print'></spam> Labels "+label+"</a></li>" + "<li><a href='#' onclick=\"sendMail(" + full.id + ")\"> <spam class='fa fa-envelope'></spam> Enviar Mail</a></li>" + "</ul></div>";
                     return btn_edit + btns + ' ' + btn_tags + btn_delete;
@@ -198,6 +201,12 @@ function agruparGuiasIndex(id) {
     };
 }
 
+function removerDocumentoAgrupado(id) {
+    objVue.removerAgrupado = {
+        id: id
+    };
+}
+
 function modalEliminar(id) {
     objVue.deleteDocument(id);
 }
@@ -248,7 +257,6 @@ var objVue = new Vue({
             listDocument(this.type_document, null, null, null, true, status_id);
         },
         datosAgrupar:function(val){
-          console.log(val);
             let me = this;
             if ($.fn.DataTable.isDataTable('#tbl-modalagrupar')) {
                 $('#tbl-modalagrupar tbody').empty();
@@ -288,6 +296,17 @@ var objVue = new Vue({
             });
             $('#modalagrupar').modal('show');
         },
+        removerAgrupado:function(option){
+              let me = this;
+              console.log(option);
+              axios.get('documento/0/removerGuiaAgrupada/' + option.id + '/' + option.id + '/' + true).then(response => {
+                  toastr.success('Registro quitado correctamente.');
+                  refreshTable('tbl-documento');
+              }).catch(function(error) {
+                  console.log(error);
+                  toastr.warning('Error: -' + error);
+              });
+          }
     },
     mounted: function() {
         this.typeDocumentList();
@@ -303,6 +322,7 @@ var objVue = new Vue({
         status_id: null,
         type_document: null,
         datosAgrupar: {},
+        removerAgrupado: {}, //es para poder remover guias agrupadas en el consolidado
     },
     methods: {
       agruparDocumentoDetalle: function(){
@@ -315,12 +335,14 @@ var objVue = new Vue({
                   ids[i] =  $('#chk' + field.value).data('id_guia');
               }
           });
-          axios.post('agruparGuiasConsolidadoCreate',{
-              'id_detalle': me.agrupar.id,
-              'ids_guias': ids
+
+          axios.post('documento/0/agruparGuiasConsolidadoCreate',{
+              'id_detalle': me.datosAgrupar.id,
+              'ids_guias': ids,
+              'document': true
           }).then(function (response) {
               toastr.success('Se agrupo correctamente.');
-              me.updateTableDetail();
+              refreshTable('tbl-documento');
           }).catch(function (error) {
               console.log(error);
               toastr.warning('Error.');
