@@ -190,7 +190,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('agencia/delete/{id}/{logical?}/{table?}', 'AgenciaController@delete')->name('agencia.delete')->middleware('permission:agencia.delete');
     Route::get('agencia/restaurar/{id}', 'AgenciaController@restaurar');
     Route::get('agencia/selectInput/{tableName}', 'AgenciaController@selectInput');
-    Route::post('agencia/{id}/savePrint', 'AgenciaController@savePrint');
 
     /*--- MODULO REMITENTES ---*/
     Route::resource('shipper', 'ShipperController', ['except' => ['show', 'create', 'edit']]);
@@ -214,6 +213,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('emailTemplate/all', 'EmailTemplateController@getAll')->name('datatable/all');
     Route::get('emailTemplate/delete/{id}/{logical?}', 'EmailTemplateController@delete')->name('emailTemplate.delete');
     Route::get('emailTemplate/restaurar/{id}', 'EmailTemplateController@restaurar');
+
+    /*--- MODULO PRINT CONFIG ---*/
+    Route::get('printConfig', 'PrintConfigController@index')->name('printConfig');
+    Route::post('printConfig', 'PrintConfigController@save');
 
     /*--- MODULO TIPO DOCUMENTOS ---*/
     Route::resource('tipoDocumento', 'TipoDocumentoController', ['except' => ['show', 'create', 'edit']]);
@@ -241,6 +244,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('documento/{id}/liquidar', 'DocumentoController@liquidar');
     Route::get('documento/{id}/additionalChargues/getAll/{documento_id}', 'DocumentoController@additionalCharguesGetAll')->name('documento.charguesGetAll');
     Route::get('documento/{id}/additionalChargues/delete/{chargue_id}', 'DocumentoController@additionalCharguesDelete')->name('documento.additionalCharguesDelete');
+    Route::get('prinFileDocument', 'DocumentoController@printFile');
 
     Route::put('documento/updateDetail/{id_detail}', 'DocumentoController@updateDetail')->name('documento.updateDetail');
     Route::post('documento/{id}/updateDetailConsolidado/', 'DocumentoController@updateDetailConsolidado')->name('datatable.updateDetailConsolidado');
@@ -306,6 +310,9 @@ Route::group(['middleware' => 'auth'], function () {
     /* MODULO APLEXCONFIG */
     Route::get('aplexConfig', 'AplexConfigController@index')->name('config.index');
 
+
+    Route::get('getConfig/{key}', 'Controller@getConfig');
+
     /* MODULO INFORMES */
     Route::get('report', 'ReportController@index')->name('report.index');
 });
@@ -356,6 +363,4 @@ Route::post('prealerta/{id_agencia}/validar_tracking', 'PrealertaController@vali
 Route::get('rastreo', 'RastreoController@index');
 Route::get('rastreo/getStatusReport/{data}', 'RastreoController@getStatusReport');
 
-Route::get('DemoPrintFile', 'DemoPrintFileController@index');
-Route::get('DemoPrintFileController', 'DocumentoController@printFile');
 Route::any('WebClientPrintController', 'WebClientPrintController@processRequest');

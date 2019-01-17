@@ -1860,17 +1860,10 @@ class DocumentoController extends Controller
             $name = 'dumaFile.pdf';
             $pdf->save(public_path(). "/pdf/" . $name);
 
-<<<<<<< HEAD
             // // return $pdf->stream($nameDocument . '.pdf');
             // $output = $pdf->output();
             // file_put_contents( $name, $output);
             return response($name)->header('Content-Type', 'text/plain');
-=======
-            $pdf->save(public_path(). '/files/dumaFile.pdf');
-
-            // return $pdf->stream($nameDocument . '.pdf');
-            return true;
->>>>>>> 33499f3369b242a3d28b89694051ba81a61e4b35
         }else{
             if (env('APP_LABEL') === '4x4') {
                 if(env('APP_CLIENT') === 'jyg'){
@@ -1892,67 +1885,26 @@ class DocumentoController extends Controller
     public function printFile(Request $request){
       $this->pdfLabel($request->input('id'), $request->input('document'));
        if ($request->exists(WebClientPrint::CLIENT_PRINT_JOB)) {
-
+            $this->getPrinterLabel();
             $useDefaultPrinter = ($request->input('useDefaultPrinter') === 'checked');
             $printerName = urldecode($request->input('printerName'));
             $filetype = $request->input('filetype');
             $fileName = uniqid() . '.' . $filetype;
 
             $filePath = '';
-            if ($filetype === 'PDF') {
-                // $filePath = public_path().'/files/LoremIpsum.pdf';
-                $filePath = public_path().'/files/dumaFile.pdf';
-            } else if ($filetype === 'TXT') {
-                // $filePath = public_path().'/files/LoremIpsum.txt';
-                $filePath = public_path().'\files\LoremIpsum.txt';
-            } else if ($filetype === 'DOC') {
-                $filePath = public_path().'/files/LoremIpsum.doc';
-            } else if ($filetype === 'XLS') {
-                $filePath = public_path().'/files/SampleSheet.xls';
-            } else if ($filetype === 'JPG') {
-                $filePath = public_path().'/files/penguins300dpi.jpg';
-            } else if ($filetype === 'PNG') {
-                $filePath = public_path().'/files/SamplePngImage.png';
-            } else if ($filetype === 'TIF') {
-                $filePath = public_path().'/files/patent2pages.tif';
-            }
+            $filePath = public_path().'/files/dumaFile.pdf';
 
             if (!Utils::isNullOrEmptyString($filePath)) {
                 //Create a ClientPrintJob obj that will be processed at the client side by the WCPP
                 $cpj = new ClientPrintJob();
 
-                if ($filetype === 'PDF')
-                {
-                    $myfile = new PrintFilePDF($filePath, $fileName, null);
-                    $myfile->printRotation = PrintRotation::None;
-                    //$myfile->pagesRange = '1,2,3,10-15';
-                    //$myfile->printAnnotations = true;
-                    //$myfile->printAsGrayscale = true;
-                    //$myfile->printInReverseOrder = true;
-                    $cpj->printFile = $myfile;
-                }
-                else if ($filetype === 'TXT')
-                {
-                    $myfile = new PrintFileTXT($filePath, $fileName, null);
-                    $myfile->printOrientation = PrintOrientation::Portrait;
-                    $myfile->fontName = 'Arial';
-                    $myfile->fontSizeInPoints = 12;
-                    //$myfile->textColor = '#ff00ff';
-                    //$myfile->textAlignment = TextAlignment::Center;
-                    //$myfile->fontBold = true;
-                    //$myfile->fontItalic = true;
-                    //$myfile->fontUnderline = true;
-                    //$myfile->fontStrikeThrough = true;
-                    //$myfile->marginLeft = 1; // INCH Unit!!!
-                    //$myfile->marginTop = 1; // INCH Unit!!!
-                    //$myfile->marginRight = 1; // INCH Unit!!!
-                    //$myfile->marginBottom = 1; // INCH Unit!!!
-                    $cpj->printFile = $myfile;
-                }
-                else
-                {
-                    $cpj->printFile = new PrintFile($filePath, $fileName, null);
-                }
+                $myfile = new PrintFilePDF($filePath, $fileName, null);
+                $myfile->printRotation = PrintRotation::None;
+                //$myfile->pagesRange = '1,2,3,10-15';
+                //$myfile->printAnnotations = true;
+                //$myfile->printAsGrayscale = true;
+                //$myfile->printInReverseOrder = true;
+                $cpj->printFile = $myfile;
 
 				if ($useDefaultPrinter || $printerName === 'null') {
                     $cpj->clientPrinter = new DefaultPrinter();

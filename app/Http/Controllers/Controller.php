@@ -13,6 +13,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use JavaScript;
+use App\AplexConfig;
 
 class Controller extends BaseController
 {
@@ -556,5 +557,10 @@ class Controller extends BaseController
             '({pais_agencia})'    => ($objAgencia) ? $objAgencia->pais : '',
         );
         return $replacements;
+    }
+
+    public function getConfig($key){
+      $data = AplexConfig::where('key', $key)->first();
+      return $data;
     }
 }

@@ -35,6 +35,7 @@ return [
     'lockens'=>'Casilleros',
     'alerts'=>'Alertas',
     'maintenances'=>'Mantenimientos',
+    'print_config'=>'Configurar impresoras',
     'email_templates'=>'Plantilla de correos',
     'payment_methods'=>'Formas de pagos',
     'payment_types'=>'Tipos de pagos',

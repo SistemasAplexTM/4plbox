@@ -232,6 +232,15 @@
                         </a>
                     </li>
                     @endcan
+                    @can('emailTemplate.index')
+                    <li>
+                        <a href="{{ route('printConfig') }}">
+                            <spam class="fa fa-print">
+                            </spam>
+                            @lang('layouts.print_config')
+                        </a>
+                    </li>
+                    @endcan
                     @can('administracion.index')
                     <li>
                         <a href="{{ url('administracion/1') }}">

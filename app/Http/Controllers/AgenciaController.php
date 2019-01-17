@@ -2,10 +2,6 @@
 
 namespace App\Http\Controllers;
 
-include_once(app_path() . '\WebClientPrint\WebClientPrint.php');
-use Neodynamic\SDK\Web\WebClientPrint;
-use Session;
-
 use App\Agencia;
 use App\AplexConfig;
 use App\AgenciaDetalle;
@@ -90,9 +86,7 @@ class AgenciaController extends Controller
             ->where([['agencia_detalle.agencia_id', '=', $id], ['agencia_detalle.deleted_at', '=', null]])
             ->get();
 
-        $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('DemoPrintFileController@printFile'), Session::getId());
-
-        return view('templates/agenciaForm', compact('agencia', 'detalle', 'wcpScript'));
+        return view('templates/agenciaForm', compact('agencia', 'detalle'));
     }
 
     public function update(AgenciaRequest $request, $id)
@@ -150,21 +144,6 @@ class AgenciaController extends Controller
         }
 
         return redirect()->route('agencia.index');
-    }
-
-    public function savePrint(Request $request, $id)
-    {
-      $data = array('id_agency' => $id, 'print' => $request->print);
-      AplexConfig::insert([
-        'key' => 'print_label',
-        'value' => json_encode($data)
-      ]);
-      return array('code' => 200);
-    }
-
-    public function get($key){
-      $data = AplexConfig::where('key', $key)->first();
-      return $data;
     }
 
     public function createAplexConfig($key, $value, $configMC){

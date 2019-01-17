@@ -43,6 +43,7 @@ return [
     'url_public'=>'Url publicas',
     'config_print'=>'Configuración de impresoras',
     'print_label'=>'Impresora para labels',
+    'print_default'=>'Impresora por defecto',
     'name'=>'Nombre',
     'agency_registration'=>'Registro de agencias',
     'responsable'=>'Responsable:',
