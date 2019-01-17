@@ -259,7 +259,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('notas/delete/{id}/{logical?}', 'DocumentoController@deleteNota')->name('documento.deleteNota');
     Route::get('documento/getHistoryConsignee/{id}', 'DocumentoController@getHistoryConsignee');
     Route::get('documento/getHistoryDocument/{document}', 'DocumentoController@getHistoryDocument');
-    Route::get('documento/{id}/getGuiasAgrupar/{id_detalle}', 'DocumentoController@getGuiasAgrupar');
+    Route::get('documento/{id}/getGuiasAgrupar/{id_detalle}/{document?}', 'DocumentoController@getGuiasAgrupar');
     Route::put('documento/{id}/updatePositionArancel', 'DocumentoController@updatePositionArancel');
     Route::get('documento/{id}/getDataDetailDocument', 'DocumentoController@getDataDetailDocument');
     Route::get('documento/{id}/getBoxesConsolidado', 'DocumentoController@getBoxesConsolidado');

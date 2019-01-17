@@ -149,7 +149,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="" @click="agruparGuiasConsolidado()" class="btn btn-primary" data-dismiss="modal">Agregar</button>
+                        <button type="button" id="" @click="agruparDocumentoDetalle()" class="btn btn-primary" data-dismiss="modal">Agregar</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>

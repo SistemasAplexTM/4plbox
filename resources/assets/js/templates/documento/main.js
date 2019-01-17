@@ -57,7 +57,10 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
                 }
                 if (full.tipo_documento_id != 3 && app_type === 'courier') {
                   groupGuias = 'group';
-                  group = ' onclick="agruparGuiasIndex('+full.id+')"';
+                  group = '';
+                  if(full.consolidado_status == 0){
+                    group = ' onclick="agruparGuiasIndex('+full.detalle_id+')"';
+                  }
                   classText = color_badget;
                   return '<span class="">' + ((codigo == null) ? '' : codigo )+ '</span><a style="float: right;cursor:pointer;" class="badge badge-'+ classText +' pop" role="button" data-html="true" data-toggle="popover" data-trigger="hover" title="<b>Guias agrupadas</b>" data-content="'+groupGuias+'" ' + group + '>'+ ((full.agrupadas == null) ? '' : full.agrupadas)+'</a>';
                 }else{
@@ -244,41 +247,42 @@ var objVue = new Vue({
         datosAgrupar:function(val){
           console.log(val);
             let me = this;
-            // if ($.fn.DataTable.isDataTable('#tbl-modalagrupar')) {
-            //     $('#tbl-modalagrupar tbody').empty();
-            //     $('#tbl-modalagrupar').dataTable().fnDestroy();
-            // }
-            // var table = $('#tbl-modalagrupar').DataTable({
-            //     "language": {
-            //         "paginate": {
-            //             "previous": "Anterior",
-            //             "next": "Siguiente",
-            //         },
-            //         /*"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",*/
-            //         "info": "Registros del _START_ al _END_  de un total de _TOTAL_",
-            //         "search": "Buscar",
-            //         "lengthMenu": "Mostrar _MENU_ Registros",
-            //         "infoEmpty": "Mostrando registros del 0 al 0",
-            //         "emptyTable": "No hay datos disponibles en la tabla",
-            //         "infoFiltered": "(Filtrando para _MAX_ Registros totales)",
-            //         "zeroRecords": "No se encontraron registros coincidentes",
-            //     },
-            //     processing: true,
-            //     serverSide: true,
-            //     searching: true,
-            //     ajax: 'getGuiasAgrupar/'+ option.id,
-            //     columns: [{
-            //         "render": function (data, type, full, meta) {
-            //             return '<div class="checkbox checkbox-success"><input type="checkbox" data-id_guia="' + full.documento_detalle_id + '" id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '"></label></div>';
-            //         }
-            //     }, {
-            //         data: 'codigo',
-            //         name: 'codigo'
-            //     }, {
-            //         data: 'peso2',
-            //         name: 'peso2'
-            //     }]
-            // });
+            if ($.fn.DataTable.isDataTable('#tbl-modalagrupar')) {
+                $('#tbl-modalagrupar tbody').empty();
+                $('#tbl-modalagrupar').dataTable().fnDestroy();
+            }
+            var table = $('#tbl-modalagrupar').DataTable({
+                "language": {
+                    "paginate": {
+                        "previous": "Anterior",
+                        "next": "Siguiente",
+                    },
+                    /*"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",*/
+                    "info": "Registros del _START_ al _END_  de un total de _TOTAL_",
+                    "search": "Buscar",
+                    "lengthMenu": "Mostrar _MENU_ Registros",
+                    "infoEmpty": "Mostrando registros del 0 al 0",
+                    "emptyTable": "No hay datos disponibles en la tabla",
+                    "infoFiltered": "(Filtrando para _MAX_ Registros totales)",
+                    "zeroRecords": "No se encontraron registros coincidentes",
+                },
+                "order": [[ 1, "desc" ]],
+                processing: true,
+                serverSide: true,
+                searching: true,
+                ajax: 'documento/0/getGuiasAgrupar/'+ val.id+'/document',
+                columns: [{
+                    "render": function (data, type, full, meta) {
+                        return '<div class="checkbox checkbox-success"><input type="checkbox" data-id_guia="' + full.id + '" id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '"></label></div>';
+                    }
+                }, {
+                    data: 'codigo',
+                    name: 'codigo'
+                }, {
+                    data: 'peso',
+                    name: 'peso'
+                }]
+            });
             $('#modalagrupar').modal('show');
         },
     },
@@ -298,6 +302,28 @@ var objVue = new Vue({
         datosAgrupar: {},
     },
     methods: {
+      agruparDocumentoDetalle: function(){
+          $('#modalagrupar').modal('hide');
+          let me = this;
+          var datos = $("#formGuiasAgrupar").serializeArray();
+          var ids = {};
+          $.each(datos, function(i, field) {
+              if (field.name === 'chk[]') {
+                  ids[i] =  $('#chk' + field.value).data('id_guia');
+              }
+          });
+          axios.post('agruparGuiasConsolidadoCreate',{
+              'id_detalle': me.agrupar.id,
+              'ids_guias': ids
+          }).then(function (response) {
+              toastr.success('Se agrupo correctamente.');
+              me.updateTableDetail();
+          }).catch(function (error) {
+              console.log(error);
+              toastr.warning('Error.');
+              toastr.options.closeButton = true;
+          });
+      },
         getStatus: function(){
             let me = this;
             axios.get('status/all').then(function (response) {
