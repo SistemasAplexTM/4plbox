@@ -164,7 +164,7 @@ function datatableDetail(){
                     display = 'none';
                 }
 
-                btn_addTracking = '<a class="btn btn-info btn-xs btn-actions addTrackings" type="button" id="btn_addtracking'+full.id+'" data-toggle="tooltip" title="Agregar tracking" onclick="addTrackings('+full.id+')"><i class="fa fa-barcode"></i> <span id="cant_tracking'+full.id+'">'+full.cantidad+'</span></a> ';
+                btn_addTracking = '<a class="btn btn-info btn-xs btn-actions addTrackings" type="button" id="btn_addtracking'+full.id+'" data-toggle="tooltip" title="Agregar tracking" onclick="addTrackings('+full.id+')"><i class="fa fa-truck"></i> <span id="cant_tracking'+full.id+'">'+full.cantidad+'</span></a> ';
 
                 btn_save = '<a class="btn btn-primary btn-xs btn-actions" type="button" id="btn_confirm'+full.id+'" onclick="saveTableDetail('+full.id+')" data-toggle="tooltip" title="Guardar" style="display:none;"><i class="fa fa-check"></i></a> ';
 
@@ -558,6 +558,34 @@ var objVue = new Vue({
         close: false
     },
     methods: {
+      modalSearchTracking: function() {
+        if ($.fn.DataTable.isDataTable('#tbl-trackings')) {
+            $('#tbl-trackings' + ' tbody').empty();
+            $('#tbl-trackings').dataTable().fnDestroy();
+        }
+        var table = $('#tbl-trackings').DataTable({
+            ajax: '../../tracking/all/' + false + '/' + $('#consignee_id').val(),
+            columns: [{
+                data: "codigo",
+                name: 'codigo'
+            }, {
+                data: "contenido",
+                name: 'contenido'
+            }, {
+                sortable: false,
+                "render": function(data, type, full, meta) {
+                    var btn_delete = '';
+                    btn_delete = '<a class="btn btn-danger btn-xs" type="button" id="btn_remove_t'+full.id+'" onclick="addTrackingToDocument(\''+full.codigo+'\', \'delete\')" data-toggle="tooltip" title="Retirar"><i class="fa fa-times"></i></a> ';
+                    return btn_delete;
+                }
+            }],
+            'columnDefs': [{
+                className: "text-center",
+                "targets": [0],
+            }]
+        });
+        $('#modalTrackingsAdd').modal('show');
+      },
       closeDocument: function() {
         let me = this;
         swal({
@@ -634,7 +662,8 @@ var objVue = new Vue({
             axios.post('../../tracking/addOrDeleteDocument', {
                 'option': option,
                 'tracking': (codigo) ? codigo : me.tracking_number,
-                'id_detail': me.id_detalle
+                'id_detail': me.id_detalle,
+                'consignee_id': $('#consignee_id').val(),
             }).then(response => {
                 if(response.data.code == 200){
                     me.tracking_number = null;
@@ -660,7 +689,7 @@ var objVue = new Vue({
         createTracking(){
             let me = this;
             axios.post('../../tracking', {
-                'consignee_id': null,
+                'consignee_id': $('#consignee_id').val(),
                 'codigo': me.tracking_number,
                 'contenido': null,
                 'confirmed_send': false,
