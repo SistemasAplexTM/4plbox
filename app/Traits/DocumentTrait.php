@@ -50,10 +50,11 @@ trait DocumentTrait
               DB::raw("0 as num_guia"),
               DB::raw("0 as agrupadas"),
               'documento.num_warehouse',
-              DB::raw("SUM(t.consolidado_status) AS consolidado_status")
-
+              DB::raw("SUM(t.consolidado_status) AS consolidado_status"),
+              'documento.carga_courier'
           )
           ->where($filter)
+          ->where('documento.carga_courier', 0)
           ->groupBy(
               'documento.id',
               'documento.liquidado',
@@ -66,7 +67,8 @@ trait DocumentTrait
               'shipper.nombre_full',
               'consignee.nombre_full',
               'consignee.correo',
-              'agencia.descripcion'
+              'agencia.descripcion',
+              'documento.carga_courier'
           )
           ->orderBy('documento.created_at', 'DESC');
         return $sql;
@@ -123,8 +125,8 @@ trait DocumentTrait
                   AND x.flag = 1
                 ) AS guias_agrupadas');
 
-        $sql = DB::table('documento_detalle AS a')
-          ->leftJoin('documento AS b', 'a.documento_id', 'b.id')
+        $sql = DB::table('documento AS b')
+          ->leftJoin('documento_detalle AS a', 'b.id', 'a.documento_id')
           ->leftJoin('consignee AS c', 'b.consignee_id', 'c.id')
           ->leftJoin('shipper AS d', 'b.shipper_id', 'd.id')
           ->leftJoin('agencia AS e', 'b.agencia_id', 'e.id')
@@ -149,6 +151,7 @@ trait DocumentTrait
           	'a.consolidado AS consolidado_status',
           	'a.agrupado',
           	'a.flag',
+          	'b.carga_courier',
             DB::raw("(SELECT
                   			x.descripcion AS estatus
                   		FROM
@@ -183,94 +186,9 @@ trait DocumentTrait
               $qr_group
             )
             ->where($filter)
+            ->where('b.carga_courier', 1)
             ->whereRaw('(a.flag = 0 OR a.flag is null)')
             ->orderBy('b.created_at', 'DESC');
-
-      // $sql = DB::table('documento')
-      //     ->leftJoin('shipper', 'documento.shipper_id', '=', 'shipper.id')
-      //     ->leftJoin('consignee', 'documento.consignee_id', '=', 'consignee.id')
-      //     ->join('agencia', 'documento.agencia_id', '=', 'agencia.id')
-      //     ->leftJoin(DB::raw("(SELECT
-      //                           z.id As detalle_id,
-      //                           Count(DISTINCT z.consolidado) AS consolidado,
-      //                           z.consolidado AS consolidado_status,
-      //                           z.agrupado,
-      //                           z.flag,
-      //                           z.num_guia,
-      //                           z.num_warehouse,
-      //                           z.documento_id,
-      //                           $qr_group,
-      //                           $qr_status,
-      //                           $qr_status_color
-      //                         FROM
-      //                           documento_detalle AS z
-      //                         WHERE
-      //                           z.deleted_at IS NULL
-      //                         GROUP BY
-      //                           z.documento_id,
-      //                           z.id,
-      //                           z.consolidado,
-      //                           z.agrupado,
-      //                           z.num_guia,
-      //                           z.num_warehouse,
-      //                           z.peso,
-      //                           z.valor,
-      //                           z.flag
-      //                         ) AS t"), "documento.id", "t.documento_id")
-      //     ->select('documento.id as id', 'documento.valor_libra', 'documento.valor', 'documento.liquidado', 'documento.tipo_documento_id as tipo_documento_id',
-      //     'documento.consecutivo as codigo',
-      //      'documento.created_at AS fecha',
-      //      'shipper.nombre_full as ship_nomfull', 'consignee.nombre_full as cons_nomfull',
-      //      'consignee.correo as email_cons', 'agencia.descripcion as agencia',
-      //         DB::raw("(SELECT Count(a.id) AS cantidad FROM documento_detalle AS a WHERE a.documento_id = documento.id AND a.deleted_at IS NULL) as cantidad"),
-      //         DB::raw("(SELECT IFNULL(SUM(a.piezas), 0) AS piezas FROM documento_detalle AS a WHERE a.documento_id = documento.id AND a.deleted_at IS NULL) as piezas"),
-      //         DB::raw("(SELECT Sum(documento_detalle.peso) FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as peso"),
-      //         DB::raw("(SELECT Sum(documento_detalle.volumen) FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as volumen"),
-      //         DB::raw("t.num_guia as num_guia"),
-      //         DB::raw('(
-      //           SELECT
-      //             (SELECT Count(z.id) FROM documento_detalle AS z WHERE z.deleted_at IS NULL AND z.agrupado = x.id AND z.flag = 1) AS agrupada
-      //             FROM
-      //             documento_detalle AS x
-      //             WHERE
-      //             x.documento_id = documento.id AND
-      //             x.deleted_at IS NULL
-      //           ) AS agrupadas'),
-      //         DB::raw("t.num_warehouse as num_warehouse"),
-      //         't.detalle_id',
-      //         't.consolidado',
-      //         't.guias_agrupadas',
-      //         't.estatus',
-      //         't.estatus_color',
-      //         DB::raw("SUM(t.consolidado_status) AS consolidado_status")
-      //
-      //     )
-      //     ->where($filter)
-      //     ->whereRaw('(t.flag = 0 OR t.flag is null)')
-      //     ->groupBy(
-      //         'documento.id',
-      //         'documento.liquidado',
-      //         'documento.tipo_documento_id',
-      //         'documento.consecutivo',
-      //         'documento.valor_libra',
-      //         'documento.valor',
-      //         'documento.num_warehouse',
-      //         'documento.created_at',
-      //         'shipper.nombre_full',
-      //         'consignee.nombre_full',
-      //         'consignee.correo',
-      //         'agencia.descripcion',
-      //         't.detalle_id',
-      //         't.consolidado',
-      //         't.guias_agrupadas',
-      //         't.agrupado',
-      //         't.flag',
-      //         't.num_guia',
-      //         't.num_warehouse',
-      //         't.estatus',
-      //         't.estatus_color'
-      //     )
-      //     ->orderBy('documento.created_at', 'DESC');
         return $sql;
     }
 

@@ -107,6 +107,7 @@ class DocumentoController extends Controller
                     $data->agencia_id        = Auth::user()->agencia_id;
                     $data->tipo_documento_id = $request->tipo_documento_id;
                     $data->usuario_id        = Auth::user()->id;
+                    $data->carga_courier     = (isset($request->type_id) and $request->type_id != '') ? $request->type_id : 0;
                     $data->created_at        = $request->created_at;
                     $tipo                    = TipoDocumento::findOrFail($request->tipo_documento_id);
 
@@ -2414,6 +2415,7 @@ class DocumentoController extends Controller
     {
       if($document){
         $detalle = DB::table('documento_detalle AS a')
+            ->join('documento AS b', 'a.documento_id', 'b.id')
             ->select(
                 'a.id',
                 'a.num_warehouse AS codigo',
@@ -2425,6 +2427,7 @@ class DocumentoController extends Controller
                 ['a.id', '<>', $id_detalle],
                 ['a.flag', 0],
                 ['a.consolidado', 0],
+                ['b.carga_courier', 1]
             ])
             ->get();
       }else{

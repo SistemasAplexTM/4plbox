@@ -54,7 +54,7 @@ var objVue = new Vue({
               console.log(option);
               axios.get('documento/0/removerGuiaAgrupada/' + option.id + '/' + option.id + '/' + true).then(response => {
                   toastr.success('Registro quitado correctamente.');
-                  refreshTable('tbl-documento');
+                  refreshTable('tbl-documento2');
               }).catch(function(error) {
                   console.log(error);
                   toastr.warning('Error: -' + error);
@@ -66,6 +66,9 @@ var objVue = new Vue({
         this.printDocument();
         this.getStatus();
         $('#date').val(this.getTime());
+    },
+    created(){
+      console.log('jhonny ', app_type);
     },
     data: {
         id_status: null,
@@ -95,7 +98,7 @@ var objVue = new Vue({
               'document': true
           }).then(function (response) {
               toastr.success('Se agrupo correctamente.');
-              refreshTable('tbl-documento');
+              refreshTable('tbl-documento2');
           }).catch(function (error) {
               console.log(error);
               toastr.warning('Error.');
@@ -143,8 +146,12 @@ var objVue = new Vue({
             });
         },
         createNewDocument: function(data) {
+          let type = '';
+          if(typeof data.type != 'undefined'){
+            type = 'para ' + data.type;
+          }
             swal({
-                title: "<div>Se creará un(a) <span style='color: rgb(212, 103, 82);'>" + data.name + ".</span></div>",
+                title: "<div>Se creará un(a) <span style='color: rgb(212, 103, 82);'>" + data.name + ".</span> " + type + "</div>",
                 text: "¿Desea Continuar?.",
                 type: 'warning',
                 showCancelButton: true,
@@ -156,6 +163,7 @@ var objVue = new Vue({
                 if (result.value) {
                     axios.post('documento/ajaxCreate/' + data.tipo_doc_id, {
                         'tipo_documento_id': data.tipo_doc_id,
+                        'type_id': data.type_id,
                         'funcionalidaddes': data.functionalities,
                         'created_at': this.getTime()
                     }).then(function(response) {

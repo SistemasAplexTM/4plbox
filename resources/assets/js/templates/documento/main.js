@@ -28,11 +28,13 @@ function sendMail(id) {
     objVue.sendMail(id);
 }
 
-function createNewDocument_(tipo_doc_id, name, functionalities) {
+function createNewDocument_(tipo_doc_id, name, functionalities, type, type_id) {
     var data = {
         tipo_doc_id: tipo_doc_id,
         name: name,
         functionalities: functionalities,
+        type: type,
+        type_id: type_id,
     };
     objVue.createNewDocument(data);
 }

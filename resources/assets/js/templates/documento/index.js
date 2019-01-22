@@ -9,14 +9,21 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
       var t = '';
       $('#tbl1').css('display','inline-block');
       $('#tbl2').css('display','none');
+      $('#crearDoc').css('display','inline-block');
+      $('#btns_group').css('display','none');
     }else{
       var t = 2;
-      $('#tbl2').css('display','inline-block')
-      $('#tbl1').css('display','none')
+      $('#tbl2').css('display','inline-block');
+      $('#tbl1').css('display','none');
+      $('#btns_group').css('display','inline-block');
+      $('#crearDoc').css('display','none');
     }
     if (reinitialite) {
       if ($.fn.DataTable.isDataTable('#tbl-documento' + t)) {
         $('#tbl-documento' + t).dataTable().fnDestroy();
+        if(t == 2){
+          $('#tbl-documento3').dataTable().fnDestroy();
+        }
       }
     }
     if(typeof filter != 'undefined'){
@@ -49,7 +56,12 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
         }
         // $('#icono_doc').removeClass(className).addClass(icon);
         $('#icono_doc').empty().append('<i class="fa '+icon+'"></i>');
-        $('#crearDoc').attr('onclick', 'createNewDocument_(' + tipo_doc_id + ',\'' + nom + '\',\'' + funcionalidades + '\')');
+        if(t == 2){
+          $('#crearDoc2').attr('onclick', 'createNewDocument_(' + tipo_doc_id + ',\'' + nom + '\',\'' + funcionalidades + '\', \'Courier\', 1)');
+          $('#crearDoc3').attr('onclick', 'createNewDocument_(' + tipo_doc_id + ',\'' + nom + '\',\'' + funcionalidades + '\', \'Carga\', 0)');
+        }else{
+          $('#crearDoc').attr('onclick', 'createNewDocument_(' + tipo_doc_id + ',\'' + nom + '\',\'' + funcionalidades + '\')');
+        }
     }
 
 }
@@ -194,7 +206,7 @@ function numDocument(data, type, full, meta) {
             color_badget = 'warning';
         }
     }
-    if (full.tipo_documento_id != 3 && app_type === 'courier') {
+    if (full.tipo_documento_id != 3 && full.carga_courier == 1) {
       var groupGuias = '';
       group = '';
       // groupGuias = full.guias_agrupadas;
