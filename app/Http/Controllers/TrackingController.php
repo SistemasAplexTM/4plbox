@@ -259,16 +259,6 @@ class TrackingController extends Controller
             );
         }
 
-        // if ($request->option == 'delete') {
-        //     DB::table('tracking')
-        //         ->where('id', $request->id_tracking)
-        //         ->update(['documento_detalle_id' => null]);
-        // } else {
-        //     DB::table('tracking')
-        //         ->where('id', $request->id_tracking)
-        //         ->update(['documento_detalle_id' => $request->id_document]);
-        // }
-
         return $answer;
     }
 

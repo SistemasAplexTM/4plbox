@@ -919,6 +919,7 @@
                         <h2 class="modal-title" id="myModalLabel"><i class="fa fa-truck"></i> @lang('documents.add_trackings')</h2>
                     </div>
                     <div class="modal-body">
+                      <form id="formSearchTracking" name="formSearchTracking" method="POST" action="">
                         <div class="row" id="window-load"><div id="loading"><Spinner name="circle" color="#66bf33" noFadeIn="true"/></div></div>
                         <div class="row">
                             <div class="col-lg-8">
@@ -932,9 +933,9 @@
                                         <table class="table table-striped table-bordered table-hover" id="tbl-trackings" style="width: 100%">
                                             <thead>
                                                 <tr>
+                                                    <th></th>
                                                     <th style="width: 50%">@lang('documents.tracking')</th>
                                                     <th>@lang('documents.content')</th>
-                                                    <th>@lang('general.actions')</th>
                                                 </tr>
                                             </thead>
                                         </table>
@@ -942,8 +943,10 @@
                                 </div>
                             </div>
                         </div>
+                      </form>
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" @click="addTrackingsToDocument()">@lang('documents.add')</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">@lang('documents.close')</button>
                     </div>
                 </div>

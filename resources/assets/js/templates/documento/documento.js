@@ -276,12 +276,12 @@ function datatableDetail(){
         if(app_type === 'courier'){
             if(json.data.length === 0){
                 objVue.cantidad_detalle = true;
-                $('#btn_add').attr('disabled', false);
-                $('#btn_add').siblings('button').attr('disabled', false);
+                // $('#btn_add').attr('disabled', false);
+                // $('#btn_add').siblings('button').attr('disabled', false);
             }else{
                 objVue.cantidad_detalle = false;
-                $('#btn_add').attr('disabled', true);
-                $('#btn_add').siblings('button').attr('disabled', true);
+                // $('#btn_add').attr('disabled', true);
+                // $('#btn_add').siblings('button').attr('disabled', true);
             }
         }
         objVue.totalizeDocument();
@@ -555,9 +555,22 @@ var objVue = new Vue({
         cantidad_detalle: true, //para mostrar u ocultar el boton de agregar (funcionalidad para courier)
         tracking_number: null,
         id_detalle: null,
-        close: false
+        close: false,
+        ids_tracking: []
     },
     methods: {
+      addTrackingsToDocument: function(){
+        let me = this;
+        var datos = $("#formSearchTracking").serializeArray();
+        me.ids_tracking = [];
+            $.each(datos, function(i, field) {
+                if (field.name === 'chk[]') {
+                  if($('#chk' + field.value).val() != ''){
+                    me.ids_tracking.push($('#chk' + field.value).val());
+                  }
+                }
+            });
+      },
       modalSearchTracking: function() {
         if ($.fn.DataTable.isDataTable('#tbl-trackings')) {
             $('#tbl-trackings' + ' tbody').empty();
@@ -566,18 +579,15 @@ var objVue = new Vue({
         var table = $('#tbl-trackings').DataTable({
             ajax: '../../tracking/all/' + false + '/' + $('#consignee_id').val(),
             columns: [{
+                "render": function (data, type, full, meta) {
+                return '<div class="checkbox checkbox-success"><input type="checkbox" data-numguia="' + full.codigo + '" id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '"></label></div>';
+              }
+            }, {
                 data: "codigo",
                 name: 'codigo'
             }, {
                 data: "contenido",
                 name: 'contenido'
-            }, {
-                sortable: false,
-                "render": function(data, type, full, meta) {
-                    var btn_delete = '';
-                    btn_delete = '<a class="btn btn-danger btn-xs" type="button" id="btn_remove_t'+full.id+'" onclick="addTrackingToDocument(\''+full.codigo+'\', \'delete\')" data-toggle="tooltip" title="Retirar"><i class="fa fa-times"></i></a> ';
-                    return btn_delete;
-                }
             }],
             'columnDefs': [{
                 className: "text-center",
@@ -1225,7 +1235,8 @@ var objVue = new Vue({
                     'peso2': peso,
                     'piezas': piezas,
                     'created_at': this.getTime(),
-                    'contador': parseInt(cont)
+                    'contador': parseInt(cont),
+                    'ids_tracking': me.ids_tracking
                 }).then(function(response) {
                     if (response.data['code'] == 200) {
                         toastr.success('Registro creado correctamente.');

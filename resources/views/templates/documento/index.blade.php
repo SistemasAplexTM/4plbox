@@ -81,9 +81,6 @@
                                        @lang('documents.warehouse')
                                     </div>
                                 </div>
-                                {{-- <div class="col-lg-4">
-                                    <v-select name="status_id" v-model="status_id" label="descripcion" :filterable="false" :options="status" placeholder="Status"></v-select>
-                                </div> --}}
                             </div>
                             <div class="col-lg-4">
                                 &nbsp;
@@ -101,7 +98,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-10">
-                                <div class="col-lg-12">
+                                <div class="col-lg-12" id="tbl1">
                                     <div class="table-responsive">
                                         <table id="tbl-documento" class="table table-striped table-hover table-bordered" style="width: 100%;">
                                             <thead>
@@ -117,6 +114,51 @@
                                                 </tr>
                                             </thead>
                                         </table>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12" id="tbl2" style="display:none">
+                                    <ul class="nav nav-tabs" role="tablist">
+                    							    <li role="warehouses" class="active"><a href="#courier" aria-controls="courier" role="tab" data-toggle="tab"><i class="fa fa-truck"></i> Courier</a></li>
+                    							    <li role="warehouses"><a href="#load" aria-controls="load" role="tab" data-toggle="tab"><i class="fa fa-truck-moving"></i> Carga</a></li>
+                    							  </ul>
+                                    <div class="tab-content">
+                                      <div role="tabpanel" class="tab-pane fade active in" id="courier">
+                                        <div class="table-responsive" style="padding-top:10px;">
+                                          <table id="tbl-documento2" class="table table-striped table-hover table-bordered" style="width: 100%;">
+                                              <thead>
+                                                  <tr>
+                                                      <th><i class="fa fa-file" aria-hidden="true" id="icono-doc-table"></i> #@lang('documents.documents')</th>
+                                                      <th><i class="fa fa-calendar" aria-hidden="true"></i> @lang('documents.date')</th>
+                                                      <th><i class="fa fa-user" aria-hidden="true"></i> @lang('documents.client_consignee')</th>
+                                                      <th><i class="fa fa-dollar-sign" aria-hidden="true"></i> @lang('general.rate')</th>
+                                                      <th><i class="fa fa-balance-scale" aria-hidden="true"></i> @lang('documents.weight')</th>
+                                                      <th><i class="fa fa-cubes" aria-hidden="true"></i> @lang('documents.volume')</th>
+                                                      <th><i class="fa fa-building" aria-hidden="true"></i> @lang('documents.agency')</th>
+                                                      <th><i class="fa fa-bolt" aria-hidden="true"></i> @lang('documents.actions')</th>
+                                                  </tr>
+                                              </thead>
+                                          </table>
+                                        </div>
+                                      </div>
+
+                                      <div role="tabpanel" class="tab-pane fade active" id="load">
+                                        <div class="table-responsive" style="padding-top:10px;">
+                                          <table id="tbl-documento3" class="table table-striped table-hover table-bordered" style="width: 100%;">
+                                              <thead>
+                                                  <tr>
+                                                      <th><i class="fa fa-file" aria-hidden="true" id="icono-doc-table"></i> #@lang('documents.documents')</th>
+                                                      <th><i class="fa fa-calendar" aria-hidden="true"></i> @lang('documents.date')</th>
+                                                      <th><i class="fa fa-user" aria-hidden="true"></i> @lang('documents.client_consignee')</th>
+                                                      <th><i class="fa fa-dollar-sign" aria-hidden="true"></i> @lang('general.rate')</th>
+                                                      <th><i class="fa fa-balance-scale" aria-hidden="true"></i> @lang('documents.weight')</th>
+                                                      <th><i class="fa fa-cubes" aria-hidden="true"></i> @lang('documents.volume')</th>
+                                                      <th><i class="fa fa-building" aria-hidden="true"></i> @lang('documents.agency')</th>
+                                                      <th><i class="fa fa-bolt" aria-hidden="true"></i> @lang('documents.actions')</th>
+                                                  </tr>
+                                              </thead>
+                                          </table>
+                                        </div>
+                                      </div>
                                     </div>
                                 </div>
                             </div>
@@ -165,4 +207,6 @@
 @section('scripts')
   {!! $wcpScript; !!}
 <script src="{{ asset('js/templates/documento/main.js') }}"></script>
+<script src="{{ asset('js/templates/documento/vue.js') }}"></script>
+<script src="{{ asset('js/templates/documento/index.js') }}"></script>
 @endsection
