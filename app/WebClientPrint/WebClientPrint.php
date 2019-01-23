@@ -5,8 +5,8 @@ use Exception;
 use ZipArchive;
 
 // Setting WebClientPrint
-WebClientPrint::$licenseOwner = '';
-WebClientPrint::$licenseKey = '';
+WebClientPrint::$licenseOwner = 'Ramon Ocampo - 1 WebApp Lic - 1 WebServer Lic';
+WebClientPrint::$licenseKey = '2E10CAAD4AA961467A3559A8BF5FE690DC18906C';
 
 //Set wcpcache folder RELATIVE to WebClientPrint.php file
 //FILE WRITE permission on this folder is required!!!

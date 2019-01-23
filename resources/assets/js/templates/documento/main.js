@@ -39,7 +39,7 @@ function createNewDocument_(tipo_doc_id, name, functionalities, type, type_id) {
     objVue.createNewDocument(data);
 }
 
-function openModalTagsDocument(id, codigo, cliente, correo, cantidad, liquidado) {
+function openModalTagsDocument(id, codigo, cliente, correo, cantidad, liquidado, piezas, estatus_color) {
     if (correo == 'null') {
         correo = 'Sin correo';
     }
@@ -53,6 +53,8 @@ function openModalTagsDocument(id, codigo, cliente, correo, cantidad, liquidado)
         'correo': correo,
         'cantidad': cantidad,
         'liquidado': liquidado,
+        'piezas': piezas,
+        'estatus_color': estatus_color,
     }
 }
 

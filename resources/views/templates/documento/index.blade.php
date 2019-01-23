@@ -34,7 +34,7 @@
       padding-right: 0px;
     }
     .ui-group-buttons .or{position:relative;float:left;width:.3em;height:1.3em;z-index:3;font-size:12px}
-    .ui-group-buttons .or:before{position:absolute;top:50%;left:50%;content:'or';background-color:#5a5a5a;margin-top:-.1em;margin-left:-.9em;width:1.8em;height:1.8em;line-height:1.55;color:#fff;font-style:normal;font-weight:400;text-align:center;border-radius:500px;-webkit-box-shadow:0 0 0 1px rgba(0,0,0,0.1);box-shadow:0 0 0 1px rgba(0,0,0,0.1);-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;box-sizing:border-box}
+    .ui-group-buttons .or:before{position:absolute;top:50%;left:50%;content:' ';background-color:#5a5a5a;margin-top:-.1em;margin-left:-.9em;width:1.8em;height:1.8em;line-height:1.55;color:#fff;font-style:normal;font-weight:400;text-align:center;border-radius:500px;-webkit-box-shadow:0 0 0 1px rgba(0,0,0,0.1);box-shadow:0 0 0 1px rgba(0,0,0,0.1);-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;box-sizing:border-box}
     .ui-group-buttons .or:after{position:absolute;top:0;left:0;content:' ';width:.3em;height:2.9em;background-color:rgba(0,0,0,0);border-top:.6em solid #5a5a5a;border-bottom:.6em solid #5a5a5a}
     .ui-group-buttons .or.or-lg{height:1.3em;font-size:16px}
     .ui-group-buttons .or.or-lg:after{height:2.85em}
@@ -142,8 +142,8 @@
                                 </div>
                                 <div class="col-lg-12" id="tbl2" style="display:none">
                                     <ul class="nav nav-tabs" role="tablist">
-                    							    <li role="warehouses" class="active"><a href="#courier" aria-controls="courier" role="tab" data-toggle="tab"><i class="fa fa-box-open"></i> Courier</a></li>
-                                      <li role="warehouses"><a href="#load" aria-controls="load" role="tab" data-toggle="tab"><i class="fa fa-truck-moving"></i> Carga</a></li>
+                    							    <li role="warehouses" class="active"><a href="#courier" aria-controls="courier" role="tab" data-toggle="tab"><i class="fa fa-box-open"></i> COURIER</a></li>
+                                      <li role="warehouses"><a href="#load" aria-controls="load" role="tab" data-toggle="tab"><i class="fa fa-truck-moving"></i> CARGA</a></li>
                     							  </ul>
                                     <div class="tab-content">
                                       <div role="tabpanel" class="tab-pane fade active in" id="courier">

@@ -51,7 +51,6 @@ var objVue = new Vue({
         },
         removerAgrupado:function(option){
               let me = this;
-              console.log(option);
               axios.get('documento/0/removerGuiaAgrupada/' + option.id + '/' + option.id + '/' + true).then(response => {
                   toastr.success('Registro quitado correctamente.');
                   refreshTable('tbl-documento2');
@@ -68,7 +67,7 @@ var objVue = new Vue({
         $('#date').val(this.getTime());
     },
     created(){
-      console.log('jhonny ', app_type);
+      //
     },
     data: {
         id_status: null,
