@@ -26,7 +26,6 @@
         </div>
         <div class="ibox-content">
           <div class="row">
-            <h1 id="testNumber"></h1>
             <div class="col-lg-12">
               <p>
                 En este módulo, usted podrá configurar lasimpresoras para Labels y para documentos, por favis siga las instrucciones.
