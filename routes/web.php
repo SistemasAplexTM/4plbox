@@ -97,6 +97,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('tracking/searchTracking/{tracking}', 'TrackingController@searchTracking');
     Route::post('tracking/validar_tracking', 'TrackingController@validar_tracking');
 
+    /*--- MODULO RECIBO DE ENTREGA ---*/
+    Route::resource('receipt', 'ReceiptController', ['except' => ['show', 'create', 'edit', 'update']]);
+    // Route::post('receipt/addOrDeleteDocument', 'ReceiptController@addOrDeleteDocument');
+    Route::get('receipt/all/{grid?}/{add?}/{id?}/{req_consignee?}', 'ReceiptController@getAll')->name('datatable/all');
+    Route::get('receipt/delete/{id}/{logical?}', 'ReceiptController@delete')->name('receipt.delete');
+    // Route::get('receipt/getAllShipperConsignee/{table}', 'ReceiptController@getAllShipperConsignee');
+    // Route::get('receipt/searchReceipt/{receipt}', 'ReceiptController@searchReceipt');
+    // Route::post('receipt/validar_tracking', 'ReceiptController@validar_tracking');
+
     /*--- MODULO MODULOS ---*/
     Route::resource('modulo', 'ModuloController', ['except' => ['show', 'create', 'edit']]);
     Route::get('modulo/all', 'ModuloController@getAll')->name('datatable/all');

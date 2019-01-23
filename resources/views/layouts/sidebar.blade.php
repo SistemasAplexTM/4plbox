@@ -80,7 +80,7 @@
                     @endcan
                     @can('documento.index')
                     <li>
-                        <a href="{{ route('documento.index') }}">
+                        <a href="{{ route('receipt.index') }}">
                             <spam class="fal fa-file-signature">
                             </spam>
                              @lang('layouts.receipt')
