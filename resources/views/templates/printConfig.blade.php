@@ -87,9 +87,5 @@
 
 @section('scripts')
   {!! $wcpScript !!}
-<script type="text/javascript">
-  document.getElementById('testNumber').innerHTML = number_format(25.4);
-</script>
-
 {{-- <script src="{{ asset('js/templates/printConfig.js') }}"></script> --}}
 @endsection
