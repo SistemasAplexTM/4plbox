@@ -134,6 +134,7 @@ class TrackingController extends Controller
 
             if ($add != null and $add != 'null') {
                 $where[] = array('tracking.consignee_id', $add);
+                $where[] = array('tracking.documento_detalle_id', NULL);
             } else {
                 // if ($req_consignee == false) {
                 //     $where[] = array('tracking.consignee_id', null);
@@ -228,7 +229,7 @@ class TrackingController extends Controller
                 if ($data->num_warehouse == null) {
                     DB::table('tracking')
                         ->where('id', $data->id)
-                        ->update(['documento_detalle_id' => $request->id_detail]);
+                        ->update(['documento_detalle_id' => $request->id_detail], ['consignee_id' => $request->consignee_id]);
                     $answer = array(
                         'code' => 200,
                         'data' => $data,
@@ -257,16 +258,6 @@ class TrackingController extends Controller
                 'error' => 'El numero de warehouse ingresado, no esta en la base de datos.',
             );
         }
-
-        // if ($request->option == 'delete') {
-        //     DB::table('tracking')
-        //         ->where('id', $request->id_tracking)
-        //         ->update(['documento_detalle_id' => null]);
-        // } else {
-        //     DB::table('tracking')
-        //         ->where('id', $request->id_tracking)
-        //         ->update(['documento_detalle_id' => $request->id_document]);
-        // }
 
         return $answer;
     }

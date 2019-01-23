@@ -164,7 +164,7 @@ function datatableDetail(){
                     display = 'none';
                 }
 
-                btn_addTracking = '<a class="btn btn-info btn-xs btn-actions addTrackings" type="button" id="btn_addtracking'+full.id+'" data-toggle="tooltip" title="Agregar tracking" onclick="addTrackings('+full.id+')"><i class="fa fa-barcode"></i> <span id="cant_tracking'+full.id+'">'+full.cantidad+'</span></a> ';
+                btn_addTracking = '<a class="btn btn-info btn-xs btn-actions addTrackings" type="button" id="btn_addtracking'+full.id+'" data-toggle="tooltip" title="Agregar tracking" onclick="addTrackings('+full.id+')"><i class="fa fa-truck"></i> <span id="cant_tracking'+full.id+'">'+full.cantidad+'</span></a> ';
 
                 btn_save = '<a class="btn btn-primary btn-xs btn-actions" type="button" id="btn_confirm'+full.id+'" onclick="saveTableDetail('+full.id+')" data-toggle="tooltip" title="Guardar" style="display:none;"><i class="fa fa-check"></i></a> ';
 
@@ -276,12 +276,12 @@ function datatableDetail(){
         if(app_type === 'courier'){
             if(json.data.length === 0){
                 objVue.cantidad_detalle = true;
-                $('#btn_add').attr('disabled', false);
-                $('#btn_add').siblings('button').attr('disabled', false);
+                // $('#btn_add').attr('disabled', false);
+                // $('#btn_add').siblings('button').attr('disabled', false);
             }else{
                 objVue.cantidad_detalle = false;
-                $('#btn_add').attr('disabled', true);
-                $('#btn_add').siblings('button').attr('disabled', true);
+                // $('#btn_add').attr('disabled', true);
+                // $('#btn_add').siblings('button').attr('disabled', true);
             }
         }
         objVue.totalizeDocument();
@@ -555,9 +555,47 @@ var objVue = new Vue({
         cantidad_detalle: true, //para mostrar u ocultar el boton de agregar (funcionalidad para courier)
         tracking_number: null,
         id_detalle: null,
-        close: false
+        close: false,
+        ids_tracking: []
     },
     methods: {
+      addTrackingsToDocument: function(){
+        let me = this;
+        var datos = $("#formSearchTracking").serializeArray();
+        me.ids_tracking = [];
+            $.each(datos, function(i, field) {
+                if (field.name === 'chk[]') {
+                  if($('#chk' + field.value).val() != ''){
+                    me.ids_tracking.push($('#chk' + field.value).val());
+                  }
+                }
+            });
+      },
+      modalSearchTracking: function() {
+        if ($.fn.DataTable.isDataTable('#tbl-trackings')) {
+            $('#tbl-trackings' + ' tbody').empty();
+            $('#tbl-trackings').dataTable().fnDestroy();
+        }
+        var table = $('#tbl-trackings').DataTable({
+            ajax: '../../tracking/all/' + false + '/' + $('#consignee_id').val(),
+            columns: [{
+                "render": function (data, type, full, meta) {
+                return '<div class="checkbox checkbox-success"><input type="checkbox" data-numguia="' + full.codigo + '" id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '"></label></div>';
+              }
+            }, {
+                data: "codigo",
+                name: 'codigo'
+            }, {
+                data: "contenido",
+                name: 'contenido'
+            }],
+            'columnDefs': [{
+                className: "text-center",
+                "targets": [0],
+            }]
+        });
+        $('#modalTrackingsAdd').modal('show');
+      },
       closeDocument: function() {
         let me = this;
         swal({
@@ -634,7 +672,8 @@ var objVue = new Vue({
             axios.post('../../tracking/addOrDeleteDocument', {
                 'option': option,
                 'tracking': (codigo) ? codigo : me.tracking_number,
-                'id_detail': me.id_detalle
+                'id_detail': me.id_detalle,
+                'consignee_id': $('#consignee_id').val(),
             }).then(response => {
                 if(response.data.code == 200){
                     me.tracking_number = null;
@@ -660,7 +699,7 @@ var objVue = new Vue({
         createTracking(){
             let me = this;
             axios.post('../../tracking', {
-                'consignee_id': null,
+                'consignee_id': $('#consignee_id').val(),
                 'codigo': me.tracking_number,
                 'contenido': null,
                 'confirmed_send': false,
@@ -1196,7 +1235,8 @@ var objVue = new Vue({
                     'peso2': peso,
                     'piezas': piezas,
                     'created_at': this.getTime(),
-                    'contador': parseInt(cont)
+                    'contador': parseInt(cont),
+                    'ids_tracking': me.ids_tracking
                 }).then(function(response) {
                     if (response.data['code'] == 200) {
                         toastr.success('Registro creado correctamente.');

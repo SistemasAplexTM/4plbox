@@ -1,10 +1,10 @@
 <!-- estilos -->
 <style type="text/css">
-@import url("https://fonts.googleapis.com/css?family=Russo+One");
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
-*{
-  /* font-family: 'Roboto Condensed', sans-serif; */
-}
+  @import url("https://fonts.googleapis.com/css?family=Russo+One");
+  @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+  *{
+    /* font-family: 'Roboto Condensed', sans-serif; */
+  }
     #tbl-statusReport_wrapper{
         padding-bottom:0 !important;
     }
@@ -210,25 +210,25 @@
           }
 	    },
 	    watch:{
-	    	params: function (newQuestion) {
-	    		this.id_document = newQuestion.id;
-	    		this.cliente_cons = newQuestion.cliente;
-	    		this.cliente_email = newQuestion.correo;
-	    		this.num_track = newQuestion.codigo;
-	    		this.cantidad = newQuestion.cantidad;
-	    		if(newQuestion.correo == 'Sin correo' || newQuestion.correo == ''){
+	    	params: function (val) {
+	    		this.id_document = val.id;
+	    		this.cliente_cons = val.cliente;
+	    		this.cliente_email = val.correo;
+	    		this.num_track = val.codigo;
+	    		this.cantidad = (val.cantidad == 'undefined') ? '' : val.cantidad;
+	    		if(val.correo == 'Sin correo' || val.correo == ''){
 	    			$('#btn-sendEmail').attr('disabled', true);
 	    		}else{
 	    			$('#btn-sendEmail').attr('disabled', false);
 	    		}
-	    		if(newQuestion.liquidado == 1){
+	    		if(val.liquidado == 1){
 					this.urlSendEmail = 'documento/sendEmailDocument/'+this.id_document;
-		    		this.urlPrint = 'impresion-documento/'+newQuestion.id+'/guia';
-					this.urlPrintLabel = 'impresion-documento-label/'+newQuestion.id+'/guia';
+		    		this.urlPrint = 'impresion-documento/'+val.id+'/guia';
+					this.urlPrintLabel = 'impresion-documento-label/'+val.id+'/guia';
 	    		}else{
 		    		this.urlSendEmail = 'documento/sendEmailDocument/'+this.id_document;
-		    		this.urlPrint = 'impresion-documento/'+newQuestion.id+'/warehouse';
-					this.urlPrintLabel = 'impresion-documento-label/'+newQuestion.id+'/warehouse';
+		    		this.urlPrint = 'impresion-documento/'+val.id+'/warehouse';
+					this.urlPrintLabel = 'impresion-documento-label/'+val.id+'/warehouse';
 	    		}
 				this.getSelectStatus();
 	        	this.getSelectWarehouses();
@@ -363,7 +363,6 @@
 	                cancelButtonText: "No, Cancelar!",
 	            }).then((result) => {
 	                if (result.value) {
-						console.log('borrar : '+me.id_status_nota+' table = '+me.table_delete);
 						axios.get(me.table_delete+'/delete/' + me.id_status_nota + '/' +false).then(response => {
                         toastr.success("Registro eliminado exitosamente.");
                         toastr.options.closeButton = true;
@@ -442,7 +441,18 @@
         },
       getDatas: function(){
         axios.get('documento/getDataByDocument/'+ this.id_document).then(response => {
-					this.trackings = response.data.trackings;
+          let me = this;
+          let track = response.data.trackings;
+          let trackings = [];
+          me.trackings = {};
+          if(track.length > 0){
+            for (var i = 0; i < track.length; i++) {
+              if(track[i].codigo != null){
+                trackings.push(track[i]);
+              }
+            }
+            this.trackings = trackings;
+          }
 	      });
 			},
     }

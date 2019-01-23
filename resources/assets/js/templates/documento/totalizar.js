@@ -53,7 +53,8 @@ function totalizeDocument(elemento) {
     // $('#valor_declarado_tbl').val(parseFloat(declarado));
     pa_aduana = isInteger((parseFloat(declarado) * parseFloat(impuesto) / 100));
     $('#pa_aduana').val(pa_aduana);
-    flete = Math.ceil(parseFloat(calculateFlete(flete)));
+    // flete = Math.ceil(parseFloat(calculateFlete(flete)));
+    flete = parseFloat(calculateFlete(flete));
     $('#flete').val(isInteger(flete));
     seguro = calculateInsurance(seguro);
     $('#seguro').val(seguro);

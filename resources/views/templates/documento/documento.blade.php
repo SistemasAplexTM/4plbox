@@ -104,6 +104,7 @@
         left: 47%;
         top: 40%;
     }
+
 </style>
 <link href="{{ asset('css/plugins/dataTables/keyTable.dataTables.min.css') }}">
 @endsection
@@ -594,7 +595,12 @@
                                                   <label class="contiene">@lang('documents.content')</label>
                                                       <div class="form-group"  id="Valconti">
                                                           <label class="contiene" style="display: none;"></label>
-                                                          <input type="text" onkeyup="deleteError($(this).parent());" id="contiene" name="contiene" class="form-control" value="" placeholder="@lang('documents.content')" autocomplete="off">
+                                                          <div class="input-group">
+                                                              <input type="text" onkeyup="deleteError($(this).parent());" id="contiene" name="contiene" class="form-control" value="" placeholder="@lang('documents.content')" autocomplete="off">
+                                                              <span class="input-group-btn">
+                                                                  <button style="font-size: 19.9px!important;" id="btn-searchTracking" @click="modalSearchTracking()" class="btn btn-primary" type="button" data-toggle='tooltip' title="Buscar trackings"><span class="fa fa-truck"></span></button>
+                                                              </span>
+                                                          </div>
                                                           <small class="help-block" id="Hcontiene" style="display: none">@lang('documents.obligatory_field')</small>
                                                       </div>
                                               </div>
@@ -822,7 +828,7 @@
                                                     @else
                                                     <div class="btn-group dropup">
                                                         <button type="button" class="btn btn-success ladda-button" id="saveForm" data-style="expand-right" @click="saveDocument()"><i class="fa fa-save fa-fw"></i>@lang('documents.save_changes')</button>
-                                                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 37px;">
+                                                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 35px;">
                                                             <span class="caret"></span>
                                                             <span class="sr-only">Toggle Dropdown</span>
                                                         </button>
@@ -864,7 +870,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">@lang('documents.close')</span></button>
-                        <h2 class="modal-title" id="myModalLabel"><i class="fa fa-barcode"></i>@lang('documents.add_trackings')</h2>
+                        <h2 class="modal-title" id="myModalLabel"><i class="fa fa-truck"></i> @lang('documents.add_trackings')</h2>
                     </div>
                     <div class="modal-body">
                         <div class="row" id="window-load"><div id="loading"><Spinner name="circle" color="#66bf33" noFadeIn="true"/></div></div>
@@ -898,6 +904,49 @@
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">@lang('documents.close')</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- MODAL AGREGAR TRACKINGS --}}
+        <div class="modal fade bs-example" id="modalTrackingsAdd" tabindex="" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" id="trackings">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">@lang('documents.close')</span></button>
+                        <h2 class="modal-title" id="myModalLabel"><i class="fa fa-truck"></i> @lang('documents.add_trackings')</h2>
+                    </div>
+                    <div class="modal-body">
+                      <form id="formSearchTracking" name="formSearchTracking" method="POST" action="">
+                        <div class="row" id="window-load"><div id="loading"><Spinner name="circle" color="#66bf33" noFadeIn="true"/></div></div>
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <h3>Seleccione los trackings del cliente registrado.</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered table-hover" id="tbl-trackings" style="width: 100%">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th style="width: 50%">@lang('documents.tracking')</th>
+                                                    <th>@lang('documents.content')</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" @click="addTrackingsToDocument()">@lang('documents.add')</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">@lang('documents.close')</button>
                     </div>
                 </div>
