@@ -13,7 +13,7 @@
                             <!-- Styles -->
                             <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
                             <link href="{{ asset('css/plantilla.css') }}" rel="stylesheet">
-                            <link href="{{ asset('css/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+                            {{-- <link href="{{ asset('css/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet"> --}}
                             <link href="{{ asset('css/main.css') }}" rel="stylesheet">
                             <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-theme@0.1.0-beta.10/dist/select2-bootstrap.min.css" rel="stylesheet">
                             <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
@@ -44,6 +44,7 @@
         </script>
         <script src="{{ asset('js/plantilla.js') }}">
         </script>
+        <script defer src="https://pro.fontawesome.com/releases/v5.6.3/js/all.js" integrity="sha384-4Gm0M5DjJ0zGaEtLu0ztNIoHWiuJ5rKiaVlpZKeNqXAW49eIIa2ymxb3C4c3uEXR" crossorigin="anonymous"></script>
         <script src="{{ asset('js/main.js') }}">
         </script>
         <!-- Latest compiled and minified JavaScript -->

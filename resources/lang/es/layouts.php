@@ -24,6 +24,7 @@ return [
     'profile' => 'Perfil',
     'load' => 'Carga',
     'documents' => 'Documentos',
+    'receipt' => 'Recibo de entrega',
     'trackings_receipt' => 'Recibo de tracking',
     'master_guide' => 'Guías master',
     'bill_of_lading'=>'Bill of lading',
