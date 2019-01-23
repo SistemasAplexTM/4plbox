@@ -12,19 +12,13 @@
                             </title>
                             <!-- Styles -->
                             <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-                                <link href="{{ asset('css/plantilla.css') }}" rel="stylesheet">
-                                    <link href="{{ asset('css/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
-                                        <link href="{{ asset('css/main.css') }}" rel="stylesheet">
-                                            <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-theme@0.1.0-beta.10/dist/select2-bootstrap.min.css" rel="stylesheet">
-                                                <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
-                                                <!-- Latest compiled and minified CSS -->
-                                                <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css" rel="stylesheet">
-                                                </link>
-                                            </link>
-                                        </link>
-                                    </link>
-                                </link>
-                            </link>
+                            <link href="{{ asset('css/plantilla.css') }}" rel="stylesheet">
+                            <link href="{{ asset('css/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+                            <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+                            <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-theme@0.1.0-beta.10/dist/select2-bootstrap.min.css" rel="stylesheet">
+                            <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+                            <!-- Latest compiled and minified CSS -->
+                            <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css" rel="stylesheet">
                         </meta>
                     </link>
                 </meta>

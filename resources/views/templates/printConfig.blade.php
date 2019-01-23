@@ -26,6 +26,7 @@
         </div>
         <div class="ibox-content">
           <div class="row">
+            <h1 id="testNumber"></h1>
             <div class="col-lg-12">
               <p>
                 En este módulo, usted podrá configurar lasimpresoras para Labels y para documentos, por favis siga las instrucciones.
@@ -88,8 +89,8 @@
 @section('scripts')
   {!! $wcpScript !!}
 <script type="text/javascript">
-
+  document.getElementById('testNumber').innerHTML = number_format(25.4);
 </script>
 
-<script src="{{ asset('js/templates/printConfig.js') }}"></script>
+{{-- <script src="{{ asset('js/templates/printConfig.js') }}"></script> --}}
 @endsection

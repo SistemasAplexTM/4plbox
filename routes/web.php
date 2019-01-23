@@ -309,10 +309,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('bill/destroyPartie/{id}', 'BillLadingController@destroyPartie');
 
     /* MODULO APLEXCONFIG */
+    // Route::get('setup', 'SetupController@index');
     Route::get('aplexConfig', 'AplexConfigController@index')->name('config.index');
-
+    Route::get('config', 'AplexConfigController@config')->name('config.index');
+    Route::get('aplexConfig/document', 'AplexConfigController@document')->name('config.document');
 
     Route::get('getConfig/{key}', 'Controller@getConfig');
+    Route::post('config/{key}/{type}/{simple?}', 'AplexConfigController@save');
 
     /* MODULO INFORMES */
     Route::get('report', 'ReportController@index')->name('report.index');
@@ -366,3 +369,5 @@ Route::get('rastreo/getStatusReport/{data}', 'RastreoController@getStatusReport'
 
 Route::any('WebClientPrintController', 'WebClientPrintController@processRequest');
 Route::get('DocumentoController', 'DocumentoController@printFile');
+
+Route::get('formatNumber', 'AplexConfigController@formatNumber');

@@ -59,7 +59,7 @@
             </style>
     </head>
     <body>
-        <div class="bodylogin">
+        <div class="bodylogin" id="setup">
             <div class="middle-box text-center loginscreen animated fadeInDown">
                 <div>
                     <div>
@@ -99,11 +99,11 @@
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
                                     @lang('auth.forgot_pass')
                                 </a>
-                                
+
                                 {{-- <a href="{{ url('/register') }}">Registrarme</a> --}}
                             </div>
                             <p class="m-t"> <small>Power by AplexTM &copy;</small> </p>
-                            
+
                             <small style="float: left;"><a href="rastreo" target="_blank" data-toggle="tooltip" title="Rastrear mercancia"><i class="fa fa-map-marker"></i> @lang('auth.tracking')</a></small>
 
                             <small style=""><a href="casillero/1" target="_blank" data-toggle="tooltip" title="Casillero"><i class="fa fa-address-book"></i> @lang('auth.registry')</a></small>
@@ -111,12 +111,13 @@
                             <small style="float: right;"><a href="prealerta/1" target="_blank" data-toggle="tooltip" title="Prealertar mercancia"><i class="fa fa-bell"></i> @lang('auth.pre-alert')</a></small>
                         </div>
                     </form>
-                    
+
                 </div>
             </div>
         </div>
         <!-- Scripts -->
-       
+        <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/plantilla.js') }}"></script>
+        <script src="{{ asset('js/templates/setup.js') }}"></script>
     </body>
 </html>

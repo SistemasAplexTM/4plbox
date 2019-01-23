@@ -211,7 +211,7 @@
                 </li>
             @endif
             @if(Auth::user()->isRole('admin'))
-            <li class="active">
+            {{-- <li class="active">
                 <a href="" style="background-color: #0e9aef; color: white;">
                     <i class="fa fa-wrench">
                     </i>
@@ -222,8 +222,8 @@
                         <i class="fas fa-angle-down"></i>
                     </span>
                 </a>
-                <ul class="nav nav-second-level">
-                    @can('emailTemplate.index')
+                <ul class="nav nav-second-level"> --}}
+                    {{-- @can('emailTemplate.index')
                     <li>
                         <a href="{{ route('emailTemplate.index') }}">
                             <spam class="fa fa-envelope">
@@ -231,8 +231,8 @@
                                   @lang('layouts.email_templates')
                         </a>
                     </li>
-                    @endcan
-                    @can('emailTemplate.index')
+                    @endcan --}}
+                    {{-- @can('emailTemplate.index')
                     <li>
                         <a href="{{ route('printConfig') }}">
                             <spam class="fa fa-print">
@@ -240,8 +240,8 @@
                             @lang('layouts.print_config')
                         </a>
                     </li>
-                    @endcan
-                    @can('administracion.index')
+                    @endcan --}}
+                    {{-- @can('administracion.index')
                     <li>
                         <a href="{{ url('administracion/1') }}">
                             <spam class="fa fa-hand-holding-usd">
@@ -249,8 +249,8 @@
                                 @lang('layouts.payment_methods')
                         </a>
                     </li>
-                    @endcan
-                    @can('administracion.index')
+                    @endcan --}}
+                    {{-- @can('administracion.index')
                     <li>
                         <a href="{{ url('administracion/2') }}">
                             <spam class="fa fa-credit-card">
@@ -258,8 +258,8 @@
                                 @lang('layouts.payment_types')
                         </a>
                     </li>
-                    @endcan
-                    @can('administracion.index')
+                    @endcan --}}
+                    {{-- @can('administracion.index')
                     <li>
                         <a href="{{ url('administracion/3') }}">
                             <spam class="fa fa-sitemap">
@@ -267,18 +267,18 @@
                                @lang('layouts.groups_of_receipts')
                         </a>
                     </li>
-                    @endcan
+                    @endcan --}}
                     {{-- @can('aerolinea_inventario.index') --}}
-                    <li>
+                    {{-- <li>
                         <a href="{{ url('aerolinea_inventario') }}">
                             <spam class="fa fa-plane">
                             </spam>
                                @lang('layouts.inventory_airlines')
 
                         </a>
-                    </li>
+                    </li> --}}
                     {{-- @endcan --}}
-                    @can('transport.index')
+                    {{-- @can('transport.index')
                     <li>
                         <a href="{{ url('transport/aerolineas') }}">
                             <spam class="fa fa-plane">
@@ -286,8 +286,8 @@
                                 @lang('layouts.airlines')
                         </a>
                     </li>
-                    @endcan
-                    @can('transport.index')
+                    @endcan --}}
+                    {{-- @can('transport.index')
                     <li>
                         <a href="{{ url('transport/aeropuertos') }}">
                             <spam class="fa fa-road">
@@ -295,8 +295,8 @@
                                 @lang('layouts.airports')
                         </a>
                     </li>
-                    @endcan
-                    @can('servicios.index')
+                    @endcan --}}
+                    {{-- @can('servicios.index')
                     <li>
                         <a href="{{ route('servicios.index') }}">
                             <spam class="fa fa-share-alt">
@@ -304,8 +304,8 @@
                                  @lang('layouts.services')
                         </a>
                     </li>
-                    @endcan
-                    @can('administracion.index')
+                    @endcan --}}
+                    {{-- @can('administracion.index')
                     <li>
                         <a href="{{ url('administracion/5') }}">
                             <spam class="fa fa-reply-all">
@@ -313,8 +313,8 @@
                                  @lang('layouts.type_boardings')
                         </a>
                     </li>
-                    @endcan
-                    @can('administracion.index')
+                    @endcan --}}
+                    {{-- @can('administracion.index')
                     <li>
                         <a href="{{ url('administracion/6') }}">
                             <spam class="fa fa-shopping-bag">
@@ -322,9 +322,9 @@
                                 @lang('layouts.type_packagings')
                         </a>
                     </li>
-                    @endcan
-                </ul>
-            </li>
+                    @endcan --}}
+                {{-- </ul>
+            </li> --}}
             @endif
             {{-- SOLO LO VE ADMINISTRADOR Y GESTION --}}
             @if(Auth::user()->isRole('admin'))
@@ -340,16 +340,14 @@
                       </span>
                   </a>
                   <ul class="nav nav-second-level collapse">
-                      @can('agencia.index')
                       <li>
-                          <a href="{{ route('agencia.index') }}">
-                              <spam class="fa fa-home">
+                          <a href="{{ route('config.index') }}">
+                              <spam class="fa fa-cogs">
                               </spam>
-                               @lang('layouts.agencies')
+                               @lang('general.configuration')
                           </a>
                       </li>
-                      @endcan
-                      @can('arancel.index')
+                      {{-- @can('arancel.index')
                       <li>
                           <a href="{{ route('arancel.index') }}">
                               <spam class="fa fa-money-bill">
@@ -357,8 +355,8 @@
                                       @lang('layouts.tariffs')
                           </a>
                       </li>
-                      @endcan
-                      @can('status.index')
+                      @endcan --}}
+                      {{-- @can('status.index')
                       <li>
                           <a href="{{ route('status.index') }}">
                               <spam class="fa fa-history">
@@ -366,8 +364,8 @@
                                 @lang('layouts.status')
                           </a>
                       </li>
-                      @endcan
-                      @can('transportador.index')
+                      @endcan --}}
+                      {{-- @can('transportador.index')
                       <li>
                           <a href="{{ route('transportador.index') }}">
                               <spam class="fa fa-truck">
@@ -375,8 +373,8 @@
                                  @lang('layouts.transporters')
                           </a>
                       </li>
-                      @endcan
-                      @can('ciudad.index')
+                      @endcan --}}
+                      {{-- @can('ciudad.index')
                       <li>
                           <a href="{{ route('ciudad.index') }}">
                               <spam class="fa fa-street-view">
@@ -384,8 +382,8 @@
                                  @lang('layouts.cities')
                           </a>
                       </li>
-                      @endcan
-                      @can('departamento.index')
+                      @endcan --}}
+                      {{-- @can('departamento.index')
                       <li>
                           <a href="{{ route('departamento.index') }}">
                               <spam class="fa fa-globe">
@@ -394,8 +392,8 @@
 
                           </a>
                       </li>
-                      @endcan
-                      @can('pais.index')
+                      @endcan --}}
+                      {{-- @can('pais.index')
                       <li>
                           <a href="{{ route('pais.index') }}">
                               <spam class="fa fa-globe">
@@ -404,8 +402,8 @@
 
                           </a>
                       </li>
-                      @endcan
-                      @can('tipoDocumento.index')
+                      @endcan --}}
+                      {{-- @can('tipoDocumento.index')
                       <li>
                           <a href="{{ route('tipoDocumento.index') }}">
                               <spam class="fa fa-file">
@@ -413,8 +411,8 @@
                                         @lang('layouts.document_types')
                           </a>
                       </li>
-                      @endcan
-                      @can('logActivity.index')
+                      @endcan --}}
+                      {{-- @can('logActivity.index')
                       <li>
                           <a href="{{ route('logActivity.index') }}">
                               <spam class="fa fa-history">
@@ -423,7 +421,7 @@
 
                           </a>
                       </li>
-                      @endcan
+                      @endcan --}}
                       @if(Auth::user()->email === 'jhonnyalejo2212@gmail.com')
                       <li>
                           <a href="{{ url('administracion/7') }}">
