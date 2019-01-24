@@ -2,7 +2,9 @@ var objVue = new Vue({
     el: '#configDocument',
     data: {
         nombreR: null,
-        dataShipper: {}
+        dataShipper: {},
+        nombreD: null,
+        dataConsignee: {}
     },
     created(){
       this.getDefault();
@@ -60,20 +62,81 @@ var objVue = new Vue({
             }]
         });
       },
+      modalConsignee: function(data_search) {
+          var me = this;
+          var nom = null;
+          var id_data = null;
+          if ($('#shipper_id').val() == '') {
+              $('#show-all-c').bootstrapToggle('disable');
+          } else {
+              $('#show-all-c').bootstrapToggle('enable');
+          }
+          if (data_search) {
+              if ($('#shipper_id').val() != '') {
+                  id_data = $('#shipper_id').val();
+              }
+          }
+          $('#modalConsignee').modal('show');
+          if ($.fn.DataTable.isDataTable('#tbl-modalconsignee')) {
+              $('#tbl-modalconsignee tbody').empty();
+              $('#tbl-modalconsignee').dataTable().fnDestroy();
+
+          }
+          if ($('#nombreD').val() != '') {
+              nom = $('#nombreD').val();
+          }
+          var table = $('#tbl-modalconsignee').DataTable({
+              ajax: '../../consignee/all/' + nom + '/' + id_data + '/' + $('#agencia_id').val(),
+              columns: [{
+                  sortable: false,
+                  "render": function(data, type, full, meta) {
+                      var btn_selet = "<button onclick=\"selectShipperConsignee(" + full.id + ", 'consignee')\" class='btn-primary btn-xs' data-toggle='tooltip' title='Seleccionar'>Seleccionar <i class='fa fa-check'></i></button> ";
+                      return btn_selet;
+                  }
+              }, {
+                  data: 'nombre_full',
+                  name: 'consignee.nombre_full'
+              }, {
+                  data: 'telefono',
+                  name: 'consignee.telefono'
+              }, {
+                  data: 'ciudad',
+                  name: 'localizacion.nombre'
+              }, {
+                  data: 'zip',
+                  name: 'consignee.zip'
+              }, {
+                  data: 'agencia',
+                  name: 'agencia.descripcion'
+              }]
+          });
+      },
       saveDefault: function(id){
         axios.post('../config/shipperDefault/'+id+'/true', {data: id}).then(response => {
           $('#modalShipper').modal('hide');
           this.getShipperById(id);
+        });
+        axios.post('../config/consigneeDefault/'+id+'/true', {data: id}).then(response => {
+          $('#modalConsignee').modal('hide');
+          this.getConsigneeById(id);
         });
       },
       getDefault: function(){
         axios.get('../getConfig/shipperDefault').then(({data}) => {
           this.getShipperById(data.value);
         });
+        axios.get('../getConfig/consigneeDefault').then(({data}) => {
+          this.getConsigneeById(data.value);
+        });
       },
       getShipperById: function(id){
         axios.get('../shipper/getDataById/' + id).then(({data}) => {
           this.dataShipper = data
+        });
+      },
+      getConsigneeById: function(id){
+        axios.get('../consignee/getDataById/' + id).then(({data}) => {
+          this.dataConsignee = data
         });
       }
     }

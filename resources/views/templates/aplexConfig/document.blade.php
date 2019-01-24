@@ -52,10 +52,11 @@
                               <p>El shipper que seleccione, se cargará por defecto en todos los documetos que cree.</p>
                               <div class="form-group">
                                 <div class="input-group"  style="margin-bottom: 5px;" :class="{ 'has-error': errors.has('nombreR') }">
+                                  <input type="hidden" class="" id="shipper_id" name="shipper_id" value="{{ isset($documento->shipper_id) ? $documento->shipper_id : '' }}">
                                   <input type="search" data-id="nomBuscarShipper" id="nombreR" name="nombreR" placeholder="@lang('documents.type_to_search')" class="form-control" onkeyup="deleteError($(this).parent());" v-model="nombreR" v-validate="'required'">
                                   <span class="input-group-btn">
                                     <button id="btnBuscarShipper" @click="modalShipper(true)" class="btn btn-primary" type="button" data-toggle='tooltip' title="Buscar Shipper"><span class="fa fa-search"></span> @lang('documents.search')</button>
-                                    <button id="btnResetShipper" @click="resetFormsShipperConsignee(0)" class="btn btn-default" type="button" data-toggle='tooltip' title="Reset Shipper"><span class="fa fa-sync"></span>&nbsp;</button>
+                                    {{-- <button id="btnResetShipper" @click="resetFormsShipperConsignee(0)" class="btn btn-default" type="button" data-toggle='tooltip' title="Reset Shipper"><span class="fa fa-sync"></span>&nbsp;</button> --}}
                                   </span>
                                 </div>
                                 <small class="help-block has-error">@{{ errors.first('nombreR') }}</small>
@@ -74,23 +75,23 @@
                             <div class="col-sm-6 b-r"><h3 class="m-t-none m-b">Consignee</h3>
                               <p>El consignee que seleccione, se cargará por defecto en todos los documetos que cree.</p>
                               <div class="form-group">
-                                <div class="input-group"  style="margin-bottom: 5px;" :class="{ 'has-error': errors.has('nombreR') }">
-                                  <input type="search" data-id="nomBuscarConsignee" id="nombreC" name="nombreC" placeholder="@lang('documents.type_to_search')" class="form-control" onkeyup="deleteError($(this).parent());" v-model="nombreR" v-validate="'required'">
+                                <div class="input-group"  style="margin-bottom: 5px;" :class="{ 'has-error': errors.has('nombreD') }">
+                                  <input type="search" data-id="nomBuscarConsignee" id="nombreD" name="nombreD" placeholder="@lang('documents.type_to_search')" class="form-control" onkeyup="deleteError($(this).parent());" v-model="nombreD" v-validate="'required'">
                                   <span class="input-group-btn">
-                                    <button id="btnBuscarShipper" @click="modalShipper(true)" class="btn btn-primary" type="button" data-toggle='tooltip' title="Buscar Shipper"><span class="fa fa-search"></span> @lang('documents.search')</button>
-                                    <button id="btnResetShipper" @click="resetFormsShipperConsignee(0)" class="btn btn-default" type="button" data-toggle='tooltip' title="Reset Shipper"><span class="fa fa-sync"></span>&nbsp;</button>
+                                    <button id="btnBuscarConsignee" @click="modalConsignee(true)" class="btn btn-primary" type="button" data-toggle='tooltip' title="Buscar Consignee"><span class="fa fa-search"></span> @lang('documents.search')</button>
+                                    {{-- <button id="btnResetSConsignee" @click="resetFormsShipperConsignee(0)" class="btn btn-default" type="button" data-toggle='tooltip' title="Reset Consignee"><span class="fa fa-sync"></span>&nbsp;</button> --}}
                                   </span>
                                 </div>
                                 <small class="help-block has-error">@{{ errors.first('nombreR') }}</small>
                                 </div>
                                 <ul>
                                   <div class="col-lg-6">
-                                    <li>@{{ dataShipper.nombre_full }}</li>
-                                    <li>@{{ dataShipper.correo }}</li>
+                                    <li>@{{ dataConsignee.nombre_full }}</li>
+                                    <li>@{{ dataConsignee.correo }}</li>
                                   </div>
                                   <div class="col-lg-6">
-                                    <li>@{{ dataShipper.direccion }}</li>
-                                    <li>@{{ dataShipper.phone }}</li>
+                                    <li>@{{ dataConsignee.direccion }}</li>
+                                    <li>@{{ dataConsignee.phone }}</li>
                                   </div>
                                 </ul>
                               </div>
