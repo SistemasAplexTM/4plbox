@@ -4,7 +4,7 @@
             <li class="nav-header">
                 <div class="dropdown profile-element">
                     <span>
-                        <img alt="image" class="img-circle" id="imgProfile" src="{{ asset('storage/') }}/{{ Session::get('logo') }}" style="width: 150px;background-color: #fff"/>
+                        <img alt="image" class="img-circle" id="imgProfile" src="{{ asset('storage/') }}/{{ Session::get('logo') }}" style="width: 70px;height: 70px;background-color: #fff"/>
                     </span>
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <span class="clear">
@@ -78,6 +78,15 @@
                         </a>
                     </li>
                     @endcan
+                    @can('documento.index')
+                    <li>
+                        <a href="{{ route('receipt.index') }}">
+                            <spam class="fal fa-file-signature">
+                            </spam>
+                             @lang('layouts.receipt')
+                        </a>
+                    </li>
+                    @endcan
                     @can('tracking.index')
                     <li>
                         <a href="{{ route('tracking.index') }}">
@@ -110,7 +119,7 @@
             </li>
             <li class="active">
                 <a href="" style="background-color: #5cb85c; color: white;">
-                    <i class="fa fa-puzzle-piece">
+                    <i class="fa fa-user">
                     </i>
                             <span class="nav-label">
                                 @lang('layouts.account')
@@ -123,9 +132,7 @@
                     @can('shipper.index')
                     <li>
                         <a href="{{ route('shipper.index') }}">
-                            <spam class="fa fa-user">
-                            </spam>
-                            <spam class="fa fa-arrow-up">
+                            <spam class="fa fa-plane-departure"></spam>
                             </spam>
                                  @lang('layouts.shipper')
                         </a>
@@ -134,10 +141,7 @@
                     @can('consignee.index')
                     <li>
                         <a href="{{ route('consignee.index') }}">
-                            <spam class="fa fa-user">
-                            </spam>
-                            <spam class="fa fa-arrow-down">
-                            </spam>
+                            <spam class="fa fa-plane-arrival"></spam>
                                 @lang('layouts.consignee')
 
                         </a>

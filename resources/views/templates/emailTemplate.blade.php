@@ -35,13 +35,13 @@
                     <div class="ibox-title">
                         <h5>@lang('general.email_templates_registration')</h5>
                         <div class="ibox-tools">
-                            
+
                         </div>
                     </div>
                     <div class="ibox-content">
                     	<input type="hidden" id="agencia_id" name="agencia_id" value="1">
                         <!--***** contenido ******-->
-                        <div class="row">   
+                        <div class="row">
                             <div class="col-lg-12">
                                 <div class="mail-box">
                                     <div class="mail-body">
@@ -99,122 +99,123 @@
                     </div>
                 </div>
             </div>
-        </form>
-        <div class="col-lg-5">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>@lang('general.email_templates')</h5>
-                    <div class="ibox-tools">
+
+            <div class="col-lg-5">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>@lang('general.email_templates')</h5>
+                        <div class="ibox-tools">
+
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                    	<div>
+    						<!-- Nav tabs -->
+    						<ul class="nav nav-tabs" role="tablist">
+    							<li role="plantillas" class="active"><a href="#table" aria-controls="table" role="tab" data-toggle="tab">@lang('general.table')</a></li>
+    							<li role="plantillas"><a href="#variables" aria-controls="variables" role="tab" data-toggle="tab">Variables</a></li>
+    						</ul>
+
+    						<!-- Tab panes -->
+    						<div class="tab-content">
+    							<div role="tabpanel" class="tab-pane fade in active" id="table" style="margin-top: 20px;">
+    								<div class="table-responsive">
+    			                        <table id="tbl-emailTemplate" class="table table-striped table-hover table-bordered" style="width: 100%;">
+    			                            <thead>
+    			                                <tr>
+    			                                    <th>@lang('general.name')</th>
+    			                                    <th>@lang('general.description')</th>
+    			                                    <th style="width: 80px;">@lang('general.actions')</th>
+    			                                </tr>
+    			                            </thead>
+    			                            <tfoot>
+    			                                <tr>
+    												<th>@lang('general.name')</th>
+    			                                    <th>@lang('general.description')</th>
+    			                                    <th>@lang('general.actions')</th>
+    			                                </tr>
+    			                            </tfoot>
+    			                        </table>
+    			                    </div>
+    							</div>
+    							<div role="tabpanel" class="tab-pane fade" id="variables">
+    								<div class="row">
+    									<div class="col-lg-12">
+    										<div class="col-lg-12" style="margin-top: 20px;">
+    											<div class="panel panel-info">
+    												<div class="panel-heading">@lang('general.document_data')</div>
+    												<!-- List group -->
+    												  <ul class="list-group">
+    												    <li class="list-group-item">{num_guia}</li>
+    												    <li class="list-group-item">{num_warehouse}</li>
+    												    <li class="list-group-item">{flete_impuesto}</li>
+    												    <li class="list-group-item">{piezas}</li>
+    												    <li class="list-group-item">{seguro}</li>
+    												    <li class="list-group-item">{descuento}</li>
+    												    <li class="list-group-item">{cargos_add}</li>
+    												    <li class="list-group-item">{total}</li>
+    												  </ul>
+    											</div>
+    											<div class="panel panel-info">
+    												<div class="panel-heading">@lang('general.data_shipper')</div>
+    												<!-- List group -->
+    												  <ul class="list-group">
+    												    <li class="list-group-item">{nom_shipper}</li>
+    												  </ul>
+    											</div>
+    											<div class="panel panel-info">
+    												<div class="panel-heading">@lang('general.data_consignee')</div>
+    												<!-- List group -->
+    												  <ul class="list-group">
+    												    <li class="list-group-item">{nom_consignee}</li>
+    												    <li class="list-group-item">{dir_consignee}</li>
+    												    <li class="list-group-item">{dir2_consignee}</li>
+    												    <li class="list-group-item">{ciu_consignee}</li>
+    												    <li class="list-group-item">{depto_consignee}</li>
+    												    <li class="list-group-item">{zip_consignee}</li>
+    												    <li class="list-group-item">{pais_consignee}</li>
+    												    <li class="list-group-item">{pass_consignee}</li>
+    												    <li class="list-group-item">{email_consignee}</li>
+    												    <li class="list-group-item">{tel_consignee}</li>
+    												    <li class="list-group-item">{zip_consignee}</li>
+    												    <li class="list-group-item">{cel_consignee}</li>
+    												  </ul>
+    											</div>
+    											<div class="panel panel-info">
+    												<div class="panel-heading">@lang('general.signature_data_agency')</div>
+    												<!-- List group -->
+    												  <ul class="list-group">
+    												    <li class="list-group-item">{id_agencia}</li>
+    												    <li class="list-group-item">{nom_agencia}</li>
+    												    <li class="list-group-item">{tel_agencia}</li>
+    												    <li class="list-group-item">{email_agencia}</li>
+    												    <li class="list-group-item">{dir_agencia}</li>
+    												    <li class="list-group-item">{zip_agencia}</li>
+    												    <li class="list-group-item">{ciudad_agencia}</li>
+    												    <li class="list-group-item">{estado_agencia}</li>
+    												  </ul>
+    											</div>
+    											<div class="panel panel-info">
+    												<div class="panel-heading">@lang('general.data_detail_message')</div>
+    												<!-- List group -->
+    												  <ul class="list-group">
+    												    <li class="list-group-item">{datos_detalle}</li>
+    												    <li class="list-group-item">{tracking}</li>
+    												  </ul>
+    											</div>
+    										</div>
+    									</div>
+    								</div>
+    							</div>
+    						</div>
+
+    					</div>
+                        <!--***** contenido ******-->
 
                     </div>
                 </div>
-                <div class="ibox-content">
-                	<div>
-						<!-- Nav tabs -->
-						<ul class="nav nav-tabs" role="tablist">
-							<li role="plantillas" class="active"><a href="#table" aria-controls="table" role="tab" data-toggle="tab">@lang('general.table')</a></li>
-							<li role="plantillas"><a href="#variables" aria-controls="variables" role="tab" data-toggle="tab">Variables</a></li>
-						</ul>
-
-						<!-- Tab panes -->
-						<div class="tab-content">
-							<div role="tabpanel" class="tab-pane fade in active" id="table" style="margin-top: 20px;">
-								<div class="table-responsive">
-			                        <table id="tbl-emailTemplate" class="table table-striped table-hover table-bordered" style="width: 100%;">
-			                            <thead>
-			                                <tr>
-			                                    <th>@lang('general.name')</th>
-			                                    <th>@lang('general.description')</th>
-			                                    <th style="width: 80px;">@lang('general.actions')</th>
-			                                </tr>
-			                            </thead>
-			                            <tfoot>
-			                                <tr>
-												<th>@lang('general.name')</th>
-			                                    <th>@lang('general.description')</th>
-			                                    <th>@lang('general.actions')</th>
-			                                </tr>
-			                            </tfoot>
-			                        </table>
-			                    </div>  
-							</div>
-							<div role="tabpanel" class="tab-pane fade" id="variables">
-								<div class="row">
-									<div class="col-lg-12">
-										<div class="col-lg-12" style="margin-top: 20px;">
-											<div class="panel panel-info">
-												<div class="panel-heading">@lang('general.document_data')</div>
-												<!-- List group -->
-												  <ul class="list-group">
-												    <li class="list-group-item">{num_guia}</li>
-												    <li class="list-group-item">{num_warehouse}</li>
-												    <li class="list-group-item">{flete_impuesto}</li>
-												    <li class="list-group-item">{piezas}</li>
-												    <li class="list-group-item">{seguro}</li>
-												    <li class="list-group-item">{descuento}</li>
-												    <li class="list-group-item">{cargos_add}</li>
-												    <li class="list-group-item">{total}</li>
-												  </ul>
-											</div>
-											<div class="panel panel-info">
-												<div class="panel-heading">@lang('general.data_shipper')</div>
-												<!-- List group -->
-												  <ul class="list-group">
-												    <li class="list-group-item">{nom_shipper}</li>
-												  </ul>
-											</div>
-											<div class="panel panel-info">
-												<div class="panel-heading">@lang('general.data_consignee')</div>
-												<!-- List group -->
-												  <ul class="list-group">
-												    <li class="list-group-item">{nom_consignee}</li>
-												    <li class="list-group-item">{dir_consignee}</li>
-												    <li class="list-group-item">{dir2_consignee}</li>
-												    <li class="list-group-item">{ciu_consignee}</li>
-												    <li class="list-group-item">{depto_consignee}</li>
-												    <li class="list-group-item">{zip_consignee}</li>
-												    <li class="list-group-item">{pais_consignee}</li>
-												    <li class="list-group-item">{pass_consignee}</li>
-												    <li class="list-group-item">{email_consignee}</li>
-												    <li class="list-group-item">{tel_consignee}</li>
-												    <li class="list-group-item">{zip_consignee}</li>
-												    <li class="list-group-item">{cel_consignee}</li>
-												  </ul>
-											</div>
-											<div class="panel panel-info">
-												<div class="panel-heading">@lang('general.signature_data_agency')</div>
-												<!-- List group -->
-												  <ul class="list-group">
-												    <li class="list-group-item">{id_agencia}</li>
-												    <li class="list-group-item">{nom_agencia}</li>
-												    <li class="list-group-item">{tel_agencia}</li>
-												    <li class="list-group-item">{email_agencia}</li>
-												    <li class="list-group-item">{dir_agencia}</li>
-												    <li class="list-group-item">{zip_agencia}</li>
-												    <li class="list-group-item">{ciudad_agencia}</li>
-												    <li class="list-group-item">{estado_agencia}</li>
-												  </ul>
-											</div>
-											<div class="panel panel-info">
-												<div class="panel-heading">@lang('general.data_detail_message')</div>
-												<!-- List group -->
-												  <ul class="list-group">
-												    <li class="list-group-item">{datos_detalle}</li>
-												    <li class="list-group-item">{tracking}</li>
-												  </ul>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-					</div>
-                    <!--***** contenido ******-->
-                               
-                </div>
             </div>
-        </div>
+        </form>
     </div>
 @endsection
 

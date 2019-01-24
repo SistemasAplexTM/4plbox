@@ -23,6 +23,7 @@ return [
     'profile' =>'Profile',
     'load' =>'Load',
     'documents' => 'Documents',
+    'receipt' => 'Delivery receipt',
     'trackings_receipt' =>'Trackings receipt',
     'master_guide' =>'Air waybill',
     'bill_of_lading'=>'Bill of lading',
