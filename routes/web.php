@@ -102,7 +102,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::post('receipt/addOrDeleteDocument', 'ReceiptController@addOrDeleteDocument');
     Route::get('receipt/all', 'ReceiptController@getAll')->name('datatable/all');
     Route::get('receipt/delete/{id}/{logical?}', 'ReceiptController@delete')->name('receipt.delete');
-    Route::get('receipt/getConsignee/{data}', 'ReceiptController@getConsignee');
+    Route::get('receipt/getConsignee/{data?}', 'ReceiptController@getConsignee');
     // Route::get('receipt/searchReceipt/{receipt}', 'ReceiptController@searchReceipt');
     // Route::post('receipt/validar_tracking', 'ReceiptController@validar_tracking');
 

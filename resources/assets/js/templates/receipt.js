@@ -19,14 +19,17 @@ $(document).ready(function () {
   $('.chosen-search input').autocomplete({
     source: function( request, response ) {
       $.ajax({
-        url: "ajaxpro.php?name="+request.term,
+        url: "receipt/getConsignee/"+request.term,
         dataType: "json",
         success: function( data ) {
-          $('.select-box').empty();
+          $('.chosen-select').empty();
           response( $.map( data, function( item ) {
-            $('.select-box').append('<option value="'+item.id+'">' + item.name + '</option>');
+            $('.chosen-select').append('<option value="">Seleccione</option>');
+            $.each(item, function(key, value) {
+              $('.chosen-select').append('<option value="'+value.id+'">' + value.name + '</option>');
+            });
           }));
-          $(".select-box").trigger("chosen:updated");
+          $(".chosen-select").trigger("chosen:updated");
         }
       });
     }

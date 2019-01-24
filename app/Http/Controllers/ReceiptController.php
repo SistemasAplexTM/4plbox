@@ -101,4 +101,22 @@ class ReceiptController extends Controller
           ->get();
       return \DataTables::of($data)->make(true);
   }
+
+  public function getConsignee($data = false)
+  {
+    $data = DB::table('consignee AS a')
+        ->join('localizacion AS b', 'a.localizacion_id', 'b.id')
+        ->select(
+            'a.id',
+            'a.nombre_full AS name',
+            'a.direccion',
+            'a.telefono',
+            'a.correo',
+            'b.nombre AS ciudad'
+        )
+        ->where([['a.deleted_at', NULL]])
+        ->whereRaw('a.nombre_full LIKE \'%' . $data . '%\'')
+        ->get();
+        return array('data' => $data);
+  }
 }
