@@ -4,6 +4,9 @@ var objVue = new Vue({
         nombreR: null,
         dataShipper: {}
     },
+    created(){
+      this.getDefault();
+    },
     methods:{
       modalShipper: function(data_search) {
         var me = this;
@@ -57,19 +60,25 @@ var objVue = new Vue({
             }]
         });
       },
-      saveDefault: function(id,name,phone,city){
+      saveDefault: function(id){
         axios.post('../config/shipperDefault/'+id+'/true', {data: id}).then(response => {
-          this.dataShipper = {
-            name: name,
-            phone: phone,
-            city: city
-          };
           $('#modalShipper').modal('hide');
+          this.getShipperById(id);
+        });
+      },
+      getDefault: function(){
+        axios.get('../getConfig/shipperDefault').then(({data}) => {
+          this.getShipperById(data.value);
+        });
+      },
+      getShipperById: function(id){
+        axios.get('../shipper/getDataById/' + id).then(({data}) => {
+          this.dataShipper = data
         });
       }
     }
 })
 
-function selectShipperConsignee(id,name,phone,city) {
-  objVue.saveDefault(id,name,phone,city);
+function selectShipperConsignee(id) {
+  objVue.saveDefault(id);
 }
