@@ -86,45 +86,18 @@ class ReceiptController extends Controller
 
   public function getAll()
   {
-
-      $data = Receipt::leftJoin('consignee AS b', 'tracking.consignee_id', 'b.id')
-          ->leftJoin('documento_detalle AS c', 'tracking.documento_detalle_id', 'c.id')
+      $data = Receipt::join('consignee AS b', 'factura.consignee_id', 'b.id')
+          ->join('localizacion AS c', 'b.localizacion_id', 'c.id')
           ->select(
-              'tracking.id',
-              'tracking.consignee_id',
-              'tracking.documento_detalle_id',
-              'tracking.codigo',
-              'tracking.contenido',
-              'tracking.confirmed_send',
-              'tracking.created_at as fecha',
-              'b.nombre_full as cliente',
-              'c.num_warehouse',
-              DB::raw("(
-                SELECT
-                  b.descripcion
-                FROM
-                  status_detalle AS a
-                INNER JOIN `status` AS b ON a.status_id = b.id
-                WHERE
-                  a.documento_detalle_id = c.id
-                ORDER BY
-                  a.id DESC
-                LIMIT 1
-              ) AS estatus"),
-              DB::raw("(
-                SELECT
-                  b.color
-                FROM
-                  status_detalle AS a
-                INNER JOIN `status` AS b ON a.status_id = b.id
-                WHERE
-                  a.documento_detalle_id = c.id
-                ORDER BY
-                  a.id DESC
-                LIMIT 1
-              ) AS estatus_color")
+              'factura.id',
+              'factura.numero_recibo',
+              'b.nombre_full AS consignee',
+              'b.direccion',
+              'b.telefono',
+              'b.correo',
+              'c.nombre AS ciudad'
           )
-          ->where($where)
+          ->where([['factura.deleted_at', NULL]])
           ->get();
       return \DataTables::of($data)->make(true);
   }
