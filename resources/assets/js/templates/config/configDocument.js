@@ -41,7 +41,7 @@ var objVue = new Vue({
                     "'" + full.nombre_full + "'",
                     full.id
                   ]
-                    var btn_selet = "<button onclick=\"selectShipperConsignee(" + full.id + ", '" + full.nombre_full +"', "+ full.telefono+", '"+full.ciudad+"')\" class='btn-primary btn-xs' data-toggle='tooltip' title='Seleccionar'>Seleccionar <i class='fa fa-check'></i></button> ";
+                    var btn_selet = "<button onclick=\"selectShipperConsignee(" + full.id + ", 'shipper')\" class='btn-primary btn-xs' data-toggle='tooltip' title='Seleccionar'>Seleccionar <i class='fa fa-check'></i></button> ";
                     return btn_selet;
                 }
             }, {
@@ -111,11 +111,13 @@ var objVue = new Vue({
               }]
           });
       },
-      saveDefault: function(id){
+      saveDefaultS: function(id){
         axios.post('../config/shipperDefault/'+id+'/true', {data: id}).then(response => {
           $('#modalShipper').modal('hide');
           this.getShipperById(id);
         });
+      },
+      saveDefaultC: function(id){
         axios.post('../config/consigneeDefault/'+id+'/true', {data: id}).then(response => {
           $('#modalConsignee').modal('hide');
           this.getConsigneeById(id);
@@ -142,6 +144,10 @@ var objVue = new Vue({
     }
 })
 
-function selectShipperConsignee(id) {
-  objVue.saveDefault(id);
+function selectShipperConsignee(id, type) {
+  if (type == 'shipper') {
+    objVue.saveDefaultS(id);
+  }else{
+    objVue.saveDefaultC(id);
+  }
 }

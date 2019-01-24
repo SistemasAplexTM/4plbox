@@ -60,7 +60,7 @@
                                   </span>
                                 </div>
                                 <small class="help-block has-error">@{{ errors.first('nombreR') }}</small>
-                                </div>
+                              </div>
                                 <ul>
                                   <div class="col-lg-6">
                                     <li>@{{ dataShipper.nombre_full }}</li>
@@ -72,7 +72,7 @@
                                   </div>
                                 </ul>
                             </div>
-                            <div class="col-sm-6 b-r"><h3 class="m-t-none m-b">Consignee</h3>
+                            <div class="col-sm-6"><h3 class="m-t-none m-b">Consignee</h3>
                               <p>El consignee que seleccione, se cargará por defecto en todos los documetos que cree.</p>
                               <div class="form-group">
                                 <div class="input-group"  style="margin-bottom: 5px;" :class="{ 'has-error': errors.has('nombreD') }">
@@ -83,7 +83,7 @@
                                   </span>
                                 </div>
                                 <small class="help-block has-error">@{{ errors.first('nombreR') }}</small>
-                                </div>
+                              </div>
                                 <ul>
                                   <div class="col-lg-6">
                                     <li>@{{ dataConsignee.nombre_full }}</li>
@@ -95,6 +95,21 @@
                                   </div>
                                 </ul>
                               </div>
+                          </div>
+                          <br>
+                          <div class="row">
+                            <div class="col-lg-12">
+                              <div class="form-group">
+                                <div class="input-group"  style="margin-bottom: 5px;" :class="{ 'has-error': errors.has('nombreR') }">
+                                  <input type="search" data-id="nomBuscarShipper" id="nombreR" name="nombreR" placeholder="@lang('documents.type_to_search')" class="form-control" onkeyup="deleteError($(this).parent());" v-model="nombreR" v-validate="'required'">
+                                  <span class="input-group-btn">
+                                    <button id="btnBuscarShipper" @click="modalShipper(true)" class="btn btn-primary" type="button" data-toggle='tooltip' title="Buscar Shipper"><span class="fa fa-search"></span> @lang('documents.search')</button>
+                                    {{-- <button id="btnResetShipper" @click="resetFormsShipperConsignee(0)" class="btn btn-default" type="button" data-toggle='tooltip' title="Reset Shipper"><span class="fa fa-sync"></span>&nbsp;</button> --}}
+                                  </span>
+                                </div>
+                                <small class="help-block has-error">@{{ errors.first('nombreR') }}</small>
+                              </div>
+                            </div>
                           </div>
                       </div>
                   </div>
