@@ -556,22 +556,29 @@ var objVue = new Vue({
         tracking_number: null,
         id_detalle: null,
         close: false,
-        ids_tracking: []
+        ids_tracking: [],
+        contenido_tracking: [],
     },
     methods: {
       addTrackingsToDocument: function(){
         let me = this;
         var datos = $("#formSearchTracking").serializeArray();
         me.ids_tracking = [];
+        me.contenido_tracking = [];
             $.each(datos, function(i, field) {
                 if (field.name === 'chk[]') {
                   if($('#chk' + field.value).val() != ''){
                     me.ids_tracking.push($('#chk' + field.value).val());
+                    me.contenido_tracking.push($('#chk' + field.value).data('contenido'));
                   }
                 }
             });
+            if(me.contenido_tracking.length > 0){
+              $('#contiene').val(me.contenido_tracking.toString());
+            }
       },
       modalSearchTracking: function() {
+        let me = this;
         if ($.fn.DataTable.isDataTable('#tbl-trackings')) {
             $('#tbl-trackings' + ' tbody').empty();
             $('#tbl-trackings').dataTable().fnDestroy();
@@ -580,7 +587,7 @@ var objVue = new Vue({
             ajax: '../../tracking/all/' + false + '/' + $('#consignee_id').val(),
             columns: [{
                 "render": function (data, type, full, meta) {
-                return '<div class="checkbox checkbox-success"><input type="checkbox" data-numguia="' + full.codigo + '" id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '"></label></div>';
+                return '<div class="checkbox checkbox-success"><input type="checkbox" data-numguia="' + full.codigo + '" data-contenido="' + full.contenido + '" id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '"></label></div>';
               }
             }, {
                 data: "codigo",
@@ -592,7 +599,16 @@ var objVue = new Vue({
             'columnDefs': [{
                 className: "text-center",
                 "targets": [0],
-            }]
+            }],
+            "drawCallback": function () {
+              if(me.ids_tracking.length > 0){
+                // setTimeout(function(){
+                  $.each(me.ids_tracking, function(i, field) {
+                    $('#chk' + field).attr('checked', true);
+                  });
+                // }, 2000);
+              }
+            }
         });
         $('#modalTrackingsAdd').modal('show');
       },

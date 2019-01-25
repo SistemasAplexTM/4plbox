@@ -87,14 +87,12 @@
         </tr>
         <tr>
             <th><div id="t_detalle" style="text-align: center;">AWB</div></th>
-            <th><div id="t_detalle">SHIPPER</div></th>
             <th><div id="t_detalle">CONSIGNEE</div></th>
             <th><div id="t_detalle">NATURE OF GOODS</div></th>
-            {{-- <th><div id="t_detalle" style="text-align: center;">U.S COSTUM</div></th> --}}
             <th><div id="t_detalle" style="text-align: center;">PCS</div></th>
             <th><div id="t_detalle" style="text-align: center;">GROSS WEIGHT</div></th>
-            <th><div id="t_detalle" style="text-align: center;">VOLUME</div></th>
-            {{-- <th><div id="t_detalle" style="text-align: center;">FOB</div></th> --}}
+            <th><div id="t_detalle" style="text-align: center;">CUFT</div></th>
+            <th><div id="t_detalle" style="text-align: center;">CBM</div></th>
         </tr>
         <tr><th colspan="7" style="margin-bottom:10px;font-size:3px;background-color: #ccc">&nbsp;</th></tr>
     </thead>
@@ -106,6 +104,8 @@
         $vol = 0;
         $bolsas = 0;
         $cont = 0;
+        $cuft = 0;
+        $cbm = 0;
         ?>
         @if($detalleConsolidado)
 
@@ -122,12 +122,6 @@
                 ?>
                 <tr>
                     <td id="detalle" style="width: 13%;text-align: center;">{{ $val->num_warehouse }}</td>
-                    <td style="width: 15%" valign="top">
-                        <div id="detalle" >{{ ($val->shipper_json) ? $shipper_json->nombre : $val->nom_ship }}</div>
-                        <div id="detalle" >{{ ($val->shipper_json) ? $shipper_json->direccion : $val->dir_ship }}</div>
-                        <div id="detalle" >{{ ($val->shipper_json) ? $shipper_json->telefono : $val->tel_ship }}</div>
-                        {{-- <div id="detalle" >{{ ($val->shipper_json) ? $shipper_json->ciudad : $val->ciu_ship }} / {{ ($val->shipper_json) ? $shipper_json->pais : $val->pais_ship }}, {{ $val->zip_ship }}</div> --}}
-                    </td>
                     <td id="detalle" style="width: 22%" valign="top">
                         <div id="detalle" >{{ ($val->consignee_json) ? $consignee_json->nombre : $val->nom_cons }}</div>
                         <div id="detalle" >{{ ($val->consignee_json) ? $consignee_json->direccion : $val->dir_cons }}</div>
@@ -144,20 +138,16 @@
                             {{ ceil($val->peso2) }} Lb
                         @endif
                     </td>
-                    <td id="detalle" style="text-align: center;width: 10%">{{ ceil($val->volumen) }} Lb</td>
-                    {{-- <td id="detalle" style="text-align: center;">
-                        @if($val->declarado2 == 0)
-                           <div style="background-color:black;color:white;">$ {{ number_format($val->declarado2,2) }}<div>
-                        @else
-                            $ {{ number_format($val->declarado2,2) }}
-                        @endif
-                    </td> --}}
+                    <td id="detalle" style="text-align: center;width: 10%">{{ ceil(number_format($val->volumen * 166 / 1728)) }}</td>
+                    <td id="detalle" style="text-align: center;width: 10%">{{ ceil(number_format(($val->volumen * 166 / 1728) / 35.315)) }}</td>
                 </tr>
                 <tr><th colspan="7"><div style="font-size:1px;margin-top:6px;margin-bottom: 6px; background-color: #ccc">&nbsp;</div></th></tr>
                 <?php
                 $totPiezas += $piezas;
                 $peso += ceil($val->peso2);
                 $vol += ceil($val->volumen);
+                $cuft += ceil(number_format($val->volumen * 166 / 1728));
+                $cbm += ceil(number_format(($val->volumen * 166 / 1728) / 35.315));
                 $cont++;
                 if($bolsas < $val->num_bolsa){
                     $bolsas = $val->num_bolsa;
@@ -173,7 +163,7 @@
         @endif
         <tfoot>
             <tr>
-                <th colspan="3"></th>
+                <th colspan="2"></th>
                 <th><div style="margin-top:8px;text-align: right;">TOTAL:</div></th>
                 <th>
                     <div style="margin-top:8px;text-align: center;font-size: 14px;color:#1d1d1e;">{{ $totPiezas }}</div>
@@ -182,12 +172,15 @@
                     <div style="margin-top:5px;text-align: center;font-size: 14px;color:#1d1d1e;">{{ $peso }} Lb</div>
                 </th>
                 <th>
-                    <div style="margin-top:5px;text-align: center;font-size: 14px;color:#1d1d1e;">{{ ceil($vol) }} Lb</div>
+                    <div style="margin-top:5px;text-align: center;font-size: 14px;color:#1d1d1e;">{{ $cuft }} cuft</div>
+                </th>
+                <th>
+                    <div style="margin-top:5px;text-align: center;font-size: 14px;color:#1d1d1e;">{{ $cbm }} cbm</div>
                 </th>
             </tr>
             <tr>
-                <th colspan="3"></th>
-                <th colspan="4"><div style="margin-top:5px;border-bottom: 1px solid #ccc;"></div></th>
+                <th colspan="2"></th>
+                <th colspan="5"><div style="margin-top:5px;border-bottom: 1px solid #ccc;"></div></th>
             </tr>
         </tfoot>
     </tbody>

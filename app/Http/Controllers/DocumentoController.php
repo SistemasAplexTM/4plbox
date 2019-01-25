@@ -1506,7 +1506,13 @@ class DocumentoController extends Controller
                                   }
                               }else{
                                 // return view('pdf/consolidadoPdfColombiana', compact('documento', 'detalle', 'detalleConsolidado'));
+                                // ESTE FORMATO ES PARA WORDCARGO
+                                if($documento->transporte_id == 1){
                                   $pdf          = PDF::loadView('pdf.consolidadoPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                                }
+                                if($documento->transporte_id == 2){
+                                  $pdf          = PDF::loadView('pdf.consolidadoPdf2Maritimo', compact('documento', 'detalle', 'detalleConsolidado'));
+                                }
                               }
                               $nameDocument = $documento->tipo_documento . '-' . $documento->id;
                             }else{
@@ -1881,23 +1887,6 @@ class DocumentoController extends Controller
                                             z.flag = 1,
                                             CONCAT(
 
-                                             IF (
-                                                    x.liquidado = 1,
-                                                    CONCAT(
-                                                        "<label>- ",
-                                                        x.num_guia,
-                                                        " (",
-                                                        x.peso2,
-                                                        " lbs) ",
-                                                        " ($ ",
-                                                        x.declarado2,
-                                                        ".00) ",
-                                                        \''.$label_1.'\',
-                                                        z.id,
-                                                        \'@\',
-                                                        x.id,
-                                                        \''.$label_2.'\'
-                                                    ),
                                                     CONCAT(
                                                         "<label>- ",
                                                         x.num_warehouse,
@@ -1913,7 +1902,6 @@ class DocumentoController extends Controller
                                                         x.id,
                                                         \''.$label_2.'\'
                                                     )
-                                                )
                                             ),
                                             NULL
                                         )
@@ -2039,6 +2027,7 @@ class DocumentoController extends Controller
                 ['a.deleted_at', null],
                 ['b.deleted_at', null],
                 ['a.consolidado', 0],
+                ['a.flag', 0],
                 ['f.tipo_embarque_id', $transporte_id],
                 ['e.pais_id', $pais_id],
             ];

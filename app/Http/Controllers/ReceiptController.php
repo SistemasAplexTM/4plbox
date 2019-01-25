@@ -119,4 +119,43 @@ class ReceiptController extends Controller
         ->get();
         return array('data' => $data);
   }
+
+  public function searchDocument($document)
+  {
+    $data = DB::table('documento_detalle AS a')
+        ->select(
+            'a.id',
+            'a.num_warehouse AS warehouse',
+            DB::raw("(
+        			SELECT
+        				GROUP_CONCAT(b.codigo)
+        			FROM
+        				tracking AS b
+        			WHERE
+        				b.deleted_at IS NULL
+        			AND b.documento_detalle_id = 26
+        	) AS trackings")
+        )
+        ->where([['a.deleted_at', NULL], ['a.num_warehouse', $document]])
+        ->get();
+      return array('data' => $data);
+  }
+
+  public function searchReceiptDetail($id_receipt)
+  {
+    $data = DB::table('factura_detalle AS a')
+      ->join('documento_detalle AS b', 'a.documento_detalle_id', 'b.id')
+        ->select(
+            'a.id',
+            'a.factura_id',
+            'b.num_warehouse AS warehouse',
+            'a.entregado',
+            'a.cantidad',
+            'a.trackings',
+            'a.observacion'
+        )
+        ->where([['a.deleted_at', NULL], ['a.factura_id', $id_receipt]])
+        ->get();
+      return array('data' => $data);
+  }
 }

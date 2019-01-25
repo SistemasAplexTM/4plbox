@@ -36,10 +36,10 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label for="" class="control-label">Nombre del cliente</label>
+                                    <label for="consignee_id" class="control-label">Nombre del cliente</label>
                                     <a id="input_name" class=" pull-right" data-toggle="tooltip" data-placement="top" title="Manual"><i class="fa fa-pencil" style="color: #f7a54a"></i></a>
                                     <div class="input-group" style="width: 100%;">
-                                        <select id="" name="" class="form-control chosen-select" style="width:100%;" tabindex="2">
+                                        <select id="consignee_id" name="consignee_id" class="form-control chosen-select" style="width:100%;" tabindex="2">
                                             <option value="">Seleccione</option>
                                         </select>
                                     </div>
@@ -48,20 +48,20 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label for="" class="">Dirección</label>
-                                    <input type="text" id="" name="" value="" class="form-control" placeholder="Ingrese la dirección">
+                                    <label for="direccion" class="">Dirección</label>
+                                    <input type="text" id="direccion" name="" value="direccion" class="form-control" placeholder="Ingrese la dirección">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label for="" class="">Telefono</label>
-                                    <input type="text" id="" name="" value="" class="form-control" placeholder="Ingrese el Telefono">
+                                    <label for="telefono" class="">Telefono</label>
+                                    <input type="text" id="telefono" name="telefono" value="" class="form-control" placeholder="Ingrese el Telefono">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label for="" class="">Ciudad</label>
-                                    <input type="text" id="" name="" value="" class="form-control" placeholder="Ingrese la ciudad">
+                                    <label for="ciudad" class="">Ciudad</label>
+                                    <input type="text" id="ciudad" name="ciudad" value="" class="form-control" placeholder="Ingrese la ciudad">
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -72,9 +72,8 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label for="num_warehouse_guia" class="">Warehouse / Guia</label>
-                                    <input type="text" style="background-color: lightcyan" onkeyup="if (event.keyCode == 13)
-                                                addDocumentoToRecibo();" id="num_warehouse_guia" name="num_warehouse_guia" value="" class="form-control" placeholder="Ingrese el Numero de Warehouse o Guia">
+                                    <label for="warehouse" class="">Warehouse</label>
+                                    <input type="text" style="background-color: lightcyan" @keyup.enter="addDocumentToReceipt" v-model="warehouse" name="warehouse" class="form-control" placeholder="Ingrese el Numero de Warehouse">
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -84,14 +83,14 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="form-group" id="div_wrh_guia_r" style="">
+                                <div class="form-group" id="div_wrh_guia_r" style="display:none">
                                     <label for="num_warehouse_guia_r" class="">Revisar - entregar</label>
                                     <input type="text" style="background-color: #e0ffe6" id="num_warehouse_guia_r" name="num_warehouse_guia_r" value="" class="form-control" placeholder="Documento a revisar y entregar." onkeyup="if (event.keyCode == 13)
                                                 checkDocument($(this).val());">
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="form-group" id="div_status" style="">
+                                <div class="form-group" id="div_status" style="display:none">
                                     <label for="status" class="">Observación para el Estatus</label>
                                     <input type="text" style="background-color: #e0ffe6" id="status" name="status" value="" class="form-control" placeholder="Observacion para el Estatus." onkeyup="if (event.keyCode == 13)
                                                 checkDocument($('#num_warehouse_guia_r').val());">
