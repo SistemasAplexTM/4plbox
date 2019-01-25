@@ -16,7 +16,8 @@ class PrintConfigController extends Controller
     {
       $this->assignPermissionsJavascript();
       $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintConfigController@index'), Session::getId());
-      return view('templates/printConfig', compact('wcpScript'));
+      $wcppScriptDetect = WebClientPrint::createWcppDetectionScript(action('WebClientPrintController@processRequest'), Session::getId());
+      return view('templates/printConfig', compact('wcpScript','wcppScriptDetect'));
     }
 
     public function save(Request $request)
