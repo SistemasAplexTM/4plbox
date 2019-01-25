@@ -97,18 +97,14 @@
                               </div>
                           </div>
                           <br>
+                          <hr>
                           <div class="row">
                             <div class="col-lg-12">
+                              <h3>Observación por defecto</h3>
                               <div class="form-group">
-                                <div class="input-group"  style="margin-bottom: 5px;" :class="{ 'has-error': errors.has('nombreR') }">
-                                  <input type="search" data-id="nomBuscarShipper" id="nombreR" name="nombreR" placeholder="@lang('documents.type_to_search')" class="form-control" onkeyup="deleteError($(this).parent());" v-model="nombreR" v-validate="'required'">
-                                  <span class="input-group-btn">
-                                    <button id="btnBuscarShipper" @click="modalShipper(true)" class="btn btn-primary" type="button" data-toggle='tooltip' title="Buscar Shipper"><span class="fa fa-search"></span> @lang('documents.search')</button>
-                                    {{-- <button id="btnResetShipper" @click="resetFormsShipperConsignee(0)" class="btn btn-default" type="button" data-toggle='tooltip' title="Reset Shipper"><span class="fa fa-sync"></span>&nbsp;</button> --}}
-                                  </span>
-                                </div>
-                                <small class="help-block has-error">@{{ errors.first('nombreR') }}</small>
+                                <textarea name="name" rows="4" cols="20" class="form-control" v-model="observDefault"></textarea>
                               </div>
+                              <button @click="saveDefaultObserv" class="btn btn-primary" type="button" data-toggle='tooltip' title="Guardar"><span class="fa fa-save"></span></button>
                             </div>
                           </div>
                       </div>

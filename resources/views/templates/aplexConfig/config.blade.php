@@ -23,7 +23,7 @@
       @lang('layouts.maintenances')
     </h3>
     @foreach ($menu as $key => $value)
-      <div class="col-lg-2">
+      <div class="col-lg-2" style="padding: 15px">
         @can($value['perm'])
           @if ($value['url'])
             <a href="{{ url($value['route']) }}">
@@ -32,10 +32,12 @@
           @endif
             <div class="widget white-bg p-lg text-center">
               <div class="m-b-md">
-                {!! '<i class="fa fa-' . $value['icon'] . ' fa-4x"></i>' !!}
-                <h3 class="font-bold no-margins">
+                {!! '<i class="fal fa-' . $value['icon'] . ' fa-4x"></i>' !!}
+                <br>
+                <br>
+                <h2 class="font-bold no-margins">
                   @lang($value['desc'])
-                </h3>
+                </h2>
               </div>
             </div>
           </a>
@@ -49,19 +51,21 @@
         @lang('layouts.administration')
       </h3>
       @foreach ($menu2 as $key => $value)
-        <div class="col-lg-2">
+        <div class="col-lg-2" style="padding: 15px">
           @can($value['perm'])
             @if ($value['url'])
               <a href="{{ url($value['route']) }}">
               @else
                 <a href="{{ route($value['route']) }}">
                 @endif
-                <div class="widget white-bg p-lg text-center">
+                <div class="widget white-bg p-lg text-center text-warning">
                   <div class="m-b-md">
-                    {!! '<i class="fa fa-' . $value['icon'] . ' fa-4x"></i>' !!}
-                    <h3 class="font-bold no-margins">
+                    {!! '<i class="fal fa-' . $value['icon'] . ' fa-4x"></i>' !!}
+                    <br>
+                    <br>
+                    <h2 class="font-bold no-margins">
                       @lang($value['desc'])
-                    </h3>
+                    </h2>
                   </div>
                 </div>
               </a>

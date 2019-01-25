@@ -41,7 +41,7 @@ return [
     'payment_methods'=>'Formas de pagos',
     'payment_types'=>'Tipos de pagos',
     'groups_of_receipts'=>'Grupos de recibos',
-    'inventory_airlines'=>'Inventario aerolineas',
+    'inventory_airlines'=>'Inventario guía master',
     'airlines'=>'Aerolíneas',
     'airports'=>'Aeropuertos',
     'services'=>'Servicios',

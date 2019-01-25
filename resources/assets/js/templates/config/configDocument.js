@@ -4,7 +4,8 @@ var objVue = new Vue({
         nombreR: null,
         dataShipper: {},
         nombreD: null,
-        dataConsignee: {}
+        dataConsignee: {},
+        observDefault: null
     },
     created(){
       this.getDefault();
@@ -121,6 +122,12 @@ var objVue = new Vue({
         axios.post('../config/consigneeDefault/'+id+'/true', {data: id}).then(response => {
           $('#modalConsignee').modal('hide');
           this.getConsigneeById(id);
+          toastr.success('Registro exitoso.');
+        });
+      },
+      saveDefaultObserv: function(){
+        axios.post('../config/observDefault/'+this.observDefault+'/true', {data: ''}).then(response => {
+          toastr.success('Registro exitoso.');
         });
       },
       getDefault: function(){
@@ -129,6 +136,9 @@ var objVue = new Vue({
         });
         axios.get('../getConfig/consigneeDefault').then(({data}) => {
           this.getConsigneeById(data.value);
+        });
+        axios.get('../getConfig/observDefault').then(({data}) => {
+          this.observDefault = data.value;
         });
       },
       getShipperById: function(id){
