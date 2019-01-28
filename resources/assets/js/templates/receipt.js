@@ -26,13 +26,24 @@ $(document).ready(function () {
           response( $.map( data, function( item ) {
             $('.chosen-select').append('<option value="">Seleccione</option>');
             $.each(item, function(key, value) {
-              $('.chosen-select').append('<option value="'+value.id+'">' + value.name + '</option>');
+              $('.chosen-select').append(
+                '<option value="'+value.id+'" data-direccion="'+value.direccion+'" data-telefono="'+value.telefono+'" data-ciudad="'+value.ciudad+'">' + value.name + '</option>'
+              );
             });
           }));
           $(".chosen-select").trigger("chosen:updated");
         }
       });
     }
+  });
+
+  $('#consignee_id').on('change', function () {
+      var dir = $('#consignee_id option:selected').data('direccion');
+      var tel = $('#consignee_id option:selected').data('telefono');
+      var ciu = $('#consignee_id option:selected').data('ciudad');
+      $('#direccion').val(dir);
+      $('#telefono').val(tel);
+      $('#ciudad').val(ciu);
   });
 
   $('#tbl-receipt').DataTable({
@@ -65,4 +76,34 @@ $(document).ready(function () {
           }
       }]
   });
+});
+
+var objVue = new Vue({
+    el: '#receipt',
+    mounted: function() {
+        //
+    },
+    data: {
+      warehouse: null,
+      editar: 0,
+    },
+    methods:{
+      addDocumentToReceipt(){
+        let me = this;
+        axios.get('receipt/searchDocument/' + me.warehouse).then(response => {
+          var datos = response.data;
+          if (datos.data != null) {
+            console.log(datos.data);
+          }
+        });
+      },
+      getDetail(id){
+        axios.get('receipt/searchReceiptDetail/' + id).then(response => {
+          var datos = response.data;
+          if (datos.data != null) {
+            console.log(datos.data);
+          }
+        });
+      }
+    }
 });

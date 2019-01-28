@@ -634,20 +634,20 @@
 			                    name: 'created_at'
 			                }, {
 			                    "render": function (data, type, full, meta) {
-	                                if(me.app_type === 'courier'){
-	                                    if(full.liquidado == 0){
-	                                        codigoGW = full.num_warehouse;
-	                                        return full.num_warehouse;
-	                                    }else{
-	                                        if(full.liquidado == 1){
-	                                            codigoGW = full.num_guia;
-	                                            return full.num_guia;
-	                                        }
-	                                    }
-	                                }else{
-	                                    codigoGW = full.num_warehouse;
+	                                // if(me.app_type === 'courier'){
+	                                //     if(full.liquidado == 0){
+	                                //         codigoGW = full.num_warehouse;
+	                                //         return full.num_warehouse;
+	                                //     }else{
+	                                //         if(full.liquidado == 1){
+	                                //             codigoGW = full.num_guia;
+	                                //             return full.num_guia;
+	                                //         }
+	                                //     }
+	                                // }else{
+	                                //     codigoGW = full.num_warehouse;
 	                                    return full.num_warehouse;
-	                                }
+	                                // }
 				                }
 			                }, {
 			                    data: 'peso2',
@@ -750,25 +750,25 @@
 																		group = '';
 																	}
 	                                if(me.app_type === 'courier'){
-	                                    if(full.liquidado == 0){
+	                                    // if(full.liquidado == 0){
 	                                        return '<span class="'+classText+'">' + full.num_warehouse + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" role="button" \n\
 	                                            data-html="true" \n\
 	                                            data-toggle="popover" \n\
 	                                            data-trigger="hover" \n\
 	                                            title="<b>Guias agrupadas</b>" \n\
 	                                            data-content="'+groupGuias+'" ' + group + '>'+full.agrupadas+'</a>';
-	                                    }else{
-	                                        if(full.liquidado == 1){
-	                                            return '<span class="'+classText+'">' + full.num_guia + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" \n\
-	                                            role="button" \n\
-	                                            data-html="true" \n\
-	                                            data-toggle="popover" \n\
-	                                            data-trigger="hover" \n\
-	                                            title="<b>Guias agrupadas</b>" \n\
-	                                            data-content="'+groupGuias+'" ' + group + '>'+full.agrupadas+'</a>';
-
-	                                        }
-	                                    }
+	                                    // }else{
+	                                    //     if(full.liquidado == 1){
+	                                    //         return '<span class="'+classText+'">' + full.num_guia + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" \n\
+	                                    //         role="button" \n\
+	                                    //         data-html="true" \n\
+	                                    //         data-toggle="popover" \n\
+	                                    //         data-trigger="hover" \n\
+	                                    //         title="<b>Guias agrupadas</b>" \n\
+	                                    //         data-content="'+groupGuias+'" ' + group + '>'+full.agrupadas+'</a>';
+																			//
+	                                    //     }
+	                                    // }
 	                                }else{
 	                                    return '<span class="'+classText+'">' + full.num_warehouse + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" role="button" \n\
 	                                            data-html="true" \n\

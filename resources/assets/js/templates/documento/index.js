@@ -133,7 +133,7 @@ function datatableDocument(t, tipo_doc_id, status_id){
 function actionsButtons(data, type, full, meta) {
     var btn_edit = '';
     var btn_delete = '';
-    if (permission_update && (parseInt(full.consolidado_status) === 0) || full.consolidado_status == null) {
+    if (permission_update) {
         var btn_edit = '<a href="documento/' + full.id + '/edit" class="edit" title="Editar" data-toggle="tooltip" style="color:#FFC107;"><i class="material-icons">&#xE254;</i></a>';
     }
     if (permission_delete && (parseInt(full.consolidado_status) === 0) || full.consolidado_status == null) {
@@ -230,6 +230,13 @@ function numDocument(data, type, full, meta) {
       var status = '<div style="color:'+full.estatus_color+'"><small>' + ((full.estatus == null) ? '' : full.estatus) + '</small></div>';
       return '<span class=""><i class="fa fa-'+ ((full.agrupadas > 0) ? 'boxes' : 'box-open')+' fa-xs"></i> ' + ((codigo == null) ? '' : codigo )+ '</span><a style="float: right;cursor:pointer;" class="badge badge-'+ classText +' pop" role="button" data-html="true" data-toggle="popover" data-trigger="hover" title="<b>Documentos agrupadas</b>" data-content="'+((groupGuias == null) ? '' : groupGuias )+'" ' + group + '>'+ ((full.agrupadas == null) ? '' : full.agrupadas)+'</a>' + status;
     }else{
-      return '<strong>' + ((codigo == null) ? '' : codigo) + '<strong> <span style="float: right;" class="badge badge-' + color_badget + '" data-toggle="tooltip" data-placement="top" title="" data-original-title="Total piezas">' + cant + '</span>';
+      icon = 'boxes';
+      if(full.transporte_id == 1){
+        icon = 'plane';
+      }
+      if(full.transporte_id == 2){
+        icon = 'ship';
+      }
+      return '<strong>' + ((codigo == null) ? '' : codigo) + '<strong> <i class="fa fa-'+ icon +'"></i> <span style="float: right;" class="badge badge-' + color_badget + '" data-toggle="tooltip" data-placement="top" title="" data-original-title="Total piezas">' + cant + '</span>';
     }
 }
