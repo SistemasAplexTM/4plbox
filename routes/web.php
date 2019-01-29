@@ -104,6 +104,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('receipt/getConsignee/{data?}', 'ReceiptController@getConsignee');
     Route::get('receipt/searchDocument/{docunent}', 'ReceiptController@searchDocument');
     Route::get('receipt/searchReceiptDetail/{id_receipt}', 'ReceiptController@searchReceiptDetail');
+    Route::post('receipt/saveDetail', 'ReceiptController@storeDeail');
+    Route::get('receipt/getDocument/{id}', 'ReceiptController@getDocument');
+    Route::post('receipt/checkReceipt', 'ReceiptController@checkReceipt');
     // Route::post('receipt/validar_tracking', 'ReceiptController@validar_tracking');
 
     /*--- MODULO MODULOS ---*/

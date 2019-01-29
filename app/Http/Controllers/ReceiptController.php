@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Receipt;
+use App\ReceiptDetail;
+use App\StatusReport;
 use Auth;
 use DataTables;
 use Illuminate\Http\Request;
@@ -18,39 +20,69 @@ class ReceiptController extends Controller
 
   public function store(Request $request)
   {
-      try {
-          $data             = (new Receipt)->fill($request->all());
-          $data->agencia_id = Auth::user()->agencia_id;
-          if ($request->confirmed_send) {
-              $data->confirmed_send = 1;
-          }
-          $data->created_at = date('Y-m-d H:i:s');
-          if ($data->save()) {
-              $answer = array(
-                  "datos"  => $request->all(),
-                  "code"   => 200,
-                  "status" => 200,
-              );
-          } else {
-              $answer = array(
-                  "error"  => 'Error al intentar Eliminar el registro.',
-                  "code"   => 600,
-                  "status" => 500,
-              );
-          }
-          return $answer;
-      } catch (\Exception $e) {
-          $error = '';
-          foreach ($e->errorInfo as $key => $value) {
-              $error .= $key . ' - ' . $value . ' <br> ';
-          }
-          $answer = array(
-              "error"  => $error,
-              "code"   => 600,
-              "status" => 500,
-          );
-          return $answer;
+    try {
+      $data = $request->data;
+      $data = Receipt::create([
+        'agencia_id' => Auth::user()->agencia_id,
+        'consignee_id' => $data['id_client'],
+        'usuario_id' => Auth::id(),
+        'numero_recibo' => 1,
+        'cliente' => 'El cliente tales',
+        'cliente_datos' => json_encode($data['data_client']),
+        'transportador' => $data['transportador'],
+      ]);
+      $answer = array(
+          'id' => $data->id,
+          "code"   => 200,
+          "status" => 200,
+      );
+      return $answer;
+    } catch (\Exception $e) {
+      $answer = array(
+          "error"  => $e,
+          "code"   => 600,
+          "status" => 500,
+      );
+      return $answer;
+    }
+  }
+
+  public function storeDeail(Request $request)
+  {
+    try {
+      Receipt::where('id', $request->factura_id)->update([
+        'agencia_id' => Auth::user()->agencia_id,
+        'consignee_id' => $request->head['id_client'],
+        'usuario_id' => Auth::id(),
+        'numero_recibo' =>  $request->factura_id,
+        'cliente' => 'El cliente tales',
+        'cliente_datos' => json_encode($request->head['data_client']),
+        'transportador' => $request->head['transportador'],
+      ]);
+
+      foreach ($request->detalle as $value) {
+        ReceiptDetail::create([
+          'factura_id' => $request->factura_id,
+          'documento_detalle_id' => $value['id'],
+          'entregado' => $request->head['entregado'],
+          'cantidad' => 1,
+          'trackings' => $value['trackings'],
+          'observacion' => ''
+        ]);
       }
+      $answer = array(
+          "code"   => 200,
+          "status" => 200,
+      );
+      return $answer;
+    } catch (\Exception $e) {
+      $answer = array(
+          "error"  => $e,
+          "code"   => 600,
+          "status" => 500,
+      );
+      return $answer;
+    }
   }
 
   public function destroy($id)
@@ -148,6 +180,7 @@ class ReceiptController extends Controller
         ->select(
             'a.id',
             'a.factura_id',
+            'a.documento_detalle_id',
             'b.num_warehouse AS warehouse',
             'a.entregado',
             'a.cantidad',
@@ -157,5 +190,29 @@ class ReceiptController extends Controller
         ->where([['a.deleted_at', NULL], ['a.factura_id', $id_receipt]])
         ->get();
       return array('data' => $data);
+  }
+
+  public function getDocument($id)
+  {
+    return Receipt::find($id);
+  }
+
+  public function checkReceipt(Request $request)
+  {
+    ReceiptDetail::where('id', $request->id)->update([
+      'entregado' => 1
+    ]);
+
+    StatusReport::create([
+      'status_id' => 9,
+      'usuario_id' => Auth::id(),
+      'documento_detalle_id' => $request->id_doc,
+      'codigo' => $request->warehouse,
+      // 'fecha_status' => date('Y-m-d:hh:mm:ss'),
+      'observacion' => $request->status
+    ]);
+    $this->AddToLog('Revisando documento ' . $request->warehouse);
+
+    return array('code' => 200);
   }
 }
