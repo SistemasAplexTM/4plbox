@@ -133,7 +133,7 @@ class ReceiptController extends Controller
         				tracking AS b
         			WHERE
         				b.deleted_at IS NULL
-        			AND b.documento_detalle_id = 26
+        			AND b.documento_detalle_id = a.id
         	) AS trackings")
         )
         ->where([['a.deleted_at', NULL], ['a.num_warehouse', $document]])

@@ -18,23 +18,12 @@ class AccessControlController extends Controller
     //     $this->middleware('permission:accessControl.delete')->only('delete');
     // }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         // $this->assignPermissionsJavascript('accessControl');
         return view('permissions/accessControl');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         DB::beginTransaction();
@@ -100,13 +89,6 @@ class AccessControlController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function saveSpecialPermissions(Request $request)
     {
         DB::beginTransaction();
@@ -161,6 +143,7 @@ class AccessControlController extends Controller
 
     public function getPermisionsRole($role_id)
     {
+        // OBTENER LOS PERMISOS DE UN ROL EN ESPECIFICO MEDIANTE SU id
         $data = DB::table('permissions AS a')
             ->select('a.module',
                 DB::raw("sum(if(a.crud = 'c', a.id,0)) AS c"),
@@ -188,6 +171,7 @@ class AccessControlController extends Controller
 
     public function getSpecialPermisions($module, $role_id)
     {
+        // OBTENER PERMISOS ESPECIOALES DE CADA MODULO Y DE UN ROL ESPECIFICO 
         $data = DB::table('permissions AS a')
             ->select(
                 'a.id',

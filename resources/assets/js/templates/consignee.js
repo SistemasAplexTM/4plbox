@@ -28,14 +28,22 @@ $(document).ready(function() {
                     var params = [
                         full.id, +full.agencia_id, +full.tipo_identificacion_id, +full.localizacion_id, "'" + full.documento + "'", "'" + full.primer_nombre + "'", "'" + full.segundo_nombre + "'", "'" + full.primer_apellido + "'", "'" + full.segundo_apellido + "'", "'" + full.direccion + "'", "'" + full.telefono + "'", "'" + full.correo + "'", "'" + full.zip + "'", "'" + full.tarifa + "'", "'" + full.ciudad + "'", "'" + full.agencia + "'", "'" + full.identificacion + "'",  + full.cliente_id, "'" + full.cliente + "'"
                     ];
-                    var btn_edit = "<a onclick=\"edit(" + params + ")\" class='btn btn-outline btn-success btn-xs' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit'></i></a> ";
+                    var btn_edit = "<a onclick=\"edit(" + params + ")\" data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit'></i></a> ";
                 }
                 if (permission_delete) {
-                    var btn_delete = " <a onclick=\"eliminar(" + full.id + "," + true + ")\" class='btn btn-outline btn-danger btn-xs' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-trash'></i></a> ";
+                    var btn_delete = "<li><a onclick=\"eliminar(" + full.id + "," + true + ")\" style='color:red'><i class='fa fa-trash'></i> Eliminar</a></li>";
                 }
-                var btn_add_contact = "<button onclick=\"pasar_id(" + full.id + ")\" type='button' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#mdl-contactos'><i data-toggle='tooltip' data-placement='top' title='Agregar contactos' class='fa fa-user-plus'></i></button> ";
-                var btn_casillero = " <a onclick=\"generarCasillero(" + full.id + ")\" class='btn btn-outline btn-info btn-xs' data-toggle='tooltip' data-placement='top' title='Generar casillero'><i class='fa fa-address-card'></i></a> ";
-                return btn_edit + btn_casillero + btn_add_contact + btn_delete;
+                var btn = '<div class="btn-group">' +
+                        '<button type="button" class="btn btn-outline btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
+                          '<i class="far fa-ellipsis-v"></i>'+
+                        '</button>'+
+                        '<ul class="dropdown-menu dropdown-menu-right pull-right">'+
+                          "<li><a onclick=\"generarCasillero(" + full.id + ")\"><i class='fa fa-address-card'></i> Generar Casillero</a></li>"+
+                          "<li><a onclick=\"pasar_id(" + full.id + ")\" data-toggle='modal' data-target='#mdl-contactos'><i class='fa fa-user-plus'></i> Agregar Contactos</a></li>"+
+                          btn_delete
+                        '</ul>'+
+                      '</div>';
+                return btn_edit + btn;
             }
         }]
     });

@@ -1,20 +1,20 @@
 @extends('layouts.app')
 @section('title', 'Shipper')
 @section('breadcrumb')
-{{-- bread crumbs --}}
-<div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
-        <h2>@lang('general.shipper')</h2>
-        <ol class="breadcrumb">
-            <li>
-                <a href="#">@lang('general.home')</a>
-            </li>
-            <li class="active">
-                <strong>@lang('general.shipper')</strong>
-            </li>
-        </ol>
-    </div>
-</div>
+  {{-- bread crumbs --}}
+  <div class="row wrapper border-bottom white-bg page-heading">
+      <div class="col-lg-10">
+          <h2>@lang('general.shipper')</h2>
+          <ol class="breadcrumb">
+              <li>
+                  <a href="#">@lang('general.home')</a>
+              </li>
+              <li class="active">
+                  <strong>@lang('general.shipper')</strong>
+              </li>
+          </ol>
+      </div>
+  </div>
 @endsection
 
 @section('content')
@@ -25,12 +25,12 @@
                     <div class="ibox-title">
                         <h5>@lang('general.shipper_registration') </h5>
                         <div class="ibox-tools">
-                            
+
                         </div>
                     </div>
                     <div class="ibox-content">
                         <!--***** contenido ******-->
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.agencia_id}">
                                         <div class="col-sm-4">
@@ -45,7 +45,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.primer_nombre}">
                                         <div class="col-sm-4">
@@ -58,7 +58,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row" style="display: none">                            
+                        <div class="row" style="display: none">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.segundo_nombre}">
                                         <div class="col-sm-4">
@@ -71,7 +71,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.primer_apellido}">
                                         <div class="col-sm-4">
@@ -84,7 +84,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row" style="display: none">                            
+                        <div class="row" style="display: none">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.segundo_apellido}">
                                         <div class="col-sm-4">
@@ -97,7 +97,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.direccion}">
                                         <div class="col-sm-4">
@@ -110,7 +110,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.telefono}">
                                         <div class="col-sm-4">
@@ -123,7 +123,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.correo}">
                                         <div class="col-sm-4">
@@ -137,7 +137,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.localizacion_id}">
                                         <div class="col-sm-4">
@@ -152,7 +152,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.zip}">
                                         <div class="col-sm-4">
@@ -183,7 +183,7 @@
                             <table id="tbl-shipper" class="table table-striped table-hover table-bordered" style="width: 100%;">
                                 <thead>
                                     <tr>
-                                        <th>@lang('general.name')</th> 
+                                        <th>@lang('general.name')</th>
                                         <th>@lang('general.phone')</th>
                                         <th>@lang('general.city')</th>
                                         <th>Zip</th>
@@ -193,7 +193,7 @@
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>@lang('general.name')</th> 
+                                        <th>@lang('general.name')</th>
                                         <th>@lang('general.phone')</th>
                                         <th>@lang('general.city')</th>
                                         <th>Zip</th>
@@ -202,7 +202,7 @@
                                     </tr>
                                 </tfoot>
                             </table>
-                        </div>             
+                        </div>
                     </div>
                 </div>
             </div>
