@@ -79,6 +79,8 @@ var objVue = new Vue({
             });
             this.$validator.validateAll().then((result) => {
                 if (result) {
+                    var l = Ladda.create(document.querySelector('.ladda-button'));
+                    l.start();
                     let me = this;
                     axios.post($('#formPrealerta').data('id_agencia'),{
                         'email' : this.email,
@@ -86,6 +88,7 @@ var objVue = new Vue({
                         'tracking' : this.tracking,
                         'despachar' : $('#despachar').prop('checked'),
                     }).then(function(response){
+                        l.stop();
                         if(response.data['code'] == 200){
                             toastr.success('Registro creado correctamente.');
                             toastr.options.closeButton = true;

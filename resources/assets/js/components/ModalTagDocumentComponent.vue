@@ -74,15 +74,9 @@
 	                </h4>
 	                <div class="">
 	                	<span><i class="fa fa-user"></i> {{ cliente_cons }}</span>
-	                	<button @click="openUrl(urlSendEmail)" style="color: #23c6c8;" class="btn btn-default dim button_print" type="button" data-toggle="tooltip" title="Enviar email" id="btn-sendEmail">
+	                	<button @click="openUrl(urlSendEmail)" data-style="expand-right" class="ladda-button btn btn-info dim button_print" data-toggle="tooltip" title="Enviar email" id="btn-sendEmail">
 	                		<i class="fa fa-envelope fa-lg" style=""></i>
 	                	</button>
-                        <!-- <button @click="openUrl(urlPrintLabel)" style="color: #1ab394;" class="btn btn-default dim button_print" type="button" data-toggle="tooltip" title="Imprimir label">
-	                		<i class="fa fa-barcode fa-lg" style=""></i>
-	                	</button>
-	                	<button @click="openUrl(urlPrint)" style="color: #ffbb33;" class="btn btn-default dim button_print" type="button" data-toggle="tooltip" title="Imprimir documento">
-                        	<i class="fa fa-file-o fa-lg" style=""></i>
-                        </button> -->
 	                </div>
 	                <div class=""><span><i class="fa fa-envelope "></i> {{ cliente_email }}</span></div>
 	            </div>
@@ -230,25 +224,31 @@
 		    		this.urlPrint = 'impresion-documento/'+val.id+'/warehouse';
 					this.urlPrintLabel = 'impresion-documento-label/'+val.id+'/warehouse';
 	    		}
-				this.getSelectStatus();
-	        	this.getSelectWarehouses();
-	            this.getStatus();
-	            this.getNotas();
-	            this.getDatas();
-			},
-			id_status: function (newQuestion) {
-				if(newQuestion != null){
-					this.id_status_nota = newQuestion;
-					this.deleteStatusNota();
-				}
-			},
-			table_delete: function (newQuestion) {
-				this.table_delete = newQuestion;
-			}
+  				this.getSelectStatus();
+  	        	this.getSelectWarehouses();
+  	            this.getStatus();
+  	            this.getNotas();
+  	            this.getDatas();
+  			},
+  			id_status: function (newQuestion) {
+  				if(newQuestion != null){
+  					this.id_status_nota = newQuestion;
+  					this.deleteStatusNota();
+  				}
+  			},
+  			table_delete: function (newQuestion) {
+  				this.table_delete = newQuestion;
+  			}
 	    },
 		methods: {
 			openUrl: function(url){
-				window.open(url, '_blank');
+        var l = Ladda.create(document.querySelector('.ladda-button'));
+        l.start();
+        axios.get(url).then(response => {
+          l.stop();
+          toastr.success('Email enviado.');
+          toastr.options.closeButton = true;
+        });
 			},
 			resetForm: function() {
 	            this.estatus_id= null,
@@ -260,9 +260,9 @@
 	            $('#tbl-' + table).dataTable()._fnAjaxUpdate();
 	        },
 			getSelectStatus: function(){
-				axios.get('status/getDataSelectModalTagGuia').then(response => {
-					this.status = response.data.data;
-	            });
+        axios.get('status/getDataSelectModalTagGuia').then(response => {
+          this.status = response.data.data;
+        });
 			},
 			getSelectWarehouses: function(){
 				axios.get('documento/getDataSelectWarehousesModalTagGuia/'+ this.id_document).then(response => {

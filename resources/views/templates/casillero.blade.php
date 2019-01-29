@@ -33,10 +33,10 @@
                     <div class="col-lg-6 col-lg-offset-3">
                         {{-- <h1>Registrese</h1>
                         <p>Obtenga su código de casillero en los Estados Unidos con nosotros y reciba sus compras en su domicilio.</p> --}}
-                        <form id="formCasillero" enctype="multipart/form-data" class="form-horizontal casillero_form" role="form" action="#" method="post">          
+                        <form id="formCasillero" enctype="multipart/form-data" class="form-horizontal casillero_form" role="form" action="#" method="post">
                             <div class="ibox float-e-margins">
                                 <div class="ibox-content">
-                                    
+
                                     <!--***** contenido ******-->
                                     <div class="row">
                                         <div class="col-lg-12">
@@ -54,8 +54,8 @@
                                             <div class="form-group" :class="{'has-error': errors.has('primer_nombre') }">
                                                 <label class="control-label" for="primer_nombre">
                                                         @{{ !corporativo ? 'Primer Nombre' : 'Razón social' }} <span class="asterisco">*</span>
-                                                </label> 
-                                                <input 
+                                                </label>
+                                                <input
                                                     v-model="primer_nombre"
                                                     v-validate="'required'"
                                                     type="text" required="" :placeholder="[corporativo ? 'Razón social' : 'Primer nombre']" class="form-control" id="primer_nombre" name="primer_nombre" value="">
@@ -64,10 +64,10 @@
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-12" v-show="!corporativo">
                                             <div class="form-group" :class="{'has-error': errors.has('primer_apellido') }">
-                                                <label class="control-label" for="primer_apellido">@lang('general.surnames')<span class="asterisco">*</span></label> 
-                                                <input 
-                                                    v-model="primer_apellido" 
-                                                    v-validate="corporativo ? '' : 'required'" 
+                                                <label class="control-label" for="primer_apellido">@lang('general.surnames')<span class="asterisco">*</span></label>
+                                                <input
+                                                    v-model="primer_apellido"
+                                                    v-validate="corporativo ? '' : 'required'"
                                                     type="text" required="" placeholder="@lang('general.surnames')" class="form-control" id="primer_apellido" name="primer_apellido" value="">
                                                 <label v-show="errors.has('primer_apellido')" class="error">@{{ errors.first('primer_apellido') }}</label>
                                             </div>
@@ -100,9 +100,9 @@
                                         <div class="col-md-6 col-sm-6">
                                             <div class="form-group" :class="{'has-error': errors.has('direccion') }">
                                                 <label class="control-label" for="direccion">@lang('general.address') <span class="asterisco">*</span></label>
-                                                <input 
+                                                <input
                                                     v-model="direccion"
-                                                    v-validate="'required'" 
+                                                    v-validate="'required'"
                                                     type="text" required="" placeholder="@lang('general.address')" class="form-control" id="direccion" name="direccion" value="">
                                                 <label v-show="errors.has('direccion')" class="error">@{{ errors.first('direccion') }}</label>
                                             </div>
@@ -113,9 +113,9 @@
                                             <div class="form-group" :class="{'has-error': errors.has('zip') }">
                                                 <label class="control-label" for="zip">@lang('general.postal_code')  <span class="asterisco">*</span></label>
                                                 <div class="input-group">
-                                                    <input 
+                                                    <input
                                                     v-model="zip"
-                                                    v-validate="'required'" 
+                                                    v-validate="'required'"
                                                     type="number" placeholder="Zip" id="zip" name="zip" class="form-control" value="">
                                                     <span class="input-group-addon" @click="setZip" style="cursor: pointer;"><i class="fa fa-map-marker"></i> @lang('general.calculate')</span>
                                                 </div>
@@ -124,10 +124,10 @@
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-12">
                                             <div class="form-group" :class="{'has-error': errors.has('celular') }">
-                                                <label class="control-label" for="celular">@lang('general.cell_phone') <span class="asterisco">*</span></label> 
+                                                <label class="control-label" for="celular">@lang('general.cell_phone') <span class="asterisco">*</span></label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon">(+@{{ phone_code }})</span>
-                                                    <input 
+                                                    <input
                                                         v-model="celular"
                                                         v-validate="'required'"
                                                         type="tel" required="" placeholder="999-9999" class="form-control" id="celular" name="celular" value="">
@@ -140,11 +140,11 @@
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                             <div class="form-group" :class="{'has-error': errors.has('email') }">
-                                                <label class="control-label" for="email">@lang('general.email') <span class="asterisco">*</span></label> 
+                                                <label class="control-label" for="email">@lang('general.email') <span class="asterisco">*</span></label>
                                                 <input
-                                                 v-model="email" 
+                                                 v-model="email"
                                                  v-validate="'required|email|unique'"
-                                                 type="email" 
+                                                 type="email"
                                                  ref="email"
                                                  required="" placeholder="@lang('general.email_be_your_user')" class="form-control" name="email">
                                                 <label v-show="errors.has('email')" class="error">@{{ errors.first('email') }}</label>
@@ -164,9 +164,9 @@
                                         <div class="col-lg-12 col-md-12 col-sm-12">
                                             <div class="form-group" :class="{'has-error': errors.has('acepta_condiciones') }">
                                                 <div class="checkbox checkbox-success checkbox-inline">
-                                                        <input 
-                                                    v-model="acepta_condiciones" 
-                                                    v-validate="'required'" 
+                                                        <input
+                                                    v-model="acepta_condiciones"
+                                                    v-validate="'required'"
                                                     type="checkbox" id="acepta_condiciones" name="acepta_condiciones" value="f">
                                                     <label for="acepta_condiciones">@lang('general.i_have_read_the') <strong><a href="#" data-toggle="modal" data-target="#modalTerminosCondiciones" data-original-title="" title="">@lang('general.terms_and_conditions')</a></strong></label>
                                                 </div>
@@ -180,23 +180,23 @@
                                         <div class="col-lg-12 col-md-12 col-sm-12">
                                             <div class="form-group">
                                                <div class="checkbox checkbox-success checkbox-inline">
-                                                    <input 
-                                                    v-model="recibir_info" 
+                                                    <input
+                                                    v-model="recibir_info"
                                                     type="checkbox" id="recibir_info" name="recibir_info" value="f" style="">
                                                     <label for="recibir_info"> @lang('general.i_wish_to_receive_information')</label>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>                                               
+                                    </div>
                                     <div class="row">
                                         <div class="col-lg-12 text-center">
                                             <div class="form-group">
-                                                <button @click.prevent="create" type="button" class="ladda-button btn btn-primary hvr-float-shadow" data-style="zoom-in" title="">
+                                                <button @click.prevent="create" type="button" class="ladda-button btn btn-primary hvr-float-shadow" data-style="expand-right" title="">
                                                     <span class="ladda-label"><i class="fa fa-user" aria-hidden="true"></i>@lang('general.create_locker')</span>
                                                     <span class="ladda-spinner"></span>
                                                 </button>
                                             </div>
-                                        </div>   
+                                        </div>
                                     </div>
                                 </div>
                             </div>

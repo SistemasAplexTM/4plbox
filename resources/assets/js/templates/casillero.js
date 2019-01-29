@@ -157,6 +157,8 @@ var objVue = new Vue({
 
             this.$validator.validateAll().then((result) => {
                 if (result) {
+                  var l = Ladda.create(document.querySelector('.ladda-button'));
+                  l.start();
                     let me = this;
                     axios.post('../casillero',{
                         'agencia_id': this.agencia_id,
@@ -180,6 +182,7 @@ var objVue = new Vue({
                         'acepta_condiciones': this.acepta_condiciones,
                         'recibir_info': this.recibir_info
                     }).then(function(response){
+                      l.stop();
                         if(response.data['code'] == 200){
                             toastr.success('Registro creado correctamente.');
                             toastr.options.closeButton = true;

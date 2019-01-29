@@ -11,9 +11,9 @@ $(function() {
 });
 $(document).ready(function() {
     //-->
-    $('.ladda-button').ladda('bind', {
-        timeout: 5000
-    });
+    // $('.ladda-button').ladda('bind', {
+    //     timeout: 5000
+    // });
     $.fn.select2.defaults.set("theme", "bootstrap");
 
     if (typeof lang != 'undefined' && lang == 'es') {
