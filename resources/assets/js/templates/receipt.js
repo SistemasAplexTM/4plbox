@@ -71,7 +71,7 @@ $(document).ready(function () {
                   "'" + full.consignee + "'",
                   full.documento_detalle_id
               ];
-              var btn_view = "<a onclick=\"view(" + params + ")\" class='' data-toggle='tooltip' data-placement='top' title='Ver'><i class='fa fa-eye'></i></a> ";
+              var btn_view = "<a onclick=\"view(" + params + ")\" data-toggle='tooltip' data-placement='top' title='Ver'><i class='fa fa-eye'></i></a> ";
               var btn_print = "<a href='receipt/printReceipt/" + full.id + "' target='_blank' class='btn btn-default btn-xs' data-toggle='tooltip' data-placement='top' title='Imprimir'><i class='fa fa-print'></i></a> ";
 
               return btn_view + btn_print;
@@ -106,10 +106,6 @@ function view(id, consignee, id_doc_detail){
   $('#ciudad').prop('disabled', true);
   $('#transportador').prop('disabled', true);
   $('#warehouse').prop('disabled', true);
-  objVue.view(id, id_doc_detail);
-}
-
-function view(id, consignee, id_doc_detail){
   objVue.view(id, id_doc_detail);
 }
 
