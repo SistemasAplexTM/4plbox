@@ -68,7 +68,7 @@
   <table border="0" cellspacing="0" cellpadding="0" id="tableCabecera" style="width: 100%;">
   <tr>
   <td rowspan="3" style="width: 100px;">
-  <div id="divLogo"><img id="logo" src=<?php echo asset('img/' .$agencia->logo); ?>></div>
+  <div id="divLogo"><img id="logo" src=<?php echo asset('storage/' .$agencia->logo); ?>></div>
 </td>
 <td>
   <div id="infoAg"><?php echo $agencia->descripcion; ?></div>

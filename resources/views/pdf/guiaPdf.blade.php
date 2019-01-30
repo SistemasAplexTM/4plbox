@@ -1,4 +1,4 @@
-    
+
     <style>
         #apDiv5, #apDiv4, #apDiv7, #apDiv10, #apDiv11{
             border: 1px solid;
@@ -66,19 +66,19 @@
             font-size: 12px;
         }
     </style>
-    <?php 
+    <?php
     $total_declarado = 0;
     $total_piezas = 0;
     $total_libras = 0;
     $total_volumen = 0;
     $total_volumen_cft = 0;
     $total_volumen_cmt = 0;
-    
+
     ?>
     @if(count($detalle) > 0)
         <?php $total_piezas = count($detalle); ?>
         @foreach($detalle as $val)
-            <?php 
+            <?php
                 $total_declarado += $val->valor;
                 $total_libras += $val->peso;
                 $total_volumen += $val->volumen;
@@ -120,7 +120,7 @@
                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
                             <tr>
                                 <td align="right">
-                                    <div id="apDiv6">{{ $documento->tipo_documento }} N° {{ ((isset($documento->consecutivo) and $documento->consecutivo != '') ? $documento->consecutivo : '') }}</div>   
+                                    <div id="apDiv6">{{ $documento->tipo_documento }} N° {{ ((isset($documento->consecutivo) and $documento->consecutivo != '') ? $documento->consecutivo : '') }}</div>
                                 </td>
                             </tr>
                             <tr>
@@ -162,7 +162,7 @@
                                     <td colspan="3" style="font-size: 10px;"> {{ ((isset($documento->ship_email) and $documento->ship_email != '') ? $documento->ship_email : '') }} </td>
                                 </tr>
                             </table>
-                        </div>   
+                        </div>
                     </td>
                     <td>
                         <div id="apDiv5">
@@ -193,7 +193,7 @@
                                     <td colspan="2" style="font-size: 12px;border-left: 1px solid #000;border-top: 1px solid #000;">PO: <b id="apDiv12">{{ ((isset($documento->cons_pobox) and $documento->cons_pobox != '') ? $documento->cons_pobox : '') }}</b></td>
                                 </tr>
                             </table>
-                        </div>  
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -217,13 +217,13 @@
                                     </tr>
                                     <tr>
                                         <td colspan="2" valign="top"><b></b></td>
-                                        <td colspan="3" valign="top"><span style="padding:4px 0 0 0; font-size: 13px;"> </span></td>                                        
+                                        <td colspan="3" valign="top"><span style="padding:4px 0 0 0; font-size: 13px;"> </span></td>
                                         <td colspan="2" valign="top"><b>@lang('general.way_to_pay'):</b></td>
                                         <td valign="top" style="text-align: center;"><span style="font-size:13px;"> {{ ((isset($documento->forma_pago) and $documento->forma_pago != '') ? $documento->forma_pago : '') }} </span></td>
                                     </tr>
                                 </table>
                             </div>
-                        </div>  
+                        </div>
 
                     </td>
                 </tr>
@@ -249,19 +249,19 @@
                                     <th width="5%" bgcolor="lightgray" scope="col" id="titulo_detalle">CFT</th> <!-- pie cubico-->
                                     <th width="5%" bgcolor="lightgray" scope="col" id="titulo_detalle">CMT</th><!-- metro cubico-->
                                 </tr>
-                                <?php 
+                                <?php
                                 $cont = 1;
                                 $sumPie = 0;
-                                $sumMetro = 0; 
+                                $sumMetro = 0;
                                 ?>
                                 @foreach($detalle as $val)
                                     <tr height='18px'>
                                         <td align='center' id="cont_detalle">{{ $cont++ }} </td>
                                         <td align='center' id="cont_detalle">
                                             <div style="padding: 0 5px">
-                                                <img id="barcode" style="height: 30px;padding: 5px;" src="data:image/png;base64, {{ DNS1D::getBarcodePNG($val->num_guia, "C128",1,29,array(1,1,1)) }}" alt="barcode" />
+                                                <img id="barcode" style="height: 30px;padding: 5px;" src="data:image/png;base64, {{ DNS1D::getBarcodePNG($val->num_warehouse, "C128",1,29,array(1,1,1)) }}" alt="barcode" />
                                             </div>
-                                            <div>{{ $val->num_guia }}</div>
+                                            <div>{{ $val->num_warehouse }}</div>
                                         </td>
                                         <?php $leng = strlen($val->contenido); ?>
                                         <td id="cont_detalle" style="height: 50px;">
@@ -283,7 +283,7 @@
                                     ?>
                                 @endforeach
                             </table>
-                        </div>    
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -310,7 +310,7 @@
                                     <td align="center"><span id="total_detail"> {{ number_format($sumMetro,2) }} </span></td>
                                 </tr>
                             </table>
-                        </div>    
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -324,7 +324,7 @@
                                                 <td><b>@lang('general.value'): (Flete+Impuesto)</b></td>
                                                 <?php $sub = ($total_declarado * $documento->impuesto / 100) + ($total_libras * $documento->valor); ?>
                                                 <td align="right"> {{ $subtotal = number_format($sub, 2) }} </td>
-                                            </tr>                                   
+                                            </tr>
 
                                             <tr>
                                                 <td><b>@lang('general.insurance'): </b></td>
@@ -356,7 +356,7 @@
                                                 </tr>
                                             </table>
                                         </div>
-                                    </div>  
+                                    </div>
                                 </td>
                                 <td valign="top">
                                     <table width="100%" border="0" cellspacing="0" cellpadding="0" style="padding-left: 2px;">
@@ -370,12 +370,12 @@
                                                     <span class="importante">
                                                     @lang('general.we_are_not_responsible')
                                                     </span>
-                                                </div>      
+                                                </div>
                                             </th>
                                         </tr>
                                         <tr>
                                             <th colspan="2" style="text-align: center;">
-                                                <div id="apDiv18">@lang('general.review_the_merchandise') </div>    
+                                                <div id="apDiv18">@lang('general.review_the_merchandise') </div>
                                             </th>
 
                                         </tr>
@@ -396,7 +396,7 @@
                     </td>
                 </tr>
 
-                @if ($i === 1) 
+                @if ($i === 1)
                     <tr>
                         <td colspan="2"><div id="space">&nbsp;</div></td>
                     </tr>

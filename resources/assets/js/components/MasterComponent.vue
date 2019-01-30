@@ -10,7 +10,7 @@
     padding-bottom: 5px;
   }*/
 </style>
-<template>  
+<template>
   <form-wizard @on-complete="onComplete"
                   @on-loading="setLoading"
                   @on-validate="handleValidation"
@@ -40,7 +40,7 @@
         <div class="widget style1" style="background-color: rgb(26, 179, 148); color: white">
           <div class="row vertical-align">
             <div class="col-xs-3">
-                <i class="fa fa-warning fa-3x"></i>
+                <i class="fa fa-exclamation-triangle fa-3x"></i>
             </div>
             <div class="col-xs-9 text-center" v-if="msg != null">
                 <h3 class="font-bold">{{ msg }}</h3>
@@ -51,7 +51,7 @@
     </div>
   </transition>
     <tab-content title="Datos de envío" icon="fa fa-user" :before-change="validar_primer_tab">
-      <div class="row">                          
+      <div class="row">
         <div class="col-lg-4">
           <div class="panel panel-default">
             <div class="panel-heading">
@@ -66,13 +66,13 @@
                 <div class="col-lg-12">
                   <div class="form-group" :class="{'has-error': errors.has('nombre') }">
                     <label for="nombre">Nombre</label>
-                      <autocomplete-component 
+                      <autocomplete-component
                       v-validate="'required'"
                       name="nombre"
                       :selection="shipper"
                       v-model="shipper.name"
-                      type="s" 
-                      @change-select="setData" 
+                      type="s"
+                      @change-select="setData"
                       url="master/buscar"
                       ></autocomplete-component>
                     <small v-show="errors.has('nombre')" class="bg-danger">{{ errors.first('nombre') }}</small>
@@ -136,13 +136,13 @@
                 <div class="col-lg-12">
                   <div class="form-group" :class="{'has-error': errors.has('nombreC') }">
                     <label for="nombre">Nombre</label>
-                    <autocomplete-component 
+                    <autocomplete-component
                      v-validate="'required'"
-                    name="nombreC" 
+                    name="nombreC"
                     :selection="consignee"
                     v-model="consignee.name"
-                    type="c" 
-                    @change-select="setData" 
+                    type="c"
+                    @change-select="setData"
                     url="master/buscar"
                     ></autocomplete-component>
                     <small v-show="errors.has('nombreC')" class="bg-danger">{{ errors.first('nombreC') }}</small>
@@ -206,13 +206,13 @@
                 <div class="col-lg-12">
                   <div class="form-group" :class="{'has-error': errors.has('nombreCR') }">
                     <label for="nombreCR">Nombre</label>
-                      <autocomplete-component 
+                      <autocomplete-component
                        v-validate="'required'"
-                      name="nombreCR" 
+                      name="nombreCR"
                       :selection="carrier"
                       v-model="carrier.name"
-                      type="cr" 
-                      @change-select="setData" 
+                      type="cr"
+                      @change-select="setData"
                       url="master/buscar"
                       ></autocomplete-component>
                     <small v-show="errors.has('nombreCR')" class="bg-danger">{{ errors.first('nombreCR') }}</small>
@@ -281,12 +281,12 @@
                   <div class="col-lg-6">
                     <div class="form-group">
                       <label for="aerolinea">Issued by: <span v-if="editing">{{ aerolinea }}</span></label>
-                      <v-select 
+                      <v-select
                         name="aerolinea"
-                        id="aerolinea" 
+                        id="aerolinea"
                         label="nombre"
-                        :options="aerolineas" 
-                        :disabled="disableAerolinea" 
+                        :options="aerolineas"
+                        :disabled="disableAerolinea"
                         :onChange="getAerolineasInventario"
                         :class="{'has-error': errors.has('aerolinea') }"
                         >
@@ -300,12 +300,12 @@
                   <div class="col-lg-6">
                     <div class="form-group" :class="{'has-error': errors.has('aerolinea_inventario') }">
                       <label for="aerolinea_inventario">Inventory: <span v-if="editing">{{ aerolinea_inventario }}</span></label>
-                      <v-select 
-                        v-validate="'required'" 
-                        name="aerolinea_inventario" 
+                      <v-select
+                        v-validate="'required'"
+                        name="aerolinea_inventario"
                         id="aerolinea_inventario"
-                        label="nombre" 
-                        :disabled="disableAerolinea" 
+                        label="nombre"
+                        :disabled="disableAerolinea"
                         :options="aerolineas_inventario"
                         :on-change="setNumMaster">
                           <template slot="no-options">
@@ -334,12 +334,12 @@
                   <div class="col-lg-12">
                     <div class="form-group">
                       <label for="aeropuerto_salida">Airport of Departure(Address of first  Carrier) and  requested Routing</label>
-                      <v-select 
-                      v-validate="'required'" 
-                      name="aeropuerto_salida" 
-                      id="aeropuerto_salida" 
-                      v-model="aeropuerto_salida" 
-                      label="name" :options="aeropuertos" 
+                      <v-select
+                      v-validate="'required'"
+                      name="aeropuerto_salida"
+                      id="aeropuerto_salida"
+                      v-model="aeropuerto_salida"
+                      label="name" :options="aeropuertos"
                       :class="{'has-error': errors.has('aeropuerto_salida') }"
                       >
                           <template slot="no-options">
@@ -1001,9 +1001,9 @@
           this.total_other_charge_due_carrier = response.data.data.total_other_charge_due_carrier;
           if(response.data.data.consolidado_id != null){
             this.consolidado_id = {
-              id: response.data.data.consolidado_id, 
-              consolidado: response.data.data.consolidado, 
-              fecha: response.data.data.fecha, 
+              id: response.data.data.consolidado_id,
+              consolidado: response.data.data.consolidado,
+              fecha: response.data.data.fecha,
               pais: response.data.data.pais
             }
           }
