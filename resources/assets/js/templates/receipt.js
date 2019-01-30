@@ -150,7 +150,7 @@ var objVue = new Vue({
           if (data.data != null) {
             me.document = data.data[0]
             if (me.detail.length <= 0) {
-              me.saveDocument();
+              //me.saveDocument();
             }
             me.detail.push(data.data[0])
             this.warehouse = null
@@ -196,6 +196,7 @@ var objVue = new Vue({
         });
       },
       saveDetail(){
+        this.saveDocument();
         var data = {
           id_client: $('#consignee_id').val(),
           data_client: {
