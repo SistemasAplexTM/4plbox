@@ -124,6 +124,10 @@ var objVue = new Vue({
       editar: 0,
     },
     methods:{
+      save(){
+        // this.saveDocument();
+        this.saveDetail();
+      },
       checkDocument(id){
         if (this.num_warehouse_guia_r != null) {
           var row = this.detail.filter(result => result.warehouse == this.num_warehouse_guia_r);
@@ -192,7 +196,6 @@ var objVue = new Vue({
         });
       },
       saveDetail(){
-        this.saveDocument();
         var data = {
           id_client: $('#consignee_id').val(),
           data_client: {
@@ -204,7 +207,8 @@ var objVue = new Vue({
           entregado: $("#entregado").prop('checked'),
           document: this.document
         }
-        axios.post('receipt/saveDetail', {factura_id: this.id, detalle: this.detail, head: data}).then(response => {
+        axios.post('receipt/saveDetail', {detalle: this.detail, head: data}).then(response => {
+          console.log('guardadndo detalle');
           var datos = response.data;
           if (datos.data != null) {
           }
