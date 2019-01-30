@@ -86,7 +86,7 @@ $(document).ready(function () {
     });
     $('#entregado').change(function () {
       if ($(this).prop('checked') == true) {
-        if ($('#warehouse').is(':disabled')) {
+        if (objVue.id != null) {
           $('#div_wrh_guia_r').slideDown(200);
           $('#div_status').slideDown(200);
         }

@@ -33,6 +33,9 @@ class ReceiptController extends Controller
         'cliente_datos' => json_encode($data['data_client']),
         'transportador' => $data['transportador'],
       ]);
+      Receipt::where('id', $data->id)->update([
+        'numero_recibo' =>  $data->id,
+      ]);
       $answer = array(
           'id' => $data->id,
           "code"   => 200,
