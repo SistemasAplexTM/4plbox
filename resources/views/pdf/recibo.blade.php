@@ -58,107 +58,127 @@
     #titulo{
         font-weight: bold;
     }
+    .spacer{ margin-top: 30px}
 </style>
-<table border="1" cellspacing="0" cellpadding="0" id="tableContainer">
-    <thead>
-        <tr>
-            <td colspan="4">
-                <table border="0" cellspacing="0" cellpadding="0" id="tableCabecera" style="width: 100%;">
-                    <tr>
-                        <td rowspan="3" style="width: 100px;">
-                            <div id="divLogo"><img id="logo" src=""/></div>
-                        </td>
-                        <td>
-                            <div id="infoAg"><?php echo $objAgencia->descripcion; ?></div>
-                        </td>
-                        <td><div id="infoAg">RECIBO DE ENTREGA:</div></td>
-                    </tr>
-                    <tr>
-                        <td><div id="infoAg"><?php echo $objAgencia->direccion . ' / ' . $objAgencia->ciudad . ' - ' . $objAgencia->pais; ?></div></td>
-                        <td><div id="infoAg"># <?php echo $numR; ?></div></td>
-                    </tr>
-                    <tr>
-                        <td><div id="infoAg"><?php echo $objAgencia->telefono; ?></div></td>
-                        <td><div id="infoAg"><?php echo 'Entrego: ' . $objRecibo->$user; ?></div></td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="4" style="text-align: center;font-weight: bold;font-size: 15px;">
-                INFORMACION DEL CLIENTE
-            </td>
-        </tr>
-        <tr>
-            <td colspan="4">
-                <table border="0" cellspacing="0" cellpadding="0" id="tableCabecera" style="width: 100%;">
-                    <tr>
-                        <td>
-                            <div id="infoCli"><strong>Fecha:</strong> <?php echo $objRecibo->$fecha; ?></div>
-                        </td>
-                        <td>
-                            <div id="infoCli"><strong>Transportador:</strong> <?php echo $objRecibo->$trans; ?></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div id="infoCli"><strong>Nombre:</strong> <?php echo ($nomConsignee) ? $nomConsignee : $objRecibo->cliente; ?></div>
-                        </td>
-                        <td><div id="infoCli"><strong>Direccion:</strong> <?php echo $objRecibo->$dir; ?></div></td>
-                    </tr>
-                    <tr>
-                        <td><div id="infoCli"><strong>Telefono:</strong> <?php echo $objRecibo->$tel; ?></div></td>
-                        <td><div id="infoCli"><strong>Ciudad:</strong> <?php echo $objRecibo->$ciu; ?></div></td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <th>Item</th>
-            <th>Numero de Warehouse</th>
-            <th>Cantidad</th>
-            <th style="width: 50%;">observacion</th>
-        </tr>
-    </thead>
-    <tbody>
-      <?php foreach ($objReciboD as $value): ?>
-            <tr>
-                <td id="detalle"><?php echo $cont++ ?></td>
-                <td id="detalle">
-                    <?php
-                    if ($value->wrh_guia == 0) {
-                        echo warehouseDetalleTableClass::getNumWarehouseById($value->id_documento_wrh_guia);
-                    } else {
-                        echo guiaTableClass::getNumGuia($value->id_documento_wrh_guia);
-                    }
-                    ?>
-                </td>
-                <td id="detalle"><?php echo $value->cantidad ?></td>
-                <td id="detalle"><?php echo $value->observacion ?></td>
-            </tr>
-        <?php endforeach; ?>
+<?php for ($i=1; $i < 3; $i++): ?>
+  <table border="1" cellspacing="0" cellpadding="0" id="tableContainer">
+  <thead>
+  <tr>
+  <td colspan="4">
+  <table border="0" cellspacing="0" cellpadding="0" id="tableCabecera" style="width: 100%;">
+  <tr>
+  <td rowspan="3" style="width: 100px;">
+  <div id="divLogo"><img id="logo" src=<?php echo asset('img/' .$agencia->logo); ?>></div>
+</td>
+<td>
+  <div id="infoAg"><?php echo $agencia->descripcion; ?></div>
+</td>
+<td><div id="infoAg">RECIBO DE ENTREGA:</div></td>
+</tr>
+<tr>
+  <td><div id="infoAg"><?php echo $agencia->direccion . ' / ' . $agencia->ciudad . ' - ' . $agencia->pais; ?></div></td>
+  <td><div id="infoAg"># <?php echo $recibo->numero_recibo; ?></div></td>
+</tr>
+<tr>
+  <td><div id="infoAg"><?php echo $agencia->telefono; ?></div></td>
+  <td><div id="infoAg"><?php echo 'Entrego: ' . $recibo->name; ?></div></td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+  <td colspan="4" style="text-align: center;font-weight: bold;font-size: 15px;">
+    INFORMACIÓN DEL CLIENTE
+  </td>
+</tr>
+<tr>
+  <td colspan="4">
+    <table border="0" cellspacing="0" cellpadding="0" id="tableCabecera" style="width: 100%;">
+      <tr>
+        <td>
+          <div id="infoCli"><strong>Fecha:</strong> <?php echo $recibo->created_at; ?></div>
+        </td>
+        <td>
+          <div id="infoCli"><strong>Transportador:</strong> <?php echo $recibo->transportador; ?></div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="infoCli">
+            <strong>Nombre:</strong>
+            <?php echo ($recibo->consignee_id) ? $consignee->primer_nombre . ' ' . $consignee->segundo_nombre . ' ' . $consignee->primer_apellido . ' ' . $consignee->segundo_apellido  : $recibo->cliente; ?>
+          </div>
+        </td>
+        <td><div id="infoCli"><strong>Dirección:</strong> <?php echo $cliente->direccion; ?></div></td>
+      </tr>
+      <tr>
+        <td><div id="infoCli"><strong>Teléfono:</strong> <?php echo $cliente->telefono; ?></div></td>
+        <td><div id="infoCli"><strong>Ciudad:</strong> <?php echo $cliente->ciudad; ?></div></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+  <th>Item</th>
+  <th>Número de Warehouse</th>
+  <th>Cantidad</th>
+  <th style="width: 50%;">Observación</th>
+</tr>
+</thead>
+<tbody>
+  <?php $cont = 1 ?>
+  <?php foreach ($reciboD as $value): ?>
+    <tr>
+      <td id="detalle"><?php echo $cont++ ?></td>
+      <td id="detalle">
         <?php
-        $filas = 10 - $cantR;
-        if ($filas > 0):
+        echo $value->num_warehouse
+        // if ($value->wrh_guia == 0) {
+          //     echo warehouseDetalleTableClass::getNumWarehouseById($value->id_documento_wrh_guia);
+          // } else {
+            //     echo guiaTableClass::getNumGuia($value->id_documento_wrh_guia);
+            // }
             ?>
-              <?php for ($f = 1; $f <= $filas; $f++): ?>
-                <tr>
-                    <td id="detalle"><?php echo $cont++ ?></td>
-                    <td id="detalle"><?php echo '' ?></td>
-                    <td id="detalle"><?php echo '' ?></td>
-                    <td id="detalle"></td>
-                </tr>
-            <?php endfor; ?>
-        <?php endif; ?>
-    </tbody>
+          </td>
+          <td id="detalle"><?php echo $value->cantidad ?></td>
+          <td id="detalle"><?php echo $value->trackings ?></td>
+        </tr>
+      <?php endforeach; ?>
+      <?php
+      $cantR = count($reciboD);
+      $filas = 10 - $cantR;
+      if ($filas > 0):
+      ?>
+      <?php for ($f = 1; $f <= $filas; $f++): ?>
+        <tr>
+          <td id="detalle"><?php echo $cont++ ?></td>
+          <td id="detalle"><?php echo '' ?></td>
+          <td id="detalle"><?php echo '' ?></td>
+          <td id="detalle"></td>
+        </tr>
+      <?php endfor; ?>
+    <?php endif; ?>
+  </tbody>
 </table>
 <table style="width: 100%;">
-    <tr>
-        <td><div id="line">_______________________________</div></td>
-        <td><div id="line">_______________________________</div></td>
-    </tr>
-    <tr>
-        <td><div id="firma">RECIBI A CONFORMIDAD:</div></td>
-        <td><div id="firma">C.C/NIT:</div></td>
-    </tr>
+  <tr>
+    <td><div id="line">_______________________________</div></td>
+    <td><div id="line">_______________________________</div></td>
+  </tr>
+  <tr>
+    <td><div id="firma">RECIBI A CONFORMIDAD:</div></td>
+    <td><div id="firma">C.C/NIT:</div></td>
+  </tr>
 </table>
+<div class="spacer"></div>
+<?php endfor ?>
+<script  type="text/javascript">
+    function printHTML() {
+       if (window.print) {
+           window.print();
+       }
+    }
+    document.addEventListener("DOMContentLoaded", function (event) {
+        printHTML();
+    });
+</script>

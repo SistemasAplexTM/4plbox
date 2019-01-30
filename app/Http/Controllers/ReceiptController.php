@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Receipt;
 use App\ReceiptDetail;
 use App\StatusReport;
+use App\Agencia;
+use App\Consignee;
 use Auth;
 use DataTables;
 use Illuminate\Http\Request;
@@ -214,5 +216,19 @@ class ReceiptController extends Controller
     $this->AddToLog('Revisando documento ' . $request->warehouse);
 
     return array('code' => 200);
+  }
+
+  public function printReceipt($id)
+  {
+    $agencia = Agencia::find(Auth::user()->agencia_id);
+    $recibo = Receipt::where('factura.id', $id)
+    ->join('users AS b', 'usuario_id', 'b.id')
+    ->first();
+    $reciboD = ReceiptDetail::where('factura_id', $id)
+    ->join('documento_detalle AS b', 'documento_detalle_id', 'b.id')
+    ->get();
+    $cliente = json_decode($recibo->cliente_datos);
+    $consignee = Consignee::find($recibo->consignee_id);
+    return view('pdf.recibo', compact('agencia', 'recibo', 'reciboD', 'cliente', 'consignee'));
   }
 }
