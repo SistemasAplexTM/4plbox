@@ -23,19 +23,19 @@ class ReceiptController extends Controller
   public function store(Request $request)
   {
     try {
-      $data = $request->data;
-      $data = Receipt::create([
-        'agencia_id' => Auth::user()->agencia_id,
-        'consignee_id' => $data['id_client'],
-        'usuario_id' => Auth::id(),
-        'numero_recibo' => 1,
-        'cliente' => 'El cliente tales',
-        'cliente_datos' => json_encode($data['data_client']),
-        'transportador' => $data['transportador'],
-      ]);
-      Receipt::where('id', $data->id)->update([
-        'numero_recibo' =>  $data->id,
-      ]);
+      // $data = $request->data;
+      // $data = Receipt::create([
+      //   'agencia_id' => Auth::user()->agencia_id,
+      //   'consignee_id' => $data['id_client'],
+      //   'usuario_id' => Auth::id(),
+      //   'numero_recibo' => 1,
+      //   'cliente' => 'El cliente tales',
+      //   'cliente_datos' => json_encode($data['data_client']),
+      //   'transportador' => $data['transportador'],
+      // ]);
+      // Receipt::where('id', $data->id)->update([
+      //   'numero_recibo' =>  $data->id,
+      // ]);
       $answer = array(
           'id' => $data->id,
           "code"   => 200,
@@ -54,12 +54,13 @@ class ReceiptController extends Controller
 
   public function storeDeail(Request $request)
   {
+    // return $request->all();
     try {
-      Receipt::where('id', $request->factura_id)->update([
+      $data = Receipt::create([
         'agencia_id' => Auth::user()->agencia_id,
         'consignee_id' => $request->head['id_client'],
         'usuario_id' => Auth::id(),
-        'numero_recibo' =>  $request->factura_id,
+        'numero_recibo' =>  1,
         'cliente' => 'El cliente tales',
         'cliente_datos' => json_encode($request->head['data_client']),
         'transportador' => $request->head['transportador'],
@@ -67,7 +68,7 @@ class ReceiptController extends Controller
 
       foreach ($request->detalle as $value) {
         ReceiptDetail::create([
-          'factura_id' => $request->factura_id,
+          'factura_id' => $data->id,
           'documento_detalle_id' => $value['id'],
           'entregado' => $request->head['entregado'],
           'cantidad' => 1,
@@ -75,6 +76,9 @@ class ReceiptController extends Controller
           'observacion' => ''
         ]);
       }
+      Receipt::where('id', $data->id)->update([
+        'numero_recibo' =>  $data->id,
+      ]);
       $answer = array(
           "code"   => 200,
           "status" => 200,
