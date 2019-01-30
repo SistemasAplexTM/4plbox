@@ -114,7 +114,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                  <tr v-for="value in detail">
+                                  <tr v-for="(value, index) in detail">
                                     <td>
                                       <span v-show="editar!=0" :class="(value.entregado == 0) ? 'badge badge-warning' : 'badge badge-primary'" :id="(value.id) ? value.id : null">@{{ (value.entregado == 0) ? 'Sin entregar' : 'Revisado' }}</span>
                                       @{{ value.warehouse }}
@@ -122,7 +122,7 @@
                                     <td>@{{ value.trackings }}</td>
                                     <td style="width: 100px;">1</td>
                                     <td style="width: 100px;" v-if="editar==0">
-                                      <a href="#" class="text-danger">
+                                      <a href="#" class="text-danger" @click="detail.splice(index, 1)">
                                         <i class="fal fa-trash"></i>
                                       </a>
                                     </td>
