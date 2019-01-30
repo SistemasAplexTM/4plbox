@@ -1195,8 +1195,9 @@ class DocumentoController extends Controller
                     //     $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
                     // }else{
                         $pdf = PDF::loadView('pdf.warehousePdf', compact('documento', 'detalle'));
+                    }else{
+                      $pdf = PDF::loadView('pdf.warehousePdf', compact('documento', 'detalle'));
                     }
-                    // $pdf = PDF::loadView('pdf.guiaPdf', compact('documento', 'detalle'));
                 } else {
                     if(env('APP_CLIENT') === 'jexpress'){
                         $pdf = PDF::loadView('pdf.warehousePdfJexpress', compact('documento', 'detalle'));
@@ -1727,6 +1728,9 @@ class DocumentoController extends Controller
                 if(env('APP_CLIENT') === 'jyg'){
                     $pdf = PDF::loadView('pdf.labelWGJyg', compact('documento', 'detalle', 'document'))
                     ->setPaper(array(25, -25, 260, 360), 'landscape');
+                    $nameDocument = 'Label' . $document . '-' . $documento->id;
+                    $pdf->save(public_path(). '/files/dumaFile.pdf');
+                    return true;
                 }else{
                     $pdf = PDF::loadView('pdf.labelWG', compact('documento', 'detalle', 'document'))
                     ->setPaper(array(25, -25, 260, 360), 'landscape');
