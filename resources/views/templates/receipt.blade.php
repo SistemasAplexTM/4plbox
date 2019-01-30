@@ -18,9 +18,7 @@
 @endsection
 
 @section('content')
-<style type="text/css">
 
-</style>
     <div class="row" id="receipt">
         <form id="formreceipt" enctype="multipart/form-data" class="form-horizontal" role="form" action="" method="post">
             <div class="col-lg-5">
@@ -184,5 +182,4 @@
 
 @section('scripts')
 <script src="{{ asset('js/templates/receipt.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 @endsection
