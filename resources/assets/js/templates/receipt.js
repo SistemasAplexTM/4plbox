@@ -115,6 +115,7 @@ var objVue = new Vue({
       warehouse: null,
       num_warehouse_guia_r: null,
       document: {},
+      consignees: {},
       detail: [],
       transportador: '',
       entregado: false,
@@ -123,7 +124,16 @@ var objVue = new Vue({
       documento_detalle_id: null,
       editar: 0,
     },
+    mounted: function() {
+        this.getConsignees();
+    },
     methods:{
+      getConsignees(){
+        let me = this;
+        axios.get('receipt/getConsignee/').then(({data}) => {
+          me.consignees = data.data;
+        });
+      },
       save(){
         // this.saveDocument();
         this.saveDetail();
@@ -212,9 +222,9 @@ var objVue = new Vue({
           var datos = response.data;
           if (datos.data != null) {
           }
+          refreshTable('tbl-receipt');
+          this.cancel()
         });
-        refreshTable('tbl-receipt');
-        this.cancel()
       },
       view(params,id_doc_detail){
         this.id = params

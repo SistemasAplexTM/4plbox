@@ -39,6 +39,7 @@
                                     <div class="input-group" style="width: 100%;">
                                         <select id="consignee_id" name="consignee_id" class="form-control chosen-select" style="width:100%;" tabindex="2">
                                             <option value="">Seleccione</option>
+                                            <option v-for="val in consignees" :value="val.id">@{{ val.name }}</option>
                                         </select>
                                     </div>
                                     <input type="text" class="form-control" id="cliente" name="cliente" value="" style="display: none;">
@@ -182,4 +183,5 @@
 
 @section('scripts')
 <script src="{{ asset('js/templates/receipt.js') }}"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> --}}
 @endsection
