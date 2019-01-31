@@ -53,16 +53,16 @@ $(document).ready(function () {
           name: 'numero_recibo'
       }, {
           data: 'consignee',
-          name: 'consignee'
+          name: 'consignee',
+          "render": getConsigneeTable
       }, {
           data: 'direccion',
           name: 'direccion',
-          "render": function(data, type, full, meta) {
-            return '<div>' + full.direccion +'</div><small>' + full.ciudad + '</small>'
-          }
+          "render": getDireccionTable
       }, {
           data: 'telefono',
-          name: 'telefono'
+          name: 'telefono',
+          "render": getTelefonoTable
       }, {
           sortable: false,
           "render": function(data, type, full, meta) {
@@ -79,12 +79,36 @@ $(document).ready(function () {
       }]
   });
 
+  function getConsigneeTable(data, type, full, meta){
+    if (full.consignee_id) {
+      return full.consignee
+    }
+    return full.cliente
+  }
+
+  function getDireccionTable(data, type, full, meta){
+    if (full.consignee_id) {
+      return '<div>' + full.direccion +'</div><small>' + full.ciudad + '</small>'
+    }
+    var datos = full.cliente_datos.replace(/&amp;/g, "&").replace(/>/g, "&gt;").replace(/&quot;/g, '"');
+    datos = JSON.parse(datos)
+    return '<div>' + datos.direccion +'</div><small>' + datos.ciudad + '</small>'
+  }
+  function getTelefonoTable(data, type, full, meta){
+    if (full.consignee_id) {
+      return full.telefono
+    }
+    var datos = full.cliente_datos.replace(/&amp;/g, "&").replace(/>/g, "&gt;").replace(/&quot;/g, '"');
+    datos = JSON.parse(datos)
+    return datos.telefono
+  }
+
   $('#input_name').on('click', function () {
       $('#consignee_id').parent().toggle();
       $('#cliente').toggle();
       $('#consignee_id').val('').prop("disabled", false).trigger('chosen:updated');
     });
-    $('#entregado').change(function () {
+  $('#entregado').change(function () {
       if ($(this).prop('checked') == true) {
         if (objVue.id != null) {
           $('#div_wrh_guia_r').slideDown(200);
@@ -106,7 +130,7 @@ function view(id, consignee, id_doc_detail){
   $('#ciudad').prop('disabled', true);
   $('#transportador').prop('disabled', true);
   $('#warehouse').prop('disabled', true);
-  objVue.view(id, id_doc_detail);
+  objVue.view(id, id_doc_detail, cliente);
 }
 
 var objVue = new Vue({
@@ -119,6 +143,7 @@ var objVue = new Vue({
       detail: [],
       transportador: '',
       entregado: false,
+      client: '',
       status: null,
       id: null,
       documento_detalle_id: null,
@@ -181,6 +206,13 @@ var objVue = new Vue({
             $('#telefono').val(cliente.telefono);
             $('#ciudad').val(cliente.ciudad);
             this.transportador = datos['transportador']
+            $('#group-consignee').css('display', 'inline-block');
+            $('#cliente').css('display', 'none');
+            if (datos['cliente']) {
+              this.client = datos['cliente']
+              $('#group-consignee').css('display', 'none');
+              $('#cliente').css('display', 'inline-block');
+            }
           }
         });
       },
@@ -220,10 +252,10 @@ var objVue = new Vue({
           },
           transportador: this.transportador,
           entregado: $("#entregado").prop('checked'),
-          document: this.document
+          document: this.document,
+          client: this.client
         }
         axios.post('receipt/saveDetail', {detalle: this.detail, head: data}).then(response => {
-          console.log('guardadndo detalle');
           var datos = response.data;
           if (datos.data != null) {
           }
@@ -246,6 +278,7 @@ var objVue = new Vue({
         this.document = {}
         this.detail = []
         this.transportador = ''
+        this.client = ''
         this.entregado = 0
         $('#direccion').val('')
         $('#telefono').val('')
@@ -257,6 +290,8 @@ var objVue = new Vue({
         $('#ciudad').prop('disabled', false);
         $('#transportador').prop('disabled', false);
         $('#warehouse').prop('disabled', false);
+        $('#group-consignee').css('display', 'inline-block');
+        $('#cliente').css('display', 'none');
       }
     }
 });

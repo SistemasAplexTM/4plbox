@@ -62,7 +62,7 @@ class ReceiptController extends Controller
         'consignee_id' => $request->head['id_client'],
         'usuario_id' => Auth::id(),
         'numero_recibo' =>  1,
-        'cliente' => 'El cliente tales',
+        'cliente' => $request->head['client'],
         'cliente_datos' => json_encode($request->head['data_client']),
         'transportador' => $request->head['transportador'],
       ]);
@@ -128,20 +128,23 @@ class ReceiptController extends Controller
 
   public function getAll()
   {
-      $data = Receipt::join('consignee AS b', 'factura.consignee_id', 'b.id')
-          ->join('localizacion AS c', 'b.localizacion_id', 'c.id')
-          ->select(
-              'factura.id',
-              'factura.numero_recibo',
-              'b.nombre_full AS consignee',
-              'b.direccion',
-              'b.telefono',
-              'b.correo',
-              'c.nombre AS ciudad'
-          )
-          ->where([['factura.deleted_at', NULL]])
-          ->get();
-      return \DataTables::of($data)->make(true);
+    $data = Receipt::leftJoin('consignee AS b', 'factura.consignee_id', 'b.id')
+        ->leftJoin('localizacion AS c', 'b.localizacion_id', 'c.id')
+        ->select(
+            'factura.consignee_id',
+            'factura.cliente',
+            'factura.cliente_datos',
+            'factura.id',
+            'factura.numero_recibo',
+            'b.nombre_full AS consignee',
+            'b.direccion',
+            'b.telefono',
+            'b.correo',
+            'c.nombre AS ciudad'
+        )
+        ->where([['factura.deleted_at', NULL]])
+        ->get();
+    return \DataTables::of($data)->make(true);
   }
 
   public function getConsignee($data = false)
@@ -183,7 +186,8 @@ class ReceiptController extends Controller
         if ($data) {
           $answer = array('code' => 200, 'msg' => 'Correcto', 'data' => $data);
           if ($this->intReceipt($data->id)) {
-            $answer = array('code' => 300, 'msg' => 'EL warehpuse ya está en otro recibo');
+            $recibo = $this->intReceipt($data->id);
+            $answer = array('code' => 300, 'msg' => "EL warehpuse ya está en el recibo $recibo->factura_id");
           }
         }else{
           $answer = array('code' => 404, 'msg' => 'No se encuentra el warehouse');
