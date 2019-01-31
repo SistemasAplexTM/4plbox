@@ -35,7 +35,7 @@
                                 <div class="form-group">
                                     <label for="consignee_id" class="control-label">Nombre del cliente</label>
                                     <a id="input_name" class=" pull-right" data-toggle="tooltip" data-placement="top" title="Manual"><i class="fa fa-pencil" style="color: #f7a54a"></i></a>
-                                    <div class="input-group" style="width: 100%;">
+                                    <div id="group-consignee" class="input-group" style="width: 100%;">
                                         <select id="consignee_id" name="consignee_id" class="form-control chosen-select" style="width:100%;" tabindex="2">
                                             <option value="">Seleccione</option>
                                             @if(count($consignees) != null)
@@ -45,7 +45,7 @@
                                             @endif
                                         </select>
                                     </div>
-                                    <input type="text" class="form-control" id="cliente" name="cliente" value="" style="display: none;">
+                                    <input type="text" class="form-control" id="cliente" v-model="client" name="cliente" style="display: none;">
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -81,7 +81,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="entregado" class="control-label col-lg-12">&nbsp;</label>
-                                    <input style="display: none;" name="entregado" id="entregado" v-model="entregado" type="checkbox" data-toggle="toggle" data-size='small' data-on="Entregar/Revisado" data-off="Consolidadar sin entregar" data-width="100%" data-style="ios" data-onstyle="primary" data-offstyle="warning" >
+                                    <input style="display: none;" name="entregado" id="entregado" type="checkbox" data-toggle="toggle" data-size='small' data-on="Entregar/Revisado" data-off="Consolidadar sin entregar" data-width="100%" data-style="ios" data-onstyle="primary" data-offstyle="warning" >
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -140,9 +140,9 @@
                                           <i class="fa fa-save"></i>  @lang('layouts.save')
                                       </button>
                                       <template v-else>
-                                          <button type="button" class="ladda-button btn btn-warning" data-style="expand-right" @click.prevent="update()">
+                                          {{-- <button type="button" class="ladda-button btn btn-warning" data-style="expand-right" @click.prevent="update()">
                                               <i class="fa fa-edit"></i> @lang('layouts.update')
-                                          </button>
+                                          </button> --}}
                                           <button type="button" class="btn btn-white" @click.prevent="cancel()">
                                               <i class="fa fa-times"></i>  @lang('layouts.cancel')
                                           </button>
