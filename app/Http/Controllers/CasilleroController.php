@@ -50,7 +50,7 @@ class CasilleroController extends Controller
             $caracteres = strlen($agencia);
             $sumarCaracteres =  $caracteres - $caracteres;
             $caracter = '';
-            for ($i=0; $i <= $sumarCaracteres ; $i++) { 
+            for ($i=0; $i <= $sumarCaracteres ; $i++) {
                 $caracter = $caracter . '0';
             }
             $po_box = $caracter . $agencia . '-' . $data->id;
@@ -113,7 +113,7 @@ class CasilleroController extends Controller
                     \Mailchimp::subscribe(
                         $listId,
                         $request->correo,
-                        ['FNAME' => $request->primer_nombre, 'LNAME' => $request->primer_apellido, 'POBOX' => $po_box], 
+                        ['FNAME' => $request->primer_nombre, 'LNAME' => $request->primer_apellido, 'POBOX' => $po_box],
                         false
                     );
                 }
@@ -152,6 +152,7 @@ class CasilleroController extends Controller
             'a.id',
             'a.nombre as name',
             'b.descripcion AS depto',
+            'c.id AS pais_id',
             'c.descripcion AS pais',
             'c.phone_code',
             'c.iso2'
@@ -172,7 +173,7 @@ class CasilleroController extends Controller
                 ['correo', $request->element],
                 ['agencia_id', $request->agencia_id],
             ])->first();
-            $dataUser = DB::table('users')->select('email')->where('email', $request->element)->first(); 
+            $dataUser = DB::table('users')->select('email')->where('email', $request->element)->first();
             if (count($data) > 0 || count($dataUser) > 0) {
                 $answer = array(
                     "valid"   => false,

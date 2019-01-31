@@ -159,7 +159,7 @@
                 </div>
                 {{-- FORMULARIO DE CONSOLIDADO --}}
                 @if(!Auth::user()->isRole('bodega'))
-                    <formconsolidado-component :app_type="'{{ env('APP_TYPE') }}'" :documento="{{ json_encode($documento) }}" :contactos="contactos" :restore="restoreShipperConsignee" :agrupar="datosAgrupar" :removeragrupado="removerAgrupado" :permission='permissions' v-if="mostrar.includes(24)" :close_document="close"></formconsolidado-component>
+                    <formconsolidado-component :pais_id_config="pais_id_config" :app_type="'{{ env('APP_TYPE') }}'" :documento="{{ json_encode($documento) }}" :contactos="contactos" :restore="restoreShipperConsignee" :agrupar="datosAgrupar" :removeragrupado="removerAgrupado" :permission='permissions' v-if="mostrar.includes(24)" :close_document="close"></formconsolidado-component>
                 @else
                     <consol_bodega-component :app_type="'{{ env('APP_TYPE') }}'" :documento="{{ json_encode($documento) }}" :contactos="contactos" :restore="restoreShipperConsignee" :agrupar="datosAgrupar" :removeragrupado="removerAgrupado" :permission='permissions' :ref_boxes='refreshBoxes' v-if="mostrar.includes(24)" :close_document="close"></consol_bodega-component>
                 @endif

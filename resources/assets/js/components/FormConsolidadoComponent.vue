@@ -46,7 +46,7 @@
                         <div class="ibox-content col-lg-12">
                             <div class="col-lg-12">
                                 <div class="row">
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-3">
                                         <div class="col-sm-12">
                                             <div class="form-group" :class="{ danger: errors.has('central_destino') }">
                                                 <label for="central_destino_id">Central destino (agencia)</label>
@@ -56,11 +56,28 @@
                                             <span class="danger">{{ errors.first('central_destino') }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="col-sm-12">
                                             <div class="form-group" :class="{ danger: errors.has('pais') }">
-                                                <label for="pais_id">País destino</label>
-                                                <v-select name="pais" v-model="pais_id" :disabled="disabled_pais" label="name" :filterable="false" :options="countries" @search="onSearch" v-validate="'required'">
+                                                <label for="localizacion_id">Ciudad destino</label>
+                                                <!-- <v-select name="pais" v-model="pais_id" :disabled="disabled_pais" label="name" :filterable="false" :options="countries" @search="onSearch" v-validate="'required'"> -->
+                                                <!-- </v-select> -->
+																								<v-select autocomplete="off" :disabled="disabled_city"  name="localizacion_id" v-model="localizacion_id" label="name" :filterable="false" :options="ciudades" @search="onSearch" v-validate="'required'">
+                                                    <template slot="no-options">
+                                                  		No result
+                                                    </template>
+                                                    <template slot="option" slot-scope="option">
+                                                        <div>
+                                                            {{ option.name }}
+                                                        </div>
+                                                        <small>{{ option.depto }} - {{ option.pais }}</small>
+                                                    </template>
+                                                    <template slot="selected-option" slot-scope="option">
+                                                        <div>
+                                                            {{ option.name }}
+                                                        </div>&nbsp;
+                                                        <small>{{ option.pais }}</small>
+                                                    </template>
                                                 </v-select>
                                             </div>
                                             <span class="danger">{{ errors.first('pais') }}</span>
@@ -82,7 +99,7 @@
                                             <label class="control-label col-lg-12">&nbsp;</label>
                                             <a hfer="#" target="blank_" class="btn btn-info btn-sm printDocument" data-toggle="tooltip" data-placement="top" title="Imprimir manifiesto"><i class="fa fa-print"></i> Manifiesto</a>
                                             <a hfer="#" target="blank_" class="btn btn-info btn-sm printDocumentGuias" data-toggle="tooltip" data-placement="top" title="Imprimir guias hijas" ><i class="fa fa-print"></i> Guias hijas</a>
-                                            <a hfer="#" target="blank_" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Imprimir instrucciones"><i class="fa fa-print"></i> Instrucciones</a>
+                                            <!-- <a hfer="#" target="blank_" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Imprimir instrucciones"><i class="fa fa-print"></i> Instrucciones</a> -->
                                         </div>
 																				<div class="col-sm-12" v-show="!show_buttons" style="color: #E34724">
 																					<span>Hay valores declarados en cero (0) o valores que superan lo permitido para COURIER o no hay guias ingresadas</span></div>
@@ -129,7 +146,7 @@
                                     <div class="col-sm-2">
                                         <div class="col-sm-12">
                                             <div class="form-group">
-                                                <label for="num_guia" class="">Número de Guía/WRH</label>
+                                                <label for="num_guia" class="">Número de Warehouse</label>
                                                 <div class="input-group">
 		                                        				<input type="text" class="form-control" v-model="num_guia" @keyup.enter="addGuiasToConsolidado()" name="num_guia">
 																								    <span class="input-group-btn">
@@ -143,7 +160,7 @@
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <label class="control-label col-lg-12">&nbsp;</label>
-		                                        <button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" data-placement="top" title="Guias Disponobles" id="btn_buscarGuias" @click="getModalGuias()"><i class="fa fa-search-plus"></i> Buscar guias</button>
+		                                        <button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" data-placement="top" title="Documentos Disponobles" id="btn_buscarGuias" @click="getModalGuias()"><i class="fa fa-search-plus"></i> Buscar</button>
                                             </div>
                                         </div>
                                     </div>
@@ -220,19 +237,19 @@
 		            <div class="modal-header">
 		                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 		                <h4 class="modal-title" id="myModalLabel">
-		                    Guias / Warehouses pendientes por consolidar
+		                    Warehouses pendientes por consolidar
 		                </h4>
 		            </div>
 		            <div class="modal-body">
 		            	<form id="formGuiasConsolidado" name="formGuiasConsolidado" method="POST" action="">
-		            		<p>Seleccione los documentos que desea ingresar al consolidado y acontinuacion de click en el boton <strong>Agregar</strong></p>
+		            		<p>Seleccione los documentos que desea ingresar al consolidado y acontinuación de click en el botón <strong>Agregar</strong></p>
 							<div class="table-responsive">
 		                        <table id="tbl-modalguiasconsolidado" class="table table-striped table-hover table-bordered" style="width: 100%;">
 		                            <thead>
 		                            	<tr>
 		                            		<th class="text-center" style="width: 20px;"></th>
-		                            		<th>Creacion</th>
-		                            		<th>Numero Guia</th>
+		                            		<th>Creación</th>
+		                            		<th>Número warehouse</th>
 		                            		<th>Peso lb</th>
 		                            		<th>Declarado</th>
 		                            	</tr>
@@ -355,6 +372,7 @@
           type: String,
           required: true
         },
+				pais_id_config:[String, Number],
 				close_document:{
 					type: Boolean,
           required: false
@@ -451,27 +469,32 @@
 	    },
 	    mounted() {
 				this.close = this.documento.close_document;
-		      	$('#document_type').val('consolidado');
-		      	$('.printDocument').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/consolidado');
-		      	$('.printDocumentGuias').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/consolidado_guias');
-						this.getDataDetail();
-			            this.getTransportes();
-						this.getStatus();
-						if(this.documento.pais_id != null){
-							this.pais_id = {id: this.documento.pais_id, name: this.documento.pais}
-							this.disabled_pais = true;
-						}
-						if(this.documento.central_destino_id != null){
-							this.central_destino_id = {id: this.documento.central_destino_id, name: this.documento.central_destino};
-							this.disabled_agencia = true;
-						}
-						if(this.documento.transporte_id != null){
-							this.transporte_id = {id: this.documento.transporte_id, nombre: this.documento.transporte}
-							this.disabled_transporte = true;
-						}
-						if(this.documento.observaciones != null){
-							this.observacion = this.documento.observaciones;
-						}
+      	$('#document_type').val('consolidado');
+      	$('.printDocument').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/consolidado');
+      	$('.printDocumentGuias').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/consolidado_guias');
+				this.getDataDetail();
+	      this.getTransportes();
+				this.getStatus();
+				if(this.documento.ciudad_id != null){
+					this.localizacion_id = {
+						id: this.documento.ciudad_id,
+						name: this.documento.ciudad,
+						pais: this.documento.pais,
+						pais_id: this.documento.pais_id
+					}
+					this.disabled_city = true;
+				}
+				if(this.documento.central_destino_id != null){
+					this.central_destino_id = {id: this.documento.central_destino_id, name: this.documento.central_destino};
+					this.disabled_agencia = true;
+				}
+				if(this.documento.transporte_id != null){
+					this.transporte_id = {id: this.documento.transporte_id, nombre: this.documento.transporte}
+					this.disabled_transporte = true;
+				}
+				if(this.documento.observaciones != null){
+					this.observacion = this.documento.observaciones;
+				}
 		},
 		created(){
 			/* CUSTOM MESSAGES VE-VALIDATOR*/
@@ -480,8 +503,8 @@
 	                transporte_id: {
 	                    required: 'El Transporte es obligatorio'
 	                },
-	                pais_id: {
-	                    required: 'El Pais es obligatorio'
+	                localizacion_id: {
+	                    required: 'La ciudad es obligatorio'
 	                },
 	                central_destino_id: {
 	                    required: 'La Central destino es obligatoria'
@@ -511,14 +534,28 @@
 	        	num_guia: null,
 	        	disabled_transporte: false,
 	        	disabled_agencia: false,
-	        	disabled_pais: false,
+	        	disabled_city: false,
 	        	msn:'',
 	        	tituloModal:'',
 						show_buttons: true,
-						close: false
+						close: false,
+						localizacion_id: null,
+						ciudades: [],
 	        }
 	    },
 		methods: {
+				onSearch(search, loading) {
+					loading(true);
+					this.search(loading, search, this);
+				},
+				search: _.debounce((loading, search, vm) => {
+					fetch(
+						`/casillero/vueSelectCiudad/${escape(search)}`
+					).then(res => {
+						res.json().then(json => (vm.ciudades = json.items));
+						loading(false);
+					});
+				}, 1000),
 	      agruparGuiasConsolidado: function(){
 	          $('#modalagrupar').modal('hide');
 	          let me = this;
@@ -599,7 +636,7 @@
 				},
 				getModalGuias: function(){
 			        var me = this;
-					if(me.pais_id != null && me.central_destino_id != null && me.transporte_id != null){
+					if(me.localizacion_id != null && me.central_destino_id != null && me.transporte_id != null){
 			            var codigoGW='';
 			            $('#modalguiasconsolidado').modal('show');
 			            if ($.fn.DataTable.isDataTable('#tbl-modalguiasconsolidado')) {
@@ -624,7 +661,7 @@
 						    processing: true,
 						    serverSide: true,
 						    searching: true,
-			                ajax: 'getAllGuiasDisponibles/'+ me.pais_id.id+'/'+me.transporte_id.id,
+			                ajax: 'getAllGuiasDisponibles/'+ me.localizacion_id.pais_id+'/'+me.transporte_id.id,
 			                columns: [{
 			                    "render": function (data, type, full, meta) {
 				                	return '<div class="checkbox checkbox-success"><input type="checkbox" data-numguia="' + full.num_guia + '" id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '"></label></div>';
@@ -667,9 +704,9 @@
 			            var me = this;
 			            var rowData = {
 			                'document_type': $('#document_type').val(),
-			                'pais_id': me.pais_id.id,
+			                'ciudad_id': me.localizacion_id.id,
 			                'central_destino_id': me.central_destino_id.id,
-	                        'transporte_id': me.transporte_id.id,
+	                    'transporte_id': me.transporte_id.id,
 			                'status_id': me.status_id.id,
 			                'observacion': me.observacion
 			            }
@@ -677,7 +714,7 @@
 				            toastr.success('Registro actualizado correctamente.');
 		                	toastr.options.closeButton = true;
 		                	me.disabled_agencia = true;
-		                	me.disabled_pais = true;
+		                	me.disabled_city = true;
 		                	me.disabled_transporte = true;
 				        }).catch(function (error) {
 				            toastr.warning('Error.');
@@ -691,8 +728,8 @@
 		            	me.msn = 'Es necesario seleccionar una central destino para continuar.';
 		            	return false;
 		            }
-		            if(me.pais_id == null){
-		            	me.msn = 'Es necesario seleccionar un pais para continuar.';
+		            if(me.localizacion_id == null){
+		            	me.msn = 'Es necesario seleccionar una ciudad para continuar.';
 		            	return false;
 		            }
 		            if(me.transporte_id == null){
@@ -750,25 +787,23 @@
 																		group = '';
 																	}
 	                                if(me.app_type === 'courier'){
-	                                    // if(full.liquidado == 0){
+																		// console.log(me.localizacion_id.id);
+	                                    if(me.localizacion_id.pais_id != pais_id_config){
 	                                        return '<span class="'+classText+'">' + full.num_warehouse + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" role="button" \n\
 	                                            data-html="true" \n\
 	                                            data-toggle="popover" \n\
 	                                            data-trigger="hover" \n\
 	                                            title="<b>Guias agrupadas</b>" \n\
 	                                            data-content="'+groupGuias+'" ' + group + '>'+full.agrupadas+'</a>';
-	                                    // }else{
-	                                    //     if(full.liquidado == 1){
-	                                    //         return '<span class="'+classText+'">' + full.num_guia + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" \n\
-	                                    //         role="button" \n\
-	                                    //         data-html="true" \n\
-	                                    //         data-toggle="popover" \n\
-	                                    //         data-trigger="hover" \n\
-	                                    //         title="<b>Guias agrupadas</b>" \n\
-	                                    //         data-content="'+groupGuias+'" ' + group + '>'+full.agrupadas+'</a>';
-																			//
-	                                    //     }
-	                                    // }
+	                                    }else{
+                                          return '<span class="'+classText+'">' + full.num_guia + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" \n\
+                                          role="button" \n\
+                                          data-html="true" \n\
+                                          data-toggle="popover" \n\
+                                          data-trigger="hover" \n\
+                                          title="<b>Guias agrupadas</b>" \n\
+                                          data-content="'+groupGuias+'" ' + group + '>'+full.agrupadas+'</a>';
+	                                    }
 	                                }else{
 	                                    return '<span class="'+classText+'">' + full.num_warehouse + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" role="button" \n\
 	                                            data-html="true" \n\
@@ -1023,12 +1058,12 @@
 	                    toastr.options.closeButton = true;
 	                }else{
 	                	if(this.validateForm()){
-							axios.get('buscarGuias/' + this.num_guia + '/'+ this.num_bolsa + '/'+ this.pais_id.id).then(response => {
+							axios.get('buscarGuias/' + this.num_guia + '/'+ this.num_bolsa + '/'+ this.localizacion_id.pais_id).then(response => {
 				                if(response.data.code === 200){
 				                	var table = $('#tbl-consolidado').DataTable();
 									if (!table.data().count()) {
 										this.saveConsolidado();
-										this.disabled_pais = true;
+										this.disabled_city = true;
 										this.disabled_agencia = true;
 										this.disabled_transporte = true;
 									}
@@ -1070,18 +1105,18 @@
 			        loading(false);
 			      });
 			    }, 350),
-				onSearch(search, loading) {
-			      loading(true);
-			      this.search(loading, search, this);
-			    },
-			    search: _.debounce((loading, search, vm) => {
-			      fetch(
-			        `../vueSelect/${escape(search)}`
-			      ).then(res => {
-			        res.json().then(json => (vm.countries = json.items));
-			        loading(false);
-			      });
-			    }, 350),
+				// onSearch(search, loading) {
+			  //     loading(true);
+			  //     this.search(loading, search, this);
+			  //   },
+			  //   search: _.debounce((loading, search, vm) => {
+			  //     fetch(
+			  //       `../vueSelect/${escape(search)}`
+			  //     ).then(res => {
+			  //       res.json().then(json => (vm.countries = json.items));
+			  //       loading(false);
+			  //     });
+			  //   }, 350),
 			}
     }
 </script>

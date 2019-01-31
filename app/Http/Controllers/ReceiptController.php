@@ -17,7 +17,8 @@ class ReceiptController extends Controller
   public function index()
   {
       // $this->assignPermissionsJavascript('tracking');
-      return view('templates/receipt');
+      $consignees = $this->getConsignee();
+      return view('templates/receipt', compact('consignees'));
   }
 
   public function store(Request $request)
@@ -156,9 +157,9 @@ class ReceiptController extends Controller
             'b.nombre AS ciudad'
         )
         ->where([['a.deleted_at', NULL]])
-        ->whereRaw('a.nombre_full LIKE \'%' . $data . '%\'')
+        // ->whereRaw('a.nombre_full LIKE \'%' . $data . '%\'')
         ->get();
-        return array('data' => $data);
+        return $data;
   }
 
   public function searchDocument($document)

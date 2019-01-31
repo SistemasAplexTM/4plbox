@@ -16,26 +16,26 @@ $(document).ready(function () {
   $('.chosen-single').css('box-shadow', 'none');
   $('.chosen-drop').css('border', '1px solid #e5e6e7');
 
-  $('.chosen-search input').autocomplete({
-    source: function( request, response ) {
-      $.ajax({
-        url: "receipt/getConsignee/"+request.term,
-        dataType: "json",
-        success: function( data ) {
-          $('.chosen-select').empty();
-          response( $.map( data, function( item ) {
-            $('.chosen-select').append('<option value="">Seleccione</option>');
-            $.each(item, function(key, value) {
-              $('.chosen-select').append(
-                '<option value="'+value.id+'" data-direccion="'+value.direccion+'" data-telefono="'+value.telefono+'" data-ciudad="'+value.ciudad+'">' + value.name + '</option>'
-              );
-            });
-          }));
-          $(".chosen-select").trigger("chosen:updated");
-        }
-      });
-    }
-  });
+  // $('.chosen-search input').autocomplete({
+  //   source: function( request, response ) {
+  //     $.ajax({
+  //       url: "receipt/getConsignee/"+request.term,
+  //       dataType: "json",
+  //       success: function( data ) {
+  //         $('.chosen-select').empty();
+  //         response( $.map( data, function( item ) {
+  //           $('.chosen-select').append('<option value="">Seleccione</option>');
+  //           $.each(item, function(key, value) {
+  //             $('.chosen-select').append(
+  //               '<option value="'+value.id+'" data-direccion="'+value.direccion+'" data-telefono="'+value.telefono+'" data-ciudad="'+value.ciudad+'">' + value.name + '</option>'
+  //             );
+  //           });
+  //         }));
+  //         $(".chosen-select").trigger("chosen:updated");
+  //       }
+  //     });
+  //   }
+  // });
 
   $('#consignee_id').on('change', function () {
       var dir = $('#consignee_id option:selected').data('direccion');
@@ -115,6 +115,7 @@ var objVue = new Vue({
       warehouse: null,
       num_warehouse_guia_r: null,
       document: {},
+      consignees: {},
       detail: [],
       transportador: '',
       entregado: false,
@@ -123,7 +124,16 @@ var objVue = new Vue({
       documento_detalle_id: null,
       editar: 0,
     },
+    mounted: function() {
+        this.getConsignees();
+    },
     methods:{
+      getConsignees(){
+        let me = this;
+        // axios.get('receipt/getConsignee/').then(({data}) => {
+        //   me.consignees = data.data;
+        // });
+      },
       save(){
         // this.saveDocument();
         this.saveDetail();
@@ -217,9 +227,9 @@ var objVue = new Vue({
           var datos = response.data;
           if (datos.data != null) {
           }
+          refreshTable('tbl-receipt');
+          this.cancel()
         });
-        refreshTable('tbl-receipt');
-        this.cancel()
       },
       view(params,id_doc_detail){
         this.id = params

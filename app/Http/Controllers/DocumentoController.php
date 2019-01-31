@@ -195,6 +195,11 @@ class DocumentoController extends Controller
 
     public function edit($id, $liquidar = false)
     {
+        // OBTENEMOS EL ID DEL PAIS QUE ESTA REGISTRADO EN LA CONFIGURACION DE APLEX_CONFIG
+        // PARA UTILIZARLO EN EL CONSOLIDADO
+        $id_pais = $this->getConfig('idColombia');
+        JavaScript::put(['pais_id_config' => $id_pais->value]);
+
         $this->assignPermissionsJavascript('documento');
         $data = Documento::findOrFail($id);
 
@@ -224,7 +229,9 @@ class DocumentoController extends Controller
             ->leftJoin('guia_wrh_pivot', 'documento.id', '=', 'guia_wrh_pivot.documento_id')
             ->join('tipo_documento', 'documento.tipo_documento_id', '=', 'tipo_documento.id')
             ->leftJoin('maestra_multiple', 'documento.transporte_id', 'maestra_multiple.id')
-            ->leftJoin('pais', 'documento.pais_id', '=', 'pais.id')
+            ->leftJoin('localizacion', 'documento.ciudad_id', '=', 'localizacion.id')
+            ->leftJoin('deptos', 'localizacion.deptos_id', '=', 'deptos.id')
+            ->leftJoin('pais', 'deptos.pais_id', '=', 'pais.id')
             ->leftJoin('transportador as central_destino', 'documento.central_destino_id', '=', 'central_destino.id')
             ->select(
                 'documento.*',
@@ -236,7 +243,9 @@ class DocumentoController extends Controller
                 'guia_wrh_pivot.grupo_id',
                 'tipo_documento.funcionalidades',
                 'tipo_documento.nombre as tipo_nombre',
+                'localizacion.nombre as ciudad',
                 'pais.descripcion as pais',
+                'pais.id as pais_id',
                 'central_destino.nombre as central_destino',
                 'maestra_multiple.nombre as transporte',
                 'maestra_multiple.id as transporte_id',
@@ -294,7 +303,7 @@ class DocumentoController extends Controller
         if ($request->document_type === 'consolidado') {
             try {
                 $data                     = Documento::findOrFail($id);
-                $data->pais_id            = $request->pais_id;
+                $data->ciudad_id          = $request->ciudad_id;
                 $data->central_destino_id = $request->central_destino_id;
                 $data->transporte_id      = $request->transporte_id;
                 $data->observaciones      = $request->observacion;
