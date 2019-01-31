@@ -3,7 +3,7 @@
             font-size: 11px;
             font-family: sans-serif;
             font-weight: bold;
-        }    
+        }
         #mvcIcon, #mvcMain{
             display: none;
         }
@@ -155,7 +155,7 @@
         	font-size: 30px;
         }
 </style>
-<?php 
+<?php
 	$cont = 0;
     $toalRegistros = count($detalle);
     $contRegistros = 0;
@@ -169,7 +169,7 @@
                 {{ $value->created_at->toFormattedDateString() }}
             </div>
             <div class="agencia">
-                {{ $documento->agencia }}
+                {{ $value->agencia }}
             </div>
         </td>
     </tr>
@@ -242,7 +242,7 @@
                         </span>
                     </div>
                     <div class="servicio">
-                        
+
                         <div class="iatacode">
                             {{ $value->prefijo }}/{{ $value->cons_pais_code }}
                         </div>
