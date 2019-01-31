@@ -229,7 +229,7 @@ trait DocumentTrait
           return $sql;
     }
 
-    public function pdfLabelDetail($filter, $codigo)
+    public function pdfLabelDetail($filter, $codigo, $consolidado, $id_detail_consol)
     {
       $sql = DocumentoDetalle::join('documento as a', 'documento_detalle.documento_id', 'a.id')
           ->join('agencia AS b', 'a.agencia_id', 'b.id')
