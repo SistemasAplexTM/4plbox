@@ -157,13 +157,18 @@ var objVue = new Vue({
       addDocumentToReceipt(){
         let me = this;
         axios.get('receipt/searchDocument/' + me.warehouse).then(({data}) => {
-          if (data.data != null) {
-            me.document = data.data[0]
-            if (me.detail.length <= 0) {
-              //me.saveDocument();
+          if (data.code == 200) {
+            var row = this.detail.filter(result => result.warehouse == me.warehouse);
+            if (row.length > 0) {
+              toastr.warning('EL warehouse ya se encuentra en este recibo');
+              this.warehouse = null
+              return;
             }
-            me.detail.push(data.data[0])
+            me.document = data.data
+            me.detail.push(data.data)
             this.warehouse = null
+          }else{
+            toastr.warning(data.msg);
           }
         });
       },

@@ -179,8 +179,17 @@ class ReceiptController extends Controller
         	) AS trackings")
         )
         ->where([['a.deleted_at', NULL], ['a.num_warehouse', $document]])
-        ->get();
-      return array('data' => $data);
+        ->first();
+        if ($data) {
+          $answer = array('code' => 200, 'msg' => 'Correcto', 'data' => $data);
+          if ($this->intReceipt($data->id)) {
+            $answer = array('code' => 300, 'msg' => 'EL warehpuse ya está en otro recibo');
+          }
+        }else{
+          $answer = array('code' => 404, 'msg' => 'No se encuentra el warehouse');
+        }
+
+      return $answer;
   }
 
   public function searchReceiptDetail($id_receipt)
@@ -238,5 +247,10 @@ class ReceiptController extends Controller
     $cliente = json_decode($recibo->cliente_datos);
     $consignee = Consignee::find($recibo->consignee_id);
     return view('pdf.recibo', compact('agencia', 'recibo', 'reciboD', 'cliente', 'consignee'));
+  }
+
+  public function intReceipt($idWarehouse)
+  {
+    return ReceiptDetail::where('documento_detalle_id', $idWarehouse)->first();
   }
 }
