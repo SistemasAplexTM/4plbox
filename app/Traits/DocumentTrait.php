@@ -5,6 +5,7 @@ namespace App\Traits;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\DocumentoDetalle;
 
 trait DocumentTrait
 {
@@ -225,6 +226,61 @@ trait DocumentTrait
           )
           ->where($filter)
           ->orderBy('documento.created_at', 'DESC');
+          return $sql;
+    }
+
+    public function pdfLabelDetail($filter, $codigo)
+    {
+      $sql = DocumentoDetalle::join('documento as a', 'documento_detalle.documento_id', 'a.id')
+          ->join('agencia AS b', 'a.agencia_id', 'b.id')
+          ->leftJoin('shipper', 'documento_detalle.shipper_id', '=', 'shipper.id')
+          ->leftJoin('consignee', 'documento_detalle.consignee_id', '=', 'consignee.id')
+          ->leftJoin('localizacion AS ciudad_consignee', 'consignee.localizacion_id', '=', 'ciudad_consignee.id')
+          ->leftJoin('localizacion AS ciudad_shipper', 'shipper.localizacion_id', '=', 'ciudad_shipper.id')
+          ->leftJoin('deptos AS deptos_consignee', 'ciudad_consignee.deptos_id', '=', 'deptos_consignee.id')
+          ->leftJoin('deptos AS deptos_shipper', 'ciudad_shipper.deptos_id', '=', 'deptos_shipper.id')
+          ->leftJoin('pais', 'pais.id', '=', 'deptos_consignee.pais_id')
+          ->select(
+              'documento_detalle.id',
+              'documento_detalle.contenido',
+              'documento_detalle.contenido2',
+              'documento_detalle.tracking',
+              'documento_detalle.volumen',
+              'documento_detalle.valor',
+              'documento_detalle.declarado2',
+              'documento_detalle.piezas',
+              'documento_detalle.largo',
+              'documento_detalle.ancho',
+              'documento_detalle.alto',
+              'documento_detalle.peso',
+              'documento_detalle.peso2',
+              'documento_detalle.' . $codigo . ' as codigo',
+              'documento_detalle.num_warehouse',
+              'documento_detalle.num_guia',
+              'documento_detalle.created_at',
+              'b.descripcion as agencia',
+              'shipper.nombre_full as ship_nomfull',
+              'shipper.direccion as ship_dir',
+              'shipper.telefono as ship_tel',
+              'shipper.correo as ship_email',
+              'shipper.zip as ship_zip',
+              'ciudad_shipper.nombre AS ship_ciudad',
+              'deptos_shipper.descripcion AS ship_depto',
+              'consignee.nombre_full as cons_nomfull',
+              'consignee.direccion as cons_dir',
+              'consignee.telefono as cons_tel',
+              'consignee.documento as cons_documento',
+              'consignee.correo as cons_email',
+              'consignee.zip as cons_zip',
+              'consignee.po_box as cons_pobox',
+              'ciudad_consignee.nombre AS cons_ciudad',
+              'deptos_consignee.descripcion AS cons_depto',
+              'pais.descripcion AS cons_pais',
+              'pais.iso2 AS cons_pais_code',
+              'ciudad_consignee.prefijo'
+          )
+          ->where($filter)
+          ->get();
           return $sql;
     }
 

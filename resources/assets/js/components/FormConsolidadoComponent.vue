@@ -60,8 +60,6 @@
                                         <div class="col-sm-12">
                                             <div class="form-group" :class="{ danger: errors.has('pais') }">
                                                 <label for="localizacion_id">Ciudad destino</label>
-                                                <!-- <v-select name="pais" v-model="pais_id" :disabled="disabled_pais" label="name" :filterable="false" :options="countries" @search="onSearch" v-validate="'required'"> -->
-                                                <!-- </v-select> -->
 																								<v-select autocomplete="off" :disabled="disabled_city"  name="localizacion_id" v-model="localizacion_id" label="name" :filterable="false" :options="ciudades" @search="onSearch" v-validate="'required'">
                                                     <template slot="no-options">
                                                   		No result
@@ -787,7 +785,6 @@
 																		group = '';
 																	}
 	                                if(me.app_type === 'courier'){
-																		// console.log(me.localizacion_id.id);
 	                                    if(me.localizacion_id.pais_id != pais_id_config){
 	                                        return '<span class="'+classText+'">' + full.num_warehouse + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" role="button" \n\
 	                                            data-html="true" \n\
@@ -822,8 +819,8 @@
 				                		nom_ship = '';
 				                	}
 				                	if(full.shipper_json != null){
-											json = JSON.parse(full.shipper_json.replace(/&quot;/g, '"'));
-											nom_ship = json.nombre;
+														json = JSON.parse(full.shipper_json.replace(/&quot;/g, '"'));
+														nom_ship = json.nombre;
 				                	}
 				                	me.shipper_contactos[full.shipper_id] = full.shipper_contactos;
 				                	return nom_ship + ' <a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalShipperConsigneeConsolidado('+full.id+', '+full.shipper_id+', \'shipper\')"><i class="material-icons">&#xE254;</i></a> <a onclick=\"restoreShipperConsignee('+full.id+', \'shipper\')\" class="delete" title="Restaurar original" data-toggle="tooltip" style="float:right;color:#2196F3;"><i class="material-icons">cached</i></a>';
@@ -878,17 +875,23 @@
 	                      sortable: false,
 	                      "render": function (data, type, full, meta) {
 	                          var btn_delete = '';
-	                          if(full.liquidado == 0){
-	                              href_print_label = "../../impresion-documento-label/"+ full.documento_id + "/warehouse/"+full.documento_detalle_id+"/consolidado";
+	                          var document_print = '';
+	                          if(me.localizacion_id.pais_id != pais_id_config){
+	                              // href_print_label = "../../impresion-documento-label/"+ full.documento_id + "/warehouse/"+full.documento_detalle_id+"/consolidado";
+																document_print = "warehouse";
 	                          }else{
-	                              if(full.liquidado == 1){
-	                                  href_print_label = "../../impresion-documento-label/"+ full.documento_id + "/guia/"+full.documento_detalle_id+"/consolidado";
-	                              }
+	                              // href_print_label = "../../impresion-documento-label/"+ full.documento_id + "/guia/"+full.documento_detalle_id+"/consolidado";
+																document_print = "guia";
 	                          }
 
 	                          var btn_invoice =  "<a href='../../impresion-documento/" + full.documento_id + "/invoice/"+full.documento_detalle_id+"' target='blank_' class=''><i class='fa fa-file' ></i> Imprimir invoice</a> ";
 	                          if (me.permissions.pdfLabel) {
 	                              var btn_label =  "<a href='"+href_print_label+"' target='blank_' class=''><i class='fa fa-barcode'></i> Imprimir label</a> ";
+																var name = "Nitro PDF Creator (Pro 10)";
+										            var format = "PDF";
+										            href_print_label = 'onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format
+																+'&id=' + full.documento_id + '&agency_id='+ full.agencia_id
+																+'&document='+ document_print + '&id_detail='+ full.documento_detalle_id + '&id_detail_consol='+ full.id +'&consolidado='+ true +'\')"';
 	                          }
 	                          if (me.permissions.deleteDetailConsolidado && !me.close) {
 	                              var btn_delete = " <a onclick=\"eliminarConsolidado(" + full.id + ","+false+")\" class='' style='color:#E34724;'><i class='fa fa-trash'></i> Eliminar</a> ";
@@ -899,7 +902,7 @@
 	                                  '</button>'+
 	                                  '<ul class="dropdown-menu dropdown-menu-right pull-right" style="font-size: 15px!important;">'+
 	                                    '<li>'+btn_invoice+'</li>'+
-	                                    '<li>'+btn_label+'</li>'+
+	                                    '<li><a '+href_print_label+'><i class="fa fa-barcode"></i> Imprimir label</a></li>'+
 	                                    '<li role="separator" class="divider"></li>'+
 	                                    '<li>'+btn_delete+'</li>'+
 	                                  '</ul>'+
@@ -1105,18 +1108,6 @@
 			        loading(false);
 			      });
 			    }, 350),
-				// onSearch(search, loading) {
-			  //     loading(true);
-			  //     this.search(loading, search, this);
-			  //   },
-			  //   search: _.debounce((loading, search, vm) => {
-			  //     fetch(
-			  //       `../vueSelect/${escape(search)}`
-			  //     ).then(res => {
-			  //       res.json().then(json => (vm.countries = json.items));
-			  //       loading(false);
-			  //     });
-			  //   }, 350),
 			}
     }
 </script>

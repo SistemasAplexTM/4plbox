@@ -956,6 +956,7 @@
 @endsection
 
 @section('scripts')
+{!! $wcpScript; !!}
 <script src="{{ asset('js/plugins/dataTables/dataTables.keyTable.min.js') }}"></script>
 <script src="{{ asset('js/plugins/dataTables/fnFilterClear.js') }}"></script>
 <script src="{{ asset('js/templates/documento/documento.js') }}"></script>

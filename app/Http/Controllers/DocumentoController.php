@@ -61,7 +61,6 @@ class DocumentoController extends Controller
     {
         $this->assignPermissionsJavascript('documento');
         $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('DocumentoController@printFile'), Session::getId());
-
         return view('templates.documento.index', ['wcpScript' => $wcpScript]);
     }
 
@@ -195,6 +194,7 @@ class DocumentoController extends Controller
 
     public function edit($id, $liquidar = false)
     {
+        $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('DocumentoController@printFile'), Session::getId());
         // OBTENEMOS EL ID DEL PAIS QUE ESTA REGISTRADO EN LA CONFIGURACION DE APLEX_CONFIG
         // PARA UTILIZARLO EN EL CONSOLIDADO
         $id_pais = $this->getConfig('idColombia');
@@ -293,7 +293,8 @@ class DocumentoController extends Controller
             'tipoPagos',
             'formaPagos',
             'grupos',
-            'func'
+            'func',
+            'wcpScript'
         ));
     }
 
@@ -1539,7 +1540,7 @@ class DocumentoController extends Controller
         return $pdf->stream($nameDocument . '.pdf'); //visualizar en el navegador
     }
 
-    public function pdfLabel($id, $document, $id_detalle = null, $consolidado = null)
+    public function pdfLabel($id, $document, $id_detalle = null, $consolidado = null, $id_detail_consol = null)
     {
         if ($document === 'guia') {
             $codigo = 'num_guia';
@@ -1601,54 +1602,7 @@ class DocumentoController extends Controller
         }
 
         // if($consolidado === null){
-            $detalle = DocumentoDetalle::join('documento as a', 'documento_detalle.documento_id', 'a.id')
-                ->leftJoin('shipper', 'documento_detalle.shipper_id', '=', 'shipper.id')
-                ->leftJoin('consignee', 'documento_detalle.consignee_id', '=', 'consignee.id')
-                ->leftJoin('localizacion AS ciudad_consignee', 'consignee.localizacion_id', '=', 'ciudad_consignee.id')
-                ->leftJoin('localizacion AS ciudad_shipper', 'shipper.localizacion_id', '=', 'ciudad_shipper.id')
-                ->leftJoin('deptos AS deptos_consignee', 'ciudad_consignee.deptos_id', '=', 'deptos_consignee.id')
-                ->leftJoin('deptos AS deptos_shipper', 'ciudad_shipper.deptos_id', '=', 'deptos_shipper.id')
-                ->leftJoin('pais', 'pais.id', '=', 'deptos_consignee.pais_id')
-                ->select(
-                    'documento_detalle.id',
-                    'documento_detalle.contenido',
-                    'documento_detalle.contenido2',
-                    'documento_detalle.tracking',
-                    'documento_detalle.volumen',
-                    'documento_detalle.valor',
-                    'documento_detalle.declarado2',
-                    'documento_detalle.piezas',
-                    'documento_detalle.largo',
-                    'documento_detalle.ancho',
-                    'documento_detalle.alto',
-                    'documento_detalle.peso',
-                    'documento_detalle.peso2',
-                    'documento_detalle.' . $codigo . ' as codigo',
-                    'documento_detalle.num_warehouse',
-                    'documento_detalle.num_guia',
-                    'documento_detalle.created_at',
-                    'shipper.nombre_full as ship_nomfull',
-                    'shipper.direccion as ship_dir',
-                    'shipper.telefono as ship_tel',
-                    'shipper.correo as ship_email',
-                    'shipper.zip as ship_zip',
-                    'ciudad_shipper.nombre AS ship_ciudad',
-                    'deptos_shipper.descripcion AS ship_depto',
-                    'consignee.nombre_full as cons_nomfull',
-                    'consignee.direccion as cons_dir',
-                    'consignee.telefono as cons_tel',
-                    'consignee.documento as cons_documento',
-                    'consignee.correo as cons_email',
-                    'consignee.zip as cons_zip',
-                    'consignee.po_box as cons_pobox',
-                    'ciudad_consignee.nombre AS cons_ciudad',
-                    'deptos_consignee.descripcion AS cons_depto',
-                    'pais.descripcion AS cons_pais',
-                    'pais.iso2 AS cons_pais_code',
-                    'ciudad_consignee.prefijo'
-                )
-                ->where($where)
-                ->get();
+              $detalle = $this->pdfLabelDetail($where, $codigo);
         // }else{
         //     $detalle = DB::table('consolidado_detalle as a')
         //         ->leftJoin('documento_detalle as b', 'a.documento_detalle_id', '=', 'b.id')
@@ -1720,6 +1674,7 @@ class DocumentoController extends Controller
         //         ->get();
         // }
         $this->AddToLog('Impresion labels (' . $documento->id . ')');
+
         if(env('APP_CLIENT') === 'colombiana'){
           $pdf = PDF::loadView('pdf.labelWGJyg', compact('documento', 'detalle', 'document'))
           ->setPaper(array(25, -25, 260, 360), 'landscape');
@@ -1727,7 +1682,6 @@ class DocumentoController extends Controller
                 // ->setPaper(array(25, -25, 300, 300), 'landscape');
 
             $nameDocument = 'Label' . $document . '-' . $documento->id;
-
             $pdf->save(public_path(). '/files/dumaFile.pdf');
 
             // return $pdf->stream($nameDocument . '.pdf');
@@ -1754,7 +1708,20 @@ class DocumentoController extends Controller
     }
 
     public function printFile(Request $request){
-        $this->pdfLabel($request->input('id'), $request->input('document'));
+      $consolidado = null;
+      $id_detalle = null;
+      $id_detail_consol = null;
+      if($request->input('document')){
+        $consolidado = 'consolidado';
+      }
+      if($request->input('id_detail')){
+        $id_detalle = $request->input('id_detail');
+      }
+      if($request->input('id_detail_consol')){
+        $id_detail_consol = $request->input('id_detail_consol');
+      }
+
+        $this->pdfLabel($request->input('id'), $request->input('document'), $id_detalle, $consolidado, $id_detail_consol);
         $dataPrint = $this->getConfig('print_' . $request->input('agency_id'));
         $prints = json_decode($dataPrint->value);
         $print = $prints->prints->labels;
@@ -1933,6 +1900,7 @@ class DocumentoController extends Controller
                 'c.documento_id',
                 'a.documento_detalle_id',
                 'b.estado_id',
+                'b.agencia_id',
                 'a.num_bolsa',
                 'c.num_warehouse',
                 'c.num_guia',
@@ -2569,6 +2537,7 @@ class DocumentoController extends Controller
             }
             if (isset($request->value) and $request->name === 'declarado') {
                 $data->valor = $request->value;
+                $data->declarado2 = $request->value;
             }
             if (isset($request->value) and $request->name === 'piezas') {
                 $data->piezas = $request->value;
