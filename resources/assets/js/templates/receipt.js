@@ -130,9 +130,9 @@ var objVue = new Vue({
     methods:{
       getConsignees(){
         let me = this;
-        axios.get('receipt/getConsignee/').then(({data}) => {
-          me.consignees = data.data;
-        });
+        // axios.get('receipt/getConsignee/').then(({data}) => {
+        //   me.consignees = data.data;
+        // });
       },
       save(){
         // this.saveDocument();

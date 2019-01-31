@@ -14,7 +14,7 @@ class Documento extends Model
      */
     protected $fillable = [
         'tipo_documento_id',
-        'pais_id',
+        'ciudad_id',
         'central_destino_id',
         'servicios_id',
         'numero_interno',

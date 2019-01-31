@@ -4,6 +4,7 @@
 // @example;
 
 $(document).ready(function() {
+  setIdPaisConfig();
     $('#tracking').tagsinput();
     //toggle `popup` / `inline` mode
     $.fn.editable.defaults.mode = 'inline';
@@ -492,6 +493,10 @@ function closeDocument() {
   objVue.closeDocument();
 }
 
+function setIdPaisConfig() {
+  objVue.pais_id_config = pais_id_config;
+}
+
 var objVue = new Vue({
     el: '#documento',
     watch:{
@@ -553,6 +558,7 @@ var objVue = new Vue({
         permissions: {}, //es para poder pasar los permisos al consolidado
         refreshBoxes: false, //variable para refrescar las cajas del consolidado bodega
         cantidad_detalle: true, //para mostrar u ocultar el boton de agregar (funcionalidad para courier)
+        pais_id_config: 0, //para validar si muestro guia o warehouse en el consolidado
         tracking_number: null,
         id_detalle: null,
         close: false,

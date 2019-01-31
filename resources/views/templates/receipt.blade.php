@@ -18,7 +18,6 @@
 @endsection
 
 @section('content')
-
     <div class="row" id="receipt">
         <form id="formreceipt" enctype="multipart/form-data" class="form-horizontal" role="form" action="" method="post">
             <div class="col-lg-5">
@@ -39,7 +38,11 @@
                                     <div class="input-group" style="width: 100%;">
                                         <select id="consignee_id" name="consignee_id" class="form-control chosen-select" style="width:100%;" tabindex="2">
                                             <option value="">Seleccione</option>
-                                            <option v-for="val in consignees" :value="val.id">@{{ val.name }}</option>
+                                            @if(count($consignees) != null)
+                                              @foreach ($consignees as $val)
+                                                <option value="{{ $val->id }}" data-direccion="{{ $val->direccion }}" data-telefono="{{ $val->telefono }}" data-ciudad="{{ $val->ciudad }}">{{ $val->name }}</option>
+                                              @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                     <input type="text" class="form-control" id="cliente" name="cliente" value="" style="display: none;">

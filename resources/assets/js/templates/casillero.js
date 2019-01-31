@@ -231,6 +231,6 @@ var objVue = new Vue({
             res.json().then(json => (vm.ciudades = json.items));
             loading(false);
           });
-        }, 50),
+        }, 1000),
     }
 });
