@@ -290,63 +290,63 @@ function datatableDetail(){
     });
 }
 function llenarSelectServicio(id_embarque) {
-    var url = '../../servicios/getAllServiciosAgencia/' + id_embarque;
-    var pa_id = 1;// POSICION ARANCELARIA POR DEFECTO
-    $.ajax({
-        url: url,
-        dataType: 'json',
-        type: 'GET',
-        success: function(data) {
-            /* llenar select */
-            $("#servicios_id").empty();
-            if ($('#impuesto').val() === '0' || $('#impuesto').val() === '') {
-              $('#impuesto').val(0);
-            }
-            if ($('#valor_libra2').val() === '0' || $('#valor_libra2').val() === '') {
-              $('#valor_libra2').val(0);
-            }
-            // $('#valor_libra2').val(0);
-            if (Object.keys(data.data).length === 0) {
-                $("#servicios_id").attr('readonly', true);
-            } else {
-                $("#servicios_id").attr('readonly', false);
-                $(data.data).each(function(index, value) {
-                    $("#servicios_id").append('<option value="' + value.id + '" data-tarifa="' + value.tarifa + '" data-seguro="' + value.seguro + '"\n\
-                        data-cobvol="' + value.cobro_peso_volumen + '"\n\
-                         data-tarifamin="' + value.peso_minimo + '"\n\
-                          data-tarifa="' + value.tarifa + '"\n\
-                           data-seguro="' + value.seguro + '"\n\
-                            data-c_opcional="' + value.cobro_opcional + '"\n\
-                             data-t_age="' + value.tarifa_agencia + '"\n\
-                              data-seg_age="' + value.seguro_agencia + '"\n\
-                               data-impuesto_age="' + value.impuesto + '"\n\
-                               data-pa_id="' + value.pa_id + '">' + value.nombre + '</option>');
-                });
-            }
-            objVue.totalizeDocument();
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            data = {
-                error: jqXHR + ' - ' + textStatus + ' - ' + errorThrown
-            }
-            $('#modal' + 1).modal('toggle');
-            $('body').append('<div class="modal fade" id="modalError" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><h4 class="modal-title" id="myModalLabel">ERROR EN TRANSACCIÓN</h4></div><div class="modal-body">' + data.error + '</div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button></div></div></div></div>');
-            $('#modalError').modal({
-                show: true
-            });
-        },
-        complete: function(){
-          // ASIGNO EL SERVICIO REGISTRADO EN LA BD
-          if($('#servicios_id').data('servicio_id') != ''){
-            $('#servicios_id').val($('#servicios_id').data('servicio_id'));
+  var url = '../../servicios/getAllServiciosAgencia/' + id_embarque;
+  var pa_id = 1;// POSICION ARANCELARIA POR DEFECTO
+  $.ajax({
+      url: url,
+      dataType: 'json',
+      type: 'GET',
+      success: function(data) {
+          /* llenar select */
+          $("#servicios_id").empty();
+          if ($('#impuesto').val() === '0' || $('#impuesto').val() === '') {
+            $('#impuesto').val(0);
           }
-            if($('#servicios_id option:selected').data('pa_id') != null){
-                pa_id = $('#servicios_id option:selected').data('pa_id');
-            }
-            $('#pa_id').val(pa_id);
-            objVue.getPositionById(pa_id);
+          if ($('#valor_libra2').val() === '0' || $('#valor_libra2').val() === '') {
+            $('#valor_libra2').val(0);
+          }
+          // $('#valor_libra2').val(0);
+          if (Object.keys(data.data).length === 0) {
+              $("#servicios_id").attr('readonly', true);
+          } else {
+              $("#servicios_id").attr('readonly', false);
+              $(data.data).each(function(index, value) {
+                  $("#servicios_id").append('<option value="' + value.id + '" data-tarifa="' + value.tarifa + '" data-seguro="' + value.seguro +
+                  'data-cobvol="' + value.cobro_peso_volumen + '"' +
+                  'data-tarifamin="' + value.peso_minimo + '"' +
+                  'data-tarifa="' + value.tarifa + '"' +
+                  'data-seguro="' + value.seguro + '"' +
+                  'data-c_opcional="' + value.cobro_opcional + '"' +
+                  'data-t_age="' + value.tarifa_agencia + '"' +
+                  'data-seg_age="' + value.seguro_agencia + '"' +
+                  'data-impuesto_age="' + value.impuesto + '"' +
+                  'data-pa_id="' + value.pa_id + '">' + value.nombre + '</option>');
+              });
+          }
+          objVue.totalizeDocument();
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+          data = {
+              error: jqXHR + ' - ' + textStatus + ' - ' + errorThrown
+          }
+          $('#modal' + 1).modal('toggle');
+          $('body').append('<div class="modal fade" id="modalError" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><h4 class="modal-title" id="myModalLabel">ERROR EN TRANSACCIÓN</h4></div><div class="modal-body">' + data.error + '</div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button></div></div></div></div>');
+          $('#modalError').modal({
+              show: true
+          });
+      },
+      complete: function(){
+        // ASIGNO EL SERVICIO REGISTRADO EN LA BD
+        if($('#servicios_id').data('servicio_id') != ''){
+          $('#servicios_id').val($('#servicios_id').data('servicio_id'));
         }
-    });
+          if($('#servicios_id option:selected').data('pa_id') != null){
+              pa_id = $('#servicios_id option:selected').data('pa_id');
+          }
+          $('#pa_id').val(pa_id);
+          objVue.getPositionById(pa_id);
+      }
+  });
 }
   /*-- Función para llenar select PERSONALIZADO --*/
 function llenarSelectPersonalizado(module, tableName, idSelect, length) {

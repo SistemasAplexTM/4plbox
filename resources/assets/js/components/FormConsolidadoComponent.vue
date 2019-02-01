@@ -97,10 +97,10 @@
                                             <label class="control-label col-lg-12">&nbsp;</label>
                                             <a hfer="#" target="blank_" class="btn btn-info btn-sm printDocument" data-toggle="tooltip" data-placement="top" title="Imprimir manifiesto"><i class="fa fa-print"></i> Manifiesto</a>
                                             <a hfer="#" target="blank_" class="btn btn-info btn-sm printDocumentGuias" data-toggle="tooltip" data-placement="top" title="Imprimir guias hijas" ><i class="fa fa-print"></i> Guias hijas</a>
-                                            <!-- <a hfer="#" target="blank_" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Imprimir instrucciones"><i class="fa fa-print"></i> Instrucciones</a> -->
+                                            <a @click="printLabelBagModal" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Imprimir labels por bolsas"><i class="fa fa-print"></i> Labes por bolsa</a>
                                         </div>
 																				<div class="col-sm-12" v-show="!show_buttons" style="color: #E34724">
-																					<span>Hay valores declarados en cero (0) o valores que superan lo permitido para COURIER o no hay guias ingresadas</span></div>
+																					<span>Hay valores declarados en cero (0) o valores que superan lo permitido para COURIER o no hay documentos ingresadas</span></div>
                                     </div>
 
                                     <div class="col-sm-8">
@@ -226,7 +226,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade bs-example-modal-lg" id="modalguiasconsolidado" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade bs-example-modal-lg" id="modalguiasconsolidado" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		    <div class="modal-dialog modal-lg">
 		        <div class="modal-content">
 		            <!--Este input es para cuando se haga el llamado desde el consolidado..
@@ -241,7 +241,7 @@
 		            <div class="modal-body">
 		            	<form id="formGuiasConsolidado" name="formGuiasConsolidado" method="POST" action="">
 		            		<p>Seleccione los documentos que desea ingresar al consolidado y acontinuación de click en el botón <strong>Agregar</strong></p>
-							<div class="table-responsive">
+												<div class="table-responsive">
 		                        <table id="tbl-modalguiasconsolidado" class="table table-striped table-hover table-bordered" style="width: 100%;">
 		                            <thead>
 		                            	<tr>
@@ -341,6 +341,31 @@
                 </div>
             </div>
         </div>
+
+		<!-- MODAL IMPRIMIR LABELS POR BOLSA -->
+		<div class="modal fade bs-example" id="modalPrintLabels" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" style="width: 20%!important">
+						<div class="modal-content">
+								<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+										<h4 class="modal-title" id="myModalLabel">
+												<i class="fa fa-barcode"></i> Imprimir Labels por Bolsa
+										</h4>
+								</div>
+								<div class="modal-body">
+									<h3>Seleccione el numero de bolsa</h3>
+									<select class="form-control">
+										<option value="">1</option>
+										<option value="">2</option>
+									</select>
+								</div>
+								<div class="modal-footer">
+										<button type="button" id="" @click="printLabelBag()" class="btn btn-primary" data-dismiss="modal">Agregar</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+								</div>
+						</div>
+				</div>
+		</div>
 	</div>
 </template>
 
@@ -542,6 +567,12 @@
 	        }
 	    },
 		methods: {
+				printLabelBag(){
+
+				},
+				printLabelBagModal(){
+					$('#modalPrintLabels').modal('show');
+				},
 				onSearch(search, loading) {
 					loading(true);
 					this.search(loading, search, this);
@@ -750,306 +781,6 @@
 	                	toastr.options.closeButton = true;
 			        });
 			    },
-				getDataDetail(){
-					let me=this;
-					var href_print_label = '';
-					/* SOLO SI ES EL DOCUMNTO CONSOLIDADO*/
-				    var table = $('#tbl-consolidado').DataTable({
-				        // keys: true,
-				        processing: true,
-				        serverSide: true,
-				        responsive: true,
-				        ajax: 'getAllConsolidadoDetalle',
-				        columns: [
-				            {data: 'num_bolsa', name: 'num_bolsa'},
-				            {
-				                "render": function (data, type, full, meta) {
-																let classText = '';
-																	if(parseFloat(full.declarado_total) > 2000 || parseFloat(full.peso_total) > 50){
-																		classText = 'text-danger';
-																	}
-	                                var groupGuias = full.guias_agrupadas;
-	                                var btn_delete = "<a style='float: right;cursor:pointer;''><i class='material-icons'>clear</i></a>";
-	                                if(groupGuias != null && groupGuias != 'null' && groupGuias != ''){
-	                                    groupGuias = groupGuias.replace(/,/g, "<br>");
-	                                    groupGuias = groupGuias.replace(/@/g, ",");//SEPARADOR AL CREAR EL ONCLIC EN EL CONTROLADOR
-	                                }else{
-	                                    groupGuias = '';
-	                                }
-	                                var color = 'default';
-	                                if(parseInt(full.agrupadas) > 0){
-	                                    color = 'primary';
-	                                }
-																	let group = ' onclick="agruparGuias('+full.id+')"';
-																	if(me.close){
-																		group = '';
-																	}
-	                                if(me.app_type === 'courier'){
-	                                    if(me.localizacion_id.pais_id != pais_id_config){
-	                                        return '<span class="'+classText+'">' + full.num_warehouse + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" role="button" \n\
-	                                            data-html="true" \n\
-	                                            data-toggle="popover" \n\
-	                                            data-trigger="hover" \n\
-	                                            title="<b>Guias agrupadas</b>" \n\
-	                                            data-content="'+groupGuias+'" ' + group + '>'+full.agrupadas+'</a>';
-	                                    }else{
-                                          return '<span class="'+classText+'">' + full.num_guia + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" \n\
-                                          role="button" \n\
-                                          data-html="true" \n\
-                                          data-toggle="popover" \n\
-                                          data-trigger="hover" \n\
-                                          title="<b>Guias agrupadas</b>" \n\
-                                          data-content="'+groupGuias+'" ' + group + '>'+full.agrupadas+'</a>';
-	                                    }
-	                                }else{
-	                                    return '<span class="'+classText+'">' + full.num_warehouse + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" role="button" \n\
-	                                            data-html="true" \n\
-	                                            data-toggle="popover" \n\
-	                                            data-trigger="hover" \n\
-	                                            title="<b>Guias agrupadas</b>" \n\
-	                                            data-content="'+groupGuias+'" ' + group + '>'+full.agrupadas+'</a>';
-	                                }
-				                }
-				            },
-				            {
-				                "render": function (data, type, full, meta) {
-				                	var nom_ship = full.shipper;
-				                	var json = '';
-				                	if(full.shipper == null){
-				                		nom_ship = '';
-				                	}
-				                	if(full.shipper_json != null){
-														json = JSON.parse(full.shipper_json.replace(/&quot;/g, '"'));
-														nom_ship = json.nombre;
-				                	}
-				                	me.shipper_contactos[full.shipper_id] = full.shipper_contactos;
-				                	return nom_ship + ' <a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalShipperConsigneeConsolidado('+full.id+', '+full.shipper_id+', \'shipper\')"><i class="material-icons">&#xE254;</i></a> <a onclick=\"restoreShipperConsignee('+full.id+', \'shipper\')\" class="delete" title="Restaurar original" data-toggle="tooltip" style="float:right;color:#2196F3;"><i class="material-icons">cached</i></a>';
-				                }
-				            },
-				            {
-				                "render": function (data, type, full, meta) {
-				                	var nom_cons = full.consignee;
-				                	var json = '';
-				                	if(full.consignee == null){
-				                		nom_cons = '';
-				                	}
-				                	if(full.consignee_json != null){
-												json = JSON.parse(full.consignee_json.replace(/&quot;/g, '"'));
-												nom_cons = json.nombre;
-				                	}
-				                	me.consignee_contactos[full.consignee_id] = full.consignee_contactos;
-				                	return nom_cons + ' <a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalShipperConsigneeConsolidado('+full.id+', '+full.consignee_id+',\'consignee\')"><i class="material-icons">&#xE254;</i></a> <a onclick=\"restoreShipperConsignee('+full.id+',\'consignee\')\" class="delete" title="Restaurar original" data-toggle="tooltip" style="float:right;color:#2196F3;"><i class="material-icons">cached</i></a>';
-				                }
-				            },
-				            {
-	                      "render": function (data, type, full, meta) {
-	                          var pa = (full.pa == null) ? '' : full.pa;
-	                          return pa + '<a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalArancel('+full.documento_detalle_id+', \'tbl-consolidado\')"><i class="material-icons">&#xE254;</i></a>';
-	                      }
-	                  },
-	                  {
-	                      "render": function (data, type, full, meta) {
-	                          return '<a data-name="contenido2" data-pk="'+full.documento_detalle_id+'" class="td_edit" data-type="text" data-placement="right" data-title="Contenido">'+full.contenido2+'</a>';
-	                      }
-	                  },
-	                  {
-	                      "render": function (data, type, full, meta) {
-													let classText = '';
-														if(parseFloat(full.declarado_total) > 2000){
-															classText = 'text-danger';
-														}
-	                          return '<a data-name="declarado2" data-pk="'+full.documento_detalle_id+'" class="td_edit '+ classText +'" data-type="text" data-placement="right" data-title="Declarado">'+full.declarado2+'</a>';
-	                      }
-	                  },
-	                  {
-	                      "render": function (data, type, full, meta) {
-													let classText = '';
-														if(parseFloat(full.peso_total) > 50){
-															classText = 'text-danger';
-														}
-	                          return '<a data-name="peso2" data-pk="'+full.documento_detalle_id+'" class="td_edit '+ classText +'" data-type="text" data-placement="right" data-title="Peso">'+full.peso2+'</a>';
-	                      }
-	                  },
-	                  {data: 'peso', name: 'peso'},
-	                  {
-	                      sortable: false,
-	                      "render": function (data, type, full, meta) {
-	                          var btn_delete = '';
-	                          var document_print = '';
-	                          if(me.localizacion_id.pais_id != pais_id_config){
-	                              // href_print_label = "../../impresion-documento-label/"+ full.documento_id + "/warehouse/"+full.documento_detalle_id+"/consolidado";
-																document_print = "warehouse";
-	                          }else{
-	                              // href_print_label = "../../impresion-documento-label/"+ full.documento_id + "/guia/"+full.documento_detalle_id+"/consolidado";
-																document_print = "guia";
-	                          }
-
-	                          var btn_invoice =  "<a href='../../impresion-documento/" + full.documento_id + "/invoice/"+full.documento_detalle_id+"' target='blank_' class=''><i class='fa fa-file' ></i> Imprimir invoice</a> ";
-	                          if (me.permissions.pdfLabel) {
-	                              var btn_label =  "<a href='"+href_print_label+"' target='blank_' class=''><i class='fa fa-barcode'></i> Imprimir label</a> ";
-																var name = "Nitro PDF Creator (Pro 10)";
-										            var format = "PDF";
-										            href_print_label = 'onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format
-																+'&id=' + full.documento_id + '&agency_id='+ full.agencia_id
-																+'&document='+ document_print + '&id_detail='+ full.documento_detalle_id + '&id_detail_consol='+ full.id +'&consolidado='+ true +'\')"';
-	                          }
-	                          if (me.permissions.deleteDetailConsolidado && !me.close) {
-	                              var btn_delete = " <a onclick=\"eliminarConsolidado(" + full.id + ","+false+")\" class='' style='color:#E34724;'><i class='fa fa-trash'></i> Eliminar</a> ";
-	                          }
-	                          var btn_group = '<div class="btn-group" data-toggle="tooltip" title="Acciones">'+
-	                                  '<button type="button" class="btn btn-default btn-outline dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
-	                                    '<i class="fa fa-ellipsis-v"></i>'+
-	                                  '</button>'+
-	                                  '<ul class="dropdown-menu dropdown-menu-right pull-right" style="font-size: 15px!important;">'+
-	                                    '<li>'+btn_invoice+'</li>'+
-	                                    '<li><a '+href_print_label+'><i class="fa fa-barcode"></i> Imprimir label</a></li>'+
-	                                    '<li role="separator" class="divider"></li>'+
-	                                    '<li>'+btn_delete+'</li>'+
-	                                  '</ul>'+
-	                                '</div>';
-	                          // return btn_invoice + btn_label + btn_delete;
-	                          return btn_group;
-	                      }
-	                  },
-	                  {data: 'contenido2', name: 'contenido2'},
-	                  {data: 'peso2', name: 'peso2'},
-	                  {data: 'declarado2', name: 'declarado2'},
-				        ],
-				        'columnDefs': [
-				        	{ className: "text-center", "targets": [ 0 ], width: 20, },
-				        	{ "targets": [ 1 ], width: 140},
-				        	{ "targets": [ 2,3 ], width: 200},
-				        	{ className: "text-center", "targets": [ 4 ], width: 100 },
-				        	{ "targets": [ 5 ],  width: 400},
-				         	{ className: "text-center", "targets": [ 6,7,8 ],  },
-	                { className: "text-center", "targets": [ 9 ],  },
-				          { "targets": [ 10,11,12 ], visible: false },
-				        ],
-	              "drawCallback": function () {
-											if(!me.close){
-												$('.edit, .delete').hide().children('i').css('font-size', '17px');
-											}else{
-												$('.edit, .delete').remove();
-											}
-	                        /* EDITABLE FIELD */
-	                        if (me.permissions.editDetail && !me.close) {
-	                            $(".td_edit").editable({
-	                                ajaxOptions: {
-	                                    type: 'post',
-	                                    dataType: 'json'
-	                                },
-	                                url: "updateDetailConsolidado",
-	                                validate:function(value){
-	                                    if($.trim(value) == ''){
-	                                        return 'Este campo es obligatorio!';
-	                                    }
-	                                },
-	                                success: function(response, newValue) {
-	                                    me.updateTableDetail();
-	                                }
-	                            });
-	                        }
-	                        /* POPOVER PARA LAS GUIAS AGRUPADAS (BADGED) */
-	                        $(".pop").popover({ trigger: "manual" , html: true})
-	                            .on("mouseenter", function () {
-	                                var _this = this;
-	                                $(this).popover("show");
-	                                $(".popover").on("mouseleave", function () {
-	                                    $(_this).popover('hide');
-	                                });
-	                            }).on("mouseleave", function () {
-	                                var _this = this;
-	                                setTimeout(function () {
-	                                    if (!$(".popover:hover").length) {
-	                                        $(_this).popover("hide");
-	                                    }
-	                                }, 300);
-	                        });
-	                    },
-				        "footerCallback": function (row, data, start, end, display) {
-		                    var api = this.api(), data;
-		                    /*Remove the formatting to get integer data for summation*/
-		                    var intVal = function (i) {
-		                        return typeof i === 'string' ?
-		                                i.replace(/[\$,]/g, '') * 1 :
-		                                typeof i === 'number' ?
-		                                i : 0;
-		                    };
-		                    /*Total over all pages*/
-		                    var total_cantidad = api
-		                            .column(8)
-		                            .data()
-		                            .reduce(function (a, b) {
-		                                return intVal(a) + intVal(b);
-		                            }, 0);
-	                        var librasR= api
-	                                .column(8, {page: 'current'})
-	                                .data()
-	                                .reduce(function (a, b) {
-	                                    return intVal(a) + intVal(b);
-	                                }, 0);
-	                        var libras= api
-	                                .column(11, {page: 'current'})
-	                                .data()
-	                                .reduce(function (a, b) {
-	                                    return intVal(a) + intVal(b);
-	                                }, 0);
-	                        var declarado= api
-	                                .column(12, {page: 'current'})
-	                                .data()
-	                                .reduce(function (a, b) {
-	                                    return intVal(a) + intVal(b);
-	                                }, 0);
-	                         var pesoK = libras * 0.453592;
-	                         var pesoKR = librasR * 0.453592;
-
-	                         var diferenciaL = librasR - libras;
-	                         var color1 = 'rgb(203, 23, 30)';
-	                         if(diferenciaL === 0){
-	                            color1 = '#4caf50';
-	                         }
-	                         var color2 = 'rgb(203, 23, 30)';
-	                         var diferenciaK = pesoKR - pesoK;
-	                         if(diferenciaK === 0){
-	                            color2 = '#4caf50';
-	                         }
-
-		                    /*Update footer formatCurrency()*/
-	                        $(api.column(6).footer()).html('<spam id="totalDeclarado">$ ' + declarado + '</spam><br>USD');
-		                    $(api.column(7).footer()).html('<spam id="totalPeso">' + libras + ' (Lbs)<br><spam id="totalPesoK">' + isInteger(pesoK) + ' (Kl)</spam></spam>');
-		                    $(api.column(8).footer()).html('<spam id="totalPesoR">' + librasR + ' (Lbs)<br><spam id="totalPesoKR">' + isInteger(pesoKR) + ' (Kl)</spam></spam>');
-		                    $(api.column(9).footer()).html('<spam id="diferenciaL" style="color:'+color1+'">Dif: ' + isInteger(diferenciaL) + ' (Lbs)</spam><br><spam id="diferenciaK" style="color:'+color2+'">Dif: ' + isInteger(diferenciaK) + ' (Kl)</spam>');
-		                },
-				    }).on('xhr.dt', function ( e, settings, json, xhr ) {
-							let datos = json.data;
-							let cont = 0;
-							if(app_type === 'courier'){
-								for (var i = 0; i < datos.length; i++) {
-									if(parseFloat(datos[i].declarado2) == 0){
-										cont += 1;
-									}
-									if(parseFloat(datos[i].declarado_total) > 2000){
-										cont += 1;
-									}
-									if(parseFloat(datos[i].peso_total) > 50){
-										cont += 1;
-									}
-								}
-								if(cont === 0 && datos.length > 0){
-									me.show_buttons = true;
-								}else{
-									me.show_buttons = false;
-								}
-							}
-				    });
-				    table.on('key', function (e, datatable, key, cell, originalEvent) {
-				        if (key == 13) {
-				            cell.data( $(cell.node()).html() ).draw();
-				            var rowData = datatable.row( cell.index().row ).data();
-				            me.updateDataDetail(rowData);
-				        }
-				    });
-				},
 				addGuiasToConsolidado: function(num_guia){
 					if(num_guia){
 						this.num_guia = num_guia;
@@ -1108,6 +839,428 @@
 			        loading(false);
 			      });
 			    }, 350),
+				getDataDetail(){
+						let me=this;
+						var href_print_label = '';
+						/* SOLO SI ES EL DOCUMNTO CONSOLIDADO*/
+					    var table = $('#tbl-consolidado').DataTable({
+					        // keys: true,
+					        processing: true,
+					        serverSide: true,
+					        responsive: true,
+					        ajax: 'getAllConsolidadoDetalle',
+					        columns: [
+					            {data: 'num_bolsa', name: 'num_bolsa'},
+					            {
+					                "render": function (data, type, full, meta) {
+		                                var groupGuias = full.guias_agrupadas;
+		                                var btn_delete = "<a style='float: right;cursor:pointer;''><i class='material-icons'>clear</i></a>";
+		                                if(groupGuias != null && groupGuias != 'null' && groupGuias != ''){
+		                                    groupGuias = groupGuias.replace(/,/g, "<br>");
+		                                    groupGuias = groupGuias.replace(/@/g, ",");//SEPARADOR AL CREAR EL ONCLIC EN EL CONTROLADOR
+		                                }else{
+		                                    groupGuias = '';
+		                                }
+		                                var color = 'default';
+		                                if(parseInt(full.agrupadas) > 0){
+		                                    color = 'primary';
+		                                }
+																		let group = ' onclick="agruparGuias('+full.id+')"';
+																		if(me.close){
+																			group = '';
+																		}
+		                                if(me.app_type === 'courier'){
+		                                    if(me.localizacion_id.pais_id != pais_id_config){
+		                                        return '<span id="num_guia'+full.id+'" class="num_guia'+full.consignee_id+'">' + full.num_warehouse + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" role="button" \n\
+		                                            data-html="true" \n\
+		                                            data-toggle="popover" \n\
+		                                            data-trigger="hover" \n\
+		                                            title="<b>Guias agrupadas</b>" \n\
+		                                            data-content="'+groupGuias+'" ' + group + '>'+full.agrupadas+'</a>';
+		                                    }else{
+	                                          return '<span id="num_guia'+full.id+'" class="num_guia'+full.consignee_id+'">' + full.num_guia + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" \n\
+	                                          role="button" \n\
+	                                          data-html="true" \n\
+	                                          data-toggle="popover" \n\
+	                                          data-trigger="hover" \n\
+	                                          title="<b>Guias agrupadas</b>" \n\
+	                                          data-content="'+groupGuias+'" ' + group + '>'+full.agrupadas+'</a>';
+		                                    }
+		                                }else{
+		                                    return '<span id="num_guia'+full.id+'" class="num_guia'+full.consignee_id+'">' + full.num_warehouse + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" role="button" \n\
+		                                            data-html="true" \n\
+		                                            data-toggle="popover" \n\
+		                                            data-trigger="hover" \n\
+		                                            title="<b>Guias agrupadas</b>" \n\
+		                                            data-content="'+groupGuias+'" ' + group + '>'+full.agrupadas+'</a>';
+		                                }
+					                }
+					            },
+					            {
+					                "render": function (data, type, full, meta) {
+					                	var nom_ship = full.shipper;
+					                	var json = '';
+					                	if(full.shipper == null){
+					                		nom_ship = '';
+					                	}
+					                	if(full.shipper_json != null){
+															json = JSON.parse(full.shipper_json.replace(/&quot;/g, '"'));
+															nom_ship = json.nombre;
+					                	}
+					                	me.shipper_contactos[full.shipper_id] = full.shipper_contactos;
+					                	return nom_ship + ' <a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalShipperConsigneeConsolidado('+full.id+', '+full.shipper_id+', \'shipper\')"><i class="material-icons">&#xE254;</i></a> <a onclick=\"restoreShipperConsignee('+full.id+', \'shipper\')\" class="delete" title="Restaurar original" data-toggle="tooltip" style="float:right;color:#2196F3;"><i class="material-icons">cached</i></a>';
+					                }
+					            },
+					            {
+					                "render": function (data, type, full, meta) {
+					                	var nom_cons = full.consignee;
+					                	var json = '';
+					                	if(full.consignee == null){
+					                		nom_cons = '';
+					                	}
+					                	if(full.consignee_json != null){
+															json = JSON.parse(full.consignee_json.replace(/&quot;/g, '"'));
+															nom_cons = json.nombre;
+					                	}
+					                	me.consignee_contactos[full.consignee_id] = full.consignee_contactos;
+					                	return nom_cons + ' <a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalShipperConsigneeConsolidado('+full.id+', '+full.consignee_id+',\'consignee\')"><i class="material-icons">&#xE254;</i></a> <a onclick=\"restoreShipperConsignee('+full.id+',\'consignee\')\" class="delete" title="Restaurar original" data-toggle="tooltip" style="float:right;color:#2196F3;"><i class="material-icons">cached</i></a>';
+					                }
+					            },
+					            {
+		                      "render": function (data, type, full, meta) {
+		                          var pa = (full.pa == null) ? '' : full.pa;
+		                          return '<span id="pa'+ full.id +'">' + pa + '</span>' + '<a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalArancel('+full.documento_detalle_id+', \'tbl-consolidado\')"><i class="material-icons">&#xE254;</i></a>';
+		                      }
+		                  },
+		                  {
+		                      "render": function (data, type, full, meta) {
+		                          return '<a data-name="contenido2" data-pk="'+full.documento_detalle_id+'" class="td_edit" data-type="text" data-placement="right" data-title="Contenido">'+full.contenido2+'</a>';
+		                      }
+		                  },
+		                  {
+		                      "render": function (data, type, full, meta) {
+		                          return '<a id="declarado'+ full.id +'" data-name="declarado2" data-pk="'+full.documento_detalle_id+'" class="td_edit declarado'+ full.consignee_id +'" data-type="text" data-placement="right" data-title="Declarado">'+full.declarado2+'</a>';
+		                      }
+		                  },
+		                  {
+		                      "render": function (data, type, full, meta) {
+		                          return '<a id="peso'+ full.id +'" data-name="peso2" data-pk="'+full.documento_detalle_id+'" class="td_edit" data-type="text" data-placement="right" data-title="Peso">'+full.peso2+'</a>';
+		                      }
+		                  },
+		                  {data: 'peso', name: 'peso'},
+		                  {
+		                      sortable: false,
+		                      "render": function (data, type, full, meta) {
+		                          var btn_delete = '';
+		                          var document_print = '';
+		                          if(me.localizacion_id.pais_id != pais_id_config){
+		                              // href_print_label = "../../impresion-documento-label/"+ full.documento_id + "/warehouse/"+full.documento_detalle_id+"/consolidado";
+																	document_print = "warehouse";
+		                          }else{
+		                              // href_print_label = "../../impresion-documento-label/"+ full.documento_id + "/guia/"+full.documento_detalle_id+"/consolidado";
+																	document_print = "guia";
+		                          }
+
+		                          var btn_invoice =  "<a href='../../impresion-documento/" + full.documento_id + "/invoice/"+full.documento_detalle_id+"' target='blank_' class=''><i class='fa fa-file' ></i> Imprimir invoice</a> ";
+		                          if (me.permissions.pdfLabel) {
+		                              var btn_label =  "<a href='"+href_print_label+"' target='blank_' class=''><i class='fa fa-barcode'></i> Imprimir label</a> ";
+																	var name = "Nitro PDF Creator (Pro 10)";
+											            var format = "PDF";
+											            href_print_label = 'onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format
+																	+'&id=' + full.documento_id + '&agency_id='+ full.agencia_id
+																	+'&document='+ document_print + '&id_detail='+ full.documento_detalle_id + '&id_detail_consol='+ full.id +'&consolidado='+ true +'\')"';
+		                          }
+		                          if (me.permissions.deleteDetailConsolidado && !me.close) {
+		                              var btn_delete = " <a onclick=\"eliminarConsolidado(" + full.id + ","+false+")\" class='' style='color:#E34724;'><i class='fa fa-trash'></i> Eliminar</a> ";
+		                          }
+		                          var btn_group = '<div class="btn-group" data-toggle="tooltip" title="Acciones">'+
+		                                  '<button type="button" class="btn btn-default btn-outline dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
+		                                    '<i class="fa fa-ellipsis-v"></i>'+
+		                                  '</button>'+
+		                                  '<ul class="dropdown-menu dropdown-menu-right pull-right" style="font-size: 15px!important;">'+
+		                                    '<li>'+btn_invoice+'</li>'+
+		                                    '<li><a '+href_print_label+'><i class="fa fa-barcode"></i> Imprimir label</a></li>'+
+		                                    '<li role="separator" class="divider"></li>'+
+		                                    '<li>'+btn_delete+'</li>'+
+		                                  '</ul>'+
+		                                '</div>';
+		                          // return btn_invoice + btn_label + btn_delete;
+		                          return btn_group;
+		                      }
+		                  },
+		                  {data: 'contenido2', name: 'contenido2'},
+		                  {data: 'peso2', name: 'peso2'},
+		                  {data: 'declarado2', name: 'declarado2'},
+					        ],
+					        'columnDefs': [
+					        	{ className: "text-center", "targets": [ 0 ], width: 20, },
+					        	{ "targets": [ 1 ], width: 140},
+					        	{ "targets": [ 2,3 ], width: 200},
+					        	{ className: "text-center", "targets": [ 4 ], width: 100 },
+					        	{ "targets": [ 5 ],  width: 400},
+					         	{ className: "text-center", "targets": [ 6,7,8 ],  },
+		                { className: "text-center", "targets": [ 9 ],  },
+					          { "targets": [ 10,11,12 ], visible: false },
+					        ],
+		              "drawCallback": function () {
+										var api = this.api();
+										let datos = api.rows( {page:'current'} ).data();
+										let cont = 0;
+											if(app_type === 'courier'){
+												var consignee = null
+												var total = null
+												var peso = null
+												for (var i = 0; i < datos.length; i++) {
+													// VALIDACION DECLARADO Y PESO SOBRE EL CONSIGNEE
+													if (datos[i].consignee_id == consignee) {
+														if (datos[i].consignee_json == null) {
+															// VALIDACION PARA EL DECLARADO
+															if (total >= 2000) {
+																	$('#declarado'+datos[i].id).addClass('text-danger');
+																	$('#num_guia' + datos[i].id).addClass('text-danger');
+																	cont++;
+															}else{
+																$('#declarado'+datos[i].id).removeClass('text-danger');
+															}
+
+															// VALIDACION PARA EL PESO
+															if (peso >= 50) {
+																	$('#peso'+datos[i].id).addClass('text-danger');
+																	$('#num_guia' + datos[i].id).addClass('text-danger');
+																	cont++;
+															}else{
+																$('#peso'+datos[i].id).removeClass('text-danger');
+															}
+														}else{
+															total = total - parseFloat(datos[i].declarado2)
+															peso = peso - (parseFloat(datos[i].peso2) * 0.453592)
+															// VALIDACION PARA EL DECLARADO
+															if (total >= 2000) {
+																var cons = JSON.parse(datos[i].consignee_json.replace(/&quot;/g, '"'));
+																if(cons.id != consignee){
+																	$('#declarado'+datos[i].id).removeClass('text-danger');
+																}else{
+																	$('#declarado'+datos[i].id).addClass('text-danger');
+																	$('#num_guia' + datos[i].id).addClass('text-danger');
+																	cont++;
+																}
+															}else{
+																$('.declarado'+datos[i].consignee_id).removeClass('text-danger');
+																if(total < 2000 && peso < 50){
+																	$('.num_guia' + datos[i].consignee_id).removeClass('text-danger');
+																	cont = 0;
+																}
+															}
+
+															// VALIDACION PARA EL PESO
+															if (peso >= 50) {
+																var cons = JSON.parse(datos[i].consignee_json.replace(/&quot;/g, '"'));
+																if(cons.id != consignee){
+																	$('#peso'+datos[i].id).removeClass('text-danger');
+																}else{
+																	$('#peso'+datos[i].id).addClass('text-danger');
+																	$('#num_guia' + datos[i].id).addClass('text-danger');
+																	cont++;
+																}
+															}else{
+																$('.peso'+datos[i].consignee_id).removeClass('text-danger');
+																if(total < 2000 && peso < 50){
+																	if(total < 2000 && peso < 50){
+																		$('.num_guia' + datos[i].consignee_id).removeClass('text-danger');
+																		cont = 0;
+																	}
+																}
+															}
+														}
+													}else{
+														total = parseFloat(datos[i].declarado_total)
+														peso = parseFloat(datos[i].peso_total)
+														if (datos[i].consignee_json == null) {
+															// VALIDACION PARA EL DECLARADO
+															if (total >= 2000) {
+																	$('#declarado'+datos[i].id).addClass('text-danger');
+																	$('#num_guia' + datos[i].id).addClass('text-danger');
+																	cont++;
+															}else{
+																$('#declarado'+datos[i].id).removeClass('text-danger');
+															}
+
+															// VALIDACION PARA EL PESO
+															if (peso >= 50) {
+																	$('#peso'+datos[i].id).addClass('text-danger');
+																	$('#num_guia' + datos[i].id).addClass('text-danger');
+																	cont++;
+															}else{
+																$('#peso'+datos[i].id).removeClass('text-danger');
+															}
+														}else{
+															total = total - parseFloat(datos[i].declarado2)
+															peso = peso - (parseFloat(datos[i].peso2) * 0.453592)
+															// VALIDACION PARA EL DECLARADO
+															if (total >= 2000) {
+																var cons = JSON.parse(datos[i].consignee_json.replace(/&quot;/g, '"'));
+																if(cons.id != consignee){
+																	$('#declarado'+datos[i].id).removeClass('text-danger');
+																}else{
+																	$('#declarado'+datos[i].id).addClass('text-danger');
+																	$('#num_guia' + datos[i].id).addClass('text-danger');
+																	cont++;
+																}
+															}else{
+																$('.declarado'+datos[i].consignee_id).removeClass('text-danger');
+																if(total < 2000 && peso < 50){
+																	$('.num_guia' + datos[i].consignee_id).removeClass('text-danger');
+																	cont = 0;
+																}
+															}
+
+															// VALIDACION PARA EL PESO
+															if (peso >= 50) {
+																var cons = JSON.parse(datos[i].consignee_json.replace(/&quot;/g, '"'));
+																if(cons.id != consignee){
+																	$('#peso'+datos[i].id).removeClass('text-danger');
+																}else{
+																	$('#peso'+datos[i].id).addClass('text-danger');
+																	$('#num_guia' + datos[i].id).addClass('text-danger');
+																	cont++;
+																}
+															}else{
+																$('.peso'+datos[i].consignee_id).removeClass('text-danger');
+																if(total < 2000 && peso < 50){
+																	$('.num_guia' + datos[i].consignee_id).removeClass('text-danger');
+																	cont = 0;
+																}
+															}
+														}
+													}
+													consignee = datos[i].consignee_id
+
+													// VALIDACION POSICION ARANCELARIA
+													if(datos[i].pa == null){
+														$('#num_guia' + datos[i].id).addClass('text-danger');
+														$('#pa' + datos[i].id).html('No Datos').addClass('text-danger');
+														cont++;
+													}else{
+														if(total < 2000 && peso < 50){
+															$('#num_guia' + datos[i].id).removeClass('text-danger');
+															$('#pa' + datos[i].id).removeClass('text-danger');
+														}
+													}
+												}
+												console.log(cont);
+												if(cont === 0 && datos.length > 0){
+													me.show_buttons = true;
+												}else{
+													me.show_buttons = false;
+												}
+											}
+
+
+											if(!me.close){
+												$('.edit, .delete').hide().children('i').css('font-size', '17px');
+											}else{
+												$('.edit, .delete').remove();
+											}
+                      /* EDITABLE FIELD */
+                      if (me.permissions.editDetail && !me.close) {
+                          $(".td_edit").editable({
+                              ajaxOptions: {
+                                  type: 'post',
+                                  dataType: 'json'
+                              },
+                              url: "updateDetailConsolidado",
+                              validate:function(value){
+                                  if($.trim(value) == ''){
+                                      return 'Este campo es obligatorio!';
+                                  }
+                              },
+                              success: function(response, newValue) {
+                                  me.updateTableDetail();
+                              }
+                          });
+                      }
+                      /* POPOVER PARA LAS GUIAS AGRUPADAS (BADGED) */
+                      $(".pop").popover({ trigger: "manual" , html: true})
+                          .on("mouseenter", function () {
+                              var _this = this;
+                              $(this).popover("show");
+                              $(".popover").on("mouseleave", function () {
+                                  $(_this).popover('hide');
+                              });
+                          }).on("mouseleave", function () {
+                              var _this = this;
+                              setTimeout(function () {
+                                  if (!$(".popover:hover").length) {
+                                      $(_this).popover("hide");
+                                  }
+                              }, 300);
+                      });
+                    },
+					        "footerCallback": function (row, data, start, end, display) {
+			                    var api = this.api(), data;
+			                    /*Remove the formatting to get integer data for summation*/
+			                    var intVal = function (i) {
+			                        return typeof i === 'string' ?
+			                                i.replace(/[\$,]/g, '') * 1 :
+			                                typeof i === 'number' ?
+			                                i : 0;
+			                    };
+			                    /*Total over all pages*/
+			                    var total_cantidad = api
+			                            .column(8)
+			                            .data()
+			                            .reduce(function (a, b) {
+			                                return intVal(a) + intVal(b);
+			                            }, 0);
+		                        var librasR= api
+		                                .column(8, {page: 'current'})
+		                                .data()
+		                                .reduce(function (a, b) {
+		                                    return intVal(a) + intVal(b);
+		                                }, 0);
+		                        var libras= api
+		                                .column(11, {page: 'current'})
+		                                .data()
+		                                .reduce(function (a, b) {
+		                                    return intVal(a) + intVal(b);
+		                                }, 0);
+		                        var declarado= api
+		                                .column(12, {page: 'current'})
+		                                .data()
+		                                .reduce(function (a, b) {
+		                                    return intVal(a) + intVal(b);
+		                                }, 0);
+		                         var pesoK = libras * 0.453592;
+		                         var pesoKR = librasR * 0.453592;
+
+		                         var diferenciaL = librasR - libras;
+		                         var color1 = 'rgb(203, 23, 30)';
+		                         if(diferenciaL === 0){
+		                            color1 = '#4caf50';
+		                         }
+		                         var color2 = 'rgb(203, 23, 30)';
+		                         var diferenciaK = pesoKR - pesoK;
+		                         if(diferenciaK === 0){
+		                            color2 = '#4caf50';
+		                         }
+
+			                    /*Update footer formatCurrency()*/
+		                      $(api.column(6).footer()).html('<spam id="totalDeclarado">$ ' + declarado + '</spam><br>USD');
+			                    $(api.column(7).footer()).html('<spam id="totalPeso">' + libras + ' (Lbs)<br><spam id="totalPesoK">' + isInteger(pesoK) + ' (Kl)</spam></spam>');
+			                    $(api.column(8).footer()).html('<spam id="totalPesoR">' + librasR + ' (Lbs)<br><spam id="totalPesoKR">' + isInteger(pesoKR) + ' (Kl)</spam></spam>');
+			                    $(api.column(9).footer()).html('<spam id="diferenciaL" style="color:'+color1+'">Dif: ' + isInteger(diferenciaL) + ' (Lbs)</spam><br><spam id="diferenciaK" style="color:'+color2+'">Dif: ' + isInteger(diferenciaK) + ' (Kl)</spam>');
+			                },
+					    }).on('xhr.dt', function ( e, settings, json, xhr ) {
+
+					    });
+					    table.on('key', function (e, datatable, key, cell, originalEvent) {
+					        if (key == 13) {
+					            cell.data( $(cell.node()).html() ).draw();
+					            var rowData = datatable.row( cell.index().row ).data();
+					            me.updateDataDetail(rowData);
+					        }
+					    });
+					},
 			}
     }
 </script>

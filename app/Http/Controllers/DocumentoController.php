@@ -837,25 +837,11 @@ class DocumentoController extends Controller
                 if ($documento->liquidado === 1) {
                     $data->liquidado = 1;
                 }
-                // $data->save();
                 if ($data->save()) {
                     /* INSERTAR TRAKCING*/
                     if($request->ids_tracking != ''){
                       $this->addTrackingsToDocument($request->ids_tracking, $data->id, $request->consignee_id);
                     }
-                    // if($data->tracking != ''){
-                    //     DB::table('tracking')->insert([
-                    //         [
-                    //             'agencia_id'            => Auth::user()->agencia_id,
-                    //             'documento_detalle_id'  => $data->id,
-                    //             'consignee_id'          => $request->consignee_id,
-                    //             'codigo'                => $data->tracking,
-                    //             'contenido'             => $data->contenido,
-                    //             'created_at'            => date('Y-m-d H:i:s'),
-                    //         ],
-                    //     ]);
-                    // }
-
                     /* INSERTAR EN STATUS_DETALLE*/
                     DB::table('status_detalle')->insert([
                         [
@@ -1860,22 +1846,24 @@ class DocumentoController extends Controller
                 DB::raw('(SELECT
               			ROUND(Sum(b.peso2) * 0.453592) AS peso_total
               		FROM
-              			consolidado_detalle AS a
-              		INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
+              			consolidado_detalle AS z
+              		INNER JOIN documento_detalle AS b ON z.documento_detalle_id = b.id
               		WHERE
-              			a.deleted_at IS NULL
+              			z.deleted_at IS NULL
               		AND b.deleted_at IS NULL
               		AND b.consignee_id = e.id
+                  AND z.consolidado_id = a.consolidado_id
               	) AS peso_total'),
                 DB::raw('(SELECT
               			Sum(b.declarado2) AS declarado_total
               		FROM
-              			consolidado_detalle AS a
-              		INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
+              			consolidado_detalle AS z
+              		INNER JOIN documento_detalle AS b ON z.documento_detalle_id = b.id
               		WHERE
-              			a.deleted_at IS NULL
+              			z.deleted_at IS NULL
               		AND b.deleted_at IS NULL
               		AND b.consignee_id = e.id
+                  AND z.consolidado_id = a.consolidado_id
               	) AS declarado_total')
             )
             ->where($where)
