@@ -1064,15 +1064,17 @@
 															total = total - parseFloat(datos[i].declarado2)
 															peso = peso - (parseFloat(datos[i].peso2) * 0.453592)
 															// VALIDACION PARA EL DECLARADO
-															if (total >= 2000 || total <= 0 && datos[i].declarado2 == 0) {
+															$('#declarado'+datos[i].id).removeClass('text-danger');
+															$('#num_guia' + datos[i].id).removeClass('text-danger');
+															if (total >= 2000 || total <= 0 || parseFloat(datos[i].declarado2) == 0) {
 																var cons = JSON.parse(datos[i].consignee_json.replace(/&quot;/g, '"'));
-																if(cons.id != consignee){
-																	$('#declarado'+datos[i].id).removeClass('text-danger');
-																}else{
+																// if(cons.id != consignee){
+																// 	$('#declarado'+datos[i].id).removeClass('text-danger');
+																// }else{
 																	$('#declarado'+datos[i].id).addClass('text-danger');
 																	$('#num_guia' + datos[i].id).addClass('text-danger');
 																	cont++;
-																}
+																// }
 															}else{
 																$('.declarado'+datos[i].consignee_id).removeClass('text-danger');
 																// if(total < 2000 && total > 0 && peso < 50){
@@ -1128,15 +1130,18 @@
 															total = total - parseFloat(datos[i].declarado2)
 															peso = peso - (parseFloat(datos[i].peso2) * 0.453592)
 															// VALIDACION PARA EL DECLARADO
-															if (total >= 2000 || total <= 0 || datos[i].declarado2 == 0) {
+															$('#declarado'+datos[i].id).removeClass('text-danger');
+															$('#num_guia' + datos[i].id).removeClass('text-danger');
+															if (total >= 2000 || total <= 0 || parseFloat(datos[i].declarado2) == 0) {
 																var cons = JSON.parse(datos[i].consignee_json.replace(/&quot;/g, '"'));
-																if(cons.id != consignee){
-																	$('#declarado'+datos[i].id).removeClass('text-danger');
-																}else{
+																// console.log(cons.id, ' ', consignee, ' ');
+																// if(cons.id != consignee){
+																	// $('#declarado'+datos[i].id).removeClass('text-danger');
+																// }else{
 																	$('#declarado'+datos[i].id).addClass('text-danger');
 																	$('#num_guia' + datos[i].id).addClass('text-danger');
 																	cont++;
-																}
+																// }
 															}else{
 																$('.declarado'+datos[i].consignee_id).removeClass('text-danger');
 																// if(total < 2000 && total > 0 && peso < 50){
