@@ -30,6 +30,9 @@
 		.table.table td a{
 			margin: 0;
 		}
+		.btn-group>.btn+.dropdown-toggle{
+			height: 34px;
+		}
 </style>
 <template>
 	<div>
@@ -97,7 +100,15 @@
                                             <label class="control-label col-lg-12">&nbsp;</label>
                                             <a hfer="#" target="blank_" class="btn btn-info btn-sm printDocument" data-toggle="tooltip" data-placement="top" title="Imprimir manifiesto"><i class="fa fa-print"></i> Manifiesto</a>
                                             <a hfer="#" target="blank_" class="btn btn-info btn-sm printDocumentGuias" data-toggle="tooltip" data-placement="top" title="Imprimir guias hijas" ><i class="fa fa-print"></i> Guias hijas</a>
-                                            <a @click="printLabelBagModal" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Imprimir labels por bolsas"><i class="fa fa-print"></i> Labes por bolsa</a>
+																						<div class="btn-group">
+																						  <a class="btn btn-info btn-sm" href="getDataPrintBagsConsolidate" target="blank_"><i class="fa fa-print"></i> Bolsas / Tulas</a>
+																						  <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																						    <span class="caret"></span>
+																						  </button>
+																						  <ul class="dropdown-menu">
+																						    <li><a @click="printLabelBagModal"><i class="fas fa-print"></i> Mas</a></li>
+																						  </ul>
+																						</div>
                                         </div>
 																				<div class="col-sm-12" v-show="!show_buttons" style="color: #E34724">
 																					<span>Hay valores declarados en cero (0) o valores que superan lo permitido para COURIER o no hay documentos ingresadas</span></div>
@@ -344,23 +355,41 @@
 
 		<!-- MODAL IMPRIMIR LABELS POR BOLSA -->
 		<div class="modal fade bs-example" id="modalPrintLabels" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog" style="width: 20%!important">
+				<div class="modal-dialog" style="width: 40%!important">
 						<div class="modal-content">
 								<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 										<h4 class="modal-title" id="myModalLabel">
-												<i class="fa fa-barcode"></i> Imprimir Labels por Bolsa
+												<i class="fa fa-barcode"></i>Imprimir
 										</h4>
 								</div>
 								<div class="modal-body">
-									<h3>Seleccione el numero de bolsa</h3>
-									<select class="form-control">
-										<option value="">1</option>
-										<option value="">2</option>
-									</select>
+									<div class="row">
+										<div class="col-sm-12">
+												<div class="col-sm-6">
+													<h3>Seleccione el numero de bolsa</h3>
+														<div class="form-group">
+															<select class="form-control">
+																<option value="">Todas</option>
+																<option value="">1</option>
+																<option value="">2</option>
+															</select>
+														</div>
+												</div>
+												<div class="col-sm-6">
+													<div class="form-group">
+														<h3>&nbsp;</h3>
+														<a hfer="#" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Imprimir Labels Bolsa"><i class="fa fa-print"></i> Bolsas</a>
+														<a hfer="#" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Imprimir Invoice"><i class="fa fa-print"></i> Invoice</a>
+														<a hfer="#" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Imprimir Guias"><i class="fa fa-print"></i> Guias</a>
+													</div>
+												</div>
+										</div>
+									</div>
+
 								</div>
 								<div class="modal-footer">
-										<button type="button" id="" @click="printLabelBag()" class="btn btn-primary" data-dismiss="modal">Agregar</button>
+										<!-- <button type="button" id="" @click="printLabelBag()" class="btn btn-primary" data-dismiss="modal">Agregar</button> -->
 										<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
 								</div>
 						</div>
@@ -1045,6 +1074,7 @@
 																	cont++;
 																}
 															}else{
+																console.log('remov6 '  + datos[i].num_guia);
 																$('.declarado'+datos[i].consignee_id).removeClass('text-danger');
 																if(total < 2000 && peso < 50){
 																	$('.num_guia' + datos[i].consignee_id).removeClass('text-danger');
@@ -1147,7 +1177,6 @@
 														}
 													}
 												}
-												console.log(cont);
 												if(cont === 0 && datos.length > 0){
 													me.show_buttons = true;
 												}else{

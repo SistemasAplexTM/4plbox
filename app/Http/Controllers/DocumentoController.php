@@ -2617,4 +2617,41 @@ class DocumentoController extends Controller
       return $answer;
     }
 
+    public function getDataPrintBagsConsolidate($id)
+    {
+      $data = DB::table('consolidado_detalle AS a')
+          ->join('documento AS b', 'a.consolidado_id', 'b.id')
+          ->leftJoin('master AS c', 'c.id', 'b.master_id')
+          ->join('localizacion AS d', 'b.ciudad_id', 'd.id')
+          ->join('deptos AS e', 'd.deptos_id', 'e.id')
+          ->join('pais AS f', 'e.pais_id', 'f.id')
+          ->join('agencia AS g', 'g.id', 'b.agencia_id')
+          ->select(
+              'a.num_bolsa',
+              'c.num_master',
+              'd.nombre AS ciudad',
+              'f.descripcion AS pais',
+              'g.descripcion AS agencia',
+              'g.logo'
+          )
+          ->where([
+              ['a.deleted_at', null],
+              ['b.deleted_at', null],
+              ['a.consolidado_id', $id],
+          ])
+          ->groupBy(
+            'a.num_bolsa',
+            'c.num_master',
+            'd.nombre',
+            'f.descripcion',
+            'g.descripcion',
+            'g.logo')
+          ->get();
+
+          $pdf = PDF::loadView('pdf.labels.bolsasConsolidado', compact('data'))
+          ->setPaper(array(0, 0, 550, 700), 'landscape');
+          $nameDocument = 'Label Bolsa';
+          return $pdf->stream($nameDocument . '.pdf');
+    }
+
 }
