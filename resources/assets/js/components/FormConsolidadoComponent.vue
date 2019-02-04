@@ -1107,9 +1107,10 @@
 														peso = parseFloat(datos[i].peso_total)
 														if (datos[i].consignee_json == null) {
 															// VALIDACION PARA EL DECLARADO
-															if (total >= 2000) {
+															if (total >= 2000 || total <= 0 && datos[i].declarado2 == 0) {
 																	$('#declarado'+datos[i].id).addClass('text-danger');
 																	$('#num_guia' + datos[i].id).addClass('text-danger');
+
 																	cont++;
 															}else{
 																$('#declarado'+datos[i].id).removeClass('text-danger');
@@ -1171,7 +1172,7 @@
 														$('#pa' + datos[i].id).html('No Datos').addClass('text-danger');
 														cont++;
 													}else{
-														if(total < 2000 && peso < 50){
+														if(total < 2000 && total > 0 && peso < 50){
 															$('#num_guia' + datos[i].id).removeClass('text-danger');
 															$('#pa' + datos[i].id).removeClass('text-danger');
 														}
