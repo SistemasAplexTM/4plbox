@@ -1711,7 +1711,7 @@ class DocumentoController extends Controller
             ])
             ->whereRaw('(documento_detalle.num_warehouse = "' . $num_guia . '" or documento_detalle.num_guia = "' . $num_guia . '")')
             ->first();
-        if (count($detalle) > 0) {
+        if ($detalle) {
             /* VERIFICAR QUE EL NUMERO INGRESADO NO ESTE EN OTRO CONSOLIDADO O YA ESTE INGRESADO */
             $cons_detail = DB::table('consolidado_detalle as a')
                 ->join('documento as b', 'a.consolidado_id', 'b.id')
@@ -1719,7 +1719,7 @@ class DocumentoController extends Controller
                 ->where([['a.deleted_at', null], ['a.documento_detalle_id', $detalle->id]])
                 ->first();
 
-            if (count($cons_detail) == 0) {
+            if (!$cons_detail) {
                 /* VERIFICAR SI LA GUIA O WAREHOUSE INGRESADO PERTENECE AL PAIS DEL CONSOLIDADO */
                 $cons = DB::table('consignee as a')
                     ->join('localizacion as b', 'a.localizacion_id', 'b.id')
