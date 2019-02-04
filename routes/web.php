@@ -332,6 +332,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* MODULO INFORMES */
     Route::get('report', 'ReportController@index')->name('report.index');
+
+    /* MODULO MINTIC */
+    Route::get('mintic', 'MinticController@index');
+    Route::get('mintic/all', 'MinticController@all');
+    Route::get('mintic/searchDocument/{document}', 'MinticController@searchDocument');
+    Route::post('mintic/createDetail', 'MinticController@createDetail');
 });
 Route::get('aplexConfig/config/{key}', 'AplexConfigController@get')->name('config.config');
 Route::get('aplexConfig/getDataAgencyById/{id}', 'AplexConfigController@getDataAgencyById')->name('aplexConfig.getDataAgencyById');
