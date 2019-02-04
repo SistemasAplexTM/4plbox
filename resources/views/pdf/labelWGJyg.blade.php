@@ -66,19 +66,19 @@
             height: 18px;
             background-color: #000;
             color: #FFFFFF;
-            width: 55px;
+            width: 85px;
             font-size: 15px;
             font-weight: bold;
         }
         .nomDesti{
             position: absolute;
             height: 15px;
-            margin-left: 60px;
+            margin-left: 90px;
             width: 310px;
             font-size: 11px;
         }
         .dirDesti{
-            margin-left: 60px;
+            margin-left: 90px;
             width: 310px;
             font-size: 11px;
         }
@@ -157,8 +157,18 @@
 </style>
 <?php
 	$cont = 0;
-    $toalRegistros = count($detalle);
-    $contRegistros = 0;
+  $toalRegistros = count($detalle);
+  $contRegistros = 0;
+  $shipper = null;
+  $consignee = null;
+  if($dato_consolidado != null){
+    if($dato_consolidado->shipper != null){
+      $shipper = json_decode($dato_consolidado->shipper);
+    }
+    if($dato_consolidado->consignee != null){
+      $consignee = json_decode($dato_consolidado->consignee);
+    }
+  }
 ?>
 @foreach ($detalle as $value)
 <?php $contRegistros++ ?>
@@ -177,7 +187,7 @@
         <td>
             @if(env('APP_CLIENT') != 'worldcargo')
                 <div class="remitente">
-                    {{ $value->ship_nomfull }}
+                    {{ ($shipper != null) ? $shipper->nombre : $value->ship_nomfull }}
                 </div>
             @endif
         </td>
@@ -187,7 +197,7 @@
             <div class="telefono">
                 @if(env('APP_CLIENT') != 'worldcargo')
                     @lang('general.phone'):
-                    {{ $value->ship_tel }}
+                    {{ ($shipper != null) ? $shipper->telefono : $value->ship_tel }}
                 @endif
             </div>
         </td>
@@ -199,10 +209,10 @@
                      @lang('general.consignee'):
                 </div>
                 <div class="nomDesti">
-                    {{ $value->cons_nomfull }}
+                    {{ ($consignee != null) ? $consignee->nombre : $value->cons_nomfull }}
                 </div>
                 <div class="dirDesti">
-                    {{ $value->cons_dir }}
+                    {{ ($consignee != null) ? $consignee->direccion : $value->cons_dir }}
                 </div>
             </div>
         </td>
@@ -210,7 +220,7 @@
     <tr>
         <td>
             <div class="ciudad">
-                {{ $value->cons_ciudad }}
+                {{ ($consignee != null) ? $consignee->ciudad : $value->cons_ciudad }}
             </div>
         </td>
     </tr>
@@ -218,7 +228,7 @@
         <td>
             <div class="datosAdd">
                 <div class="codebar1">
-                    <div class="peso">{{ $value->peso }} Lb</div>
+                    <div class="peso">{{ (isset($consolidado) and $consolidado != null) ? $value->peso2 : $value->peso }} Lb</div>
                     <div class="paginacion">{{ $cont + 1 . '-' . count($detalle) }}</div>
                     <div class="warehouse">Rec: </div>
                 </div>
@@ -226,14 +236,17 @@
                     <div class="pkgs">Pkgs: 1 </div>
                     <div class="fob">
                         Fob:
-                        {{ number_format($value->valor,2) }}
+                        {{ number_format(((isset($consolidado) and $consolidado != null) ? $value->declarado2 : $value->valor),2) }}
                     </div>
-                    <?php $leng = strlen($value->contenido); ?>
+                    <?php
+                      $contenido = ((isset($consolidado) and $consolidado != null) ? $value->contenido2 : $value->contenido);
+                      $leng = strlen($contenido);
+                    ?>
                     <div class="des">
                         @if(env('APP_CLIENT') != 'worldcargo')
                             Desc:
                             <span id="descripcion">
-                                {{ (($leng > 215) ? str_replace(',', '-', substr($value->contenido, 0, 215)) : str_replace(',', ', ', $value->contenido)) }}
+                                {{ (($leng > 215) ? str_replace(',', '-', substr($contenido, 0, 215)) : str_replace(',', ', ', $contenido)) }}
                             </span>
                         @endif
                         <span id="descripcion">

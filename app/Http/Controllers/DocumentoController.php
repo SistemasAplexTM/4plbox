@@ -837,25 +837,11 @@ class DocumentoController extends Controller
                 if ($documento->liquidado === 1) {
                     $data->liquidado = 1;
                 }
-                // $data->save();
                 if ($data->save()) {
                     /* INSERTAR TRAKCING*/
                     if($request->ids_tracking != ''){
                       $this->addTrackingsToDocument($request->ids_tracking, $data->id, $request->consignee_id);
                     }
-                    // if($data->tracking != ''){
-                    //     DB::table('tracking')->insert([
-                    //         [
-                    //             'agencia_id'            => Auth::user()->agencia_id,
-                    //             'documento_detalle_id'  => $data->id,
-                    //             'consignee_id'          => $request->consignee_id,
-                    //             'codigo'                => $data->tracking,
-                    //             'contenido'             => $data->contenido,
-                    //             'created_at'            => date('Y-m-d H:i:s'),
-                    //         ],
-                    //     ]);
-                    // }
-
                     /* INSERTAR EN STATUS_DETALLE*/
                     DB::table('status_detalle')->insert([
                         [
@@ -1619,83 +1605,19 @@ class DocumentoController extends Controller
         if ($id_detalle != null) {
             $where[] = array('documento_detalle.id', $id_detalle);
         }
+        $dato_consolidado = null;
+        if($id_detail_consol != null){
+          $dato_consolidado = DB::table('consolidado_detalle AS a')
+          ->select('a.consignee', 'a.shipper')
+          ->where([['a.deleted_at', NULL],['a.id', $id_detail_consol]])
+          ->first();
+        }
+        $detalle = $this->pdfLabelDetail($where, $codigo, $consolidado, $id_detail_consol);
 
-        // if($consolidado === null){
-              $detalle = $this->pdfLabelDetail($where, $codigo);
-        // }else{
-        //     $detalle = DB::table('consolidado_detalle as a')
-        //         ->leftJoin('documento_detalle as b', 'a.documento_detalle_id', '=', 'b.id')
-        //         ->leftJoin('shipper as c', 'b.shipper_id', '=', 'c.id')
-        //         ->leftJoin('consignee as d', 'b.consignee_id', '=', 'd.id')
-        //         ->leftJoin('localizacion as e', 'c.localizacion_id', '=', 'e.id')
-        //         ->leftJoin('deptos as f', 'e.deptos_id', '=', 'f.id')
-        //         ->leftJoin('pais', 'f.pais_id', '=', 'pais.id')
-        //         ->leftJoin('localizacion as g', 'd.localizacion_id', '=', 'g.id')
-        //         ->leftJoin('deptos as h', 'e.deptos_id', '=', 'h.id')
-        //         ->leftJoin('pais as i', 'h.pais_id', '=', 'i.id')
-        //         ->leftJoin(DB::raw("(SELECT
-        //                     z.agrupado,
-        //                     SUM(x.peso) AS peso,
-        //                     SUM(x.peso2) AS peso2,
-        //                     GROUP_CONCAT(
-
-        //                         IF (
-        //                             z.flag = 1,
-        //                             CONCAT(
-
-        //                                 IF (
-        //                                     x.liquidado = 1,
-        //                                     CONCAT('<label>- ', x.num_guia, \"</label><a style='float: right;cursor:pointer;color:red' title='Quitar' data-toggle='tooltip' onclick='removerGuiaAgrupada(\",z.id,\")'><i class='fa fa-times' style='font-size: 15px;'></i></a>\"),
-        //                                     CONCAT('<label>- ', x.num_warehouse, \"</label><a style='float: right;cursor:pointer;color:red' title='Quitar' data-toggle='tooltip' onclick='removerGuiaAgrupada(\",z.id,\")'><i class='fa fa-times' style='font-size: 15px;'></i></a>\")
-        //                                 )
-        //                             ),
-        //                             NULL
-        //                         )
-        //                     ) AS guias_agrupadas
-        //                 FROM
-        //                     consolidado_detalle AS z
-        //                 INNER JOIN documento_detalle AS x ON z.documento_detalle_id = x.id
-        //                 WHERE
-        //                     z.deleted_at IS NULL
-        //                 AND x.deleted_at IS NULL
-        //                 GROUP BY
-        //                     z.agrupado
-        //             ) AS j"), 'a.agrupado', 'j.agrupado')
-        //         ->select(
-        //             'a.num_bolsa',
-        //             'a.shipper AS shipper_json',
-        //             'a.consignee AS consignee_json',
-        //             'b.' . $codigo . ' as codigo',
-        //             'b.num_warehouse',
-        //             'b.num_guia',
-        //             'b.created_at',
-        //             'c.nombre_full as ship_nomfull',
-        //             'c.direccion as ship_dir',
-        //             'c.telefono as ship_tel',
-        //             'c.zip as ship_zip',
-        //             'e.nombre as ship_ciudad',
-        //             'f.descripcion as ship_depto',
-        //             'pais.descripcion as ship_pais',
-        //             'd.nombre_full as cons_nomfull',
-        //             'd.zip as cons_zip',
-        //             'd.po_box as cons_pobox',
-        //             'g.nombre as cons_ciudad',
-        //             'h.descripcion as cons_depto',
-        //             'd.direccion as cons_dir',
-        //             'd.telefono as cons_tel',
-        //             'i.descripcion as cons_pais',
-        //             'b.declarado2',
-        //             'j.peso2',
-        //             'b.contenido2',
-        //             'b.liquidado'
-        //         )
-        //         ->where([['a.deleted_at', null], ['a.documento_detalle_id', $id_detalle], ['a.flag', 0]])
-        //         ->get();
-        // }
         $this->AddToLog('Impresion labels (' . $documento->id . ')');
 
         if(env('APP_CLIENT') === 'colombiana'){
-          $pdf = PDF::loadView('pdf.labelWGJyg', compact('documento', 'detalle', 'document'))
+          $pdf = PDF::loadView('pdf.labelWGJyg', compact('documento', 'detalle', 'document', 'consolidado', 'dato_consolidado'))
           ->setPaper(array(25, -25, 260, 360), 'landscape');
             // $pdf = PDF::loadView('pdf.labelWGcolombiana', compact('documento', 'detalle', 'document'))
                 // ->setPaper(array(25, -25, 300, 300), 'landscape');
@@ -1708,20 +1630,20 @@ class DocumentoController extends Controller
         }else{
             if (env('APP_LABEL') === '4x4') {
                 if(env('APP_CLIENT') === 'jyg'){
-                    $pdf = PDF::loadView('pdf.labelWGJyg', compact('documento', 'detalle', 'document'))
+                    $pdf = PDF::loadView('pdf.labelWGJyg', compact('documento', 'detalle', 'document', 'consolidado', 'dato_consolidado'))
                     ->setPaper(array(25, -25, 260, 360), 'landscape');
                     $nameDocument = 'Label' . $document . '-' . $documento->id;
                     $pdf->save(public_path(). '/files/dumaFile.pdf');
                     return true;
                 }else{
-                    $pdf = PDF::loadView('pdf.labelWG', compact('documento', 'detalle', 'document'))
+                    $pdf = PDF::loadView('pdf.labelWG', compact('documento', 'detalle', 'document', 'consolidado', 'dato_consolidado'))
                     ->setPaper(array(25, -25, 260, 360), 'landscape');
                 }
 
                 $nameDocument = 'Label' . $document . '-' . $documento->id;
                 return $pdf->stream($nameDocument . '.pdf');
             }else{
-                return view('pdf/labelWG_2', compact('documento', 'detalle', 'document'));
+                return view('pdf/labelWG_2', compact('documento', 'detalle', 'document', 'consolidado', 'dato_consolidado'));
             }
         }
     }
@@ -1730,7 +1652,7 @@ class DocumentoController extends Controller
       $consolidado = null;
       $id_detalle = null;
       $id_detail_consol = null;
-      if($request->input('document')){
+      if($request->input('consolidado')){
         $consolidado = 'consolidado';
       }
       if($request->input('id_detail')){
@@ -1943,22 +1865,24 @@ class DocumentoController extends Controller
                 DB::raw('(SELECT
               			ROUND(Sum(b.peso2) * 0.453592) AS peso_total
               		FROM
-              			consolidado_detalle AS a
-              		INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
+              			consolidado_detalle AS z
+              		INNER JOIN documento_detalle AS b ON z.documento_detalle_id = b.id
               		WHERE
-              			a.deleted_at IS NULL
+              			z.deleted_at IS NULL
               		AND b.deleted_at IS NULL
               		AND b.consignee_id = e.id
+                  AND z.consolidado_id = a.consolidado_id
               	) AS peso_total'),
                 DB::raw('(SELECT
               			Sum(b.declarado2) AS declarado_total
               		FROM
-              			consolidado_detalle AS a
-              		INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
+              			consolidado_detalle AS z
+              		INNER JOIN documento_detalle AS b ON z.documento_detalle_id = b.id
               		WHERE
-              			a.deleted_at IS NULL
+              			z.deleted_at IS NULL
               		AND b.deleted_at IS NULL
               		AND b.consignee_id = e.id
+                  AND z.consolidado_id = a.consolidado_id
               	) AS declarado_total')
             )
             ->where($where)
