@@ -1044,7 +1044,7 @@
 													if (datos[i].consignee_id == consignee) {
 														if (datos[i].consignee_json == null) {
 															// VALIDACION PARA EL DECLARADO
-															if (total >= 2000 || total <= 0 && datos[i].declarado2 == 0) {
+															if (total >= 2000 || total <= 0 || parseFloat(datos[i].declarado2) == 0) {
 																	$('#declarado'+datos[i].id).addClass('text-danger');
 																	$('#num_guia' + datos[i].id).addClass('text-danger');
 																	cont++;
@@ -1075,7 +1075,8 @@
 																}
 															}else{
 																$('.declarado'+datos[i].consignee_id).removeClass('text-danger');
-																if(total < 2000 && total > 0 && peso < 50){
+																// if(total < 2000 && total > 0 && peso < 50){
+																	if(total < 2000 && total > 0 && peso < 50 && parseFloat(datos[i].declarado2) != 0){
 																	$('.num_guia' + datos[i].consignee_id).removeClass('text-danger');
 																	cont = 0;
 																}
@@ -1094,7 +1095,8 @@
 															}else{
 																$('.peso'+datos[i].consignee_id).removeClass('text-danger');
 																if(total < 2000 && peso < 50){
-																	if(total < 2000 && total > 0 && peso < 50){
+																	// if(total < 2000 && total > 0 && peso < 50){
+																		if(total < 2000 && total > 0 && peso < 50 && parseFloat(datos[i].declarado2) != 0){
 																		$('.num_guia' + datos[i].consignee_id).removeClass('text-danger');
 																		cont = 0;
 																	}
@@ -1106,10 +1108,9 @@
 														peso = parseFloat(datos[i].peso_total)
 														if (datos[i].consignee_json == null) {
 															// VALIDACION PARA EL DECLARADO
-															if (total >= 2000 || total <= 0 && datos[i].declarado2 == 0) {
+															if (total >= 2000 || total <= 0 || parseFloat(datos[i].declarado2) == 0) {
 																	$('#declarado'+datos[i].id).addClass('text-danger');
 																	$('#num_guia' + datos[i].id).addClass('text-danger');
-
 																	cont++;
 															}else{
 																$('#declarado'+datos[i].id).removeClass('text-danger');
@@ -1127,7 +1128,7 @@
 															total = total - parseFloat(datos[i].declarado2)
 															peso = peso - (parseFloat(datos[i].peso2) * 0.453592)
 															// VALIDACION PARA EL DECLARADO
-															if (total >= 2000 || total <= 0 && datos[i].declarado2 == 0) {
+															if (total >= 2000 || total <= 0 || datos[i].declarado2 == 0) {
 																var cons = JSON.parse(datos[i].consignee_json.replace(/&quot;/g, '"'));
 																if(cons.id != consignee){
 																	$('#declarado'+datos[i].id).removeClass('text-danger');
@@ -1138,7 +1139,8 @@
 																}
 															}else{
 																$('.declarado'+datos[i].consignee_id).removeClass('text-danger');
-																if(total < 2000 && total > 0 && peso < 50){
+																// if(total < 2000 && total > 0 && peso < 50){
+																	if(total < 2000 && total > 0 && peso < 50 && parseFloat(datos[i].declarado2) != 0){
 																	$('.num_guia' + datos[i].consignee_id).removeClass('text-danger');
 																	cont = 0;
 																}
@@ -1156,7 +1158,7 @@
 																}
 															}else{
 																$('.peso'+datos[i].consignee_id).removeClass('text-danger');
-																if(total < 2000 && total > 0 && peso < 50){
+																if(total < 2000 && total > 0 && peso < 50 && parseFloat(datos[i].declarado2) != 0){
 																	$('.num_guia' + datos[i].consignee_id).removeClass('text-danger');
 																	cont = 0;
 																}
@@ -1171,7 +1173,8 @@
 														$('#pa' + datos[i].id).html('No Datos').addClass('text-danger');
 														cont++;
 													}else{
-														if(total < 2000 && total > 0 && peso < 50){
+														// if(total < 2000 && total > 0 && peso < 50){
+															if(total < 2000 && total > 0 && peso < 50 && parseFloat(datos[i].declarado2) != 0){
 															$('#num_guia' + datos[i].id).removeClass('text-danger');
 															$('#pa' + datos[i].id).removeClass('text-danger');
 														}
