@@ -799,7 +799,7 @@ class DocumentoController extends Controller
                     $data->tracking = null;
                 }
 
-                /* OBTENER EL PREFIJO DE LA CIUDAD DEL CONSIGNEE PARA HACER EL NUMERO DE GUIA */
+                /* OBTENER EL PREFIJO DE LA CIUDAD DEL CONSIGNEE PARA HACER EL NÚMERO DE GUIA */
                 $prefijoGuia = DB::table('consignee as a')
                     ->join('localizacion as b', 'a.localizacion_id', 'b.id')
                     ->join('deptos as c', 'b.deptos_id', 'c.id')
@@ -824,8 +824,8 @@ class DocumentoController extends Controller
                 $caracteres      = strlen($documento->consecutivo);
                 $sumarCaracteres = 7 - $caracteres;
                 $carcater        = '0';
-                $prefijo         = (isset($prefijoGuia->prefijo) and $prefijoGuia->prefijo != '') ? $prefijoGuia->prefijo : '';
-                $prefijoPais     = (isset($prefijoGuia->iso2) and $prefijoGuia->iso2 != '') ? $prefijoGuia->iso2 : '';
+                $prefijo         = (isset($prefijoGuia->prefijo) and $prefijoGuia->prefijo != '') ? $prefijoGuia->prefijo : 'CLO';
+                $prefijoPais     = (isset($prefijoGuia->iso2) and $prefijoGuia->iso2 != '') ? $prefijoGuia->iso2 : 'CO';
                 for ($i = 1; $i <= $sumarCaracteres; $i++) {
                     $prefijo = $prefijo . $carcater;
                 }
@@ -873,6 +873,12 @@ class DocumentoController extends Controller
                         "code"   => 200,
                         "status" => 200,
                     );
+
+                    // Validación para Mintic
+                    if ($request->minitc != NULL) {
+                      $this->mintic($request->minitc, $data->id, $request->detail);
+                    }
+
                 } else {
                     $answer = array(
                         "error"  => 'Error al intentar Eliminar el registro.',
@@ -895,6 +901,19 @@ class DocumentoController extends Controller
             );
             return $answer;
         }
+    }
+
+    public function mintic($mintic, $id, $ids)
+    {
+      DocumentoDetalle::where('id', $id)->update([
+        'mintic' => $mintic
+      ]);
+      foreach ($ids as $key => $value) {
+        DocumentoDetalle::where('id', $value['id'])->update([
+          'agrupado' => $id,
+          'flag' => 1
+        ]);
+      }
     }
 
     public function addTrackingsToDocument($ids, $id_detalle, $id_consignee)

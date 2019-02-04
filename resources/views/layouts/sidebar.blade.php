@@ -80,6 +80,15 @@
                     @endcan
                     @can('documento.index')
                     <li>
+                        <a href="{{ url('mintic') }}">
+                            <spam class="fa fa-clipboard">
+                            </spam>
+                             Mintic
+                        </a>
+                    </li>
+                    @endcan
+                    @can('documento.index')
+                    <li>
                         <a href="{{ route('receipt.index') }}">
                             <spam class="fal fa-file-signature">
                             </spam>
