@@ -106,7 +106,7 @@
         <table>
           <tr>
             <td colspan="2" rowspan="5" style="width:300px;height: 100px;">
-                <img src="{{ asset('storage/') }}/{{ ((isset($documento->agencia_logo) and $documento->agencia_logo != '') ? trim($documento->agencia_logo) : 'logo.png') }}" style="width: 100%"/>
+                {{-- <img src="{{ asset('storage/') }}/{{ ((isset($documento->agencia_logo) and $documento->agencia_logo != '') ? trim($documento->agencia_logo) : 'logo.png') }}" style="width: 100%"/> --}}
             </td>
             <td colspan="2" class="agency_title title_doc" style="">{{ ((isset($documento->agencia) and $documento->agencia != '') ? $documento->agencia : '') }}</td>
           </tr>

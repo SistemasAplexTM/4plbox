@@ -898,16 +898,20 @@
 																		if(me.close){
 																			group = '';
 																		}
+																		var error = '';
+																		if((full.flag_declarado != 0 && full.flag_declarado != null) || parseFloat(full.declarado2) === 0 || full.flag_peso != 0 || parseFloat(full.peso2) === 0){
+																			error = 'text-danger'
+																		}
 		                                if(me.app_type === 'courier'){
 		                                    if(me.localizacion_id.pais_id != pais_id_config){
-		                                        return '<span id="num_guia'+full.id+'" class="num_guia'+full.consignee_id+'">' + full.num_warehouse + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" role="button" \n\
+		                                        return '<span id="num_guia'+full.id+'" class="'+error+'">' + full.num_warehouse + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" role="button" \n\
 		                                            data-html="true" \n\
 		                                            data-toggle="popover" \n\
 		                                            data-trigger="hover" \n\
 		                                            title="<b>Guias agrupadas</b>" \n\
 		                                            data-content="'+groupGuias+'" ' + group + '>'+full.agrupadas+'</a>';
 		                                    }else{
-	                                          return '<span id="num_guia'+full.id+'" class="num_guia'+full.consignee_id+'">' + full.num_guia + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" \n\
+	                                          return '<span id="num_guia'+full.id+'" class="'+error+'">' + full.num_guia + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" \n\
 	                                          role="button" \n\
 	                                          data-html="true" \n\
 	                                          data-toggle="popover" \n\
@@ -916,7 +920,7 @@
 	                                          data-content="'+groupGuias+'" ' + group + '>'+full.agrupadas+'</a>';
 		                                    }
 		                                }else{
-		                                    return '<span id="num_guia'+full.id+'" class="num_guia'+full.consignee_id+'">' + full.num_warehouse + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" role="button" \n\
+		                                    return '<span id="num_guia'+full.id+'" class="'+error+'">' + full.num_warehouse + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" role="button" \n\
 		                                            data-html="true" \n\
 		                                            data-toggle="popover" \n\
 		                                            data-trigger="hover" \n\
@@ -968,12 +972,12 @@
 		                  },
 		                  {
 		                      "render": function (data, type, full, meta) {
-		                          return '<a id="declarado'+ full.id +'" data-name="declarado2" data-pk="'+full.documento_detalle_id+'" class="td_edit declarado'+ full.consignee_id +'" data-type="text" data-placement="right" data-title="Declarado">'+full.declarado2+'</a>';
+		                          return '<a data-name="declarado2" data-pk="'+full.documento_detalle_id+'" class="td_edit '+ ((full.flag_declarado != 0 || parseFloat(full.declarado2) === 0) ? 'text-danger' : '') +'" data-type="text" data-placement="right" data-title="Declarado">'+full.declarado2+'</a>';
 		                      }
 		                  },
 		                  {
 		                      "render": function (data, type, full, meta) {
-		                          return '<a id="peso'+ full.id +'" data-name="peso2" data-pk="'+full.documento_detalle_id+'" class="td_edit" data-type="text" data-placement="right" data-title="Peso">'+full.peso2+'</a>';
+		                          return '<a id="peso'+ full.consignee_id +'" data-name="peso2" data-pk="'+full.documento_detalle_id+'" class="td_edit '+ ((full.flag_peso != 0 || parseFloat(full.peso2) === 0) ? 'text-danger' : '') +'" data-type="text" data-placement="right" data-title="Peso">'+full.peso2+'</a>';
 		                      }
 		                  },
 		                  {data: 'peso', name: 'peso'},
@@ -1036,141 +1040,141 @@
 										let datos = api.rows( {page:'current'} ).data();
 										let cont = 0;
 											if(app_type === 'courier'){
-												var consignee = null
-												var total = null
-												var peso = null
+												// var consignee = null
+												// var total = null
+												// var peso = null
 												for (var i = 0; i < datos.length; i++) {
 													// VALIDACION DECLARADO Y PESO SOBRE EL CONSIGNEE
-													if (datos[i].consignee_id == consignee) {
-														if (datos[i].consignee_json == null) {
-															// VALIDACION PARA EL DECLARADO
-															if (total >= 2000 || total <= 0 || parseFloat(datos[i].declarado2) == 0) {
-																	$('#declarado'+datos[i].id).addClass('text-danger');
-																	$('#num_guia' + datos[i].id).addClass('text-danger');
-																	cont++;
-															}else{
-																$('#declarado'+datos[i].id).removeClass('text-danger');
-															}
-
-															// VALIDACION PARA EL PESO
-															if (peso >= 50) {
-																	$('#peso'+datos[i].id).addClass('text-danger');
-																	$('#num_guia' + datos[i].id).addClass('text-danger');
-																	cont++;
-															}else{
-																$('#peso'+datos[i].id).removeClass('text-danger');
-															}
-														}else{
-															total = total - parseFloat(datos[i].declarado2)
-															peso = peso - (parseFloat(datos[i].peso2) * 0.453592)
-															// VALIDACION PARA EL DECLARADO
-															$('#declarado'+datos[i].id).removeClass('text-danger');
-															$('#num_guia' + datos[i].id).removeClass('text-danger');
-															if (total >= 2000 || total <= 0 || parseFloat(datos[i].declarado2) == 0) {
-																var cons = JSON.parse(datos[i].consignee_json.replace(/&quot;/g, '"'));
-																// if(cons.id != consignee){
-																// 	$('#declarado'+datos[i].id).removeClass('text-danger');
-																// }else{
-																	$('#declarado'+datos[i].id).addClass('text-danger');
-																	$('#num_guia' + datos[i].id).addClass('text-danger');
-																	cont++;
-																// }
-															}else{
-																$('.declarado'+datos[i].consignee_id).removeClass('text-danger');
-																// if(total < 2000 && total > 0 && peso < 50){
-																	if(total < 2000 && total > 0 && peso < 50 && parseFloat(datos[i].declarado2) != 0){
-																	$('.num_guia' + datos[i].consignee_id).removeClass('text-danger');
-																	cont = 0;
-																}
-															}
-
-															// VALIDACION PARA EL PESO
-															if (peso >= 50) {
-																var cons = JSON.parse(datos[i].consignee_json.replace(/&quot;/g, '"'));
-																if(cons.id != consignee){
-																	$('#peso'+datos[i].id).removeClass('text-danger');
-																}else{
-																	$('#peso'+datos[i].id).addClass('text-danger');
-																	$('#num_guia' + datos[i].id).addClass('text-danger');
-																	cont++;
-																}
-															}else{
-																$('.peso'+datos[i].consignee_id).removeClass('text-danger');
-																if(total < 2000 && peso < 50){
-																	// if(total < 2000 && total > 0 && peso < 50){
-																		if(total < 2000 && total > 0 && peso < 50 && parseFloat(datos[i].declarado2) != 0){
-																		$('.num_guia' + datos[i].consignee_id).removeClass('text-danger');
-																		cont = 0;
-																	}
-																}
-															}
-														}
-													}else{
-														total = parseFloat(datos[i].declarado_total)
-														peso = parseFloat(datos[i].peso_total)
-														if (datos[i].consignee_json == null) {
-															// VALIDACION PARA EL DECLARADO
-															if (total >= 2000 || total <= 0 || parseFloat(datos[i].declarado2) == 0) {
-																	$('#declarado'+datos[i].id).addClass('text-danger');
-																	$('#num_guia' + datos[i].id).addClass('text-danger');
-																	cont++;
-															}else{
-																$('#declarado'+datos[i].id).removeClass('text-danger');
-															}
-
-															// VALIDACION PARA EL PESO
-															if (peso >= 50) {
-																	$('#peso'+datos[i].id).addClass('text-danger');
-																	$('#num_guia' + datos[i].id).addClass('text-danger');
-																	cont++;
-															}else{
-																$('#peso'+datos[i].id).removeClass('text-danger');
-															}
-														}else{
-															total = total - parseFloat(datos[i].declarado2)
-															peso = peso - (parseFloat(datos[i].peso2) * 0.453592)
-															// VALIDACION PARA EL DECLARADO
-															$('#declarado'+datos[i].id).removeClass('text-danger');
-															$('#num_guia' + datos[i].id).removeClass('text-danger');
-															if (total >= 2000 || total <= 0 || parseFloat(datos[i].declarado2) == 0) {
-																var cons = JSON.parse(datos[i].consignee_json.replace(/&quot;/g, '"'));
-																// console.log(cons.id, ' ', consignee, ' ');
-																// if(cons.id != consignee){
-																	// $('#declarado'+datos[i].id).removeClass('text-danger');
-																// }else{
-																	$('#declarado'+datos[i].id).addClass('text-danger');
-																	$('#num_guia' + datos[i].id).addClass('text-danger');
-																	cont++;
-																// }
-															}else{
-																$('.declarado'+datos[i].consignee_id).removeClass('text-danger');
-																// if(total < 2000 && total > 0 && peso < 50){
-																	if(total < 2000 && total > 0 && peso < 50 && parseFloat(datos[i].declarado2) != 0){
-																	$('.num_guia' + datos[i].consignee_id).removeClass('text-danger');
-																	cont = 0;
-																}
-															}
-
-															// VALIDACION PARA EL PESO
-															if (peso >= 50) {
-																var cons = JSON.parse(datos[i].consignee_json.replace(/&quot;/g, '"'));
-																if(cons.id != consignee){
-																	$('#peso'+datos[i].id).removeClass('text-danger');
-																}else{
-																	$('#peso'+datos[i].id).addClass('text-danger');
-																	$('#num_guia' + datos[i].id).addClass('text-danger');
-																	cont++;
-																}
-															}else{
-																$('.peso'+datos[i].consignee_id).removeClass('text-danger');
-																if(total < 2000 && total > 0 && peso < 50 && parseFloat(datos[i].declarado2) != 0){
-																	$('.num_guia' + datos[i].consignee_id).removeClass('text-danger');
-																	cont = 0;
-																}
-															}
-														}
-													}
-													consignee = datos[i].consignee_id
+													// if (datos[i].consignee_id == consignee) {
+													// 	if (datos[i].consignee_json == null) {
+													// 		// VALIDACION PARA EL DECLARADO
+													// 		if (total >= 2000 || total <= 0 || parseFloat(datos[i].declarado2) == 0) {
+													// 				$('#declarado'+datos[i].id).addClass('text-danger');
+													// 				$('#num_guia' + datos[i].id).addClass('text-danger');
+													// 				cont++;
+													// 		}else{
+													// 			$('#declarado'+datos[i].id).removeClass('text-danger');
+													// 		}
+													//
+													// 		// VALIDACION PARA EL PESO
+													// 		if (peso >= 50) {
+													// 				$('#peso'+datos[i].id).addClass('text-danger');
+													// 				$('#num_guia' + datos[i].id).addClass('text-danger');
+													// 				cont++;
+													// 		}else{
+													// 			$('#peso'+datos[i].id).removeClass('text-danger');
+													// 		}
+													// 	}else{
+													// 		total = total - parseFloat(datos[i].declarado2)
+													// 		peso = peso - (parseFloat(datos[i].peso2) * 0.453592)
+													// 		// VALIDACION PARA EL DECLARADO
+													// 		$('#declarado'+datos[i].id).removeClass('text-danger');
+													// 		$('#num_guia' + datos[i].id).removeClass('text-danger');
+													// 		if (total >= 2000 || total <= 0 || parseFloat(datos[i].declarado2) == 0) {
+													// 			var cons = JSON.parse(datos[i].consignee_json.replace(/&quot;/g, '"'));
+													// 			// if(cons.id != consignee){
+													// 			// 	$('#declarado'+datos[i].id).removeClass('text-danger');
+													// 			// }else{
+													// 				$('#declarado'+datos[i].id).addClass('text-danger');
+													// 				$('#num_guia' + datos[i].id).addClass('text-danger');
+													// 				cont++;
+													// 			// }
+													// 		}else{
+													// 			$('.declarado'+datos[i].consignee_id).removeClass('text-danger');
+													// 			// if(total < 2000 && total > 0 && peso < 50){
+													// 				if(total < 2000 && total > 0 && peso < 50 && parseFloat(datos[i].declarado2) != 0){
+													// 				$('.num_guia' + datos[i].consignee_id).removeClass('text-danger');
+													// 				cont = 0;
+													// 			}
+													// 		}
+													//
+													// 		// VALIDACION PARA EL PESO
+													// 		if (peso >= 50) {
+													// 			var cons = JSON.parse(datos[i].consignee_json.replace(/&quot;/g, '"'));
+													// 			if(cons.id != consignee){
+													// 				$('#peso'+datos[i].id).removeClass('text-danger');
+													// 			}else{
+													// 				$('#peso'+datos[i].id).addClass('text-danger');
+													// 				$('#num_guia' + datos[i].id).addClass('text-danger');
+													// 				cont++;
+													// 			}
+													// 		}else{
+													// 			$('.peso'+datos[i].consignee_id).removeClass('text-danger');
+													// 			if(total < 2000 && peso < 50){
+													// 				// if(total < 2000 && total > 0 && peso < 50){
+													// 					if(total < 2000 && total > 0 && peso < 50 && parseFloat(datos[i].declarado2) != 0){
+													// 					$('.num_guia' + datos[i].consignee_id).removeClass('text-danger');
+													// 					cont = 0;
+													// 				}
+													// 			}
+													// 		}
+													// 	}
+													// }else{
+													// 	total = parseFloat(datos[i].declarado_total)
+													// 	peso = parseFloat(datos[i].peso_total)
+													// 	if (datos[i].consignee_json == null) {
+													// 		// VALIDACION PARA EL DECLARADO
+													// 		if (total >= 2000 || total <= 0 || parseFloat(datos[i].declarado2) == 0) {
+													// 				$('#declarado'+datos[i].id).addClass('text-danger');
+													// 				$('#num_guia' + datos[i].id).addClass('text-danger');
+													// 				cont++;
+													// 		}else{
+													// 			$('#declarado'+datos[i].id).removeClass('text-danger');
+													// 		}
+													//
+													// 		// VALIDACION PARA EL PESO
+													// 		if (peso >= 50) {
+													// 				$('#peso'+datos[i].id).addClass('text-danger');
+													// 				$('#num_guia' + datos[i].id).addClass('text-danger');
+													// 				cont++;
+													// 		}else{
+													// 			$('#peso'+datos[i].id).removeClass('text-danger');
+													// 		}
+													// 	}else{
+													// 		total = total - parseFloat(datos[i].declarado2)
+													// 		peso = peso - (parseFloat(datos[i].peso2) * 0.453592)
+													// 		// VALIDACION PARA EL DECLARADO
+													// 		$('#declarado'+datos[i].id).removeClass('text-danger');
+													// 		$('#num_guia' + datos[i].id).removeClass('text-danger');
+													// 		if (total >= 2000 || total <= 0 || parseFloat(datos[i].declarado2) == 0) {
+													// 			var cons = JSON.parse(datos[i].consignee_json.replace(/&quot;/g, '"'));
+													// 			// console.log(cons.id, ' ', consignee, ' ');
+													// 			// if(cons.id != consignee){
+													// 				// $('#declarado'+datos[i].id).removeClass('text-danger');
+													// 			// }else{
+													// 				$('#declarado'+datos[i].id).addClass('text-danger');
+													// 				$('#num_guia' + datos[i].id).addClass('text-danger');
+													// 				cont++;
+													// 			// }
+													// 		}else{
+													// 			$('.declarado'+datos[i].consignee_id).removeClass('text-danger');
+													// 			// if(total < 2000 && total > 0 && peso < 50){
+													// 				if(total < 2000 && total > 0 && peso < 50 && parseFloat(datos[i].declarado2) != 0){
+													// 				$('.num_guia' + datos[i].consignee_id).removeClass('text-danger');
+													// 				cont = 0;
+													// 			}
+													// 		}
+													//
+													// 		// VALIDACION PARA EL PESO
+													// 		if (peso >= 50) {
+													// 			var cons = JSON.parse(datos[i].consignee_json.replace(/&quot;/g, '"'));
+													// 			if(cons.id != consignee){
+													// 				$('#peso'+datos[i].id).removeClass('text-danger');
+													// 			}else{
+													// 				$('#peso'+datos[i].id).addClass('text-danger');
+													// 				$('#num_guia' + datos[i].id).addClass('text-danger');
+													// 				cont++;
+													// 			}
+													// 		}else{
+													// 			$('.peso'+datos[i].consignee_id).removeClass('text-danger');
+													// 			if(total < 2000 && total > 0 && peso < 50 && parseFloat(datos[i].declarado2) != 0){
+													// 				$('.num_guia' + datos[i].consignee_id).removeClass('text-danger');
+													// 				cont = 0;
+													// 			}
+													// 		}
+													// 	}
+													// }
+													// consignee = datos[i].consignee_id
 
 													// VALIDACION POSICION ARANCELARIA
 													if(datos[i].pa == null){

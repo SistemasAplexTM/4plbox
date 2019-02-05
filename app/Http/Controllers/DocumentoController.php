@@ -1784,6 +1784,10 @@ class DocumentoController extends Controller
 
     public function getAllConsolidadoDetalle($id, $num_bolsa = null)
     {
+        // OBTENEMOS LA CONFIGURACION DEL CONSOLIDADO
+        $config = $this->getConfig('consolidado');
+        $config = json_decode($config->value);
+
         $where = [['a.deleted_at', null], ['a.consolidado_id', $id], ['a.flag', 0]];
         if($num_bolsa != null){
             $where[] = ['a.num_bolsa', $num_bolsa];
@@ -1836,6 +1840,27 @@ class DocumentoController extends Controller
                                 GROUP BY
                                     z.agrupado
                             ) AS g'), 'a.agrupado', 'g.agrupado')
+            ->leftJoin(DB::raw('(SELECT
+                b.consignee_id,
+                Sum(b.declarado2) AS declarado,
+                Sum(b.peso2) AS peso,
+                (CASE
+                    WHEN (Sum(b.peso2) >= ' . $config->peso_max . '  or Sum(b.peso2) <= 0) THEN 1 ELSE 0
+                END) AS flag_peso,
+                (CASE
+                    WHEN (Sum(b.declarado2) >= ' . $config->declarado_max . '  or Sum(b.declarado2) <= 0) THEN 2 ELSE 0
+                END) AS flag_declarado
+                FROM
+                consolidado_detalle AS a
+                INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
+                WHERE
+                a.consolidado_id = ' . $id . ' AND
+                b.deleted_at IS NULL
+                GROUP BY
+                b.consignee_id
+                HAVING
+                peso <= 0 OR peso >= ' . $config->peso_max . ' OR
+                declarado <= 0 OR declarado >= ' . $config->declarado_max . ') AS h'), 'e.id', 'h.consignee_id')
             ->select(
                 'a.id',
                 'c.documento_id',
@@ -1883,7 +1908,9 @@ class DocumentoController extends Controller
               		AND b.deleted_at IS NULL
               		AND b.consignee_id = e.id
                   AND z.consolidado_id = a.consolidado_id
-              	) AS declarado_total')
+              	) AS declarado_total'),
+                'h.flag_peso',
+                'h.flag_declarado'
             )
             ->where($where)
             ->get();
