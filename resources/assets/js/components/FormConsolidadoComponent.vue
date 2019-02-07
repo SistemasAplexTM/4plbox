@@ -899,7 +899,7 @@
 																			group = '';
 																		}
 																		var error = '';
-																		if((full.flag_declarado != 0 && full.flag_declarado != null) || parseFloat(full.declarado2) === 0 || full.flag_peso != 0 || parseFloat(full.peso2) === 0){
+																		if(full.flag_declarado != 0 && full.flag_declarado != null || parseFloat(full.declarado2) === 0 || full.flag_peso != null &&  full.flag_peso != 0 || parseFloat(full.peso2) === 0){
 																			error = 'text-danger'
 																		}
 		                                if(me.app_type === 'courier'){
@@ -941,7 +941,7 @@
 															nom_ship = json.nombre;
 					                	}
 					                	me.shipper_contactos[full.shipper_id] = full.shipper_contactos;
-					                	return nom_ship + ' <a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalShipperConsigneeConsolidado('+full.id+', '+full.shipper_id+', \'shipper\')"><i class="material-icons">&#xE254;</i></a> <a onclick=\"restoreShipperConsignee('+full.id+', \'shipper\')\" class="delete" title="Restaurar original" data-toggle="tooltip" style="float:right;color:#2196F3;"><i class="material-icons">cached</i></a>';
+					                	return nom_ship + ' <a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalShipperConsigneeConsolidado('+full.id+', \''+full.shipper_id+'\', \'shipper\')"><i class="material-icons">&#xE254;</i></a> <a onclick=\"restoreShipperConsignee('+full.id+', \'shipper\')\" class="delete" title="Restaurar original" data-toggle="tooltip" style="float:right;color:#2196F3;"><i class="material-icons">cached</i></a>';
 					                }
 					            },
 					            {
@@ -956,7 +956,7 @@
 															nom_cons = json.nombre;
 					                	}
 					                	me.consignee_contactos[full.consignee_id] = full.consignee_contactos;
-					                	return nom_cons + ' <a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalShipperConsigneeConsolidado('+full.id+', '+full.consignee_id+',\'consignee\')"><i class="material-icons">&#xE254;</i></a> <a onclick=\"restoreShipperConsignee('+full.id+',\'consignee\')\" class="delete" title="Restaurar original" data-toggle="tooltip" style="float:right;color:#2196F3;"><i class="material-icons">cached</i></a>';
+					                	return nom_cons + ' <a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalShipperConsigneeConsolidado('+full.id+', \''+full.consignee_id+'\',\'consignee\')"><i class="material-icons">&#xE254;</i></a> <a onclick=\"restoreShipperConsignee('+full.id+',\'consignee\')\" class="delete" title="Restaurar original" data-toggle="tooltip" style="float:right;color:#2196F3;"><i class="material-icons">cached</i></a>';
 					                }
 					            },
 					            {
@@ -972,12 +972,12 @@
 		                  },
 		                  {
 		                      "render": function (data, type, full, meta) {
-		                          return '<a data-name="declarado2" data-pk="'+full.documento_detalle_id+'" class="td_edit '+ ((full.flag_declarado != 0 || parseFloat(full.declarado2) === 0) ? 'text-danger' : '') +'" data-type="text" data-placement="right" data-title="Declarado">'+full.declarado2+'</a>';
+		                          return '<a data-name="declarado2" data-pk="'+full.documento_detalle_id+'" class="td_edit '+ ((full.flag_declarado != null && full.flag_declarado != 0 || parseFloat(full.declarado2) === 0) ? 'text-danger' : '') +'" data-type="text" data-placement="right" data-title="Declarado">'+full.declarado2+'</a>';
 		                      }
 		                  },
 		                  {
 		                      "render": function (data, type, full, meta) {
-		                          return '<a id="peso'+ full.consignee_id +'" data-name="peso2" data-pk="'+full.documento_detalle_id+'" class="td_edit '+ ((full.flag_peso != 0 || parseFloat(full.peso2) === 0) ? 'text-danger' : '') +'" data-type="text" data-placement="right" data-title="Peso">'+full.peso2+'</a>';
+		                          return '<a id="peso'+ full.consignee_id +'" data-name="peso2" data-pk="'+full.documento_detalle_id+'" class="td_edit '+ ((full.flag_peso != null && full.flag_peso != 0 || parseFloat(full.peso2) === 0) ? 'text-danger' : '') +'" data-type="text" data-placement="right" data-title="Peso">'+full.peso2+'</a>';
 		                      }
 		                  },
 		                  {data: 'peso', name: 'peso'},
@@ -1040,149 +1040,13 @@
 										let datos = api.rows( {page:'current'} ).data();
 										let cont = 0;
 											if(app_type === 'courier'){
-												// var consignee = null
-												// var total = null
-												// var peso = null
 												for (var i = 0; i < datos.length; i++) {
-													// VALIDACION DECLARADO Y PESO SOBRE EL CONSIGNEE
-													// if (datos[i].consignee_id == consignee) {
-													// 	if (datos[i].consignee_json == null) {
-													// 		// VALIDACION PARA EL DECLARADO
-													// 		if (total >= 2000 || total <= 0 || parseFloat(datos[i].declarado2) == 0) {
-													// 				$('#declarado'+datos[i].id).addClass('text-danger');
-													// 				$('#num_guia' + datos[i].id).addClass('text-danger');
-													// 				cont++;
-													// 		}else{
-													// 			$('#declarado'+datos[i].id).removeClass('text-danger');
-													// 		}
-													//
-													// 		// VALIDACION PARA EL PESO
-													// 		if (peso >= 50) {
-													// 				$('#peso'+datos[i].id).addClass('text-danger');
-													// 				$('#num_guia' + datos[i].id).addClass('text-danger');
-													// 				cont++;
-													// 		}else{
-													// 			$('#peso'+datos[i].id).removeClass('text-danger');
-													// 		}
-													// 	}else{
-													// 		total = total - parseFloat(datos[i].declarado2)
-													// 		peso = peso - (parseFloat(datos[i].peso2) * 0.453592)
-													// 		// VALIDACION PARA EL DECLARADO
-													// 		$('#declarado'+datos[i].id).removeClass('text-danger');
-													// 		$('#num_guia' + datos[i].id).removeClass('text-danger');
-													// 		if (total >= 2000 || total <= 0 || parseFloat(datos[i].declarado2) == 0) {
-													// 			var cons = JSON.parse(datos[i].consignee_json.replace(/&quot;/g, '"'));
-													// 			// if(cons.id != consignee){
-													// 			// 	$('#declarado'+datos[i].id).removeClass('text-danger');
-													// 			// }else{
-													// 				$('#declarado'+datos[i].id).addClass('text-danger');
-													// 				$('#num_guia' + datos[i].id).addClass('text-danger');
-													// 				cont++;
-													// 			// }
-													// 		}else{
-													// 			$('.declarado'+datos[i].consignee_id).removeClass('text-danger');
-													// 			// if(total < 2000 && total > 0 && peso < 50){
-													// 				if(total < 2000 && total > 0 && peso < 50 && parseFloat(datos[i].declarado2) != 0){
-													// 				$('.num_guia' + datos[i].consignee_id).removeClass('text-danger');
-													// 				cont = 0;
-													// 			}
-													// 		}
-													//
-													// 		// VALIDACION PARA EL PESO
-													// 		if (peso >= 50) {
-													// 			var cons = JSON.parse(datos[i].consignee_json.replace(/&quot;/g, '"'));
-													// 			if(cons.id != consignee){
-													// 				$('#peso'+datos[i].id).removeClass('text-danger');
-													// 			}else{
-													// 				$('#peso'+datos[i].id).addClass('text-danger');
-													// 				$('#num_guia' + datos[i].id).addClass('text-danger');
-													// 				cont++;
-													// 			}
-													// 		}else{
-													// 			$('.peso'+datos[i].consignee_id).removeClass('text-danger');
-													// 			if(total < 2000 && peso < 50){
-													// 				// if(total < 2000 && total > 0 && peso < 50){
-													// 					if(total < 2000 && total > 0 && peso < 50 && parseFloat(datos[i].declarado2) != 0){
-													// 					$('.num_guia' + datos[i].consignee_id).removeClass('text-danger');
-													// 					cont = 0;
-													// 				}
-													// 			}
-													// 		}
-													// 	}
-													// }else{
-													// 	total = parseFloat(datos[i].declarado_total)
-													// 	peso = parseFloat(datos[i].peso_total)
-													// 	if (datos[i].consignee_json == null) {
-													// 		// VALIDACION PARA EL DECLARADO
-													// 		if (total >= 2000 || total <= 0 || parseFloat(datos[i].declarado2) == 0) {
-													// 				$('#declarado'+datos[i].id).addClass('text-danger');
-													// 				$('#num_guia' + datos[i].id).addClass('text-danger');
-													// 				cont++;
-													// 		}else{
-													// 			$('#declarado'+datos[i].id).removeClass('text-danger');
-													// 		}
-													//
-													// 		// VALIDACION PARA EL PESO
-													// 		if (peso >= 50) {
-													// 				$('#peso'+datos[i].id).addClass('text-danger');
-													// 				$('#num_guia' + datos[i].id).addClass('text-danger');
-													// 				cont++;
-													// 		}else{
-													// 			$('#peso'+datos[i].id).removeClass('text-danger');
-													// 		}
-													// 	}else{
-													// 		total = total - parseFloat(datos[i].declarado2)
-													// 		peso = peso - (parseFloat(datos[i].peso2) * 0.453592)
-													// 		// VALIDACION PARA EL DECLARADO
-													// 		$('#declarado'+datos[i].id).removeClass('text-danger');
-													// 		$('#num_guia' + datos[i].id).removeClass('text-danger');
-													// 		if (total >= 2000 || total <= 0 || parseFloat(datos[i].declarado2) == 0) {
-													// 			var cons = JSON.parse(datos[i].consignee_json.replace(/&quot;/g, '"'));
-													// 			// console.log(cons.id, ' ', consignee, ' ');
-													// 			// if(cons.id != consignee){
-													// 				// $('#declarado'+datos[i].id).removeClass('text-danger');
-													// 			// }else{
-													// 				$('#declarado'+datos[i].id).addClass('text-danger');
-													// 				$('#num_guia' + datos[i].id).addClass('text-danger');
-													// 				cont++;
-													// 			// }
-													// 		}else{
-													// 			$('.declarado'+datos[i].consignee_id).removeClass('text-danger');
-													// 			// if(total < 2000 && total > 0 && peso < 50){
-													// 				if(total < 2000 && total > 0 && peso < 50 && parseFloat(datos[i].declarado2) != 0){
-													// 				$('.num_guia' + datos[i].consignee_id).removeClass('text-danger');
-													// 				cont = 0;
-													// 			}
-													// 		}
-													//
-													// 		// VALIDACION PARA EL PESO
-													// 		if (peso >= 50) {
-													// 			var cons = JSON.parse(datos[i].consignee_json.replace(/&quot;/g, '"'));
-													// 			if(cons.id != consignee){
-													// 				$('#peso'+datos[i].id).removeClass('text-danger');
-													// 			}else{
-													// 				$('#peso'+datos[i].id).addClass('text-danger');
-													// 				$('#num_guia' + datos[i].id).addClass('text-danger');
-													// 				cont++;
-													// 			}
-													// 		}else{
-													// 			$('.peso'+datos[i].consignee_id).removeClass('text-danger');
-													// 			if(total < 2000 && total > 0 && peso < 50 && parseFloat(datos[i].declarado2) != 0){
-													// 				$('.num_guia' + datos[i].consignee_id).removeClass('text-danger');
-													// 				cont = 0;
-													// 			}
-													// 		}
-													// 	}
-													// }
-													// consignee = datos[i].consignee_id
-
 													// VALIDACION POSICION ARANCELARIA
 													if(datos[i].pa == null){
 														$('#num_guia' + datos[i].id).addClass('text-danger');
 														$('#pa' + datos[i].id).html('No Datos').addClass('text-danger');
 														cont++;
 													}else{
-														// if(total < 2000 && total > 0 && peso < 50){
 															if(total < 2000 && total > 0 && peso < 50 && parseFloat(datos[i].declarado2) != 0){
 															$('#num_guia' + datos[i].id).removeClass('text-danger');
 															$('#pa' + datos[i].id).removeClass('text-danger');

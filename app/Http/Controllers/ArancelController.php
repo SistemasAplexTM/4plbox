@@ -165,7 +165,10 @@ class ArancelController extends Controller
      */
     public function getAll()
     {
-        return \DataTables::of(Arancel::query()->where('deleted_at', '=', null))->make(true);
+        return \DataTables::of(Arancel::query()->where([
+          ['deleted_at', null],
+          ['id', '<>', 1]
+          ]))->make(true);
     }
 
     /**
