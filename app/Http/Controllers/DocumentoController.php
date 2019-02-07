@@ -1784,6 +1784,10 @@ class DocumentoController extends Controller
 
     public function getAllConsolidadoDetalle($id, $num_bolsa = null)
     {
+        // OBTENEMOS LA CONFIGURACION DEL CONSOLIDADO
+        $config = $this->getConfig('consolidado');
+        $config = json_decode($config->value);
+
         $where = [['a.deleted_at', null], ['a.consolidado_id', $id], ['a.flag', 0]];
         if($num_bolsa != null){
             $where[] = ['a.num_bolsa', $num_bolsa];
@@ -1836,6 +1840,27 @@ class DocumentoController extends Controller
                                 GROUP BY
                                     z.agrupado
                             ) AS g'), 'a.agrupado', 'g.agrupado')
+            ->leftJoin(DB::raw('(SELECT
+                b.consignee_id,
+                Sum(b.declarado2) AS declarado,
+                Sum(b.peso2) AS peso,
+                (CASE
+                    WHEN (Sum(b.peso2) >= ' . $config->peso_max . '  or Sum(b.peso2) <= 0) THEN 1 ELSE 0
+                END) AS flag_peso,
+                (CASE
+                    WHEN (Sum(b.declarado2) >= ' . $config->declarado_max . '  or Sum(b.declarado2) <= 0) THEN 2 ELSE 0
+                END) AS flag_declarado
+                FROM
+                consolidado_detalle AS a
+                INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
+                WHERE
+                a.consolidado_id = ' . $id . ' AND
+                b.deleted_at IS NULL
+                GROUP BY
+                b.consignee_id
+                HAVING
+                peso <= 0 OR peso >= ' . $config->peso_max . ' OR
+                declarado <= 0 OR declarado >= ' . $config->declarado_max . ') AS h'), 'c.consignee_id', 'h.consignee_id')
             ->select(
                 'a.id',
                 'c.documento_id',
@@ -1850,7 +1875,7 @@ class DocumentoController extends Controller
                 'd.id as shipper_id',
                 'd.nombre_full as shipper',
                 'd.contactos_json as shipper_contactos',
-                'e.id as consignee_id',
+                'c.consignee_id as consignee_id',
                 'e.nombre_full as consignee',
                 'e.contactos_json as consignee_contactos',
                 'c.contenido2',
@@ -1883,7 +1908,9 @@ class DocumentoController extends Controller
               		AND b.deleted_at IS NULL
               		AND b.consignee_id = e.id
                   AND z.consolidado_id = a.consolidado_id
-              	) AS declarado_total')
+              	) AS declarado_total'),
+                'h.flag_peso',
+                'h.flag_declarado'
             )
             ->where($where)
             ->get();
@@ -2264,19 +2291,6 @@ class DocumentoController extends Controller
         return $answer;
     }
 
-    public function createContactsConsolidadoDetalle(Request $request, $id)
-    {
-        $campos = json_encode($request->all()['campos']);
-        $data   = $request->all()['data'];
-        DB::table('consolidado_detalle')
-            ->where('id', $data['id'])
-            ->update([$data['opcion'] => $campos]);
-        $answer = array(
-            'code' => 200,
-        );
-        return $answer;
-    }
-
     public function addStatusToGuias(Request $request, $id)
     {
         $detalle = DB::table('consolidado_detalle AS a')
@@ -2313,8 +2327,23 @@ class DocumentoController extends Controller
         return $answer;
     }
 
+    public function createContactsConsolidadoDetalle(Request $request, $id)
+    {
+        $campos = json_encode($request->all()['campos']);
+        $data   = $request->all()['data'];
+        $this->updateIdConsigneeContactConsolidate(false, $data['id'], json_decode($campos)->id);
+        DB::table('consolidado_detalle')
+            ->where('id', $data['id'])
+            ->update([$data['opcion'] => $campos]);
+        $answer = array(
+            'code' => 200,
+        );
+        return $answer;
+    }
+
     public function restoreShipperConsignee($id, $idD, $table)
     {
+      $this->updateIdConsigneeContactConsolidate(true, $idD);
         DB::table('consolidado_detalle')
             ->where('id', $idD)
             ->update([$table => null]);
@@ -2322,6 +2351,29 @@ class DocumentoController extends Controller
             'code' => 200,
         );
         return $answer;
+    }
+
+    public function updateIdConsigneeContactConsolidate($restore, $id_consol_detail, $id_json = null)
+    {
+      $id_detail_document = DB::table('consolidado_detalle AS a')
+          ->select('a.documento_detalle_id')
+          ->where('a.id', $id_consol_detail)
+          ->first();
+      $consignee_id = DB::table('documento_detalle AS a')
+              ->select('a.consignee_id')
+              ->where('a.id', $id_detail_document->documento_detalle_id)
+              ->first();
+      if($restore){
+        $dat = explode("-", $consignee_id->consignee_id);
+        $id_cons = $dat[0];
+      }else{
+        $id_cons = $consignee_id->consignee_id . '-' . $id_json;
+      }
+
+      DB::table('documento_detalle AS a')
+          ->where('a.id', $id_detail_document->documento_detalle_id)
+          ->update(['a.consignee_id' => $id_cons]);
+      return true;
     }
 
     public function getGuiasAgrupar($id, $id_detalle, $document = false)
