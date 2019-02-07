@@ -324,8 +324,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* MODULO APLEXCONFIG */
     // Route::get('setup', 'SetupController@index');
-    Route::get('aplexConfig', 'AplexConfigController@index')->name('config.index');
-    Route::get('config', 'AplexConfigController@config')->name('config.index');
+    Route::get('settings', 'AplexConfigController@settings')->name('settings');
+    Route::get('configs', 'AplexConfigController@config')->name('config.index');
     Route::get('aplexConfig/document', 'AplexConfigController@document')->name('config.document');
 
     Route::get('getConfig/{key}', 'Controller@getConfig');

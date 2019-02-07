@@ -2,17 +2,8 @@
 @section('title', trans('general.configuration'))
 
 @section('content')
-<style type="text/css">
-    .bg{
-        background: none;
-    }
-    .view_content{
-        padding: 10px;
-        background: #ffffff;
-    }
-</style>
 <div id="aplexConfig">
-    <index-config></index-config>
+    <config-component></config-component>
 </div>
 @endsection
 

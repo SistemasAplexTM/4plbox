@@ -2,6 +2,7 @@
 
 return [
     //resources/views/templates/aplexConfig
+    'general' => 'General',
     'configuration' => 'Configuración',
 
     //resources/views/templates/bill/create
