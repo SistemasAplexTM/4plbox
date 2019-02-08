@@ -1047,10 +1047,12 @@
 														$('#pa' + datos[i].id).html('No Datos').addClass('text-danger');
 														cont++;
 													}else{
-															if(total < 2000 && total > 0 && peso < 50 && parseFloat(datos[i].declarado2) != 0){
-															$('#num_guia' + datos[i].id).removeClass('text-danger');
 															$('#pa' + datos[i].id).removeClass('text-danger');
-														}
+															if(datos[i].flag_peso == null && datos[i].flag_declarado == null){
+																$('#num_guia' + datos[i].id).removeClass('text-danger');
+															}else{
+																cont++;
+															}
 													}
 												}
 												if(cont === 0 && datos.length > 0){

@@ -275,6 +275,7 @@ return [
      'registered_tracking'=>'Registered Tracking',
      'office'=>'Office',
      'number_of_tracking'=>'Number of tracking',
+     'quantity_tracking'=>'Cantidad de trackings',
 
      //resources/views/template/transport
 

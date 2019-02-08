@@ -121,26 +121,33 @@ class TrackingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getAll($grid = false, $add = null, $id = false, $req_consignee = false)
+    public function getAll($grid = false, $add = null, $id = false, $req_consignee = false, $bodega = false)
     {
         $where = [['tracking.deleted_at', null], ['tracking.agencia_id', Auth::user()->agencia_id]];
-
         if ($grid == false || $grid == 'false') {
-            if ($id != '') {
-                $where[] = array('tracking.documento_detalle_id', $id);
-            } else {
-                // $where[] = array('tracking.documento_detalle_id', null);
-            }
+           if ($id != '') {
+               $where[] = array('tracking.documento_detalle_id', $id);
+           } else {
+               // $where[] = array('tracking.documento_detalle_id', null);
+           }
 
-            if ($add != null and $add != 'null') {
-                $where[] = array('tracking.consignee_id', $add);
-                $where[] = array('tracking.documento_detalle_id', NULL);
-            } else {
-                // if ($req_consignee == false) {
-                //     $where[] = array('tracking.consignee_id', null);
-                // }
-            }
-        }
+           if ($add != null and $add != 'null') {
+               $where[] = array('tracking.consignee_id', $add);
+               $where[] = array('tracking.documento_detalle_id', NULL);
+           } else {
+               // if ($req_consignee == false) {
+               //     $where[] = array('tracking.consignee_id', null);
+               // }
+           }
+       }else{
+         if($bodega === true || $bodega === 'true'){
+           $where[] = ['tracking.documento_detalle_id', '<>', null];
+         }else{
+           $where[] = ['tracking.documento_detalle_id', null];
+         }
+       }
+
+
         $data = Tracking::leftJoin('consignee AS b', 'tracking.consignee_id', 'b.id')
             ->leftJoin('documento_detalle AS c', 'tracking.documento_detalle_id', 'c.id')
             ->select(
@@ -152,6 +159,7 @@ class TrackingController extends Controller
                 'tracking.confirmed_send',
                 'tracking.created_at as fecha',
                 'b.nombre_full as cliente',
+                'b.correo as cliente_email',
                 'c.num_warehouse',
                 DB::raw("(
               		SELECT
@@ -281,5 +289,53 @@ class TrackingController extends Controller
         } catch (Exception $e) {
             return $e;
         }
+    }
+
+    public function getTrackingByCreateReceipt()
+    {
+      $data = Tracking::join('consignee AS b', 'tracking.consignee_id', 'b.id')
+          ->select(
+              'tracking.consignee_id',
+              'b.nombre_full as cliente',
+              DB::raw("(
+                SELECT
+                Count(t.id)
+                FROM
+                tracking AS t
+                WHERE
+                t.deleted_at IS NULL AND
+                t.documento_detalle_id IS NULL AND
+                t.consignee_id = tracking.consignee_id
+              ) AS cantidad")
+          )
+          ->where([
+            ['tracking.deleted_at', NULL],
+            ['b.deleted_at', NULL],
+            ['tracking.documento_detalle_id', NULL]
+          ])
+          ->groupBy(
+            'b.nombre_full',
+            'tracking.consignee_id',
+            'cantidad'
+            )
+          ->get();
+      return \DataTables::of($data)->make(true);
+    }
+
+    public function getTrackingByIdConsignee($consignee_id)
+    {
+      $data = Tracking::select(
+              'tracking.id',
+              'tracking.codigo',
+              'tracking.contenido',
+              'tracking.confirmed_send'
+          )
+          ->where([
+            ['tracking.deleted_at', NULL],
+            ['tracking.documento_detalle_id', NULL],
+            ['tracking.consignee_id', $consignee_id]
+          ])
+          ->get();
+        return \DataTables::of($data)->make(true);
     }
 }

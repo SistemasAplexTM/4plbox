@@ -91,7 +91,9 @@ Route::group(['middleware' => 'auth'], function () {
     /*--- MODULO TRACKINGS ---*/
     Route::resource('tracking', 'TrackingController', ['except' => ['show', 'create', 'edit', 'update']]);
     Route::post('tracking/addOrDeleteDocument', 'TrackingController@addOrDeleteDocument');
-    Route::get('tracking/all/{grid?}/{add?}/{id?}/{req_consignee?}', 'TrackingController@getAll')->name('datatable/all');
+    Route::get('tracking/all/{grid?}/{add?}/{id?}/{req_consignee?}/{bodega?}', 'TrackingController@getAll')->name('datatable/all');
+    Route::get('tracking/getTrackingByCreateReceipt', 'TrackingController@getTrackingByCreateReceipt');
+    Route::get('tracking/getTrackingByIdConsignee/{consignee_id}', 'TrackingController@getTrackingByIdConsignee');
     Route::get('tracking/delete/{id}/{logical?}', 'TrackingController@delete')->name('tracking.delete');
     Route::get('tracking/getAllShipperConsignee/{table}', 'TrackingController@getAllShipperConsignee');
     Route::get('tracking/searchTracking/{tracking}', 'TrackingController@searchTracking');

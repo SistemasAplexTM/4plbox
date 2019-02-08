@@ -82,23 +82,23 @@ function datatableDocument(t, tipo_doc_id, status_id){
           "render": numDocument
       }, {
           data: 'fecha',
-          name: 'documento.created_at',
+          name: 'b.created_at',
           width: 80
       }, {
           data: 'cons_nomfull',
-          name: 'consignee.nombre_full'
+          name: 'c.nombre_full'
       },{
           data: 'valor',
-          name: 'documento.valor',
+          name: 'b.valor',
           visible: (tipo_doc_id != 3) ? true : false
       },  {
           data: 'peso',
-          name: 'documento.peso'
+          name: 'b.peso'
       }, {
           "render": showVolumen
       }, {
           data: 'agencia',
-          name: 'agencia.descripcion'
+          name: 'e.descripcion'
       }, {
           sortable: false,
           className: 'actions_btn',

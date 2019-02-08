@@ -281,7 +281,8 @@ return [
     'track_record'=>'Registro de tracking',
     'registered_tracking'=>'Tracking registrado',
     'office'=>'Despacho',
-    'number_of_tracking'=>'Número de racking',
+    'number_of_tracking'=>'Número de tracking',
+    'quantity_tracking'=>'Cantidad de trackings',
 
     //resources/views/template/transport
 

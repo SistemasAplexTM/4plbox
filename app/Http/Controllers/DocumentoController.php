@@ -110,6 +110,23 @@ class DocumentoController extends Controller
                     $data->created_at        = $request->created_at;
                     $tipo                    = TipoDocumento::findOrFail($request->tipo_documento_id);
 
+                    $getShipper = $this->getConfig('shipperDefault');
+                    $getConsignee = $this->getConfig('consigneeDefault');
+                    if(isset($request->shipper_id)){
+                      $data->shipper_id = $request->shipper_id;
+                    }else{
+                      if($getShipper){
+                        $data->shipper_id = $getShipper->value;
+                      }
+                    }
+                    if(isset($request->consignee_id)){
+                      $data->consignee_id = $request->consignee_id;
+                    }else{
+                      if($getConsignee){
+                        $data->consignee_id = $getConsignee->value;
+                      }
+                    }
+
                     if ($data->save()) {
                         $id_documento = $data->id;
 
@@ -645,11 +662,11 @@ class DocumentoController extends Controller
 
     public function getAll(Request $request)
     {
-      $filter = [['documento.deleted_at', null],
-        ['agencia.deleted_at', null],
-        ['documento.tipo_documento_id', $request->id_tipo_doc]];
+      $filter = [['b.deleted_at', null],
+        ['e.deleted_at', null],
+        ['b.tipo_documento_id', $request->id_tipo_doc]];
         if(!Auth::user()->isRole('admin')){
-            $filter[] = ['documento.agencia_id', Auth::user()->agencia_id];
+            $filter[] = ['b.agencia_id', Auth::user()->agencia_id];
         }
         /* GRILLA */
         if ($request->id_tipo_doc == 3) {
@@ -818,7 +835,6 @@ class DocumentoController extends Controller
                         ['documento_detalle.documento_id', $data->documento_id],
                     ])->get();
                 // $data->num_guia      = $documento->num_guia . '' . (count($documentoD) + 1);
-
 
                 /* GENERAR NUMERO DE GUIA */
                 $caracteres      = strlen($documento->consecutivo);
