@@ -9,7 +9,7 @@ use DataTables;
 
 class AplexConfigController extends Controller
 {
-    public function index()
+    public function settings()
     {
         return view('templates/aplexConfig/index');
     }
@@ -31,7 +31,7 @@ class AplexConfigController extends Controller
       );
 
       $menu2 = array(
-        array('icon' => 'file-invoice', 'route' => 'config.document', 'url' => false, 'desc' => 'layouts.documents', 'perm' => 'administracion.index'),
+        array('icon' => 'cog', 'route' => 'settings', 'url' => false, 'desc' => 'general.general', 'perm' => 'administracion.index'),
         array('icon' => 'store', 'route' => 'agencia.index', 'url' => false, 'desc' => 'layouts.agencies', 'perm' => 'agencia.index'),
         array('icon' => 'money-bill', 'route' => 'arancel.index', 'url' => false, 'desc' => 'layouts.tariffs', 'perm' => 'arancel.index'),
         array('icon' => 'box-check', 'route' => 'status.index', 'url' => false, 'desc' => 'layouts.status', 'perm' => 'status.index'),
