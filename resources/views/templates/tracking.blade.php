@@ -143,7 +143,7 @@
                                   <thead>
                                       <tr>
                                           <th>@lang('general.client')</th>
-                                          <th>@lang('general.quantity_tracking')</th>
+                                          <th>Inventario</th>
                                           <th>@lang('general.actions')</th>
                                       </tr>
                                   </thead>
@@ -244,7 +244,7 @@
                               <div class="col-lg-4">
                                 <div class="row">
                                   <div class="col-lg-12">
-                                    <h3>Información Adicional</h3>
+                                    <h3>Datos de envio</h3>
                                     <hr>
                                   </div>
                                   <div class="col-sm-12">

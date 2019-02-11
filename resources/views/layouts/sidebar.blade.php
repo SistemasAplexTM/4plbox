@@ -87,24 +87,7 @@
                         </a>
                     </li>
                     @endcan
-                    @can('documento.index')
-                    <li>
-                        <a href="{{ route('receipt.index') }}">
-                            <spam class="fal fa-file-signature">
-                            </spam>
-                             @lang('layouts.receipt')
-                        </a>
-                    </li>
-                    @endcan
-                    @can('tracking.index')
-                    <li>
-                        <a href="{{ route('tracking.index') }}">
-                            <spam class="fa fa-cubes">
-                            </spam>
-                              @lang('layouts.trackings_receipt')
-                        </a>
-                    </li>
-                    @endcan
+
                     @can('master.index')
                     <li>
                         <a href="{{ route('master.index') }}">
@@ -167,37 +150,6 @@
                     @endcan
                 </ul>
             </li>
-            @can('master.index')
-              <li class="active">
-                  <a href="" style="background-color: #d6c600; color: white;">
-                      <i class="fa fa-puzzle-piece">
-                      </i>
-                              <span class="nav-label">
-                                  @lang('layouts.reports')
-                              </span>
-                      <span class="arrow">
-                          <i class="fas fa-angle-down"></i>
-                      </span>
-                  </a>
-                  <ul class="nav nav-second-level">
-                      <li>
-                          <a href="{{ route('report.index') }}">
-                              <spam class="fa fa-file">
-                              </spam>
-                                   @lang('layouts.load_reports')
-                          </a>
-                      </li>
-                      <li>
-                          <a href="{{ route('consulta.index') }}">
-                              <spam class="fa fa-file">
-                              </spam>
-                               @lang('layouts.reports')
-                          </a>
-                      </li>
-                  </ul>
-              </li>
-            @endcan
-
             @if(env('APP_TYPE') === 'courier')
                 <li class="active">
                     <a href="" style="background-color: brown; color: white;">
@@ -220,9 +172,73 @@
                             </a>
                         </li>
                         {{-- @endcan --}}
+                        @can('tracking.index')
+                        <li>
+                            <a href="{{ route('tracking.index') }}">
+                                <spam class="fa fa-cubes">
+                                </spam>
+                                  @lang('layouts.trackings_receipt')
+                            </a>
+                        </li>
+                        @endcan
                     </ul>
                 </li>
             @endif
+            @can('master.index')
+              <li class="active">
+                  <a href="" style="background-color: #d6c600; color: white;">
+                      <i class="fa fa-puzzle-piece">
+                      </i>
+                              <span class="nav-label">
+                                  @lang('layouts.reports')
+                              </span>
+                      <span class="arrow">
+                          <i class="fas fa-angle-down"></i>
+                      </span>
+                  </a>
+                  <ul class="nav nav-second-level">
+                      <li>
+                          <a href="{{ route('report.index') }}">
+                              <spam class="fa fa-file">
+                              </spam>
+                                   @lang('layouts.load_reports')
+                          </a>
+                      </li>
+                      {{-- <li>
+                          <a href="{{ route('consulta.index') }}">
+                              <spam class="fa fa-file">
+                              </spam>
+                               @lang('layouts.reports')
+                          </a>
+                      </li> --}}
+                  </ul>
+              </li>
+            @endcan
+
+
+            <li class="active">
+                <a href="" style="background-color: #2a3fa5; color: white;">
+                    <i class="fa fa-address-card">
+                    </i>
+                    <span class="nav-label">
+                         @lang('layouts.distribution_warehouse')
+                    </span>
+                    <span class="arrow">
+                        <i class="fas fa-angle-down"></i>
+                    </span>
+                </a>
+                <ul class="nav nav-second-level">
+                    @can('documento.index')
+                    <li>
+                        <a href="{{ route('receipt.index') }}">
+                            <spam class="fal fa-file-signature">
+                            </spam>
+                             @lang('layouts.receipt')
+                        </a>
+                    </li>
+                    @endcan
+                </ul>
+            </li>
             @if(Auth::user()->isRole('admin'))
             {{-- <li class="active">
                 <a href="" style="background-color: #0e9aef; color: white;">

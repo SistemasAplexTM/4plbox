@@ -62,8 +62,9 @@ return [
     'roles'=>'Roles',
     'access_controls'=>'Access controls',
     'change_agency'  =>'changea_agency',
-    'reports'  =>'Reports',
+    'reports'  =>'General Reports',
     'load_reports'  =>'Load reports',
+    'distribution_warehouse'  =>'Distribution Warehouse',
 
 
 ];

@@ -117,6 +117,7 @@ function datatableDetail(){
         processing: false,
         serverSide: false,
         "searching": false,
+        // "order": [[ 0, "desc" ], [ 1, "desc" ]],
         columns: [{
             data: 'num_warehouse',
             name: 'num_warehouse'
