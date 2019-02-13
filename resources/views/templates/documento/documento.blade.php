@@ -827,13 +827,13 @@
                                                         <button type="button" class="btn btn-success ladda-button" id="saveForm" data-style="expand-right" @click="saveDocument('all')"><i class="fa fa-save fa-fw"></i>@lang('documents.save_changes')</button>
                                                     @else
                                                     <div class="btn-group dropup">
-                                                        <button type="button" class="btn btn-success ladda-button" id="saveForm" data-style="expand-right" @click="saveDocument()"><i class="fa fa-save fa-fw"></i>@lang('documents.save_changes')</button>
+                                                        <button type="button" class="btn btn-success ladda-button" id="saveForm" data-style="expand-right" @click="saveDocument('print')"><i class="fa fa-save fa-fw"></i> @lang('documents.save_changes_print')</button>
                                                         <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 35px;">
                                                             <span class="caret"></span>
                                                             <span class="sr-only">Toggle Dropdown</span>
                                                         </button>
                                                         <ul class="dropdown-menu">
-                                                            <li><a @click="saveDocument('print')"><i class="fa fa-print"></i> @lang('documents.save_changes_print')</a></li>
+                                                            <li><a @click="saveDocument()"><i class="fa fa-print"></i> @lang('documents.save_changes')</a></li>
                                                             <li><a @click="saveDocument('email')"><i class="fa fa-envelope"></i> @lang('documents.save_changes_email')</a></li>
                                                             <li><a @click="saveDocument('all')"><i class="fa fa-mail-bulk"></i> @lang('documents.save_changes_email_print')</a></li>
                                                         </ul>

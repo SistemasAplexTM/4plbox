@@ -153,24 +153,29 @@ function actionsButtons(data, type, full, meta) {
     } else {
         var codigo = full.num_warehouse;
         if (full.liquidado == 1) {
-            href_print = "impresion-documento/" + full.id + "/guia";
+            href_print_view = "impresion-documento/" + full.id + "/guia";
+            href_print = 'onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format +'&id=' + full.id + '&agency_id='+agency_id+'&document=guia\')"';
             // href_print_label = "impresion-documento-label/" + full.id + "/guia";
             var name = "Nitro PDF Creator (Pro 10)";
             var format = "PDF";
-            href_print_label = 'onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format +'&id=' + full.id + '&agency_id='+agency_id+'&document=guia\')"';
+            href_print_label = 'onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format +'&id=' + full.id + '&agency_id='+agency_id+'&document=guia&label=true\')"';
             // codigo = full.num_guia;
         } else {
-            href_print = "impresion-documento/" + full.id + "/warehouse";
+            href_print_view = "impresion-documento/" + full.id + "/warehouse";
+            href_print = 'onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format +'&id=' + full.id + '&agency_id='+agency_id+'&document=warehouse\')"';
             // href_print_label = "impresion-documento-label/" + full.id + "/warehouse";
             var name = "Nitro PDF Creator (Pro 10)";
             var format = "PDF";
-            href_print_label = 'onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format +'&id=' + full.id + '&agency_id='+agency_id+'&document=warehouse\')"';
+            href_print_label = 'onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format +'&id=' + full.id + '&agency_id='+agency_id+'&document=warehouse&label=true\')"';
             // codigo = full.num_warehouse;
         }
 
         var btn_tags = ' <a onclick="openModalTagsDocument(' + full.id + ', \'' + codigo + '\', \'' + full.cons_nomfull + '\', \'' + full.email_cons + '\', \'' + full.cantidad + '\', \'' + full.liquidado + '\', \'' + full.piezas + '\', \'' + full.estatus_color + '\')" data-toggle="modal" data-target="#modalTagDocument" class="" style="font-size: 18px;"><i class="fal fa-arrow-square-right fa-lg" data-toggle="tooltip" title="Tareas"></i></a>';
-        var btns = "<div class='btn-group'>" + "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + "<i class='fal fa-print fa-lg'></i> <span class='caret'></span>" + "</button>" + "<ul class='dropdown-menu dropdown-menu-right pull-right'><li><a href='" + href_print + "' target='_blank'> <spam class='fa fa-print'></spam> Imprimir</a></li>"
-        + "<li><a " + href_print_label + " > <spam class='fa fa-print'></spam> Labels "+label+"</a></li>" + "<li><a href='#' onclick=\"sendMail(" + full.id + ")\"> <spam class='fa fa-envelope'></spam> Enviar Mail</a></li>" + "</ul></div>";
+        var btns = "<div class='btn-group'>" + "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + "<i class='fal fa-print fa-lg'></i> <span class='caret'></span>" + "</button>" + "<ul class='dropdown-menu dropdown-menu-right pull-right'>"
+        + "<li><a " + href_print + "> <spam class='fa fa-print'></spam> Documento</a></li>"
+        + "<li><a " + href_print_label + " > <spam class='fa fa-print'></spam> Labels "+label+"</a></li>"
+        + "<li><a href='" + href_print_view + "' target='_blank'> <spam class='fa fa-eye'></spam> Ver Documento</a></li>"
+        + "<li><a href='#' onclick=\"sendMail(" + full.id + ")\"> <spam class='fa fa-envelope'></spam> Enviar Mail</a></li>" + "</ul></div>";
         return btn_edit + btns + ' ' + btn_tags + btn_delete;
     }
 }

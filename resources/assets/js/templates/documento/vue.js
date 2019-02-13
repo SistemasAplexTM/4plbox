@@ -61,9 +61,12 @@ var objVue = new Vue({
           }
     },
     mounted: function() {
-        this.typeDocumentList();
-        this.printDocument();
-        this.getStatus();
+      let me = this;
+        me.typeDocumentList();
+        setTimeout(function () {
+          me.printDocument();
+          me.getStatus();
+        },1500)
         $('#date').val(this.getTime());
     },
     created(){
@@ -116,8 +119,15 @@ var objVue = new Vue({
         },
         printDocument: function(){
             if( $('#documentoIndex').data('id_print') != '' && $('#documentoIndex').data('doc_print') != ''){
-                window.open('impresion-documento/' + $('#documentoIndex').data('id_print') + '/'+$('#documentoIndex').data('doc_print'), '_blank');
-                window.open('impresion-documento-label/' + $('#documentoIndex').data('id_print') + '/'+$('#documentoIndex').data('doc_print'), '_blank');
+                var name = "Nitro PDF Creator (Pro 10)";
+                var format = "PDF";
+                javascript:jsWebClientPrint.print("useDefaultPrinter=false&printerName=" + name + "&filetype="+ format +"&id=" + $('#documentoIndex').data('id_print') + "&agency_id="+agency_id+"&document="+$('#documentoIndex').data('doc_print')+"&label=true")
+
+                setTimeout(function() {
+                  javascript:jsWebClientPrint.print("useDefaultPrinter=false&printerName=" + name + "&filetype="+ format +"&id=" + $('#documentoIndex').data('id_print') + "&agency_id="+agency_id+"&document="+$('#documentoIndex').data('doc_print'))
+                }, 4000)
+                // window.open('impresion-documento/' + $('#documentoIndex').data('id_print') + '/'+$('#documentoIndex').data('doc_print'), '_blank');
+                // window.open('impresion-documento-label/' + $('#documentoIndex').data('id_print') + '/'+$('#documentoIndex').data('doc_print'), '_blank');
             }
         },
         sendMail: function(id) {

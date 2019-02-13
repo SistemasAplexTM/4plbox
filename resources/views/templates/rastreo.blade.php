@@ -52,21 +52,24 @@
         .gris {
         width: 60%;
         }
+        .texto{
+          font-size: 15px;
+        }
     </style>
 </head>
 <body>
     <div id="wrapper">
         <div>
             <div class="wrapper wrapper-content animated fadeInRight" id="rastreo">
-                <div class="row" id="contenido">                    
+                <div class="row" id="contenido">
                     <div class="col-lg-5 col-md-6" id="formulario">
                         <h1>@lang('general.track_your_merchandise')</h1>
                         <p>@lang('general.enter_the_tracking')</p>
-                        <form id="formRastreo" enctype="multipart/form-data" class="form-horizontal casillero_form" role="form" action="#" method="post">          
+                        <form id="formRastreo" enctype="multipart/form-data" class="form-horizontal casillero_form" role="form" action="#" method="post">
                             <div class="ibox float-e-margins">
                                 <div class="ibox-content gray-bg">
                                     <!--***** contenido ******-->
-                                    <div class="row">   
+                                    <div class="row">
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label class="control-label" for="codigo">@lang('general.warehouse_guide_tracking')</label>
@@ -81,17 +84,22 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">   
-                                        <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>@lang('general.weight'): <span id="peso_label">@{{ peso_label }} Lbs</span></label>
-                                                <label>@lang('general.tracking'): <span id="tracking_label">@{{ tracking_label }}</span></label>
                                                 <div>@lang('general.deliver_date'): <span id="fecha_label">@{{ fecha_entrega }}</span></div>
-                                                <div class="hr-line-dashed" style="border-top: 1px dashed #898d90;"></div>
                                             </div>
                                         </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                              <label>@lang('general.tracking'): </label>
+                                              <div class="" id="tracking_label" v-for="tracking in tracking_label">- @{{ tracking }}</div>
+                                          </div>
+                                      </div>
                                     </div>
-                                    <div class="row">               
+                                    <div class="hr-line-dashed" style="border-top: 1px dashed #898d90;"></div>
+                                    <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="row" v-for="dato in datos">
                                                 <div class="col-lg-5 col-md-5 col-sm-6 col-xs-6">
@@ -102,7 +110,7 @@
                                                             <span class="year">
                                                                 <h2 id="estado_year1">@{{ dato.year_data }}</h2>
                                                             </span>
-                                                        </div>                          
+                                                        </div>
                                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="padding-left: 0; padding-right: 0;">
                                                             <div style="text-align: center;"><img id="estado1" class="gris" v-bind:src="dato.img"></div>
                                                             <div style="padding: 15px 0px;"></div>
@@ -110,16 +118,16 @@
                                                             <div style="padding: 15px 0px;"></div>
                                                         </div>
                                                     </div>
-                                                </div>                  
+                                                </div>
                                                 <div class="col-lg-7 col-md-7 col-sm-6 col-xs-6">
                                                     <h3 style="font-weight: 900;" id="estado_estado1">@{{ dato.estado }}</h3>
-                                                    <span style="font-weight: 300;" id="estado_descripcion1">@{{ dato.descripcion }}</span><br>
+                                                    <span style="font-weight: 300;" id="estado_descripcion1" class="texto">@{{ dato.descripcion }}</span><br>
                                                     <span style="font-weight: 900;color: black;" id="estado_procedente1">@{{ dato.procedencia }}</span>
                                                 </div>
                                             </div>
                                             <div v-if="Object.keys(datos).length === 0">
                                                 <h1>@{{ no_data }}</h1>
-                                            </div>            
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

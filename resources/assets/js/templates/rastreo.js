@@ -47,7 +47,8 @@ var objVue = new Vue({
                             this.codigo_label = this.codigo;
                             if(this.datos.length > 0){
                                 this.peso_label = this.datos[0].peso;
-                                this.tracking_label = this.datos[0].tracking;
+                                str = this.datos[0].tracking;
+                                this.tracking_label = str.split(",");
                             }else{
                                 this.no_data = 'No hay datos con el numero ingresado. :(';
                             }

@@ -1078,7 +1078,7 @@ class DocumentoController extends Controller
         return $pdf->stream('TSA.pdf');
     }
 
-    public function pdf($id, $document, $id_detalle = null)
+    public function pdf($id, $document, $id_detalle = null, $view = true)
     {
         $documento = DB::table('documento')
             ->leftJoin('master AS m', 'documento.master_id', '=', 'm.id')
@@ -1556,9 +1556,12 @@ class DocumentoController extends Controller
                 }
             }
         }
-
-        // return $pdf->download($nameDocument . ' . pdf');
-        return $pdf->stream($nameDocument . '.pdf'); //visualizar en el navegador
+        if($view){
+          return $pdf->stream($nameDocument . '.pdf'); //visualizar en el navegador
+        }else{
+          $pdf->save(public_path(). '/files/File.pdf');//GUARDAR PARA IMPRIMIR POR DEFECTO
+        }
+        // return $pdf->download($nameDocument . ' . pdf');// DESCARGAR ARCHIVO
     }
 
     public function pdfLabel($id, $document, $id_detalle = null, $consolidado = null, $id_detail_consol = null)
@@ -1639,7 +1642,7 @@ class DocumentoController extends Controller
                 // ->setPaper(array(25, -25, 300, 300), 'landscape');
 
             $nameDocument = 'Label' . $document . '-' . $documento->id;
-            $pdf->save(public_path(). '/files/dumaFile.pdf');
+            $pdf->save(public_path(). '/files/File.pdf');
 
             // return $pdf->stream($nameDocument . '.pdf');
             return true;
@@ -1649,7 +1652,7 @@ class DocumentoController extends Controller
                     $pdf = PDF::loadView('pdf.labelWGJyg', compact('documento', 'detalle', 'document', 'consolidado', 'dato_consolidado'))
                     ->setPaper(array(25, -25, 260, 360), 'landscape');
                     $nameDocument = 'Label' . $document . '-' . $documento->id;
-                    $pdf->save(public_path(). '/files/dumaFile.pdf');
+                    $pdf->save(public_path(). '/files/File.pdf');
                     return true;
                 }else{
                     $pdf = PDF::loadView('pdf.labelWG', compact('documento', 'detalle', 'document', 'consolidado', 'dato_consolidado'))
@@ -1677,11 +1680,17 @@ class DocumentoController extends Controller
       if($request->input('id_detail_consol')){
         $id_detail_consol = $request->input('id_detail_consol');
       }
-
+      // OBTENER LA CONFIGURACION DE LA IMPRESORA
+      $dataPrint = $this->getConfig('print_' . $request->input('agency_id'));
+      $prints = json_decode($dataPrint->value);
+      // VALIDAR SI ES UN LABEL O UN DOCUMENTO A IMPRIMIR
+      if($request->input('label')){
         $this->pdfLabel($request->input('id'), $request->input('document'), $id_detalle, $consolidado, $id_detail_consol);
-        $dataPrint = $this->getConfig('print_' . $request->input('agency_id'));
-        $prints = json_decode($dataPrint->value);
         $print = $prints->prints->labels;
+      }else{
+        $this->pdf($request->input('id'), $request->input('document'), $id_detalle, false);
+        $print = $prints->prints->default;
+      }
        if ($request->exists(WebClientPrint::CLIENT_PRINT_JOB)) {
             $useDefaultPrinter = ($request->input('useDefaultPrinter') === 'checked');
             // $printerName = urldecode($request->input('printerName'));
@@ -1690,7 +1699,7 @@ class DocumentoController extends Controller
             $fileName = uniqid() . '.' . $filetype;
 
             $filePath = '';
-            $filePath = public_path().'\files\dumaFile.pdf';
+            $filePath = public_path().'/files/File.pdf';
 
             if (!Utils::isNullOrEmptyString($filePath)) {
                 //Create a ClientPrintJob obj that will be processed at the client side by the WCPP
@@ -1704,7 +1713,7 @@ class DocumentoController extends Controller
                 //$myfile->printInReverseOrder = true;
                 $cpj->printFile = $myfile;
 
-				if ($useDefaultPrinter || $printerName === 'null') {
+				        if ($useDefaultPrinter || $printerName === 'null') {
                     $cpj->clientPrinter = new DefaultPrinter();
                 } else {
                     $cpj->clientPrinter = new InstalledPrinter($printerName);
