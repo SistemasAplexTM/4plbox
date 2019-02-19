@@ -59,7 +59,7 @@
      #shipper,#consignee{
         font-size: 9px;
         height: 13px;
-    } 
+    }
     #tblContenido{
         padding-bottom: 3px;
         padding-top: 8px;
@@ -74,7 +74,7 @@
     }
      #remitente,#destinatario,#shipper,#consignee{
         padding-left: 5px;
-    } 
+    }
     #piezas,#declarado,#peso{
         text-align: center;
         font-size: 10px;
@@ -91,7 +91,10 @@
     }
     #spaceTable{
         /*background-color:  #8B91A0;*/
-        height: 12px;
+        height: 5px;
+    }
+    .agency_name{
+      font-weight: bold;
     }
 </style>
 <?php
@@ -124,7 +127,7 @@ $toalRegistros = count($detalleConsolidado);
                endif;
                ?>>
                         <tr>
-                            <td>
+                            <td class="agency_name">
                                 {{ (isset($documento->agencia)) ? $documento->agencia : '' }}
                             </td>
                             <td align="right">
@@ -226,7 +229,7 @@ $toalRegistros = count($detalleConsolidado);
                                             </div>
                                         </td>
                                         <td style="border-left: 1px solid #8B91A0;"><div id="piezas">{{ 1 }}</div></td>
-                                        <td style="border-left: 1px solid #8B91A0;"><div id="declarado" style="{{ ($value->declarado2 == 0) ? 'background-color: black;color: #fff' : ''}}">{{ '$ '.number_format($value->declarado2, 2) }}</div></td> 
+                                        <td style="border-left: 1px solid #8B91A0;"><div id="declarado" style="{{ ($value->declarado2 == 0) ? 'background-color: black;color: #fff' : ''}}">{{ '$ '.number_format($value->declarado2, 2) }}</div></td>
                                         <td style="border-left: 1px solid #8B91A0;"><div id="peso" style="{{ ($value->peso2 == 0) ? 'background-color: black;color: #fff' : ''}}">{{ ' '.$value->peso2 }} Lbs</div><div id="peso">{{ ' '.number_format(($value->peso2 * 0.453592), 2) }} Kls</div></td>
                                     </tr>
                                 </table>
@@ -234,7 +237,7 @@ $toalRegistros = count($detalleConsolidado);
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <div id="recibido">@lang('pdfs.received_by') :__________________________ 
+                                <div id="recibido">@lang('pdfs.received_by') :__________________________
                                 @lang('pdfs.id') :____________________ @lang('pdfs.date') : DD____MM____AAAA______</div>
                             </td>
                         </tr>

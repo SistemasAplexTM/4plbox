@@ -1054,7 +1054,12 @@
 													}else{
 															$('#pa' + datos[i].id).removeClass('text-danger');
 															if(datos[i].flag_peso == null && datos[i].flag_declarado == null){
-																$('#num_guia' + datos[i].id).removeClass('text-danger');
+																if(parseFloat(datos[i].declarado2) == 0 || parseFloat(datos[i].peso2) == 0){
+																	$('#num_guia' + datos[i].id).addClass('text-danger');
+																	cont++;
+																}else{
+																	$('#num_guia' + datos[i].id).removeClass('text-danger');
+																}
 															}else{
 																cont++;
 															}

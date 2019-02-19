@@ -29,7 +29,7 @@ $(document).ready(function() {
                 var btn_delete = '';
                 if (permission_update) {
                     var params = [
-                        full.id, "'" + full.descripcion + "'", "'" + full.color + "'", "'" + full.email + "'",
+                        full.id, "'" + full.descripcion + "'", "'" + full.color + "'", "'" + full.email + "'", "'" + full.view_client + "'"
                     ];
                     var btn_edit = "<a onclick=\"edit(" + params + ")\" class='btn btn-outline btn-success btn-xs' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit'></i></a> ";
                 }
@@ -46,40 +46,59 @@ $(document).ready(function() {
     });
 });
 
-function edit(id, descripcion, color, email) {
+function edit(id, descripcion, color, email, view_client) {
     var data = {
         id: id,
         descripcion: descripcion,
         color: color,
         email: email,
+        view_client: view_client,
     };
     objVue.edit(data);
 }
 var objVue = new Vue({
     el: '#status',
     mounted: function() {
-        //
+        this.getPlantillasEmail();
     },
     data: {
         descripcion: '',
-        color: '',
+        color: '#020202',
         email: '',
         view_client: false,
         editar: 0,
         formErrors: {},
         listErrors: {},
+        email_plantilla_id: null,
+        plantillas: [],
     },
     methods: {
         resetForm: function() {
             this.id = '';
             this.descripcion = '';
-            this.color = '';
+            this.color = '#020202';
             this.email = '';
             this.editar = 0;
+            this.view_client= false;
             this.formErrors = {};
             this.listErrors = {};
             $('#email_s').iCheck('uncheck').prop('checked', false);
             $('#email_n').iCheck('check').prop('checked', true);
+            $('#view_client_s').iCheck('uncheck').prop('checked', false);
+            $('#view_client_n').iCheck('check').prop('checked', true);
+        },
+        showEmailTemplate: function() {
+          if ($('#email_s').is(':checked')) {
+              console.log('chek');
+          } else {
+              console.log('no check');
+          }
+        },
+        getPlantillasEmail: function() {
+            let me = this;
+            axios.get('tipoDocumento/getPlantillasEmail').then(response => {
+                me.plantillas = response.data.data;
+            });
         },
         /* metodo para eliminar el error de los campos del formulario cuando dan clic sobre el */
         deleteError: function(element) {
@@ -130,16 +149,17 @@ var objVue = new Vue({
             } else {
                 this.email = 0;
             }
-            if ($('#email_s').is(':checked')) {
-                this.email = 1;
+            if ($('#view_client_s').is(':checked')) {
+                this.view_client = 1;
             } else {
-                this.email = 0;
+                this.view_client = 0;
             }
             axios.post('status', {
                 'created_at': new Date(),
                 'descripcion': this.descripcion,
                 'color': this.color,
                 'email': this.email,
+                'view_client': this.view_client,
             }).then(function(response) {
                 if (response.data['code'] == 200) {
                     toastr.success('Registro creado correctamente.');
@@ -170,10 +190,16 @@ var objVue = new Vue({
             } else {
                 this.email = 0;
             }
+            if ($('#view_client_s').is(':checked')) {
+                this.view_client = 1;
+            } else {
+                this.view_client = 0;
+            }
             axios.put('status/' + this.id, {
                 'descripcion': this.descripcion,
                 'color': this.color,
                 'email': this.email,
+                'view_client': this.view_client,
             }).then(function(response) {
                 if (response.data['code'] == 200) {
                     toastr.success('Registro Actualizado correctamente');
@@ -208,6 +234,12 @@ var objVue = new Vue({
                 $('#email_s').iCheck('check').prop('checked', true);
             } else {
                 $('#email_n').iCheck('check').prop('checked', true);
+            }
+            /* Chekear los radios del campo view_client*/
+            if (data['view_client'] == 1) {
+                $('#view_client_s').iCheck('check').prop('checked', true);
+            } else {
+                $('#view_client_n').iCheck('check').prop('checked', true);
             }
             this.editar = 1;
             this.formErrors = {};

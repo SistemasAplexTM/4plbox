@@ -62,7 +62,7 @@ return [
     'use_mailchimp'=>'Use MailChimp',
     'usar_zopim'=>'Use Zopim',
     'description'=>'Description',
-    'view_client'=>'Show the user',
+    'view_client'=>'Alert for Client',
     'tracking'=>'Tracking',
     'locker_registration'=>'Locker registration',
     'pre_alert'=>'Pre alert',

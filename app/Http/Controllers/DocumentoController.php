@@ -1407,16 +1407,16 @@ class DocumentoController extends Controller
                         // VALIDAR QUE EL PESO Y EL DECLARADO NO SUPEREN LO MAXIMO ESTABLECIDO
                         $peso_t = 0;
                         $decla_t = 0;
-                        if (count($detalleConsolidado) > 0) {
-                          foreach ($detalleConsolidado as $key) {
-                            if($key->peso_total > 50){
-                              $peso_t++;
-                            }
-                            if($key->declarado_total > 2000){
-                              $decla_t++;
-                            }
-                          }
-                        }
+                        // if (count($detalleConsolidado) > 0) {
+                        //   foreach ($detalleConsolidado as $key) {
+                        //     if($key->peso_total > 50){
+                        //       $peso_t++;
+                        //     }
+                        //     if($key->declarado_total > 2000){
+                        //       $decla_t++;
+                        //     }
+                        //   }
+                        // }
                         if($peso_t === 0 and $decla_t === 0){
                           $this->AddToLog('Impresion Consolidado guias (' . $id . ')');
                           if (env('APP_TYPE') === 'courier') {
@@ -1528,16 +1528,16 @@ class DocumentoController extends Controller
                             // VALIDAR QUE EL PESO Y EL DECLARADO NO SUPEREN LO MAXIMO ESTABLECIDO
                             $peso_t = 0;
                             $decla_t = 0;
-                            if (count($detalleConsolidado) > 0) {
-                              foreach ($detalleConsolidado as $key) {
-                                if($key->peso_total > 50){
-                                  $peso_t++;
-                                }
-                                if($key->declarado_total > 2000){
-                                  $decla_t++;
-                                }
-                              }
-                            }
+                            // if (count($detalleConsolidado) > 0) {
+                            //   foreach ($detalleConsolidado as $key) {
+                            //     if($key->peso_total > 50){
+                            //       $peso_t++;
+                            //     }
+                            //     if($key->declarado_total > 2000){
+                            //       $decla_t++;
+                            //     }
+                            //   }
+                            // }
                             if($peso_t === 0 and $decla_t === 0){
                               $this->AddToLog('Impresion Consolidado (' . $id . ')');
                               if (env('APP_TYPE') === 'courier') {
@@ -2036,6 +2036,7 @@ class DocumentoController extends Controller
                 'a.num_warehouse',
                 'a.liquidado',
                 'a.peso2',
+                'e.pais_id',
                 DB::raw('IFNULL(a.declarado2,0) as declarado2')
             )
             ->groupBy(

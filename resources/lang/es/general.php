@@ -68,7 +68,7 @@ return [
     'use_mailchimp'=>'Usar MailChimp',
     'use_zopim '=>'Usar Zopim ',
     'description'=>'Descripción',
-    'view_client'=>'Mostrar al usuario',
+    'view_client'=>'Alerta para Cliente',
     'tracking'=>'Tracking',
     'locker_registration'=>'Registro casillero ',
     'pre_alert'=>'Pre alert',
@@ -248,7 +248,7 @@ return [
     //resources/views/template/shipper
     'shipper_registration'=>'Registro de Shipper',
     'status'=>'Estado',
-    'state_registration'=>'State registration',
+    'state_registration'=>'Registro de estado',
     'yes'=>'Sí',
     'not'=>'No',
 
