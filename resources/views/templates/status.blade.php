@@ -25,12 +25,12 @@
                     <div class="ibox-title">
                         <h5>@lang('general.state_registration')</h5>
                         <div class="ibox-tools">
-                            
+
                         </div>
                     </div>
                     <div class="ibox-content">
                         <!--***** contenido ******-->
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                 <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.descripcion}">
@@ -45,7 +45,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                 <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.color}">
@@ -60,7 +60,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                 <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.email}">
@@ -68,13 +68,29 @@
                                             <label for="email" class="control-label gcore-label-top">@lang('general.send_email'):</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <div class="i-checks"><label>
-                                                <input type="radio" value="1" id="email_s" name="email"> <i></i> @lang('general.yes') </label>
-                                            </div>
-                                            <div class="i-checks"><label> 
-                                                <input type="radio" value="0" id="email_n" name="email" checked=""> <i></i>@lang('general.not')</label>
+                                            <div class="i-checks">
+                                              <label><input type="radio" value="1" id="email_s" name="email"> @lang('general.yes') </label>
+                                              <label><input type="radio" value="0" id="email_n" name="email" checked=""> @lang('general.not')</label>
                                             </div>
                                             <small id="msn1" class="help-block result-email" v-show="listErrors.email">@lang('general.obligatory_field')</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="col-lg-12">
+                                    <div class="form-group" :class="{'has-error': listErrors.view_client}">
+                                        <div class="col-sm-4">
+                                            <label for="view_client" class="control-label gcore-label-top">@lang('general.view_client'):</label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                          <div class="i-checks">
+                                            <label><input type="radio" value="1" id="view_client" name="view_client"> @lang('general.yes') </label>
+                                            <label><input type="radio" value="0" id="view_client" name="view_client" checked=""> @lang('general.not')</label>
+                                          </div>
+                                            <small id="msn1" class="help-block result-view_client" v-show="listErrors.view_client">@lang('general.obligatory_field')</small>
                                         </div>
                                     </div>
                                 </div>
@@ -87,7 +103,6 @@
                     </div>
                 </div>
             </div>
-        </form>
         <div class="col-lg-7">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
@@ -117,10 +132,11 @@
                                 </tr>
                             </tfoot>
                         </table>
-                    </div>             
+                    </div>
                 </div>
             </div>
         </div>
+      </form>
     </div>
 @endsection
 

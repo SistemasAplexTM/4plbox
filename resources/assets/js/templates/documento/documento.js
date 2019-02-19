@@ -172,7 +172,7 @@ function datatableDetail(){
 
                 btn_edit = '<a class="btn btn-success btn-xs btn-actions" type="button" id="btn_edit'+full.id+'" onclick="editTableDetail('+full.id+')" data-toggle="tooltip" title="Editar"><i class="fa fa-edit"></i></a> ';
 
-                btn_delete = '<a class="btn btn-danger btn-xs btn-actions" type="button" id="btn_remove'+full.id+'" onclick="eliminar('+full.id+', true)" data-toggle="tooltip" title="Eliminar" style="display: '+display+'"><i class="fa fa-times"></i></a> ';
+                btn_delete = '<a class="btn btn-danger btn-xs btn-actions" type="button" id="btn_remove'+full.id+'" onclick="eliminar('+full.id+', false)" data-toggle="tooltip" title="Eliminar" style="display: '+display+'"><i class="fa fa-times"></i></a> ';
 
                 return btn_addTracking + btn_delete;
             }
@@ -1012,14 +1012,27 @@ var objVue = new Vue({
                     // $('#fila' + data.id).remove();
                 });
             } else {
-                axios.delete('../delete/' + data.id).then(response => {
-                    toastr.success('Registro eliminado correctamente.');
-                    toastr.options.closeButton = true;
-                    me.refreshTableDetail();
-                    // refreshTable('whgTable');
-                    // me.totalizeDocument();
-                    // $('#fila' + data.id).remove();
-                });
+              swal({
+              title: "<div><span style='color: rgb(212, 103, 82);'>Atención!</span><br><div>¿Desea eliminar este registro?</div></div>",
+              text: "NO SE PODRA RECUPERAR",
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: "Si",
+              cancelButtonText: "No, Cancelar!",
+              }).then((result) => {
+                  if (result.value) {
+                    axios.get('../delete/' + data.id + '/' + data.logical + '/documento_detalle').then(response => {
+                        toastr.success('Registro eliminado correctamente.');
+                        toastr.options.closeButton = true;
+                        me.refreshTableDetail();
+                        // refreshTable('whgTable');
+                        // me.totalizeDocument();
+                        // $('#fila' + data.id).remove();
+                    });
+                  }
+              });
             }
         },
         placeShipperConsignee: function(data, table) {
@@ -1224,18 +1237,24 @@ var objVue = new Vue({
             var paId = $('#pa_id').val();
             var pa = $('#pa').val();
             var contiene = $('#contiene').val();
-            var valDeclarado = parseFloat($('#valDeclarado').val());
+            var valDeclarado = ($('#valDeclarado').val() != '') ? parseFloat($('#valDeclarado').val()) : '';
             var resArancel = 0;
             var resIva = 0;
             var piezas = $('#valPiezas').val();
             var cont = 1;
             /* insercion del detalle */
             var me = this;
-            // alert('registrar '+ tipo);
             if(typeof tipo != 'undefined'){
                 cont = piezas;
                 piezas = 1;
             }
+            var datos = {
+              'peso': peso,
+              'tipoEmpaque': tipoEmpaque,
+              'contiene': contiene,
+              'declarado': valDeclarado,
+            }
+            if(me.validationDetail(datos)){
             // for (var i = 0; i < cont; i++) {
                 axios.post('../insertDetail', {
                     'documento_id': id_documento,
@@ -1293,6 +1312,41 @@ var objVue = new Vue({
                     });
                 });
             // }
+          }
+        },
+        validationDetail: function(datos) {
+          let me = this;
+          console.log(datos, me.showFieldsTotals);
+          if (datos.peso !== '') {
+            if(datos.tipoEmpaque !== ''){
+              if(datos.contiene !== ''){
+                if(!me.showFieldsTotals){
+                  return true;
+                }else{
+                  if(datos.declarado !== ''){
+                    return true;
+                  }else{
+                    toastr.warning('Ingrese el DECLARADO de la carga.');
+                    return false;
+                  }
+                }
+              }else{
+                toastr.warning('Ingrese el CONTENIDO de la carga.');
+                return false;
+              }
+            }else{
+              toastr.warning('Seleccione un TIPO DE EMPAQUE.');
+              return false;
+            }
+          }else{
+            $('#peso').css({"transition": "ripple .4s ease-in"});
+            toastr.warning('Ingresa el PESO para continuar.');
+    //         transition-property: text-decoration;
+    // transition-duration: 0.8s;
+    // transition-timing-function: linear;
+    // transition-delay: 0.2s;
+            return false;
+          }
         },
         editTableDetail: function(data) {
             $('#pesoD' + data.id).attr('readonly', false);

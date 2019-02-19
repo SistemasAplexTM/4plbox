@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TrackingRequest;
 use App\Tracking;
+use App\Prealerta;
 use Auth;
 use DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Traits\sendEmailAlerts;
 
 class TrackingController extends Controller
 {
+    use sendEmailAlerts;
+
     public function __construct()
     {
         $this->middleware('permission:tracking.index')->only('index');
@@ -45,11 +49,16 @@ class TrackingController extends Controller
             }
             $data->created_at = date('Y-m-d H:i:s');
             if ($data->save()) {
-                $answer = array(
-                    "datos"  => $request->all(),
-                    "code"   => 200,
-                    "status" => 200,
-                );
+              $tr = Prealerta::where('tracking', $request->codigo)->first();
+              if($tr){
+                $tr->recibido = 1;
+                $tr->save();
+              }
+              $answer = array(
+                  "datos"  => $request->all(),
+                  "code"   => 200,
+                  "status" => 200,
+              );
             } else {
                 $answer = array(
                     "error"  => 'Error al intentar Eliminar el registro.',
@@ -58,11 +67,11 @@ class TrackingController extends Controller
                 );
             }
             return $answer;
-        } catch (\Exception $e) {
-            $error = '';
-            foreach ($e->errorInfo as $key => $value) {
-                $error .= $key . ' - ' . $value . ' <br> ';
-            }
+        } catch (Exception $e) {
+            $error = $e;
+            // foreach ($e->errorInfo as $key => $value) {
+            //     $error .= $key . ' - ' . $value . ' <br> ';
+            // }
             $answer = array(
                 "error"  => $error,
                 "code"   => 600,
@@ -337,5 +346,42 @@ class TrackingController extends Controller
           ])
           ->get();
         return \DataTables::of($data)->make(true);
+    }
+
+    public function updateTrackingReceipt(Request $request)
+    {
+        try {
+            $data = Tracking::findOrFail($request->pk);
+            $data->contenido = $request->value;
+
+            if ($data->save()) {
+                $this->AddToLog('Tracking contenido editado (' . $data->id . ')');
+                $answer = array(
+                    "datos"  => $data,
+                    "code"   => 200,
+                    "status" => 200,
+                );
+            } else {
+                $answer = array(
+                    "error"  => 'Error al intentar Eliminar el registro.',
+                    "code"   => 600,
+                    "status" => 500,
+                );
+            }
+            return $answer;
+        } catch (\Exception $e) {
+            $error = '';
+            if (isset($e->errorInfo) and $e->errorInfo) {
+                foreach ($e->errorInfo as $key => $value) {
+                    $error .= $key . ' - ' . $value . ' <br> ';
+                }
+            } else { $error = $e;}
+            $answer = array(
+                "error"  => $error,
+                "code"   => 600,
+                "status" => 500,
+            );
+            return $answer;
+        }
     }
 }

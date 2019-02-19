@@ -109,13 +109,14 @@
                             </div>
                         </div>
 
-                        <div class="row" v-if="instruccion || email">
+                        <div class="row" v-show="instruccion || email">
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <div class="alert alert-info alert-dismissible" role="alert" id="msn_sendmail" style="margin-bottom: 0px;">
                                           <button type="button" class="close" data-dismiss="alert" aria-label="Close" id="icon_close"><span aria-hidden="true">&times;</span></button>
                                           <strong>@lang('general.instruction'):</strong> @{{ instruccion }}<br>
+                                          {{-- <strong>@lang('general.pack_off'):</strong> @{{ (confirmedSend) ? 'Si' : 'No' }}<br> --}}
                                           <strong>@lang('general.email'):</strong> @{{ email }}
                                         </div>
                                     </div>
@@ -195,7 +196,7 @@
                                 </table>
                             </div>
                           </div>
-                          <div role="tabpanel" class="tab-pane fade active" id="bodega">
+                          <div role="tabpanel" class="tab-pane fade" id="bodega">
                           <div class="table-responsive" style="margin-top: 10px">
                               <table id="tbl-tracking-bodega" class="table table-striped table-hover table-bordered" style="width: 100%;">
                                   <thead>
@@ -231,6 +232,7 @@
               </div>
           </form>
 
+          {{-- MODAL CREAR RECIBO --}}
           <div class="modal fade bs-example" id="modalCreateReceipt" tabindex="" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
               <div class="modal-dialog" style="width: 60%;">
                   <div class="modal-content">
@@ -305,7 +307,7 @@
                         </form>
                       </div>
                       <div class="modal-footer">
-                          <button type="button" class="btn btn-primary" data-dismiss="modal" @click="createDocument()"><i class="far fa-file-signature"></i> @lang('documents.create')</button>
+                          <button type="button" class="btn btn-primary" @click="createDocument()"><i class="far fa-file-signature"></i> @lang('documents.create')</button>
                           <button type="button" class="btn btn-default" data-dismiss="modal"><i class="far fa-times"></i> @lang('documents.close')</button>
                       </div>
                   </div>

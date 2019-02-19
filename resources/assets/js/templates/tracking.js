@@ -1,4 +1,9 @@
 $(document).ready(function() {
+  $.fn.editable.defaults.mode = 'inline';
+  $.fn.editable.defaults.params = function(params) {
+      params._token = $('meta[name="csrf-token"]').attr('content');
+      return params;
+  };
   loadTable('tbl-tracking', false);
   loadTable('tbl-tracking-bodega', true);
   loadTableCreateReceipt();
@@ -25,10 +30,12 @@ function loadTable(name, bodega) {
       }, {
         "render": function(data, type, full, meta) {
           return '<div>'+ ((full.num_warehouse === null) ? '' : full.num_warehouse) +'</div><small style="color:#2196F3">'+ ((full.estatus === null) ? '' : full.estatus) +'</small>'
-        }
+        },
+        "visible": bodega
       }, {
-          data: "contenido",
-          name: 'contenido'
+          "render": function(data, type, full, meta) {
+            return '<a data-name="contenido" data-pk="'+full.id+'" class="td_edit" data-type="text" data-placement="right" data-title="Contenido">'+ ((full.contenido !== null) ? full.contenido : 'No hay datos') +'</a>';
+          }
       },
       // {
       //     sortable: false,
@@ -47,11 +54,28 @@ function loadTable(name, bodega) {
           "render": function(data, type, full, meta) {
               var btn_delete = '';
               if (permission_delete) {
-                  var btn_delete = " <a onclick=\"eliminar(" + full.id + "," + false + ")\" class='btn btn-outline btn-danger btn-xs' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-trash'></i></a> ";
+                  var btn_delete = " <a onclick=\"eliminar(" + full.id + "," + false + ")\" class='text-danger' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-trash'></i></a> ";
               }
               return btn_delete;
           }
       }],
+      "drawCallback": function () {
+        $(".td_edit").editable({
+            ajaxOptions: {
+                type: 'post',
+                dataType: 'json'
+            },
+            url: "tracking/updateTrackingReceipt",
+            validate:function(value){
+                if($.trim(value) == ''){
+                    return 'Este campo es obligatorio!';
+                }
+            },
+            success: function(response, newValue) {
+                objVue.updateTable();
+            }
+        });
+      },
   });
 }
 
@@ -68,13 +92,13 @@ function loadTableCreateReceipt() {
           sortable: false,
           class: 'text-center',
           "render": function(data, type, full, meta) {
-              return '<label class="badge badge-success">'+full.cantidad+'</label>';
+              return '<label class="badge badge-success" style="font-size: 15px;">'+full.cantidad+'</label>';
           }
       },
       {
           sortable: false,
           "render": function(data, type, full, meta) {
-              return " <a onclick=\"showDataToCreateReceipt(" + full.consignee_id + ", '" + full.cliente + "')\" class='btn btn-outline btn-success btn-xs' data-toggle='tooltip' data-placement='top' title='Crear recibo'><i class='far fa-file-signature'></i></a> ";
+              return " <a onclick=\"showDataToCreateReceipt(" + full.consignee_id + ", '" + full.cliente + "')\" class='btn btn-outline btn-success btn-xs'><i class='far fa-file-signature'></i> Crear recibo</a> ";
           }
       }],
   });
@@ -100,15 +124,31 @@ function showDataToCreateReceipt(consignee_id, client) {
         name: 'codigo'
       },
       {
-        data: "contenido",
-        name: 'contenido'
+        "render": function(data, type, full, meta) {
+          return '<a data-name="contenido" data-pk="'+full.id+'" class="td_edit" data-type="text" data-placement="right" data-title="Contenido">'+ ((full.contenido !== null) ? full.contenido : 'No hay datos') +'</a>';
+        }
       }],
       "drawCallback": function () {
-        // $('#chk' + field).attr('checked', true);
+        $(".td_edit").editable({
+            ajaxOptions: {
+                type: 'post',
+                dataType: 'json'
+            },
+            url: "tracking/updateTrackingReceipt",
+            validate:function(value){
+                if($.trim(value) == ''){
+                    return 'Este campo es obligatorio!';
+                }
+            },
+            success: function(response, newValue) {
+                objVue.updateTable();
+                refreshTable('tbl-trackings-client');
+            }
+        });
       }
   });
   objVue.consignee_id_doc = consignee_id;
-  $('#client-tracking').html(client);
+  $('#client-tracking').html(client.toUpperCase());
   $('#modalCreateReceipt').modal('show');
 }
 
@@ -161,37 +201,28 @@ var objVue = new Vue({
             this.confirmedSend = false;
             this.editar = 0;
         },
-        createDocument: function(){
-          let me = this;
-          axios.post('documento/ajaxCreate/' + 1, {
-              'tipo_documento_id': 1,
-              'type_id': 1, //COURIER
-              'created_at': this.getTime(),
-              'shipper_id': (me.shipper_id.id) ? me.shipper_id.id : false,
-              'consignee_id': me.consignee_id_doc,
-          }).then(function(response) {
-              var res = response.data;
-              if (response.data['code'] == 200) {
-                  toastr.success('Registro creado correctamente.');
-                  me.createDocumentDetail(res.datos['id']);
-              } else {
-                  toastr.warning(response.data['error']);
+        validation: function(data) {
+          if(data.contenido != ''){
+            if(data.peso != '' && parseFloat(data.peso) > 0){
+              if(data.shipper != null){
+                return true;
+              }else{
+                toastr.options = {"positionClass": "toast-top-center"}
+                toastr.error('Selecciona un shippper para continuar.');
+                return false;
               }
-          }).catch(function(error) {
-              console.log(error);
-              if (error.response.status === 422) {
-                  me.formErrors = error.response.data; //guardo los errores
-                  me.listErrors = me.formErrors.errors; //genero lista de errores
-              }
-              $.each(me.formErrors.errors, function(key, value) {
-                  $('.result-' + key).html(value);
-              });
-              toastr.error("Porfavor completa los campos obligatorios.", {
-                  timeOut: 50000
-              });
-          });
+            }else{
+              toastr.options = {"positionClass": "toast-top-center"}
+              toastr.error('Ingresa el peso del paquete.');
+              return false;
+            }
+          }else{
+            toastr.options = {"positionClass": "toast-top-center"}
+            toastr.error('Ingresa el contenido en alguno de los registros de tracking seleccionados.');
+            return false;
+          }
         },
-        createDocumentDetail: function(id_document) {
+        createDocument: function(){
           let me = this;
           var datos = $("#formTrackingClient").serializeArray();
           me.ids_tracking = [];
@@ -205,8 +236,46 @@ var objVue = new Vue({
               }
           });
           if(me.contenido_tracking.length > 0){
-            me.contenido_detail = me.contenido_tracking.toString();
+            var myStr = me.contenido_tracking.toString();
+            me.contenido_detail = myStr.replace(/,/g, ', ');
           }
+          var datosForm = {
+            'contenido': me.contenido_detail,
+            'peso': me.peso,
+            'shipper': me.shipper_id
+          }
+          if(me.validation(datosForm)){
+            axios.post('documento/ajaxCreate/' + 1, {
+                'tipo_documento_id': 1,
+                'type_id': 1, //COURIER
+                'created_at': this.getTime(),
+                'shipper_id': (me.shipper_id.id) ? me.shipper_id.id : false,
+                'consignee_id': me.consignee_id_doc,
+            }).then(function(response) {
+                var res = response.data;
+                if (response.data['code'] == 200) {
+                    toastr.success('Registro creado correctamente. Recibo N°: ' + res.datos['num_warehouse']);
+                    me.createDocumentDetail(res.datos['id']);
+                } else {
+                    toastr.warning(response.data['error']);
+                }
+            }).catch(function(error) {
+                console.log(error);
+                if (error.response.status === 422) {
+                    me.formErrors = error.response.data; //guardo los errores
+                    me.listErrors = me.formErrors.errors; //genero lista de errores
+                }
+                $.each(me.formErrors.errors, function(key, value) {
+                    $('.result-' + key).html(value);
+                });
+                toastr.error("Porfavor completa los campos obligatorios.", {
+                    timeOut: 50000
+                });
+            });
+          }
+        },
+        createDocumentDetail: function(id_document) {
+          let me = this;
           axios.post('documento/insertDetail', {
             'documento_id': id_document,
             'contador': 1,
@@ -223,11 +292,14 @@ var objVue = new Vue({
             'posicion_arancelaria_id': 234,
             'arancel_id2': 234,
             'created_at': this.getTime(),
-            'ids_tracking': this.ids_tracking
+            'ids_tracking': this.ids_tracking,
+            'shipper_id': (me.shipper_id.id) ? me.shipper_id.id : null,
+            'consignee_id': me.consignee_id_doc,
           }).then(function(response) {
             var res = response.data;
             if (response.data['code'] == 200) {
-              toastr.success('Registro creado correctamente.');
+              $('#modalCreateReceipt').modal('hide');
+              // toastr.success('Registro creado correctamente.');
               me.updateTable();
             } else {
               toastr.warning(response.data['error']);
@@ -256,13 +328,13 @@ var objVue = new Vue({
                     me.instruccion = datos.data['instruccion'];
                     me.email = datos.data['correo'];
                     me.confirmedSend = (datos.data['despachar'] == 1) ? true : false;
+                    if(me.instruccion !== null || me.confirmedSend){
+                      $('.alert-dismissible').removeClass('alert-info').addClass('alert-danger');
+                    }else{
+                      $('.alert-dismissible').removeClass('alert-danger').addClass('alert-info');
+                    }
                 } else {
                     me.create();
-                    // this.instruccion = false;
-                    // this.contenido = null;
-                    // this.email = null;
-                    // this.consignee_id = null;
-                    // this.confirmedSend = false;
                 }
             });
         },

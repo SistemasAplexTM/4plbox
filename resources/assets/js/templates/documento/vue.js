@@ -83,6 +83,15 @@ var objVue = new Vue({
         removerAgrupado: {}, //es para poder remover guias agrupadas en el consolidado
     },
     methods: {
+        pendign(){
+          setTimeout(function() {
+            if($('#li-pending').hasClass('active')){
+              $('.pending').removeClass('ligth');
+            }else{
+              $('.pending').addClass('ligth');
+            }
+          },100)
+        },
         agruparDocumentoDetalle: function(){
           $('#modalagrupar').modal('hide');
           let me = this;
@@ -214,7 +223,7 @@ var objVue = new Vue({
                 if (result.value) {
                     axios.delete('documento/' + id).then(function (response) {
                         if(response.data.code === 200){
-                            refreshTable('tbl-documento');
+                            refreshTable('tbl-documento2');
                             toastr.success('Documento eliminado exitosamente.');
                             toastr.options.closeButton = true;
                         }else{
@@ -222,7 +231,7 @@ var objVue = new Vue({
                         }
                     }).catch(function (error) {
                         console.log(error);
-                        toastr.warning('Error.');
+                        toastr.warning('Error.'+ error);
                         toastr.options.closeButton = true;
                     });
                 }

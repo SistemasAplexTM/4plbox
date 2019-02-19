@@ -65,7 +65,7 @@
                     <div class="col-lg-5 col-md-6" id="formulario">
                         <h1>@lang('general.track_your_merchandise')</h1>
                         <p>@lang('general.enter_the_tracking')</p>
-                        <form id="formRastreo" enctype="multipart/form-data" class="form-horizontal casillero_form" role="form" action="#" method="post">
+                        <form id="formRastreo" class="form-horizontal casillero_form" v-on:submit.prevent="getData()">
                             <div class="ibox float-e-margins">
                                 <div class="ibox-content gray-bg">
                                     <!--***** contenido ******-->

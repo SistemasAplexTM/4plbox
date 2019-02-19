@@ -74,7 +74,7 @@ class CasilleroController extends Controller
                 [$table . '.id', '=', $data->id],
                 [$table . '.deleted_at', '=', null],
             ])->first();
-            // return new \App\Mail\CasilleroEmail($variable);
+
             $plantilla = DB::table('plantillas_correo AS a')
             ->select([
                 'a.mensaje',
@@ -105,20 +105,20 @@ class CasilleroController extends Controller
 
             $replacements = $this->replacements(null, $agencia, null, null, $user, null);
 
-            $cuerpo_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->mensaje);
-            $asunto_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->subject);
-            if ($request->recibir_info) {
-                $listId = $request->listId;
-                if (!\Mailchimp::check($listId, $request->correo)) {
-                    \Mailchimp::subscribe(
-                        $listId,
-                        $request->correo,
-                        ['FNAME' => $request->primer_nombre, 'LNAME' => $request->primer_apellido, 'POBOX' => $po_box],
-                        false
-                    );
-                }
-            }
-            Mail::to($request->correo)->send(new \App\Mail\CasilleroEmail($cuerpo_correo));
+            // $cuerpo_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->mensaje);
+            // $asunto_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->subject);
+            // if ($request->recibir_info) {
+            //     $listId = $request->listId;
+            //     if (!\Mailchimp::check($listId, $request->correo)) {
+            //         \Mailchimp::subscribe(
+            //             $listId,
+            //             $request->correo,
+            //             ['FNAME' => $request->primer_nombre, 'LNAME' => $request->primer_apellido, 'POBOX' => $po_box],
+            //             false
+            //         );
+            //     }
+            // }
+            // Mail::to($request->correo)->send(new \App\Mail\CasilleroEmail($cuerpo_correo));
 
             DB::commit();
         } catch (\Exception $e) {

@@ -3,6 +3,9 @@
 @section('breadcrumb')
 {{-- bread crumbs --}}
 <style type="text/css">
+  .ligth{
+    opacity: 0.5;
+  }
     .dataTables_wrapper{
         padding-bottom: 200px;
         padding-right: 30px;
@@ -99,7 +102,7 @@
                                 {{-- </div> --}}
                             </div>
                             <div class="col-lg-10">
-                                <div class="col-lg-8" style="font-size: 30px; font-weight:800;border-bottom: 1px solid #CDCDCD;">
+                                <div class="col-lg-12" style="font-size: 30px; font-weight:800;border-bottom: 1px solid #CDCDCD;">
                                     <span id="icono_doc"></span>&nbsp;
                                     <div style="display:inline;" id="nombre_doc">
                                        @lang('documents.warehouse')
@@ -122,6 +125,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-10">
+                              <div class="row">
                                 <div class="col-lg-12" id="tbl1">
                                     <div class="table-responsive">
                                         <table id="tbl-documento" class="table table-striped table-hover table-bordered" style="width: 100%;">
@@ -142,8 +146,9 @@
                                 </div>
                                 <div class="col-lg-12" id="tbl2" style="display:none">
                                     <ul class="nav nav-tabs" role="tablist">
-                    							    <li role="warehouses" class="active"><a href="#courier" aria-controls="courier" role="tab" data-toggle="tab"><i class="fa fa-box-open"></i> COURIER</a></li>
-                                      <li role="warehouses"><a href="#load" aria-controls="load" role="tab" data-toggle="tab"><i class="fa fa-truck-moving"></i> CARGA</a></li>
+                    							    <li role="warehouses" class="active" @click="pendign"><a href="#courier" aria-controls="courier" role="tab" data-toggle="tab"><i class="fa fa-box-open"></i> COURIER</a></li>
+                                      <li role="warehouses" @click="pendign"><a href="#load" aria-controls="load" role="tab" data-toggle="tab"><i class="fa fa-truck-moving"></i> CARGA</a></li>
+                                      <li role="pending" id="li-pending" @click="pendign"><a href="#pending" aria-controls="pending" role="tab" data-toggle="tab"><i class="fa fa-box"></i> PENDIENTES <span class="pending badge badge-primary ligth">0</span></a></li>
                     							  </ul>
                                     <div class="tab-content">
                                       <div role="tabpanel" class="tab-pane fade active in" id="courier">
@@ -183,8 +188,28 @@
                                           </table>
                                         </div>
                                       </div>
+
+                                      <div role="tabpanel" class="tab-pane fade" id="pending">
+                                        <div class="table-responsive" style="padding-top:10px;">
+                                          <table id="tbl-documento4" class="table table-striped table-hover table-bordered" style="width: 100%;">
+                                              <thead>
+                                                  <tr>
+                                                      <th><i class="fa fa-file" aria-hidden="true" id="icono-doc-table"></i> #@lang('documents.documents')</th>
+                                                      <th><i class="fa fa-calendar" aria-hidden="true"></i> @lang('documents.date')</th>
+                                                      <th><i class="fa fa-user" aria-hidden="true"></i> @lang('documents.client_consignee')</th>
+                                                      <th><i class="fa fa-dollar-sign" aria-hidden="true"></i> @lang('general.rate')</th>
+                                                      <th><i class="fa fa-balance-scale" aria-hidden="true"></i> @lang('documents.weight')</th>
+                                                      <th><i class="fa fa-cubes" aria-hidden="true"></i> @lang('documents.volume')</th>
+                                                      <th><i class="fa fa-building" aria-hidden="true"></i> @lang('documents.agency')</th>
+                                                      <th><i class="fa fa-bolt" aria-hidden="true"></i> @lang('documents.actions')</th>
+                                                  </tr>
+                                              </thead>
+                                          </table>
+                                        </div>
+                                      </div>
                                     </div>
                                 </div>
+                              </div>
                             </div>
                         </div>
                     </div>

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 include_once(app_path() . '\WebClientPrint\WebClientPrint.php');
@@ -142,9 +141,9 @@ class DocumentoController extends Controller
                                     'documento_id'     => $id_documento,
                                     'servicios_id'     => 1,
                                     'forma_pago_id'    => 1,
-                                    'tipo_pago_id'     => 1,
-                                    'tipo_embarque_id' => 1,
-                                    'grupo_id'         => 1,
+                                    'tipo_pago_id'     => 4,//prepaid
+                                    'tipo_embarque_id' => 7,//aereo
+                                    'grupo_id'         => 3,//general
                                     'estado_id'        => ($request->tipo_documento_id == 2) ? 27 : 28, //maestra multiple
                                     'created_at'       => $request->created_at,
                                 ],
@@ -560,6 +559,7 @@ class DocumentoController extends Controller
         $data              = DocumentoDetalle::findOrFail($obj->documento_detalle_id);
         $data->consolidado = 0;
         $data->save();
+        $piv = DB::table('status_detalle')->where([['documento_detalle_id', $obj->documento_detalle_id], ['status_id', 5]])->delete();
         $this->AddToLog('Consolidado detalle eliminado (' . $id_detalle . ')');
         $answer = array(
             "code" => 200,
@@ -573,14 +573,17 @@ class DocumentoController extends Controller
         if ($table) {
             $data = DocumentoDetalle::findOrFail($id);
             $data->delete();
+            $piv = DB::table('status_detalle')->where([['documento_detalle_id', $id]])->delete();
             $this->AddToLog('Documento detalle eliminado (' . $id . ') WRH ('. $data->num_warehouse.')');
         } else {
             $data = Documento::findOrFail($id);
+            $piv = DB::table('guia_wrh_pivot')->where([['documento_id', $id]])->delete();
             $detail = DB::table('documento_detalle')->where([['documento_id', $id]])->get();
 
             if(count($detail) > 0){
                 foreach ($detail as $key) {
                     $this->destroy($key->id, 'detalle');
+                    $piv = DB::table('status_detalle')->where([['documento_detalle_id', $key->id]])->delete();
                 }
             }
             $data->delete();
@@ -673,16 +676,23 @@ class DocumentoController extends Controller
             $sql = $this->getAllConsolidated($filter);
         } else {
             // if(env('APP_TYPE') == 'courier'){
-            if($request->type == 2){
+            if($request->type == 3){
+              $sql = $this->getAllLoad($filter);
+            }else{
               $filter = [['a.deleted_at', null],
-                      ['b.deleted_at', null],
-                      ['b.tipo_documento_id', $request->id_tipo_doc]];
+              ['b.deleted_at', null],
+              ['b.tipo_documento_id', $request->id_tipo_doc]];
               if(!Auth::user()->isRole('admin')){
-                  $filter[] = ['b.agencia_id', Auth::user()->agencia_id];
+                $filter[] = ['b.agencia_id', Auth::user()->agencia_id];
+              }
+              if($request->type == 2){
+                $filter[] = ['a.num_warehouse', '<>', NULL ];
+              }else{
+                if($request->type == 4){
+                  $filter[] = ['a.num_warehouse', NULL ];
+                }
               }
               $sql = $this->getAllCourier($filter);
-            }else{
-              $sql = $this->getAllLoad($filter);
             }
         }
 
@@ -1730,12 +1740,14 @@ class DocumentoController extends Controller
     public function buscarGuias($id, $num_guia, $num_bolsa, $pais_id)
     {
 
-        $detalle = DocumentoDetalle::select('documento_detalle.id', 'documento_detalle.consignee_id')
+        $detalle = DocumentoDetalle::join('documento as b', 'documento_detalle.documento_id', 'b.id')
+            ->select('documento_detalle.id', 'b.consignee_id')
             ->where([
                 ['documento_detalle.deleted_at', null],
             ])
             ->whereRaw('(documento_detalle.num_warehouse = "' . $num_guia . '" or documento_detalle.num_guia = "' . $num_guia . '")')
             ->first();
+
         if ($detalle) {
             /* VERIFICAR QUE EL NUMERO INGRESADO NO ESTE EN OTRO CONSOLIDADO O YA ESTE INGRESADO */
             $cons_detail = DB::table('consolidado_detalle as a')

@@ -68,6 +68,7 @@ return [
     'use_mailchimp'=>'Usar MailChimp',
     'use_zopim '=>'Usar Zopim ',
     'description'=>'Descripción',
+    'view_client'=>'Mostrar al usuario',
     'tracking'=>'Tracking',
     'locker_registration'=>'Registro casillero ',
     'pre_alert'=>'Pre alert',
@@ -216,8 +217,8 @@ return [
     //resources/views/template/rastreo
 
     'track_your_merchandise'=>'Rastrea tu mercancía',
-    'enter_the_tracking'=>'Ingrese el numero de tracking, warehouse o guia que desea rastrear',
-    'warehouse_guide_tracking'=>'Warehouse /Guía/ Tracking',
+    'enter_the_tracking'=>'Ingrese el numero de tracking o warehouse que desea rastrear',
+    'warehouse_guide_tracking'=>'Warehouse / Tracking',
     'deliver_date'=>'Fecha entrega',
     'track_your_package_here'=>'Rastree su paquete aquí',
 

@@ -23,6 +23,7 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
         $('#tbl-documento' + t).dataTable().fnDestroy();
         if(t == 2){
           $('#tbl-documento3').dataTable().fnDestroy();
+          $('#tbl-documento4').dataTable().fnDestroy();
         }
       }
     }
@@ -31,7 +32,7 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
     }
     // SI MUESTRO LOS WAREHOUSES ENTONCES LISTO LAS DOS GRILLAS DEL TAB
     if(t === 2){
-      for (var i = 2; i <= 3; i++) {
+      for (var i = 2; i <= 4; i++) {
         datatableDocument(i, tipo_doc_id, status_id);
       }
     }else{
@@ -126,6 +127,10 @@ function datatableDocument(t, tipo_doc_id, status_id){
                     }
                 }, 300);
         });
+        if(t === 4){
+          var table = $('#tbl-documento' + t).DataTable();
+          $('.pending').html(table.data().count());
+        }
       }
   });
 }

@@ -97,6 +97,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('tracking/delete/{id}/{logical?}', 'TrackingController@delete')->name('tracking.delete');
     Route::get('tracking/getAllShipperConsignee/{table}', 'TrackingController@getAllShipperConsignee');
     Route::get('tracking/searchTracking/{tracking}', 'TrackingController@searchTracking');
+    Route::post('tracking/updateTrackingReceipt', 'TrackingController@updateTrackingReceipt');
     Route::post('tracking/validar_tracking', 'TrackingController@validar_tracking');
 
     /*--- MODULO RECIBO DE ENTREGA ---*/

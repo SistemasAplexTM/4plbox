@@ -8,6 +8,16 @@ $(document).ready(function() {
     }
 });
 
+$(function() {
+  // if($('#li-pending').hasClass('active')){
+  //   console.log('remove');
+  //   $('.pending').removeClass('ligth');
+  // }else{
+  //   console.log('add');
+  //   $('.pending').addClass('ligth');
+  // }
+});
+
 function agruparGuiasIndex(id) {
     objVue.datosAgrupar = {
         id: id

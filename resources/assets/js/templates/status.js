@@ -64,6 +64,7 @@ var objVue = new Vue({
         descripcion: '',
         color: '',
         email: '',
+        view_client: false,
         editar: 0,
         formErrors: {},
         listErrors: {},
@@ -124,6 +125,11 @@ var objVue = new Vue({
         },
         create: function() {
             let me = this;
+            if ($('#email_s').is(':checked')) {
+                this.email = 1;
+            } else {
+                this.email = 0;
+            }
             if ($('#email_s').is(':checked')) {
                 this.email = 1;
             } else {

@@ -170,7 +170,7 @@ var objVue = new Vue({
                         'primer_apellido': this.primer_apellido,
                         'segundo_apellido': this.segundo_apellido,
                         'direccion': this.direccion,
-                        'telefono': this.telefono,
+                        'telefono': this.celular,
                         'celular': this.celular,
                         'correo': this.email,
                         'zip': this.zip,
