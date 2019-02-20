@@ -38,7 +38,7 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-
+    
     public function redirectPath()
     {
         /* AGENCIA */
@@ -68,7 +68,7 @@ class LoginController extends Controller
             \Session::put('logo', 'logo.png');
         }
         \Session::put('agencia', $objAgencia->descripcion);
-       
+
         return 'documento';
     }
 
