@@ -16,27 +16,6 @@ $(document).ready(function () {
   $('.chosen-single').css('box-shadow', 'none');
   $('.chosen-drop').css('border', '1px solid #e5e6e7');
 
-  // $('.chosen-search input').autocomplete({
-  //   source: function( request, response ) {
-  //     $.ajax({
-  //       url: "receipt/getConsignee/"+request.term,
-  //       dataType: "json",
-  //       success: function( data ) {
-  //         $('.chosen-select').empty();
-  //         response( $.map( data, function( item ) {
-  //           $('.chosen-select').append('<option value="">Seleccione</option>');
-  //           $.each(item, function(key, value) {
-  //             $('.chosen-select').append(
-  //               '<option value="'+value.id+'" data-direccion="'+value.direccion+'" data-telefono="'+value.telefono+'" data-ciudad="'+value.ciudad+'">' + value.name + '</option>'
-  //             );
-  //           });
-  //         }));
-  //         $(".chosen-select").trigger("chosen:updated");
-  //       }
-  //     });
-  //   }
-  // });
-
   $('#consignee_id').on('change', function () {
       var dir = $('#consignee_id option:selected').data('direccion');
       var tel = $('#consignee_id option:selected').data('telefono');

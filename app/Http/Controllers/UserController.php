@@ -190,8 +190,8 @@ class UserController extends Controller
             $where[] = array('users.agencia_id', Auth::user()->agencia_id);
         }
         $data = User::leftjoin('agencia as a', 'users.agencia_id', 'a.id')
-            ->join('role_user as b', 'users.id', 'b.user_id')
-            ->join('roles as c', 'c.id', 'b.role_id')
+            ->leftJoin('role_user as b', 'users.id', 'b.user_id')
+            ->leftJoin('roles as c', 'c.id', 'b.role_id')
             ->select('users.id', 'users.name', 'users.email', 'users.agencia_id', 'users.actived', 'a.descripcion as name_agencia', 'c.id AS rol_id', 'c.name as rol_name')
             ->where($where)->get();
         return \DataTables::of($data)->make(true);

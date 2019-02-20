@@ -20,6 +20,22 @@
     </div>
 </div>
 <style type="text/css">
+@-webkit-keyframes ripple {
+  0% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    padding-bottom: 200%;
+    width: 200%;
+  }
+}
+  .text-write{
+    background-color: #ffffd1;
+  }
     .help-block{
         color: #ed5565;
     }
@@ -159,7 +175,7 @@
                 </div>
                 {{-- FORMULARIO DE CONSOLIDADO --}}
                 @if(!Auth::user()->isRole('bodega'))
-                    <formconsolidado-component :pais_id_config="pais_id_config" :app_type="'{{ env('APP_TYPE') }}'" :documento="{{ json_encode($documento) }}" :contactos="contactos" :restore="restoreShipperConsignee" :agrupar="datosAgrupar" :removeragrupado="removerAgrupado" :permission='permissions' v-if="mostrar.includes(24)" :close_document="close"></formconsolidado-component>
+                    <formconsolidado-component :pais_id_config="pais_id_config" :app_type="'{{ env('APP_TYPE') }}'" :app_client="'{{ env('APP_CLIENT') }}'" :documento="{{ json_encode($documento) }}" :contactos="contactos" :restore="restoreShipperConsignee" :agrupar="datosAgrupar" :removeragrupado="removerAgrupado" :permission='permissions' v-if="mostrar.includes(24)" :close_document="close"></formconsolidado-component>
                 @else
                     <consol_bodega-component :app_type="'{{ env('APP_TYPE') }}'" :documento="{{ json_encode($documento) }}" :contactos="contactos" :restore="restoreShipperConsignee" :agrupar="datosAgrupar" :removeragrupado="removerAgrupado" :permission='permissions' :ref_boxes='refreshBoxes' v-if="mostrar.includes(24)" :close_document="close"></consol_bodega-component>
                 @endif
@@ -370,7 +386,7 @@
                                         <div class="form-group"  style="margin-top: 15px;">
                                             <div class="col-sm-6">
                                                 <label for="tipo_embarque_id" class="">@lang('documents.type_boarding') - <span class="fa fa-ship"></span><span class="fa fa-plane"></span></label>
-                                                <select id="tipo_embarque_id" name="tipo_embarque_id" class="form-control" onchange="deleteError($(this).parent());llenarSelectServicio($(this).val())">
+                                                <select id="tipo_embarque_id" name="tipo_embarque_id" class="form-control text-write" onchange="deleteError($(this).parent());llenarSelectServicio($(this).val())">
                                                     @if(isset($embarques) and $embarques)
                                                         @foreach($embarques as $embarque)
                                                             <option value="{{ $embarque['id'] }}" {{ (isset($documento->tipo_embarque_id) and $documento->tipo_embarque_id === $embarque['id']) ? 'selected' : '' }}>{{ $embarque['nombre'] }}</option>
@@ -381,24 +397,8 @@
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="servicios_id" class="">@lang('documents.type_of_service')</label>
-                                                <select onchange="calculateServiceType();" id="servicios_id" name="servicios_id" class="form-control" data-servicio_id="{{ $documento->servicios_id }}">
+                                                <select onchange="calculateServiceType();" id="servicios_id" name="servicios_id" class="form-control text-write" data-servicio_id="{{ $documento->servicios_id }}">
                                                     <option value="">@lang('documents.select_type_of_boarding')</option>
-                                                    {{-- @if(isset($servicios) and $servicios)
-                                                        @foreach($servicios as $servicio)
-                                                          <option value="{{ $servicio['id'] }}"
-                                                            data-cobvol="{{ $servicio['cobro_peso_volumen'] }}"
-                                                            data-tarifamin="{{ $servicio['peso_minimo'] }}"
-                                                            data-tarifa="{{ $servicio['tarifa'] }}"
-                                                            data-seguro="{{ $servicio['seguro'] }}"
-                                                            data-c_opcional="{{ $servicio['cobro_opcional'] }}"
-                                                            data-t_age="{{ $servicio['tarifa_agencia'] }}"
-                                                            data-seg_age="{{ $servicio['seguro_agencia'] }}"
-                                                            data-impuesto_age="{{ $servicio['impuesto'] }}"
-                                                            {{ (isset($documento->servicios_id) and $documento->servicios_id === $servicio['id']) ? 'selected' : '' }}>
-                                                            {{ $servicio['nombre'] }}
-                                                          </option>
-                                                        @endforeach
-                                                    @endif --}}
                                                 </select>
                                                 <small class="help-block" style="display: none">@lang('documents.obligatory_field')</small>
                                             </div>
@@ -444,7 +444,7 @@
                                             <div class="col-sm-6">
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon">$ </span>
-                                                    <input style="background-color: #FFFF99;" type="number" placeholder="0" value="{{ isset($documento->valor) ? $documento->valor : '' }}" onkeyup="totalizeDocument();" class="form-control" id="valor_libra" name="valor_libra">
+                                                    <input type="number" placeholder="0" value="{{ isset($documento->valor) ? $documento->valor : '' }}" onkeyup="totalizeDocument();" class="form-control text-write" id="valor_libra" name="valor_libra">
                                                 </div>
                                             </div>
                                         </div>
@@ -455,7 +455,7 @@
                                             <div class="col-sm-6">
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon">%</span>
-                                                    <input type="number" placeholder="0" value="{{ isset($documento->impuesto) ? $documento->impuesto : '' }}" onkeyup="totalizeDocument();" class="form-control" id="impuesto" name="impuesto" style="background-color:#FFFF99;border-color: cornflowerblue;">
+                                                    <input type="number" placeholder="0" value="{{ isset($documento->impuesto) ? $documento->impuesto : '' }}" onkeyup="totalizeDocument();" class="form-control text-write" id="impuesto" name="impuesto" style="border-color: cornflowerblue;">
                                                 </div>
                                             </div>
                                         </div>
@@ -505,7 +505,7 @@
                                             <div class="col-sm-6">
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon">$</span>
-                                                    <input style="background-color: #FFFF99;" type="number" onkeyup="totalizeDocument();" class="form-control" placeholder="0" maxlength="4" id="seguro_valor" name="seguro_valor" value="{{ isset($documento->seguro) ? $documento->seguro : '' }}">
+                                                    <input type="number" onkeyup="totalizeDocument();" class="form-control text-write" placeholder="0" maxlength="4" id="seguro_valor" name="seguro_valor" value="{{ isset($documento->seguro) ? $documento->seguro : '' }}">
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
@@ -535,7 +535,7 @@
                                             <div class="col-sm-6">
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon">$</span>
-                                                    <input style="background-color: #FFFF99;" type="number" placeholder="0" class="form-control" value="{{ isset($documento->descuento) ? $documento->descuento : '' }}" onkeyup="totalizeDocument();" id="descuento" name="descuento">
+                                                    <input type="number" placeholder="0" class="form-control text-write" value="{{ isset($documento->descuento) ? $documento->descuento : '' }}" onkeyup="totalizeDocument();" id="descuento" name="descuento">
                                                 </div>
                                             </div>
                                         </div>
@@ -574,7 +574,7 @@
                                               <div class="col-sm-2">
                                                       <div class="form-group"  id="Valpeso">
                                                           <label class="peso">@lang('documents.weight')</label>
-                                                          <input type="number" class="form-control" onkeyup="deleteError($(this).parent());" id="peso" name="peso" maxlength="4" placeholder="Lb" value="">
+                                                          <input type="number" class="form-control text-write" onkeyup="deleteError($(this).parent());" id="peso" name="peso" maxlength="4" placeholder="Lb" value="">
                                                           <small class="help-block" id="Hpeso" style="display: none">@lang('documents.these_data_are_required')</small>
                                                       </div>
                                               </div>
@@ -582,11 +582,11 @@
                                                       <div class="form-group"  id="Valdim">
                                                           <label class="dimensiones">@lang('documents.dimensions') (L x W x H)</label>
                                                           <div class="input-group">
-                                                              <input type="text" class="form-control" placeholder="L" maxlength="4" id="largo" onkeyup="deleteError($(this).parent());" name="largo" value="0">
+                                                              <input type="text" class="form-control text-write" placeholder="L" maxlength="4" id="largo" onkeyup="deleteError($(this).parent());" name="largo" value="0">
                                                               <span class="input-group-addon">x</span>
-                                                              <input type="text" class="form-control" placeholder="W" maxlength="4" id="ancho" onkeyup="deleteError($(this).parent());" name="ancho" value="0">
+                                                              <input type="text" class="form-control text-write" placeholder="W" maxlength="4" id="ancho" onkeyup="deleteError($(this).parent());" name="ancho" value="0">
                                                               <span class="input-group-addon">x</span>
-                                                              <input type="text" class="form-control" placeholder="H" maxlength="4" id="alto" onkeyup="deleteError($(this).parent());" name="alto" value="0">
+                                                              <input type="text" class="form-control text-write" placeholder="H" maxlength="4" id="alto" onkeyup="deleteError($(this).parent());" name="alto" value="0">
                                                           </div>
                                                           <small class="help-block" id="Hdim" style="display: none">@lang('documents.these_data_are_required')</small>
                                                       </div>
@@ -596,7 +596,7 @@
                                                       <div class="form-group"  id="Valconti">
                                                           <label class="contiene" style="display: none;"></label>
                                                           <div class="input-group">
-                                                              <input type="text" onkeyup="deleteError($(this).parent());" id="contiene" name="contiene" class="form-control" value="" placeholder="@lang('documents.content')" autocomplete="off">
+                                                              <input type="text" onkeyup="deleteError($(this).parent());" id="contiene" name="contiene" class="form-control text-write" value="" placeholder="@lang('documents.content')" autocomplete="off">
                                                               <span class="input-group-btn">
                                                                   <button style="font-size: 19.9px!important;" id="btn-searchTracking" @click="modalSearchTracking()" class="btn btn-primary" type="button" data-toggle='tooltip' title="Buscar trackings"><span class="fa fa-truck"></span></button>
                                                               </span>
@@ -610,14 +610,14 @@
                                                   <label class="valDeclarado">@lang('documents.pieces')</label>
                                                       <div class="form-group" id="ValDecla">
                                                           <label style="display: none;" for="" class=""></label>
-                                                          <input type="number" onkeyup="deleteError($(this).parent());" placeholder="@lang('documents.pieces')" onkeyup="deleteError($(this).parent());" id="valPiezas" name="valPiezas" class="form-control" value="1">
+                                                          <input type="number" onkeyup="deleteError($(this).parent());" placeholder="@lang('documents.pieces')" onkeyup="deleteError($(this).parent());" id="valPiezas" name="valPiezas" class="form-control text-write" value="1">
                                                           <small class="help-block" id="Hpiezas" style="display: none">>@lang('documents.obligatory_field')</small>
                                                       </div>
                                               </div>
                                               <div class="col-sm-2">
                                                       <div class="form-group" id="Valtipoem">
                                                           <label for="tipo_empaque_id" class="">@lang('documents.packing')</label>
-                                                          <select  onchange="deleteError($(this).parent());" id="tipo_empaque_id" name="tipo_empaque_id" class="form-control">
+                                                          <select  onchange="deleteError($(this).parent());" id="tipo_empaque_id" name="tipo_empaque_id" class="form-control text-write">
                                                               @if(isset($empaques) and $empaques)
                                                                   @foreach($empaques as $empaque)
                                                                       <option value="{{ $empaque['id'] }}">{{ $empaque['nombre'] }}</option>
@@ -638,7 +638,7 @@
                                                       <label class="valDeclarado">@lang('documents.declared')</label>
                                                           <div class="form-group" id="ValDecla">
                                                               <label style="display: none;" for="" class=""></label>
-                                                              <input type="number" onkeyup="deleteError($(this).parent());" placeholder="@lang('documents.declared')" onkeyup="deleteError($(this).parent());" id="valDeclarado" name="valDeclarado" class="form-control" value="">
+                                                              <input type="number" onkeyup="deleteError($(this).parent());" placeholder="@lang('documents.declared')" onkeyup="deleteError($(this).parent());" id="valDeclarado" name="valDeclarado" class="form-control text-write" value="">
                                                               <small class="help-block" id="HvalDeclarado" style="display: none">@lang('documents.obligatory_field')</small>
                                                           </div>
                                                   </div>
@@ -757,7 +757,7 @@
                                             <div class="col-lg-4" v-if="mostrar.includes(17)">
                                                     <div class="form-group">
                                                         <label for="" class="">@lang('documents.payment_type')</label>
-                                                        <select id="tipo_pago_id" name="tipo_pago_id" class="form-control" onchange="deleteError($(this).parent());">
+                                                        <select id="tipo_pago_id" name="tipo_pago_id" class="form-control text-write" onchange="deleteError($(this).parent());">
                                                            @if(isset($tipoPagos) and $tipoPagos)
                                                                 @foreach($tipoPagos as $tipoPago)
                                                                     <option {{ (isset($documento->tipo_pago_id) and $documento->tipo_pago_id === $tipoPago['id']) ? 'selected' : '' }} value="{{ $tipoPago['id'] }}">{{ $tipoPago['descripcion'] }}</option>
@@ -769,7 +769,7 @@
                                             <div class="col-lg-4" v-if="mostrar.includes(12)">
                                                     <div class="form-group">
                                                         <label for="forma_pago_id" class="">@lang('documents.way_to_pay')</label>
-                                                        <select id="forma_pago_id" name="forma_pago_id" class="form-control" onchange="deleteError($(this).parent());">
+                                                        <select id="forma_pago_id" name="forma_pago_id" class="form-control text-write" onchange="deleteError($(this).parent());">
                                                             @if(isset($formaPagos) and $formaPagos)
                                                                 @foreach($formaPagos as $formaPago)
                                                                     <option {{ (isset($documento->forma_pago_id) and $documento->forma_pago_id === $formaPago['id']) ? 'selected' : '' }} value="{{ $formaPago['id'] }}">{{ $formaPago['nombre'] }}</option>
@@ -781,7 +781,7 @@
                                             <div class="col-lg-4" v-if="mostrar.includes(18)">
                                                     <div class="form-group">
                                                         <label for="grupo_id" class="">@lang('documents.group')</label>
-                                                        <select id="grupo_id" name="grupo_id" class="form-control" onchange="deleteError($(this).parent());">
+                                                        <select id="grupo_id" name="grupo_id" class="form-control text-write" onchange="deleteError($(this).parent());">
                                                             @if(isset($grupos) and $grupos)
                                                                 @foreach($grupos as $grupo)
                                                                     <option {{ (isset($documento->grupo_id) and $documento->grupo_id === $grupo['id']) ? 'selected' : '' }} value="{{ $grupo['id'] }}">{{ $grupo['nombre'] }}</option>
@@ -793,7 +793,7 @@
                                             <div class="col-lg-12">
                                                     <div class="form-group">
                                                         <label>@lang('documents.comments'): </label>
-                                                        <textarea class="form-control" rows="3" style="height: 65px;" id="observaciones" name="observaciones">{{ isset($documento->observaciones) ? $documento->observaciones : '' }}</textarea>
+                                                        <textarea class="form-control text-write" rows="3" style="height: 65px;" id="observaciones" name="observaciones">{{ isset($documento->observaciones) ? $documento->observaciones : '' }}</textarea>
                                                     </div>
                                             </div>
                                             <div class="col-sm-12">
@@ -827,13 +827,13 @@
                                                         <button type="button" class="btn btn-success ladda-button" id="saveForm" data-style="expand-right" @click="saveDocument('all')"><i class="fa fa-save fa-fw"></i>@lang('documents.save_changes')</button>
                                                     @else
                                                     <div class="btn-group dropup">
-                                                        <button type="button" class="btn btn-success ladda-button" id="saveForm" data-style="expand-right" @click="saveDocument()"><i class="fa fa-save fa-fw"></i>@lang('documents.save_changes')</button>
+                                                        <button type="button" class="btn btn-success ladda-button" id="saveForm" data-style="expand-right" @click="saveDocument('print')"><i class="fa fa-save fa-fw"></i> @lang('documents.save_changes_print')</button>
                                                         <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 35px;">
                                                             <span class="caret"></span>
                                                             <span class="sr-only">Toggle Dropdown</span>
                                                         </button>
                                                         <ul class="dropdown-menu">
-                                                            <li><a @click="saveDocument('print')"><i class="fa fa-print"></i> @lang('documents.save_changes_print')</a></li>
+                                                            <li><a @click="saveDocument()"><i class="fa fa-print"></i> @lang('documents.save_changes')</a></li>
                                                             <li><a @click="saveDocument('email')"><i class="fa fa-envelope"></i> @lang('documents.save_changes_email')</a></li>
                                                             <li><a @click="saveDocument('all')"><i class="fa fa-mail-bulk"></i> @lang('documents.save_changes_email_print')</a></li>
                                                         </ul>

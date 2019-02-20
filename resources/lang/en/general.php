@@ -62,6 +62,7 @@ return [
     'use_mailchimp'=>'Use MailChimp',
     'usar_zopim'=>'Use Zopim',
     'description'=>'Description',
+    'view_client'=>'Alert for Client',
     'tracking'=>'Tracking',
     'locker_registration'=>'Locker registration',
     'pre_alert'=>'Pre alert',
@@ -210,8 +211,8 @@ return [
     //resources/views/template/rastreo
 
     'track_your_merchandise'=>'Track your merchandise',
-    'enter_the_tracking'=>'Enter the tracking, warehouse or guide number you want to track',
-    'warehouse_guide_tracking'=>'Warehouse /Guide/ Tracking',
+    'enter_the_tracking'=>'Enter the tracking or warehouse number you want to track',
+    'warehouse_guide_tracking'=>'Warehouse / Tracking',
     'deliver_date'=>'Deliver date',
     'track_your_package_here'=>'Track your package here',
 
@@ -275,6 +276,7 @@ return [
      'registered_tracking'=>'Registered Tracking',
      'office'=>'Office',
      'number_of_tracking'=>'Number of tracking',
+     'quantity_tracking'=>'Cantidad de trackings',
 
      //resources/views/template/transport
 

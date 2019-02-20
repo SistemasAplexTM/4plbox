@@ -61,9 +61,12 @@ var objVue = new Vue({
           }
     },
     mounted: function() {
-        this.typeDocumentList();
-        this.printDocument();
-        this.getStatus();
+      let me = this;
+        me.typeDocumentList();
+        setTimeout(function () {
+          me.printDocument();
+          me.getStatus();
+        },1500)
         $('#date').val(this.getTime());
     },
     created(){
@@ -80,6 +83,15 @@ var objVue = new Vue({
         removerAgrupado: {}, //es para poder remover guias agrupadas en el consolidado
     },
     methods: {
+        pendign(){
+          setTimeout(function() {
+            if($('#li-pending').hasClass('active')){
+              $('.pending').removeClass('ligth');
+            }else{
+              $('.pending').addClass('ligth');
+            }
+          },100)
+        },
         agruparDocumentoDetalle: function(){
           $('#modalagrupar').modal('hide');
           let me = this;
@@ -116,8 +128,15 @@ var objVue = new Vue({
         },
         printDocument: function(){
             if( $('#documentoIndex').data('id_print') != '' && $('#documentoIndex').data('doc_print') != ''){
+                var name = "Nitro PDF Creator (Pro 10)";
+                var format = "PDF";
+                javascript:jsWebClientPrint.print("useDefaultPrinter=false&printerName=" + name + "&filetype="+ format +"&id=" + $('#documentoIndex').data('id_print') + "&agency_id="+agency_id+"&document="+$('#documentoIndex').data('doc_print')+"&label=true")
+
+                // setTimeout(function() {
+                //   javascript:jsWebClientPrint.print("useDefaultPrinter=false&printerName=" + name + "&filetype="+ format +"&id=" + $('#documentoIndex').data('id_print') + "&agency_id="+agency_id+"&document="+$('#documentoIndex').data('doc_print'))
+                // }, 4000)
                 window.open('impresion-documento/' + $('#documentoIndex').data('id_print') + '/'+$('#documentoIndex').data('doc_print'), '_blank');
-                window.open('impresion-documento-label/' + $('#documentoIndex').data('id_print') + '/'+$('#documentoIndex').data('doc_print'), '_blank');
+                // window.open('impresion-documento-label/' + $('#documentoIndex').data('id_print') + '/'+$('#documentoIndex').data('doc_print'), '_blank');
             }
         },
         sendMail: function(id) {
@@ -204,7 +223,7 @@ var objVue = new Vue({
                 if (result.value) {
                     axios.delete('documento/' + id).then(function (response) {
                         if(response.data.code === 200){
-                            refreshTable('tbl-documento');
+                            refreshTable('tbl-documento2');
                             toastr.success('Documento eliminado exitosamente.');
                             toastr.options.closeButton = true;
                         }else{
@@ -212,7 +231,7 @@ var objVue = new Vue({
                         }
                     }).catch(function (error) {
                         console.log(error);
-                        toastr.warning('Error.');
+                        toastr.warning('Error.'+ error);
                         toastr.options.closeButton = true;
                     });
                 }

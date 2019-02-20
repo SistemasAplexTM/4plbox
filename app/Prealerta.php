@@ -15,11 +15,12 @@ class Prealerta extends Model
     protected $fillable = [
         'consignee_id',
         'agencia_id',
-        'tracking', 
-        'contenido', 
+        'tracking',
+        'contenido',
         'instruccion',
         'correo',
         'telefono',
         'despachar',
+        'recibido',
     ];
 }

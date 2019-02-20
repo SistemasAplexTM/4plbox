@@ -11,10 +11,10 @@ trait DocumentTrait
 {
     public function getAllLoad($filter)
     {
-      $sql = DB::table('documento')
-          ->leftJoin('shipper', 'documento.shipper_id', '=', 'shipper.id')
-          ->leftJoin('consignee', 'documento.consignee_id', '=', 'consignee.id')
-          ->join('agencia', 'documento.agencia_id', '=', 'agencia.id')
+      $sql = DB::table('documento AS b')
+          ->leftJoin('shipper', 'b.shipper_id', '=', 'shipper.id')
+          ->leftJoin('consignee', 'b.consignee_id', '=', 'consignee.id')
+          ->join('agencia AS e', 'b.agencia_id', '=', 'e.id')
           ->leftJoin(DB::raw("(SELECT
                                 z.id As detalle_id,
                                 Count(DISTINCT z.consolidado) AS consolidado,
@@ -38,40 +38,40 @@ trait DocumentTrait
                                 z.peso,
                                 z.valor,
                                 z.flag
-                              ) AS t"), "documento.id", "t.documento_id")
-          ->select('documento.id as id', 'documento.valor_libra', 'documento.valor', 'documento.liquidado', 'documento.tipo_documento_id as tipo_documento_id',
-          'documento.consecutivo as codigo',
-           'documento.created_at AS fecha',
+                              ) AS t"), "b.id", "t.documento_id")
+          ->select('b.id as id', 'b.valor_libra', 'b.valor', 'b.liquidado', 'b.tipo_documento_id as tipo_documento_id',
+          'b.consecutivo as codigo',
+           'b.created_at AS fecha',
            'shipper.nombre_full as ship_nomfull', 'consignee.nombre_full as cons_nomfull',
-           'consignee.correo as email_cons', 'agencia.descripcion as agencia',
-              DB::raw("(SELECT Count(a.id) AS cantidad FROM documento_detalle AS a WHERE a.documento_id = documento.id AND a.deleted_at IS NULL) as cantidad"),
-              DB::raw("(SELECT IFNULL(SUM(a.piezas), 0) AS piezas FROM documento_detalle AS a WHERE a.documento_id = documento.id AND a.deleted_at IS NULL) as piezas"),
-              DB::raw("(SELECT Sum(documento_detalle.peso) FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as peso"),
-              DB::raw("(SELECT Sum(documento_detalle.volumen) FROM documento_detalle WHERE documento_detalle.documento_id = documento.id AND documento_detalle.deleted_at IS NULL) as volumen"),
+           'consignee.correo as email_cons', 'e.descripcion as agencia',
+              DB::raw("(SELECT Count(a.id) AS cantidad FROM documento_detalle AS a WHERE a.documento_id = b.id AND a.deleted_at IS NULL) as cantidad"),
+              DB::raw("(SELECT IFNULL(SUM(a.piezas), 0) AS piezas FROM documento_detalle AS a WHERE a.documento_id = b.id AND a.deleted_at IS NULL) as piezas"),
+              DB::raw("(SELECT Sum(documento_detalle.peso) FROM documento_detalle WHERE documento_detalle.documento_id = b.id AND documento_detalle.deleted_at IS NULL) as peso"),
+              DB::raw("(SELECT Sum(documento_detalle.volumen) FROM documento_detalle WHERE documento_detalle.documento_id = b.id AND documento_detalle.deleted_at IS NULL) as volumen"),
               DB::raw("0 as num_guia"),
               DB::raw("0 as agrupadas"),
-              'documento.num_warehouse',
+              'b.num_warehouse',
               DB::raw("SUM(t.consolidado_status) AS consolidado_status"),
-              'documento.carga_courier'
+              'b.carga_courier'
           )
           ->where($filter)
-          ->where('documento.carga_courier', 0)
+          ->where('b.carga_courier', 0)
           ->groupBy(
-              'documento.id',
-              'documento.liquidado',
-              'documento.tipo_documento_id',
-              'documento.consecutivo',
-              'documento.valor_libra',
-              'documento.valor',
-              'documento.num_warehouse',
-              'documento.created_at',
+              'b.id',
+              'b.liquidado',
+              'b.tipo_documento_id',
+              'b.consecutivo',
+              'b.valor_libra',
+              'b.valor',
+              'b.num_warehouse',
+              'b.created_at',
               'shipper.nombre_full',
               'consignee.nombre_full',
               'consignee.correo',
-              'agencia.descripcion',
-              'documento.carga_courier'
+              'e.descripcion',
+              'b.carga_courier'
           )
-          ->orderBy('documento.created_at', 'DESC');
+          ->orderBy('b.created_at', 'DESC');
         return $sql;
     }
 
@@ -195,14 +195,14 @@ trait DocumentTrait
 
     public function getAllConsolidated($filter)
     {
-      $sql    = DB::table('documento')
-          ->leftJoin('shipper', 'documento.shipper_id', '=', 'shipper.id')
-          ->leftJoin('consignee', 'documento.consignee_id', '=', 'consignee.id')
-          ->join('agencia', 'documento.agencia_id', '=', 'agencia.id')
-          ->select('documento.id as id', 'documento.transporte_id', 'valor_libra', 'documento.valor', 'documento.liquidado', 'documento.tipo_documento_id as tipo_documento_id', 'documento.consecutivo as codigo', 'documento.created_at as fecha', 'shipper.nombre_full as ship_nomfull', 'consignee.nombre_full as cons_nomfull', 'consignee.correo as email_cons', 'agencia.descripcion as agencia',
-              DB::raw("(SELECT IFNULL(COUNT(consolidado_detalle.id),0) FROM consolidado_detalle WHERE consolidado_detalle.deleted_at IS NULL AND consolidado_detalle.consolidado_id = documento.id) as cantidad"),
-              DB::raw("(SELECT IFNULL(Sum(documento_detalle.peso2),0) FROM consolidado_detalle INNER JOIN documento_detalle ON consolidado_detalle.documento_detalle_id = documento_detalle.id WHERE consolidado_detalle.deleted_at IS NULL AND consolidado_detalle.consolidado_id = documento.id) as peso"),
-              DB::raw("(SELECT IFNULL(Sum(documento_detalle.volumen),0) FROM consolidado_detalle INNER JOIN documento_detalle ON consolidado_detalle.documento_detalle_id = documento_detalle.id WHERE consolidado_detalle.deleted_at IS NULL AND consolidado_detalle.consolidado_id = documento.id) as volumen"),
+      $sql    = DB::table('documento AS b')
+          ->leftJoin('shipper', 'b.shipper_id', '=', 'shipper.id')
+          ->leftJoin('consignee AS c', 'b.consignee_id', '=', 'c.id')
+          ->join('agencia AS e', 'b.agencia_id', '=', 'e.id')
+          ->select('b.id as id', 'b.transporte_id', 'valor_libra', 'b.valor', 'b.liquidado', 'b.tipo_documento_id as tipo_documento_id', 'b.consecutivo as codigo', 'b.created_at as fecha', 'shipper.nombre_full as ship_nomfull', 'c.nombre_full as cons_nomfull', 'c.correo as email_cons', 'e.descripcion as agencia',
+              DB::raw("(SELECT IFNULL(COUNT(consolidado_detalle.id),0) FROM consolidado_detalle WHERE consolidado_detalle.deleted_at IS NULL AND consolidado_detalle.consolidado_id = b.id) as cantidad"),
+              DB::raw("(SELECT IFNULL(Sum(documento_detalle.peso2),0) FROM consolidado_detalle INNER JOIN documento_detalle ON consolidado_detalle.documento_detalle_id = documento_detalle.id WHERE consolidado_detalle.deleted_at IS NULL AND consolidado_detalle.consolidado_id = b.id) as peso"),
+              DB::raw("(SELECT IFNULL(Sum(documento_detalle.volumen),0) FROM consolidado_detalle INNER JOIN documento_detalle ON consolidado_detalle.documento_detalle_id = documento_detalle.id WHERE consolidado_detalle.deleted_at IS NULL AND consolidado_detalle.consolidado_id = b.id) as volumen"),
               DB::raw('(SELECT
                   ROUND(Sum(b.peso2) * 0.453592) AS peso_total
                 FROM
@@ -211,7 +211,7 @@ trait DocumentTrait
                 WHERE
                   a.deleted_at IS NULL
                 AND b.deleted_at IS NULL
-                AND a.consolidado_id = documento.id
+                AND a.consolidado_id = b.id
               ) AS peso_total'),
               DB::raw('(SELECT
                   Sum(b.declarado2) AS declarado_total
@@ -221,11 +221,11 @@ trait DocumentTrait
                 WHERE
                   a.deleted_at IS NULL
                 AND b.deleted_at IS NULL
-                AND a.consolidado_id = documento.id
+                AND a.consolidado_id = b.id
               ) AS declarado_total')
           )
           ->where($filter)
-          ->orderBy('documento.created_at', 'DESC');
+          ->orderBy('b.created_at', 'DESC');
           return $sql;
     }
 

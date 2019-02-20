@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 include_once(app_path() . '\WebClientPrint\WebClientPrint.php');
@@ -110,6 +109,23 @@ class DocumentoController extends Controller
                     $data->created_at        = $request->created_at;
                     $tipo                    = TipoDocumento::findOrFail($request->tipo_documento_id);
 
+                    $getShipper = $this->getConfig('shipperDefault');
+                    $getConsignee = $this->getConfig('consigneeDefault');
+                    if(isset($request->shipper_id)){
+                      $data->shipper_id = $request->shipper_id;
+                    }else{
+                      if($getShipper){
+                        $data->shipper_id = $getShipper->value;
+                      }
+                    }
+                    if(isset($request->consignee_id)){
+                      $data->consignee_id = $request->consignee_id;
+                    }else{
+                      if($getConsignee){
+                        $data->consignee_id = $getConsignee->value;
+                      }
+                    }
+
                     if ($data->save()) {
                         $id_documento = $data->id;
 
@@ -125,9 +141,9 @@ class DocumentoController extends Controller
                                     'documento_id'     => $id_documento,
                                     'servicios_id'     => 1,
                                     'forma_pago_id'    => 1,
-                                    'tipo_pago_id'     => 1,
-                                    'tipo_embarque_id' => 1,
-                                    'grupo_id'         => 1,
+                                    'tipo_pago_id'     => 4,//prepaid
+                                    'tipo_embarque_id' => 7,//aereo
+                                    'grupo_id'         => 3,//general
                                     'estado_id'        => ($request->tipo_documento_id == 2) ? 27 : 28, //maestra multiple
                                     'created_at'       => $request->created_at,
                                 ],
@@ -543,6 +559,7 @@ class DocumentoController extends Controller
         $data              = DocumentoDetalle::findOrFail($obj->documento_detalle_id);
         $data->consolidado = 0;
         $data->save();
+        $piv = DB::table('status_detalle')->where([['documento_detalle_id', $obj->documento_detalle_id], ['status_id', 5]])->delete();
         $this->AddToLog('Consolidado detalle eliminado (' . $id_detalle . ')');
         $answer = array(
             "code" => 200,
@@ -556,14 +573,17 @@ class DocumentoController extends Controller
         if ($table) {
             $data = DocumentoDetalle::findOrFail($id);
             $data->delete();
+            $piv = DB::table('status_detalle')->where([['documento_detalle_id', $id]])->delete();
             $this->AddToLog('Documento detalle eliminado (' . $id . ') WRH ('. $data->num_warehouse.')');
         } else {
             $data = Documento::findOrFail($id);
+            $piv = DB::table('guia_wrh_pivot')->where([['documento_id', $id]])->delete();
             $detail = DB::table('documento_detalle')->where([['documento_id', $id]])->get();
 
             if(count($detail) > 0){
                 foreach ($detail as $key) {
                     $this->destroy($key->id, 'detalle');
+                    $piv = DB::table('status_detalle')->where([['documento_detalle_id', $key->id]])->delete();
                 }
             }
             $data->delete();
@@ -645,27 +665,34 @@ class DocumentoController extends Controller
 
     public function getAll(Request $request)
     {
-      $filter = [['documento.deleted_at', null],
-        ['agencia.deleted_at', null],
-        ['documento.tipo_documento_id', $request->id_tipo_doc]];
+      $filter = [['b.deleted_at', null],
+        ['e.deleted_at', null],
+        ['b.tipo_documento_id', $request->id_tipo_doc]];
         if(!Auth::user()->isRole('admin')){
-            $filter[] = ['documento.agencia_id', Auth::user()->agencia_id];
+            $filter[] = ['b.agencia_id', Auth::user()->agencia_id];
         }
         /* GRILLA */
         if ($request->id_tipo_doc == 3) {
             $sql = $this->getAllConsolidated($filter);
         } else {
             // if(env('APP_TYPE') == 'courier'){
-            if($request->type == 2){
+            if($request->type == 3){
+              $sql = $this->getAllLoad($filter);
+            }else{
               $filter = [['a.deleted_at', null],
-                      ['b.deleted_at', null],
-                      ['b.tipo_documento_id', $request->id_tipo_doc]];
+              ['b.deleted_at', null],
+              ['b.tipo_documento_id', $request->id_tipo_doc]];
               if(!Auth::user()->isRole('admin')){
-                  $filter[] = ['b.agencia_id', Auth::user()->agencia_id];
+                $filter[] = ['b.agencia_id', Auth::user()->agencia_id];
+              }
+              if($request->type == 2){
+                $filter[] = ['a.num_warehouse', '<>', NULL ];
+              }else{
+                if($request->type == 4){
+                  $filter[] = ['a.num_warehouse', NULL ];
+                }
               }
               $sql = $this->getAllCourier($filter);
-            }else{
-              $sql = $this->getAllLoad($filter);
             }
         }
 
@@ -818,7 +845,6 @@ class DocumentoController extends Controller
                         ['documento_detalle.documento_id', $data->documento_id],
                     ])->get();
                 // $data->num_guia      = $documento->num_guia . '' . (count($documentoD) + 1);
-
 
                 /* GENERAR NUMERO DE GUIA */
                 $caracteres      = strlen($documento->consecutivo);
@@ -1062,7 +1088,7 @@ class DocumentoController extends Controller
         return $pdf->stream('TSA.pdf');
     }
 
-    public function pdf($id, $document, $id_detalle = null)
+    public function pdf($id, $document, $id_detalle = null, $view = true)
     {
         $documento = DB::table('documento')
             ->leftJoin('master AS m', 'documento.master_id', '=', 'm.id')
@@ -1381,16 +1407,16 @@ class DocumentoController extends Controller
                         // VALIDAR QUE EL PESO Y EL DECLARADO NO SUPEREN LO MAXIMO ESTABLECIDO
                         $peso_t = 0;
                         $decla_t = 0;
-                        if (count($detalleConsolidado) > 0) {
-                          foreach ($detalleConsolidado as $key) {
-                            if($key->peso_total > 50){
-                              $peso_t++;
-                            }
-                            if($key->declarado_total > 2000){
-                              $decla_t++;
-                            }
-                          }
-                        }
+                        // if (count($detalleConsolidado) > 0) {
+                        //   foreach ($detalleConsolidado as $key) {
+                        //     if($key->peso_total > 50){
+                        //       $peso_t++;
+                        //     }
+                        //     if($key->declarado_total > 2000){
+                        //       $decla_t++;
+                        //     }
+                        //   }
+                        // }
                         if($peso_t === 0 and $decla_t === 0){
                           $this->AddToLog('Impresion Consolidado guias (' . $id . ')');
                           if (env('APP_TYPE') === 'courier') {
@@ -1502,16 +1528,16 @@ class DocumentoController extends Controller
                             // VALIDAR QUE EL PESO Y EL DECLARADO NO SUPEREN LO MAXIMO ESTABLECIDO
                             $peso_t = 0;
                             $decla_t = 0;
-                            if (count($detalleConsolidado) > 0) {
-                              foreach ($detalleConsolidado as $key) {
-                                if($key->peso_total > 50){
-                                  $peso_t++;
-                                }
-                                if($key->declarado_total > 2000){
-                                  $decla_t++;
-                                }
-                              }
-                            }
+                            // if (count($detalleConsolidado) > 0) {
+                            //   foreach ($detalleConsolidado as $key) {
+                            //     if($key->peso_total > 50){
+                            //       $peso_t++;
+                            //     }
+                            //     if($key->declarado_total > 2000){
+                            //       $decla_t++;
+                            //     }
+                            //   }
+                            // }
                             if($peso_t === 0 and $decla_t === 0){
                               $this->AddToLog('Impresion Consolidado (' . $id . ')');
                               if (env('APP_TYPE') === 'courier') {
@@ -1540,9 +1566,12 @@ class DocumentoController extends Controller
                 }
             }
         }
-
-        // return $pdf->download($nameDocument . ' . pdf');
-        return $pdf->stream($nameDocument . '.pdf'); //visualizar en el navegador
+        if($view){
+          return $pdf->stream($nameDocument . '.pdf'); //visualizar en el navegador
+        }else{
+          $pdf->save(public_path(). '/files/File.pdf');//GUARDAR PARA IMPRIMIR POR DEFECTO
+        }
+        // return $pdf->download($nameDocument . ' . pdf');// DESCARGAR ARCHIVO
     }
 
     public function pdfLabel($id, $document, $id_detalle = null, $consolidado = null, $id_detail_consol = null)
@@ -1623,7 +1652,7 @@ class DocumentoController extends Controller
                 // ->setPaper(array(25, -25, 300, 300), 'landscape');
 
             $nameDocument = 'Label' . $document . '-' . $documento->id;
-            $pdf->save(public_path(). '/files/dumaFile.pdf');
+            $pdf->save(public_path(). '/files/File.pdf');
 
             // return $pdf->stream($nameDocument . '.pdf');
             return true;
@@ -1633,7 +1662,7 @@ class DocumentoController extends Controller
                     $pdf = PDF::loadView('pdf.labelWGJyg', compact('documento', 'detalle', 'document', 'consolidado', 'dato_consolidado'))
                     ->setPaper(array(25, -25, 260, 360), 'landscape');
                     $nameDocument = 'Label' . $document . '-' . $documento->id;
-                    $pdf->save(public_path(). '/files/dumaFile.pdf');
+                    $pdf->save(public_path(). '/files/File.pdf');
                     return true;
                 }else{
                     $pdf = PDF::loadView('pdf.labelWG', compact('documento', 'detalle', 'document', 'consolidado', 'dato_consolidado'))
@@ -1661,11 +1690,17 @@ class DocumentoController extends Controller
       if($request->input('id_detail_consol')){
         $id_detail_consol = $request->input('id_detail_consol');
       }
-
+      // OBTENER LA CONFIGURACION DE LA IMPRESORA
+      $dataPrint = $this->getConfig('print_' . $request->input('agency_id'));
+      $prints = json_decode($dataPrint->value);
+      // VALIDAR SI ES UN LABEL O UN DOCUMENTO A IMPRIMIR
+      if($request->input('label')){
         $this->pdfLabel($request->input('id'), $request->input('document'), $id_detalle, $consolidado, $id_detail_consol);
-        $dataPrint = $this->getConfig('print_' . $request->input('agency_id'));
-        $prints = json_decode($dataPrint->value);
         $print = $prints->prints->labels;
+      }else{
+        $this->pdf($request->input('id'), $request->input('document'), $id_detalle, false);
+        $print = $prints->prints->default;
+      }
        if ($request->exists(WebClientPrint::CLIENT_PRINT_JOB)) {
             $useDefaultPrinter = ($request->input('useDefaultPrinter') === 'checked');
             // $printerName = urldecode($request->input('printerName'));
@@ -1674,7 +1709,7 @@ class DocumentoController extends Controller
             $fileName = uniqid() . '.' . $filetype;
 
             $filePath = '';
-            $filePath = public_path().'\files\dumaFile.pdf';
+            $filePath = public_path().'/files/File.pdf';
 
             if (!Utils::isNullOrEmptyString($filePath)) {
                 //Create a ClientPrintJob obj that will be processed at the client side by the WCPP
@@ -1688,7 +1723,7 @@ class DocumentoController extends Controller
                 //$myfile->printInReverseOrder = true;
                 $cpj->printFile = $myfile;
 
-				if ($useDefaultPrinter || $printerName === 'null') {
+				        if ($useDefaultPrinter || $printerName === 'null') {
                     $cpj->clientPrinter = new DefaultPrinter();
                 } else {
                     $cpj->clientPrinter = new InstalledPrinter($printerName);
@@ -1705,12 +1740,14 @@ class DocumentoController extends Controller
     public function buscarGuias($id, $num_guia, $num_bolsa, $pais_id)
     {
 
-        $detalle = DocumentoDetalle::select('documento_detalle.id', 'documento_detalle.consignee_id')
+        $detalle = DocumentoDetalle::join('documento as b', 'documento_detalle.documento_id', 'b.id')
+            ->select('documento_detalle.id', 'b.consignee_id')
             ->where([
                 ['documento_detalle.deleted_at', null],
             ])
             ->whereRaw('(documento_detalle.num_warehouse = "' . $num_guia . '" or documento_detalle.num_guia = "' . $num_guia . '")')
             ->first();
+
         if ($detalle) {
             /* VERIFICAR QUE EL NUMERO INGRESADO NO ESTE EN OTRO CONSOLIDADO O YA ESTE INGRESADO */
             $cons_detail = DB::table('consolidado_detalle as a')
@@ -1999,6 +2036,7 @@ class DocumentoController extends Controller
                 'a.num_warehouse',
                 'a.liquidado',
                 'a.peso2',
+                'e.pais_id',
                 DB::raw('IFNULL(a.declarado2,0) as declarado2')
             )
             ->groupBy(

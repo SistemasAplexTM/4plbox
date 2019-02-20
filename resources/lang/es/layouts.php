@@ -64,8 +64,9 @@ return [
     'roles'=>'Roles',
     'access_controls'=>'Control de accesos',
     'change_agency'  =>'Cambiar de Agencia',
-    'reports'  =>'Informes',
+    'reports'  =>'Informe General',
     'load_reports'  =>'Informe de carga',
+    'distribution_warehouse'  =>'Bodega Reparto',
 
 
 

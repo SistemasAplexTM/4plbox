@@ -423,6 +423,9 @@
         },app_type: {
           type: String,
           required: true
+        },app_client: {
+          type: String,
+          required: true
         },
 				pais_id_config:[String, Number],
 				close_document:{
@@ -942,7 +945,8 @@
 					                	}
 					                	me.shipper_contactos[full.shipper_id] = full.shipper_contactos;
 					                	return nom_ship + ' <a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalShipperConsigneeConsolidado('+full.id+', \''+full.shipper_id+'\', \'shipper\')"><i class="material-icons">&#xE254;</i></a> <a onclick=\"restoreShipperConsignee('+full.id+', \'shipper\')\" class="delete" title="Restaurar original" data-toggle="tooltip" style="float:right;color:#2196F3;"><i class="material-icons">cached</i></a>';
-					                }
+					                },
+													visible: ((app_client === 'worldcargo') ? false : true)
 					            },
 					            {
 					                "render": function (data, type, full, meta) {
@@ -963,7 +967,8 @@
 		                      "render": function (data, type, full, meta) {
 		                          var pa = (full.pa == null) ? '' : full.pa;
 		                          return '<span id="pa'+ full.id +'">' + pa + '</span>' + '<a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalArancel('+full.documento_detalle_id+', \'tbl-consolidado\')"><i class="material-icons">&#xE254;</i></a>';
-		                      }
+		                      },
+													visible: ((app_client === 'worldcargo') ? false : true)
 		                  },
 		                  {
 		                      "render": function (data, type, full, meta) {
@@ -1047,10 +1052,17 @@
 														$('#pa' + datos[i].id).html('No Datos').addClass('text-danger');
 														cont++;
 													}else{
-															if(total < 2000 && total > 0 && peso < 50 && parseFloat(datos[i].declarado2) != 0){
-															$('#num_guia' + datos[i].id).removeClass('text-danger');
 															$('#pa' + datos[i].id).removeClass('text-danger');
-														}
+															if(datos[i].flag_peso == null && datos[i].flag_declarado == null){
+																if(parseFloat(datos[i].declarado2) == 0 || parseFloat(datos[i].peso2) == 0){
+																	$('#num_guia' + datos[i].id).addClass('text-danger');
+																	cont++;
+																}else{
+																	$('#num_guia' + datos[i].id).removeClass('text-danger');
+																}
+															}else{
+																cont++;
+															}
 													}
 												}
 												if(cont === 0 && datos.length > 0){
