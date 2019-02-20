@@ -21,4 +21,23 @@ Route::get('paises', function () {
     return datatables()->eloquent(App\Pais::query())->toJson();
 });
 
-Route::get('rastreo/getStatusReport/{data}', 'RastreoController@getStatusReport')->middleware('auth:api');
+Route::namespace('Auth')->group(function () {
+  Route::group(['prefix' => 'auth'], function () {
+    Route::post('login', 'AuthController@login');
+    Route::post('signup', 'AuthController@signup');
+
+    Route::group(['middleware' => 'auth:api'], function() {
+      Route::get('logout', 'AuthController@logout');
+      Route::get('user', 'AuthController@user');
+    });
+  });
+});
+Route::group(['prefix' => 'user'], function() {
+    Route::get('/', function() {
+      // authenticated user. Use User::find() to get the user from db by id
+     return request()->user();
+    })->middleware('auth:api');
+});
+Route::group(['middleware' => 'auth:api'], function(){
+  Route::get('rastreo/getStatusReport/{data}/{idStatus?}', 'RastreoController@getStatusReport');
+});
