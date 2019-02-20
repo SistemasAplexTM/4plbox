@@ -19,6 +19,13 @@
 
 @section('content')
 <style type="text/css">
+.tox .tox-dialog__content-js{
+  display: inline-block;
+  height:auto;
+}
+.tox .tox-dialog__body-content{
+  height: 200px!importnat;
+}
 	.panel-info {
 	    border-color: #bce8f1;
 	}
@@ -84,7 +91,7 @@
                                         </div>
                                     </div>
                                     <div class="mail-text h-200">
-                                        <textarea style="max-width: 100%;" placeholder="Ingrese Texto" class="form-control summernote" id="mensaje" name="mensaje" @click="deleteError('mensaje')"></textarea>
+                                        <textarea style="max-width: 100%;" placeholder="Ingrese Texto" class="form-control" id="mensaje" name="mensaje" @click="deleteError('mensaje')"></textarea>
                                         <div class="clearfix"></div>
                                     </div>
                                     <div class="clearfix"></div>
@@ -221,4 +228,19 @@
 
 @section('scripts')
 <script src="{{ asset('js/templates/emailTemplate.js') }}"></script>
+<script src="{{ asset('js/plugins/tinymce/js/tinymce/tinymce.min.js') }}"></script>
+<script src="{{ asset('js/plugins/tinymce/js/tinymce/jquery.tinymce.min.js') }}"></script>
+<script>
+  tinymce.init({
+    selector: '#mensaje',
+    plugins: [
+      'autoresize',
+      'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+      'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+      'save table directionality emoticons template paste'
+    ],
+    toolbar: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
+    image_advtab: true,
+  });
+</script>
 @endsection

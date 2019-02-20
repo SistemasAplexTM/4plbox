@@ -17,5 +17,6 @@ class Status extends Model
         'color',
         'email',
         'view_client',
+        'json_data',
     ];
 }

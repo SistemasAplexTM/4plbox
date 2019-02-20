@@ -2196,6 +2196,7 @@ class DocumentoController extends Controller
 
         $objShipper   = $this->getDataConsigneeOrShipperById($id_ship, 'shipper');
         $objConsignee = $this->getDataConsigneeOrShipperById($id_cons, 'consignee');
+
         /* DATOS DE LA AGENCIA */
         $objAgencia = $this->getDataAgenciaById($id_agencia);
         /* DATOS DE LA PLANTILLA */

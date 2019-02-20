@@ -16,7 +16,7 @@ $(document).ready(function() {
                 var btn_delete = '';
                 if (permission_update) {
                     var params = [
-                        full.id, +full.agencia_id, "'" + full.nombre + "'", "'" + full.subject + "'", "'" + full.mensaje + "'", "'" + full.descripcion_plantilla + "'", "'" + full.otros_destinatarios + "'", full.enviar_archivo,
+                        full.id, +full.agencia_id, "'" + full.nombre + "'", "'" + full.subject + "'", "'" + full.descripcion_plantilla + "'", "'" + full.otros_destinatarios + "'", full.enviar_archivo,
                     ];
                     var btn_edit = "<a onclick=\"edit(" + params + ")\" class='btn btn-outline btn-success btn-xs' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit'></i></a> ";
                 }
@@ -29,13 +29,12 @@ $(document).ready(function() {
     });
 });
 
-function edit(id, agencia_id, nombre, subject, mensaje, descripcion_plantilla, otros_destinatarios, enviar_archivo) {
+function edit(id, agencia_id, nombre, subject, descripcion_plantilla, otros_destinatarios, enviar_archivo) {
     var data = {
         id: id,
         agencia_id: agencia_id,
         nombre: nombre,
         subject: subject,
-        mensaje: mensaje,
         descripcion_plantilla: descripcion_plantilla,
         otros_destinatarios: otros_destinatarios,
         enviar_archivo: enviar_archivo
@@ -44,8 +43,8 @@ function edit(id, agencia_id, nombre, subject, mensaje, descripcion_plantilla, o
 }
 
 function llenarTextarea() {
-    var cont = $('.note-editable').html();
-    $('#mensaje').html(cont);
+    // var cont = $('.note-editable').html();
+    // $('#mensaje').html(cont);
 }
 /* objeto VUE */
 var objVue = new Vue({
@@ -71,8 +70,9 @@ var objVue = new Vue({
             this.agencia_id = '';
             this.nombre = '';
             this.subject = '';
-            $('#mensaje').html('');
-            $('.note-editable').html('');
+            // $('#mensaje').html('');
+            // $('.note-editable').html('');
+            tinymce.activeEditor.setContent('');
             this.descripcion_plantilla = '';
             this.otros_destinatarios = '';
             this.email_file = false;
@@ -125,7 +125,7 @@ var objVue = new Vue({
                 'agencia_id': $('#agencia_id').val(),
                 'nombre': this.nombre,
                 'subject': this.subject,
-                'mensaje': $('#mensaje').val(),
+                'mensaje': tinymce.get('mensaje').getContent(),
                 'descripcion_plantilla': this.descripcion_plantilla,
                 'otros_destinatarios': this.otros_destinatarios,
                 'enviar_archivo': this.email_file,
@@ -158,7 +158,7 @@ var objVue = new Vue({
                 'agencia_id': $('#agencia_id').val(),
                 'nombre': this.nombre,
                 'subject': this.subject,
-                'mensaje': $('#mensaje').val(),
+                'mensaje': tinymce.get('mensaje').getContent(),
                 'descripcion_plantilla': this.descripcion_plantilla,
                 'otros_destinatarios': this.otros_destinatarios,
                 'enviar_archivo': this.email_file,
@@ -197,11 +197,18 @@ var objVue = new Vue({
                 data['otros_destinatarios'] = '';
             }
             this.otros_destinatarios = data['otros_destinatarios'];
-            $('#mensaje').html(data['mensaje']);
-            $('.note-editable').html(data['mensaje']);
+            // $('#mensaje').html(data['mensaje']);
+            // $('.note-editable').html(data['mensaje']);
+            this.getContent(data['id']);
             this.editar = 1;
             this.formErrors = {};
             this.listErrors = {};
+        },
+        getContent(id){
+          axios.get('emailTemplate/getContent/'+id).then(response => {
+            tinymce.activeEditor.setContent('');
+            tinymce.activeEditor.selection.setContent(response.data.content);
+          });
         },
         cancel: function() {
             var me = this;

@@ -73,7 +73,8 @@
                                 </div>
                         </div>
                         <div class="row">
-                                <div class="col-lg-12">
+                            <transition name="fade">
+                                <div class="col-lg-12" v-show="showTemplate">
                                     <div class="form-group" :class="{'has-error': listErrors.email_plantilla_id}">
                                         <div class="col-sm-5">
                                             <label for="email_plantilla_id" class="control-label gcore-label-top">@lang('general.mail_template'):</label>
@@ -90,6 +91,7 @@
                                         </div>
                                     </div>
                                 </div>
+                            </transition>
                         </div>
                         <div class="row">
                                 <div class="col-lg-12">

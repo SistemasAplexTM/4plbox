@@ -41,6 +41,7 @@ class TrackingController extends Controller
      */
     public function store(TrackingRequest $request)
     {
+
         try {
             $data             = (new Tracking)->fill($request->all());
             $data->agencia_id = Auth::user()->agencia_id;
@@ -59,6 +60,10 @@ class TrackingController extends Controller
                   "code"   => 200,
                   "status" => 200,
               );
+              if($request->consignee_id != null){
+                // $config = $this->getConfig('ingreso_tracking');
+                // $this->verifySendEmail($config->value, 4, $request->consignee_id, $request->codigo);
+              }
             } else {
                 $answer = array(
                     "error"  => 'Error al intentar Eliminar el registro.',
@@ -66,6 +71,7 @@ class TrackingController extends Controller
                     "status" => 500,
                 );
             }
+
             return $answer;
         } catch (Exception $e) {
             $error = $e;

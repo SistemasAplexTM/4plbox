@@ -39,6 +39,9 @@ class StatusController extends Controller
         try {
             $data             = (new Status)->fill($request->all());
             $data->created_at = date('Y-m-d H:i:s');
+            if($request->email_plantilla_id != null){
+              $data->json_data = json_encode(['email_template_id' => $request->email_plantilla_id]);
+            }
             if ($data->save()) {
                 $answer = array(
                     "datos"  => $request->all(),
@@ -53,11 +56,11 @@ class StatusController extends Controller
                 );
             }
             return $answer;
-        } catch (\Exception $e) {
-            $error = '';
-            foreach ($e->errorInfo as $key => $value) {
-                $error .= $key . ' - ' . $value . ' <br> ';
-            }
+        } catch (Exception $e) {
+            $error = $e;
+            // foreach ($e->errorInfo as $key => $value) {
+            //     $error .= $key . ' - ' . $value . ' <br> ';
+            // }
             $answer = array(
                 "error"  => $error,
                 "code"   => 600,

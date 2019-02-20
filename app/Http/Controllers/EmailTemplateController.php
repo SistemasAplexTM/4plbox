@@ -90,7 +90,7 @@ class EmailTemplateController extends Controller
                 "status" => 500,
             );
             return $answer;
-            
+
         } catch (\Exception $e) {
             $error = '';
             foreach ($e->errorInfo as $key => $value) {
@@ -126,7 +126,7 @@ class EmailTemplateController extends Controller
      */
     public function delete($id,$logical)
     {
-        
+
         if(isset($logical) and $logical == 'true'){
             $data = EmailTemplate::findOrFail($id);
             $now = new \DateTime();
@@ -135,14 +135,14 @@ class EmailTemplateController extends Controller
                     $answer=array(
                         "datos" => 'Eliminación exitosa.',
                         "code" => 200
-                    ); 
+                    );
                }  else{
                     $answer=array(
                         "error" => 'Error al intentar Eliminar el registro.',
                         "code" => 600
                     );
-               }          
-                
+               }
+
                 return $answer;
         }else{
             $this->destroy($id);
@@ -176,6 +176,15 @@ class EmailTemplateController extends Controller
             ->where([[$table.'.deleted_at', '=', NULL]])
             ->orderBy($table.'.nombre');
         return \DataTables::of($sql)->make(true);
+    }
+
+    public function getContent($id)
+    {
+        $data = EmailTemplate::findOrFail($id);
+        return array(
+            "content" => $data->mensaje,
+            "code" => 200
+        );
     }
 
 }

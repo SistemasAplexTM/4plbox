@@ -229,6 +229,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('emailTemplate/all', 'EmailTemplateController@getAll')->name('datatable/all');
     Route::get('emailTemplate/delete/{id}/{logical?}', 'EmailTemplateController@delete')->name('emailTemplate.delete');
     Route::get('emailTemplate/restaurar/{id}', 'EmailTemplateController@restaurar');
+    Route::get('emailTemplate/getContent/{id}', 'EmailTemplateController@getContent');
 
     /*--- MODULO PRINT CONFIG ---*/
     Route::get('printConfig', 'PrintConfigController@index')->name('printConfig');

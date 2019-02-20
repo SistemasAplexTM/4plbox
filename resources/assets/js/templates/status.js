@@ -46,6 +46,12 @@ $(document).ready(function() {
     });
 });
 
+$(function(){
+  $('input').on('ifChecked', function(event){
+    objVue.showEmailTemplate();
+  });
+})
+
 function edit(id, descripcion, color, email, view_client) {
     var data = {
         id: id,
@@ -71,6 +77,7 @@ var objVue = new Vue({
         listErrors: {},
         email_plantilla_id: null,
         plantillas: [],
+        showTemplate: false,
     },
     methods: {
         resetForm: function() {
@@ -80,6 +87,7 @@ var objVue = new Vue({
             this.email = '';
             this.editar = 0;
             this.view_client= false;
+            this.email_plantilla_id= null;
             this.formErrors = {};
             this.listErrors = {};
             $('#email_s').iCheck('uncheck').prop('checked', false);
@@ -88,10 +96,11 @@ var objVue = new Vue({
             $('#view_client_n').iCheck('check').prop('checked', true);
         },
         showEmailTemplate: function() {
+          let me = this;
           if ($('#email_s').is(':checked')) {
-              console.log('chek');
+              me.showTemplate = true;
           } else {
-              console.log('no check');
+              me.showTemplate = false;
           }
         },
         getPlantillasEmail: function() {
@@ -160,6 +169,7 @@ var objVue = new Vue({
                 'color': this.color,
                 'email': this.email,
                 'view_client': this.view_client,
+                'email_plantilla_id': (this.email_plantilla_id !== null) ? this.email_plantilla_id.id : null,
             }).then(function(response) {
                 if (response.data['code'] == 200) {
                     toastr.success('Registro creado correctamente.');
@@ -200,6 +210,7 @@ var objVue = new Vue({
                 'color': this.color,
                 'email': this.email,
                 'view_client': this.view_client,
+                'email_plantilla_id': (this.email_plantilla_id !== null) ? this.email_plantilla_id.id : null,
             }).then(function(response) {
                 if (response.data['code'] == 200) {
                     toastr.success('Registro Actualizado correctamente');
