@@ -886,7 +886,7 @@
 					            {
 					                "render": function (data, type, full, meta) {
 		                                var groupGuias = full.guias_agrupadas;
-		                                var btn_delete = "<a style='float: right;cursor:pointer;''><i class='material-icons'>clear</i></a>";
+		                                var btn_delete = "<a style='float: right;cursor:pointer;''><i class='fal fa-times'></i></a>";
 		                                if(groupGuias != null && groupGuias != 'null' && groupGuias != ''){
 		                                    groupGuias = groupGuias.replace(/,/g, "<br>");
 		                                    groupGuias = groupGuias.replace(/@/g, ",");//SEPARADOR AL CREAR EL ONCLIC EN EL CONTROLADOR
@@ -944,7 +944,7 @@
 															nom_ship = json.nombre;
 					                	}
 					                	me.shipper_contactos[full.shipper_id] = full.shipper_contactos;
-					                	return nom_ship + ' <a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalShipperConsigneeConsolidado('+full.id+', \''+full.shipper_id+'\', \'shipper\')"><i class="material-icons">&#xE254;</i></a> <a onclick=\"restoreShipperConsignee('+full.id+', \'shipper\')\" class="delete" title="Restaurar original" data-toggle="tooltip" style="float:right;color:#2196F3;"><i class="material-icons">cached</i></a>';
+					                	return nom_ship + ' <a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalShipperConsigneeConsolidado('+full.id+', \''+full.shipper_id+'\', \'shipper\')"><i class="fal fa-pencil"></i></a> <a onclick=\"restoreShipperConsignee('+full.id+', \'shipper\')\" class="delete" title="Restaurar original" data-toggle="tooltip" style="float:right;color:#2196F3;margin-right: 5px;"><i class="far fa-sync-alt"></i></a>';
 					                },
 													visible: ((app_client === 'worldcargo') ? false : true)
 					            },
@@ -960,13 +960,13 @@
 															nom_cons = json.nombre;
 					                	}
 					                	me.consignee_contactos[full.consignee_id] = full.consignee_contactos;
-					                	return nom_cons + ' <a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalShipperConsigneeConsolidado('+full.id+', \''+full.consignee_id+'\',\'consignee\')"><i class="material-icons">&#xE254;</i></a> <a onclick=\"restoreShipperConsignee('+full.id+',\'consignee\')\" class="delete" title="Restaurar original" data-toggle="tooltip" style="float:right;color:#2196F3;"><i class="material-icons">cached</i></a>';
+					                	return nom_cons + ' <a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalShipperConsigneeConsolidado('+full.id+', \''+full.consignee_id+'\',\'consignee\')"><i class="fal fa-pencil"></i></a> <a onclick=\"restoreShipperConsignee('+full.id+',\'consignee\')\" class="delete" title="Restaurar original" data-toggle="tooltip" style="float:right;color:#2196F3;margin-right: 5px;"><i class="far fa-sync-alt"></i></a>';
 					                }
 					            },
 					            {
 		                      "render": function (data, type, full, meta) {
 		                          var pa = (full.pa == null) ? '' : full.pa;
-		                          return '<span id="pa'+ full.id +'">' + pa + '</span>' + '<a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalArancel('+full.documento_detalle_id+', \'tbl-consolidado\')"><i class="material-icons">&#xE254;</i></a>';
+		                          return '<span id="pa'+ full.id +'">' + pa + '</span>' + '<a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalArancel('+full.documento_detalle_id+', \'tbl-consolidado\')"><i class="fal fa-pencil"></i></a>';
 		                      },
 													visible: ((app_client === 'worldcargo') ? false : true)
 		                  },

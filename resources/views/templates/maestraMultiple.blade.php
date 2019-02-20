@@ -26,12 +26,12 @@
                     <div class="ibox-title">
                         <h5>@lang('general.register_of') {{ $name }}</h5>
                         <div class="ibox-tools">
-                            
+
                         </div>
                     </div>
                     <div class="ibox-content">
                         <!--***** contenido ******-->
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                 <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.nombre}">
@@ -46,7 +46,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                 <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.descripcion}">
@@ -87,15 +87,8 @@
                                         <th>@lang('general.actions')</th>
                                     </tr>
                                 </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>@lang('general.name')</th>
-                                        <th>{{ ($type != '1' and $type != '2') ? 'Descripción' : 'Abreviatura' }}</th>
-                                        <th>@lang('general.actions')</th>
-                                    </tr>
-                                </tfoot>
                             </table>
-                        </div>             
+                        </div>
                     </div>
                 </div>
             </div>

@@ -20,19 +20,19 @@
     </div>
 </div>
 <style type="text/css">
-@-webkit-keyframes ripple {
-  0% {
-    opacity: 0;
+  @-webkit-keyframes ripple {
+    0% {
+      opacity: 0;
+    }
+    30% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      padding-bottom: 200%;
+      width: 200%;
+    }
   }
-  30% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    padding-bottom: 200%;
-    width: 200%;
-  }
-}
   .text-write{
     background-color: #ffffd1;
   }
@@ -135,7 +135,7 @@
         <modalarancel-component></modalarancel-component>
         <modalcargosadd-component :showmodal="showmodalAdd"></modalcargosadd-component>
 
-            <form class="" id="formDocumento" name="formDocumento" class=" form-horizontal" role="form" action="{{ url('documento/updatedDocument') }}/{{  $documento->id }}" method="post">
+        <form class="" id="formDocumento" name="formDocumento" class=" form-horizontal" role="form" action="{{ url('documento/updatedDocument') }}/{{  $documento->id }}" method="post">
                 {{ csrf_field() }}
                 <input type="hidden" class="form-control" id="date" name="date" readonly="">
                 <input type="hidden" class="form-control" id="id_documento" name="id_documento"  value="{{ $documento->id }}" readonly="">
@@ -948,8 +948,8 @@
 
 @section('scripts')
 {!! $wcpScript; !!}
-<script src="{{ asset('js/plugins/dataTables/dataTables.keyTable.min.js') }}"></script>
-<script src="{{ asset('js/plugins/dataTables/fnFilterClear.js') }}"></script>
+{{-- <script src="{{ asset('js/plugins/dataTables/dataTables.keyTable.min.js') }}"></script> --}}
+{{-- <script src="{{ asset('js/plugins/dataTables/fnFilterClear.js') }}"></script> --}}
 <script src="{{ asset('js/templates/documento/documento.js') }}"></script>
 <script src="{{ asset('js/templates/documento/totalizar.js') }}"></script>
 <script src="{{ asset('js/templates/documento/postalCode.js') }}"></script>

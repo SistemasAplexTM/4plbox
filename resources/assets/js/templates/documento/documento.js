@@ -141,7 +141,7 @@ function datatableDetail(){
         }, {
             "render": function (data, type, full, meta) {
                 var pa = full.nom_pa;
-                return ((pa === null) ? '' : pa) + '<a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalArancel('+full.id+', \'whgTable\')"><i class="material-icons">&#xE254;</i></a>';
+                return ((pa === null) ? '' : pa) + '<a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalArancel('+full.id+', \'whgTable\')"><i class="fal fa-pencil"></i></a>';
             },
             visible: (objVue.mostrar.includes(16)) ? true : false
         },
