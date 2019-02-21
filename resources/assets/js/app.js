@@ -7,11 +7,15 @@ import vSelect 		from 'vue-select'
 
 import es 				from 'vee-validate/dist/locale/es';
 import VeeValidate, { Validator } 	from 'vee-validate';
+import { Select, Option } from 'element-ui';
 import Spinner 		from 'vue-spinkit'
+import 'element-ui/lib/theme-chalk/index.css';
 // Localize takes the locale object as the second argument (optional) and merges it.
 Validator.localize('es', es);
 // Install the Plugin.
 Vue.use(VeeValidate);
+Vue.use(Select);
+Vue.use(Option);
 
 Vue.component('Spinner', Spinner)
 Vue.component('v-select', vSelect)
@@ -31,3 +35,4 @@ Vue.component('modalreciboentrega-component',   require('./components/ModalRecib
 Vue.component('rigthsidebar-component', 	      require('./components/RigthSidebarComponent.vue'));
 Vue.component('consol_bodega-component', 	      require('./components/ConsolBodegaComponent.vue'));
 Vue.component('config-component', 				      require('./components/config/Index.vue'));
+Vue.component('points-component', 				      require('./components/ModalPointsComponent.vue'));

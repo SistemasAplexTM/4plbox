@@ -1,503 +1,3 @@
-// @class address;
-// @extends abstractinput;
-// @final;
-// @example;
-
-$(document).ready(function() {
-  setIdPaisConfig();
-    $('#tracking').tagsinput();
-    //toggle `popup` / `inline` mode
-    $.fn.editable.defaults.mode = 'inline';
-    $.fn.editable.defaults.params = function(params) {
-        params._token = $('meta[name="csrf-token"]').attr('content');
-        return params;
-    };
-    $('#agencia_id').on('change', function() {
-        objVue.resetFormsShipperConsignee(0);
-        objVue.resetFormsShipperConsignee(1);
-    });
-    /* LIMPIAR MODALES */
-    $('#modalShipper').on('hidden.bs.modal', function() {
-        var table = $('#tbl-modalshipper').DataTable();
-        table.clear();
-    });
-    $('#modalConsignee').on('hidden.bs.modal', function() {
-        var table = $('#tbl-modalconsignee').DataTable();
-        table.clear();
-    });
-    $('#modalShipperConsigneeConsolidado').on('hidden.bs.modal', function() {
-        objVue.contactos = {};
-    });
-    $('#modalagrupar').on('hidden.bs.modal', function() {
-        var table = $('#tbl-modalagrupar').DataTable();
-        table.clear();
-    });
-    if ($('#shipper_id').val() == '') {
-        $('#show-all-c').bootstrapToggle('disable');
-    }
-    if ($('#consignee_id').val() == '') {
-        $('#show-all').bootstrapToggle('disable');
-    }
-    $('.track_guia').tagsinput({
-        tagClass: 'label label-primary'
-    });
-    $('.table .bootstrap-tagsinput').children('input').attr('readonly', true);
-    /* poner readonly al campo tracking */
-    $(".table .bootstrap-tagsinput .tag").each(function() {
-        $(this).removeClass('label-info').css('color', '#555');
-        $(this).children('span').remove();
-    });
-    llenarSelectPersonalizado('documento', 'localizacion', 'localizacion_id', 2); // module, tableName, id_campo
-    llenarSelectPersonalizado('documento', 'localizacion', 'localizacion_id_c', 2); // module, tableName, id_campo
-
-});
-$(function() {
-    //aparecer botones de accion en las bolsas del consolidado
-    jQuery('.list-group').
-    on('mouseover', 'li', function() {
-        jQuery(this).find('.boxEdit, .boxDelete').show();
-    }).
-    on('mouseout', 'li', function() {
-        jQuery(this).find('.boxEdit, .boxDelete').hide();
-    });
-
-    jQuery('#tbl-consolidado').
-    on('mouseover', 'tr', function() {
-        jQuery(this).find('.edit, .delete').show();
-    }).
-    on('mouseout', 'tr', function() {
-        jQuery(this).find('.edit, .delete').hide();
-    });
-
-    jQuery('#whgTable').
-    on('mouseover', 'tr', function() {
-        jQuery(this).find('.edit').show();
-    }).
-    on('mouseout', 'tr', function() {
-        jQuery(this).find('.edit').hide();
-    });
-
-    $('#show-all-c').change(function() {
-        if ($(this).prop('checked') === true) {
-            objVue.modalConsignee(false);
-        } else {
-            objVue.modalConsignee($('#shipper_id').val());
-        }
-    });
-    $('#show-all').change(function() {
-        if ($(this).prop('checked') === true) {
-            objVue.modalShipper(false);
-        } else {
-            objVue.modalShipper($('#consignee_id').val());
-        }
-    });
-    $('#show-totales').change(function() {
-        if ($(this).prop('checked') === true) {
-            objVue.showTotals(true);
-            setTimeout(function() {
-                llenarSelectServicio($('#tipo_embarque_id').val());
-            }, 500);
-        } else {
-            objVue.showTotals(false);
-        }
-    });
-});
-
-function datatableDetail(){
-    //     if ($.fn.DataTable.isDataTable('#whgTable')) {
-    // var table = $('#whgTable').DataTable();
-    //     table.clear();
-    //         $('#whgTable tbody').empty();
-    //         $('#whgTable').dataTable().fnDestroy();
-    //     }
-    $('#whgTable').DataTable({
-        ajax: 'getDataDetailDocument',
-        // "paging":   false,
-        // "info":     false,
-        processing: false,
-        serverSide: false,
-        "searching": false,
-        // "order": [[ 0, "desc" ], [ 1, "desc" ]],
-        columns: [{
-            data: 'num_warehouse',
-            name: 'num_warehouse'
-        }, {
-            "render": function (data, type, full, meta) {
-                return '<a data-name="piezas" data-pk="'+full.id+'" data-value="'+full.piezas+'" class="td_edit" data-type="text" data-placement="right" data-title="Piezas">'+full.piezas+'</a>';
-            }
-        },  {
-            "render": function (data, type, full, meta) {
-                var cadena  = full.dimensiones;
-                var dimensiones = cadena.split(" ");
-                var arr1 = cadena.split("=");
-                var arrF = arr1[1].split("x");
-                return '<a data-name="peso" data-pk="'+full.id+'" class="td_edit" data-type="text" data-placement="right" data-title="Peso">'+full.peso+'</a> ' +
-                ' <a data-name="dimensiones" data-pk="'+full.id+'" data-value="'+arrF+'" class="td_edit_d" data-type="address" data-placement="right" data-title="Dimensiones">'+dimensiones[1]+'</a>';;
-            }
-        }, {
-            "render": function (data, type, full, meta) {
-                return '<a data-name="contenido" data-pk="'+full.id+'" data-value="'+full.contenido+'" class="td_edit" data-type="text" data-placement="right" data-title="Contenido">'+full.contenido+'</a>';
-            }
-        }, {
-            "render": function (data, type, full, meta) {
-                var pa = full.nom_pa;
-                return ((pa === null) ? '' : pa) + '<a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalArancel('+full.id+', \'whgTable\')"><i class="fal fa-pencil"></i></a>';
-            },
-            visible: (objVue.mostrar.includes(16)) ? true : false
-        },
-        // {
-        //     data: 'nom_pa',
-        //     name: 'nom_pa',
-        //     visible: (objVue.mostrar.includes(16)) ? true : false
-        // },
-        {
-            "render": function (data, type, full, meta) {
-                return '<a data-name="declarado" data-pk="'+full.id+'" class="td_edit" data-type="text" data-placement="left" data-title="Declarado">'+full.valor+'</a>';
-            }
-        }, {
-            sortable: false,
-            "render": function(data, type, full, meta) {
-                var btn_addTracking = '';
-                var btn_edit = '';
-                var btn_save = '';
-                var btn_delete = '';
-                var display = 'inline-block';
-                if(full.consolidado == 1){
-                    display = 'none';
-                }
-
-                btn_addTracking = '<a class="btn btn-info btn-xs btn-actions addTrackings" type="button" id="btn_addtracking'+full.id+'" data-toggle="tooltip" title="Agregar tracking" onclick="addTrackings('+full.id+')"><i class="fa fa-truck"></i> <span id="cant_tracking'+full.id+'">'+full.cantidad+'</span></a> ';
-
-                btn_save = '<a class="btn btn-primary btn-xs btn-actions" type="button" id="btn_confirm'+full.id+'" onclick="saveTableDetail('+full.id+')" data-toggle="tooltip" title="Guardar" style="display:none;"><i class="fa fa-check"></i></a> ';
-
-                btn_edit = '<a class="btn btn-success btn-xs btn-actions" type="button" id="btn_edit'+full.id+'" onclick="editTableDetail('+full.id+')" data-toggle="tooltip" title="Editar"><i class="fa fa-edit"></i></a> ';
-
-                btn_delete = '<a class="btn btn-danger btn-xs btn-actions" type="button" id="btn_remove'+full.id+'" onclick="eliminar('+full.id+', false)" data-toggle="tooltip" title="Eliminar" style="display: '+display+'"><i class="fa fa-times"></i></a> ';
-
-                return btn_addTracking + btn_delete;
-            }
-        }, {
-            data: 'volumen',
-            name: 'volumen',
-            visible: false
-        }, {
-            data: 'piezas',
-            name: 'piezas',
-            visible: false
-        }, {
-            data: 'peso',
-            name: 'peso',
-            visible: false
-        }, {
-            data: 'valor',
-            name: 'valor',
-            visible: false
-        },],
-        "drawCallback": function () {
-            /* EDITABLE FIELD */
-            // if (me.permissions.editDetail) {
-                $(".td_edit").editable({
-                    ajaxOptions: {
-                        type: 'post',
-                        dataType: 'json'
-                    },
-                    url: "updateDetailDocument",
-                    validate:function(value){
-                        if($.trim(value) == ''){
-                            return 'Este campo es obligatorio!';
-                        }
-                    },
-                    success: function(response, newValue) {
-                        refreshTable('whgTable');
-                        objVue.totalizeDocument();
-                    }
-                });
-
-                $('.td_edit_d').editable({
-                    ajaxOptions: {
-                        type: 'post',
-                        dataType: 'json'
-                    },
-                    mode: 'popup',
-                    url: 'updateDetailDocument',
-                    validate:function(value){
-                        if($.trim(value.largo) == '' || $.trim(value.ancho) == '' || $.trim(value.alto) == ''){
-                            return 'Los campos no pueden ir vacios!';
-                        }
-                    },
-                    success: function(response, newValue) {
-                        refreshTable('whgTable');
-                        objVue.totalizeDocument();
-                    }
-                });
-            // }
-        },
-        "footerCallback": function (row, data, start, end, display) {
-            var api = this.api(), data;
-            /*Remove the formatting to get integer data for summation*/
-            var intVal = function (i) {
-                return typeof i === 'string' ?
-                        i.replace(/[\$,]/g, '') * 1 :
-                        typeof i === 'number' ?
-                        i : 0;
-            };
-            /*Total over all pages*/
-            var vol = api
-                    .column(7)
-                    .data()
-                    .reduce(function (a, b) {
-                        return intVal(Math.ceil(a)) + intVal(Math.ceil(b));
-                    }, 0);
-            var piezas = api
-                    .column(8)
-                    .data()
-                    .reduce(function (a, b) {
-                        return intVal(a) + intVal(b);
-                    }, 0);
-            var peso = api
-                    .column(9)
-                    .data()
-                    .reduce(function (a, b) {
-                        return intVal(Math.ceil(a)) + intVal(Math.ceil(b));
-                    }, 0);
-            var dec = api
-                    .column(10)
-                    .data()
-                    .reduce(function (a, b) {
-                        return intVal(a) + intVal(b);
-                    }, 0);
-
-            /*Update footer formatCurrency()*/
-            $('#piezas').val(parseFloat(isInteger(piezas)));
-            $('#volumen').val(parseFloat(isInteger(Math.ceil(vol))));
-            $('#pie_ft').val(parseFloat(isInteger(Math.ceil(vol * 166 / 1728))));
-            $('#pesoDim').val(parseFloat(isInteger(peso)));
-            $('#valor_declarado_tbl').val(parseFloat(isInteger(dec)));
-        },
-    }).on('xhr.dt', function ( e, settings, json, xhr ) {
-        if(app_type === 'courier'){
-            if(json.data.length === 0){
-                objVue.cantidad_detalle = true;
-                // $('#btn_add').attr('disabled', false);
-                // $('#btn_add').siblings('button').attr('disabled', false);
-            }else{
-                objVue.cantidad_detalle = false;
-                // $('#btn_add').attr('disabled', true);
-                // $('#btn_add').siblings('button').attr('disabled', true);
-            }
-        }
-        objVue.totalizeDocument();
-        // console.log(json.data);
-    });
-}
-function llenarSelectServicio(id_embarque) {
-  var url = '../../servicios/getAllServiciosAgencia/' + id_embarque;
-  var pa_id = 1;// POSICION ARANCELARIA POR DEFECTO
-  $.ajax({
-      url: url,
-      dataType: 'json',
-      type: 'GET',
-      success: function(data) {
-          /* llenar select */
-          $("#servicios_id").empty();
-          if ($('#impuesto').val() === '0' || $('#impuesto').val() === '') {
-            $('#impuesto').val(0);
-          }
-          if ($('#valor_libra2').val() === '0' || $('#valor_libra2').val() === '') {
-            $('#valor_libra2').val(0);
-          }
-          // $('#valor_libra2').val(0);
-          if (Object.keys(data.data).length === 0) {
-              $("#servicios_id").attr('readonly', true);
-          } else {
-              $("#servicios_id").attr('readonly', false);
-              $(data.data).each(function(index, value) {
-                  $("#servicios_id").append('<option value="' + value.id + '" data-tarifa="' + value.tarifa + '" data-seguro="' + value.seguro +
-                  'data-cobvol="' + value.cobro_peso_volumen + '"' +
-                  'data-tarifamin="' + value.peso_minimo + '"' +
-                  'data-tarifa="' + value.tarifa + '"' +
-                  'data-seguro="' + value.seguro + '"' +
-                  'data-c_opcional="' + value.cobro_opcional + '"' +
-                  'data-t_age="' + value.tarifa_agencia + '"' +
-                  'data-seg_age="' + value.seguro_agencia + '"' +
-                  'data-impuesto_age="' + value.impuesto + '"' +
-                  'data-pa_id="' + value.pa_id + '">' + value.nombre + '</option>');
-              });
-          }
-          objVue.totalizeDocument();
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-          data = {
-              error: jqXHR + ' - ' + textStatus + ' - ' + errorThrown
-          }
-          $('#modal' + 1).modal('toggle');
-          $('body').append('<div class="modal fade" id="modalError" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><h4 class="modal-title" id="myModalLabel">ERROR EN TRANSACCIÓN</h4></div><div class="modal-body">' + data.error + '</div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button></div></div></div></div>');
-          $('#modalError').modal({
-              show: true
-          });
-      },
-      complete: function(){
-        // ASIGNO EL SERVICIO REGISTRADO EN LA BD
-        if($('#servicios_id').data('servicio_id') != ''){
-          $('#servicios_id').val($('#servicios_id').data('servicio_id'));
-        }
-          if($('#servicios_id option:selected').data('pa_id') != null){
-              pa_id = $('#servicios_id option:selected').data('pa_id');
-          }
-          $('#pa_id').val(pa_id);
-          objVue.getPositionById(pa_id);
-      }
-  });
-}
-  /*-- Función para llenar select PERSONALIZADO --*/
-function llenarSelectPersonalizado(module, tableName, idSelect, length) {
-    var url = '../selectInput/' + tableName;
-    $('#' + idSelect).select2({
-        placeholder: "Seleccionar",
-        tokenSeparators: [','],
-        ajax: {
-            url: url,
-            dataType: 'json',
-            delay: 250,
-            data: function(params) {
-                return {
-                    term: params.term, // search term
-                    page: params.page
-                };
-            },
-            processResults: function(data, params) {
-                params.page = params.page || 1;
-                return {
-                    results: data.items,
-                    pagination: {
-                        more: (params.page * 30) < data.total_count
-                    }
-                };
-            },
-            cache: false
-        },
-        escapeMarkup: function(markup) {
-            return markup;
-        }, // let our custom formatter work
-        templateResult: formatRepo,
-        templateSelection: formatRepoSelection,
-        minimumInputLength: length,
-    }).on("change", function(e) {
-        $('.select2-selection').css('border-color', '');
-        $('#' + idSelect).siblings('small').css('display', 'none');
-    });
-}
-
-function formatRepo(repo) {
-    if (repo.loading) {
-        return repo.text;
-    }
-    var markup = "<div class='select2-result-repository clearfix'>" + "<div class='select2-result-repository__meta'>" + "<div class='select2-result-repository__title'><strong><i class='fa fa-map-marker'></i> " + repo.text + " / " + repo.deptos + " / " + repo.pais + "</strong></div>";
-    return markup;
-}
-
-function formatRepoSelection(repo) {
-    $('#deptoD').val(repo.deptos);
-    $('#paisD').val(repo.pais);
-    return repo.text || repo.id + ' - ' + repo.text;
-}
-
-function editTableDetail(id_fila) {
-    var data = {
-        id: id_fila
-    };
-    objVue.editTableDetail(data);
-}
-
-function saveTableDetail(id_fila) {
-    var data = {
-        id: id_fila
-    };
-    objVue.saveTableDetail(data);
-}
-
-function selectShipperConsignee(id, table) {
-    objVue.searchShipperConsignee(id, table);
-}
-
-function eliminarConsolidado(id, logical) {
-    var data = {
-        id: id,
-        logical: logical,
-    };
-    objVue.deleteDetailConsolidado(data);
-}
-
-function updateShipperConsigneeConsolidado(id, documento_detalle_id, option) {
-    var data = {
-        id: id,
-        documento_detalle_id: documento_detalle_id,
-        option: option,
-    };
-    objVue.updateDataDetailConsolidado(data);
-}
-
-function addTrackings(id) {
-    objVue.addTrackings(id);
-}
-
-function restoreShipperConsignee(id, table) {
-    objVue.restoreShipperConsignee = {
-        id: id,
-        table: table
-    };;
-}
-
-function addTrackingToDocument(tracking, option) {
-    objVue.addTrackingToDocument(option, tracking);
-}
-
-function showModalShipperConsigneeConsolidado(id, idShipCons, opcion) {
-    objVue.contactos = {
-        id: id,
-        idShipCons: idShipCons,
-        opcion: opcion,
-    };
-}
-
-function agruparGuias(id) {
-    objVue.datosAgrupar = {
-        id: id
-    };
-}
-
-function removerGuiaAgrupada(id, id_guia_detalle) {
-    objVue.removerAgrupado = {
-        id: id,
-        id_guia_detalle: id_guia_detalle,
-    };
-}
-
-function showModalArancel(id, table) {
-    objVue.modalArancel(id, table);
-}
-
-function permissions_f() {
-    objVue.permissions = {
-        deleteDetailConsolidado: permission_deleteDetailConsolidado,
-        insertDetail:                       permission_insertDetail,
-        editDetail:                         permission_editDetail,
-        removerGuiaAgrupada:                permission_removerGuiaAgrupada,
-        pdfContrato:                        permission_pdfContrato,
-        pdfTsa:                             permission_pdfTsa,
-        pdf:                                permission_pdf,
-        pdfLabel:                           permission_pdfLabel
-    };
-}
-
-function closeDocument() {
-  objVue.closeDocument();
-}
-
-function setIdPaisConfig() {
-  objVue.pais_id_config = pais_id_config;
-}
-
 var objVue = new Vue({
     el: '#documento',
     watch:{
@@ -567,78 +67,78 @@ var objVue = new Vue({
         contenido_tracking: [],
     },
     methods: {
-      addTrackingsToDocument: function(){
-        let me = this;
-        var datos = $("#formSearchTracking").serializeArray();
-        me.ids_tracking = [];
-        me.contenido_tracking = [];
-            $.each(datos, function(i, field) {
-                if (field.name === 'chk[]') {
-                  if($('#chk' + field.value).val() != ''){
-                    me.ids_tracking.push($('#chk' + field.value).val());
-                    me.contenido_tracking.push($('#chk' + field.value).data('contenido'));
+        addTrackingsToDocument: function(){
+          let me = this;
+          var datos = $("#formSearchTracking").serializeArray();
+          me.ids_tracking = [];
+          me.contenido_tracking = [];
+              $.each(datos, function(i, field) {
+                  if (field.name === 'chk[]') {
+                    if($('#chk' + field.value).val() != ''){
+                      me.ids_tracking.push($('#chk' + field.value).val());
+                      me.contenido_tracking.push($('#chk' + field.value).data('contenido'));
+                    }
                   }
+              });
+              if(me.contenido_tracking.length > 0){
+                $('#contiene').val(me.contenido_tracking.toString());
+              }
+        },
+        modalSearchTracking: function() {
+          let me = this;
+          if ($.fn.DataTable.isDataTable('#tbl-trackings')) {
+              $('#tbl-trackings' + ' tbody').empty();
+              $('#tbl-trackings').dataTable().fnDestroy();
+          }
+          var table = $('#tbl-trackings').DataTable({
+              ajax: '../../tracking/all/' + false + '/' + $('#consignee_id').val(),
+              columns: [{
+                  "render": function (data, type, full, meta) {
+                  return '<div class="checkbox checkbox-success"><input type="checkbox" data-numguia="' + full.codigo + '" data-contenido="' + full.contenido + '" id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '"></label></div>';
                 }
-            });
-            if(me.contenido_tracking.length > 0){
-              $('#contiene').val(me.contenido_tracking.toString());
-            }
-      },
-      modalSearchTracking: function() {
-        let me = this;
-        if ($.fn.DataTable.isDataTable('#tbl-trackings')) {
-            $('#tbl-trackings' + ' tbody').empty();
-            $('#tbl-trackings').dataTable().fnDestroy();
-        }
-        var table = $('#tbl-trackings').DataTable({
-            ajax: '../../tracking/all/' + false + '/' + $('#consignee_id').val(),
-            columns: [{
-                "render": function (data, type, full, meta) {
-                return '<div class="checkbox checkbox-success"><input type="checkbox" data-numguia="' + full.codigo + '" data-contenido="' + full.contenido + '" id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '"></label></div>';
+              }, {
+                  data: "codigo",
+                  name: 'codigo'
+              }, {
+                  data: "contenido",
+                  name: 'contenido'
+              }],
+              'columnDefs': [{
+                  className: "text-center",
+                  "targets": [0],
+              }],
+              "drawCallback": function () {
+                if(me.ids_tracking.length > 0){
+                  // setTimeout(function(){
+                    $.each(me.ids_tracking, function(i, field) {
+                      $('#chk' + field).attr('checked', true);
+                    });
+                  // }, 2000);
+                }
               }
-            }, {
-                data: "codigo",
-                name: 'codigo'
-            }, {
-                data: "contenido",
-                name: 'contenido'
-            }],
-            'columnDefs': [{
-                className: "text-center",
-                "targets": [0],
-            }],
-            "drawCallback": function () {
-              if(me.ids_tracking.length > 0){
-                // setTimeout(function(){
-                  $.each(me.ids_tracking, function(i, field) {
-                    $('#chk' + field).attr('checked', true);
+          });
+          $('#modalTrackingsAdd').modal('show');
+        },
+        closeDocument: function() {
+          let me = this;
+          swal({
+              title: 'Seguro que desea CERRAR este documento?',
+              text: "No lo podras abrir nuevamente!",
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Si',
+              cancelButtonText: 'No, cancelar!'
+          }).then((result) => {
+              if (result.value) {
+                  axios.get('./closeDocument').then(response => {
+                    me.close = true;
+                    toastr.success("Documento cerrado exitosamente.");
                   });
-                // }, 2000);
               }
-            }
-        });
-        $('#modalTrackingsAdd').modal('show');
-      },
-      closeDocument: function() {
-        let me = this;
-        swal({
-            title: 'Seguro que desea CERRAR este documento?',
-            text: "No lo podras abrir nuevamente!",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Si',
-            cancelButtonText: 'No, cancelar!'
-        }).then((result) => {
-            if (result.value) {
-                axios.get('./closeDocument').then(response => {
-                  me.close = true;
-                  toastr.success("Documento cerrado exitosamente.");
-                });
-            }
-        });
-      },
+          });
+        },
         refreshTableDetail: function(){
             var table = $('#whgTable').DataTable();
             table.ajax.reload();
@@ -1056,6 +556,7 @@ var objVue = new Vue({
                 $('#localizacion_id_c').append('<option value="' + data['ciudad_id'] + '" selected="selected">' + data['ciudad'] + '</option>').val([data['ciudad_id']]).trigger('change');
                 // $('#localizacion_id_c').select2({'disabled': true});
                 $('#zipD').val(data['zip']).attr('readonly', true);
+                $('#pais_id_D').val(data['pais_id']);
             }
         },
         searchShipperConsignee: function(id, table) {
@@ -1474,154 +975,3 @@ var objVue = new Vue({
         }, 350),
     }
 });
-
-(function ($) {
-    "use strict";
-
-    var Address = function (options) {
-        this.init('address', options, Address.defaults);
-    };
-
-    //inherit from Abstract input
-    $.fn.editableutils.inherit(Address, $.fn.editabletypes.abstractinput);
-
-    $.extend(Address.prototype, {
-        /**
-        Renders input from tpl
-
-        @method render()
-        **/
-        render: function() {
-           this.$input = this.$tpl.find('input');
-        },
-
-        /**
-        Default method to show value in element. Can be overwritten by display option.
-
-        @method value2html(value, element)
-        **/
-        value2html: function(value, element) {
-            if(!value) {
-                $(element).empty();
-                return;
-            }
-            var html = 'Vol=' + $('<div>').text(value.largo).html() + 'x' + $('<div>').text(value.ancho).html() + 'x' + $('<div>').text(value.alto).html();
-            $(element).html(html);
-        },
-
-        /**
-        Gets value from element's html
-
-        @method html2value(html)
-        **/
-        html2value: function(html) {
-          /*
-            you may write parsing method to get value by element's html
-            e.g. "Moscow, st. Lenina, bld. 15" => {city: "Moscow", street: "Lenina", building: "15"}
-            but for complex structures it's not recommended.
-            Better set value directly via javascript, e.g.
-            editable({
-                value: {
-                    city: "Moscow",
-                    street: "Lenina",
-                    building: "15"
-                }
-            });
-          */
-          // console.log('asdf: '+ html);
-          return null;
-        },
-
-       /**
-        Converts value to string.
-        It is used in internal comparing (not for sending to server).
-
-        @method value2str(value)
-       **/
-       value2str: function(value) {
-           var str = '';
-           if(value) {
-               for(var k in value) {
-                   str = str + k + ':' + value[k] + ';';
-               }
-           }
-           return str;
-       },
-
-       /*
-        Converts string to value. Used for reading value from 'data-value' attribute.
-
-        @method str2value(str)
-       */
-       str2value: function(str) {
-           /*
-           this is mainly for parsing value defined in data-value attribute.
-           If you will always set value by javascript, no need to overwrite it
-           */
-           return str;
-       },
-
-       /**
-        Sets value of input.
-
-        @method value2input(value)
-        @param {mixed} value
-       **/
-       value2input: function(value) {
-           if(!value) {
-             return;
-           }else{
-            value = value.split(',');
-           }
-           this.$input.filter('[name="largo"]').val(value[0]);
-           this.$input.filter('[name="ancho"]').val(value[1]);
-           this.$input.filter('[name="alto"]').val(value[2]);
-       },
-
-       /**
-        Returns value of input.
-
-        @method input2value()
-       **/
-       input2value: function() {
-           return {
-              largo: this.$input.filter('[name="largo"]').val(),
-              ancho: this.$input.filter('[name="ancho"]').val(),
-              alto: this.$input.filter('[name="alto"]').val()
-           };
-       },
-
-        /**
-        Activates input: sets focus on the first field.
-
-        @method activate()
-       **/
-       activate: function() {
-            this.$input.filter('[name="largo"]').focus();
-       },
-
-       /**
-        Attaches handler to submit form in case of 'showbuttons=false' mode
-
-        @method autosubmit()
-       **/
-       autosubmit: function() {
-           this.$input.keydown(function (e) {
-                if (e.which === 13) {
-                    $(this).closest('form').submit();
-                }
-           });
-       }
-    });
-
-    Address.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, {
-        tpl: '<div class="editable-address"><label><span>Length: </span><input type="number" name="largo" class="input-small form-control" autocomplete="off"></label></div>'+
-             '<div class="editable-address"><label><span>Width:  </span><input type="number" name="ancho" class="input-small form-control" autocomplete="off"></label></div>'+
-             '<div class="editable-address"><label><span>Heigth: </span><input type="number" name="alto" class="input-small form-control" autocomplete="off"></label></div>',
-
-        inputclass: ''
-    });
-
-    $.fn.editabletypes.address = Address;
-
-}(window.jQuery));

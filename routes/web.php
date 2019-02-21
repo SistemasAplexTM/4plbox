@@ -127,7 +127,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('administracion/{type}', 'MaestraMultipleController@store')->name('administracion.store');
     Route::put('administracion/{type}/{id}', 'MaestraMultipleController@update')->name('administracion.update');
     Route::delete('administracion/{type}/{id}', 'MaestraMultipleController@destroy')->name('administracion.destroy');
-    Route::get('administracion/{type}/selectInput/{tableName}', 'MaestraMultipleController@selectInput');
+    Route::get('administracion/{type}/selectInput/{tableName?}', 'MaestraMultipleController@selectInput');
 
     /*--- MODULO PAIS ---*/
     Route::resource('pais', 'PaisController', ['except' => ['show', 'create', 'edit']]);
