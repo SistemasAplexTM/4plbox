@@ -213,11 +213,14 @@ class DocumentoController extends Controller
         $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('DocumentoController@printFile'), Session::getId());
         // OBTENEMOS EL ID DEL PAIS QUE ESTA REGISTRADO EN LA CONFIGURACION DE APLEX_CONFIG
         // PARA UTILIZARLO EN EL CONSOLIDADO
-        $id_pais = $this->getConfig('idColombia');
-        JavaScript::put(['pais_id_config' => $id_pais->value]);
 
         $this->assignPermissionsJavascript('documento');
         $data = Documento::findOrFail($id);
+
+        $id_pais = $this->getConfig('idColombia');
+        $puntos = $this->getConfig('puntos_'.$data->agencia_id);
+
+        JavaScript::put(['pais_id_config' => ($id_pais) ? $id_pais->value : null, 'puntos_config' => ($puntos) ? $puntos->value : null]);
 
         $tipo     = TipoDocumento::findOrFail($data->tipo_documento_id);
         $agencias = Agencia::select('id', 'descripcion')

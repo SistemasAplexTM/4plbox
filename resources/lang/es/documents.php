@@ -9,10 +9,10 @@ return [
 		'agency'           => 'Agencia',
 		'document_number'  => 'Número de Documento',
 		'sender_shipper'		   => 'Remitente',
-		'prepared_for_editing'     => 'Preparado para edición...',	
+		'prepared_for_editing'     => 'Preparado para edición...',
 		'name'                     => 'Nombre',
 		'search'           => 'Buscar',
-		'address'          => 'Dirección',    
+		'address'          => 'Dirección',
 		'email'            => 'Email',
 		'phone'            => 'Teléfono',
 		'city'             => 'Ciudad',
@@ -22,8 +22,8 @@ return [
 		'addressee_consignee'        => 'Destinatario',
 		'load_data'					 => 'Datos de la carga',
 		'weight'           => 'Peso',
-		'dimensions'       => 'Dimensiones',   
-		'these_data_are_required'    => 'Estos Datos son obligatorios', 
+		'dimensions'       => 'Dimensiones',
+		'these_data_are_required'    => 'Estos Datos son obligatorios',
 		'content'          => 'Contenido',
 		'declared'         => 'Declarado ',
 		'pieces'           => 'Piezas',
@@ -42,7 +42,7 @@ return [
 		'group'            => 'Grupo',
 		'comments'         => 'Comentarios',
 		'bill'             => 'Factura',
-		'dangerous_load'   => 'Carga Peligrosa', 
+		'dangerous_load'   => 'Carga Peligrosa',
 		'packed'           => 'Re-Empacado',
 		'badly_packed'     => 'Mal empacada',
 		'broken'           => 'Rota',
@@ -53,7 +53,7 @@ return [
 		'to_print'				   => 'Imprimir',
 		'print_label'              => 'Imprimir label',
 		'invoice'                  => 'Invoice',
-		'cancel'                   => 'Cancelar', 
+		'cancel'                   => 'Cancelar',
 		'totals'                   => 'Totales',
 		'liquidate'                => 'Liquidar',
 		'type_boarding'            => 'Tipo Embarque',
@@ -68,7 +68,7 @@ return [
 		'discount'                 => 'Descuento',
 		'Total'                    => 'Total',
 		'close'                    => 'Cerrar',
-		'add_trackings'            => 'Agregar trackings', 
+		'add_trackings'            => 'Agregar trackings',
 		'tracks_available'         => 'Trackings disponibles',
 		'tracking'                 => 'Tracking',
 		'associated_trackings'     => 'Trackings asociado',
@@ -77,14 +77,14 @@ return [
 // templaces/documento/index
 
 		'documents'                => 'Documentos',
-		'attention'                => 'Atención!', 
+		'attention'                => 'Atención!',
 		'create_document'          => 'Crear Documentos',
 		'warehouse'                => 'Almacén',
-		'types_of_documents'       => 'Tipos de Documentos', 
+		'types_of_documents'       => 'Tipos de Documentos',
 		'date'                     => 'Date',
 		'client_consignee'         => 'Cliente',
 		'actions'                  => 'Acciones',
-// // templaces/documento/viewGuiaWarehouse	
+// // templaces/documento/viewGuiaWarehouse
 		'see'                      => 'Ver',
 		'visualize_guide'          => 'Visualizar Recibo',
 		'print_document'           => 'Imprimir documento',
@@ -100,31 +100,33 @@ return [
 		'message_receipt'          => 'EL RECIBO SE COBRARÁ POR EL VALOR MAYOR, (PESO O VOLUMEN) PARA LOS ENVÍOS AÉREOS.',
 		'we_are_not_responsible'   => 'NO NOS HACEMOS RESPONSABLES DE DAÑOS EN TELEVISORES QUE NO VIAJEN EN  CAJA
                                                                             DE MADERA.',
-        'check_the_ merchandise'   => 'REVISAR LA MERCANCÍA ANTES DE RETIRARSE DE LA OFICINA EN COLOMBIA, LUEGO DE ESTO, NO SE ACEPTARÁ NINGÚN RECLAMO. ALL CARGO.',
-         'shipper_certifies'       => 'EL ENVÍO CERTIFICA QUE LAS PARTÍCULAS QUE APARECEN AQUÍ SON CORRECTAS Y QUE INSOFARÁN COMO CUALQUIER PARTE DEL ENVÍO CONTIENE BIENES DANGEOROSOS, DICHA PARTE ESTÁ CORRECTAMENTE DESCRITA POR NOMBRE Y ESTÁ EN EL ESTADO ADECUADO PARA EL TRANSPORTE POR AVIÓN SEGÚN LA NORMATIVA APLICABLE DE MERCANCÍAS PELIGROSAS. EL ENCARGADO CONSIENTE POR ESTE MEDIO A UNA BÚSQUEDA O INSPECCIÓN DE LA CARGA.',
-         'received'                => 'Recibido',
-         'settlement'              => 'Liquidación',
-         'others'                  => 'Otros',
-         'states'                  => 'Estados',
-         'return'                   => 'Volver',
-         'edit'                     => 'Editar',
+    'check_the_ merchandise'   => 'REVISAR LA MERCANCÍA ANTES DE RETIRARSE DE LA OFICINA EN COLOMBIA, LUEGO DE ESTO, NO SE ACEPTARÁ NINGÚN RECLAMO. ALL CARGO.',
+     'shipper_certifies'       => 'EL ENVÍO CERTIFICA QUE LAS PARTÍCULAS QUE APARECEN AQUÍ SON CORRECTAS Y QUE INSOFARÁN COMO CUALQUIER PARTE DEL ENVÍO CONTIENE BIENES DANGEOROSOS, DICHA PARTE ESTÁ CORRECTAMENTE DESCRITA POR NOMBRE Y ESTÁ EN EL ESTADO ADECUADO PARA EL TRANSPORTE POR AVIÓN SEGÚN LA NORMATIVA APLICABLE DE MERCANCÍAS PELIGROSAS. EL ENCARGADO CONSIENTE POR ESTE MEDIO A UNA BÚSQUEDA O INSPECCIÓN DE LA CARGA.',
+     'received'                => 'Recibido',
+     'settlement'              => 'Liquidación',
+     'others'                  => 'Otros',
+     'states'                  => 'Estados',
+     'return'                   => 'Volver',
+     'edit'                     => 'Editar',
+
+		'add_points'               => 'Agregar Puntos',
 
 
 
 
 
-                                                                            
-
-
-
-
- 
 
 
 
 
 
- 
+
+
+
+
+
+
+
 
 
 

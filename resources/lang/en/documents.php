@@ -103,14 +103,16 @@ return [
  		'message_receipt'          => 'THE RECEIPT WILL BE CHARGED FOR THE GREATER VALUE, (WEIGHT OR VOLUME) FOR AIR SHIPPING.',
  		'we_are_not_responsible'   => 'WE ARE NOT RESPONSIBLE FOR DAMAGE TO TELEVISIONS THAT DO NOT TRAVEL IN BOX
                                                                             OF WOOD.',
-        'check_the_ merchandise'   => 'CHECK THE MERCHANDISE BEFORE RETURNING FROM THE OFFICE IN COLOMBIA, AFTER THIS, NO CLAIM WILL BE ACCEPTED. ALL CARGO',
-        'shipper_certifies'        => 'SHIPPER CERTIFIES THAT THE PARTICULARS ON THE FACE HERE OF ARE CORRECT AND THAT INSOFAR AS ANY PART OF THE CONSIGNMENT CONTAINS DANGEOROUS GOODS, SUCH PART IS PROPERLY DESCRIBED BY NAME AND IS IN PROPER CONDITION FOR CARRIAGE BY AIR ACCORDING TO THE APPLICABLE DANGEROUS GOODS REGULATIONS. SHIPPER HEREBY CONSENTS TO A SEARCH OR INSPECTION OF THE CARGO.',
-        'received'                 => 'Received',
-        'settlement'               => 'Settlement',
-        'others'                   => 'Others',
-        'states'                   => 'States',
-        'return'                   => 'Return',
-        'edit'                     => 'Edit',
+    'check_the_ merchandise'   => 'CHECK THE MERCHANDISE BEFORE RETURNING FROM THE OFFICE IN COLOMBIA, AFTER THIS, NO CLAIM WILL BE ACCEPTED. ALL CARGO',
+    'shipper_certifies'        => 'SHIPPER CERTIFIES THAT THE PARTICULARS ON THE FACE HERE OF ARE CORRECT AND THAT INSOFAR AS ANY PART OF THE CONSIGNMENT CONTAINS DANGEOROUS GOODS, SUCH PART IS PROPERLY DESCRIBED BY NAME AND IS IN PROPER CONDITION FOR CARRIAGE BY AIR ACCORDING TO THE APPLICABLE DANGEROUS GOODS REGULATIONS. SHIPPER HEREBY CONSENTS TO A SEARCH OR INSPECTION OF THE CARGO.',
+    'received'                 => 'Received',
+    'settlement'               => 'Settlement',
+    'others'                   => 'Others',
+    'states'                   => 'States',
+    'return'                   => 'Return',
+    'edit'                     => 'Edit',
+
+    'add_points'               => 'Add Points',
 
 
 

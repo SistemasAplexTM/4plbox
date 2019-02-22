@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('title', ($documento->liquidado == 1) ? 'Guia' : $documento->tipo_nombre)
 @section('breadcrumb')
-<link href="https://cdn.datatables.net/keytable/2.3.2/css/keyTable.dataTables.min.css" rel="stylesheet" media='print'>
 {{-- bread crumbs --}}
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
@@ -20,19 +19,19 @@
     </div>
 </div>
 <style type="text/css">
-@-webkit-keyframes ripple {
-  0% {
-    opacity: 0;
+  @-webkit-keyframes ripple {
+    0% {
+      opacity: 0;
+    }
+    30% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      padding-bottom: 200%;
+      width: 200%;
+    }
   }
-  30% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    padding-bottom: 200%;
-    width: 200%;
-  }
-}
   .text-write{
     background-color: #ffffd1;
   }
@@ -120,6 +119,9 @@
         left: 47%;
         top: 40%;
     }
+    table.table td a{
+      margin: 0!important;
+    }
 
 </style>
 <link href="{{ asset('css/plugins/dataTables/keyTable.dataTables.min.css') }}">
@@ -135,7 +137,7 @@
         <modalarancel-component></modalarancel-component>
         <modalcargosadd-component :showmodal="showmodalAdd"></modalcargosadd-component>
 
-            <form class="" id="formDocumento" name="formDocumento" class=" form-horizontal" role="form" action="{{ url('documento/updatedDocument') }}/{{  $documento->id }}" method="post">
+        <form class="" id="formDocumento" name="formDocumento" class=" form-horizontal" role="form" action="{{ url('documento/updatedDocument') }}/{{  $documento->id }}" method="post">
                 {{ csrf_field() }}
                 <input type="hidden" class="form-control" id="date" name="date" readonly="">
                 <input type="hidden" class="form-control" id="id_documento" name="id_documento"  value="{{ $documento->id }}" readonly="">
@@ -330,6 +332,7 @@
                                                 <input type="hidden" id="prefijoD" name="prefijoD" value="">
                                                 <input type="hidden" id="deptoD" value="">
                                                 <input type="hidden" id="paisD" value="">
+                                                <input type="hidden" id="pais_id_D" value="">
                                                 <select name="localizacion_id_c" id="localizacion_id_c" class="form-control js-data-example-ajax select2-container" @click="deleteError('localizacion_id_c')">
                                                 </select>
                                                 <small class="help-block has-error" id="msn_l2" style="display: none;">@lang('documents.obligatory_field')</small>
@@ -855,102 +858,21 @@
                 </div>
             </form>
 
-        {{-- MODAL AGREGAR TRACKINGS 2 --}}
-        <div class="modal fade bs-example" id="modalTrackingsAdd2" tabindex="" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog" id="trackings">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">@lang('documents.close')</span></button>
-                        <h2 class="modal-title" id="myModalLabel"><i class="fa fa-truck"></i> @lang('documents.add_trackings')</h2>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row" id="window-load"><div id="loading"><Spinner name="circle" color="#66bf33" noFadeIn="true"/></div></div>
-                        <div class="row">
-                            <div class="col-lg-8">
-                                <label class="control-label">Ingrese el numero de tracking</label>
-                                <input type="text" placeholder="Tracking" id="tracking_number" class="form-control" v-model="tracking_number" @keyup.enter="addTrackingToDocument('create')">
-                            </div>
-                            <div class="col-lg-4">
-                                <label class="control-label" style="width: 100%;">&nbsp;</label>
-                                <button type="button" id="tracking_save" class="btn btn-primary" @click="addTrackingToDocument('create')">Agregar</button>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <h2>@lang('documents.associated_trackings')</h2>
-                                <div class="form-group">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped table-bordered table-hover" id="tbl-trackings-used" style="width: 100%">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 50%">@lang('documents.tracking')</th>
-                                                    <th>@lang('documents.content')</th>
-                                                    <th>@lang('general.actions')</th>
-                                                </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">@lang('documents.close')</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         {{-- MODAL AGREGAR TRACKINGS --}}
-        <div class="modal fade bs-example" id="modalTrackingsAdd" tabindex="" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog" id="trackings">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">@lang('documents.close')</span></button>
-                        <h2 class="modal-title" id="myModalLabel"><i class="fa fa-truck"></i> @lang('documents.add_trackings')</h2>
-                    </div>
-                    <div class="modal-body">
-                      <form id="formSearchTracking" name="formSearchTracking" method="POST" action="">
-                        <div class="row" id="window-load"><div id="loading"><Spinner name="circle" color="#66bf33" noFadeIn="true"/></div></div>
-                        <div class="row">
-                            <div class="col-lg-8">
-                                <h3>Seleccione los trackings del cliente registrado.</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped table-bordered table-hover" id="tbl-trackings" style="width: 100%">
-                                            <thead>
-                                                <tr>
-                                                    <th></th>
-                                                    <th style="width: 50%">@lang('documents.tracking')</th>
-                                                    <th>@lang('documents.content')</th>
-                                                </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                      </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" @click="addTrackingsToDocument()">@lang('documents.add')</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">@lang('documents.close')</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @include('templates/documento/modals/modalTracking')
+
+        {{-- MODAL AGREGAR PUNTOS --}}
+        <points-component></points-component>
     </div>
 @endsection
 
 @section('scripts')
 {!! $wcpScript; !!}
-<script src="{{ asset('js/plugins/dataTables/dataTables.keyTable.min.js') }}"></script>
-<script src="{{ asset('js/plugins/dataTables/fnFilterClear.js') }}"></script>
-<script src="{{ asset('js/templates/documento/documento.js') }}"></script>
-<script src="{{ asset('js/templates/documento/totalizar.js') }}"></script>
-<script src="{{ asset('js/templates/documento/postalCode.js') }}"></script>
+{{-- <script src="{{ asset('js/plugins/dataTables/dataTables.keyTable.min.js') }}"></script> --}}
+{{-- <script src="{{ asset('js/plugins/dataTables/fnFilterClear.js') }}"></script> --}}
+<script src="{{ asset('js/templates/documento/documentoForm/objVue.js') }}"></script>
+<script src="{{ asset('js/templates/documento/documentoForm/documento.js') }}"></script>
+<script src="{{ asset('js/templates/documento/documentoForm/totalizar.js') }}"></script>
+<script src="{{ asset('js/templates/documento/documentoForm/postalCode.js') }}"></script>
+<script src="{{ asset('js/templates/documento/documentoForm/editableConfig.js') }}"></script>
 @endsection

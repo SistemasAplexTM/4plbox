@@ -132,8 +132,8 @@ trait DocumentTrait
           ->leftJoin('shipper AS d', 'b.shipper_id', 'd.id')
           ->leftJoin('agencia AS e', 'b.agencia_id', 'e.id')
           ->select(
-            'b.id',
           	'a.id AS detalle_id',
+            'b.id',
           	'b.valor_libra',
           	'b.valor',
           	'b.liquidado',

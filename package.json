@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "ajv": "^6.5.3",
-    "element-ui": "^2.4.6",
+    "element-ui": "^2.5.4",
     "imagemin": "^5.3.1",
     "sweetalert2": "^7.26.26",
     "vee-validate": "^2.1.1",
