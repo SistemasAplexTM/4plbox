@@ -60,9 +60,9 @@ let mix = require('laravel-mix');
 
 mix.js('resources/assets/js/app.js' , 'public/js');
 mix.scripts(['resources/assets/js/main.js'] , 'public/js/main.js');
-mix.styles(['resources/assets/css/main.css'] , 'public/css/main.css');
-mix.copyDirectory('resources/assets/js/templates', 'public/js/templates');
-mix.copyDirectory('resources/assets/js/reports', 'public/js/reports');
+// mix.styles(['resources/assets/css/main.css'] , 'public/css/main.css');
+// mix.copyDirectory('resources/assets/js/templates', 'public/js/templates');
+// mix.copyDirectory('resources/assets/js/reports', 'public/js/reports');
 
 
  //

@@ -52,15 +52,16 @@ class AplexConfigController extends Controller
     public function save(Request $request, $key, $type, $simple = false){
       $id = $this->get($key);
       $data = array($type => $request->all());
+      // return ($simple != 'false' || $simple == false) ? $request->type : json_encode($data['type']);
       if ($id) {
         AplexConfig::where('id', $id->id)->update([
           'key' => $key,
-          'value' =>  ($simple != 'false') ? $request->type : json_encode($data)
+          'value' => ($simple != 'false' || $simple == false) ? $request->type : json_encode($data['type'])
         ]);
       }else{
         AplexConfig::insert([
           'key' => $key,
-          'value' =>  ($simple != 'false') ? $request->type : json_encode($data)
+          'value' => ($simple != 'false' || $simple == false) ? $request->type : json_encode($data['type'])
         ]);
       }
     }

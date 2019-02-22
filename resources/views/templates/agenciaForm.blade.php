@@ -289,7 +289,7 @@
                                                 <small id="msn1" class="help-block"></small>
                                             </div>
                                     </div>
-                                    <div class="col-sm-2"  data-container="body" data-toggle="popover" data-placement="top" data-content="Por cada 100 USD se cobrara el valor ingresado en el seguro.">
+                                    <div class="col-sm-2" data-container="body" data-toggle="popover" data-placement="top" data-content="Por cada 100 USD se cobrara el valor ingresado en el seguro.">
                                             <div class="form-group" id="classSeguro">
                                                 <label for="seguro" class="" >@lang('general.insurance')</label>
                                                 <div class="input-group">
@@ -364,110 +364,16 @@
                                      <!--****************Aquí*******************************-->
 
                                 </div>
+
                                 <div role="tabpanel" class="tab-pane fade" id="tab2">
                                     <div class="row">
-                                        <div class="col-lg-12" style="margin-top: 20px;">
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                        <h3>@lang('general.select_the_integrations')</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="panel-group" id="accordion">
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading" id="heading_paypal">
-                                                      <h4 class="panel-title">
-                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                                          <i class="fab fa-paypal"></i> @lang('general.use_paypal')
-                                                        </a>
-                                                        <label v-show="paypal" class="badge badge-primary pull-right" style="background-color: rgb(6, 165, 114)">Activado <i class="fa fa-check"></i></label>
-                                                      </h4>
-                                                    </div>
-                                                    <div id="collapseOne" class="panel-collapse collapse in">
-                                                        <div class="panel-body">
-                                                            <div class="col-lg-12">
-                                                                <div class="col-sm-3">
-                                                                    <i class="fab fa-paypal fa-7x"></i>
-                                                                </div>
-                                                                <div class="col-lg-9">
-                                                                    <div class="checkbox checkbox-success checkbox-inline"  @click="functionalities('pp', 'paypal')">
-                                                                        <input type="checkbox" id="paypal" name="usar_paypal" {{ (isset($agencia->usar_paypal) and $agencia->usar_paypal == '1') ? 'checked=""' : '' }}>
-                                                                        <label for="paypal"> @lang('general.use_paypal') </label>
-                                                                    </div>
-                                                                    <div class="form-group" v-show="paypal">
-                                                                        <label>Ingrese el correo electronico</label>
-                                                                        <input type="mail" name="email_pp" id="email_pp" class="form-control" placeholder="Email PayPal">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading" id="heading_mail">
-                                                      <h4 class="panel-title">
-                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                                                          <i class="fab fa-mailchimp"></i> @lang('general.use_mailchimp')
-                                                        </a>
-                                                        <label v-show="mailchimp" class="badge badge-primary pull-right" style="background-color: rgb(6, 165, 114)">Activado <i class="fa fa-check"></i></label>
-                                                      </h4>
-                                                    </div>
-                                                    <div id="collapseTwo" class="panel-collapse collapse">
-                                                        <div class="panel-body">
-                                                            <div class="col-lg-12">
-                                                                <div class="col-sm-3">
-                                                                    <i class="fab fa-mailchimp fa-7x"></i>
-                                                                </div>
-                                                                <div class="col-lg-9">
-                                                                    <div class="checkbox checkbox-success checkbox-inline" @click="functionalities('mc', 'mail')">
-                                                                        <input type="checkbox" id="mail" name="usar_mail_chimp" {{ (isset($agencia->usar_mail_chimp) and $agencia->usar_mail_chimp == '1') ? 'checked=""' : '' }}>
-                                                                        <label for="mail"> @lang('general.use_mailchimp') </label>
-                                                                    </div>
-                                                                    <div class="form-group" v-show="mailchimp">
-                                                                      <label>Ingrese MC_KEY de MailChimp</label>
-                                                                      <input type="tex" name="mc_key" id="mc_key" class="form-control" placeholder="MC_KEY">
-                                                                    </div>
-                                                                    <div class="form-group" v-show="mailchimp">
-                                                                        <label>Ingrese el ID de la lista</label>
-                                                                        <input type="tex" name="listId" id="listId" class="form-control" placeholder="ID Cliente">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading" id="heading_zoopim">
-                                                        <h4 class="panel-title">
-                                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                                                              <i class="fas fa-comments"></i> @lang('general.usar_zopim')
-                                                            </a>
-                                                            <label v-show="zopim" class="badge badge-primary pull-right" style="background-color: rgb(6, 165, 114)">Activado <i class="fa fa-check"></i></label>
-                                                        </h4>
-                                                    </div>
-                                                    <div id="collapseThree" class="panel-collapse collapse">
-                                                        <div class="panel-body">
-                                                            <div class="col-sm-3">
-                                                                <i class="far fa-comments fa-7x"></i>
-                                                            </div>
-                                                            <div class="col-lg-9">
-                                                                <div class="checkbox checkbox-success checkbox-inline" @click="functionalities('zp', 'zopim')">
-                                                                    <input type="checkbox" id="zopim" name="usar_zopim" {{ (isset($agencia->usar_zopim) and $agencia->usar_zopim == '1') ? 'checked=""' : '' }}>
-                                                                    <label for="zopim"> @lang('general.usar_zopim')</label>
-                                                                </div>
-                                                                <textarea v-show="zopim" class="form-control" id="zopim_script" name="zopim_script" placeholder="Ingresa el script aqui"></textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                      <div class="col-lg-12">
+                                        <agency-integrations-component :agency_id="{{ $agencia->id }}"></agency-integrations-component>
+                                      </div>
                                     </div>
                                     <div class="row" style="margin-top: 20px;"></div>
                                 </div>
+
                                 <div role="tabpanel" class="tab-pane fade" id="tab3">
                                     <div class="row">
                                         <div class="col-lg-12" style="margin-top: 10px;">

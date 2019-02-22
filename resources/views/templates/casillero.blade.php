@@ -176,6 +176,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @if($terms)
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12">
                                             <div class="form-group">
@@ -188,6 +189,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                  @endif
                                     <div class="row">
                                         <div class="col-lg-12 text-center">
                                             <div class="form-group">

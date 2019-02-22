@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Consignee;
 use App\Ciudad;
 use App\User;
+use App\AplexConfig;
 
 class CasilleroController extends Controller
 {
@@ -23,7 +24,15 @@ class CasilleroController extends Controller
         ->select('logo')
         ->where('id', $id)
         ->first();
-        return view('templates/casillero', compact('img'));
+        $terms = AplexConfig::where('key', 'agency_mc_' . $id)->first();
+        if ($terms) {
+          $terms = $terms->value;
+          $terms = json_decode($terms, true);
+          $terms = $terms['actived'];
+        }else{
+          $terms = false;
+        }
+        return view('templates/casillero', compact('img', 'terms'));
     }
 
     /**
