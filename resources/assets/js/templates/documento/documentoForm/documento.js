@@ -509,53 +509,6 @@ function setIdPaisConfig() {
 
 /* funciones para los puntos */
 function insertPoints(id_detail) {
-  // selectPoints();
+  objVue.points_id_detail = id_detail;
   $('#modalAddPoints').modal('show');
-}
-
-function selectPoints() {
-    var url = '../../administracion/9/selectInput';
-    $('#points_id').select2({
-        placeholder: "Seleccionar",
-        tokenSeparators: [','],
-        ajax: {
-            url: url,
-            dataType: 'json',
-            delay: 250,
-            data: function(params) {
-                return {
-                    term: params.term, // search term
-                    page: params.page
-                };
-            },
-            processResults: function(data, params) {
-                params.page = params.page || 1;
-                return {
-                    results: data.items,
-                    pagination: {
-                        more: (params.page * 30) < data.total_count
-                    }
-                };
-            },
-            cache: false
-        },
-        escapeMarkup: function(markup) {
-            return markup;
-        }, // let our custom formatter work
-        templateResult: formatRepoPoints,
-        templateSelection: formatRepoSelectionPoints,
-        minimumInputLength: 0,
-    });
-}
-
-function formatRepoPoints(repo) {
-    if (repo.loading) {
-        return repo.text;
-    }
-    var markup = "<div class='select2-result-repository clearfix'>" + "<div class='select2-result-repository__meta'>" + "<div class='select2-result-repository__title'><strong><i class='fa fa-map-marker'></i> " + repo.text + "</strong></div>";
-    return markup;
-}
-
-function formatRepoSelectionPoints(repo) {
-    return repo.text || repo.id + ' - ' + repo.text;
 }

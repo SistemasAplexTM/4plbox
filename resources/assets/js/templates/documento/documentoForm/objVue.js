@@ -65,6 +65,7 @@ var objVue = new Vue({
         close: false,
         ids_tracking: [],
         contenido_tracking: [],
+        points_id_detail: null
     },
     methods: {
         addTrackingsToDocument: function(){

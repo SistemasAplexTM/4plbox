@@ -862,7 +862,7 @@
         @include('templates/documento/modals/modalTracking')
 
         {{-- MODAL AGREGAR PUNTOS --}}
-        <points-component></points-component>
+        <points-component :id_detail="points_id_detail"></points-component>
     </div>
 @endsection
 

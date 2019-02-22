@@ -202,7 +202,7 @@ class MaestraMultipleController extends Controller
         $term = $request->term ?: '';
 
         $tags = DB::table($tableName)
-            ->select([$tableName.'.id', $tableName.'.nombre as text'])
+            ->select([$tableName.'.id', $tableName.'.nombre as text', $tableName.'.descripcion'])
         ->where([
                 [$tableName.'.nombre', 'like', $term.'%'],
                 [$tableName.'.modulo_id', '=', $type],
