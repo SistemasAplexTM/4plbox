@@ -237,12 +237,8 @@
                                      <div class="row">
                                         <label class="control-label col-sm-2">@lang('documents.city'): </label>
                                         <div class="col-sm-5" onclick ="deleteError($(this));">
-                                            <input type="hidden" id="localizacion_id_input" value="">
-                                            <input type="hidden" id="prefijoR" name="prefijoR" value="">
-                                            <select name="localizacion_id" id="localizacion_id" class="form-control js-data-example-ajax select2-container">
-                                            </select>
-                                            {{-- <v-select name="localizacion_id" v-model="localizacion_id" label="name" :filterable="false" :options="citys" @search="onSearchCity" v-validate="'required'">
-                                                </v-select> --}}
+                                            <input type="hidden" id="localizacion_id" name="localizacion_id" value="">
+                                            <city-component @get="setCity($event, true)" :disabled="disabled_s" :selected="city_selected_s"></city-component>
                                             <small class="help-block has-error" id="msn_l1" style="display: none;">@lang('documents.obligatory_field')</small>
                                         </div>
                                         <label class="control-label col-sm-1">@lang('documents.zip'): </label>
@@ -328,13 +324,8 @@
                                         <div class="form-group">
                                             <label class="control-label col-sm-2">@lang('documents.city'): </label>
                                             <div class="col-sm-5" onclick ="deleteError($(this));">
-                                                <input type="hidden" id="localizacion_id_input_c" value="">
-                                                <input type="hidden" id="prefijoD" name="prefijoD" value="">
-                                                <input type="hidden" id="deptoD" value="">
-                                                <input type="hidden" id="paisD" value="">
-                                                <input type="hidden" id="pais_id_D" value="">
-                                                <select name="localizacion_id_c" id="localizacion_id_c" class="form-control js-data-example-ajax select2-container" @click="deleteError('localizacion_id_c')">
-                                                </select>
+                                              <input type="hidden" id="localizacion_id_c" name="localizacion_id_c" value="">
+                                                <city-component @get="setCity($event, false)" :disabled="disabled_c" :selected="city_selected_c"></city-component>
                                                 <small class="help-block has-error" id="msn_l2" style="display: none;">@lang('documents.obligatory_field')</small>
                                             </div>
                                             <label class="control-label col-sm-1">C.P: </label>

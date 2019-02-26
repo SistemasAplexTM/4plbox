@@ -1,20 +1,20 @@
 <!-- estilos -->
 <style type="text/css">
-.el-select-dropdown{
-  z-index: 9999!important;
-}
-.el-input-number.is-controls-right .el-input-number__decrease, .el-input-number.is-controls-right .el-input-number__increase{
-  height: 19px;
-}
-[class*=" el-icon-"], [class^=el-icon-]{
-  margin-top: 2px;
-}
-.el-select .el-input__inner{
-  width: 100%;
-}
-.el-table__empty-block{
-  height: auto;
-}
+  .el-select-dropdown{
+    z-index: 9999!important;
+  }
+  .el-input-number.is-controls-right .el-input-number__decrease, .el-input-number.is-controls-right .el-input-number__increase{
+    height: 19px;
+  }
+  [class*=" el-icon-"], [class^=el-icon-]{
+    margin-top: 2px;
+  }
+  .el-select .el-input__inner{
+    width: 100%;
+  }
+  .el-table__empty-block{
+    height: auto;
+  }
 </style>
 <template>
   <div class="modal fade bs-example" id="modalAddPoints" tabindex="" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -29,7 +29,7 @@
                   <div class="row" id="window-load"><div id="loading"><Spinner name="circle" color="#66bf33"/></div></div>
                   <div class="row">
                       <div class="col-lg-12">
-                          <h3>Seleccione la categoria para y la cantidad del producto para registrar los puntos.</h3>
+                          <h3>Seleccione la categoria y la cantidad del producto para registrar los puntos.</h3>
                       </div>
                   </div>
                   <div class="row">
@@ -45,7 +45,8 @@
                             :remote-method="remoteMethod"
                             :loading="loading"
                             loading-text="Cargando"
-                            no-data-text="No hay datos">
+                            no-data-text="No hay datos"
+                            value-key="id">
                             <el-option
                               v-for="item in options4"
                               :key="item.id"
@@ -62,7 +63,7 @@
                       </div>
                       <div class="col-lg-3">
                           <div class="form-group">
-                            <el-button type="success" :loading="loading" @click="save"><i class="fa fa-save"></i> Guardar</el-button>
+                            <el-button type="success" :loading="loading_save" @click="save"><i class="fa fa-save"></i> Guardar</el-button>
                         </div>
                       </div>
                   </div>
@@ -129,7 +130,7 @@
         list: [],
         loading: false,
         cantidad: 1,
-        loading:false,
+        loading_save:false,
         tableData: []
       }
     },
@@ -143,21 +144,25 @@
       },
       save(){
         let me = this;
-        me.loading = true;
-        axios.post('../../puntos/', {
-            'puntos_id': me.point_id.id,
-            'documento_detalle_id': me.id_detail,
-            'cantidad': me.cantidad,
-            'total_puntos': me.cantidad * parseInt(me.point_id.descripcion),
-        }).then(response => {
-          me.getTableData();
-          me.resetForm();
-          me.loading = false;
-        }).catch(function(error) {
-            console.log(error);
-            toastr.warning('Error: -' + error);
-            me.loading = false;
-        });
+        if(me.point_id != null && me.cantidad > 0){
+        me.loading_save = true;
+          axios.post('../../puntos', {
+              'puntos_id': me.point_id.id,
+              'documento_detalle_id': me.id_detail,
+              'cantidad': me.cantidad,
+              'total_puntos': me.cantidad * parseInt(me.point_id.descripcion),
+          }).then(response => {
+            me.getTableData();
+            me.resetForm();
+            me.loading_save = false;
+          }).catch(function(error) {
+              console.log(error);
+              toastr.warning('Error: -' + error);
+              me.loading_save = false;
+          });
+        }else{
+          toastr.warning('Completa los campos requeridos');
+        }
       },
       handleDelete(index, row) {
         let me = this;
@@ -170,13 +175,13 @@
         });
       },
       getTableData(){
-				var me = this;
-				axios.get('../../puntos/' + me.id_detail).then(function(response) {
-            me.tableData = response.data.data;
-        }).catch(function(error) {
-            console.log(error);
-            toastr.warning('Error: -' + error);
-        });
+  				var me = this;
+  				axios.get('../../puntos/' + me.id_detail).then(function(response) {
+              me.tableData = response.data.data;
+          }).catch(function(error) {
+              console.log(error);
+              toastr.warning('Error: -' + error);
+          });
 			},
       getDataSelect(){
 				var me = this;

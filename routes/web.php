@@ -399,3 +399,5 @@ Route::any('WebClientPrintController', 'WebClientPrintController@processRequest'
 Route::get('DocumentoController', 'DocumentoController@printFile');
 
 Route::get('formatNumber', 'AplexConfigController@formatNumber');
+
+Route::get('ciudad/getSelectCity', 'CiudadController@getSelectCity');

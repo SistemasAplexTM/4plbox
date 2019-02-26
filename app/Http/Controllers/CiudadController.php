@@ -89,7 +89,7 @@ class CiudadController extends Controller
                 "status" => 500,
             );
             return $answer;
-            
+
         } catch (\Exception $e) {
             $error = '';
             foreach ($e->errorInfo as $key => $value) {
@@ -145,7 +145,7 @@ class CiudadController extends Controller
      */
     public function delete($id,$logical)
     {
-        
+
         if(isset($logical) and $logical == 'true'){
             $data = Ciudad::findOrFail($id);
             $now = new \DateTime();
@@ -154,14 +154,14 @@ class CiudadController extends Controller
                     $answer=array(
                         "datos" => 'Eliminación exitosa.',
                         "code" => 200
-                    ); 
+                    );
                }  else{
                     $answer=array(
                         "error" => 'Error al intentar Eliminar el registro.',
                         "code" => 600
                     );
-               }          
-                
+               }
+
                 return $answer;
         }else{
             $this->destroy($id);
@@ -211,7 +211,7 @@ class CiudadController extends Controller
 	        $tags = DB::table($tableName)->select(['id', 'descripcion as text'])->where([
 	                ['descripcion', 'like', '%'.$term.'%'],
                     [$tableName.'.deleted_at', '=', NULL]
-	            ])->get();        	
+	            ])->get();
         }
 
         $answer = array(
@@ -220,4 +220,29 @@ class CiudadController extends Controller
         );
         return \Response::json($answer);
     }
+
+
+    public function getSelectCity(){
+      $data = DB::table('localizacion AS a')
+          ->join('deptos', 'a.deptos_id', 'deptos.id')
+          ->join('pais', 'deptos.pais_id', 'pais.id')
+          ->select(['a.id',
+          'a.nombre as name',
+          'a.prefijo',
+          'deptos.descripcion as deptos',
+          'deptos.id as deptos_id',
+          'pais.descripcion as pais',
+          'pais.id as pais_id',
+          'pais.iso3 AS prefijo_pais'])
+          ->where([
+              ['a.deleted_at', null],
+          ])->get();
+          $answer = array(
+              'code' => 200,
+              'data' => $data
+          );
+        return \Response::json($answer);
+    }
+
+
 }

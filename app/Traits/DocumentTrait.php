@@ -52,7 +52,8 @@ trait DocumentTrait
               DB::raw("0 as agrupadas"),
               'b.num_warehouse',
               DB::raw("SUM(t.consolidado_status) AS consolidado_status"),
-              'b.carga_courier'
+              'b.carga_courier',
+              DB::raw('"ciudad"')
           )
           ->where($filter)
           ->where('b.carga_courier', 0)
@@ -184,7 +185,8 @@ trait DocumentTrait
                         AND z.agrupado = a.id
                         AND z.flag = 1
                       ) AS agrupadas'),
-              $qr_group
+              $qr_group,
+              DB::raw('"ciudad"')
             )
             ->where($filter)
             ->where('b.carga_courier', 1)
@@ -198,6 +200,7 @@ trait DocumentTrait
       $sql    = DB::table('documento AS b')
           ->leftJoin('shipper', 'b.shipper_id', '=', 'shipper.id')
           ->leftJoin('consignee AS c', 'b.consignee_id', '=', 'c.id')
+          ->leftJoin('localizacion as l', 'b.ciudad_id', 'l.id')
           ->join('agencia AS e', 'b.agencia_id', '=', 'e.id')
           ->select('b.id as id', 'b.transporte_id', 'valor_libra', 'b.valor', 'b.liquidado', 'b.tipo_documento_id as tipo_documento_id', 'b.consecutivo as codigo', 'b.created_at as fecha', 'shipper.nombre_full as ship_nomfull', 'c.nombre_full as cons_nomfull', 'c.correo as email_cons', 'e.descripcion as agencia',
               DB::raw("(SELECT IFNULL(COUNT(consolidado_detalle.id),0) FROM consolidado_detalle WHERE consolidado_detalle.deleted_at IS NULL AND consolidado_detalle.consolidado_id = b.id) as cantidad"),
@@ -222,7 +225,8 @@ trait DocumentTrait
                   a.deleted_at IS NULL
                 AND b.deleted_at IS NULL
                 AND a.consolidado_id = b.id
-              ) AS declarado_total')
+              ) AS declarado_total'),
+              'l.nombre AS ciudad'
           )
           ->where($filter)
           ->orderBy('b.created_at', 'DESC');

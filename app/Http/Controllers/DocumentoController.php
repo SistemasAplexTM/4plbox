@@ -1826,7 +1826,12 @@ class DocumentoController extends Controller
     {
         // OBTENEMOS LA CONFIGURACION DEL CONSOLIDADO
         $config = $this->getConfig('consolidado');
-        $config = json_decode($config->value);
+        if($config and $config->value != ''){
+          $config = json_decode($config->value);
+        }else{
+          //VALOR POR DEFECTO
+          $config = json_decode('{"peso_max": 110, "declarado_max": 2000}');
+        }
 
         $where = [['a.deleted_at', null], ['a.consolidado_id', $id], ['a.flag', 0]];
         if($num_bolsa != null){
@@ -1950,7 +1955,14 @@ class DocumentoController extends Controller
                   AND z.consolidado_id = a.consolidado_id
               	) AS declarado_total'),
                 'h.flag_peso',
-                'h.flag_declarado'
+                'h.flag_declarado',
+                DB::raw('(SELECT
+                    sum(z.total_puntos)
+                    FROM
+                    pivot_puntos_detalle AS z
+                    WHERE
+                    z.documento_detalle_id = a.documento_detalle_id AND
+                    z.deleted_at IS NULL) AS total_puntos')
             )
             ->where($where)
             ->get();
