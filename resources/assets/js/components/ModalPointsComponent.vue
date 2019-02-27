@@ -1,17 +1,20 @@
 <!-- estilos -->
 <style type="text/css">
-.el-select-dropdown{
-  z-index: 9999!important;
-}
-.el-input-number.is-controls-right .el-input-number__decrease, .el-input-number.is-controls-right .el-input-number__increase{
-  height: 19px;
-}
-[class*=" el-icon-"], [class^=el-icon-]{
-  margin-top: 2px;
-}
-.el-select .el-input__inner{
-  width: 100%;
-}
+  .el-select-dropdown{
+    z-index: 9999!important;
+  }
+  .el-input-number.is-controls-right .el-input-number__decrease, .el-input-number.is-controls-right .el-input-number__increase{
+    height: 19px;
+  }
+  [class*=" el-icon-"], [class^=el-icon-]{
+    margin-top: 2px;
+  }
+  .el-select .el-input__inner{
+    width: 100%;
+  }
+  .el-table__empty-block{
+    height: auto;
+  }
 </style>
 <template>
   <div class="modal fade bs-example" id="modalAddPoints" tabindex="" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -26,7 +29,7 @@
                   <div class="row" id="window-load"><div id="loading"><Spinner name="circle" color="#66bf33"/></div></div>
                   <div class="row">
                       <div class="col-lg-12">
-                          <h3>Seleccione la categoria para y la cantidad del producto para registrar los puntos.</h3>
+                          <h3>Seleccione la categoria y la cantidad del producto para registrar los puntos.</h3>
                       </div>
                   </div>
                   <div class="row">
@@ -34,7 +37,7 @@
                         <div class="form-group">
                           <el-select
                             clearable
-                            v-model="value9"
+                            v-model="point_id"
                             filterable
                             remote
                             reserve-keyword
@@ -42,12 +45,13 @@
                             :remote-method="remoteMethod"
                             :loading="loading"
                             loading-text="Cargando"
-                            no-data-text="No hay datos">
+                            no-data-text="No hay datos"
+                            value-key="id">
                             <el-option
                               v-for="item in options4"
                               :key="item.id"
                               :label="item.text"
-                              :value="item.id">
+                              :value="item">
                             </el-option>
                           </el-select>
                         </div>
@@ -59,7 +63,7 @@
                       </div>
                       <div class="col-lg-3">
                           <div class="form-group">
-                            <el-button type="success" :loading="loading" @click="save"><i class="fa fa-save"></i> Guardar</el-button>
+                            <el-button type="success" :loading="loading_save" @click="save"><i class="fa fa-save"></i> Guardar</el-button>
                         </div>
                       </div>
                   </div>
@@ -70,7 +74,8 @@
                               :data="tableData"
                               style="width: 100%"
                               show-summary
-                              sum-text="TOTAL">
+                              sum-text="TOTAL"
+                              empty-text="No hay datos">
                               <el-table-column
                                 label="Categoria"
                                 prop="category">
@@ -86,10 +91,11 @@
                               <el-table-column
                                 align="right">
                                 <template slot-scope="scope">
-                                  <el-button
-                                    size="mini"
-                                    type="danger"
-                                    @click="handleDelete(scope.$index, scope.row)"><i class="far fa-times"></i></el-button>
+                                    <el-button data-toggle="tooltip" title="Eliminar" data-placement="left"
+                                      size="mini"
+                                      type="danger"
+                                      @click="handleDelete(scope.$index, scope.row)"><i class="far fa-times"></i>
+                                    </el-button>
                                 </template>
                               </el-table-column>
                             </el-table>
@@ -108,54 +114,82 @@
 
 <script>
   export default {
+    props:["id_detail"],
+    watch:{
+        id_detail:function(value){
+            this.tableData= [];
+            if(value != null && value != ''){
+                this.getTableData();
+            }
+        },
+    },
     data() {
       return {
         options4: [],
-        value9: [],
+        point_id: [],
         list: [],
         loading: false,
         cantidad: 1,
-        loading:false,
-        tableData: [{
-          category: 'Camisas',
-          quantity: 2,
-          points_total: 6,
-        }, {
-          category: 'Celulares',
-          quantity: 5,
-          points_total: 100,
-        }, {
-          category: 'Televisores',
-          quantity: 1,
-          points_total: 50,
-        }, {
-          category: 'Pantalones',
-          quantity: 3,
-          points_total: 15,
-        }]
+        loading_save:false,
+        tableData: []
       }
     },
     mounted() {
       this.getDataSelect();
     },
     methods: {
+      resetForm(){
+        this.point_id= null;
+        this.cantidad= 1;
+      },
       save(){
         let me = this;
-        me.loading = true;
-        setTimeout(function() {
-          me.loading = false;
-        },2000);
+        if(me.point_id != null && me.cantidad > 0){
+        me.loading_save = true;
+          axios.post('../../puntos', {
+              'puntos_id': me.point_id.id,
+              'documento_detalle_id': me.id_detail,
+              'cantidad': me.cantidad,
+              'total_puntos': me.cantidad * parseInt(me.point_id.descripcion),
+          }).then(response => {
+            me.getTableData();
+            me.resetForm();
+            me.loading_save = false;
+          }).catch(function(error) {
+              console.log(error);
+              toastr.warning('Error: -' + error);
+              me.loading_save = false;
+          });
+        }else{
+          toastr.warning('Completa los campos requeridos');
+        }
       },
       handleDelete(index, row) {
-        console.log(index, row);
+        let me = this;
+        axios.delete('../../puntos/' + row.id).then(function(response) {
+          me.getTableData();
+          toastr.success('Registro eliminado correctamente.');
+        }).catch(function(error) {
+            console.log(error);
+            toastr.warning('Error: -' + error);
+        });
       },
+      getTableData(){
+  				var me = this;
+  				axios.get('../../puntos/' + me.id_detail).then(function(response) {
+              me.tableData = response.data.data;
+          }).catch(function(error) {
+              console.log(error);
+              toastr.warning('Error: -' + error);
+          });
+			},
       getDataSelect(){
 				var me = this;
 				axios.get('../../administracion/9/selectInput').then(function(response) {
-            console.log(response.data.items);
             me.list = response.data.items;
         }).catch(function(error) {
             console.log(error);
+            toastr.warning('Error: -' + error);
         });
 			},
       remoteMethod(query) {

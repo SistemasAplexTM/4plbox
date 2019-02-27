@@ -20,7 +20,6 @@ Route::group(['middleware' => 'auth'], function () {
         \Artisan::call('backup:run', ['--only-db' => true]);
         return "successfully!";
     });
-
     /* REGISTRO DE LOG DE ACTIVIDADES DE USUARIOS */
     Route::get('logActivity', 'LogActivityController@index')->name('logActivity.index');
     Route::get('logActivity/all', 'LogActivityController@getAll')->name('logActivity.getAll');
@@ -47,6 +46,11 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* VISTA MANTENIMIENTO */
     Route::get('mantenimiento', 'MantenimientoController@index')->name('mantenimiento.index');
+
+    /* MODULO PivotPuntosDetalle */
+    Route::post('puntos', 'PivotPuntosDetalleController@store');
+    Route::delete('puntos/{id}', 'PivotPuntosDetalleController@destroy');
+    Route::get('puntos/{id}', 'PivotPuntosDetalleController@getByIdDetail')->name('getData');
 
     /*--- MODULO USER ---*/
     Route::resource('user', 'UserController', ['except' => ['show', 'create', 'edit']]);
@@ -395,3 +399,5 @@ Route::any('WebClientPrintController', 'WebClientPrintController@processRequest'
 Route::get('DocumentoController', 'DocumentoController@printFile');
 
 Route::get('formatNumber', 'AplexConfigController@formatNumber');
+
+Route::get('ciudad/getSelectCity', 'CiudadController@getSelectCity');
