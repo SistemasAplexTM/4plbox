@@ -156,46 +156,46 @@ var objVue = new Vue({
             let me=this;
 
             this.$validator.validateAll().then((result) => {
-                if (result) {
-                  var l = Ladda.create(document.querySelector('.ladda-button'));
-                  l.start();
-                    let me = this;
-                    axios.post('../casillero',{
-                        'agencia_id': this.agencia_id,
-                        // 'listId': this.listId.id_list,
-                        'localizacion_id': this.localizacion_id,
-                        'documento': this.documento,
-                        'primer_nombre': this.primer_nombre,
-                        'segundo_nombre': this.segundo_nombre,
-                        'primer_apellido': this.primer_apellido,
-                        'segundo_apellido': this.segundo_apellido,
-                        'direccion': this.direccion,
-                        'telefono': this.celular,
-                        'celular': this.celular,
-                        'correo': this.email,
-                        'zip': this.zip,
-                        'tarifa': this.tarifa,
-                        'estatus': this.estatus,
-                        'casillero': this.casillero,
-                        'password': this.password,
-                        'direccion2': this.direccion2,
-                        'acepta_condiciones': this.acepta_condiciones,
-                        'recibir_info': this.recibir_info
-                    }).then(function(response){
-                      l.stop();
-                        if(response.data['code'] == 200){
-                            toastr.success('Registro creado correctamente.');
-                            toastr.options.closeButton = true;
-                            window.location = response.data['url'];
-                        }else{
-                            toastr.warning(response.data['error']);
-                            toastr.options.closeButton = true;
-                        }
-                        me.resetForm();
-                    }).catch(function(error){
-                        console.log(error);
-                    });
-                }
+              if (result) {
+                var l = Ladda.create(document.querySelector('.ladda-button'));
+                l.start();
+                  let me = this;
+                  axios.post('../casillero',{
+                      'agencia_id': this.agencia_id,
+                      // 'listId': this.listId.id_list,
+                      'localizacion_id': this.localizacion_id,
+                      'documento': this.documento,
+                      'primer_nombre': this.primer_nombre,
+                      'segundo_nombre': this.segundo_nombre,
+                      'primer_apellido': this.primer_apellido,
+                      'segundo_apellido': this.segundo_apellido,
+                      'direccion': this.direccion,
+                      'telefono': this.celular,
+                      'celular': this.celular,
+                      'correo': this.email,
+                      'zip': this.zip,
+                      'tarifa': this.tarifa,
+                      'estatus': this.estatus,
+                      'casillero': this.casillero,
+                      'password': this.password,
+                      'direccion2': this.direccion2,
+                      'acepta_condiciones': this.acepta_condiciones,
+                      'recibir_info': this.recibir_info
+                  }).then(function(response){
+                    l.stop();
+                      if(response.data['code'] == 200){
+                          toastr.success('Registro creado correctamente.');
+                          toastr.options.closeButton = true;
+                          window.location = response.data['url'];
+                      }else{
+                          toastr.warning(response.data['error']);
+                          toastr.options.closeButton = true;
+                      }
+                      me.resetForm();
+                  }).catch(function(error){
+                      console.log(error);
+                  });
+              }
             });
 
         },
