@@ -8,7 +8,7 @@
                       <ul class="folder-list m-b-md" style="padding: 0">
                           <li v-for="item in list" @click="currentView=item.component" class="m5">
                             <a href="#">
-                              <i :class="'fab fa-'+item.icon"></i> {{ item.desc }}
+                              <i :class="item.icon"></i> {{ item.desc }}
                             </a>
                           </li>
                       </ul>
@@ -39,9 +39,9 @@
         return{
           currentView: 'MailChimp',
           list: [
-            { component: 'MailChimp', desc: 'MailChimp', icon: 'mailchimp' },
-            { component: 'PayPal', desc: 'PayPal', icon: 'paypal' },
-            { component: 'Zopim', desc: 'Zopim', icon: 'comment-lines' }
+            { component: 'MailChimp', desc: 'MailChimp', icon: 'fab fa-mailchimp' },
+            { component: 'PayPal', desc: 'PayPal', icon: 'fab fa-paypal' },
+            { component: 'Zopim', desc: 'Zopim', icon: 'fa fa-comments' }
           ]
         }
       },

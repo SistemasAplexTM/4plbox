@@ -113,20 +113,25 @@ class CasilleroController extends Controller
             ])->first();
 
             $replacements = $this->replacements(null, $agencia, null, null, $user, null);
-
-            // $cuerpo_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->mensaje);
-            // $asunto_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->subject);
-            // if ($request->recibir_info) {
-            //     $listId = $request->listId;
-            //     if (!\Mailchimp::check($listId, $request->correo)) {
-            //         \Mailchimp::subscribe(
-            //             $listId,
-            //             $request->correo,
-            //             ['FNAME' => $request->primer_nombre, 'LNAME' => $request->primer_apellido, 'POBOX' => $po_box],
-            //             false
-            //         );
-            //     }
-            // }
+            if ($request->recibir_info) {
+              $list_id = AplexConfig::where('key', 'agency_mc_' .$request->agencia_id)->first();
+              if ($list_id) {
+                $list_id = $list_id->value;
+                $list_id = json_decode($list_id, true);
+                $list_id = $list_id['id_list'];
+                $cuerpo_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->mensaje);
+                $asunto_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->subject);
+                $listId = $request->listId;
+                if (!\Mailchimp::check($list_id, $request->correo)) {
+                  \Mailchimp::subscribe(
+                    $list_id,
+                    $request->correo,
+                    ['FNAME' => $request->primer_nombre, 'LNAME' => $request->primer_apellido, 'POBOX' => $po_box],
+                    false
+                  );
+                }
+              }
+            }
             // Mail::to($request->correo)->send(new \App\Mail\CasilleroEmail($cuerpo_correo));
 
             DB::commit();
@@ -183,7 +188,7 @@ class CasilleroController extends Controller
                 ['agencia_id', $request->agencia_id],
             ])->first();
             $dataUser = DB::table('users')->select('email')->where('email', $request->element)->first();
-            if (count($data) > 0 || count($dataUser) > 0) {
+            if ($data || $dataUser) {
                 $answer = array(
                     "valid"   => false,
                     "message" => "El registro ya existe en la base de datos.",
