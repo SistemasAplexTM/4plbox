@@ -32,6 +32,9 @@ class CasilleroController extends Controller
         }else{
           $terms = false;
         }
+        if ($img == null) {
+          return redirect('/');
+        }
         return view('templates/casillero', compact('img', 'terms'));
     }
 
