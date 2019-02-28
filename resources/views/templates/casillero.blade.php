@@ -77,7 +77,8 @@
                                         <div class="col-md-6 col-sm-6">
                                             <div class="form-group" :class="{'has-error': errors.has('localizacion_id') }">
                                                 <label class="control-label">Ciudad: <span class="asterisco">*</span></label>
-                                                <v-select autocomplete="off"  name="localizacion_id" v-model="localizacion_id" label="name" :filterable="false" :options="ciudades" @search="onSearch" v-validate="'required'" :on-change="setPhoneCode">
+                                                <city-component @get="localizacion_id = $event.id"></city-component>
+                                                {{-- <v-select autocomplete="off"  name="localizacion_id" v-model="localizacion_id" label="name" :filterable="false" :options="ciudades" @search="onSearch" v-validate="'required'" :on-change="setPhoneCode">
                                                     <template slot="no-options">
                                                   @lang('general.there_are_no_results')
                                                     </template>
@@ -93,7 +94,7 @@
                                                         </div>&nbsp;
                                                         <small>@{{ option.depto }} - @{{ option.pais }}</small>
                                                     </template>
-                                                </v-select>
+                                                </v-select> --}}
                                                 <label v-show="errors.has('localizacion_id')" class="error">@{{ errors.first('localizacion_id') }}</label>
                                             </div>
                                         </div>
