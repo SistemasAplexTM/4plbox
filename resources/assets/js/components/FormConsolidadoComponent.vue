@@ -111,7 +111,7 @@
 																						</div>
                                         </div>
 																				<div class="col-sm-12" v-show="!show_buttons" style="color: #E34724">
-																					<span>Hay valores declarados en cero (0) o valores que superan lo permitido para COURIER o no hay documentos ingresadas</span></div>
+																					<span>Hay valores declarados en cero (0) o valores que superan lo permitido para COURIER o no hay documentos ingresados</span></div>
                                     </div>
 
                                     <div class="col-sm-8">
@@ -880,6 +880,7 @@
 					        processing: true,
 					        serverSide: true,
 					        responsive: true,
+									lengthMenu: [[40, 50, 80, 100, 200, -1], [40, 50, 80, 100, 200, "All"]],
 					        ajax: 'getAllConsolidadoDetalle',
 					        columns: [
 					            {data: 'num_bolsa', name: 'num_bolsa'},

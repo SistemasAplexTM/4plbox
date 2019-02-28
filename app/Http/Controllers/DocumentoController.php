@@ -668,6 +668,15 @@ class DocumentoController extends Controller
 
     public function getAll(Request $request)
     {
+      $data = $this->getConfig('show_agency_' . Auth::user()->agencia_id);
+      if($data and $data->value != ''){
+        $show = $data->value;
+      }else{
+        $show = null;
+      }
+      JavaScript::put(['show_agency' => $show]);
+      // print_r($data->value);
+      // exit();
       $filter = [['b.deleted_at', null],
         ['e.deleted_at', null],
         ['b.tipo_documento_id', $request->id_tipo_doc]];
@@ -823,8 +832,9 @@ class DocumentoController extends Controller
                 if ($request->declarado2 == '') {
                     $data->declarado2 = 0;
                 }
-
-                $data->created_at = $request->created_at;
+                if($request->created_at){
+                  $data->created_at = $request->created_at;
+                }
                 if ($data->tracking == '') {
                     $data->tracking = null;
                 }
@@ -2061,6 +2071,7 @@ class DocumentoController extends Controller
                 'a.num_warehouse',
                 'a.liquidado',
                 'a.peso2',
+                'e.pais_id',
                 'a.declarado2')
             ->where($filter)
             ->get();

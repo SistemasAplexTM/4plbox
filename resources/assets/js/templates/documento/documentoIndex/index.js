@@ -71,6 +71,7 @@ function datatableDocument(t, tipo_doc_id, status_id){
   $('#tbl-documento' + t).DataTable({
       processing: true,
       serverSide: true,
+      order: [[1, "desc"]],
       ajax: {
           "url": 'documento/all/documento_detalle',
           "data": function(d) {
@@ -80,7 +81,8 @@ function datatableDocument(t, tipo_doc_id, status_id){
           }
       },
       columns: [{
-          "render": numDocument
+          "render": numDocument,
+          name: (tipo_doc_id != 3) ? 'a.num_warehouse' : 'b.id',
       }, {
           data: 'fecha',
           name: 'b.created_at',
@@ -91,23 +93,30 @@ function datatableDocument(t, tipo_doc_id, status_id){
       },{
           data: 'ciudad',
           name: 'ciudad',
+          searchable: false,
           visible: (tipo_doc_id != 3) ? false : true
       },{
           data: 'valor',
           name: 'b.valor',
+          searchable: false,
           visible: (tipo_doc_id != 3) ? true : false
       },  {
           data: 'peso',
-          name: 'b.peso'
+          name: 'b.peso',
+          searchable: false,
       }, {
-          "render": showVolumen
+          "render": showVolumen,
+          searchable: false,
       }, {
           data: 'agencia',
-          name: 'e.descripcion'
+          name: 'e.descripcion',
+          searchable: false,
+          // visible: (show_agency != null && show_agency != 0) ? false : true
       }, {
           sortable: false,
           className: 'actions_btn',
           "render": actionsButtons,
+          searchable: false,
           width: 180
       }],
       'columnDefs': [{
@@ -196,6 +205,7 @@ function actionsButtons(data, type, full, meta) {
         + href_print_view_w + " "
         + href_print_view_g + " "
         + "<li><a href='#' onclick=\"sendMail(" + full.id + ")\"> <spam class='fa fa-envelope'></spam> Enviar Mail</a></li>" + "</ul></div>";
+
         return btn_edit + btns + ' ' + btn_tags + btn_delete;
     }
 }
@@ -226,6 +236,10 @@ function numDocument(data, type, full, meta) {
             if (full.liquidado == 1) {
                 // if(app_type === 'courier'){codigo = full.num_guia;}
                 color_badget = 'primary';
+            }
+            var mintic = '';
+            if(full.mintic && full.mintic != null){
+              color_badget = 'info';
             }
         }
         if(full.consolidado_status >= 1){
