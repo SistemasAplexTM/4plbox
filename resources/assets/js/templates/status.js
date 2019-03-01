@@ -3,7 +3,10 @@ $(document).ready(function() {
         ajax: 'status/all',
         columns: [{
             data: 'descripcion',
-            name: 'descripcion'
+            name: 'descripcion',
+            "render": function(data, type, full, meta) {
+              return '<i class="'+ full.icon +'" style="font-size: 20px;"></i> ' + full.descripcion;
+            }
         }, {
             data: 'color',
             name: 'color',
@@ -29,7 +32,7 @@ $(document).ready(function() {
                 var btn_delete = '';
                 if (permission_update) {
                     var params = [
-                        full.id, "'" + full.descripcion + "'", "'" + full.color + "'", "'" + full.email + "'", "'" + full.view_client + "'"
+                        full.id, "'" + full.descripcion + "'", "'" + full.color + "'", "'" + full.email + "'", "'" + full.view_client + "'", "'" + full.icon + "'"
                     ];
                     var btn_edit = "<a onclick=\"edit(" + params + ")\" class='btn btn-outline btn-success btn-xs' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit'></i></a> ";
                 }
@@ -52,13 +55,14 @@ $(function(){
   });
 })
 
-function edit(id, descripcion, color, email, view_client) {
+function edit(id, descripcion, color, email, view_client, icon) {
     var data = {
         id: id,
         descripcion: descripcion,
         color: color,
         email: email,
         view_client: view_client,
+        icon: icon,
     };
     objVue.edit(data);
 }
@@ -66,6 +70,7 @@ var objVue = new Vue({
     el: '#status',
     mounted: function() {
         this.getPlantillasEmail();
+        this.getIcons();
     },
     data: {
         descripcion: '',
@@ -78,8 +83,40 @@ var objVue = new Vue({
         email_plantilla_id: null,
         plantillas: [],
         showTemplate: false,
+        options4: [],
+        value9: [],
+        list: [],
+        loading: false,
+        icon_selected: null
     },
     methods: {
+        setIconPrefix(data){
+          this.icon_selected = data.value;
+        },
+        getIcons(){
+          let me = this;
+          $.getJSON('./json/fa-icons-lite.json', function(data) {
+              $(".ajaxLoadFontAwesome").append('<option value="">Seleccione</option>');
+              $.each(data, function(key, value) {
+                  var val = key.substring(4);
+                  me.list.push({value: key, label: value});
+              });
+          });
+        },
+        remoteMethod(query) {
+          if (query !== '') {
+            this.loading = true;
+            setTimeout(() => {
+              this.loading = false;
+              this.options4 = this.list.filter(item => {
+                return item.label.toLowerCase()
+                  .indexOf(query.toLowerCase()) > -1;
+              });
+            }, 200);
+          } else {
+            this.options4 = [];
+          }
+        },
         resetForm: function() {
             this.id = '';
             this.descripcion = '';
@@ -90,6 +127,8 @@ var objVue = new Vue({
             this.email_plantilla_id= null;
             this.formErrors = {};
             this.listErrors = {};
+            this.value9 = null;
+            this.icon_selected = null;
             $('#email_s').iCheck('uncheck').prop('checked', false);
             $('#email_n').iCheck('check').prop('checked', true);
             $('#view_client_s').iCheck('uncheck').prop('checked', false);
@@ -163,12 +202,14 @@ var objVue = new Vue({
             } else {
                 this.view_client = 0;
             }
+            console.log(this.value9);
             axios.post('status', {
                 'created_at': new Date(),
                 'descripcion': this.descripcion,
                 'color': this.color,
                 'email': this.email,
                 'view_client': this.view_client,
+                'icon': this.value9.value,
                 'email_plantilla_id': (this.email_plantilla_id !== null) ? this.email_plantilla_id.id : null,
             }).then(function(response) {
                 if (response.data['code'] == 200) {
@@ -205,11 +246,13 @@ var objVue = new Vue({
             } else {
                 this.view_client = 0;
             }
+            console.log(this.value9, 'sdfa');
             axios.put('status/' + this.id, {
                 'descripcion': this.descripcion,
                 'color': this.color,
                 'email': this.email,
                 'view_client': this.view_client,
+                'icon': this.value9.value,
                 'email_plantilla_id': (this.email_plantilla_id !== null) ? this.email_plantilla_id.id : null,
             }).then(function(response) {
                 if (response.data['code'] == 200) {
@@ -251,6 +294,13 @@ var objVue = new Vue({
                 $('#view_client_s').iCheck('check').prop('checked', true);
             } else {
                 $('#view_client_n').iCheck('check').prop('checked', true);
+            }
+            this.value9 = null;
+            this.icon_selected = null;
+            let icono = _.filter(this.list, function(q){return q.value === data['icon']});
+            if(icono.length > 0){
+              this.value9 = icono[0].label;
+              this.icon_selected = icono[0].value;
             }
             this.editar = 1;
             this.formErrors = {};

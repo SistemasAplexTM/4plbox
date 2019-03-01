@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    selectWhithFontAwesome();
+    // selectWhithFontAwesome();
     llenarSelect('administracion/7', 'maestra_multiple', 'funcionalidades', 0); // module, tableName, id_campo
     llenarSelect('tipoDocumento', 'credencial', 'credenciales', 0); // module, tableName, id_campo
     $('#tbl-tipoDocumento').DataTable({
@@ -71,6 +71,7 @@ var objVue = new Vue({
     el: '#tipoDocumento',
     mounted: function() {
         this.getPlantillasEmail();
+        this.getIcons();
     },
     data: {
         nombre: '',
@@ -87,6 +88,10 @@ var objVue = new Vue({
         email_copia_oculta: null,
         email_plantilla_id: null,
         plantillas: [],
+        options4: [],
+        value9: [],
+        list: [],
+        loading: false,
     },
     watch: {
         email_plantilla_id: function(newQuestion) {
@@ -102,12 +107,37 @@ var objVue = new Vue({
         }
     },
     methods: {
+        getIcons(){
+          let me = this;
+          $.getJSON('./json/fa-icons-lite.json', function(data) {
+              $(".ajaxLoadFontAwesome").append('<option value="">Seleccione</option>');
+              $.each(data, function(key, value) {
+                  var val = key.substring(4);
+                  me.list.push({value: key, label: value});
+              });
+          });
+        },
+        remoteMethod(query) {
+          if (query !== '') {
+            this.loading = true;
+            setTimeout(() => {
+              this.loading = false;
+              this.options4 = this.list.filter(item => {
+                return item.label.toLowerCase()
+                  .indexOf(query.toLowerCase()) > -1;
+              });
+            }, 200);
+          } else {
+            this.options4 = [];
+          }
+        },
         resetForm: function() {
             this.id = '';
             this.nombre = '';
             this.prefijo = '';
             this.consecutivo_inicial = 1;
-            $('.ajaxLoadFontAwesome').selectpicker('val', '');
+            this.value9 = null;
+            // $('.ajaxLoadFontAwesome').selectpicker('val', '');
             $('#funcionalidades').val(''); // Select the option with a value of '1'
             $('#funcionalidades').trigger('change'); // Notify any JS components that the value changed
             $('#credenciales').val(''); // Select the option with a value of '1'
@@ -175,7 +205,7 @@ var objVue = new Vue({
                 'nombre': this.nombre,
                 'prefijo': this.prefijo,
                 'consecutivo_inicial': this.consecutivo_inicial,
-                'icono': $('.ajaxLoadFontAwesome').selectpicker('val'),
+                'icono': this.value9,
                 'funcionalidades': $('#funcionalidades').select2('data'),
                 'credenciales': $('#credenciales').select2('data'),
                 'email_copia': $('#email_copia').val(),
@@ -215,7 +245,7 @@ var objVue = new Vue({
                 'nombre': this.nombre,
                 'prefijo': this.prefijo,
                 'consecutivo_inicial': this.consecutivo_inicial,
-                'icono': $('.ajaxLoadFontAwesome').selectpicker('val'),
+                'icono': this.value9,
                 'funcionalidades': $('#funcionalidades').select2('data'),
                 'credenciales': $('#credenciales').select2('data'),
                 'email_copia': $('#email_copia').val(),
@@ -253,7 +283,12 @@ var objVue = new Vue({
             this.nombre = data['nombre'];
             this.prefijo = data['prefijo'];
             this.consecutivo_inicial = data['consecutivo_inicial'];
-            $('.ajaxLoadFontAwesome').selectpicker('val', data['icono']);
+            // $('.ajaxLoadFontAwesome').selectpicker('val', data['icono']);
+            let icono = _.filter(this.list, function(q){return q.value === data['icono']});
+            console.log(icono);
+            if(icono.length > 0){
+              me.value9 = icono[0].label;
+            }
             /* ASIGNAR VALORES AL SELECT FUNCIONALIDADES */
             jsonFuncionalidades = JSON.parse(data['funcionalidades']);
             if (jsonFuncionalidades != null) {

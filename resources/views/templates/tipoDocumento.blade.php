@@ -60,12 +60,12 @@
                     <div class="ibox-title">
                         <h5>@lang('general.record_type_of_document')</h5>
                         <div class="ibox-tools">
-                            
+
                         </div>
                     </div>
                     <div class="ibox-content">
                         <!--***** contenido ******-->
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.nombre}">
                                         <div class="col-sm-4">
@@ -78,7 +78,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.prefijo}">
                                         <div class="col-sm-4">
@@ -91,21 +91,42 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.icono}">
                                         <div class="col-sm-4">
                                             <label for="icono" class="control-label gcore-label-top">@lang('general.icon'):</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <select data-live-search="true" id="icono" name="icono" class="form-control ajaxLoadFontAwesome" style="font-family:'FontAwesome'">
-                                            </select>
+                                            {{-- <select data-live-search="true" id="icono" name="icono" class="form-control ajaxLoadFontAwesome" style="font-family:'FontAwesome'"> --}}
+                                            {{-- </select> --}}
+                                            <el-select
+                                              v-model="value9"
+                                              size="medium"
+                                              filterable
+                                              clearable
+                                              remote
+                                              reserve-keyword
+                                              placeholder="Buscar Icono"
+                                              :remote-method="remoteMethod"
+                                              loading-text="Cargando..."
+                                              no-data-text="No hay datos"
+                                              value-key="id">
+                                              <el-option
+                                                v-for="item in options4"
+                                                :key="item.value"
+                                                :label="item.label"
+                                                :value="item.value">
+                                                <span style="float: left;"><i :class="item.value" style="font-size: 25px;"></i></span>
+                                                <span style="float: right; color: #8492a6; font-size: 13px">@{{ item.label }}</span>
+                                              </el-option>
+                                            </el-select>
                                             <small id="msn1" class="help-block result-icono" v-show="listErrors.icono">@lang('general.obligatory_field')</small>
                                         </div>
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group" :class="{'has-error': errors.has('email_plantilla_id') }">
                                     <div class="col-sm-4">
@@ -124,7 +145,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" v-if="mostrar_correos_add">                            
+                        <div class="row" v-if="mostrar_correos_add">
                             <div class="col-lg-12">
                                 <div class="form-group" :class="{'has-error': listErrors.email_copia}">
                                     <div class="col-sm-4">
@@ -146,7 +167,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.consecutivo_inicial}">
                                         <div class="col-sm-4">
@@ -162,7 +183,7 @@
                         <div class="col-lg-12" style="padding-bottom: 20px;">
                             <div style="text-align: center;margin-bottom: 40px;" class="label label-danger"><i class="fa fa-lock"></i> @lang('general.security_settings')</div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.credenciales}">
                                     	<div class="col-sm-12">
@@ -179,7 +200,7 @@
                         <div class="col-lg-12" style="padding-bottom: 20px;padding-top: 20px;">
                             <div style="text-align: center;margin-bottom: 20px;margin-top: 20px" class="label label-success"><i class="fa fa-share-alt"></i> Funcionalidades</div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.funcionalidades}">
                                     	<div class="col-sm-12">
@@ -193,7 +214,7 @@
                                     </div>
                             </div>
                         </div>
-                        
+
 
                         <div class="row">
                             @include('layouts.buttons')
@@ -234,7 +255,7 @@
                                 </tr>
                             </tfoot>
                         </table>
-                    </div>             
+                    </div>
                 </div>
             </div>
         </div>

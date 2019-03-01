@@ -19,12 +19,8 @@ class RastreoController extends Controller
 
     public function getStatusReport($data, $idStatus = null)
     {
-      $where = [DB::raw(" a.status_id IN (1,2, 5, 6, 7,12) AND (c.num_guia = '" . $data . "' OR c.num_warehouse = '" . $data . "' OR t.codigo = '" . $data . "')")];
-      if ($idStatus) {
-        $where = ["a.status_id", $idStatus];
-      }
         /* ESTATUS DEL DOCUMENTO */
-        $data = DB::table('status_detalle as a')
+        $datos = DB::table('status_detalle as a')
             ->join('status as b', 'a.status_id', 'b.id')
             ->join('documento_detalle as c', 'a.documento_detalle_id', 'c.id')
             ->join('documento as d', 'c.documento_id', 'd.id')
@@ -53,9 +49,15 @@ class RastreoController extends Controller
                 DB::raw("(SELECT GROUP_CONCAT(tracking.codigo) FROM tracking WHERE tracking.documento_detalle_id = c.id) as tracking")
             )
             ->where([
-                ['c.deleted_at', null],
-                $where
+                ['c.deleted_at', null]
             ])
+            ->where(function ($query) use ($idStatus, $data) {
+                if($idStatus){
+                  $query->where(["a.status_id", $idStatus]);
+                }else{
+                  $query->whereRaw(" a.status_id IN (1,2, 5, 6, 7,12) AND (c.num_guia = '" . $data . "' OR c.num_warehouse = '" . $data . "' OR t.codigo = '" . $data . "')");
+                }
+            })
             ->groupBy(
                 'a.id',
                 'c.id',
@@ -71,10 +73,10 @@ class RastreoController extends Controller
                 'g.nombre',
                 'h.descripcion',
                 'i.descripcion'
-            )
-            ->get();
+            )->get();
+
         $answer = array(
-            "data" => $data,
+            "data" => $datos,
             "code"  => 200,
         );
         return $answer;

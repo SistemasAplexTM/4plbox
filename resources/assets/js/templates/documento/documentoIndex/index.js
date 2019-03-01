@@ -56,7 +56,7 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
             var icon = 'file-text-o';
         }
         // $('#icono_doc').removeClass(className).addClass(icon);
-        $('#icono_doc').empty().append('<i class="fa '+icon+'"></i>');
+        $('#icono_doc').empty().append('<i class="'+icon+'"></i>');
         if(t == 2){
           $('#crearDoc2').attr('onclick', 'createNewDocument_(' + tipo_doc_id + ',\'' + nom + '\',\'' + funcionalidades + '\', \'Courier\', 1)');
           $('#crearDoc3').attr('onclick', 'createNewDocument_(' + tipo_doc_id + ',\'' + nom + '\',\'' + funcionalidades + '\', \'Carga\', 0)');
