@@ -5,6 +5,18 @@
 .el-select{
   width: 100%;
 }
+.btn_action_edit{
+  color:#FFC107;
+}
+.btn_action_edit:hover{
+  color:#ffd860;
+}
+.btn_action_delete{
+  color:#E34724;
+}
+.btn_action_delete:hover{
+  color:#ff9982;
+}
 .m5{
   margin: 5px;
 }

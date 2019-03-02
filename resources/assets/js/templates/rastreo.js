@@ -58,7 +58,9 @@ var objVue = new Vue({
                             for (var i in this.datos) {
                                 if (this.datos.hasOwnProperty(i)) {
                                     this.datos[i].mont_data = this.findMontToDate(this.datos[i].mont_data);
-                                    this.datos[i].img = this.replace[i].img;
+                                    // this.datos[i].img = this.replace[i].img;
+                                    this.datos[i].img = this.datos[i].icon + ' fa-5x';
+                                    this.datos[i].color = this.datos[i].color;
                                     this.datos[i].descripcion = this.replace[i].descripcion;
                                     if(i != 0){
                                         this.datos[i].procedencia = '';

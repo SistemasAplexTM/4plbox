@@ -34,6 +34,8 @@ class RastreoController extends Controller
                 'a.id',
                 'b.descripcion as estado',
                 'b.color',
+                'b.icon',
+                'b.view_client',
                 'c.peso',
                 'c.num_warehouse',
                 'c.num_guia',
@@ -49,13 +51,15 @@ class RastreoController extends Controller
                 DB::raw("(SELECT GROUP_CONCAT(tracking.codigo) FROM tracking WHERE tracking.documento_detalle_id = c.id) as tracking")
             )
             ->where([
-                ['c.deleted_at', null]
+                ['c.deleted_at', null],
+                ['b.view_client', 1],
             ])
             ->where(function ($query) use ($idStatus, $data) {
                 if($idStatus){
                   $query->where(["a.status_id", $idStatus]);
                 }else{
-                  $query->whereRaw(" a.status_id IN (1,2, 5, 6, 7,12) AND (c.num_guia = '" . $data . "' OR c.num_warehouse = '" . $data . "' OR t.codigo = '" . $data . "')");
+                  // $query->whereRaw(" a.status_id IN (1,2, 5, 6, 7,12) AND (c.num_guia = '" . $data . "' OR c.num_warehouse = '" . $data . "' OR t.codigo = '" . $data . "')");
+                  $query->whereRaw(" (c.num_guia = '" . $data . "' OR c.num_warehouse = '" . $data . "' OR t.codigo = '" . $data . "')");
                 }
             })
             ->groupBy(
