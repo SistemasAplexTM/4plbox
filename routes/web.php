@@ -36,6 +36,8 @@ Route::group(['middleware' => 'auth'], function () {
         abort(404);
 
     });
+    /* EXPORT EXCEL CONSOLIDADO */
+    Route::get('exportLiquimp', 'DocumentoController@exportLiquimp')->name('exportLiquimp');
     /* CONSULTAR SHIPPERS O CONSIGNEE */
     Route::get('consulta', 'ConsultaController@index')->name('consulta.index');
     Route::get('consulta/all', 'ConsultaController@getAll')->name('consulta.getAll');

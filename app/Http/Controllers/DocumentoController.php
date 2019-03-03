@@ -15,21 +15,23 @@ use Neodynamic\SDK\Web\TextAlignment;
 use Neodynamic\SDK\Web\ClientPrintJob;
 use Session;
 
+use Auth;
+use DataTables;
+use JavaScript;
+use Redirect;
+use Excel;
 use App\Agencia;
 use App\Documento;
 use App\DocumentoDetalle;
 use App\MaestraMultiple;
 use App\Servicios;
 use App\TipoDocumento;
-use Auth;
 use Barryvdh\DomPDF\Facade as PDF;
-use DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use JavaScript;
-use Redirect;
 use App\Traits\DocumentTrait;
+use App\Exports\ConsolidadoExport;
 
 class DocumentoController extends Controller
 {
@@ -107,6 +109,7 @@ class DocumentoController extends Controller
                     $data->usuario_id        = Auth::user()->id;
                     $data->carga_courier     = (isset($request->type_id) and $request->type_id != '') ? $request->type_id : 0;
                     $data->created_at        = $request->created_at;
+                    $data->tipo_consolidado  = 'COURIER';
                     $tipo                    = TipoDocumento::findOrFail($request->tipo_documento_id);
 
                     $getShipper = $this->getConfig('shipperDefault');
@@ -328,6 +331,7 @@ class DocumentoController extends Controller
                 $data->transporte_id      = $request->transporte_id;
                 $data->observaciones      = $request->observacion;
                 $data->updated_at         = $request->date;
+                $data->tipo_consolidado   = $request->tipo_consolidado;
                 if ($data->save()) {
                     $this->AddToLog('Documento Consolidado actualizado (' . $id . ')');
                     $answer = array(
@@ -2768,7 +2772,8 @@ class DocumentoController extends Controller
               'd.nombre AS ciudad',
               'f.descripcion AS pais',
               'g.descripcion AS agencia',
-              'g.logo'
+              'g.logo',
+              'b.tipo_consolidado'
           )
           ->where([
               ['a.deleted_at', null],
@@ -2781,13 +2786,21 @@ class DocumentoController extends Controller
             'd.nombre',
             'f.descripcion',
             'g.descripcion',
-            'g.logo')
+            'g.logo',
+            'b.tipo_consolidado')
           ->get();
 
           $pdf = PDF::loadView('pdf.labels.bolsasConsolidado', compact('data'))
           ->setPaper(array(0, 0, 550, 700), 'landscape');
           $nameDocument = 'Label Bolsa';
           return $pdf->stream($nameDocument . '.pdf');
+    }
+
+    public function exportLiquimp()
+    {
+      $data = array('prueba' => 'jhonny');
+        return Excel::download(new ConsolidadoExport(array('datos' => $data,)),
+         'Excel Liquimp.xlsx', \Maatwebsite\Excel\Excel::XLSX);
     }
 
 }

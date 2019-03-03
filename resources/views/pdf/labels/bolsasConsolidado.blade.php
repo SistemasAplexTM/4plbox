@@ -72,7 +72,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <span id="bolsas"><span id="pieza">COURIER</span></span>
+                            <span id="bolsas"><span id="pieza">{{ $data[$i]->tipo_consolidado }}</span></span>
                         </td>
                         <td align="CENTER">
                             <div id="ciudadDestino">{{ $data[$i]->ciudad . ' ' . $data[$i]->pais }}</div>
