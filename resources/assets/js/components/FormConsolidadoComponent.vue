@@ -626,7 +626,7 @@
 	    },
 		methods: {
 				exportLiquimp(){
-					window.open('/exportLiquimp', '_blank');
+					window.open('/exportLiquimp/' + this.documento.id, '_blank');
 				},
 				printLabelBagModal(){
 					$('#modalPrintLabels').modal('show');

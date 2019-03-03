@@ -2796,9 +2796,50 @@ class DocumentoController extends Controller
           return $pdf->stream($nameDocument . '.pdf');
     }
 
-    public function exportLiquimp()
+    public function exportLiquimp($id)
     {
-      $data = array('prueba' => 'jhonny');
+      $data = DB::table('consolidado_detalle AS a')
+          ->join('documento_detalle AS b', 'a.documento_detalle_id', 'b.id')
+          ->join('posicion_arancelaria AS c', 'c.id', 'b.arancel_id2')
+          ->join('shipper AS d', 'd.id', 'b.shipper_id')
+          ->join('localizacion AS e', 'e.id', 'd.tipo_identificacion_id')
+          ->join('deptos AS f', 'e.deptos_id', 'f.id')
+          ->join('pais AS g', 'f.pais_id', 'g.id')
+          ->join('consignee AS i', 'i.id', 'b.consignee_id')
+          ->join('localizacion AS j', 'i.localizacion_id', 'j.id')
+          ->join('deptos AS k', 'j.deptos_id', 'k.id')
+          ->join('pais AS l', 'k.pais_id', 'l.id')
+          ->select(
+              'b.num_warehouse',
+              'b.num_guia',
+              'c.pa',
+              'c.arancel',
+              'c.iva',
+              'b.contenido2 AS contenido',
+              'b.declarado2 AS declarado',
+              'b.peso2 AS peso_lb',
+              'b.piezas',
+              'd.nombre_full AS ship',
+              'd.direccion AS ship_dir',
+              'd.zip AS ship_zip',
+              'd.telefono AS ship_tel',
+              'e.nombre AS ship_ciu',
+              'f.descripcion AS ship_depto',
+              'g.descripcion AS ship_pais',
+              'a.shipper AS ship_json',
+              'i.nombre_full AS cons',
+              'i.direccion AS cons_dir',
+              'j.codigo_int AS cons_ciu',
+              'k.descripcion AS cons_depto',
+              'l.descripcion AS cons_pais',
+              'i.telefono AS cons_tel',
+              'i.zip AS cons_zip'
+          )
+          ->where([
+              ['a.deleted_at', null],
+              ['b.deleted_at', null],
+              ['a.consolidado_id', $id],
+          ])->get();
         return Excel::download(new ConsolidadoExport(array('datos' => $data,)),
          'Excel Liquimp.xlsx', \Maatwebsite\Excel\Excel::XLSX);
     }
