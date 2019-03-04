@@ -29,7 +29,7 @@
                   <div class="row" id="window-load"><div id="loading"><Spinner name="circle" color="#66bf33"/></div></div>
                   <div class="row">
                       <div class="col-lg-12">
-                          <h3>Seleccione la categoria y la cantidad del producto para registrar los puntos.</h3>
+                          <h3>Seleccione la categoría y la cantidad del producto para registrar los puntos.</h3>
                       </div>
                   </div>
                   <div class="row">
@@ -77,7 +77,7 @@
                               sum-text="TOTAL"
                               empty-text="No hay datos">
                               <el-table-column
-                                label="Categoria"
+                                label="Categoría"
                                 prop="category">
                               </el-table-column>
                               <el-table-column
@@ -85,8 +85,12 @@
                                 prop="quantity">
                               </el-table-column>
                               <el-table-column
-                                label="Total Puntos"
+                                label="Puntos"
                                 prop="points_total">
+                              </el-table-column>
+                              <el-table-column
+                                label="Total Puntos"
+                                prop="total_puntos">
                               </el-table-column>
                               <el-table-column
                                 align="right">

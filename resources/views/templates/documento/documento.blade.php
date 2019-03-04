@@ -143,6 +143,7 @@
                 <input type="hidden" class="form-control" id="id_documento" name="id_documento"  value="{{ $documento->id }}" readonly="">
                 <input type="hidden" class="form-control" id="option" name="option"  value="" readonly="">
                 <input type="hidden" class="form-control" name="document_type" id="document_type" data-liquidado="{{ $documento->liquidado }}"  value="consolidado" readonly="" v-model="document_type">
+
                 <div class="col-lg-12" style="">
                     <div class="col-lg-12">
                         <div class="col-lg-6" style="padding-left: 0px;">
@@ -696,12 +697,13 @@
                                                                         <th style="">@lang('documents.contains')</th>
                                                                         <th style="width: 15%;">PA</th>
                                                                         <th style="width: 10%;">@lang('documents.value') US$</th>
+                                                                        <th style="width: 10%;">@lang('documents.points')</th>
                                                                         <th style="width: 13%;">@lang('documents.action')</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tfoot style="background-color: paleturquoise;">
                                                                     <tr>
-                                                                        <td colspan="7">
+                                                                        <td colspan="8">
                                                                             <table style="width: 100%;">
                                                                                 <tr>
                                                                                     <td>

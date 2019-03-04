@@ -107,7 +107,7 @@
 <table  cellspacing="0" cellpadding="0" id="tableContainer" border="0">
     <tr>
         <td colspan="2">
-            <div id="nomAgencia">{{ $documento->agencia }}</div>
+            <div id="nomAgencia">{{ $documento->agencia }} CUBA</div>
         </td>
         <td colspan="2">
             <div id="manifiesto">@lang('general.cargo_manifest')</div>
@@ -163,14 +163,14 @@
 <table  cellspacing="0" cellpadding="0" id="tableDetalle" border="0">
     <thead>
         <tr>
-            <td style="width: 5%;"><div id="detalle">#@lang('general.bag')</div></td>
-            <td style="width: 20%;"><div id="detalle">@lang('general.guide')</div></td>
-            <td style=""><div id="detalle">@lang('general.shipper')</div></td>
-            <td style=""><div id="detalle">@lang('general.recipients')</div></td>
-            <td style="width: 10%;"><div id="detalle">@lang('general.declared')</div></td>
-            <td style="width: 5%;"><div id="detalle">@lang('general.pieces')</div></td>
-            <td style="width: 5%;"><div id="detalle">@lang('general.weight')</div></td>
-            <td style="width: 11%;"><div id="detalle">@lang('general.customs') US</div></td>
+            <td style="width: 5%;"><div id="detalle">No. Envío/HBL</div></td>
+            <td style="width: 20%;"><div id="detalle">Cantidad de Bultos</div></td>
+            <td style=""><div id="detalle">Peso (Kg)</div></td>
+            <td style=""><div id="detalle">Volúmen (cbm)</div></td>
+            <td style="width: 10%;"><div id="detalle">Valor (CUC)</div></td>
+            <td style="width: 5%;"><div id="detalle">Envia/Embarcador</div></td>
+            <td style="width: 5%;"><div id="detalle">Consignatario</div></td>
+            <td style="width: 11%;"><div id="detalle">Descripción de la Mercancia</div></td>
         </tr>
     </thead>
     <tbody>

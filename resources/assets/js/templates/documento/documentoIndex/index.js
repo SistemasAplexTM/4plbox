@@ -121,7 +121,7 @@ function datatableDocument(t, tipo_doc_id, status_id){
       }],
       'columnDefs': [{
           className: "text-center",
-          "targets": [7]
+          "targets": [7,8]
       }],
       "drawCallback": function () {
         /* POPOVER PARA LAS GUIAS AGRUPADAS (BADGED) */
@@ -151,8 +151,10 @@ function datatableDocument(t, tipo_doc_id, status_id){
 function actionsButtons(data, type, full, meta) {
     var btn_edit = '';
     var btn_delete = '';
+    var btn_status = '';
     if (permission_update && (parseInt(full.consolidado_status) === 0) || full.consolidado_status == null) {
         var btn_edit = '<a href="documento/' + full.id + '/edit" class="edit" title="Editar" data-toggle="tooltip" style="color:#FFC107;"><i class="fal fa-pencil fa-lg"></i></a>';
+        var btn_status = '<a onclick=\"modalChangeStatus(' + full.id + ')\" class="edit" title="Status" data-toggle="tooltip" style="color:#4caf50;"><i class="fal fa-clock fa-lg"></i></a>';
     }
     if (permission_delete && (parseInt(full.consolidado_status) === 0) || full.consolidado_status == null) {
         btn_delete = '<a onclick=\"modalEliminar(' + full.id + ')\" class="delete" title="Eliminar" data-toggle="tooltip" style="color:#E34724;"><i class="fal fa-trash-alt fa-lg"></i></a>';
@@ -167,7 +169,7 @@ function actionsButtons(data, type, full, meta) {
         }else{
           var btns = "<div class='btn-group'>" + "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + "<i class='fal fa-print fa-lg'></i><span class='caret'></span>" + "</button>" + "<ul class='dropdown-menu dropdown-menu-right pull-right'>" + "<li><a href='impresion-documento/" + full.id + "/consolidado' target='_blank'> <spam class='fa fa-print'></spam> Imprimir manifiesto</a></li>" + "<li><a href='impresion-documento/" + full.id + "/consolidado_guias' target='_blank'> <spam class='fa fa-print'></spam> Imprimir Guias</a></li>" + "<li role='separator' class='divider'></li> " + "<li><a href='impresion-documento/pdfContrato' target='_blank'> <spam class='fa fa-print'></spam> Imprimir contrato</a></li>" + "<li><a href='impresion-documento/pdfTsa' target='_blank'> <spam class='fa fa-print'></spam> Imprimir TSA</a></li>" + "</ul></div>";
         }
-        return btn_edit + ' ' + btns + ' ' +  btn_delete;
+        return btn_edit + ' ' + btns + ' ' + btn_status + ' ' +  btn_delete;
     } else {
         var codigo = full.num_warehouse;
         var href_print_guia = '';
@@ -279,4 +281,8 @@ function numDocument(data, type, full, meta) {
       }
       return '<strong>' + ((codigo == null) ? '' : codigo) + '<strong> <i class="fa fa-'+ icon +'"></i> <span style="float: right;" class="badge badge-' + color_badget + '" data-toggle="tooltip" data-placement="top" title="" data-original-title="Total piezas">' + cant + '</span>';
     }
+}
+
+function modalChangeStatus(id) {
+  $('#modalChangeStatus').modal('show');
 }

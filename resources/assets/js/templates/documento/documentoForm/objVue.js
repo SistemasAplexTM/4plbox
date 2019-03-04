@@ -29,9 +29,9 @@ var objVue = new Vue({
     },
     created: function() {
         this.liquidado = $('#document_type').data('liquidado');
-        this.showHiddeFields();
         this.searchShipperConsignee($('#shipper_id').val(), 'shipper');
         this.searchShipperConsignee($('#consignee_id').val(), 'consignee');
+        this.showHiddeFields();
         /* CUSTOM MESSAGES VE-VALIDATOR*/
         const dict = {
             custom: {

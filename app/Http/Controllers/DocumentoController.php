@@ -1108,6 +1108,8 @@ class DocumentoController extends Controller
     public function pdf($id, $document, $id_detalle = null, $view = true)
     {
         $documento = DB::table('documento')
+            ->leftJoin('localizacion AS ciudad_document', 'documento.ciudad_id', '=', 'ciudad_document.id')
+            ->leftJoin('deptos AS deptos_documento', 'ciudad_document.deptos_id', '=', 'deptos_documento.id')
             ->leftJoin('master AS m', 'documento.master_id', '=', 'm.id')
             ->leftJoin('aerolineas_aeropuertos AS aerolinea', 'm.aerolineas_id', '=', 'aerolinea.id')
             ->leftJoin('aerolineas_aeropuertos AS aeropuerto', 'm.aeropuertos_id', '=', 'aeropuerto.id')
@@ -1136,6 +1138,7 @@ class DocumentoController extends Controller
             ->join('tipo_documento', 'documento.tipo_documento_id', '=', 'tipo_documento.id')
             ->select(
                 'documento.*', 'users.name as usuario',
+                'deptos_documento.pais_id AS pais_id_document',
                 'shipper.nombre_full as ship_nomfull',
                 'shipper.direccion as ship_dir',
                 'shipper.telefono as ship_tel',
@@ -1185,6 +1188,13 @@ class DocumentoController extends Controller
                 ['documento.id', $id],
             ])
             ->first();
+
+        $puntos = $this->getConfig('puntos_'.$documento->agencia_id);
+        $pais_id_puntos = 0;
+        if ($puntos) {
+          $puntos_value = json_decode($puntos->value);
+          $pais_id_puntos = $puntos_value->pais_id;
+        }
 
         $where = [['documento_detalle.deleted_at', null], ['documento_detalle.documento_id', $id]];
         if ($id_detalle != null) {
@@ -1561,7 +1571,12 @@ class DocumentoController extends Controller
                                   if(env('APP_CLIENT') === 'colombiana'){
                                       $pdf          = PDF::loadView('pdf.consolidadoPdfColombiana', compact('documento', 'detalle', 'detalleConsolidado'));
                                   }else{
+                                    if($documento->pais_id_document === $pais_id_puntos){
+                                      //FORMATO PARA CUBA
+                                      $pdf          = PDF::loadView('pdf.manifiesto.formatoCuba', compact('documento', 'detalle', 'detalleConsolidado'));
+                                    }else{
                                       $pdf          = PDF::loadView('pdf.consolidadoPdf', compact('documento', 'detalle', 'detalleConsolidado'));
+                                    }
                                   }
                               }else{
                                 // return view('pdf/consolidadoPdfColombiana', compact('documento', 'detalle', 'detalleConsolidado'));
@@ -2580,7 +2595,13 @@ class DocumentoController extends Controller
             ->leftJoin('posicion_arancelaria', 'documento_detalle.posicion_arancelaria_id', '=', 'posicion_arancelaria.id')
             ->join('maestra_multiple', 'documento_detalle.tipo_empaque_id', '=', 'maestra_multiple.id')
             ->select('documento_detalle.*', 'agencia.descripcion AS nom_agencia', 'posicion_arancelaria.pa AS nom_pa', 'posicion_arancelaria.id AS id_pa', 'shipper.nombre_full AS ship_nomfull', 'consignee.nombre_full AS cons_nomfull', 'maestra_multiple.nombre AS empaque',
-                DB::raw("(SELECT Count(a.id) FROM tracking AS a WHERE a.documento_detalle_id = documento_detalle.id AND a.deleted_at IS NULL) as cantidad")
+                DB::raw("(SELECT Count(a.id) FROM tracking AS a WHERE a.documento_detalle_id = documento_detalle.id AND a.deleted_at IS NULL) as cantidad"),
+                DB::raw("(SELECT
+                IFNULL(SUM(a.total_puntos),0)
+                FROM
+                pivot_puntos_detalle AS a
+                WHERE
+                a.documento_detalle_id = documento_detalle.id) AS puntos")
             )
             ->where([['documento_detalle.deleted_at', null], ['documento_detalle.documento_id', $id]])
             ->get();
@@ -2797,6 +2818,54 @@ class DocumentoController extends Controller
     }
 
     public function exportLiquimp($id)
+    {
+      $data = DB::table('consolidado_detalle AS a')
+          ->join('documento_detalle AS b', 'a.documento_detalle_id', 'b.id')
+          ->join('posicion_arancelaria AS c', 'c.id', 'b.arancel_id2')
+          ->join('shipper AS d', 'd.id', 'b.shipper_id')
+          ->join('localizacion AS e', 'e.id', 'd.tipo_identificacion_id')
+          ->join('deptos AS f', 'e.deptos_id', 'f.id')
+          ->join('pais AS g', 'f.pais_id', 'g.id')
+          ->join('consignee AS i', 'i.id', 'b.consignee_id')
+          ->join('localizacion AS j', 'i.localizacion_id', 'j.id')
+          ->join('deptos AS k', 'j.deptos_id', 'k.id')
+          ->join('pais AS l', 'k.pais_id', 'l.id')
+          ->select(
+              'b.num_warehouse',
+              'b.num_guia',
+              'c.pa',
+              'c.arancel',
+              'c.iva',
+              'b.contenido2 AS contenido',
+              'b.declarado2 AS declarado',
+              'b.peso2 AS peso_lb',
+              'b.piezas',
+              'd.nombre_full AS ship',
+              'd.direccion AS ship_dir',
+              'd.zip AS ship_zip',
+              'd.telefono AS ship_tel',
+              'e.nombre AS ship_ciu',
+              'f.descripcion AS ship_depto',
+              'g.descripcion AS ship_pais',
+              'a.shipper AS ship_json',
+              'i.nombre_full AS cons',
+              'i.direccion AS cons_dir',
+              'j.codigo_int AS cons_ciu',
+              'k.descripcion AS cons_depto',
+              'l.descripcion AS cons_pais',
+              'i.telefono AS cons_tel',
+              'i.zip AS cons_zip'
+          )
+          ->where([
+              ['a.deleted_at', null],
+              ['b.deleted_at', null],
+              ['a.consolidado_id', $id],
+          ])->get();
+        return Excel::download(new ConsolidadoExport(array('datos' => $data,)),
+         'Excel Liquimp.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+    }
+
+    public function exportCellar($id)
     {
       $data = DB::table('consolidado_detalle AS a')
           ->join('documento_detalle AS b', 'a.documento_detalle_id', 'b.id')

@@ -104,7 +104,11 @@ function datatableDetail(){
     //         $('#whgTable tbody').empty();
     //         $('#whgTable').dataTable().fnDestroy();
     //     }
-    $('#whgTable').DataTable({
+    var puntos = null;
+    if(puntos_config != null){
+      puntos = JSON.parse(puntos_config);
+    }
+    var tbl = $('#whgTable').DataTable({
         ajax: 'getDataDetailDocument',
         // "paging":   false,
         // "info":     false,
@@ -114,7 +118,10 @@ function datatableDetail(){
         // "order": [[ 0, "desc" ], [ 1, "desc" ]],
         columns: [{
             data: 'num_warehouse',
-            name: 'num_warehouse'
+            name: 'num_warehouse',
+            "render": function (data, type, full, meta) {
+              return '<strong>'+ full.num_warehouse +'</strong>';
+            }
         }, {
             "render": function (data, type, full, meta) {
                 return '<a data-name="piezas" data-pk="'+full.id+'" data-value="'+full.piezas+'" class="td_edit" data-type="text" data-placement="right" data-title="Piezas">'+full.piezas+'</a>';
@@ -125,7 +132,7 @@ function datatableDetail(){
                 var dimensiones = cadena.split(" ");
                 var arr1 = cadena.split("=");
                 var arrF = arr1[1].split("x");
-                return '<a data-name="peso" data-pk="'+full.id+'" class="td_edit" data-type="text" data-placement="right" data-title="Peso">'+full.peso+'</a><br>' +
+                return '<a data-name="peso" data-pk="'+full.id+'" class="td_edit" data-type="text" data-placement="right" data-title="Peso">'+full.peso+'</a>' +
                 ' <a data-name="dimensiones" data-pk="'+full.id+'" data-value="'+arrF+'" class="td_edit_d" data-type="address" data-placement="right" data-title="Dimensiones">'+dimensiones[1]+'</a>';;
             }
         }, {
@@ -146,6 +153,9 @@ function datatableDetail(){
                 return '<a data-name="declarado" data-pk="'+full.id+'" class="td_edit" data-type="text" data-placement="left" data-title="Declarado">'+full.valor+'</a>';
             }
         }, {
+            data: 'puntos',
+            name: 'puntos'
+        },{
             sortable: false,
             "render": function(data, type, full, meta) {
                 var btn_addTracking = '';
@@ -158,9 +168,7 @@ function datatableDetail(){
                 }
 
                 btn_addTracking = '<a class="btn btn-info btn-xs btn-actions addTrackings" type="button" id="btn_addtracking'+full.id+'" data-toggle="tooltip" title="Agregar tracking" onclick="addTrackings('+full.id+')"><i class="fa fa-truck"></i> <span id="cant_tracking'+full.id+'">'+full.cantidad+'</span></a> ';
-
-                if(puntos_config != null){
-                  var puntos = JSON.parse(puntos_config)
+                if(puntos != null){
                   if(objVue.city_c.pais_id == puntos.pais_id){
                       btn_points = ' <a class="btn btn-warning btn-xs btn-actions" type="button" id="btn_points'+full.id+'" onclick="insertPoints('+full.id+')" data-toggle="tooltip" title="Puntos"><i class="far fa-map-pin"></i></a> ';
                   }
@@ -245,25 +253,25 @@ function datatableDetail(){
             };
             /*Total over all pages*/
             var vol = api
-                    .column(7)
+                    .column(8)
                     .data()
                     .reduce(function (a, b) {
                         return intVal(Math.ceil(a)) + intVal(Math.ceil(b));
                     }, 0);
             var piezas = api
-                    .column(8)
+                    .column(9)
                     .data()
                     .reduce(function (a, b) {
                         return intVal(a) + intVal(b);
                     }, 0);
             var peso = api
-                    .column(9)
+                    .column(10)
                     .data()
                     .reduce(function (a, b) {
                         return intVal(Math.ceil(a)) + intVal(Math.ceil(b));
                     }, 0);
             var dec = api
-                    .column(10)
+                    .column(11)
                     .data()
                     .reduce(function (a, b) {
                         return intVal(a) + intVal(b);
@@ -289,6 +297,21 @@ function datatableDetail(){
             }
         }
         objVue.totalizeDocument();
+
+        //VALIDA SI SE MUESTRAN LOS PUNTOS PARA EL PAIS CONFIGURADO
+        if(puntos !== null){
+          if(objVue.city_c.pais_id === puntos.pais_id){
+            var columna = tbl.column(5);
+            columna.visible(false);
+            var columna = tbl.column(6);
+            columna.visible(true);
+          }else{
+            var columna = tbl.column(5);
+            columna.visible(true);
+            var columna = tbl.column(6);
+            columna.visible(false);
+          }
+        }
         // console.log(json.data);
     });
 }
@@ -315,7 +338,7 @@ function llenarSelectServicio(id_embarque) {
           } else {
               $("#servicios_id").attr('readonly', false);
               $(data.data).each(function(index, value) {
-                  $("#servicios_id").append('<option value="' + value.id + '" data-tarifa="' + value.tarifa + '" data-seguro="' + value.seguro +
+                  $("#servicios_id").append('<option value="' + value.id + '" data-tarifa="' + value.tarifa + '" data-seguro="' + value.seguro + '" ' +
                   'data-cobvol="' + value.cobro_peso_volumen + '"' +
                   'data-tarifamin="' + value.peso_minimo + '"' +
                   'data-tarifa="' + value.tarifa + '"' +

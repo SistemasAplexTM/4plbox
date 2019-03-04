@@ -76,7 +76,9 @@ class RastreoController extends Controller
                 'c.num_consolidado',
                 'g.nombre',
                 'h.descripcion',
-                'i.descripcion'
+                'i.descripcion',
+                'b.icon',
+                'b.view_client'
             )->get();
 
         $answer = array(

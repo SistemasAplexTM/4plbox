@@ -68,6 +68,7 @@ var objVue = new Vue({
           me.getStatus();
         },1500)
         $('#date').val(this.getTime());
+        this.getStatus();
     },
     created(){
       //
@@ -81,8 +82,32 @@ var objVue = new Vue({
         type_document: null,
         datosAgrupar: {},
         removerAgrupado: {}, //es para poder remover guias agrupadas en el consolidado
+        status_id: {id: 5, descripcion: 'Consolidada'},
+        status: [],
     },
     methods: {
+        addStatusConsolidado: function(){
+            let me = this;
+            axios.post('addStatusToGuias',{
+                'status_id': me.status_id.id
+            }).then(function (response) {
+                toastr.success('Registro Exitoso.');
+            }).catch(function (error) {
+                console.log(error);
+                toastr.warning('Error.');
+                toastr.options.closeButton = true;
+            });
+        },
+        getStatus: function(){
+            let me = this;
+            axios.get('../status/all').then(function (response) {
+                me.status = response.data.data;
+            }).catch(function (error) {
+                console.log(error);
+                toastr.warning('Error.');
+                toastr.options.closeButton = true;
+            });
+        },
         pendign(){
           setTimeout(function() {
             if($('#li-pending').hasClass('active')){

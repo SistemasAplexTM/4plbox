@@ -113,6 +113,7 @@ return [
     'edit'                     => 'Edit',
 
     'add_points'               => 'Add Points',
+		'points'									 =>'Points',
 
 
 

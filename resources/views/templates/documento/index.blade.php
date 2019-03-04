@@ -254,6 +254,42 @@
                 </div>
             </div>
         </div>
+
+        <!-- MODAL CAMBIAR STATUS CONSOLIDADO -->
+        <div class="modal fade bs-example" id="modalChangeStatus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            <i class="fal fa-clock" style="font-size: 20px;"></i> Estatus actual del consolidado
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="formGuiasAgrupar">
+                            <p>Selecione el estatus que desea aplicar a este consolidado y sus documentos internos.</p>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        <label for="status_id">Estatus actual</label>
+                                        <v-select name="status_id" v-model="status_id" label="descripcion" :filterable="false" :options="status"></v-select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="status_id" style="width: 100%;">&nbsp;</label>
+                                        <button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Agregar estatus a guias" @click="addStatusConsolidado()"><i class="fa fa-save"></i> Cambiar estatus</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 

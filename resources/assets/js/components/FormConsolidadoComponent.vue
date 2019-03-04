@@ -133,31 +133,17 @@
                                     <div class="col-sm-4" v-if="show_buttons">
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label for="status_id" style="width: 100%;">&nbsp;</label>
+                                                <label for="" style="width: 100%;">&nbsp;</label>
                                                 <button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Descargar Excel Liquimp" @click="exportLiquimp()"><i class="fas fa-cloud-download-alt"></i> Excel</button>
                                             </div>
                                         </div>
 																				<div class="col-sm-3">
                                             <div class="form-group">
-                                                <label for="status_id" style="width: 100%;">&nbsp;</label>
+                                                <label for="" style="width: 100%;">&nbsp;</label>
                                                 <button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Descargar Excel Bodega"><i class="fas fa-cloud-download-alt"></i> Excel Bodega</button>
                                             </div>
                                         </div>
                                     </div>
-																		<!-- <div class="col-sm-4" v-if="!close">
-                                        <div class="col-sm-9">
-                                            <div class="form-group">
-                                                <label for="status_id">Estatus</label>
-                                                <v-select name="status_id" v-model="status_id" label="descripcion" :filterable="false" :options="status"></v-select>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <label for="status_id" style="width: 100%;">&nbsp;</label>
-                                                <button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Agregar estatus a guias" @click="addStatusConsolidado()"><i class="fa fa-save"></i> Aplicar</button>
-                                            </div>
-                                        </div>
-                                    </div> -->
                                 </div>
                                 <div class="row"><div class="hr-line-dashed"></div></div>
                                 <div class="row" v-if="!close">
@@ -551,7 +537,6 @@
       	$('.printDocumentGuias').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/consolidado_guias');
 				this.getDataDetail();
 	      this.getTransportes();
-				this.getStatus();
 				if(this.documento.ciudad_id != null){
 					this.localizacion_id = {
 						id: this.documento.ciudad_id,
@@ -596,8 +581,6 @@
 		data () {
 	        return {
             transporte_id: null,
-	        	status_id: {id: 5, descripcion: 'Consolidada'},
-            status: [],
 	        	transportes: [],
 	        	countries: [],
 	        	branchs: [],
@@ -665,18 +648,6 @@
 	              toastr.options.closeButton = true;
 	          });
 	      },
-	      addStatusConsolidado: function(){
-	          let me = this;
-	          axios.post('addStatusToGuias',{
-	              'status_id': me.status_id.id
-	          }).then(function (response) {
-	              toastr.success('Registro Exitoso.');
-	          }).catch(function (error) {
-	              console.log(error);
-	              toastr.warning('Error.');
-	              toastr.options.closeButton = true;
-	          });
-	      },
 				selectedShipperConsignee: function(campos){
 					let me = this;
 			        axios.post('createContactsConsolidadoDetalle',{
@@ -692,16 +663,6 @@
 	                	toastr.options.closeButton = true;
 			        });
 				},
-	      getStatus: function(){
-	                let me = this;
-	                axios.get('../../status/all').then(function (response) {
-	                    me.status = response.data.data;
-	                }).catch(function (error) {
-	                    console.log(error);
-	                    toastr.warning('Error.');
-	                    toastr.options.closeButton = true;
-	                });
-	            },
 				getTransportes: function(){
 					let me = this;
 			        axios.get('../../administracion/5/all').then(function (response) {
@@ -794,7 +755,6 @@
 			                'ciudad_id': me.localizacion_id.id,
 			                'central_destino_id': me.central_destino_id.id,
 	                    'transporte_id': me.transporte_id.id,
-			                'status_id': me.status_id.id,
 			                'observacion': me.observacion,
 			                'tipo_consolidado': me.tipo_consolidado,
 			            }

@@ -110,6 +110,7 @@ return [
      'edit'                     => 'Editar',
 
 		'add_points'               => 'Agregar Puntos',
+    'points'									 =>'Puntos',
 
 
 
