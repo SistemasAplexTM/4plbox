@@ -307,7 +307,7 @@
                         </form>
                       </div>
                       <div class="modal-footer">
-                          <button type="button" class="btn btn-primary" @click="createDocument()"><i class="far fa-file-signature"></i> @lang('documents.create')</button>
+                          <button type="button" class="btn btn-primary" id="saveDoc" @click="createDocument()"><i class="far fa-file-signature"></i> @lang('documents.create')</button>
                           <button type="button" class="btn btn-default" data-dismiss="modal"><i class="far fa-times"></i> @lang('documents.close')</button>
                       </div>
                   </div>
