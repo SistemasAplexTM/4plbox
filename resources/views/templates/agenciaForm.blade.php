@@ -368,7 +368,7 @@
                                 <div role="tabpanel" class="tab-pane fade" id="tab2">
                                     <div class="row">
                                       <div class="col-lg-12">
-                                        <agency-integrations-component :agency_id="{{ $agencia->id }}"></agency-integrations-component>
+                                        <agency-integrations-component :agency_id="{{ ((isset($agencia) and $agencia) ? $agencia->id : 0) }}"></agency-integrations-component>
                                       </div>
                                     </div>
                                     <div class="row" style="margin-top: 20px;"></div>

@@ -13,11 +13,22 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/plantilla.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('css/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet"> --}}
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-6jHF7Z3XI3fF4XZixAuSu0gGKrXwoX/w3uFPxC56OtjChio7wtTGJWRW53Nhx6Ev" crossorigin="anonymous">
     <style>
+        @import url('https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&subset=latin-ext,vietnamese');
+        /* font-family: 'Montserrat', sans-serif;
+        color: #454550;
+        font-weight: 900; */
         body{
             background-color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            color: #454550;
         }
+        .h1, .h2, .h3, h1, h2, h3 {
+        		margin-top: 0px;
+        		margin-bottom: 0px;
+    		}
         .help-block{
             color: #ed5565;
         }
@@ -26,12 +37,12 @@
             margin:0px auto!important;
         }
         #codigo_label{
-            font-weight: bold;
+            font-weight: 900;
             font-size: 30px;
             margin: 5px;
         }
         #tracking_label, #peso_label, #fecha_label{
-            font-weight: bold;
+            font-weight: 900;
             color: black;
             font-size: 15px;
         }
@@ -41,6 +52,7 @@
             transform: rotate(-90deg);
             bottom: 20px;
             margin-left: 35px;
+
         }
         .day{
             font-size: 30px;
@@ -54,6 +66,11 @@
         }
         .texto{
           font-size: 15px;
+        }
+        .year_2{
+          color: #454550;
+          font-weight: 500;
+          font-size: 30px;
         }
     </style>
 </head>
@@ -72,7 +89,7 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label class="control-label" for="codigo">@lang('general.warehouse_guide_tracking')</label>
+                                                <label class="control-label" for="codigo" style="font-weight: 900;">@lang('general.warehouse_guide_tracking')</label>
                                                 <div class="input-group" :class="{ 'has-error': errors.has('codigo') }">
                                                     <input type="text" placeholder="@lang('general.track_your_package_here')" class="form-control" name="codigo" v-model="codigo" v-validate.disabled="'required'">
                                                     <span class="input-group-btn">
@@ -108,11 +125,14 @@
                                                             <h1 style="" class="day" id="estado_day1">@{{ dato.day_data }}</h1>
                                                             <h2 style=""  class="mont" id="estado_mont1">@{{ dato.mont_data }}</h2>
                                                             <span class="year">
-                                                                <h2 id="estado_year1">@{{ dato.year_data }}</h2>
+                                                                <h2 class="year_2">@{{ dato.year_data }}</h2>
                                                             </span>
                                                         </div>
                                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="padding-left: 0; padding-right: 0;">
-                                                            <div style="text-align: center;"><img id="estado1" class="gris" v-bind:src="dato.img"></div>
+                                                            <div style="text-align: center;">
+                                                              {{-- <img id="estado1" class="gris" v-bind:src="dato.img"> --}}
+                                                              <i :class="dato.img" v-bind:style="{ color: dato.color }"></i>
+                                                            </div>
                                                             <div style="padding: 15px 0px;"></div>
                                                             <div style="text-align: center;"><img id="estado_linea1" src="{{ asset('img/imagesRastreo/linea_puntos.png') }}"></div>
                                                             <div style="padding: 15px 0px;"></div>

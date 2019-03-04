@@ -15,21 +15,23 @@ use Neodynamic\SDK\Web\TextAlignment;
 use Neodynamic\SDK\Web\ClientPrintJob;
 use Session;
 
+use Auth;
+use DataTables;
+use JavaScript;
+use Redirect;
+use Excel;
 use App\Agencia;
 use App\Documento;
 use App\DocumentoDetalle;
 use App\MaestraMultiple;
 use App\Servicios;
 use App\TipoDocumento;
-use Auth;
 use Barryvdh\DomPDF\Facade as PDF;
-use DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use JavaScript;
-use Redirect;
 use App\Traits\DocumentTrait;
+use App\Exports\ConsolidadoExport;
 
 class DocumentoController extends Controller
 {
@@ -107,6 +109,7 @@ class DocumentoController extends Controller
                     $data->usuario_id        = Auth::user()->id;
                     $data->carga_courier     = (isset($request->type_id) and $request->type_id != '') ? $request->type_id : 0;
                     $data->created_at        = $request->created_at;
+                    $data->tipo_consolidado  = 'COURIER';
                     $tipo                    = TipoDocumento::findOrFail($request->tipo_documento_id);
 
                     $getShipper = $this->getConfig('shipperDefault');
@@ -328,6 +331,7 @@ class DocumentoController extends Controller
                 $data->transporte_id      = $request->transporte_id;
                 $data->observaciones      = $request->observacion;
                 $data->updated_at         = $request->date;
+                $data->tipo_consolidado   = $request->tipo_consolidado;
                 if ($data->save()) {
                     $this->AddToLog('Documento Consolidado actualizado (' . $id . ')');
                     $answer = array(
@@ -668,6 +672,15 @@ class DocumentoController extends Controller
 
     public function getAll(Request $request)
     {
+      $data = $this->getConfig('show_agency_' . Auth::user()->agencia_id);
+      if($data and $data->value != ''){
+        $show = $data->value;
+      }else{
+        $show = null;
+      }
+      JavaScript::put(['show_agency' => $show]);
+      // print_r($data->value);
+      // exit();
       $filter = [['b.deleted_at', null],
         ['e.deleted_at', null],
         ['b.tipo_documento_id', $request->id_tipo_doc]];
@@ -823,8 +836,9 @@ class DocumentoController extends Controller
                 if ($request->declarado2 == '') {
                     $data->declarado2 = 0;
                 }
-
-                $data->created_at = $request->created_at;
+                if($request->created_at){
+                  $data->created_at = $request->created_at;
+                }
                 if ($data->tracking == '') {
                     $data->tracking = null;
                 }
@@ -2061,6 +2075,7 @@ class DocumentoController extends Controller
                 'a.num_warehouse',
                 'a.liquidado',
                 'a.peso2',
+                'e.pais_id',
                 'a.declarado2')
             ->where($filter)
             ->get();
@@ -2757,7 +2772,8 @@ class DocumentoController extends Controller
               'd.nombre AS ciudad',
               'f.descripcion AS pais',
               'g.descripcion AS agencia',
-              'g.logo'
+              'g.logo',
+              'b.tipo_consolidado'
           )
           ->where([
               ['a.deleted_at', null],
@@ -2770,13 +2786,62 @@ class DocumentoController extends Controller
             'd.nombre',
             'f.descripcion',
             'g.descripcion',
-            'g.logo')
+            'g.logo',
+            'b.tipo_consolidado')
           ->get();
 
           $pdf = PDF::loadView('pdf.labels.bolsasConsolidado', compact('data'))
           ->setPaper(array(0, 0, 550, 700), 'landscape');
           $nameDocument = 'Label Bolsa';
           return $pdf->stream($nameDocument . '.pdf');
+    }
+
+    public function exportLiquimp($id)
+    {
+      $data = DB::table('consolidado_detalle AS a')
+          ->join('documento_detalle AS b', 'a.documento_detalle_id', 'b.id')
+          ->join('posicion_arancelaria AS c', 'c.id', 'b.arancel_id2')
+          ->join('shipper AS d', 'd.id', 'b.shipper_id')
+          ->join('localizacion AS e', 'e.id', 'd.tipo_identificacion_id')
+          ->join('deptos AS f', 'e.deptos_id', 'f.id')
+          ->join('pais AS g', 'f.pais_id', 'g.id')
+          ->join('consignee AS i', 'i.id', 'b.consignee_id')
+          ->join('localizacion AS j', 'i.localizacion_id', 'j.id')
+          ->join('deptos AS k', 'j.deptos_id', 'k.id')
+          ->join('pais AS l', 'k.pais_id', 'l.id')
+          ->select(
+              'b.num_warehouse',
+              'b.num_guia',
+              'c.pa',
+              'c.arancel',
+              'c.iva',
+              'b.contenido2 AS contenido',
+              'b.declarado2 AS declarado',
+              'b.peso2 AS peso_lb',
+              'b.piezas',
+              'd.nombre_full AS ship',
+              'd.direccion AS ship_dir',
+              'd.zip AS ship_zip',
+              'd.telefono AS ship_tel',
+              'e.nombre AS ship_ciu',
+              'f.descripcion AS ship_depto',
+              'g.descripcion AS ship_pais',
+              'a.shipper AS ship_json',
+              'i.nombre_full AS cons',
+              'i.direccion AS cons_dir',
+              'j.codigo_int AS cons_ciu',
+              'k.descripcion AS cons_depto',
+              'l.descripcion AS cons_pais',
+              'i.telefono AS cons_tel',
+              'i.zip AS cons_zip'
+          )
+          ->where([
+              ['a.deleted_at', null],
+              ['b.deleted_at', null],
+              ['a.consolidado_id', $id],
+          ])->get();
+        return Excel::download(new ConsolidadoExport(array('datos' => $data,)),
+         'Excel Liquimp.xlsx', \Maatwebsite\Excel\Excel::XLSX);
     }
 
 }

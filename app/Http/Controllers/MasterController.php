@@ -49,9 +49,9 @@ class MasterController extends Controller
                 foreach ($request->other_c as $value) {
                     DB::table('master_cargos_adicionales')->insert(
                         [
-                            'master_id' => $master->id, 
-                            'descripcion' => $value['oc_description'], 
-                            'agent_carrier' => $value['oc_due'], 
+                            'master_id' => $master->id,
+                            'descripcion' => $value['oc_description'],
+                            'agent_carrier' => $value['oc_due'],
                             'valor' => $value['oc_value'],
                             'created_at' => date('Y-m-d H:i:s'),
                         ]
@@ -114,13 +114,13 @@ class MasterController extends Controller
                 'descripcion'    => $request->descripcion,
             ]);
             DB::table('master_cargos_adicionales')->where('master_id', $master)->delete();
-            if(count($request->other_c) > 0){
+            if($request->other_c[0]['oc_value'] != ''){
                 foreach ($request->other_c as $value) {
                     DB::table('master_cargos_adicionales')->insert(
                         [
-                            'master_id' => $master, 
-                            'descripcion' => $value['oc_description'], 
-                            'agent_carrier' => $value['oc_due'], 
+                            'master_id' => $master,
+                            'descripcion' => $value['oc_description'],
+                            'agent_carrier' => $value['oc_due'],
                             'valor' => $value['oc_value'],
                             'created_at' => date('Y-m-d H:i:s'),
                         ]
@@ -206,7 +206,9 @@ class MasterController extends Controller
             ->join('aerolineas_aeropuertos AS h', 'a.aeropuertos_id_destino', 'h.id')
             ->join('aerolineas_inventario AS i', 'a.aerolinea_inventario_id', 'i.id')
             ->leftJoin('documento AS z', 'a.id', 'z.master_id')
-            ->leftJoin('pais AS x', 'z.pais_id', 'x.id')
+            ->leftJoin('localizacion', 'z.ciudad_id', '=', 'localizacion.id')
+            ->leftJoin('deptos', 'localizacion.deptos_id', '=', 'deptos.id')
+            ->leftJoin('pais AS x', 'deptos.pais_id', 'x.id')
             ->select(
                 'a.num_master',
                 'a.account_information',

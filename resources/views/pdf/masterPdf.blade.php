@@ -1031,7 +1031,7 @@
                     {{-- Charges in Dest. Currency  --}}
                     <div style="position:absolute;top:9.78in;left:1.35in;width:0.99in;line-height:0.13in;font-size:10pt;">
                         <span style="font-style:normal;font-weight:normal;font-family:Helvetica;color:#000000">
-                            
+
                         </span>
                     </div>
                     {{-- Other Charges   --}}

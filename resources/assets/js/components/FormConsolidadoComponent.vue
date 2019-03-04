@@ -111,10 +111,10 @@
 																						</div>
                                         </div>
 																				<div class="col-sm-12" v-show="!show_buttons" style="color: #E34724">
-																					<span>Hay valores declarados en cero (0) o valores que superan lo permitido para COURIER o no hay documentos ingresadas</span></div>
+																					<span>Hay valores declarados en cero (0) o valores que superan lo permitido para COURIER o no hay documentos ingresados</span></div>
                                     </div>
 
-                                    <div class="col-sm-8">
+                                    <div class="col-sm-6">
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <label for="observacion">Observación</label>
@@ -122,7 +122,29 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4" v-if="!close">
+																		<div class="col-sm-2">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="observacion">Tipo consolidado</label>
+                                                <input type="text" v-model="tipo_consolidado" name="tipo_consolidado" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4" v-if="show_buttons">
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="status_id" style="width: 100%;">&nbsp;</label>
+                                                <button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Descargar Excel Liquimp" @click="exportLiquimp()"><i class="fas fa-cloud-download-alt"></i> Excel</button>
+                                            </div>
+                                        </div>
+																				<div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="status_id" style="width: 100%;">&nbsp;</label>
+                                                <button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Descargar Excel Bodega"><i class="fas fa-cloud-download-alt"></i> Excel Bodega</button>
+                                            </div>
+                                        </div>
+                                    </div>
+																		<!-- <div class="col-sm-4" v-if="!close">
                                         <div class="col-sm-9">
                                             <div class="form-group">
                                                 <label for="status_id">Estatus</label>
@@ -135,7 +157,7 @@
                                                 <button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Agregar estatus a guias" @click="addStatusConsolidado()"><i class="fa fa-save"></i> Aplicar</button>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="row"><div class="hr-line-dashed"></div></div>
                                 <div class="row" v-if="!close">
@@ -550,6 +572,9 @@
 				if(this.documento.observaciones != null){
 					this.observacion = this.documento.observaciones;
 				}
+				if(this.documento.observaciones != null){
+					this.tipo_consolidado = this.documento.tipo_consolidado;
+				}
 		},
 		created(){
 			/* CUSTOM MESSAGES VE-VALIDATOR*/
@@ -596,11 +621,12 @@
 						close: false,
 						localizacion_id: null,
 						ciudades: [],
+						tipo_consolidado: 'COURIER',
 	        }
 	    },
 		methods: {
-				printLabelBag(){
-
+				exportLiquimp(){
+					window.open('/exportLiquimp/' + this.documento.id, '_blank');
 				},
 				printLabelBagModal(){
 					$('#modalPrintLabels').modal('show');
@@ -769,7 +795,8 @@
 			                'central_destino_id': me.central_destino_id.id,
 	                    'transporte_id': me.transporte_id.id,
 			                'status_id': me.status_id.id,
-			                'observacion': me.observacion
+			                'observacion': me.observacion,
+			                'tipo_consolidado': me.tipo_consolidado,
 			            }
 			            axios.put('../'+$('#id_documento').val(), rowData).then(function (response) {
 				            toastr.success('Registro actualizado correctamente.');
@@ -782,26 +809,26 @@
 		                	toastr.options.closeButton = true;
 				        });
 				    }
-		        },
-		        validateForm: function() {
-		        	let me = this;
-		            if(me.central_destino_id == null){
-		            	me.msn = 'Es necesario seleccionar una central destino para continuar.';
-		            	return false;
-		            }
-		            if(me.localizacion_id == null){
-		            	me.msn = 'Es necesario seleccionar una ciudad para continuar.';
-		            	return false;
-		            }
-		            if(me.transporte_id == null){
-		            	me.msn = 'Es necesario seleccionar un transporte para continuar.';
-		            	return false;
-		            }
-		            return true;
-		        },
-		        cancelDocument: function() {
-		            window.location.href = '../';
-		        },
+		   	},
+	      validateForm: function() {
+	      	let me = this;
+	          if(me.central_destino_id == null){
+	          	me.msn = 'Es necesario seleccionar una central destino para continuar.';
+	          	return false;
+	          }
+	          if(me.localizacion_id == null){
+	          	me.msn = 'Es necesario seleccionar una ciudad para continuar.';
+	          	return false;
+	          }
+	          if(me.transporte_id == null){
+	          	me.msn = 'Es necesario seleccionar un transporte para continuar.';
+	          	return false;
+	          }
+	          return true;
+	      },
+        cancelDocument: function() {
+            window.location.href = '../';
+        },
 				updateDataDetail(rowData) {
 			        var me = this;
 			        axios.put('updateDetailConsolidado', {rowData}).then(function (response) {
@@ -880,6 +907,7 @@
 					        processing: true,
 					        serverSide: true,
 					        responsive: true,
+									lengthMenu: [[40, 50, 80, 100, 200, -1], [40, 50, 80, 100, 200, "All"]],
 					        ajax: 'getAllConsolidadoDetalle',
 					        columns: [
 					            {data: 'num_bolsa', name: 'num_bolsa'},

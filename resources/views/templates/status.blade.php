@@ -72,6 +72,7 @@
                                     </div>
                                 </div>
                         </div>
+
                         <div class="row">
                             <transition name="fade">
                                 <div class="col-lg-12" v-show="showTemplate">
@@ -105,6 +106,39 @@
                                             <label><input type="radio" value="0" id="view_client_n" name="view_client" checked=""> @lang('general.not')</label>
                                           </div>
                                             <small id="msn1" class="help-block result-view_client" v-show="listErrors.view_client">@lang('general.obligatory_field')</small>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="col-sm-5">
+                                            <label for="icon" class="control-label gcore-label-top">@lang('general.icon'):</label>
+                                        </div>
+                                        <div class="col-sm-7">
+                                            <div class="i-checks">
+                                              <el-select
+                                                v-model="value9"
+                                                size="medium"
+                                                filterable
+                                                placeholder="Buscar Icono"
+                                                loading-text="Cargando..."
+                                                no-data-text="No hay datos"
+                                                no-match-text="No coinciden datos"
+                                                value-key="value"
+                                                @change= "setIconPrefix">
+                                                <el-option
+                                                  v-for="item in list"
+                                                  :key="item.value"
+                                                  :label="item.label"
+                                                  :value="item">
+                                                  <span style="float: left;"><i :class="item.value" style="font-size: 25px;"></i></span>
+                                                  <span style="float: right; color: #8492a6; font-size: 13px">@{{ item.label }}</span>
+                                                </el-option>
+                                                <i slot="prefix" :class="icon_selected" style="margin-top: 8px;font-size: 20px;"></i>
+                                              </el-select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

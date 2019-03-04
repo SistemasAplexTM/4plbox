@@ -15,6 +15,7 @@ class Status extends Model
     protected $fillable = [
         'descripcion',
         'color',
+        'icon',
         'email',
         'view_client',
         'json_data',

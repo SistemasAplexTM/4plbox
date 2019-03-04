@@ -18,13 +18,13 @@ var objVue = new Vue({
             'descripcion': 'Su envío ha sido consolidado, próximo a despacharse a ',
         }, {
             'img': 'img/imagesRastreo/llegada.png',
-            'descripcion': 'Su paquete ha llegado a Colombia en proceso de desconsolidación.',
+            'descripcion': 'Su paquete ha llegado a bodega destino en proceso de desconsolidación.',
         }, {
             'img': 'img/imagesRastreo/reparto.png',
             'descripcion': 'Su paquete se encuentra en reparto con Coordinadora realice el seguimiento a la guía número 21200004563.',
         }, {
             'img': 'img/imagesRastreo/fin.png',
-            'descripcion': '',
+            'descripcion': 'El paquete ha sido entregado!!',
         }],
         datos: [],
     },
@@ -48,14 +48,19 @@ var objVue = new Vue({
                             if(this.datos.length > 0){
                                 this.peso_label = this.datos[0].peso;
                                 str = this.datos[0].tracking;
-                                this.tracking_label = str.split(",");
+                                this.tracking_label = '';
+                                if(str != null){
+                                  this.tracking_label = str.split(",");
+                                }
                             }else{
                                 this.no_data = 'No hay datos con el numero ingresado. :(';
                             }
                             for (var i in this.datos) {
                                 if (this.datos.hasOwnProperty(i)) {
                                     this.datos[i].mont_data = this.findMontToDate(this.datos[i].mont_data);
-                                    this.datos[i].img = this.replace[i].img;
+                                    // this.datos[i].img = this.replace[i].img;
+                                    this.datos[i].img = this.datos[i].icon + ' fa-5x';
+                                    this.datos[i].color = this.datos[i].color;
                                     this.datos[i].descripcion = this.replace[i].descripcion;
                                     if(i != 0){
                                         this.datos[i].procedencia = '';

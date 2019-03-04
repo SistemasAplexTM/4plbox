@@ -53,7 +53,7 @@ trait DocumentTrait
               'b.num_warehouse',
               DB::raw("SUM(t.consolidado_status) AS consolidado_status"),
               'b.carga_courier',
-              DB::raw('"ciudad"')
+              DB::raw('"ciudad" AS ciudad')
           )
           ->where($filter)
           ->where('b.carga_courier', 0)
@@ -186,7 +186,8 @@ trait DocumentTrait
                         AND z.flag = 1
                       ) AS agrupadas'),
               $qr_group,
-              DB::raw('"ciudad"')
+              'a.mintic',
+              DB::raw('"ciudad" AS ciudad')
             )
             ->where($filter)
             ->where('b.carga_courier', 1)
