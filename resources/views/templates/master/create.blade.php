@@ -28,13 +28,13 @@
                 <div class="ibox-title">
                     <h5>@lang('master.master_guide_record')</h5>
                     <div class="ibox-tools">
-                        
+
                     </div>
                 </div>
                 <div class="ibox-content">
                     <!--***** contenido ******-->
-                    @if(count($master) > 0)
-                        <master-component :master="{!! (count($master) > 0) ? $master : false !!}"></master-component>
+                    @if($master)
+                        <master-component :master="{!! ($master) ? $master : false !!}"></master-component>
                     @else
                         <master-component :master="null"></master-component>
                     @endif

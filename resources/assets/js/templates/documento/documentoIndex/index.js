@@ -121,7 +121,11 @@ function datatableDocument(t, tipo_doc_id, status_id){
       }],
       'columnDefs': [{
           className: "text-center",
+<<<<<<< HEAD
           "targets": [7,8]
+=======
+          "targets": [6]
+>>>>>>> 796718c48ab02d35d1d182767ce683829d80f068
       }],
       "drawCallback": function () {
         /* POPOVER PARA LAS GUIAS AGRUPADAS (BADGED) */

@@ -289,7 +289,7 @@ class TrackingController extends Controller
     {
         try {
             $dataTrack = DB::table('tracking')->select('codigo')->where('codigo', $request->element)->first();
-            if (count($dataTrack) > 0) {
+            if ($dataTrack) {
                 $answer = array(
                     "valid"   => false,
                     "message" => "El registro ya se encuentra en nuestra base de datos.",

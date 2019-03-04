@@ -223,6 +223,8 @@ var objVue = new Vue({
           }
         },
         createDocument: function(){
+          var l = $("#saveDoc").ladda();
+          l.ladda( 'start' );
           let me = this;
           var datos = $("#formTrackingClient").serializeArray();
           me.ids_tracking = [];
@@ -259,6 +261,7 @@ var objVue = new Vue({
                 } else {
                     toastr.warning(response.data['error']);
                 }
+                l.ladda('stop');
             }).catch(function(error) {
                 console.log(error);
                 if (error.response.status === 422) {
@@ -271,8 +274,10 @@ var objVue = new Vue({
                 toastr.error("Porfavor completa los campos obligatorios.", {
                     timeOut: 50000
                 });
+                l.ladda('stop');
             });
           }
+          l.ladda('stop');
         },
         createDocumentDetail: function(id_document) {
           let me = this;
