@@ -89,10 +89,6 @@ function datatableDocument(t, tipo_doc_id, status_id){
           data: 'cons_nomfull',
           name: 'c.nombre_full'
       },{
-          data: 'ciudad',
-          name: 'ciudad',
-          visible: (tipo_doc_id != 3) ? false : true
-      },{
           data: 'valor',
           name: 'b.valor',
           visible: (tipo_doc_id != 3) ? true : false
@@ -112,7 +108,7 @@ function datatableDocument(t, tipo_doc_id, status_id){
       }],
       'columnDefs': [{
           className: "text-center",
-          "targets": [7]
+          "targets": [6]
       }],
       "drawCallback": function () {
         /* POPOVER PARA LAS GUIAS AGRUPADAS (BADGED) */
