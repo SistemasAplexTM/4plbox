@@ -1,3 +1,4 @@
+let modalName = '';
 $(document).ready(function() {
     setIdPaisConfig();
     $('#tracking').tagsinput();
@@ -42,9 +43,9 @@ $(document).ready(function() {
         $(this).removeClass('label-info').css('color', '#555');
         $(this).children('span').remove();
     });
-    llenarSelectPersonalizado('documento', 'localizacion', 'localizacion_id', 2); // module, tableName, id_campo
-    llenarSelectPersonalizado('documento', 'localizacion', 'localizacion_id_c', 2); // module, tableName, id_campo
-    llenarSelectPersonalizado('documento', 'localizacion', 'points_id', 2); // module, tableName, id_campo
+    // llenarSelectPersonalizado('documento', 'localizacion', 'localizacion_id', 2); // module, tableName, id_campo
+    // llenarSelectPersonalizado('documento', 'localizacion', 'localizacion_id_c', 2); // module, tableName, id_campo
+    // llenarSelectPersonalizado('documento', 'localizacion', 'points_id', 2); // module, tableName, id_campo
 
 });
 $(function() {
@@ -378,61 +379,61 @@ function llenarSelectServicio(id_embarque) {
   });
 }
   /*-- Función para llenar select PERSONALIZADO --*/
-function llenarSelectPersonalizado(module, tableName, idSelect, length) {
-    var url = '../selectInput/' + tableName;
-    $('#' + idSelect).select2({
-        placeholder: "Seleccionar",
-        tokenSeparators: [','],
-        ajax: {
-            url: url,
-            dataType: 'json',
-            delay: 250,
-            data: function(params) {
-                return {
-                    term: params.term, // search term
-                    page: params.page
-                };
-            },
-            processResults: function(data, params) {
-                params.page = params.page || 1;
-                return {
-                    results: data.items,
-                    pagination: {
-                        more: (params.page * 30) < data.total_count
-                    }
-                };
-            },
-            cache: false
-        },
-        escapeMarkup: function(markup) {
-            return markup;
-        }, // let our custom formatter work
-        templateResult: formatRepo,
-        templateSelection: formatRepoSelection,
-        minimumInputLength: length,
-    }).on("change", function(e) {
-        $('.select2-selection').css('border-color', '');
-        $('#' + idSelect).siblings('small').css('display', 'none');
-    });
-}
+// function llenarSelectPersonalizado(module, tableName, idSelect, length) {
+//     var url = '../selectInput/' + tableName;
+//     $('#' + idSelect).select2({
+//         placeholder: "Seleccionar",
+//         tokenSeparators: [','],
+//         ajax: {
+//             url: url,
+//             dataType: 'json',
+//             delay: 250,
+//             data: function(params) {
+//                 return {
+//                     term: params.term, // search term
+//                     page: params.page
+//                 };
+//             },
+//             processResults: function(data, params) {
+//                 params.page = params.page || 1;
+//                 return {
+//                     results: data.items,
+//                     pagination: {
+//                         more: (params.page * 30) < data.total_count
+//                     }
+//                 };
+//             },
+//             cache: false
+//         },
+//         escapeMarkup: function(markup) {
+//             return markup;
+//         }, // let our custom formatter work
+//         templateResult: formatRepo,
+//         templateSelection: formatRepoSelection,
+//         minimumInputLength: length,
+//     }).on("change", function(e) {
+//         $('.select2-selection').css('border-color', '');
+//         $('#' + idSelect).siblings('small').css('display', 'none');
+//     });
+// }
 
-function formatRepo(repo) {
-    if (repo.loading) {
-        return repo.text;
-    }
-    var markup = "<div class='select2-result-repository clearfix'>" + "<div class='select2-result-repository__meta'>" + "<div class='select2-result-repository__title'><strong><i class='fa fa-map-marker'></i> " + repo.text + " / " + repo.deptos + " / " + repo.pais + "</strong></div>";
-    return markup;
-}
-
-function formatRepoSelection(repo) {
-    $('#deptoD').val(repo.deptos);
-    $('#paisD').val(repo.pais);
-    $('#pais_id_D').val(repo.pais_id);
-    // setTimeout(function() {
-    //   refreshTable('whgTable');
-    // }, 500);
-    return repo.text || repo.id + ' - ' + repo.text;
-}
+// function formatRepo(repo) {
+//     if (repo.loading) {
+//         return repo.text;
+//     }
+//     var markup = "<div class='select2-result-repository clearfix'>" + "<div class='select2-result-repository__meta'>" + "<div class='select2-result-repository__title'><strong><i class='fa fa-map-marker'></i> " + repo.text + " / " + repo.deptos + " / " + repo.pais + "</strong></div>";
+//     return markup;
+// }
+//
+// function formatRepoSelection(repo) {
+//     $('#deptoD').val(repo.deptos);
+//     $('#paisD').val(repo.pais);
+//     $('#pais_id_D').val(repo.pais_id);
+//     // setTimeout(function() {
+//     //   refreshTable('whgTable');
+//     // }, 500);
+//     return repo.text || repo.id + ' - ' + repo.text;
+// }
 
 function editTableDetail(id_fila) {
     var data = {
@@ -532,7 +533,7 @@ function setIdPaisConfig() {
 
 /* funciones para los puntos */
 function insertPoints(id_detail) {
-  // selectPoints();
+  objVue.points_id_detail = id_detail
   $('#modalAddPoints').modal('show');
 }
 

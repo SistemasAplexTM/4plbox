@@ -29,8 +29,8 @@ class TrackingController extends Controller
      */
     public function index()
     {
-        $this->assignPermissionsJavascript('tracking');
-        return view('templates/tracking');
+      $this->assignPermissionsJavascript('tracking');
+      return view('templates/tracking');
     }
 
     /**
