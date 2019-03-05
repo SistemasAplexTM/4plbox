@@ -2403,6 +2403,7 @@ class DocumentoController extends Controller
             ]);
             DocumentoDetalle::where('id', $key->documento_detalle_id)->update(['status_id' => $request->status_id]);
         }
+        Documento::where('id', $id)->update(['estado_id' => $request->status_id]);
         $this->AddToLog('Estatus agregado a guias. Conolidado id (' . $id . ')');
 
         $answer = array(
@@ -2913,4 +2914,14 @@ class DocumentoController extends Controller
          'Excel Liquimp.xlsx', \Maatwebsite\Excel\Excel::XLSX);
     }
 
+    public function getStatusDocument(Request $request, $id)
+    {
+      $estatus = Documento::select('documento.estado_id')
+          ->where([
+              ['documento.deleted_at', null],
+              ['documento.id', $id],
+          ])
+          ->first();
+        return $estatus;
+    }
 }

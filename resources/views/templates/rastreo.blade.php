@@ -80,7 +80,7 @@
             <div class="wrapper wrapper-content animated fadeInRight" id="rastreo">
                 <div class="row" id="contenido">
                     <div class="col-lg-5 col-md-6" id="formulario">
-                        <h1>@lang('general.track_your_merchandise')</h1>
+                        <h1 style="font-weight: 900;">@lang('general.track_your_merchandise')</h1>
                         <p>@lang('general.enter_the_tracking')</p>
                         <form id="formRastreo" class="form-horizontal casillero_form" v-on:submit.prevent="getData()">
                             <div class="ibox float-e-margins">

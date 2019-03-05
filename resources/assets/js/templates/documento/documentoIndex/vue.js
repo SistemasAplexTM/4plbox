@@ -68,7 +68,6 @@ var objVue = new Vue({
           me.getStatus();
         },1500)
         $('#date').val(this.getTime());
-        this.getStatus();
     },
     created(){
       //
@@ -77,18 +76,17 @@ var objVue = new Vue({
         id_status: null,
         tableDelete: null,
         params: {},
-        status: [],
-        status_id: null,
         type_document: null,
         datosAgrupar: {},
         removerAgrupado: {}, //es para poder remover guias agrupadas en el consolidado
         status_id: {id: 5, descripcion: 'Consolidada'},
         status: [],
+        id_consolidado_selected: null,
     },
     methods: {
         addStatusConsolidado: function(){
             let me = this;
-            axios.post('addStatusToGuias',{
+            axios.post('documento/' + me.id_consolidado_selected + '/addStatusToGuias',{
                 'status_id': me.status_id.id
             }).then(function (response) {
                 toastr.success('Registro Exitoso.');
@@ -98,10 +96,10 @@ var objVue = new Vue({
                 toastr.options.closeButton = true;
             });
         },
-        getStatus: function(){
+        getStatusDocument: function(){
             let me = this;
-            axios.get('../status/all').then(function (response) {
-                me.status = response.data.data;
+            axios.post('documento/' + me.id_consolidado_selected + '/getStatusDocument').then(function (response) {
+                console.log(response.data);
             }).catch(function (error) {
                 console.log(error);
                 toastr.warning('Error.');

@@ -284,5 +284,7 @@ function numDocument(data, type, full, meta) {
 }
 
 function modalChangeStatus(id) {
+  objVue.id_consolidado_selected = id;
+  objVue.getStatusDocument();
   $('#modalChangeStatus').modal('show');
 }

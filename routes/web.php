@@ -261,6 +261,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('documento/ajaxCreateNota/{id}', 'DocumentoController@ajaxCreateNota')->name('documento.ajaxCreateNota');
     Route::post('documento/{id}/createContactsConsolidadoDetalle', 'DocumentoController@createContactsConsolidadoDetalle');
     Route::post('documento/{id}/addStatusToGuias', 'DocumentoController@addStatusToGuias')->name('documento.addStatusToGuias');
+    Route::post('documento/{id}/getStatusDocument', 'DocumentoController@getStatusDocument')->name('documento.getStatusDocument');
     Route::post('documento/{id}/agruparGuiasConsolidadoCreate', 'DocumentoController@agruparGuiasConsolidadoCreate');
     Route::get('documento/{id}/removerGuiaAgrupada/{id_detalle}/{id_guia_detalle}/{document?}', 'DocumentoController@removerGuiaAgrupada')->name('documento.removerGuiaAgrupada');
     Route::get('documento/sendEmailDocument/{id}', 'DocumentoController@sendEmailDocument');
