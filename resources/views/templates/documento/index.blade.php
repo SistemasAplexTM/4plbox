@@ -22,6 +22,7 @@
     }
     .lb_status{
         cursor: pointer;
+        font-family: 'Roboto', sans-serif;
     }
     .dropdown-toggle>input[type="search"] {
     width: 100px !important;

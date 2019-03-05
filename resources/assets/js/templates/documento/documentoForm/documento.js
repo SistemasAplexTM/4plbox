@@ -170,15 +170,8 @@ function datatableDetail(){
                 }
 
                 btn_addTracking = '<a class="btn btn-info btn-xs btn-actions addTrackings" type="button" id="btn_addtracking'+full.id+'" data-toggle="tooltip" title="Agregar tracking" onclick="addTrackings('+full.id+')"><i class="fa fa-truck"></i> <span id="cant_tracking'+full.id+'">'+full.cantidad+'</span></a> ';
-<<<<<<< HEAD
                 if(puntos != null){
                   if(objVue.city_c.pais_id == puntos.pais_id){
-=======
-
-                if(puntos_config != null){
-                  var puntos = JSON.parse(puntos_config)
-                  if($('#pais_id_D').val() == puntos.pais_id){
->>>>>>> 796718c48ab02d35d1d182767ce683829d80f068
                       btn_points = ' <a class="btn btn-warning btn-xs btn-actions" type="button" id="btn_points'+full.id+'" onclick="insertPoints('+full.id+')" data-toggle="tooltip" title="Puntos"><i class="far fa-map-pin"></i></a> ';
                   }
                 }
