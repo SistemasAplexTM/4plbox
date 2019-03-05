@@ -49,3 +49,4 @@ Vue.component('consol_bodega-component', 	      require('./components/ConsolBode
 Vue.component('config-component', 				      require('./components/config/Index.vue'));
 Vue.component('agency-integrations-component',  require('./components/agency_integrations/Index.vue'));
 Vue.component('points-component', 				      require('./components/ModalPointsComponent.vue'));
+Vue.component('city-component', 				        require('./components/CityComponent.vue'));
