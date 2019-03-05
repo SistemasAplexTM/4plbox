@@ -22,8 +22,9 @@ class PrintConfigController extends Controller
 
     public function save(Request $request)
     {
-      $key = 'print_'. Auth::user()->agencia_id;
-      $data = array('prints' => $request->data);
+      // $key = 'print_'. Auth::user()->agencia_id;
+      $key = 'print_' . php_uname('n');
+      $data = array("prints" => $request->data);
       $id = $this->getConfig($key);
       if ($id) {
         AplexConfig::where('id', $id->id)->update([
