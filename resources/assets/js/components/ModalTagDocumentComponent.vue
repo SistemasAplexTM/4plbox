@@ -103,7 +103,7 @@
                 </div>
 
 
-							    <div role="tabpanel" class="tab-pane fade active" id="status">
+							    <div role="tabpanel" class="tab-pane fade" id="status">
 							    	<div class="row form-group" id="register">
     										<div class="col-lg-6" :class="{ 'has-error': errors.has('warehouse') }">
     											<v-select name="warehouse" v-model="warehouse_codigo" label="name" :options="warehouses" v-validate.disable="'required'" placeholder="Warehouse/Guia"></v-select>
