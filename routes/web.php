@@ -86,7 +86,7 @@ Route::group(['middleware' => 'auth'], function () {
     /*--- MASTER ---*/
     Route::resource('master', 'MasterController');
     // Reg al final, por que genera conficto el hecho de que el show se llama con "nombre/variable"
-    Route::get('master/create/{master}', 'MasterController@create');
+    Route::get('master/create/{master}/{consolidado_id?}', 'MasterController@create');
     Route::get('master/all/reg', 'MasterController@getAll');
     Route::get('master/delete/{id}/{logical?}', 'MasterController@delete')->name('modulo.delete');
     Route::get('master/restaurar/{id}', 'MasterController@restaurar');
@@ -94,6 +94,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('master/getOtherCharges/{id}', 'MasterController@getOtherCharges');
     Route::get('master/imprimirLabel/{id_master}', 'MasterController@imprimirLabel');
     Route::get('master/imprimirGuias/{consolidado_id}/{option?}', 'MasterController@imprimirGuias');
+    Route::post('master/getDataConsolidados', 'MasterController@getDataConsolidados');
 
     /*--- MODULO TRACKINGS ---*/
     Route::resource('tracking', 'TrackingController', ['except' => ['show', 'create', 'edit', 'update']]);
@@ -261,6 +262,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('documento/ajaxCreateNota/{id}', 'DocumentoController@ajaxCreateNota')->name('documento.ajaxCreateNota');
     Route::post('documento/{id}/createContactsConsolidadoDetalle', 'DocumentoController@createContactsConsolidadoDetalle');
     Route::post('documento/{id}/addStatusToGuias', 'DocumentoController@addStatusToGuias')->name('documento.addStatusToGuias');
+    Route::post('documento/{id}/getStatusDocument', 'DocumentoController@getStatusDocument')->name('documento.getStatusDocument');
     Route::post('documento/{id}/agruparGuiasConsolidadoCreate', 'DocumentoController@agruparGuiasConsolidadoCreate');
     Route::get('documento/{id}/removerGuiaAgrupada/{id_detalle}/{id_guia_detalle}/{document?}', 'DocumentoController@removerGuiaAgrupada')->name('documento.removerGuiaAgrupada');
     Route::get('documento/sendEmailDocument/{id}', 'DocumentoController@sendEmailDocument');

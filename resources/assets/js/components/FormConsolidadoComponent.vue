@@ -140,7 +140,7 @@
 																				<div class="col-sm-3">
                                             <div class="form-group">
                                                 <label for="" style="width: 100%;">&nbsp;</label>
-                                                <button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Descargar Excel Bodega"><i class="fas fa-cloud-download-alt"></i> Excel Bodega</button>
+                                                <button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Descargar Excel Bodega" @click="exportCellar()"><i class="fas fa-cloud-download-alt"></i> Excel Bodega</button>
                                             </div>
                                         </div>
                                     </div>
@@ -610,6 +610,9 @@
 		methods: {
 				exportLiquimp(){
 					window.open('/exportLiquimp/' + this.documento.id, '_blank');
+				},
+				exportCellar(){
+					window.open('/exportCellar/' + this.documento.id, '_blank');
 				},
 				printLabelBagModal(){
 					$('#modalPrintLabels').modal('show');

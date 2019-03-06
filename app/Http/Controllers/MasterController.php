@@ -88,10 +88,11 @@ class MasterController extends Controller
         return array('data' => $data, 'detalle' => $detalle);
     }
 
-    public function create($master = null)
+    public function create($master = null, $consolidado_id = null)
     {
         $master = $master;
-        return view('templates.master.create', compact('master'));
+        $consolidado_id = $consolidado_id;
+        return view('templates.master.create', compact('master', 'consolidado_id'));
     }
     public function update(Request $request, $master)
     {
@@ -341,7 +342,7 @@ class MasterController extends Controller
     public function vueSelectConsolidados($data)
     {
         $where = [
-                ['a.pais_id', '<>', null],
+                ['a.ciudad_id', '<>', null],
                 ['a.master_id', null],
                 ['a.deleted_at', null],
             ];
@@ -349,9 +350,12 @@ class MasterController extends Controller
             $where[] = ['a.agencia_id', Auth::user()->agencia_id];
         }
         $term = $data;
-        $tags = DB::table('documento AS a')->leftJoin('pais AS b', 'a.pais_id', 'b.id')
-            ->select(['a.id', 'a.consecutivo AS consolidado', DB::raw('SUBSTRING_INDEX(`a`.`created_at`, " ", 1) as fecha'), 'b.descripcion AS pais'])
-            ->whereRaw("(a.consecutivo like '%" . $term . "%' OR b.descripcion like '%" . $term . "%')")
+        $tags = DB::table('documento AS a')
+            ->leftJoin('localizacion AS b', 'a.ciudad_id', 'b.id')
+            ->leftJoin('deptos AS c', 'b.deptos_id', 'c.id')
+            ->leftJoin('pais AS d', 'c.pais_id', 'd.id')
+            ->select(['a.id', 'a.consecutivo AS consolidado', DB::raw('SUBSTRING_INDEX(`a`.`created_at`, " ", 1) as fecha'), 'd.descripcion AS pais'])
+            ->whereRaw("(a.consecutivo like '%" . $term . "%' OR d.descripcion like '%" . $term . "%')")
             ->where($where)->get();
         $answer = array(
             'code'  => 200,
@@ -408,5 +412,24 @@ class MasterController extends Controller
         $detalle = DB::select("CALL getDataGuiasDetalleByConsolidadoId(?)", array($consolidado_id));
 
         return view('pdf/labels/guiasHijasColombiana', compact('detalle'));
+    }
+
+    public function getDataConsolidados()
+    {
+      $where = [
+              ['a.ciudad_id', '<>', null],
+              ['a.master_id', null],
+              ['a.deleted_at', null],
+          ];
+      if(!Auth::user()->isRole('admin')){
+          $where[] = ['a.agencia_id', Auth::user()->agencia_id];
+      }
+      $data = DB::table('documento AS a')
+          ->leftJoin('localizacion AS b', 'a.ciudad_id', 'b.id')
+          ->leftJoin('deptos AS c', 'b.deptos_id', 'c.id')
+          ->leftJoin('pais AS d', 'c.pais_id', 'd.id')
+          ->select(['a.id', 'a.consecutivo AS consolidado', DB::raw('SUBSTRING_INDEX(`a`.`created_at`, " ", 1) as fecha'), 'b.nombre AS ciudad'])
+          ->where($where)->get();
+      return $data;
     }
 }

@@ -1178,6 +1178,7 @@ class DocumentoController extends Controller
                 'servicios.nombre AS servicio',
                 'tipo_documento.nombre AS tipo_documento',
                 'm.num_master',
+                'm.fecha_vuelo1 AS fecha_vuelo',
                 'aerolinea.nombre AS aerolinea',
                 'aeropuerto.nombre AS aeropuerto',
                 'transportador.nombre AS consignee_master',
@@ -1723,7 +1724,7 @@ class DocumentoController extends Controller
         $id_detail_consol = $request->input('id_detail_consol');
       }
       // OBTENER LA CONFIGURACION DE LA IMPRESORA
-      $dataPrint = $this->getConfig('print_' . $request->input('agency_id'));
+      $dataPrint = $this->getConfig('print_' . php_uname('n'));
       $prints = json_decode($dataPrint->value);
       // VALIDAR SI ES UN LABEL O UN DOCUMENTO A IMPRIMIR
       if($request->input('label')){
@@ -2403,6 +2404,7 @@ class DocumentoController extends Controller
             ]);
             DocumentoDetalle::where('id', $key->documento_detalle_id)->update(['status_id' => $request->status_id]);
         }
+        Documento::where('id', $id)->update(['estado_id' => $request->status_id]);
         $this->AddToLog('Estatus agregado a guias. Conolidado id (' . $id . ')');
 
         $answer = array(
@@ -2819,7 +2821,7 @@ class DocumentoController extends Controller
 
     public function exportLiquimp($id)
     {
-      $data = DB::table('consolidado_detalle AS a')
+        $data = DB::table('consolidado_detalle AS a')
           ->join('documento_detalle AS b', 'a.documento_detalle_id', 'b.id')
           ->join('posicion_arancelaria AS c', 'c.id', 'b.arancel_id2')
           ->join('shipper AS d', 'd.id', 'b.shipper_id')
@@ -2850,7 +2852,7 @@ class DocumentoController extends Controller
               'a.shipper AS ship_json',
               'i.nombre_full AS cons',
               'i.direccion AS cons_dir',
-              'j.codigo_int AS cons_ciu',
+              'j.nombre AS cons_ciu',
               'k.descripcion AS cons_depto',
               'l.descripcion AS cons_pais',
               'i.telefono AS cons_tel',
@@ -2860,15 +2862,16 @@ class DocumentoController extends Controller
               ['a.deleted_at', null],
               ['b.deleted_at', null],
               ['a.consolidado_id', $id],
-          ])->get();
-        return Excel::download(new ConsolidadoExport(array('datos' => $data,)),
+        ])->get();
+        return Excel::download(new ConsolidadoExport('exports.excelLiquimp', array('datos' => $data,)),
          'Excel Liquimp.xlsx', \Maatwebsite\Excel\Excel::XLSX);
     }
 
     public function exportCellar($id)
     {
-      $data = DB::table('consolidado_detalle AS a')
+        $data = DB::table('consolidado_detalle AS a')
           ->join('documento_detalle AS b', 'a.documento_detalle_id', 'b.id')
+          ->join('documento AS doc', 'b.documento_id', 'doc.id')
           ->join('posicion_arancelaria AS c', 'c.id', 'b.arancel_id2')
           ->join('shipper AS d', 'd.id', 'b.shipper_id')
           ->join('localizacion AS e', 'e.id', 'd.tipo_identificacion_id')
@@ -2879,6 +2882,7 @@ class DocumentoController extends Controller
           ->join('deptos AS k', 'j.deptos_id', 'k.id')
           ->join('pais AS l', 'k.pais_id', 'l.id')
           ->select(
+              'doc.consecutivo',
               'b.num_warehouse',
               'b.num_guia',
               'c.pa',
@@ -2898,19 +2902,30 @@ class DocumentoController extends Controller
               'a.shipper AS ship_json',
               'i.nombre_full AS cons',
               'i.direccion AS cons_dir',
-              'j.codigo_int AS cons_ciu',
+              'j.nombre AS cons_ciu',
               'k.descripcion AS cons_depto',
               'l.descripcion AS cons_pais',
               'i.telefono AS cons_tel',
-              'i.zip AS cons_zip'
+              'i.zip AS cons_zip',
+              DB::raw("(SELECT GROUP_CONCAT(tracking.codigo) FROM tracking WHERE tracking.documento_detalle_id = b.id) as tracking")
           )
           ->where([
               ['a.deleted_at', null],
               ['b.deleted_at', null],
               ['a.consolidado_id', $id],
-          ])->get();
-        return Excel::download(new ConsolidadoExport(array('datos' => $data,)),
-         'Excel Liquimp.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+        ])->get();
+        return Excel::download(new ConsolidadoExport('exports.excelBodega', array('datos' => $data,)),
+         'Excel Bodega.xlsx', \Maatwebsite\Excel\Excel::XLSX);
     }
 
+    public function getStatusDocument(Request $request, $id)
+    {
+      $estatus = Documento::select('documento.estado_id')
+          ->where([
+              ['documento.deleted_at', null],
+              ['documento.id', $id],
+          ])
+          ->first();
+        return $estatus;
+    }
 }
