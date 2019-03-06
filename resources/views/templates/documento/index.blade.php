@@ -279,7 +279,7 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="status_id" style="width: 100%;">&nbsp;</label>
-                                        <button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Agregar estatus a guias" @click="addStatusConsolidado()"><i class="fa fa-save"></i> Cambiar estatus</button>
+                                        <button class="ladda-button btn btn-primary btn-sm" data-style="expand-right" type="button" data-toggle="tooltip" title="Agregar estatus a guias" @click="addStatusConsolidado()"><i class="fa fa-save"></i> Cambiar</button>
                                     </div>
                                 </div>
                             </div>

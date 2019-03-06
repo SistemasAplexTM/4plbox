@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class CasilleroEmail extends Mailable
+class BodegaRecibido extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -33,8 +33,8 @@ class CasilleroEmail extends Mailable
      */
     public function build()
     {
-        return $this->from($this->from_self)
-        ->subject($this->subject_msn)
-        ->view('emailTemplate');
+      return $this->from($this->from_self)
+      ->subject($this->subject_msn)
+      ->view('emailTemplate');
     }
 }

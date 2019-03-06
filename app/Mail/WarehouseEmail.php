@@ -42,14 +42,14 @@ class WarehouseEmail extends Mailable
         if($this->pdf){
             return $this->from($this->from_self['address'])
             ->subject($this->subject_msn)
-            ->view('prueba')
+            ->view('emailTemplate')
             ->attachData(base64_decode($this->pdf), $this->pdf_name.'.pdf', [
                     'mime' => 'application/pdf',
             ]);
         }else{
             return $this->from($this->from_self)
             ->subject($this->subject_msn)
-            ->view('prueba');
+            ->view('emailTemplate');
         }
 
     }

@@ -85,12 +85,17 @@ var objVue = new Vue({
     },
     methods: {
         addStatusConsolidado: function(){
+            var l = Ladda.create(document.querySelector('.ladda-button'));
+            console.log(l);
+            l.start();
             let me = this;
             axios.post('documento/' + me.id_consolidado_selected + '/addStatusToGuias',{
                 'status_id': me.status_id.id
             }).then(function (response) {
+                l.stop();
                 toastr.success('Registro Exitoso.');
             }).catch(function (error) {
+                l.stop();
                 console.log(error);
                 toastr.warning('Error.');
                 toastr.options.closeButton = true;
