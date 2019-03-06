@@ -1178,6 +1178,7 @@ class DocumentoController extends Controller
                 'servicios.nombre AS servicio',
                 'tipo_documento.nombre AS tipo_documento',
                 'm.num_master',
+                'm.fecha_vuelo1 AS fecha_vuelo',
                 'aerolinea.nombre AS aerolinea',
                 'aeropuerto.nombre AS aeropuerto',
                 'transportador.nombre AS consignee_master',

@@ -52,3 +52,33 @@ $(document).ready(function () {
         ]
     });
 });
+new Vue({
+ el: '#master_list',
+ mounted(){
+   this.getData();
+ },
+ data:{
+   options: [],
+   consolidado_id: null,
+   list: [],
+   loading: false,
+ },
+ methods: {
+   getData(){
+     var me = this;
+     axios.post('master/getDataConsolidados').then(function(response) {
+         me.options = response.data;
+     }).catch(function(error) {
+         console.log(error);
+         toastr.warning('Error: -' + error);
+     });
+   },
+   createMaster(){
+     var consolidado_id = null;
+     if(this.consolidado_id != null){
+       consolidado_id = this.consolidado_id.id;
+     }
+     location.href = "master/create/" + null + '/' + consolidado_id;
+   }
+	}
+});

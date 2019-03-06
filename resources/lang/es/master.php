@@ -40,7 +40,7 @@ return [
 'airport_of_destination'=>'Aeropuerto de destino',
 'flight_date'=>'Fecha de vuelo',
 'amount_of_insurance'=>'Cantidad de seguro',
-'insurance'=>'SEGURO: Si el transportista ofrece un seguro y dicho seguro se solicita de acuerdo con las condiciones 
+'insurance'=>'SEGURO: Si el transportista ofrece un seguro y dicho seguro se solicita de acuerdo con las condiciones
              que, indique el monto que se asegurará en cifras, está marcado con una caja * Cantidad de seguro *',
 'handling_information'=>'Manejo de la información',
 'message_technology'=>'* Esta tecnología o software de productos básicos se exportó desde los Estados Unidos
@@ -67,7 +67,7 @@ return [
 'charges_at_destination'=>'Cargos en el destino',
 'other_charge'=>'Otro cargo',
 'shipper_certifies'=>'El remitente certifica que los datos que figuran aquí son correctos y que, en la medida en que cualquier parte del envío
-                      contiene mercancías peligrosas, dicha parte está debidamente descrita por su nombre y está en condiciones adecuadas para el transporte aéreo, 
+                      contiene mercancías peligrosas, dicha parte está debidamente descrita por su nombre y está en condiciones adecuadas para el transporte aéreo,
                       de conformidad con las reglamentaciones aplicables sobre mercancías peligrosas.',
 'signature_of_shippe'=>'Firma del remitente o su agente',
 'executed_on'=>'Ejecutado en',
@@ -88,12 +88,12 @@ return [
 'manifest'=>'Consolidado',
 'actions'=>'Acciones',
 'new'=>'Nuevo',
+'create'=>'Crear' 
 
 
 
 
 
-           
 
 
 

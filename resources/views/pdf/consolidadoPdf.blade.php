@@ -119,7 +119,7 @@
     </tr>
     <tr>
         <td colspan="2"><div id="localAgencia">{{ $documento->agencia_ciudad }}, {{ $documento->agencia_depto }}. {{ $documento->agencia_zip }}</div></td>
-        <td colspan="2"><div id="numManifiesto">N° @lang('general.manifest'): {{ $documento->id }}</div></td>
+        <td colspan="2"><div id="numManifiesto">N° @lang('general.manifest'): {{ $documento->num_master }}</div></td>
     </tr>
     <tr>
         <td colspan="2"><div id="paisAgencia">{{ $documento->agencia_pais }}</div></td>
@@ -142,7 +142,7 @@
             <div id="datosVuelo">@lang('general.flight_date'):</div>
         </td>
         <td>
-            <div id="datosDestino"></div>
+            <div id="datosDestino">{{ $documento->fecha_vuelo }}</div>
         </td>
     </tr>
     <tr>

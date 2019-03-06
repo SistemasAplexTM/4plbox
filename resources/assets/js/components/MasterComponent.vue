@@ -445,7 +445,7 @@
                       <small v-show="errors.has('handing_information')" class="bg-danger">{{ errors.first('handing_information') }}</small>
                     </div>
                   </div>
-                  <div class="col-lg-4">
+                  <!-- <div class="col-lg-4">
                     <div class="form-group">
                       <label for="consolidado_id">Consolidado</label>
                       <v-select name="consolidado_id" v-model="consolidado_id" label="consolidado" :filterable="false" :options="consolidados" @search="onSearchConsolidados" placeholder="# Consolidado">
@@ -459,7 +459,7 @@
                         </template>
                       </v-select>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
                 <div class="row">
                   <div class="col-lg-12">
@@ -715,7 +715,7 @@
         editing: false
       }
     },
-    props: ["master"],
+    props: ["master", "consol"],
     watch:{
       peso: function(){
         this.peso_cobrado = this.peso;
@@ -734,6 +734,11 @@
       if (this.master != null) {
         this.editing = true;
         this.edit(this.master);
+      }
+      if(this.consol != null){
+        this.consolidado_id ={
+          id: this.consol
+        };
       }
       this.getAerolineas('aerolineas');
       this.getAerolineas('aeropuertos');
@@ -855,7 +860,7 @@
         });
       },
       store: function(){
-        axios.post('../master', {
+        axios.post('/master', {
           'num_master': this.num_master,
           'shipper_id': this.shipper.id,
           'carrier_id': this.carrier.id,
@@ -894,11 +899,11 @@
         }).then(response => {
             toastr.success('Registro exitoso.');
             location.reload(true);
-            window.open("imprimir/" + response.data.id_master + '/' + true,'_blank');
+            window.open("../../imprimir/" + response.data.id_master + '/' + true,'_blank');
         });
       },
       update: function(){
-        axios.put('../' + this.master, {
+        axios.put('/master/' + this.master, {
           'shipper_id': this.shipper.id,
           'consignee_id': this.consignee.id,
           'carrier_id': this.carrier.id,
@@ -1012,7 +1017,7 @@
       getAerolineas: function(tipo){
         let url = null;
         if (!this.editing) {
-          url = '../transport/'+tipo+'/all';
+          url = '/transport/'+tipo+'/all';
         }else{
           url = '../../transport/'+tipo+'/all';
         }
@@ -1030,7 +1035,7 @@
           this.codigo = val.codigo;
           this.aerolinea = val.id;
           this.aerolinea_name = val.nombre;
-          let url = '../aerolinea_inventario/get/' + val.id;
+          let url = '/aerolinea_inventario/get/' + val.id;
           if (this.editing) {
             url = '../../aerolinea_inventario/get/' + val.id;
           }
@@ -1060,14 +1065,14 @@
         searchConsolidados: _.debounce((loading, search, vm) => {
           if(vm.editing){
             fetch(
-              `../vueSelectConsolidados/${escape(search)}`
+              `../../vueSelectConsolidados/${escape(search)}`
             ).then(res => {
               res.json().then(json => (vm.consolidados = json.items));
               loading(false);
             });
           }else{
             fetch(
-              `vueSelectConsolidados/${escape(search)}`
+              `../../vueSelectConsolidados/${escape(search)}`
             ).then(res => {
               res.json().then(json => (vm.consolidados = json.items));
               loading(false);

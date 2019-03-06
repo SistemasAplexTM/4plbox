@@ -86,7 +86,7 @@ Route::group(['middleware' => 'auth'], function () {
     /*--- MASTER ---*/
     Route::resource('master', 'MasterController');
     // Reg al final, por que genera conficto el hecho de que el show se llama con "nombre/variable"
-    Route::get('master/create/{master}', 'MasterController@create');
+    Route::get('master/create/{master}/{consolidado_id?}', 'MasterController@create');
     Route::get('master/all/reg', 'MasterController@getAll');
     Route::get('master/delete/{id}/{logical?}', 'MasterController@delete')->name('modulo.delete');
     Route::get('master/restaurar/{id}', 'MasterController@restaurar');
@@ -94,6 +94,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('master/getOtherCharges/{id}', 'MasterController@getOtherCharges');
     Route::get('master/imprimirLabel/{id_master}', 'MasterController@imprimirLabel');
     Route::get('master/imprimirGuias/{consolidado_id}/{option?}', 'MasterController@imprimirGuias');
+    Route::post('master/getDataConsolidados', 'MasterController@getDataConsolidados');
 
     /*--- MODULO TRACKINGS ---*/
     Route::resource('tracking', 'TrackingController', ['except' => ['show', 'create', 'edit', 'update']]);
