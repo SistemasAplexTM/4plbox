@@ -25,6 +25,9 @@ class PrintConfigController extends Controller
       $key = 'print_'. Auth::id();
       $data = array("prints" => $request->data);
       $id = $this->getConfig($key);
+      // echo "<pre>";
+      // print_r(json_decode($data->value)[0]->labels);
+      // echo "</pre>";
       if ($id) {
         AplexConfig::where('id', $id->id)->update([
           'key' => $key,

@@ -10,6 +10,7 @@ use DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Traits\sendEmailAlerts;
+use Illuminate\Support\Facades\Mail;
 
 class TrackingController extends Controller
 {
@@ -41,7 +42,6 @@ class TrackingController extends Controller
      */
     public function store(TrackingRequest $request)
     {
-
         try {
             $data             = (new Tracking)->fill($request->all());
             $data->agencia_id = Auth::user()->agencia_id;
@@ -63,6 +63,27 @@ class TrackingController extends Controller
               if($request->consignee_id != null){
                 // $config = $this->getConfig('ingreso_tracking');
                 // $this->verifySendEmail($config->value, 4, $request->consignee_id, $request->codigo);
+                $objConsignee = $this->getDataConsigneeOrShipperById($request->consignee_id, 'consignee');
+                if (isset($objConsignee->correo) and $objConsignee->correo != '') {
+                    if (filter_var(trim($objConsignee->correo), FILTER_VALIDATE_EMAIL)) {
+                        /* DATOS DE LA AGENCIA */
+                        $objAgencia = $this->getDataAgenciaById(Auth::user()->agencia_id);
+                        /* DATOS DE LA PLANTILLA */
+                        $plantilla = $this->getDataEmailPlantillaById(4);
+                        /* ENVIO DE EMAIL REPLACEMENT($id_documento, $objAgencia, $objDocumento, $objShipper, $objConsignee, $datosEnvio)*/
+                        $replacements = $this->replacements(Auth::user()->agencia_id, $objAgencia);
+
+                        $cuerpo_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->mensaje);
+                        $asunto_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->subject);
+
+                        $from_self = array(
+                            'address' => $objAgencia->email,
+                            'name'    => $objAgencia->descripcion,
+                        );
+                        Mail::to(trim($objConsignee->correo))
+                            ->send(new \App\Mail\BodegaRecibido($cuerpo_correo, $from_self, $asunto_correo));
+                    }
+                }
               }
             } else {
                 $answer = array(
