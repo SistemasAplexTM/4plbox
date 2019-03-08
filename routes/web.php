@@ -406,3 +406,7 @@ Route::get('DocumentoController', 'DocumentoController@printFile');
 Route::get('formatNumber', 'AplexConfigController@formatNumber');
 
 Route::get('ciudad/getSelectCity', 'CiudadController@getSelectCity');
+
+Route::get('test/cuba', function(){
+  return view('cuba/index');
+});
