@@ -270,7 +270,7 @@ function numDocument(data, type, full, meta) {
       }
       classText = color_badget;
       var status = '<div style="color:'+full.estatus_color+'"><small>' + ((full.estatus == null) ? '' : full.estatus) + '</small></div>';
-      return '<span class=""><i class="fa fa-'+ ((full.agrupadas > 0) ? 'boxes' : 'box-open')+' fa-xs"></i> ' + ((codigo == null) ? '' : codigo )+ '</span><a style="float: right;cursor:pointer;" class="badge badge-'+ classText +' pop" role="button" data-html="true" data-toggle="popover" data-trigger="hover" title="<b>Documentos agrupadas</b>" data-content="'+((groupGuias == null) ? '' : groupGuias )+'" ' + group + '>'+ ((full.agrupadas == null) ? '' : full.agrupadas)+'</a>' + status;
+      return '<span class=""><i class="fa fa-'+ ((full.agrupadas > 0) ? 'boxes' : 'box-open')+' fa-xs"></i> ' + ((codigo == null) ? full.warehouse : codigo )+ '</span><a style="float: right;cursor:pointer;" class="badge badge-'+ classText +' pop" role="button" data-html="true" data-toggle="popover" data-trigger="hover" title="<b>Documentos agrupadas</b>" data-content="'+((groupGuias == null) ? '' : groupGuias )+'" ' + group + '>'+ ((full.agrupadas == null) ? '' : full.agrupadas)+'</a>' + status;
     }else{
       icon = 'boxes';
       if(full.transporte_id == 7){
@@ -279,6 +279,7 @@ function numDocument(data, type, full, meta) {
       if(full.transporte_id == 8){
         icon = 'ship';
       }
+
       return '<strong>' + ((codigo == null) ? '' : codigo) + '<strong> <i class="fal fa-'+ icon +'"></i> <span style="float: right;" class="badge badge-' + color_badget + '" data-toggle="tooltip" data-placement="top" title="" data-original-title="Total piezas">' + cant + '</span>';
     }
 }
