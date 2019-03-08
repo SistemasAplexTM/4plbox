@@ -83,6 +83,7 @@ return [
 		'types_of_documents'       => 'Tipos de Documentos',
 		'date'                     => 'Date',
 		'client_consignee'         => 'Cliente',
+		'central_destination'      => 'Central Destino',
 		'actions'                  => 'Acciones',
 // // templaces/documento/viewGuiaWarehouse
 		'see'                      => 'Ver',

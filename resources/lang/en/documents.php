@@ -83,6 +83,7 @@ return [
 		'types_of_documents'       => 'Types of documents',
 		'date'                     => 'Date',
 		'client_consignee'         => 'Client',
+		'central_destination'      => 'Central Destination',
 		'actions'                  => 'Actions',
 		'consolidated'             => 'Consolidado',
 

@@ -81,6 +81,9 @@ class StatusController extends Controller
     {
         try {
             $data = Status::findOrFail($id);
+            if($request->email_plantilla_id != null){
+              $data->json_data = json_encode(['email_template_id' => $request->email_plantilla_id]);
+            }
             $data->update($request->all());
             $answer = array(
                 "datos"  => $request->all(),

@@ -1,14 +1,13 @@
 <style type="text/css">
-  /*.dropdown-toggle>input[type="search"] {
-    width: 120px !important;
+  span.error{
+    color:#e74c3c;
+    font-size:20px;
+    display:flex;
+    justify-content:center;
   }
-  .input-group-btn select {
-    border-color: #ccc;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    padding-top: 7px;
-    padding-bottom: 5px;
-  }*/
+  .el-date-editor{
+      width: auto!important;
+  }
 </style>
 <template>
   <form-wizard @on-complete="onComplete"
@@ -369,7 +368,7 @@
                   <div class="col-lg-12">
                     <div class="form-group" :class="{'has-error': errors.has('account_information') }">
                       <label for="account_information">Account information</label>
-                      <textarea v-validate="'required'" v-model="account_information" class="form-control" name="account_information" id="account_information" cols="30" rows="5">
+                      <textarea v-validate="'required'" v-model="account_information" class="form-control" name="account_information" id="account_information" cols="30" rows="6">
                         -PREPAID
                       </textarea>
                       <small v-show="errors.has('account_information')" class="bg-danger">{{ errors.first('account_information') }}</small>
@@ -400,7 +399,15 @@
                   <div class="col-lg-4">
                     <div class="form-group" :class="{'has-error': errors.has('fecha_vuelo') }">
                       <label for="fecha_vuelo">Date of flight</label>
-                      <input type="date" v-validate="'required'" v-model="fecha_vuelo" id="fecha_vuelo" class="form-control" name="fecha_vuelo">
+                      <el-date-picker
+                        v-model="fecha_vuelo"
+                        v-validate="'required'"
+                        type="date"
+                        placeholder="Seleccione"
+                        value-format="yyyy-MM-dd"
+                        name="fecha_vuelo"
+                        size="medium">
+                      </el-date-picker>
                     </div>
                     <small v-show="errors.has('fecha_vuelo')" class="bg-danger">{{ errors.first('fecha_vuelo') }}</small>
                   </div>
@@ -415,8 +422,8 @@
                     <div class="form-group" :class="{'has-error': errors.has('chgs') }">
                       <label for="chgs">chgs</label>
                       <select v-model="chgs" v-validate="'required'" name="chgs" id="chgs" class="form-control">
-                        <option value="pp">PP</option>
-                        <option value="cll">CLL</option>
+                        <option value="PP">PP</option>
+                        <option value="CLL">CLL</option>
                       </select>
                       <small v-show="errors.has('chgs')" class="bg-danger">{{ errors.first('chgs') }}</small>
                     </div>
@@ -614,14 +621,7 @@
   </form-wizard>
 
 </template>
-<style>
-  span.error{
-    color:#e74c3c;
-    font-size:20px;
-    display:flex;
-    justify-content:center;
-  }
-</style>
+
 <script>
   import VueFormWizard from 'vue-form-wizard'
   import 'vue-form-wizard/dist/vue-form-wizard.min.css'
@@ -681,7 +681,7 @@
         num_master: null,
         unidad_medida: 'Kl',
         currency: 'USD',
-        chgs: 'pp',
+        chgs: 'PP',
         tipo_transportador: 's',
         shipper: {
           id: null,
@@ -745,18 +745,6 @@
       this.getOtherCharges();
     },
     methods: {
-      // onSearchShipper(search, loading) {
-      //     loading(true);
-      //     this.searchShipper(loading, search, this);
-      //   },
-      //   searchShipper: _.debounce((loading, search, vm) => {
-      //     fetch(
-      //       `buscar/${escape(search)}/s`
-      //     ).then(res => {
-      //       res.json().then(json => (vm.shippers = json.items));
-      //       loading(false);
-      //     });
-      //   }, 350),
       addOtherChargue: function(){
         this.other_c.push({
           oc_description: null,

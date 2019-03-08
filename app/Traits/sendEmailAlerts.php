@@ -43,7 +43,7 @@ trait sendEmailAlerts
               return Mail::to(trim($condignee->correo))
               // ->cc($moreUsers)
               // ->bcc($evenMoreUsers)
-                  ->send(new \App\Mail\WarehouseEmail($cuerpo_correo, false, $from_self, $asunto_correo));
+                  ->send(new \App\Mail\BodegaRecibido($cuerpo_correo, $from_self, $asunto_correo));
           }
       }
     }

@@ -34,9 +34,9 @@
                 <div class="ibox-content">
                     <!--***** contenido ******-->
                     @if($master)
-                        <master-component :master="{!! ($master) ? $master : false !!}" :consol="{!! ($consolidado_id) ? $consolidado_id : false !!}"></master-component>
+                        <master-component :master="{!! (($master) ? $master : false) !!}" :consol="{!! (($consolidado_id) ? $consolidado_id : 0) !!}"></master-component>
                     @else
-                        <master-component :master="null" :consol="{!! ($consolidado_id) ? $consolidado_id : false !!}"></master-component>
+                        <master-component :master="null" :consol="{!! (($consolidado_id) ? $consolidado_id : 0) !!}"></master-component>
                     @endif
                 </div>
             </div>

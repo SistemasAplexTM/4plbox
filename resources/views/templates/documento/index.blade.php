@@ -134,7 +134,7 @@
                                                 <tr>
                                                     <th><i class="fa fa-file" aria-hidden="true" id="icono-doc-table"></i> #@lang('documents.documents')</th>
                                                     <th><i class="fa fa-calendar" aria-hidden="true"></i> @lang('documents.date')</th>
-                                                    <th><i class="fa fa-user" aria-hidden="true"></i> @lang('documents.client_consignee')</th>
+                                                    <th><i class="fa fa-user" aria-hidden="true"></i> @{{ (type_document == 3) ? '@lang('documents.central_destination')' : '@lang('documents.client_consignee')' }}</th>
                                                     <th><i class="fas fa-map-marked-alt" aria-hidden="true"></i> @lang('documents.city')</th>
                                                     <th><i class="fa fa-dollar-sign" aria-hidden="true"></i> @lang('general.rate')</th>
                                                     <th><i class="fa fa-balance-scale" aria-hidden="true"></i> @lang('documents.weight')</th>

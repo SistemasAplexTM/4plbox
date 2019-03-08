@@ -7,6 +7,7 @@ use App\Tracking;
 use App\Prealerta;
 use Auth;
 use DataTables;
+use App\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Traits\sendEmailAlerts;
@@ -61,28 +62,17 @@ class TrackingController extends Controller
                   "status" => 200,
               );
               if($request->consignee_id != null){
-                // $config = $this->getConfig('ingreso_tracking');
-                // $this->verifySendEmail($config->value, 4, $request->consignee_id, $request->codigo);
-                $objConsignee = $this->getDataConsigneeOrShipperById($request->consignee_id, 'consignee');
-                if (isset($objConsignee->correo) and $objConsignee->correo != '') {
-                    if (filter_var(trim($objConsignee->correo), FILTER_VALIDATE_EMAIL)) {
-                        /* DATOS DE LA AGENCIA */
-                        $objAgencia = $this->getDataAgenciaById(Auth::user()->agencia_id);
-                        /* DATOS DE LA PLANTILLA */
-                        $plantilla = $this->getDataEmailPlantillaById(4);
-                        /* ENVIO DE EMAIL REPLACEMENT($id_documento, $objAgencia, $objDocumento, $objShipper, $objConsignee, $datosEnvio)*/
-                        $replacements = $this->replacements(Auth::user()->agencia_id, $objAgencia);
-
-                        $cuerpo_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->mensaje);
-                        $asunto_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->subject);
-
-                        $from_self = array(
-                            'address' => $objAgencia->email,
-                            'name'    => $objAgencia->descripcion,
-                        );
-                        Mail::to(trim($objConsignee->correo))
-                            ->send(new \App\Mail\BodegaRecibido($cuerpo_correo, $from_self, $asunto_correo));
+                $config = $this->getConfig('ingreso_tracking');
+                $status = Status::where('id', 9)->first();// 9 es alerta de tracking
+                if($status){
+                  if($status->email === 1){
+                    if ($status->json_data != null) {
+                      $json_data = json_decode($status->json_data);
+                      if(isset($json_data->email_template_id)){
+                        $this->verifySendEmail($config->value, $json_data->email_template_id, $request->consignee_id, $request->codigo);
+                      }
                     }
+                  }
                 }
               }
             } else {

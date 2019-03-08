@@ -88,8 +88,8 @@ function datatableDocument(t, tipo_doc_id, status_id){
           name: 'b.created_at',
           width: 80
       }, {
-          data: 'cons_nomfull',
-          name: 'c.nombre_full'
+          data: (tipo_doc_id != 3) ? 'cons_nomfull' : 'central_destino',
+          name: (tipo_doc_id != 3) ? 'c.nombre_full' : 'central_destino.nombre'
       },{
           data: 'ciudad',
           name: 'ciudad',

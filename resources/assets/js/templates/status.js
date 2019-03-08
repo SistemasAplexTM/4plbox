@@ -32,7 +32,7 @@ $(document).ready(function() {
                 var btn_delete = '';
                 if (permission_update) {
                     var params = [
-                        full.id, "'" + full.descripcion + "'", "'" + full.color + "'", "'" + full.email + "'", "'" + full.view_client + "'", "'" + full.icon + "'"
+                        full.id, "'" + full.descripcion + "'", "'" + full.color + "'", "'" + full.email + "'", "'" + full.view_client + "'", "'" + full.icon + "'", "'" + full.json_data + "'"
                     ];
                     var btn_edit = "<a onclick=\"edit(" + params + ")\" class='btn_action_edit' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fal fa-pencil fa-lg'></i></a> ";
                 }
@@ -55,7 +55,7 @@ $(function(){
   });
 })
 
-function edit(id, descripcion, color, email, view_client, icon) {
+function edit(id, descripcion, color, email, view_client, icon, json_data) {
     var data = {
         id: id,
         descripcion: descripcion,
@@ -63,6 +63,7 @@ function edit(id, descripcion, color, email, view_client, icon) {
         email: email,
         view_client: view_client,
         icon: icon,
+        json_data: json_data,
     };
     objVue.edit(data);
 }
@@ -302,6 +303,7 @@ var objVue = new Vue({
               this.value9 = icono[0].label;
               this.icon_selected = icono[0].value;
             }
+            console.log(JSON.parse(data['json_data']));
             this.editar = 1;
             this.formErrors = {};
             this.listErrors = {};

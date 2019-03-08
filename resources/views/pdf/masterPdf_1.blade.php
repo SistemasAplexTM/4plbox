@@ -5,7 +5,7 @@
 <title>AWB-{{ $data->num_master }}</title>
 
 <style>
-	
+
 	:root {
 		/*
 		#FF0000 (ROJO)
@@ -18,11 +18,11 @@
 		#FFDFDF (Rojo)
 		#E1F0FF (Azul)
 		*/
-		--background-color: #FFDFDF; 
-		
+		--background-color: #FFDFDF;
+
 	}
 	body {
-		font-family:Tahoma, Geneva, sans-serif;	
+		font-family:Tahoma, Geneva, sans-serif;
 		font-size:12px;
 		vertical-align:middle;
 	}
@@ -30,7 +30,7 @@
 		border-collapse: collapse;
 		align: center;
 	}
-	table td.special { 
+	table td.special {
 	    border: 3px solid /*var(--color)*/;
 	}
 	div.r {
@@ -40,13 +40,13 @@
 	}
 	.main_table {
 		border-collapse: collapse;
-		align: center;	
+		align: center;
 		border: 1px solid /*var(--color)*/;
 		width:100%;
 	}
 	.main_table_2 {
 		border-collapse: collapse;
-		align: center;	
+		align: center;
 		border-bottom: 1px solid /*var(--color)*/;
 		border-left: 1px solid /*var(--color)*/;
 		border-right: 1px solid /*var(--color)*/;
@@ -151,13 +151,13 @@
 		font-weight:700;
 		color: /*var(--color)*/;
 	}
-	.altura{ 
+	.altura{
 		height:25px;
 	}
-	.altura_2{ 
+	.altura_2{
 		height:30px;
 	}
-	.altura_interna{ 
+	.altura_interna{
 		height:15px;
 	}
 	div.relative {
@@ -167,7 +167,7 @@
 	}
 	.bg_azul {
 		background-color:var(--background-color);
-		
+
 	}
 	.line1{
 		width: 17px;
@@ -176,7 +176,7 @@
 		-webkit-transform:
 			translateY(-11px)
 			translateX(-8px)
-			rotate(50deg); 
+			rotate(50deg);
 		position: absolute;
 	}
 	.line2{
@@ -196,7 +196,7 @@
 		-webkit-transform:
 			translateY(-10px)
 			translateX(-4px)
-			rotate(58deg); 
+			rotate(58deg);
 		position: absolute;
 	}
 	.line4{
@@ -223,7 +223,7 @@
 		font-family:'Courier New', Courier, monospace;
 		text-align:left;
 		padding-left: 3px;
-			
+
 		margin-top:-13px;
 		margin-bottom:5px;
 		padding-left:3px;
@@ -233,7 +233,7 @@
 		font-family:'Courier New', Courier, monospace;
 		text-align:left;
 		padding-left: 3px;
-			
+
 		margin-top:3px;
 		margin-bottom:5px;
 		padding-left:3px;
@@ -356,7 +356,7 @@
 					    </tr>
 					</table>
 
-					    
+
 					    </td>
 					  </tr>
 					  <tr height="70px" class="bottom_line" style="border-bottom: 1px solid {{ $color }};">
@@ -382,9 +382,9 @@
 					                </div>
 					            </td>
 					          </tr>
-					        </table>    
-					    
-					    
+					        </table>
+
+
 					    </td>
 					    <td width="52%" colspan="2" valign="middle" class="left_line  text_titles_j" style="border-left: 1px solid {{ $color }};color: {{ $color }}">
 					    	<div style="font-size: 8px;">
@@ -430,7 +430,7 @@
 					                <td colspan="3">
 					            <table width="100%">
 					              <tr>
-					    
+
 					            <td width="28%" height="10px" class="text_titles_tl" style="color: {{ $color }}"><div>Reference Number</div></td>
 					            <td width="2%" class="line1" style="border-bottom: 1px solid {{ $color }};">&nbsp;</td>
 					            <td width="44%" class="text_titles_tc bottom_line" style="border-bottom: 1px solid {{ $color }};color: {{ $color }}"><div>Optional Shipping Information</div></td>
@@ -453,7 +453,7 @@
 					              </tr>
 					            </table>
 
-					    
+
 					    </td>
 					  </tr>
 
@@ -464,7 +464,7 @@
 					                <td width="6%" align="center" valign="top" height="40px"><div class="text_titles_tc margin_div" style="color: {{ $color }}">To</div>
 					                <div id="destino" class="text_regular_l">{{ $data->to1 }}</div>
 					                </td>
-					                <td width="22.5%" valign="top" class="left_line" style="border-left: 1px solid {{ $color }};">			
+					                <td width="22.5%" valign="top" class="left_line" style="border-left: 1px solid {{ $color }};">
 					                <div class="text_titles_tl margin_div" style="color: {{ $color }}">By First Carrier</div>
 					                <div id="first_carrier" class="text_regular_l">{{ $data->by_first_carrier }}</div>
 					                </td>
@@ -485,7 +485,7 @@
 					                <div id="by_2" class="text_regular_c">{{ $data->by2 }}</div>
 					                </td>
 					              </tr>
-					            </table>    
+					            </table>
 
 					    </td>
 					    <td colspan="2" class="left_line" style="border-left: 1px solid {{ $color }};">
@@ -503,7 +503,7 @@
 					            <td width="33%" align="center" valign="top" rowspan="3" class="left_line" style="border-left: 1px solid {{ $color }};">
 					                 <div class="text_titles_tc margin_div" style="color: {{ $color }}">Declared Value for Customs</div>
 					                 <div id="declared_customs" class="text_regular_c">NVD</div>
-					            
+
 					            </td>
 					          </tr>
 					          <tr>
@@ -517,28 +517,28 @@
 					            <td width="5%" align="center" class="left_line" style="border-left: 1px solid {{ $color }};">
 					            	<div id="chgs_code" class="text_regular_c">{{ $data->chgs_code }}</div>
 					            </td>
-					            <td width="5%" align="center" class="left_line text_regular_c" style="border-left: 1px solid {{ $color }};">{!! ($data->chgs_code == 'pp') ? 'X' : '' !!}</td>
-					            <td width="5%" align="center" class="left_line text_regular_c" style="border-left: 1px solid {{ $color }};">{!! ($data->chgs_code == 'cll') ? 'X' : '' !!}</td>
-					            <td width="5%" align="center" class="left_line text_regular_c" style="border-left: 1px solid {{ $color }};"></td>
-					            <td width="5%" align="center" class="left_line text_regular_c" style="border-left: 1px solid {{ $color }};"></td>
+					            <td width="5%" align="center" class="left_line text_regular_c" style="border-left: 1px solid {{ $color }};">{!! ($data->chgs_code == 'PP') ? 'X' : '' !!}</td>
+					            <td width="5%" align="center" class="left_line text_regular_c" style="border-left: 1px solid {{ $color }};">{!! ($data->chgs_code == 'CLL') ? 'X' : '' !!}</td>
+					            <td width="5%" align="center" class="left_line text_regular_c" style="border-left: 1px solid {{ $color }};">{!! ($data->chgs_code == 'PP') ? 'X' : '' !!}</td>
+					            <td width="5%" align="center" class="left_line text_regular_c" style="border-left: 1px solid {{ $color }};">{!! ($data->chgs_code == 'CLL') ? 'X' : '' !!}</td>
 					          </tr>
 					        </table>
 					    </td>
 					  </tr>
 					  <tr class="bottom_line" style="border-bottom: 1px solid {{ $color }};">
-					    
+
 					    <td width="24.5%" height="30px" valign="top" colspan="4" class="{{-- special --}}" style="color: {{ $color }}">
 					    <div class="text_titles_tc margin_div" style="color: {{ $color }}">Airport of Destination</div>
 					    <div id="airport_destination" class="text_regular_l" style="color: #000;font-size: 8px;">{{ $data->aeropuerto_destino }}</div>
 					    </td>
-					    
+
 					    <td width="24%" colspan="2" class="left_line" style="border-left: 1px solid {{ $color }};">
 					        <table width="100%">
 								<tr>
 					            <td colspan="2">
 					            <table width="100%">
 					              <tr>
-					    
+
 					            <td class="text_titles_tl" style="color: {{ $color }}"><div>Flight Date</div></td>
 					            <td width="2%" class="line1" style="border-bottom: 1px solid {{ $color }};">&nbsp;</td>
 					            <td class="text_titles_tc bottom_line" style="border-bottom: 1px solid {{ $color }};color: {{ $color }}"><div>For Carrier Use Only</div></td>
@@ -649,7 +649,7 @@
 					    </td>
 					    <td class="left_line bg_azul" style="border-left: 1px solid {{ $color }};background-color:{{ $background }};">&nbsp;</td>
 					    <td valign="top" rowspan="2" class="left_line" style="border-left: 1px solid {{ $color }};">
-					    	<div id="nature_goods" class="margin_div text_regular_l"> 
+					    	<div id="nature_goods" class="margin_div text_regular_l">
 					    	  {{ $detalle->descripcion }}
 					    	</div>
 					    </td>
@@ -710,17 +710,17 @@
 					        </tr>
 					      <tr>
 					        <td width="18%" height="12px" align="center" class="bottom_line" style="border-bottom: 1px solid {{ $color }};">
-					        	<div id="pp_w_charge" class="text_total">{!! ($data->chgs_code == 'pp') ?  '$ '.number_format($detalle->total,2) : '' !!}</div>
+					        	<div id="pp_w_charge" class="text_total">{!! ($data->chgs_code == 'PP') ?  '$ '.number_format($detalle->total,2) : '' !!}</div>
 					        </td>
 					        <td width="18%" align="center" class="left_line bottom_line" style="border-left: 1px solid {{ $color }};border-bottom: 1px solid {{ $color }};">
-					        	<div id="coll_w_charge" class="text_total">{!! ($data->chgs_code == 'cll') ?  '$ '.number_format($detalle->total,2) : '' !!}</div>
+					        	<div id="coll_w_charge" class="text_total">{!! ($data->chgs_code == 'CLL') ?  '$ '.number_format($detalle->total,2) : '' !!}</div>
 					        </td>
 					      </tr>
 					      <tr>
 					        <td height="10px" align="center" colspan="2">
 					            <table width="50%" align="center">
 					              <tr>
-					    
+
 					            <td class="text_titles_tl" style="color: {{ $color }}"></td>
 					            <td width="2%" class="line3" style="border-bottom: 1px solid {{ $color }};">&nbsp;</td>
 					            <td class="text_titles_tc bottom_line" style="border-bottom: 1px solid {{ $color }};color: {{ $color }}"><div>Valuation Charge</div></td>
@@ -729,8 +729,8 @@
 					            <td class="text_titles_tr" style="color: {{ $color }}"></td>
 
 					              </tr>
-					            </table>        
-					        
+					            </table>
+
 					        </td>
 					        </tr>
 					      <tr>
@@ -744,7 +744,7 @@
 					      <tr>
 					        <td height="10px" colspan="2"><table width="20%" align="center">
 					              <tr>
-					    
+
 					            <td class="text_titles_tl" style="color: {{ $color }}"></td>
 					            <td width="2%" class="line3" style="border-bottom: 1px solid {{ $color }};">&nbsp;</td>
 					            <td class="text_titles_tc bottom_line" style="border-bottom: 1px solid {{ $color }};color: {{ $color }}"><div>Tax</div></td>
@@ -753,9 +753,9 @@
 					            <td class="text_titles_tr" style="color: {{ $color }}"></td>
 
 					              </tr>
-					            </table>        
-					        
-					        
+					            </table>
+
+
 					        </td>
 					        </tr>
 					      <tr>
@@ -767,7 +767,7 @@
 					        </td>
 					      </tr>
 					    </table>
-					    
+
 					    </td>
 					    <td width="64%" colspan="3" valign="top" class="left_line bottom_line  rigth_line " style="border-left: 1px solid {{ $color }}; border-right: 1px solid {{ $color }};border-bottom: 1px solid {{ $color }};"><div class="margin_div text_titles_tl" style="color: {{ $color }}">Other Charges</div>
 					    <table width="90%" align="center">
@@ -795,13 +795,13 @@
 					  </tr>
 					  <tr>
 					    <td height="75px" colspan="2" rowspan="2" class="bottom_line" style="border-bottom: 1px solid {{ $color }};">
-					    
+
 					 <table width="100%" border="0">
 					      <tr>
 					        <td height="10" colspan="2">
 					            <table width="70%" align="center">
 					              <tr>
-					    
+
 					            <td class="text_titles_tl" style="color: {{ $color }}"></td>
 					            <td width="2%" class="line1" style="border-bottom: 1px solid {{ $color }};">&nbsp;</td>
 					            <td class="text_titles_tc bottom_line" style="border-bottom: 1px solid {{ $color }};color: {{ $color }}"><div>Total Other Charges Due Agent</div></td>
@@ -810,24 +810,24 @@
 					            <td class="text_titles_tr" style="color: {{ $color }}"></td>
 
 					              </tr>
-					            </table>   
+					            </table>
 
-					        
+
 					        </td>
 					        </tr>
 					      <tr>
 					        <td width="18%" height="12" class="bottom_line" style="border-bottom: 1px solid {{ $color }};">
-					        	<div id="pp_due_agent" class="text_total">{!! ($data->chgs_code == 'pp') ?  '$ '. number_format($data->total_other_charge_due_agent,2) : '' !!}</div>
+					        	<div id="pp_due_agent" class="text_total">{!! ($data->chgs_code == 'PP') ?  '$ '. number_format($data->total_other_charge_due_agent,2) : '' !!}</div>
 					        </td>
 					        <td width="18%" class="left_line bottom_line" style="border-left: 1px solid {{ $color }};border-bottom: 1px solid {{ $color }};">
-					        	<div id="coll_due_agent" class="text_total">{!! ($data->chgs_code == 'cll') ?  '$ '. number_format($data->total_other_charge_due_agent,2) : '' !!}</div>
+					        	<div id="coll_due_agent" class="text_total">{!! ($data->chgs_code == 'CLL') ?  '$ '. number_format($data->total_other_charge_due_agent,2) : '' !!}</div>
 					        </td>
 					      </tr>
 					      <tr>
 					        <td height="10" align="center" colspan="2">
 					            <table width="70%" align="center">
 					              <tr>
-					    
+
 					            <td class="text_titles_tl" style="color: {{ $color }}"></td>
 					            <td width="2%" class="line1" style="border-bottom: 1px solid {{ $color }};">&nbsp;</td>
 					            <td class="text_titles_tc bottom_line" style="border-bottom: 1px solid {{ $color }};color: {{ $color }}"><div>Total Other Charges Due Carrier</div></td>
@@ -836,23 +836,23 @@
 					            <td class="text_titles_tr" style="color: {{ $color }}"></td>
 
 					              </tr>
-					            </table>        
-					        
+					            </table>
+
 					        </td>
 					        </tr>
 					      <tr>
 					        <td height="12" class="bottom_line" style="border-bottom: 1px solid {{ $color }};">
-					        	<div id="pp_due_carrier" class="text_total">{!! ($data->chgs_code == 'pp') ?  '$ '. number_format($data->total_other_charge_due_carrier,2) : '' !!}</div>
+					        	<div id="pp_due_carrier" class="text_total">{!! ($data->chgs_code == 'PP') ?  '$ '. number_format($data->total_other_charge_due_carrier,2) : '' !!}</div>
 					        </td>
 					        <td width="18%" class="left_bottom_line" style="border-left: 1px solid {{ $color }};border-bottom: 1px solid {{ $color }};">
-					        	<div id="coll_due_carrier" class="text_total">{!! ($data->chgs_code == 'cll') ?  '$ '. number_format($data->total_other_charge_due_carrier,2) : '' !!}</div>
+					        	<div id="coll_due_carrier" class="text_total">{!! ($data->chgs_code == 'CLL') ?  '$ '. number_format($data->total_other_charge_due_carrier,2) : '' !!}</div>
 					        </td>
 					      </tr>
 					      <tr>
 					        <td width="36%" height="25px" colspan="2" class="bg_azul" style="background-color:{{ $background }};">&nbsp;</td>
 					        </tr>
-					    </table>   
-					    
+					    </table>
+
 					    </td>
 					    <td valign="top" colspan="3" class="left_line rigth_line bottom_line" style="border-left: 1px solid {{ $color }};border-right: 1px solid {{ $color }};border-bottom: 1px solid {{ $color }};">
 					      <div class="text_titles_j margin_div" style="color: {{ $color }}">Shipper certifies that the particulars on the face hereof are correct and that<strong> insofar as any part of the consignment
@@ -879,8 +879,8 @@
 					            <td width="2%" class="line2" style="border-bottom: 1px solid {{ $color }};">&nbsp;</td>
 					            <td class="text_titles_tr" style="color: {{ $color }}"></td>
 					      			</tr>
-					            </table>        
-					        
+					            </table>
+
 					        </td>
 					        <td height="10" align="center" class="left_line" style="border-left: 1px solid {{ $color }};">
 					            <table width="45%" align="center">
@@ -892,15 +892,15 @@
 					            <td width="2%" class="line2" style="border-bottom: 1px solid {{ $color }};">&nbsp;</td>
 					            <td class="text_titles_tr" style="color: {{ $color }}"></td>
 					      			</tr>
-					            </table>          
+					            </table>
 					        </td>
 					        </tr>
 					      <tr>
 					        <td height="12" class="bottom_line" style="border-bottom: 1px solid {{ $color }};">
-					        	<div id="pp_total" class="text_total">{!! ($data->chgs_code == 'pp') ?  '$ '.number_format(($data->total_other_charge_due_carrier + $data->total_other_charge_due_agent + $detalle->total),2) : '' !!}</div>
+					        	<div id="pp_total" class="text_total">{!! ($data->chgs_code == 'PP') ?  '$ '.number_format(($data->total_other_charge_due_carrier + $data->total_other_charge_due_agent + $detalle->total),2) : '' !!}</div>
 					        </td>
 					        <td width="18%" class="left_bottom_line" style="border-left: 1px solid {{ $color }};border-bottom: 1px solid {{ $color }};">
-					        	<div id="coll_total" class="text_total">{!! ($data->chgs_code == 'cll') ?  '$ '. number_format(($data->total_other_charge_due_carrier + $data->total_other_charge_due_agent + $detalle->total), 2) : '' !!}</div>
+					        	<div id="coll_total" class="text_total">{!! ($data->chgs_code == 'CLL') ?  '$ '. number_format(($data->total_other_charge_due_carrier + $data->total_other_charge_due_agent + $detalle->total), 2) : '' !!}</div>
 					        </td>
 					      </tr>
 					      <tr class="bg_azul" style="background-color:{{ $background }};">
@@ -914,10 +914,10 @@
 					            <td width="2%" class="line2" style="border-bottom: 1px solid {{ $color }};">&nbsp;</td>
 					            <td class="text_titles_tr" style="color: {{ $color }}"></td>
 					      			</tr>
-					            </table>        
+					            </table>
 					        </td>
 					        <td class="left_line" style="border-left: 1px solid {{ $color }};">
-					        
+
 					            <table width="97%" align="center">
 					              <tr>
 					            <td class="text_titles_tl" style="color: {{ $color }}"></td>
@@ -927,7 +927,7 @@
 					            <td width="2%" class="line2" style="border-bottom: 1px solid {{ $color }};">&nbsp;</td>
 					            <td class="text_titles_tr" style="color: {{ $color }}"></td>
 					      			</tr>
-					            </table>        
+					            </table>
 					        </td>
 					      </tr>
 					      <tr class="bg_azul" style="background-color:{{ $background }};">
@@ -937,10 +937,10 @@
 					        <td width="18%" class="left_line" style="border-left: 1px solid {{ $color }};">
 					        	<div id="currency_dest" class="text_total">{{-- 10.00 --}}</div>
 					        </td>
-					      </tr>      
-					    </table>    
-					    
-					    
+					      </tr>
+					    </table>
+
+
 					    </td>
 					    <td height="35px" valign="bottom" colspan="3" class="left_line rigth_line" style="border-left: 1px solid {{ $color }};border-right: 1px solid {{ $color }};">
 						    {{-- <div id="sign_description" class="text_regular_l margin_div">DESCRIPCIÓN DE LA FIRMA</div> --}}
@@ -954,7 +954,7 @@
 		                        <span>
 		                            {{ $data->telefono_carrier }} / {{ $data->direccion_carrier }}
 		                        </span>
-							</div>    
+							</div>
 					    </td>
 					  </tr>
 					  <tr class="bottom_line" style="border-bottom: 1px solid {{ $color }};">
@@ -979,8 +979,8 @@
 					            <td width="2%" class="line2" style="border-bottom: 1px solid {{ $color }};">&nbsp;</td>
 					            <td class="text_titles_tr" style="color: {{ $color }}"></td>
 					      			</tr>
-					            </table>      
-					    
+					            </table>
+
 					    </td>
 					    <td class=" left_line bg_azul" style="border-left: 1px solid {{ $color }};background-color:{{ $background }};">
 					            <table width="70%" align="center">
@@ -992,7 +992,7 @@
 					            <td width="2%" class="line2" style="border-bottom: 1px solid {{ $color }};">&nbsp;</td>
 					            <td class="text_titles_tr" style="color: {{ $color }}"></td>
 					      			</tr>
-					            </table>      
+					            </table>
 					    </td>
 					    <td rowspan="2" class=" left_line" style="border-left: 1px solid {{ $color }};">&nbsp;</td>
 					    <td align="center" rowspan="2"><div id="master_bottom" style="font-size:18px" >{{ $data->codigo_aerolinea .'-'. substr($data->num_master,3) }}</div></td>
