@@ -51,7 +51,7 @@ let mix = require('laravel-mix');
  //    // 	// 'resources/assets/css/plugins/dropzone/dropzone.css',------------------------ delete
  //    // 	// 'resources/assets/css/hoverEfects/css/hover.css',------------------------ delete
  //     	'resources/assets/css/plugins/summernote/summernote-bs3.css',
- //     	'resources/assets/css/plugins/summernote/summernote.css',s
+ //     	'resources/assets/css/plugins/summernote/summernote.css',
  //     	'resources/assets/css/plugins/bootstrapTagsInput/bootstrap-tagsinput.css',
  //     	], 'public/css/plantilla.css');
 

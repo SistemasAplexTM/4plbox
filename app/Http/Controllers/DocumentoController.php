@@ -104,9 +104,9 @@ class DocumentoController extends Controller
         try {
             return DB::transaction(function () use ($request) {
                     $data                    = new Documento;
-                    $data->agencia_id        = Auth::user()->agencia_id;
+                    $data->agencia_id        = ($request->agencia_id) ? $request->agencia_id : Auth::user()->agencia_id;
                     $data->tipo_documento_id = $request->tipo_documento_id;
-                    $data->usuario_id        = Auth::user()->id;
+                    $data->usuario_id        = ($request->usuario_id) ? $request->usuario_id : Auth::user()->id;
                     $data->carga_courier     = (isset($request->type_id) and $request->type_id != '') ? $request->type_id : 0;
                     $data->created_at        = $request->created_at;
                     $data->tipo_consolidado  = 'COURIER';

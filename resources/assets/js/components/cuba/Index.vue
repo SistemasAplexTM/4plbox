@@ -22,7 +22,7 @@
           <div slot="page2">
             <!-- <shipper-consignee type="shipper" @data="shipper_id = $event"></shipper-consignee> -->
             <h4 class="mt-5 mb-5">
-              Seleccione el usuario que envía
+              Ingrese número de identificación
             </h4>
             <small>Acá va una descripción acerca de lo que es el usuario que envía.</small>
             <el-row class="mb-20 pb-20 bb justify-center" :gutter="24">
@@ -219,58 +219,65 @@
             </transition>
           </div>
           <div slot="page4">
-            <h4 class="mt-5 mb-5">Seleccione los prductos</h4>
-            <p>Acá va una descripción acerca de lo que son los productos.</p>
-            <el-row :gutter="14">
+            <div class="" v-if="showResult">
+              <h1>Su número de recibo es: <strong>{{ warehouse }}</strong></h1>
+              <el-button type="success"  @click="refresh">Aceptar</el-button>
+            </div>
+            <div v-else>
+              <h4 class="mt-5 mb-5">Seleccione los prductos</h4>
+              <p>Acá va una descripción acerca de lo que son los productos.</p>
+              <el-row :gutter="14">
                 <el-form :inline="true" class="demo-form-inline">
-                    <el-form-item label="" style="width: 50%">
-                      <el-col :xs="24" :sm="24" :md="24" :lg="{span: 24, offset: 0}" :xl="{span: 12, offset: 6}">
+                  <el-form-item label="" style="width: 50%">
+                    <el-col :xs="24" :sm="24" :md="24" :lg="{span: 24, offset: 0}" :xl="{span: 12, offset: 6}">
                       <el-select
-                          style="width: 100%"
-                          v-model="value10"
-                          filterable
-                          allow-create
-                          placeholder="Choose tags for your article"
-                          value-key="id">
+                        style="width: 100%"
+                        v-model="value10"
+                        filterable
+                        allow-create
+                        placeholder="Choose tags for your article"
+                        value-key="id">
                         <el-option
-                          v-for="item in productPoint"
-                          :key="item.id"
-                          :label="item.articulo"
-                          :value="item">
-                        </el-option>
-                      </el-select>
-                    </el-col>
-                  </el-form-item>
-                  <el-form-item label="">
-                    <el-input-number v-model="cantPoint" :min="1"></el-input-number>
-                  </el-form-item>
-                  <el-form-item label="">
-                    <el-button type="success" @click="addPoints"><i class="fal fa-plus"></i></el-button>
-                  </el-form-item>
-                </el-form>
+                        v-for="item in productPoint"
+                        :key="item.id"
+                        :label="item.articulo"
+                        :value="item">
+                      </el-option>
+                    </el-select>
+                  </el-col>
+                </el-form-item>
+                <el-form-item label="">
+                  <el-input-number v-model="cantPoint" :min="1"></el-input-number>
+                </el-form-item>
+                <el-form-item label="">
+                  <el-button type="success" @click="addPoints"><i class="fal fa-plus"></i></el-button>
+                </el-form-item>
+              </el-form>
             </el-row>
-            <el-table
-              :data="tableData"
-              border
-              style="width: 70%; margin: 0 auto">
-              <el-table-column
-                prop="product"
-                label="Articulo">
-              </el-table-column>
-              <el-table-column
-                prop="cant"
-                label="Cantidad"
-                width="100">
-              </el-table-column>
-              <el-table-column
-                prop="address"
-                label="Acciones"
-                width="100">
-                <template slot-scope="scope">
-                  <i class="fal fa-trash-alt danger-text pointer" @click="tableData.splice(scope.$index, 1);"></i>
-                </template>
-              </el-table-column>
-            </el-table>
+          <el-table
+                      :data="tableData"
+                      border
+                      style="width: 70%; margin: 0 auto">
+                      <el-table-column
+                      prop="product"
+                      label="Articulo">
+                    </el-table-column>
+                    <el-table-column
+                    prop="cant"
+                    label="Cantidad"
+                    width="100">
+                  </el-table-column>
+                  <el-table-column
+                  prop="address"
+                  label="Acciones"
+                  width="100">
+                  <template slot-scope="scope">
+                    <i class="fal fa-trash-alt danger-text pointer" @click="tableData.splice(scope.$index, 1);"></i>
+                  </template>
+                </el-table-column>
+              </el-table>
+
+            </div>
           </div>
         </vue-good-wizard>
       </el-col>
@@ -315,6 +322,8 @@ export default {
       cantPoint: 1,
       showForm: false,
       showFormC: false,
+      showResult: false,
+      warehouse: null,
       iconStatus: 'fa-search',
       ruleForm: {
         agencia_id: 1,
@@ -355,17 +364,11 @@ export default {
       value10: ''
     };
   },
-  mounted(){
-    axios.post('/oauth/token', {
-        grant_type: 'client_credentials',
-        client_id: 3,
-        client_secret: 'MSEnHqdFANBO9EVXVBmS2IURnjRk2IRGFJxTKxUe'
-    }).then(({data}) => {
-    localStorage.setItem('token', data.access_token)
-    }).catch(error => { console.log(error) })
-  },
   methods: {
     nextClicked(currentPage) {
+      if (currentPage == 3) {
+        this.createDocument()
+      }
       if (currentPage == 2) {
         if (this.dataC.length <= 0) {
           this.$message.warning('Seleccione un consignatario')
@@ -507,6 +510,47 @@ export default {
       }
       this.cantPoint = 1
       this.value10 = null
+    },
+    createDocument(){
+      let me = this
+      axios.post('documento/ajaxCreatePublic/1', {
+        'tipo_documento_id': 1,
+        'type_id': 1,
+        'agencia_id': 1,
+        'usuario_id': 1,
+        'shipper_id': me.data[0].id,
+        'consignee_id': me.dataC.id,
+        'created_at': me.getTime()
+      }).then(({data}) => {
+        if (data['code'] == 200) {
+          me.warehouse = data.datos['num_warehouse'];
+          this.showResult = true
+        } else {
+          this.$message.warning(data['error']);
+        }
+      }).catch(function(error) {
+        console.log(error);
+        toastr.error("Error.", {
+          timeOut: 50000
+        });
+      });
+    },
+    getTime() {
+      Number.prototype.padLeft = function(base, chr) {
+          var len = (String(base || 10).length - String(this).length) + 1;
+          return len > 0 ? new Array(len).join(chr || '0') + this : this;
+      }
+      var d = new Date,
+        dformat = [d.getFullYear(), (d.getMonth() + 1).padLeft(),
+            d.getDate().padLeft()
+        ].join('-') + ' ' + [d.getHours().padLeft(),
+            d.getMinutes().padLeft(),
+            d.getSeconds().padLeft()
+        ].join(':');
+      return dformat;
+    },
+    refresh(){
+      location.reload(true)
     }
   }
 };
