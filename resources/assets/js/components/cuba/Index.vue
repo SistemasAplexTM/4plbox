@@ -423,7 +423,7 @@ export default {
           me.loadingSave = true
           me.ruleForm.documento = me.doc
           if (me.type == 'shipper') {
-            save(me.ruleForm, me.type).then(({data}) => {
+            axios.post('shipperSave/' + me.type, me.ruleForm).then(({data}) => {
               this.$message({
                 message: 'Registrado con éxito.',
                 type: 'success'
@@ -435,7 +435,7 @@ export default {
               me.loadingSave = false
             })
           }else{
-            save(me.ruleFormC, me.type).then(({data}) => {
+            axios.post('shipperSave/' + me.type, me.ruleFormC).then(({data}) => {
               this.$message({
                 message: 'Registrado con éxito.',
                 type: 'success'

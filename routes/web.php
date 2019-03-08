@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Http\Request;
 use App\Shipper;
 use App\Consignee;
 use Illuminate\Support\Facades\DB;
