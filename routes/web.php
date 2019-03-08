@@ -439,3 +439,5 @@ return DB::table('puntos_cuba_productos AS a')
 Route::get('/getConsigneesById/{id}', function (Consignee $consignee, $id) {
 return $consignee->find($id);
 });
+
+Route::post('documento/ajaxCreatePublic/{document}', 'DocumentoController@ajaxCreate');
