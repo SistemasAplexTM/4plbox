@@ -36,6 +36,7 @@ class AplexConfigController extends Controller
         array('icon' => 'money-bill', 'route' => 'arancel.index', 'url' => false, 'desc' => 'layouts.tariffs', 'perm' => 'arancel.index'),
         array('icon' => 'box-check', 'route' => 'status.index', 'url' => false, 'desc' => 'layouts.status', 'perm' => 'status.index'),
         array('icon' => 'truck', 'route' => 'transportador.index', 'url' => false, 'desc' => 'layouts.transporters', 'perm' => 'transportador.index'),
+        array('icon' => 'truck-container', 'route' => 'transportadoras_locales', 'url' => true, 'desc' => 'layouts.local_transporters', 'perm' => 'transportador.index'),
         array('icon' => 'street-view', 'route' => 'ciudad.index', 'url' => false, 'desc' => 'layouts.cities', 'perm' => 'ciudad.index'),
         array('icon' => 'globe', 'route' => 'departamento.index', 'url' => false, 'desc' => 'layouts.dptos_states', 'perm' => 'departamento.index'),
         array('icon' => 'map-marker', 'route' => 'pais.index', 'url' => false, 'desc' => 'layouts.countrieses', 'perm' => 'pais.index'),

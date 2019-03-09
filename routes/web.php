@@ -326,6 +326,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('clientes/restaurar/{id}', 'ClienteController@restaurar');
     Route::get('clientes/selectInput/{tableName}', 'ClienteController@selectInput');
 
+    /*--- MODULO TRANSPORTADORAS LOCALES ---*/
+    Route::resource('transportadoras_locales', 'LocalTransportersController', ['except' => ['show', 'create', 'edit']]);
+    Route::get('transportadoras_locales/all', 'LocalTransportersController@getAll')->name('datatable/all');
+    Route::get('transportadoras_locales/getPaises', 'LocalTransportersController@getAllPais');
+    // Route::get('clientes/delete/{id}/{logical?}', 'ClienteController@delete')->name('arancel.delete');
+    // Route::get('clientes/restaurar/{id}', 'ClienteController@restaurar');
+    // Route::get('clientes/selectInput/{tableName}', 'ClienteController@selectInput');
+
     /*--- MODULO BL ---*/
     Route::resource('bill', 'BillLadingController', ['except' => ['show', 'create']]);
     Route::get('bill/create/{bill?}', 'BillLadingController@create');

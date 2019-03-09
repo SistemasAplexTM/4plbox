@@ -52,6 +52,7 @@ return [
     'tariffs'=>'Aranceles',
     'status'=>'Estado',
     'transporters'=>'Transportadores',
+    'local_transporters'=>'Transportadores locales',
     'cities'=>'Ciudades',
     'dptos_states'=>'Dptos/Estados',
     'countrieses'=>'Países',
