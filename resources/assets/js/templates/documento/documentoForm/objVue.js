@@ -451,6 +451,7 @@ var objVue = new Vue({
                 if ($('#opEditarCons').is(':checked')) {
                     $('#opEditarCons').prop('checked', false);
                     $('#msnEditarCons').css('display', 'none');
+                    $('#nombreD').attr('readonly', true);
                     $('#direccionD').attr('readonly', true);
                     $('#emailD').attr('readonly', true);
                     $('#telD').attr('readonly', true);
@@ -460,6 +461,7 @@ var objVue = new Vue({
                 } else {
                     $('#opEditarCons').prop('checked', true);
                     $('#msnEditarCons').css('display', 'inline-block');
+                    $('#nombreD').attr('readonly', false);
                     $('#direccionD').attr('readonly', false);
                     $('#emailD').attr('readonly', false);
                     $('#telD').attr('readonly', false);
@@ -472,6 +474,7 @@ var objVue = new Vue({
                 if ($('#opEditarShip').is(':checked')) {
                     $('#opEditarShip').prop('checked', false);
                     $('#msnEditarShip').css('display', 'none');
+                    $('#nombreR').attr('readonly', true);
                     $('#direccionR').attr('readonly', true);
                     $('#emailR').attr('readonly', true);
                     $('#telR').attr('readonly', true);
@@ -481,6 +484,7 @@ var objVue = new Vue({
                 } else {
                     $('#opEditarShip').prop('checked', true);
                     $('#msnEditarShip').css('display', 'inline-block');
+                    $('#nombreR').attr('readonly', false);
                     $('#direccionR').attr('readonly', false);
                     $('#emailR').attr('readonly', false);
                     $('#telR').attr('readonly', false);
@@ -491,6 +495,64 @@ var objVue = new Vue({
                 }
             }
         },
+        placeShipperConsignee: function(data, table) {
+          let me = this;
+          if (table === 'shipper') {
+            me.nombreR = data['nombre_full'];
+            me.direccionR = data['direccion'];
+            $('#nombreR').attr('readonly', true);
+            $('#direccionR').attr('readonly', true);
+            $('#emailR').val(data['correo']).attr('readonly', true);
+            $('#telR').val(data['telefono']).attr('readonly', true);
+            $('#localizacion_id').val(data['ciudad_id']);
+            me.city_selected_s = data['ciudad'];
+            me.city_s = {
+              'id': data['ciudad_id'],
+              'name': data['ciudad'],
+              'pais_id': data['pais_id'],
+            }
+            me.disabled_s = true;
+            $('#zipR').val(data['zip']).attr('readonly', true);
+          } else {
+            me.nombreD = data['nombre_full'];
+            me.direccionD = data['direccion'];
+            $('#nombreD').attr('readonly', true);
+            $('#direccionD').attr('readonly', true);
+            $('#emailD').val(data['correo']).attr('readonly', true);
+            me.emailD = data['correo'];
+            $('#telD').val(data['telefono']).attr('readonly', true);
+            $('#localizacion_id_c').val(data['ciudad_id']);
+            me.city_selected_c = data['ciudad'];
+            me.city_c = {
+              'id': data['ciudad_id'],
+              'name': data['ciudad'],
+              'pais_id': data['pais_id'],
+            }
+            me.disabled_c = true;
+            $('#zipD').val(data['zip']).attr('readonly', true);
+            $('#pais_id_D').val(data['pais_id']);
+          }
+        },
+        searchShipperConsignee: function(id, table) {
+            var me = this;
+            if (id != '') {
+                if (table === 'shipper') {
+                    axios.get('../../' + table + '/getDataById/' + id).then(response => {
+                        data = response.data;
+                        me.placeShipperConsignee(data, table);
+                        $('#shipper_id').val(id);
+                        $('#modalShipper').modal('hide');
+                    });
+                } else {
+                    axios.get('../../' + table + '/getDataById/' + id).then(response => {
+                        data = response.data;
+                        me.placeShipperConsignee(data, table);
+                        $('#consignee_id').val(id);
+                        $('#modalConsignee').modal('hide');
+                    });
+                }
+            }
+        },
         resetFormsShipperConsignee: function(op) {
           let me = this;
             if (op == 1) {
@@ -498,6 +560,8 @@ var objVue = new Vue({
                 $('#poBoxD').val('');
                 this.nombreD = null;
                 this.direccionD = null;
+                $('#nombreD').attr('readonly', false);
+                $('#direccionD').attr('readonly', false);
                 $('#direccionD').attr('readonly', false);
                 $('#emailD').val('').attr('readonly', false);
                 this.emailD = null;
@@ -511,6 +575,7 @@ var objVue = new Vue({
                 $('#shipper_id').val('');
                 this.nombreR = null;
                 this.direccionR = null;
+                $('#nombreR').attr('readonly', false);
                 $('#direccionR').attr('readonly', false);
                 $('#emailR').val('').attr('readonly', false);
                 $('#telR').val('').attr('readonly', false);
@@ -566,62 +631,6 @@ var objVue = new Vue({
                     });
                   }
               });
-            }
-        },
-        placeShipperConsignee: function(data, table) {
-            let me = this;
-            if (table === 'shipper') {
-                me.nombreR = data['nombre_full'];
-                me.direccionR = data['direccion'];
-                $('#direccionR').attr('readonly', true);
-                $('#emailR').val(data['correo']).attr('readonly', true);
-                $('#telR').val(data['telefono']).attr('readonly', true);
-                $('#localizacion_id').val(data['ciudad_id']);
-                me.city_selected_s = data['ciudad'];
-                me.city_s = {
-                  'id': data['ciudad_id'],
-                  'name': data['ciudad'],
-                  'pais_id': data['pais_id'],
-                }
-                me.disabled_s = true;
-                $('#zipR').val(data['zip']).attr('readonly', true);
-            } else {
-                me.nombreD = data['nombre_full'];
-                me.direccionD = data['direccion'];
-                $('#direccionD').attr('readonly', true);
-                $('#emailD').val(data['correo']).attr('readonly', true);
-                me.emailD = data['correo'];
-                $('#telD').val(data['telefono']).attr('readonly', true);
-                $('#localizacion_id_c').val(data['ciudad_id']);
-                me.city_selected_c = data['ciudad'];
-                me.city_c = {
-                  'id': data['ciudad_id'],
-                  'name': data['ciudad'],
-                  'pais_id': data['pais_id'],
-                }
-                me.disabled_c = true;
-                $('#zipD').val(data['zip']).attr('readonly', true);
-                $('#pais_id_D').val(data['pais_id']);
-            }
-        },
-        searchShipperConsignee: function(id, table) {
-            var me = this;
-            if (id != '') {
-                if (table === 'shipper') {
-                    axios.get('../../' + table + '/getDataById/' + id).then(response => {
-                        data = response.data;
-                        me.placeShipperConsignee(data, table);
-                        $('#shipper_id').val(id);
-                        $('#modalShipper').modal('hide');
-                    });
-                } else {
-                    axios.get('../../' + table + '/getDataById/' + id).then(response => {
-                        data = response.data;
-                        me.placeShipperConsignee(data, table);
-                        $('#consignee_id').val(id);
-                        $('#modalConsignee').modal('hide');
-                    });
-                }
             }
         },
         modalShipper: function(data_search) {

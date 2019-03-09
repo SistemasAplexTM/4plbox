@@ -61,8 +61,9 @@ class DocumentoController extends Controller
     public function index()
     {
         $this->assignPermissionsJavascript('documento');
+        $wcppScriptDetect = WebClientPrint::createWcppDetectionScript(action('WebClientPrintController@processRequest'), Session::getId());
         $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('DocumentoController@printFile'), Session::getId());
-        return view('templates.documento.index', ['wcpScript' => $wcpScript]);
+        return view('templates.documento.index', compact('wcpScript', 'wcppScriptDetect'));
     }
 
     public function create($tipo_documento_id)

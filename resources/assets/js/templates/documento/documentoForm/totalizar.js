@@ -65,6 +65,7 @@ function totalizeDocument(elemento) {
     }
     total = parseFloat(pa_aduana) + parseFloat(flete) + parseFloat(seguro) + parseFloat(cargos_add) - parseFloat(descuento);
     $('#total').val(isInteger(total));
+    $('.total_lb').html(isInteger(total));
     // },1000);
 }
 

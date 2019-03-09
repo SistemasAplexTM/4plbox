@@ -158,6 +158,7 @@
           }).then(response => {
             me.getTableData();
             me.resetForm();
+            refreshTable('whgTable');
             me.loading_save = false;
           }).catch(function(error) {
               console.log(error);
@@ -172,6 +173,7 @@
         let me = this;
         axios.delete('../../puntos/' + row.id).then(function(response) {
           me.getTableData();
+          refreshTable('whgTable');
           toastr.success('Registro eliminado correctamente.');
         }).catch(function(error) {
             console.log(error);
