@@ -1,5 +1,5 @@
 <template>
-  <!-- <vue-scroll class=""> -->
+  <div>
     <el-row class="">
       <el-col :span="24" class="text-center">
         <vue-good-wizard
@@ -128,7 +128,7 @@
                       :key="item.id"
                       :label="item.primer_nombre"
                       :value="item.id">
-                      <span class="fl">{{ item.primer_nombre  + ' ' + item.primer_apellido}}</span>
+                      <span class="fl">{{ item.primer_nombre}}  {{ (item.primer_apellido) ? item.primer_apellido : '' }}</span>
                       <span class="fr">{{ item.documento }}</span>
                     </el-option>
                   </el-select>
@@ -254,35 +254,62 @@
                 </el-form-item>
               </el-form>
             </el-row>
-          <el-table
-                      :data="tableData"
-                      border
-                      style="width: 70%; margin: 0 auto">
-                      <el-table-column
-                      prop="product"
-                      label="Articulo">
-                    </el-table-column>
-                    <el-table-column
-                    prop="cant"
-                    label="Cantidad"
-                    width="100">
-                  </el-table-column>
-                  <el-table-column
+              <el-table
+                :data="tableData"
+                border
+                show-summary
+                sum-text="Total"
+                style="width: 70%; margin: 0 auto">
+                <el-table-column
+                  prop="product"
+                  sortable
+                  label="Articulo">
+                </el-table-column>
+                <el-table-column
+                  prop="unm"
+                  label="UM"
+                  width="100">
+                </el-table-column>
+                <el-table-column
+                  prop="cant"
+                  label="Cantidad"
+                  width="100">
+                </el-table-column>
+                <el-table-column
+                  prop="points"
+                  sortable
+                  label="Puntos"
+                  width="100">
+                </el-table-column>
+                <el-table-column
                   prop="address"
-                  label="Acciones"
+                  label=""
                   width="100">
                   <template slot-scope="scope">
                     <i class="fal fa-trash-alt danger-text pointer" @click="tableData.splice(scope.$index, 1);"></i>
                   </template>
                 </el-table-column>
               </el-table>
-
             </div>
           </div>
         </vue-good-wizard>
       </el-col>
     </el-row>
-  <!-- </vue-scroll> -->
+    <el-dialog
+      title="Número de recibo"
+      :visible.sync="showResult"
+      width="30%"
+      :before-close="handleClose"
+      center>
+      <div class="text-center"  >
+        <p>Su número de recibo es:</p>
+        <h1>{{ warehouse }}</h1>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="success"  @click="refresh">Aceptar</el-button>
+      </span>
+    </el-dialog>
+  </div>
 </template>
 
 <script>
@@ -290,6 +317,7 @@
 export default {
   data(){
     return {
+      agency_id: null,
       tableData: [],
       type: '',
       steps: [
@@ -323,7 +351,7 @@ export default {
       showForm: false,
       showFormC: false,
       showResult: false,
-      warehouse: null,
+      warehouse: 'Generando su recibo...',
       iconStatus: 'fa-search',
       ruleForm: {
         agencia_id: 1,
@@ -363,6 +391,11 @@ export default {
       value: '',
       value10: ''
     };
+  },
+  mounted(){
+    var pathname = window.location.pathname;
+    var data = pathname.split('/');
+    this.agency_id = data.pop();
   },
   methods: {
     nextClicked(currentPage) {
@@ -423,7 +456,7 @@ export default {
           me.loadingSave = true
           me.ruleForm.documento = me.doc
           if (me.type == 'shipper') {
-            axios.post('shipperSave/' + me.type, me.ruleForm).then(({data}) => {
+            axios.post('/shipperSave/' + me.type, me.ruleForm).then(({data}) => {
               this.$message({
                 message: 'Registrado con éxito.',
                 type: 'success'
@@ -435,11 +468,12 @@ export default {
               me.loadingSave = false
             })
           }else{
-            axios.post('shipperSave/' + me.type, me.ruleFormC).then(({data}) => {
+            axios.post('/shipperSave/' + me.type + '/'+ me.data[0].id, me.ruleFormC).then(({data}) => {
               this.$message({
                 message: 'Registrado con éxito.',
                 type: 'success'
               });
+              me.getConsignees()
               me.loadingSave = false
             }).catch(error => {
               console.log(error);
@@ -462,7 +496,7 @@ export default {
       this.ruleFormC.localizacion_id = city
     },
     getConsignees(){
-      axios.get('getConsigneesByShipper/'+ this.data[0].id).then(({data}) => {
+      axios.get('/getConsigneesByShipper/'+ this.data[0].id).then(({data}) => {
         this.options = []
         if (data.length > 0) {
           this.options = data
@@ -473,14 +507,14 @@ export default {
     },
     setDataC(val){
       let me = this
-      axios.get('getConsigneesById/' + val).then(({data}) => {
+      axios.get('/getConsigneesById/' + val).then(({data}) => {
         me.showFormC = false
         me.dataC = data
       }).catch(error => {console.log(error);})
     },
     getProductsPoint(){
       let me = this
-      axios.get('getProductsPoint').then(({data}) => {
+      axios.get('/getProductsPoint').then(({data}) => {
         me.productPoint = data
       }).catch(error => { console.log(error) })
     },
@@ -498,12 +532,17 @@ export default {
       var found = this.tableData.find(function(element) {
         if (element.product == product) {
           element.cant += me.cantPoint
+          element.points = (me.value10.valor_aduan) ? (element.cant * parseFloat(me.value10.valor_aduan)) : 0
           return true
         }
         return false
       });
 
-      var data = {id: this.value10.id, product: product, cant: this.cantPoint }
+      var data = {
+        id: this.value10.id, product: product, cant: this.cantPoint,
+        points: (this.value10.valor_aduan) ? (this.cantPoint * parseFloat(this.value10.valor_aduan)) : 0,
+        unm: this.value10.descripcion
+      }
       if (!found) {
         console.log(found);
         this.tableData.push(data)
@@ -512,11 +551,13 @@ export default {
       this.value10 = null
     },
     createDocument(){
+      this.showResult = true
       let me = this
-      axios.post('documento/ajaxCreatePublic/1', {
+      axios.post('/documento/ajaxCreatePublic/1', {
         'tipo_documento_id': 1,
         'type_id': 1,
-        'agencia_id': 1,
+        'agencia_id': me.agency_id,
+        'tipo_ebmarque_id': 8,
         'usuario_id': 1,
         'shipper_id': me.data[0].id,
         'consignee_id': me.dataC.id,
@@ -524,7 +565,6 @@ export default {
       }).then(({data}) => {
         if (data['code'] == 200) {
           me.warehouse = data.datos['num_warehouse'];
-          this.showResult = true
         } else {
           this.$message.warning(data['error']);
         }
@@ -551,6 +591,15 @@ export default {
     },
     refresh(){
       location.reload(true)
+    },
+    handleClose(done) {
+      this.$confirm('Si cierra esta ventana no podrá ver de nuevo su número de recibo', 'Warning', {
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar',
+        type: 'warning'
+      }).then(_ => {
+        this.refresh()
+      }).catch(_ => {});
     }
   }
 };
@@ -584,30 +633,7 @@ html, body {
 .text-center{
   text-align: center;
 }
-.o-0 { opacity: 0; }
-.o-005 { opacity: 0.05; }
-.o-010 { opacity: 0.10; }
-.o-015 { opacity: 0.15; }
 .o-020 { opacity: 0.20; }
-.o-025 { opacity: 0.25; }
-.o-030 { opacity: 0.30; }
-.o-035 { opacity: 0.35; }
-.o-040 { opacity: 0.40; }
-.o-045 { opacity: 0.45; }
-.o-050 { opacity: 0.50; }
-.o-055 { opacity: 0.55; }
-.o-060 { opacity: 0.60; }
-.o-065 { opacity: 0.65; }
-.o-070 { opacity: 0.70; }
-.o-075 { opacity: 0.75; }
-.o-080 { opacity: 0.80; }
-.o-085 { opacity: 0.85; }
-.o-090 { opacity: 0.90; }
-.o-095 { opacity: 0.95; }
-.o-1 { opacity: 1; }
-// Padding / Margin helpers
-.no-p { padding: 0 !important; }
-.no-m { margin: 0 !important; }
-
+.p-20 { padding: 20px}
 
 </style>

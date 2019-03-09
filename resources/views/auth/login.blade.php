@@ -110,7 +110,7 @@
                             <small style=""><a href="casillero/1" target="_blank" data-toggle="tooltip" title="Casillero"><i class="fa fa-address-book"></i> @lang('auth.registry')</a></small>
                             <small style=""><a href="prealerta/1" target="_blank" data-toggle="tooltip" title="Prealertar mercancia"><i class="fa fa-bell"></i> @lang('auth.pre-alert')</a></small>
 
-                            <small style="float: right;"><a href="puntosTest" target="_blank" data-toggle="tooltip" title="Prealertar mercancia"><i class="fal fa-calculator-alt"></i> Self Service</a></small>
+                            <small style="float: right;"><a href="selfService/1" target="_blank" data-toggle="tooltip" title="Prealertar mercancia"><i class="fal fa-calculator-alt"></i> Self Service</a></small>
 
                         </div>
                     </form>

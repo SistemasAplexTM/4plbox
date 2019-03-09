@@ -410,7 +410,7 @@ Route::get('formatNumber', 'AplexConfigController@formatNumber');
 
 Route::get('ciudad/getSelectCity', 'CiudadController@getSelectCity');
 
-Route::get('puntosTest/', 'PuntosController@index');
+Route::get('selfService/{id?}', 'PuntosController@index');
 
 
 
@@ -418,9 +418,7 @@ Route::get('/shipperSearch/{doc}/{type?}', function (Shipper $shipper, $doc, $ty
 return DB::table($type)->select('*')->where('documento', $doc)->get();
 });
 
-Route::post('/shipperSave/{type}', function (Request $request, $type) {
-DB::table($type)->insert($request->all());
-});
+Route::post('/shipperSave/{type}/{shipper_id?}', 'PuntosController@saveShipperConsignee');
 
 Route::get('/getConsigneesByShipper/{shipper_id}', function (Shipper $shipper, $shipper_id) {
 return DB::table('consignee AS a')
@@ -442,3 +440,7 @@ return $consignee->find($id);
 });
 
 Route::post('documento/ajaxCreatePublic/{document}', 'DocumentoController@ajaxCreate');
+
+Route::get('pruebaSilent', function(){
+  return view('test/index');
+});
