@@ -122,6 +122,14 @@
     table.table td a{
       margin: 0!important;
     }
+    .totales_lb{
+      border: 1px solid darkgrey;
+      border-radius: 5px;
+    }
+    .total_title{
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
 
 </style>
 <link href="{{ asset('css/plugins/dataTables/keyTable.dataTables.min.css') }}">
@@ -398,7 +406,16 @@
                                                 <small class="help-block" style="display: none">@lang('documents.obligatory_field')</small>
                                             </div>
                                         </div>
-
+                                        <div class="col-sm-12">
+                                          <div class="form-group totales_lb">
+                                            <div class="col-sm-6">
+                                              <h1 class="total_title">TOTAL</h1>
+                                            </div>
+                                            <div class="col-sm-6">
+                                              <h1 class="total_title">$ <span class="total_lb"></span></h1>
+                                            </div>
+                                          </div>
+                                        </div>
                                         <div class="form-group" v-if="mostrar.includes(22)">
                                             <div class="col-sm-4">
                                                 <label class="">@lang('documents.weight')</label>
@@ -534,7 +551,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group" style="display: none;">
                                             <div class="col-sm-6">
                                                 <label class="control-label" for="total">@lang('documents.total'): </label>
                                             </div>
