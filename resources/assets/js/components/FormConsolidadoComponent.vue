@@ -98,8 +98,9 @@
                                     <div class="col-sm-4">
                                         <div class="col-sm-12" v-show="show_buttons">
                                             <label class="control-label col-lg-12">&nbsp;</label>
-                                            <a hfer="#" target="blank_" class="btn btn-info btn-sm printDocument" data-toggle="tooltip" data-placement="top" title="Imprimir manifiesto"><i class="fa fa-print"></i> Manifiesto</a>
-                                            <a hfer="#" target="blank_" class="btn btn-info btn-sm printDocumentGuias" data-toggle="tooltip" data-placement="top" title="Imprimir guias hijas" ><i class="fa fa-print"></i> Guias hijas</a>
+                                            <a target="blank_" class="btn btn-info btn-sm printDocument" data-toggle="tooltip" data-placement="top" title="Imprimir manifiesto"><i class="fa fa-print"></i> Manifiesto</a>
+                                            <a target="blank_" class="btn btn-info btn-sm printDocumentGuiasCuba" data-toggle="tooltip" data-placement="top" title="Imprimir guias hijas" ><i class="fa fa-print"></i> Guias hijas Cuba</a>
+                                            <a target="blank_" class="btn btn-info btn-sm printDocumentGuias" data-toggle="tooltip" data-placement="top" title="Imprimir guias hijas" ><i class="fa fa-print"></i> Guias hijas</a>
 																						<div class="btn-group">
 																						  <a class="btn btn-info btn-sm" href="getDataPrintBagsConsolidate" target="blank_"><i class="fa fa-print"></i> Bolsas / Tulas</a>
 																						  <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -410,156 +411,157 @@
 
     export default {
     	props: {
-				documento: {
-		      type: Object,
-		      required: true
-		    },contactos: {
-		      type: Object,
-		      required: false
-		    },restore: {
-          type: Object,
-          required: false
-        },agrupar: {
-          type: Object,
-          required: false
-        },removeragrupado: {
-          type: Object,
-          required: false
-        },permission: {
-          type: Object,
-          required: false
-        },app_type: {
-          type: String,
-          required: true
-        },app_client: {
-          type: String,
-          required: true
-        },
-				pais_id_config:[String, Number],
-				close_document:{
-					type: Boolean,
-          required: false
-				}
+						documento: {
+				      type: Object,
+				      required: true
+				    },contactos: {
+				      type: Object,
+				      required: false
+				    },restore: {
+			        type: Object,
+			        required: false
+			      },agrupar: {
+			        type: Object,
+			        required: false
+			      },removeragrupado: {
+			        type: Object,
+			        required: false
+			      },permission: {
+			        type: Object,
+			        required: false
+			      },app_type: {
+			        type: String,
+			        required: true
+			      },app_client: {
+			        type: String,
+			        required: true
+			      },
+						pais_id_config:[String, Number],
+						close_document:{
+							type: Boolean,
+			        required: false
+						}
     	},
     	watch:{
-				close_document:function(val){
-					this.close = val;
-					this.updateTableDetail();
-				},
-        permission:function(values){
-            this.permissions = values;
-        },
-	  		contactos:function(option){
-	  			this.contactos_fields = null;
-	              if(option.opcion === 'shipper'){
-	                  var id = option.idShipCons;
-	              	$('#modalShipperConsigneeConsolidado').modal('show');
-	              	this.tituloModal = 'Remitente (Shipper)';
-	              	var contact = this.shipper_contactos[id];
-	              	if(contact != null){
-	                	this.contactos_fields = (JSON.parse(contact.replace(/&quot;/g, '"'))).campos;
-	                }
-	              }
-	              if(option.opcion === 'consignee'){
-	                  var id = option.idShipCons;
-	              	$('#modalShipperConsigneeConsolidado').modal('show');
-	              	this.tituloModal = 'Destinatario (Consignee)';
-	              	var contact = this.consignee_contactos[id];
-	              	if(contact != null){
-	                	this.contactos_fields = (JSON.parse(contact.replace(/&quot;/g, '"'))).campos;
-	                }
-	              }
-					},
-	        restore:function(option){
-	            let me = this;
-	            axios.get('restoreShipperConsignee/' + option.id + '/' + option.table).then(response => {
-	                toastr.success('Registro original restaurado.');
-	                me.updateTableDetail();
-	            }).catch(function(error) {
-	                console.log(error);
-	                toastr.warning('Error: -' + error);
-	            });
-	        },
-	        agrupar:function(option){
-	            let me = this;
-	            if ($.fn.DataTable.isDataTable('#tbl-modalagrupar')) {
-	                $('#tbl-modalagrupar tbody').empty();
-	                $('#tbl-modalagrupar').dataTable().fnDestroy();
-	            }
-	            var table = $('#tbl-modalagrupar').DataTable({
-	                "language": {
-	                    "paginate": {
-	                        "previous": "Anterior",
-	                        "next": "Siguiente",
-	                    },
-	                    /*"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",*/
-	                    "info": "Registros del _START_ al _END_  de un total de _TOTAL_",
-	                    "search": "Buscar",
-	                    "lengthMenu": "Mostrar _MENU_ Registros",
-	                    "infoEmpty": "Mostrando registros del 0 al 0",
-	                    "emptyTable": "No hay datos disponibles en la tabla",
-	                    "infoFiltered": "(Filtrando para _MAX_ Registros totales)",
-	                    "zeroRecords": "No se encontraron registros coincidentes",
-	                },
-	                processing: true,
-	                serverSide: true,
-	                searching: true,
-	                ajax: 'getGuiasAgrupar/'+ option.id,
-	                columns: [{
-	                    "render": function (data, type, full, meta) {
-	                        return '<div class="checkbox checkbox-success"><input type="checkbox" data-id_guia="' + full.documento_detalle_id + '" id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '"></label></div>';
-	                    }
-	                }, {
-	                    data: 'codigo',
-	                    name: 'codigo'
-	                }, {
-	                    data: 'peso2',
-	                    name: 'peso2'
-	                }]
-	            });
-	            $('#modalagrupar').modal('show');
-	        },
-          removeragrupado:function(option){
-                let me = this;
-                axios.get('removerGuiaAgrupada/' + option.id + '/' + option.id_guia_detalle).then(response => {
-                    toastr.success('Registro quitado correctamente.');
-                    me.updateTableDetail();
-                }).catch(function(error) {
-                    console.log(error);
-                    toastr.warning('Error: -' + error);
-                });
-            }
+						close_document:function(val){
+						this.close = val;
+						this.updateTableDetail();
+						},
+						permission:function(values){
+						  this.permissions = values;
+						},
+						contactos:function(option){
+						this.contactos_fields = null;
+						      if(option.opcion === 'shipper'){
+						          var id = option.idShipCons;
+						      	$('#modalShipperConsigneeConsolidado').modal('show');
+						      	this.tituloModal = 'Remitente (Shipper)';
+						      	var contact = this.shipper_contactos[id];
+						      	if(contact != null){
+						        	this.contactos_fields = (JSON.parse(contact.replace(/&quot;/g, '"'))).campos;
+						        }
+						      }
+						      if(option.opcion === 'consignee'){
+						          var id = option.idShipCons;
+						      	$('#modalShipperConsigneeConsolidado').modal('show');
+						      	this.tituloModal = 'Destinatario (Consignee)';
+						      	var contact = this.consignee_contactos[id];
+						      	if(contact != null){
+						        	this.contactos_fields = (JSON.parse(contact.replace(/&quot;/g, '"'))).campos;
+						        }
+						      }
+						},
+						restore:function(option){
+						    let me = this;
+						    axios.get('restoreShipperConsignee/' + option.id + '/' + option.table).then(response => {
+						        toastr.success('Registro original restaurado.');
+						        me.updateTableDetail();
+						    }).catch(function(error) {
+						        console.log(error);
+						        toastr.warning('Error: -' + error);
+						    });
+						},
+						agrupar:function(option){
+						    let me = this;
+						    if ($.fn.DataTable.isDataTable('#tbl-modalagrupar')) {
+						        $('#tbl-modalagrupar tbody').empty();
+						        $('#tbl-modalagrupar').dataTable().fnDestroy();
+						    }
+						    var table = $('#tbl-modalagrupar').DataTable({
+						        "language": {
+						            "paginate": {
+						                "previous": "Anterior",
+						                "next": "Siguiente",
+						            },
+						            /*"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",*/
+						            "info": "Registros del _START_ al _END_  de un total de _TOTAL_",
+						            "search": "Buscar",
+						            "lengthMenu": "Mostrar _MENU_ Registros",
+						            "infoEmpty": "Mostrando registros del 0 al 0",
+						            "emptyTable": "No hay datos disponibles en la tabla",
+						            "infoFiltered": "(Filtrando para _MAX_ Registros totales)",
+						            "zeroRecords": "No se encontraron registros coincidentes",
+						        },
+						        processing: true,
+						        serverSide: true,
+						        searching: true,
+						        ajax: 'getGuiasAgrupar/'+ option.id,
+						        columns: [{
+						            "render": function (data, type, full, meta) {
+						                return '<div class="checkbox checkbox-success"><input type="checkbox" data-id_guia="' + full.documento_detalle_id + '" id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '"></label></div>';
+						            }
+						        }, {
+						            data: 'codigo',
+						            name: 'codigo'
+						        }, {
+						            data: 'peso2',
+						            name: 'peso2'
+						        }]
+						    });
+						    $('#modalagrupar').modal('show');
+						},
+						removeragrupado:function(option){
+						    let me = this;
+						    axios.get('removerGuiaAgrupada/' + option.id + '/' + option.id_guia_detalle).then(response => {
+						        toastr.success('Registro quitado correctamente.');
+						        me.updateTableDetail();
+						    }).catch(function(error) {
+						        console.log(error);
+						        toastr.warning('Error: -' + error);
+						    });
+						}
 	    },
 	    mounted() {
-				this.close = this.documento.close_document;
-      	$('#document_type').val('consolidado');
-      	$('.printDocument').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/consolidado');
-      	$('.printDocumentGuias').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/consolidado_guias');
-				this.getDataDetail();
-	      this.getTransportes();
-				if(this.documento.ciudad_id != null){
-					this.localizacion_id = {
-						id: this.documento.ciudad_id,
-						name: this.documento.ciudad,
-						pais: this.documento.pais,
-						pais_id: this.documento.pais_id
-					}
-					this.disabled_city = true;
-				}
-				if(this.documento.central_destino_id != null){
-					this.central_destino_id = {id: this.documento.central_destino_id, name: this.documento.central_destino};
-					this.disabled_agencia = true;
-				}
-				if(this.documento.transporte_id != null){
-					this.transporte_id = {id: this.documento.transporte_id, nombre: this.documento.transporte}
-					this.disabled_transporte = true;
-				}
-				if(this.documento.observaciones != null){
-					this.observacion = this.documento.observaciones;
-				}
-				if(this.documento.observaciones != null){
-					this.tipo_consolidado = this.documento.tipo_consolidado;
-				}
+						this.close = this.documento.close_document;
+		      	$('#document_type').val('consolidado');
+		      	$('.printDocument').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/consolidado');
+		      	$('.printDocumentGuias').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/consolidado_guias');
+		      	$('.printDocumentGuiasCuba').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/consolidado_guias_cuba');
+						this.getDataDetail();
+			      this.getTransportes();
+						if(this.documento.ciudad_id != null){
+							this.localizacion_id = {
+								id: this.documento.ciudad_id,
+								name: this.documento.ciudad,
+								pais: this.documento.pais,
+								pais_id: this.documento.pais_id
+							}
+							this.disabled_city = true;
+						}
+						if(this.documento.central_destino_id != null){
+							this.central_destino_id = {id: this.documento.central_destino_id, name: this.documento.central_destino};
+							this.disabled_agencia = true;
+						}
+						if(this.documento.transporte_id != null){
+							this.transporte_id = {id: this.documento.transporte_id, nombre: this.documento.transporte}
+							this.disabled_transporte = true;
+						}
+						if(this.documento.observaciones != null){
+							this.observacion = this.documento.observaciones;
+						}
+						if(this.documento.observaciones != null){
+							this.tipo_consolidado = this.documento.tipo_consolidado;
+						}
 		},
 		created(){
 			/* CUSTOM MESSAGES VE-VALIDATOR*/

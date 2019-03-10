@@ -1446,17 +1446,23 @@ class DocumentoController extends Controller
                         //     }
                         //   }
                         // }
+                        echo $documento->tipo_embarque_id;
+                        exit();
                         if($peso_t === 0 and $decla_t === 0){
                           $this->AddToLog('Impresion Consolidado guias (' . $id . ')');
-                          if (env('APP_TYPE') === 'courier') {
-                              if(env('APP_CLIENT') === 'colombiana'){
-                                  // return view('pdf/consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
-                                  $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
-                              }else{
-                                  $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf', compact('documento', 'detalle', 'detalleConsolidado'));
-                              }
+                          if($documento->tipo_embarque_id == 8){
+                            if (env('APP_TYPE') === 'courier') {
+                                if(env('APP_CLIENT') === 'colombiana'){
+                                    // return view('pdf/consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                                    $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                                }else{
+                                    $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf', compact('documento', 'detalle', 'detalleConsolidado'));
+                                }
+                            }else{
+                                $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                            }
                           }else{
-                              $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                            return view('pdf.manifiesto.guiasCuba', compact('documento', 'detalle', 'detalleConsolidado'));
                           }
                           $nameDocument = 'Guias -' . $documento->id;
                         }else{

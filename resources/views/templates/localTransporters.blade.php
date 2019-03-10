@@ -34,7 +34,7 @@
                                 <label for="localizacion_id" class="control-label gcore-label-top">País:<samp id="require">*</samp></label>
                               </div>
                               <div class="col-sm-9">
-                                <el-select v-model="pais_id" placeholder="País" name="pais_id" filtable>
+                                <el-select v-model="pais_id" placeholder="País" name="pais_id" filterable>
                                   <el-option
                                     v-for="item in paises"
                                     :key="item.id"
