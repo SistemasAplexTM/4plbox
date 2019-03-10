@@ -192,6 +192,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('status/restaurar/{id}', 'StatusController@restaurar');
     Route::get('status/getDataSelect', 'StatusController@getDataSelect');
     Route::get('status/getDataSelectModalTagGuia', 'StatusController@getDataSelectModalTagGuia');
+    Route::get('status/getDataSelectTransportadoras/{id}', 'StatusController@getDataSelectTransportadoras');
 
     /*--- MODULO STATUS-REPORT ---*/
     Route::resource('statusReport', 'StatusReportController', ['except' => ['show', 'create', 'edit']]);

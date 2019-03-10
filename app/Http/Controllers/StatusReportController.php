@@ -31,38 +31,34 @@ class StatusReportController extends Controller
     public function store(StatusReportRequest $request)
     {
         try {
-            $obj = DocumentoDetalle::select('id')
-                ->whereRaw("documento_detalle.num_warehouse = '" . trim($request->codigo) . "' OR documento_detalle.num_guia = '" . trim($request->codigo) . "'")
-                ->where('deleted_at', null)
-                ->first();
-            if ($obj) {
-                $data                       = (new StatusReport)->fill($request->all());
-                $data->documento_detalle_id = $obj->id;
+          if ($request->codigo) {
+              foreach ($request->codigo as $key => $value) {
+                $data = new StatusReport;
+                $data->status_id            = $request->status_id;
+                $data->documento_detalle_id = $value['id'];
                 $data->usuario_id           = Auth::user()->id;
+                $data->codigo               = $value['name'];
+                $data->observacion          = $request->observacion;
+                $data->transportadora       = ($request->transportadora) ? $request->transportadora : NULL;
+                $data->num_transportadora   = ($request->num_transportadora) ? $request->num_transportadora : NULL;
                 $data->fecha_status         = date('Y-m-d H:i:s');
                 $data->created_at           = date('Y-m-d H:i:s');
-                if ($data->save()) {
-                    $this->AddToLog('Status creado id(' . $data->id . ')');
-                    $answer = array(
-                        "datos"  => $request->all(),
-                        "code"   => 200,
-                        "status" => 200,
-                    );
-                } else {
-                    $answer = array(
-                        "error"  => 'Error al intentar Eliminar el registro.',
-                        "code"   => 600,
-                        "status" => 500,
-                    );
-                }
-            } else {
-                $answer = array(
-                    "error"  => 'No existe registro con ese numero de Guia o Warehouse que ingresó.',
-                    "code"   => 600,
-                    "status" => 500,
-                );
-            }
-            return $answer;
+                $data->save();
+                $this->AddToLog('Status creado id(' . $data->id . ')');
+              }
+              $answer = array(
+                  "datos"  => '',
+                  "code"   => 200,
+                  "status" => 200,
+              );
+          } else {
+              $answer = array(
+                  "error"  => 'No existen registro para insertar.',
+                  "code"   => 600,
+                  "status" => 500,
+              );
+          }
+          return $answer;
         } catch (\Exception $e) {
             $error = '';
             if (isset($e->errorInfo) and count($e->errorInfo) > 0) {

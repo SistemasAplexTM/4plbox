@@ -61,6 +61,9 @@
     font-family: 'courier', sans-serif;
     margin-top: 20px;
   }
+  .el-select-dropdown{
+    z-index: 9999!important;
+  }
 </style>
 <template>
 	<!-- modal shipper -->
@@ -106,11 +109,29 @@
 							    <div role="tabpanel" class="tab-pane fade" id="status">
 							    	<div class="row form-group" id="register">
     										<div class="col-lg-6" :class="{ 'has-error': errors.has('warehouse') }">
-    											<v-select name="warehouse" v-model="warehouse_codigo" label="name" :options="warehouses" v-validate.disable="'required'" placeholder="Warehouse/Guia"></v-select>
+                          <el-select v-model="warehouse_codigo" name="warehouse"
+                          multiple filterable  placeholder="Warehouse/Guia" value-key="id"
+                          collapse-tags v-validate.disable="'required'" size="medium">
+                              <el-option
+                                v-for="item in warehouses"
+                                :key="item.id"
+                                :label="item.name"
+                                :value="item">
+                              </el-option>
+                            </el-select>
     											<small class="help-block">{{ errors.first('warehouse') }}</small>
     										</div>
-    						        		<div class="col-lg-6" :class="{ 'has-error': errors.has('estatus') }">
-    											<v-select name="estatus" v-model="estatus_id" label="name" :options="status" v-validate.disable="'required'" placeholder="Status"></v-select>
+    						        <div class="col-lg-6" :class="{ 'has-error': errors.has('estatus') }">
+                          <el-select name="estatus" v-model="estatus_id" filterable
+                          placeholder="Status" v-validate.disable="'required'"
+                          size="medium" @change="selectStatus" value-key="id">
+                            <el-option
+                              v-for="item in status"
+                              :key="item.id"
+                              :label="item.name"
+                              :value="item">
+                            </el-option>
+                          </el-select>
     											<small class="help-block">{{ errors.first('estatus') }}</small>
     										</div>
     										<div class="col-lg-10">
@@ -225,10 +246,10 @@
 					this.urlPrintLabel = 'impresion-documento-label/'+val.id+'/warehouse';
 	    		}
   				this.getSelectStatus();
-  	        	this.getSelectWarehouses();
-  	            this.getStatus();
-  	            this.getNotas();
-  	            this.getDatas();
+  	      this.getSelectWarehouses();
+          this.getStatus();
+          this.getNotas();
+          this.getDatas();
   			},
   			id_status: function (newQuestion) {
   				if(newQuestion != null){
@@ -241,6 +262,13 @@
   			}
 	    },
 		methods: {
+      selectStatus(val){
+        if(val.transportadora == 1){
+          this.show = true;
+        }else{
+          this.show = false;
+        }
+      },
 			openUrl: function(url){
         var l = Ladda.create(document.querySelector('.ladda-button'));
         l.start();
@@ -251,29 +279,34 @@
         });
 			},
 			resetForm: function() {
-	            this.estatus_id= null,
-	            this.warehouse_codigo= null,
-	        	this.nota= null,
-	        	this.observacion= null
-	        },
+        this.estatus_id= null,
+        this.warehouse_codigo= [],
+      	this.nota= null,
+      	this.observacion= null
+      },
 			updateTable: function(table) {
-	            $('#tbl-' + table).dataTable()._fnAjaxUpdate();
-	        },
-			getSelectStatus: function(){
-        axios.get('status/getDataSelectModalTagGuia').then(response => {
-          this.status = response.data.data;
-        });
-			},
+          $('#tbl-' + table).dataTable()._fnAjaxUpdate();
+      },
+      getSelectStatus: function(){
+  				axios.get('status/getDataSelectModalTagGuia').then(response => {
+  					this.status = response.data.data;
+  	      });
+  			},
+  			getSelectTransportadoras: function(){
+  				axios.get('status/getDataSelectTransportadoras/' + this.params.id).then(response => {
+  					this.transportadora = response.data.data;
+  	      });
+  			},
 			getSelectWarehouses: function(){
 				axios.get('documento/getDataSelectWarehousesModalTagGuia/'+ this.id_document).then(response => {
 					this.warehouses = response.data.data;
-	            });
+	      });
 			},
 			getStatus: function(){
 				if ($.fn.DataTable.isDataTable('#tbl-statusReport')) {
-	                $('#tbl-statusReport tbody').empty();
-	                $('#tbl-statusReport').dataTable().fnDestroy();
-	            }
+            $('#tbl-statusReport tbody').empty();
+            $('#tbl-statusReport').dataTable().fnDestroy();
+        }
 				var table = $('#tbl-statusReport').DataTable({
 						"language": {
 				        "paginate": {
@@ -318,7 +351,7 @@
 	            	if (result) {
 			            axios.post('statusReport', {
 			                'status_id': this.estatus_id.id,
-			                'codigo': this.warehouse_codigo.name,
+			                'codigo': this.warehouse_codigo,
 			                'observacion': this.observacion,
 			                // 'transportadora': this.transportadora,
 			                // 'num_transportadora': this.num_transportadora,
@@ -353,31 +386,31 @@
 				let me = this;
 				deleteStatusNota(null, me.table_delete);
 				swal({
-	                title: "¿Desea eliminar el registro seleccionado?",
-	                text: "No podras restaurarlo despues!",
-	                type: 'warning',
-	                showCancelButton: true,
-	                confirmButtonColor: '#3085d6',
-	                cancelButtonColor: '#d33',
-	                confirmButtonText: "Si",
-	                cancelButtonText: "No, Cancelar!",
-	            }).then((result) => {
-	                if (result.value) {
+            title: "¿Desea eliminar el registro seleccionado?",
+            text: "No podras restaurarlo despues!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: "Si",
+            cancelButtonText: "No, Cancelar!",
+        }).then((result) => {
+	         if (result.value) {
 						axios.get(me.table_delete+'/delete/' + me.id_status_nota + '/' +false).then(response => {
-                        toastr.success("Registro eliminado exitosamente.");
-                        toastr.options.closeButton = true;
-                        var table = $('#tbl-'+me.table_delete).DataTable();
-                        table.ajax.reload();
-                    });
+                toastr.success("Registro eliminado exitosamente.");
+                toastr.options.closeButton = true;
+                var table = $('#tbl-'+me.table_delete).DataTable();
+                table.ajax.reload();
+            });
 					}
-	            })
+	      })
 			},
 			/* NOTAS */
 			getNotas: function(){
 				if ($.fn.DataTable.isDataTable('#tbl-notas')) {
-	                $('#tbl-notas tbody').empty();
-	                $('#tbl-notas').dataTable().fnDestroy();
-	            }
+            $('#tbl-notas tbody').empty();
+            $('#tbl-notas').dataTable().fnDestroy();
+        }
 				var table = $('#tbl-notas').DataTable({
 						"language": {
 				        "paginate": {
@@ -415,30 +448,30 @@
 	            });
 			},
 			createNota: function(){
-            let me = this;
-            this.$validator.validateAll(['nota_name']).then((result) => {
-            	if (result) {
-		            axios.post('documento/ajaxCreateNota/'+this.id_document,{
-		                'nota' : this.nota
-		            }).then(function(response){
-		                if(response.data['code'] == 200){
-		                    toastr.success('Registro creado correctamente.');
-		                    toastr.options.closeButton = true;
-		                }else{
-		                    toastr.warning(response.data['error']);
-		                    toastr.options.closeButton = true;
-		                }
-		                me.resetForm();
-		                me.updateTable('notas');
-		            }).catch(function(error){
-		                console.log(error);
-		                toastr.error("Porfavor completa los campos obligatorios.", {timeOut: 50000});
-		            });
-		        }
-            }).catch(function(error) {
-                toastr.warning('Error: Completa los campos.');
-            });
-        },
+          let me = this;
+          this.$validator.validateAll(['nota_name']).then((result) => {
+          	if (result) {
+	            axios.post('documento/ajaxCreateNota/'+this.id_document,{
+	                'nota' : this.nota
+	            }).then(function(response){
+	                if(response.data['code'] == 200){
+	                    toastr.success('Registro creado correctamente.');
+	                    toastr.options.closeButton = true;
+	                }else{
+	                    toastr.warning(response.data['error']);
+	                    toastr.options.closeButton = true;
+	                }
+	                me.resetForm();
+	                me.updateTable('notas');
+	            }).catch(function(error){
+	                console.log(error);
+	                toastr.error("Porfavor completa los campos obligatorios.", {timeOut: 50000});
+	            });
+	        }
+          }).catch(function(error) {
+              toastr.warning('Error: Completa los campos.');
+          });
+      },
       getDatas: function(){
         axios.get('documento/getDataByDocument/'+ this.id_document).then(response => {
           let me = this;

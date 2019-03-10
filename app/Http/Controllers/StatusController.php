@@ -205,8 +205,28 @@ class StatusController extends Controller
 
     public function getDataSelectModalTagGuia()
     {
-        $data = Status::select('descripcion as name', 'id')
+        $data = Status::select('descripcion as name', 'id', 'transportadora')
             ->where('deleted_at', null)->get();
         return \DataTables::of($data)->make(true);
+    }
+
+    public function getDataSelectTransportadoras($id)
+    {
+      $pais_id = DB::table('documento AS a')
+      ->join('consignee AS b', 'a.consignee_id', 'b.id')
+      ->join('localizacion AS c', 'b.localizacion_id', 'c.id')
+      ->join('deptos AS d', 'c.deptos_id', 'd.id')
+      ->select('d.pais_id')
+      ->where([['a.id', $id]])
+      ->first();
+
+        $data = DB::table('transportadoras_locales AS a')
+        ->select('a.nombre as name', 'a.id', 'b.descripcion AS pais', 'b.iso3 AS prefijo')
+        ->join('pais AS b', 'a.pais_id', 'b.id')
+            ->where([['a.deleted_at', null], ['a.pais_id', $pais_id->pais_id]])->get();
+        return array(
+            "code" => 200,
+            "data" => $data,
+        );
     }
 }
