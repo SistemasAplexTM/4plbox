@@ -69,6 +69,7 @@ return [
     'use_zopim '=>'Usar Zopim ',
     'description'=>'Descripción',
     'view_client'=>'Alerta para Cliente',
+    'transportadora'=>'Transportadora',
     'tracking'=>'Tracking',
     'locker_registration'=>'Registro casillero ',
     'pre_alert'=>'Pre alert',

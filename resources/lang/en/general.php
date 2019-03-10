@@ -63,6 +63,7 @@ return [
     'usar_zopim'=>'Use Zopim',
     'description'=>'Description',
     'view_client'=>'Alert for Client',
+    'transportadora'=>'Transport',
     'tracking'=>'Tracking',
     'locker_registration'=>'Locker registration',
     'pre_alert'=>'Pre alert',
