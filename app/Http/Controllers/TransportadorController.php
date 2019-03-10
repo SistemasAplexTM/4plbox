@@ -86,7 +86,7 @@ class TransportadorController extends Controller
                 "code" => 200,
             );
             return $answer;
-            
+
         } catch (\Exception $e) {
             $error = '';
             foreach ($e->errorInfo as $key => $value) {
@@ -122,7 +122,7 @@ class TransportadorController extends Controller
      */
     public function delete($id,$logical)
     {
-        
+
         if(isset($logical) and $logical == 'true'){
             $data = Transportador::findOrFail($id);
             $now = new \DateTime();
@@ -131,14 +131,14 @@ class TransportadorController extends Controller
                     $answer=array(
                         "datos" => 'Eliminación exitosa.',
                         "code" => 200
-                    ); 
+                    );
                }  else{
                     $answer=array(
                         "error" => 'Error al intentar Eliminar el registro.',
                         "code" => 600
                     );
-               }          
-                
+               }
+
                 return $answer;
         }else{
             $this->destroy($id);

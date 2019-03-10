@@ -134,6 +134,34 @@
                           </el-select>
     											<small class="help-block">{{ errors.first('estatus') }}</small>
     										</div>
+                        <transition name="fade">
+                        <div class="col-lg-6 form-group" :class="{ 'has-error': errors.has('transportadora') }" v-if='show'>
+                          <el-select name="transportadora" v-model="transportadora_id"
+                          filterable placeholder="Transportadoras locales" v-validate.disable="'required'" size="medium">
+                            <el-option
+                              v-for="item in transportadora"
+                              :key="item.id"
+                              :label="item.name"
+                              :value="item.id">
+                              <span style="float: left">{{ item.name }}</span>
+                              <span style="float: right; color: #8492a6; font-size: 13px">{{ item.pais }}</span>
+                            </el-option>
+                          </el-select>
+                          <small class="help-block">{{ errors.first('transportadora') }}</small>
+                        </div>
+                      </transition>
+                      <transition name="fade">
+                        <div class="col-lg-6 form-group" :class="{ 'has-error': errors.has('guia_transportadora') }" v-if='show'>
+                          <el-input
+                            name="guia_transportadora"
+                            placeholder="Número de guia transportadora"
+                            prefix-icon="el-icon-edit-outlin"
+                            v-model="guia_transportadora"
+                            v-validate.disable="'required'" size="medium">
+                          </el-input>
+                          <small class="help-block">{{ errors.first('guia_transportadora') }}</small>
+                        </div>
+                      </transition>
     										<div class="col-lg-10">
     								        	<input type="text" class="form-control" v-model="observacion" placeholder="Observación">
     								        </div>
@@ -200,10 +228,26 @@
 		    id_status: Number,
 		    table_delete: String,
     	},
-        mounted() {
-
-        },
-        data () {
+      mounted() {
+        const dict = {
+          custom: {
+            warehouse: {
+              required: 'Este campo es obligatorio.'
+            },
+            estatus: {
+              required: 'Este campo es obligatorio.'
+            },
+            transportadora: {
+              required: 'Este campo es obligatorio.'
+            },
+            guia_transportadora: {
+              required: 'Este campo es obligatorio.'
+            },
+          }
+        };
+        this.$validator.localize('es', dict);
+      },
+      data () {
 	        return {
 	        	id_document: null,
 	        	cliente_cons: null,
@@ -221,74 +265,82 @@
 	        	status: [],
 	        	warehouses: [],
             trackings: [],
-            is_active: false
+            is_active: false,
+            transportadora: [],
+            transportadora_id: null,
+            guia_transportadora: null,
+            show: false
           }
 	    },
-	    watch:{
-	    	params: function (val) {
-	    		this.id_document = val.id;
-	    		this.cliente_cons = val.cliente;
-	    		this.cliente_email = val.correo;
-	    		this.num_track = val.codigo;
-	    		this.cantidad = (val.cantidad == 'undefined') ? '' : val.cantidad;
-	    		if(val.correo == 'Sin correo' || val.correo == ''){
-	    			$('#btn-sendEmail').attr('disabled', true);
-	    		}else{
-	    			$('#btn-sendEmail').attr('disabled', false);
-	    		}
-	    		if(val.liquidado == 1){
-					this.urlSendEmail = 'documento/sendEmailDocument/'+this.id_document;
-		    		this.urlPrint = 'impresion-documento/'+val.id+'/guia';
-					this.urlPrintLabel = 'impresion-documento-label/'+val.id+'/guia';
-	    		}else{
-		    		this.urlSendEmail = 'documento/sendEmailDocument/'+this.id_document;
-		    		this.urlPrint = 'impresion-documento/'+val.id+'/warehouse';
-					this.urlPrintLabel = 'impresion-documento-label/'+val.id+'/warehouse';
-	    		}
-  				this.getSelectStatus();
-  	      this.getSelectWarehouses();
-          this.getStatus();
-          this.getNotas();
-          this.getDatas();
+  	  watch:{
+  	    	params: function (val) {
+  	    		this.id_document = val.id;
+  	    		this.cliente_cons = val.cliente;
+  	    		this.cliente_email = val.correo;
+  	    		this.num_track = val.codigo;
+  	    		this.cantidad = (val.cantidad == 'undefined') ? '' : val.cantidad;
+  	    		if(val.correo == 'Sin correo' || val.correo == ''){
+  	    			$('#btn-sendEmail').attr('disabled', true);
+  	    		}else{
+  	    			$('#btn-sendEmail').attr('disabled', false);
+  	    		}
+  	    		if(val.liquidado == 1){
+  					this.urlSendEmail = 'documento/sendEmailDocument/'+this.id_document;
+  		    		this.urlPrint = 'impresion-documento/'+val.id+'/guia';
+  					this.urlPrintLabel = 'impresion-documento-label/'+val.id+'/guia';
+  	    		}else{
+  		    		this.urlSendEmail = 'documento/sendEmailDocument/'+this.id_document;
+  		    		this.urlPrint = 'impresion-documento/'+val.id+'/warehouse';
+  					this.urlPrintLabel = 'impresion-documento-label/'+val.id+'/warehouse';
+  	    		}
+    				this.getSelectStatus();
+    	      this.getSelectWarehouses();
+            this.getStatus();
+            this.getNotas();
+            this.getDatas();
+            this.getSelectTransportadoras();
+    			},
+    			id_status: function (newQuestion) {
+    				if(newQuestion != null){
+    					this.id_status_nota = newQuestion;
+    					this.deleteStatusNota();
+    				}
+    			},
+    			table_delete: function (newQuestion) {
+    				this.table_delete = newQuestion;
+    			}
+  	    },
+  		methods: {
+        selectStatus(val){
+          if(val.transportadora == 1){
+            this.show = true;
+          }else{
+            this.show = false;
+          }
+        },
+  			openUrl: function(url){
+          var l = Ladda.create(document.querySelector('.ladda-button'));
+          l.start();
+          axios.get(url).then(response => {
+            l.stop();
+            toastr.success('Email enviado.');
+            toastr.options.closeButton = true;
+          });
   			},
-  			id_status: function (newQuestion) {
-  				if(newQuestion != null){
-  					this.id_status_nota = newQuestion;
-  					this.deleteStatusNota();
-  				}
-  			},
-  			table_delete: function (newQuestion) {
-  				this.table_delete = newQuestion;
-  			}
-	    },
-		methods: {
-      selectStatus(val){
-        if(val.transportadora == 1){
-          this.show = true;
-        }else{
-          this.show = false;
-        }
-      },
-			openUrl: function(url){
-        var l = Ladda.create(document.querySelector('.ladda-button'));
-        l.start();
-        axios.get(url).then(response => {
-          l.stop();
-          toastr.success('Email enviado.');
-          toastr.options.closeButton = true;
-        });
-			},
-			resetForm: function() {
-        this.estatus_id= null,
-        this.warehouse_codigo= [],
-      	this.nota= null,
-      	this.observacion= null
-      },
-			updateTable: function(table) {
-          $('#tbl-' + table).dataTable()._fnAjaxUpdate();
-      },
-      getSelectStatus: function(){
-  				axios.get('status/getDataSelectModalTagGuia').then(response => {
+  			resetForm: function() {
+          this.estatus_id= null,
+          this.warehouse_codigo= [],
+        	this.nota= null,
+        	this.observacion= null,
+          this.transportadora_id= null,
+          this.guia_transportadora= null,
+          this.show = false
+        },
+  			updateTable: function(table) {
+            $('#tbl-' + table).dataTable()._fnAjaxUpdate();
+        },
+        getSelectStatus: function(){
+  			     axios.get('status/getDataSelectModalTagGuia').then(response => {
   					this.status = response.data.data;
   	      });
   			},
@@ -297,198 +349,197 @@
   					this.transportadora = response.data.data;
   	      });
   			},
-			getSelectWarehouses: function(){
-				axios.get('documento/getDataSelectWarehousesModalTagGuia/'+ this.id_document).then(response => {
-					this.warehouses = response.data.data;
-	      });
-			},
-			getStatus: function(){
-				if ($.fn.DataTable.isDataTable('#tbl-statusReport')) {
-            $('#tbl-statusReport tbody').empty();
-            $('#tbl-statusReport').dataTable().fnDestroy();
-        }
-				var table = $('#tbl-statusReport').DataTable({
-						"language": {
-				        "paginate": {
-				            "previous": "Anterior",
-				            "next": "Siguiente",
-				        },
-				        /*"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",*/
-				        "info": "Registros del _START_ al _END_  de un total de _TOTAL_",
-				        "search": "Buscar",
-				        "lengthMenu": "Mostrar _MENU_ Registros",
-				        "infoEmpty": "Mostrando registros del 0 al 0",
-				        "emptyTable": "No hay datos disponibles en la tabla",
-				        "infoFiltered": "(Filtrando para _MAX_ Registros totales)",
-				        "zeroRecords": "No se encontraron registros coincidentes",
-				    },
-            		lengthMenu: [[5, 10, 15, 20, 50], [5, 10, 15, 20, 50]],
-	                ajax: 'statusReport/getAllGrid/'+this.id_document,
-	                columns: [ {
-	                    data: 'fecha_status',
-	                    name: 'fecha_status'
-	                }, {
-	                	sortable: false,
-	                	"render": function (data, type, full, meta) {
-		                    return '<span style="color:#439a46;font-weight: 900;">'+full.num_warehouse+'</span><div>'+full.status_name+'</div> ';
-		                }
-	                }, {
-	                    data: 'observacion',
-	                    name: 'observacion'
-	                }, {
-	                    data: 'name',
-	                    name: 'usuario_id'
-	                },{
-	                    "render": function (data, type, full, meta) {
-		                	return '<a class="btn btn-danger btn-xs btn-outline" data-toggle="tooltip" title="Eliminar" onclick="deleteStatusNota('+full.id+', \'statusReport\')"><i class="fa fa-trash"></i></a>';
-		                }
-	                }, ]
-	            });
-			},
-			createStatusReport: function() {
-	            let me = this;
-	            this.$validator.validateAll(['estatus', 'warehouse']).then((result) => {
-	            	if (result) {
-			            axios.post('statusReport', {
-			                'status_id': this.estatus_id.id,
-			                'codigo': this.warehouse_codigo,
-			                'observacion': this.observacion,
-			                // 'transportadora': this.transportadora,
-			                // 'num_transportadora': this.num_transportadora,
-			            }).then(function(response) {
-			                if (response.data['code'] == 200) {
-			                    toastr.success('Registro creado correctamente.');
-			                    toastr.options.closeButton = true;
-			                    me.resetForm();
-			                    me.updateTable('statusReport');
-			                } else {
-			                    toastr.warning(response.data['error']);
-			                    toastr.options.closeButton = true;
-			                }
-			            }).catch(function(error) {
-			                if (error.response.status === 422) {
-			                    me.formErrors = error.response.data; //guardo los errores
-			                    me.listErrors = me.formErrors.errors; //genero lista de errores
-			                }
-			                $.each(me.formErrors.errors, function(key, value) {
-			                    $('.result-' + key).html(value);
-			                });
-			                toastr.error("Porfavor completa los campos obligatorios.", {
-			                    timeOut: 50000
-			                });
-			            });
-			        }
-	            }).catch(function(error) {
-	                toastr.warning('Error: Completa los campos.');
-	            });
-	        },
-			deleteStatusNota: function(){
-				let me = this;
-				deleteStatusNota(null, me.table_delete);
-				swal({
-            title: "¿Desea eliminar el registro seleccionado?",
-            text: "No podras restaurarlo despues!",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: "Si",
-            cancelButtonText: "No, Cancelar!",
-        }).then((result) => {
-	         if (result.value) {
-						axios.get(me.table_delete+'/delete/' + me.id_status_nota + '/' +false).then(response => {
-                toastr.success("Registro eliminado exitosamente.");
-                toastr.options.closeButton = true;
-                var table = $('#tbl-'+me.table_delete).DataTable();
-                table.ajax.reload();
-            });
-					}
-	      })
-			},
-			/* NOTAS */
-			getNotas: function(){
-				if ($.fn.DataTable.isDataTable('#tbl-notas')) {
-            $('#tbl-notas tbody').empty();
-            $('#tbl-notas').dataTable().fnDestroy();
-        }
-				var table = $('#tbl-notas').DataTable({
-						"language": {
-				        "paginate": {
-				            "previous": "Anterior",
-				            "next": "Siguiente",
-				        },
-				        /*"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",*/
-				        "info": "Registros del _START_ al _END_  de un total de _TOTAL_",
-				        "search": "Buscar",
-				        "lengthMenu": "Mostrar _MENU_ Registros",
-				        "infoEmpty": "Mostrando registros del 0 al 0",
-				        "emptyTable": "No hay datos disponibles en la tabla",
-				        "infoFiltered": "(Filtrando para _MAX_ Registros totales)",
-				        "zeroRecords": "No se encontraron registros coincidentes",
-				    },
-				    processing: true,
-				    serverSide: true,
-				    searching: true,
-            		lengthMenu: [[5, 10, 15, 20, 50], [5, 10, 15, 20, 50]],
-	                ajax: 'documento/getAllGridNotas/'+this.id_document,
-	                columns: [ {
-	                    data: 'created_at',
-	                    name: 'created_at'
-	                }, {
-	                    data: 'nota',
-	                    name: 'nota'
-	                }, {
-	                    data: 'name',
-	                    name: 'name'
-	                },{
-	                    "render": function (data, type, full, meta) {
-		                	return '<a class="btn btn-danger btn-xs btn-outline" data-toggle="tooltip" title="Eliminar" onclick="deleteStatusNota('+full.id+', \'notas\')"><i class="fa fa-trash"></i></a>';
-		                }
-	                }, ]
-	            });
-			},
-			createNota: function(){
-          let me = this;
-          this.$validator.validateAll(['nota_name']).then((result) => {
-          	if (result) {
-	            axios.post('documento/ajaxCreateNota/'+this.id_document,{
-	                'nota' : this.nota
-	            }).then(function(response){
-	                if(response.data['code'] == 200){
-	                    toastr.success('Registro creado correctamente.');
-	                    toastr.options.closeButton = true;
-	                }else{
-	                    toastr.warning(response.data['error']);
-	                    toastr.options.closeButton = true;
-	                }
-	                me.resetForm();
-	                me.updateTable('notas');
-	            }).catch(function(error){
-	                console.log(error);
-	                toastr.error("Porfavor completa los campos obligatorios.", {timeOut: 50000});
-	            });
-	        }
-          }).catch(function(error) {
-              toastr.warning('Error: Completa los campos.');
-          });
-      },
-      getDatas: function(){
-        axios.get('documento/getDataByDocument/'+ this.id_document).then(response => {
-          let me = this;
-          let track = response.data.trackings;
-          let trackings = [];
-          me.trackings = {};
-          if(track.length > 0){
-            for (var i = 0; i < track.length; i++) {
-              if(track[i].codigo != null){
-                trackings.push(track[i]);
-              }
-            }
-            this.trackings = trackings;
+  			getSelectWarehouses: function(){
+  				axios.get('documento/getDataSelectWarehousesModalTagGuia/'+ this.id_document).then(response => {
+  					this.warehouses = response.data.data;
+  	      });
+  			},
+  			getStatus: function(){
+  				if ($.fn.DataTable.isDataTable('#tbl-statusReport')) {
+              $('#tbl-statusReport tbody').empty();
+              $('#tbl-statusReport').dataTable().fnDestroy();
           }
-	      });
-			},
+  				var table = $('#tbl-statusReport').DataTable({
+  						"language": {
+  				        "paginate": {
+  				            "previous": "Anterior",
+  				            "next": "Siguiente",
+  				        },
+  				        /*"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",*/
+  				        "info": "Registros del _START_ al _END_  de un total de _TOTAL_",
+  				        "search": "Buscar",
+  				        "lengthMenu": "Mostrar _MENU_ Registros",
+  				        "infoEmpty": "Mostrando registros del 0 al 0",
+  				        "emptyTable": "No hay datos disponibles en la tabla",
+  				        "infoFiltered": "(Filtrando para _MAX_ Registros totales)",
+  				        "zeroRecords": "No se encontraron registros coincidentes",
+  				    },
+              		lengthMenu: [[5, 10, 15, 20, 50], [5, 10, 15, 20, 50]],
+  	                ajax: 'statusReport/getAllGrid/'+this.id_document,
+  	                columns: [ {
+  	                    data: 'fecha_status',
+  	                    name: 'fecha_status'
+  	                }, {
+  	                	sortable: false,
+  	                	"render": function (data, type, full, meta) {
+  		                    return '<span style="color:#439a46;font-weight: 900;">'+full.num_warehouse+'</span><div>'+full.status_name+'</div> ';
+  		                }
+  	                }, {
+  	                    data: 'observacion',
+  	                    name: 'observacion'
+  	                }, {
+  	                    data: 'name',
+  	                    name: 'usuario_id'
+  	                },{
+  	                    "render": function (data, type, full, meta) {
+  		                	return '<a class="btn btn-danger btn-xs btn-outline" data-toggle="tooltip" title="Eliminar" onclick="deleteStatusNota('+full.id+', \'statusReport\')"><i class="fa fa-trash"></i></a>';
+  		                }
+  	                }, ]
+  	            });
+  			},
+  			createStatusReport: function() {
+  	            let me = this;
+  	            this.$validator.validateAll(['estatus', 'warehouse', 'transportadora', 'guia_transportadora']).then((result) => {
+  	            	if (result) {
+  			            axios.post('statusReport', {
+  			                'status_id': this.estatus_id.id,
+  			                'codigo': this.warehouse_codigo,
+  			                'observacion': this.observacion,
+  			                'transportadora': this.transportadora_id,
+  			                'num_transportadora': this.guia_transportadora,
+  			            }).then(function(response) {
+  			                if (response.data['code'] == 200) {
+  			                    toastr.success('Registro creado correctamente.');
+  			                    toastr.options.closeButton = true;
+  			                    me.resetForm();
+  			                    me.updateTable('statusReport');
+  			                } else {
+  			                    toastr.warning(response.data['error']);
+  			                    toastr.options.closeButton = true;
+  			                }
+  			            }).catch(function(error) {
+  			                if (error.response.status === 422) {
+  			                    me.formErrors = error.response.data; //guardo los errores
+  			                    me.listErrors = me.formErrors.errors; //genero lista de errores
+  			                }
+  			                $.each(me.formErrors.errors, function(key, value) {
+  			                    $('.result-' + key).html(value);
+  			                });
+  			                toastr.error("Porfavor completa los campos obligatorios.", {
+  			                    timeOut: 50000
+  			                });
+  			            });
+  			        }
+  	            }).catch(function(error) {
+  	                toastr.warning('Error: Completa los campos.');
+  	            });
+  	        },
+  			deleteStatusNota: function(){
+  				let me = this;
+  				deleteStatusNota(null, me.table_delete);
+  				swal({
+              title: "¿Desea eliminar el registro seleccionado?",
+              text: "No podras restaurarlo despues!",
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: "Si",
+              cancelButtonText: "No, Cancelar!",
+          }).then((result) => {
+  	         if (result.value) {
+  						axios.get(me.table_delete+'/delete/' + me.id_status_nota + '/' +false).then(response => {
+                  toastr.success("Registro eliminado exitosamente.");
+                  toastr.options.closeButton = true;
+                  var table = $('#tbl-'+me.table_delete).DataTable();
+                  table.ajax.reload();
+              });
+  					}
+  	      })
+  			},
+  			/* NOTAS */
+  			getNotas: function(){
+  				if ($.fn.DataTable.isDataTable('#tbl-notas')) {
+              $('#tbl-notas tbody').empty();
+              $('#tbl-notas').dataTable().fnDestroy();
+          }
+  				var table = $('#tbl-notas').DataTable({
+  						"language": {
+  				        "paginate": {
+  				            "previous": "Anterior",
+  				            "next": "Siguiente",
+  				        },
+  				        /*"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",*/
+  				        "info": "Registros del _START_ al _END_  de un total de _TOTAL_",
+  				        "search": "Buscar",
+  				        "lengthMenu": "Mostrar _MENU_ Registros",
+  				        "infoEmpty": "Mostrando registros del 0 al 0",
+  				        "emptyTable": "No hay datos disponibles en la tabla",
+  				        "infoFiltered": "(Filtrando para _MAX_ Registros totales)",
+  				        "zeroRecords": "No se encontraron registros coincidentes",
+  				    },
+  				    processing: true,
+  				    serverSide: true,
+  				    searching: true,
+              		lengthMenu: [[5, 10, 15, 20, 50], [5, 10, 15, 20, 50]],
+  	                ajax: 'documento/getAllGridNotas/'+this.id_document,
+  	                columns: [ {
+  	                    data: 'created_at',
+  	                    name: 'created_at'
+  	                }, {
+  	                    data: 'nota',
+  	                    name: 'nota'
+  	                }, {
+  	                    data: 'name',
+  	                    name: 'name'
+  	                },{
+  	                    "render": function (data, type, full, meta) {
+  		                	return '<a class="btn btn-danger btn-xs btn-outline" data-toggle="tooltip" title="Eliminar" onclick="deleteStatusNota('+full.id+', \'notas\')"><i class="fa fa-trash"></i></a>';
+  		                }
+  	                }, ]
+  	            });
+  			},
+  			createNota: function(){
+            let me = this;
+            this.$validator.validateAll(['nota_name']).then((result) => {
+            	if (result) {
+  	            axios.post('documento/ajaxCreateNota/'+this.id_document,{
+  	                'nota' : this.nota
+  	            }).then(function(response){
+  	                if(response.data['code'] == 200){
+  	                    toastr.success('Registro creado correctamente.');
+  	                    toastr.options.closeButton = true;
+  	                }else{
+  	                    toastr.warning(response.data['error']);
+  	                    toastr.options.closeButton = true;
+  	                }
+  	                me.resetForm();
+  	                me.updateTable('notas');
+  	            }).catch(function(error){
+  	                console.log(error);
+  	                toastr.error("Porfavor completa los campos obligatorios.", {timeOut: 50000});
+  	            });
+  	        }
+            }).catch(function(error) {
+                toastr.warning('Error: Completa los campos.');
+            });
+        },
+        getDatas: function(){
+          axios.get('documento/getDataByDocument/'+ this.id_document).then(response => {
+            let me = this;
+            let track = response.data.trackings;
+            let trackings = [];
+            me.trackings = {};
+            if(track.length > 0){
+              for (var i = 0; i < track.length; i++) {
+                if(track[i].codigo != null){
+                  trackings.push(track[i]);
+                }
+              }
+              this.trackings = trackings;
+            }
+  	      });
+  			},
+      }
     }
-
-  }
 </script>

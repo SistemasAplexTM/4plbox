@@ -20,7 +20,7 @@
 @section('content')
     <div class="row" id="transportadoras_locales">
         <form enctype="multipart/form-data" class="form-horizontal" role="form" action="" method="post">
-            <div class="col-lg-6">
+            <div class="col-lg-5">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                       <h5>Registro de transportadoras locales</h5>
@@ -79,7 +79,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-7">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>Transportadoras locales</h5>

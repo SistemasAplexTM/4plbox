@@ -57,20 +57,20 @@
                                 </div>
                         </div>
                         <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="form-group" :class="{'has-error': listErrors.email}">
-                                        <div class="col-sm-5">
-                                            <label for="email" class="control-label gcore-label-top">@lang('general.send_email'):</label>
+                            <div class="col-lg-12">
+                                <div class="form-group" :class="{'has-error': listErrors.email}">
+                                    <div class="col-sm-5">
+                                        <label for="email" class="control-label gcore-label-top">@lang('general.send_email'):</label>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <div class="i-checks">
+                                          <label><input type="radio" value="1" id="email_s" name="email" @click="showEmailTemplate"> @lang('general.yes') </label>
+                                          <label><input type="radio" value="0" id="email_n" name="email" @click="showEmailTemplate" checked=""> @lang('general.not')</label>
                                         </div>
-                                        <div class="col-sm-7">
-                                            <div class="i-checks">
-                                              <label><input type="radio" value="1" id="email_s" name="email" @click="showEmailTemplate"> @lang('general.yes') </label>
-                                              <label><input type="radio" value="0" id="email_n" name="email" @click="showEmailTemplate" checked=""> @lang('general.not')</label>
-                                            </div>
-                                            <small id="msn1" class="help-block result-email" v-show="listErrors.email">@lang('general.obligatory_field')</small>
-                                        </div>
+                                        <small id="msn1" class="help-block result-email" v-show="listErrors.email">@lang('general.obligatory_field')</small>
                                     </div>
                                 </div>
+                            </div>
                         </div>
 
                         <div class="row">
@@ -95,20 +95,36 @@
                             </transition>
                         </div>
                         <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="form-group" :class="{'has-error': listErrors.view_client}">
-                                        <div class="col-sm-5">
-                                            <label for="view_client" class="control-label gcore-label-top">@lang('general.view_client'):</label>
-                                        </div>
-                                        <div class="col-sm-7">
-                                          <div class="i-checks">
-                                            <label><input type="radio" value="1" id="view_client_s" name="view_client"> @lang('general.yes') </label>
-                                            <label><input type="radio" value="0" id="view_client_n" name="view_client" checked=""> @lang('general.not')</label>
-                                          </div>
-                                            <small id="msn1" class="help-block result-view_client" v-show="listErrors.view_client">@lang('general.obligatory_field')</small>
-                                        </div>
+                            <div class="col-lg-12">
+                                <div class="form-group" :class="{'has-error': listErrors.view_client}">
+                                    <div class="col-sm-5">
+                                        <label for="view_client" class="control-label gcore-label-top">@lang('general.view_client'):</label>
+                                    </div>
+                                    <div class="col-sm-7">
+                                      <div class="i-checks">
+                                        <label><input type="radio" value="1" id="view_client_s" name="view_client"> @lang('general.yes') </label>
+                                        <label><input type="radio" value="0" id="view_client_n" name="view_client" checked=""> @lang('general.not')</label>
+                                      </div>
+                                        <small id="msn1" class="help-block result-view_client" v-show="listErrors.view_client">@lang('general.obligatory_field')</small>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group" :class="{'has-error': listErrors.transportadora}">
+                                    <div class="col-sm-5">
+                                        <label for="transportadora" class="control-label gcore-label-top">@lang('general.transportadora'):</label>
+                                    </div>
+                                    <div class="col-sm-7">
+                                      <div class="i-checks">
+                                        <label><input type="radio" value="1" id="transportadora_s" name="transportadora"> @lang('general.yes') </label>
+                                        <label><input type="radio" value="0" id="transportadora_n" name="transportadora" checked=""> @lang('general.not')</label>
+                                      </div>
+                                        <small id="msn1" class="help-block result-transportadora" v-show="listErrors.transportadora">@lang('general.obligatory_field')</small>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                                 <div class="col-lg-12">

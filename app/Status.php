@@ -18,6 +18,7 @@ class Status extends Model
         'icon',
         'email',
         'view_client',
+        'transportadora',
         'json_data',
     ];
 }

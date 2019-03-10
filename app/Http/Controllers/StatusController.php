@@ -6,6 +6,7 @@ use App\Http\Requests\StatusRequest;
 use App\Status;
 use DataTables;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StatusController extends Controller
 {
@@ -17,23 +18,13 @@ class StatusController extends Controller
         $this->middleware('permission:status.destroy')->only('destroy');
         $this->middleware('permission:status.delete')->only('delete');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $this->assignPermissionsJavascript('status');
         return view('templates/status');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StatusRequest $request)
     {
         try {
@@ -70,13 +61,6 @@ class StatusController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(StatusRequest $request, $id)
     {
         try {

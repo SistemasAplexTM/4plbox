@@ -32,7 +32,7 @@ $(document).ready(function() {
                 var btn_delete = '';
                 if (permission_update) {
                     var params = [
-                        full.id, "'" + full.descripcion + "'", "'" + full.color + "'", "'" + full.email + "'", "'" + full.view_client + "'", "'" + full.icon + "'", "'" + full.json_data + "'"
+                        full.id, "'" + full.descripcion + "'", "'" + full.color + "'", "'" + full.email + "'", "'" + full.view_client + "'", "'" + full.icon + "'", "'" + full.json_data + "'",  "'" + full.transportadora + "'"
                     ];
                     var btn_edit = "<a onclick=\"edit(" + params + ")\" class='btn_action_edit' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fal fa-pencil fa-lg'></i></a> ";
                 }
@@ -55,13 +55,14 @@ $(function(){
   });
 })
 
-function edit(id, descripcion, color, email, view_client, icon, json_data) {
+function edit(id, descripcion, color, email, view_client, icon, json_data, transportadora) {
     var data = {
         id: id,
         descripcion: descripcion,
         color: color,
         email: email,
         view_client: view_client,
+        transportadora: transportadora,
         icon: icon,
         json_data: json_data,
     };
@@ -78,6 +79,7 @@ var objVue = new Vue({
         color: '#020202',
         email: '',
         view_client: false,
+        transportadora: false,
         editar: 0,
         formErrors: {},
         listErrors: {},
@@ -125,6 +127,7 @@ var objVue = new Vue({
             this.email = '';
             this.editar = 0;
             this.view_client= false;
+            this.transportadora= false;
             this.email_plantilla_id= null;
             this.formErrors = {};
             this.listErrors = {};
@@ -134,6 +137,8 @@ var objVue = new Vue({
             $('#email_n').iCheck('check').prop('checked', true);
             $('#view_client_s').iCheck('uncheck').prop('checked', false);
             $('#view_client_n').iCheck('check').prop('checked', true);
+            $('#transportadora_s').iCheck('uncheck').prop('checked', false);
+            $('#transportadora_n').iCheck('check').prop('checked', true);
         },
         showEmailTemplate: function() {
           let me = this;
@@ -203,6 +208,11 @@ var objVue = new Vue({
             } else {
                 this.view_client = 0;
             }
+            if ($('#transportadora_s').is(':checked')) {
+                this.transportadora = 1;
+            } else {
+                this.transportadora = 0;
+            }
             console.log(this.value9);
             axios.post('status', {
                 'created_at': new Date(),
@@ -210,6 +220,7 @@ var objVue = new Vue({
                 'color': this.color,
                 'email': this.email,
                 'view_client': this.view_client,
+                'transportadora': this.transportadora,
                 'icon': this.value9.value,
                 'email_plantilla_id': (this.email_plantilla_id !== null) ? this.email_plantilla_id.id : null,
             }).then(function(response) {
@@ -247,12 +258,18 @@ var objVue = new Vue({
             } else {
                 this.view_client = 0;
             }
+            if ($('#transportadora_s').is(':checked')) {
+                this.transportadora = 1;
+            } else {
+                this.transportadora = 0;
+            }
             console.log(this.value9, 'sdfa');
             axios.put('status/' + this.id, {
                 'descripcion': this.descripcion,
                 'color': this.color,
                 'email': this.email,
                 'view_client': this.view_client,
+                'transportadora': this.transportadora,
                 'icon': this.value9.value,
                 'email_plantilla_id': (this.email_plantilla_id !== null) ? this.email_plantilla_id.id : null,
             }).then(function(response) {
@@ -296,6 +313,12 @@ var objVue = new Vue({
             } else {
                 $('#view_client_n').iCheck('check').prop('checked', true);
             }
+            /* Chekear los radios del campo transportadora*/
+            if (data['transportadora'] == 1) {
+                $('#transportadora_s').iCheck('check').prop('checked', true);
+            } else {
+                $('#transportadora_n').iCheck('check').prop('checked', true);
+            }
             this.value9 = null;
             this.icon_selected = null;
             let icono = _.filter(this.list, function(q){return q.value === data['icon']});
@@ -303,7 +326,6 @@ var objVue = new Vue({
               this.value9 = icono[0].label;
               this.icon_selected = icono[0].value;
             }
-            console.log(JSON.parse(data['json_data']));
             this.editar = 1;
             this.formErrors = {};
             this.listErrors = {};

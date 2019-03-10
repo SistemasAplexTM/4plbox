@@ -21,7 +21,8 @@ $(document).ready(function() {
                 var btn_edit = "<a onclick=\"edit(" + params + ")\" class='btn btn-outline btn-success btn-xs' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit'></i></a> ";
                 var btn_delete = " <a onclick=\"eliminar(" + full.id + "," + true + ")\" class='btn btn-outline btn-danger btn-xs' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-trash'></i></a> ";
                 return btn_edit + btn_delete;
-            }
+            },
+            width: 100
         }]
     });
 });
@@ -79,7 +80,7 @@ var objVue = new Vue({
             });
         },
         rollBackDelete: function(data) {
-            var urlRestaurar = 'clientes/restaurar/' + data.id;
+            var urlRestaurar = 'transportadoras_locales/restaurar/' + data.id;
             axios.get(urlRestaurar).then(response => {
                 toastr.success('Registro restaurado.');
                 this.updateTable();
@@ -92,13 +93,13 @@ var objVue = new Vue({
             this.formErrors = {};
             this.listErrors = {};
             if (data.logical === true) {
-                axios.get('clientes/delete/' + data.id + '/' + data.logical).then(response => {
+                axios.get('transportadoras_locales/delete/' + data.id + '/' + data.logical).then(response => {
                     this.updateTable();
                     toastr.success("<div><p>Registro eliminado exitosamente.</p><button type='button' onclick='deshacerEliminar(" + data.id + ")' id='okBtn' class='btn btn-xs btn-danger pull-right'><i class='fa fa-reply'></i> Restaurar</button></div>");
                     toastr.options.closeButton = true;
                 });
             } else {
-                axios.delete('clientes/' + data.id).then(response => {
+                axios.delete('transportadoras_locales/' + data.id).then(response => {
                     this.updateTable();
                     toastr.success('Registro eliminado correctamente.');
                     toastr.options.closeButton = true;
@@ -136,11 +137,12 @@ var objVue = new Vue({
         },
         update: function() {
             var me = this;
-            axios.put('clientes/' + this.id, {
+            axios.put('transportadoras_locales/' + this.id, {
               'pais_id': this.pais_id,
               'nombre': this.nombre,
               'url_rastreo': this.url_rastreo
             }).then(function(response) {
+              console.log('error');
                 if (response.data['code'] == 200) {
                     toastr.success('Registro Actualizado correctamente');
                     toastr.options.closeButton = true;

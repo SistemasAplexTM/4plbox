@@ -1725,7 +1725,8 @@ class DocumentoController extends Controller
         $id_detail_consol = $request->input('id_detail_consol');
       }
       // OBTENER LA CONFIGURACION DE LA IMPRESORA
-      $dataPrint = $this->getConfig('print_' . Auth::id());
+      $dataPrint = $this->getConfig('print_' . 1);
+      // $dataPrint = $this->getConfig('print_' . Auth::user()->agencia_id);
       $prints = json_decode($dataPrint->value);
       // VALIDAR SI ES UN LABEL O UN DOCUMENTO A IMPRIMIR
       if($request->input('label')){

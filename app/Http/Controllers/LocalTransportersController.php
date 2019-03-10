@@ -7,32 +7,16 @@ use App\TransportadorasLocales;
 use App\Pais;
 class LocalTransportersController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return view('templates.localTransporters');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
       try {
@@ -67,49 +51,63 @@ class LocalTransportersController extends Controller
       }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+      try {
+          $data = TransportadorasLocales::findOrFail($id);
+          $data->update($request->all());
+          $answer=array(
+              "datos" => $request->all(),
+              "code" => 200,
+          );
+          return $answer;
+
+      } catch (\Exception $e) {
+          $answer=array(
+                  "error" => $e,
+                  "code" => 600,
+                  "status" => 500,
+              );
+          return $answer;
+      }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+      $data = TransportadorasLocales::findOrFail($id);
+      $data->delete();
+    }
+
+    public function delete($id,$logical)
+    {
+
+        if(isset($logical) and $logical == 'true'){
+            $data = TransportadorasLocales::findOrFail($id);
+            $now = new \DateTime();
+            $data->deleted_at =$now->format('Y-m-d H:i:s');
+            if($data->save()){
+                    $answer=array(
+                        "datos" => 'Eliminación exitosa.',
+                        "code" => 200
+                    );
+               }  else{
+                    $answer=array(
+                        "error" => 'Error al intentar Eliminar el registro.',
+                        "code" => 600
+                    );
+               }
+
+                return $answer;
+        }else{
+            $this->destroy($id);
+        }
+    }
+
+    public function restaurar($id)
+    {
+        $data = TransportadorasLocales::findOrFail($id);
+        $data->deleted_at = NULL;
+        $data->save();
     }
 
     public function getAll()
@@ -122,6 +120,7 @@ class LocalTransportersController extends Controller
     			'transportadoras_locales.url_rastreo',
     			'b.descripcion AS pais'
         )
+        ->where('transportadoras_locales.deleted_at', null)
         ->get();
 
         return \DataTables::of($sql)->make(true);
