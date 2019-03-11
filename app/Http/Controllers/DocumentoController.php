@@ -923,6 +923,18 @@ class DocumentoController extends Controller
                       $this->mintic($request->minitc, $data->id, $request->detail);
                     }
 
+                    //insercion de puntos para CUBA
+                    if($request->points){
+                      foreach ($request->points as $key => $value) {
+                        $id = DB::table('pivot_puntos_detalle')->insertGetId([
+                          'puntos_id' => $value['producto_id'],
+                          'documento_detalle_id' => $data->id,
+                          'cantidad' => $value['cantidad'],
+                          'total_puntos' => $value['cantidad'] * $value['puntos']
+                        ]);
+                      }
+                    }
+
                 } else {
                     $answer = array(
                         "error"  => 'Error al intentar Eliminar el registro.',

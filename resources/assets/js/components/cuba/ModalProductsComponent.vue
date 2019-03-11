@@ -33,9 +33,11 @@
                       <div class="col-lg-12">
                           <div class="form-group">
                             <el-table
+                              ref="multipleTable"
                               :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
                               style="width: 100%"
-                              empty-text="No hay datos">
+                              empty-text="No hay datos"
+                              @selection-change="handleSelectionChange">
                               <el-table-column
                                 type="selection"
                                 width="55">
@@ -73,10 +75,16 @@
                           </div>
                       </div>
                   </div>
+                  <div class="row">
+                      <div class="col-lg-12">
+                          <div class="form-group">
+                            <h2>PUNTOS SELECCIONADOS: 0</h2>
+                          </div>
+                      </div>
+                  </div>
                 </form>
               </div>
               <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" @click="addToDetailDocument()"><i class="fal fa-plus"></i> Agregar a la caja</button>
                   <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fal fa-times"></i> Cerrar</button>
               </div>
           </div>
@@ -86,48 +94,40 @@
 
 <script>
   export default {
-    props:["id_document"],
+    props:["id_document", "points", "data_p"],
     watch:{
-      //
+      multipleSelection:function(val){
+        // console.log(val);
+      },
+      data_p:function(val){
+        if(val.length == 0){
+          this.toggleSelection();
+        }
+      },
     },
     data() {
       return {
         tableData: [],
-        search: ''
+        multipleSelection: [],
+        search: '',
       }
     },
     mounted() {
       this.getTableData();
     },
     methods: {
-      addToDetailDocument(){
-        console.log('add detalle');
+      toggleSelection(rows) {
+        if (rows) {
+          rows.forEach(row => {
+            this.$refs.multipleTable.toggleRowSelection(row);
+          });
+        } else {
+          this.$refs.multipleTable.clearSelection();
+        }
       },
-      resetForm(){
-        //
-      },
-      save(){
-        // let me = this;
-        // if(me.point_id != null && me.cantidad > 0){
-        // me.loading_save = true;
-        //   axios.post('../../puntos', {
-        //       'puntos_id': me.point_id.id,
-        //       'documento_detalle_id': me.id_detail,
-        //       'cantidad': me.cantidad,
-        //       'total_puntos': me.cantidad * parseInt(me.point_id.descripcion),
-        //   }).then(response => {
-        //     me.getTableData();
-        //     me.resetForm();
-        //     refreshTable('whgTable');
-        //     me.loading_save = false;
-        //   }).catch(function(error) {
-        //       console.log(error);
-        //       toastr.warning('Error: -' + error);
-        //       me.loading_save = false;
-        //   });
-        // }else{
-        //   toastr.warning('Completa los campos requeridos');
-        // }
+      handleSelectionChange(val){
+        this.multipleSelection = val;
+        this.$emit('get', val);
       },
       getTableData(){
   				var me = this;

@@ -144,7 +144,7 @@
         <modalconsignee-component></modalconsignee-component>
         <modalarancel-component></modalarancel-component>
         <modalcargosadd-component :showmodal="showmodalAdd"></modalcargosadd-component>
-        <products-cuba-component :id_document="{{ $documento->id }}"></products-cuba-component>
+        <products-cuba-component :id_document="{{ $documento->id }}" :points="total_points" :data_p="data_points" @get="getProductsCuba($event)"></products-cuba-component>
 
         <form class="" id="formDocumento" name="formDocumento" class=" form-horizontal" role="form" action="{{ url('documento/updatedDocument') }}/{{  $documento->id }}" method="post">
                 {{ csrf_field() }}
@@ -606,6 +606,7 @@
                                               </div>
                                               <div :class="[mostrar.includes(22) ? 'col-sm-6' : 'col-sm-6' ]">
                                                   <label class="contiene">@lang('documents.content')</label>
+                                                  <label class="total_points" v-if="total_points > 0">(Pts. @{{ total_points }})</label>
                                                       <div class="form-group"  id="Valconti">
                                                           <label class="contiene" style="display: none;"></label>
                                                           <div class="input-group">
