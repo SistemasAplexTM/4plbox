@@ -16,7 +16,7 @@
             <div class="">
               <el-row :gutter="24">
                   <el-col :xs="24" :sm="24" :md="12" :lg="{span: 4, offset: 6}" :xl="6">
-                    <div class="pointer p-10" :class="[category == 1 ? 'activeCategory' : '' ]" @click="setCategory(1)">
+                    <div class="category" :class="[category == 1 ? 'activeCategory' : '' ]" @click="setCategory(1)">
                       <h3 class="mb-0">PAQUETERÍA</h3>
                       <small>Envíe paquetes a sus familiares en CUBA</small>
                       <br>
@@ -25,7 +25,7 @@
                     </div>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="4" :xl="6">
-                    <div class="pointer p-10" :class="[category == 2 ? 'activeCategory' : '' ]" @click="setCategory(2)">
+                    <div class="category" :class="[category == 2 ? 'activeCategory' : '' ]" @click="setCategory(2)">
                       <h3 class="mb-0">MENAJE</h3>
                       <small>Envíe articulos para el hogar a CUBA</small>
                       <br>
@@ -34,7 +34,7 @@
                     </div>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="4" :xl="6">
-                    <div class="pointer p-10" :class="[category == 3 ? 'activeCategory' : '' ]" @click="setCategory(3)">
+                    <div class="category" :class="[category == 3 ? 'activeCategory' : '' ]" @click="setCategory(3)">
                       <h3 class="mb-0">EQUIPAJE NO</h3>
                       <small>acompañado</small>
                       <br>
@@ -46,11 +46,11 @@
             </div>
           </div>
           <div slot="page2">
-            <h4 class="mt-5 mb-5">
-              Ingrese su número de identificación
-            </h4>
             <el-row class="mb-20 pb-20 bb justify-center" :gutter="24">
-              <el-col :xs="24" :sm="24" :md="24" :lg="{span: 12, offset: 6}" :xl="{span: 12, offset: 6}">
+              <el-col :xs="24" :sm="24" :md="24" :lg="{span: 6, offset: 0}" :xl="{span: 6, offset: 0}">
+                <h4 class="mt-5 mb-5">
+                  Ingrese su número de identificación
+                </h4>
                 <el-input placeholder="Cédula o Pasaporte" v-model="doc" prefix-icon="el-icon-search" v-on:keyup.13="search(doc, type)">
                   <template slot="append" class="">
                     <el-button @click="search(doc, type)" :disabled="doc.length == 0" :loading="loading">
@@ -60,82 +60,121 @@
                     </el-button>
                   </template>
                 </el-input>
+                <br>
+                <br>
+                <i class="fal fa-address-card fa-10x o-010 hidden-md-and-down"></i>
+              </el-col>
+              <el-col :xs="24" :sm="24" :md="24" :lg="{span: 17, offset: 1}" :xl="{span: 17, offset: 1}">
+                <transition name="fade" mode="out-in">
+                  <el-form v-if="showForm" :model="ruleForm" :rules="rules" ref="ruleForm" class="">
+                    <el-row :gutter="10">
+                      <small class="text-center">No se ha encontrado un {{ type }} con el documento, puede: </small>
+                      <h3 class="text-center mt-5">Crear nuevo</h3>
+                    </el-row>
+                    <el-row :gutter="24">
+                      <el-col :xs="24" :sm="24" :md="12" :lg="{span: 6, offset: 6}" :xl="6">
+                        <el-form-item label="" prop="primer_nombre">
+                          <el-input v-model="ruleForm.primer_nombre" placeholder="Nombre"></el-input>
+                        </el-form-item>
+                      </el-col>
+                      <el-col :xs="24" :sm="24" :md="12" :lg="{span: 6, offset: 0}" :xl="6">
+                        <el-form-item label="" prop="primer_apellido">
+                          <el-input v-model="ruleForm.primer_apellido" placeholder="Apellidos"></el-input>
+                        </el-form-item>
+                      </el-col>
+                    </el-row>
+                    <el-row :gutter="24">
+                      <el-col :xs="24" :sm="24" :md="24" :lg="{span: 12, offset: 6}" :xl="12">
+                        <el-form-item label="" prop="direccion">
+                          <el-input v-model="ruleForm.direccion" placeholder="Dirección"></el-input>
+                        </el-form-item>
+                      </el-col>
+                    </el-row>
+                    <el-row :gutter="24">
+                      <el-col :xs="24" :sm="24" :md="12" :lg="{span: 6, offset: 6}" :xl="6">
+                        <el-form-item label="" prop="localizacion_id">
+                          <city-component @get="setCity($event.id)"/>
+                        </el-form-item>
+                      </el-col>
+                      <el-col :xs="24" :sm="24" :md="12" :lg="{span: 6, offset: 0}" :xl="6">
+                        <el-form-item label="" prop="correo">
+                          <el-input v-model="ruleForm.correo" placeholder="Correo" type="email"></el-input>
+                        </el-form-item>
+                      </el-col>
+                    </el-row>
+                    <el-row :gutter="24">
+                      <el-col :xs="24" :sm="24" :md="12" :lg="{span: 6, offset: 6}" :xl="6">
+                        <el-form-item label="" prop="zip">
+                          <el-input v-model="ruleForm.zip" placeholder="Código postal"></el-input>
+                        </el-form-item>
+                      </el-col>
+                      <el-col :xs="24" :sm="24" :md="12" :lg="{span: 6, offset: 0}" :xl="6">
+                        <el-form-item label="" prop="telefono">
+                          <el-input v-model="ruleForm.telefono" placeholder="Teléfono"></el-input>
+                        </el-form-item>
+                      </el-col>
+                    </el-row>
+                    <el-form-item>
+                      <el-button type="primary" @click="submitForm('ruleForm')" :loading="loadingSave">Crear</el-button>
+                      <el-button @click="resetForm('ruleForm')">Resetear</el-button>
+                    </el-form-item>
+                  </el-form>
+                  <div v-else>
+                    <div class="text-center o-020 p-20" v-if="data.length <= 0">
+                      <i class="fal fa-search fa-7x"></i>
+                      <h4>Buscar...</h4>
+                    </div>
+                    <div class="" v-else>
+                      <h2 class="mb-0" style="text-align: left">
+                        {{ data[0].nombre_full }}
+                      </h2>
+                      <ul class="data-shipper">
+                        <li class="mb-10">
+                          <span>
+                            Documento:
+                          </span>
+                          <span class="ml-10">
+                            {{ data[0].documento }}
+                          </span>
+                        </li>
+                        <li>
+                          <span>
+                            Dirección:
+                          </span>
+                          <span class="ml-10">
+                            {{ data[0].direccion }}
+                          </span>
+                        </li>
+                        <li>
+                          <span>
+                            Teléfono:
+                          </span>
+                          <span class="ml-10">
+                            {{ data[0].telefono }}
+                          </span>
+                        </li>
+                        <li>
+                          <span>
+                            Correo:
+                          </span>
+                          <span class="ml-10">
+                            {{ data[0].correo }}
+                          </span>
+                        </li>
+                        <li>
+                          <span>
+                            Código postal:
+                          </span>
+                          <span class="ml-10">
+                            {{ data[0].zip }}
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </transition>
               </el-col>
             </el-row>
-            <transition name="fade" mode="out-in">
-              <el-form v-if="showForm" :model="ruleForm" :rules="rules" ref="ruleForm" class="">
-                <el-row :gutter="10">
-                    <small class="text-center">No se ha encontrado un {{ type }} con el documento, puede: </small>
-                    <h3 class="text-center mt-5">Crear nuevo</h3>
-                </el-row>
-                <el-row :gutter="24">
-                  <el-col :xs="24" :sm="24" :md="12" :lg="{span: 6, offset: 6}" :xl="6">
-                    <el-form-item label="" prop="primer_nombre">
-                      <el-input v-model="ruleForm.primer_nombre" placeholder="Nombre"></el-input>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :xs="24" :sm="24" :md="12" :lg="{span: 6, offset: 0}" :xl="6">
-                    <el-form-item label="" prop="primer_apellido">
-                      <el-input v-model="ruleForm.primer_apellido" placeholder="Apellidos"></el-input>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-                <el-row :gutter="24">
-                  <el-col :xs="24" :sm="24" :md="24" :lg="{span: 12, offset: 6}" :xl="12">
-                    <el-form-item label="" prop="direccion">
-                      <el-input v-model="ruleForm.direccion" placeholder="Dirección"></el-input>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-                <el-row :gutter="24">
-                  <el-col :xs="24" :sm="24" :md="12" :lg="{span: 6, offset: 6}" :xl="6">
-                    <el-form-item label="" prop="localizacion_id">
-                      <city-component @get="setCity($event.id)"/>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :xs="24" :sm="24" :md="12" :lg="{span: 6, offset: 0}" :xl="6">
-                    <el-form-item label="" prop="correo">
-                      <el-input v-model="ruleForm.correo" placeholder="Correo" type="email"></el-input>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-                <el-row :gutter="24">
-                  <el-col :xs="24" :sm="24" :md="12" :lg="{span: 6, offset: 6}" :xl="6">
-                    <el-form-item label="" prop="zip">
-                      <el-input v-model="ruleForm.zip" placeholder="Código postal"></el-input>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :xs="24" :sm="24" :md="12" :lg="{span: 6, offset: 0}" :xl="6">
-                    <el-form-item label="" prop="telefono">
-                      <el-input v-model="ruleForm.telefono" placeholder="Teléfono"></el-input>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-                <el-form-item>
-                  <el-button type="primary" @click="submitForm('ruleForm')" :loading="loadingSave">Crear</el-button>
-                  <el-button @click="resetForm('ruleForm')">Resetear</el-button>
-                </el-form-item>
-              </el-form>
-              <div v-else>
-                <div class="text-center o-020 p-20" v-if="data.length <= 0">
-                  <i class="fal fa-search fa-7x"></i>
-                  <h4>Buscar...</h4>
-                </div>
-                <div class="" v-else>
-                  <h3 class="h-big mb-0">
-                    {{ data[0].nombre_full }}
-                  </h3>
-                  <ul class="data-shipper">
-                    <li>{{ data[0].documento }}</li>
-                    <li>{{ data[0].nombre }}</li>
-                    <li>{{ data[0].direccion }}</li>
-                    <li>{{ data[0].telefono }}</li>
-                    <li>{{ data[0].correo }}</li>
-                    <li>{{ data[0].zip }}</li>
-                  </ul>
-                </div>
-              </div>
-            </transition>
           </div>
           <div slot="page3">
             <h4 class="mt-5 mb-5">
@@ -228,7 +267,7 @@
                 </div>
                 <div class="" v-else>
                   <h3 class="h-big mb-0">
-                    {{ dataC.primer_nombre }} {{ (dataC.primer_apellido) ? dataC.primer_apellido : '' }}
+                    {{ dataC.nombre_full }}
                   </h3>
                   <ul class="data-shipper">
                     <li>{{ dataC.documento }}</li>
@@ -244,18 +283,16 @@
           </div>
           <div slot="page4">
             <div class="" v-if="showResult">
-              <h1>Su número de recibo es: <strong>{{ warehouse }}</strong></h1>
-              <el-button type="success"  @click="refresh">Aceptar</el-button>
+              <h1 class="o-010"><strong>{{ warehouse }}</strong></h1>
             </div>
             <div v-else>
               <h4 class="mt-5 mb-5">Seleccione los prductos</h4>
-              <p>Acá va una descripción acerca de lo que son los productos.</p>
-              <el-row :gutter="14">
+              <el-row :gutter="0">
                 <el-form :inline="true" class="demo-form-inline">
-                  <el-form-item label="" style="width: 50%">
+                  <el-form-item label="">
                     <el-col :xs="24" :sm="24" :md="24" :lg="{span: 24, offset: 0}" :xl="{span: 12, offset: 6}">
+                      <!-- style="width: 100%" -->
                       <el-select
-                        style="width: 100%"
                         v-model="value10"
                         filterable
                         allow-create
@@ -283,7 +320,7 @@
                 border
                 show-summary
                 sum-text="Total"
-                style="width: 70%; margin: 0 auto">
+                style="width: 100%; margin: 0 auto">
                 <el-table-column
                   prop="product"
                   sortable
@@ -322,7 +359,7 @@
     <el-dialog
       title="Número de recibo"
       :visible.sync="showResult"
-      width="30%"
+      width="70%"
       :before-close="handleClose"
       center>
       <div class="text-center"  >
@@ -659,6 +696,9 @@ html, body {
 }
 .data-shipper{
   list-style: none;
+  text-align: left;
+  padding-left: 0px;
+  margin-top: 4px;
 }
 .el-form-item__content{
   width: 100%;
@@ -672,10 +712,40 @@ html, body {
 .text-center{
   text-align: center;
 }
+.o-010 { opacity: 0.10; }
 .o-020 { opacity: 0.20; }
 .p-10 { padding: 10px}
 .p-20 { padding: 20px}
 .pb-0 { padding-bottom: 0px}
 .mb-0 { margin-bottom: 0px}
+.ml-0 { margin-left: 0px}
+.ml-10 { margin-left: 10px}
+.ml-20 { margin-left: 20px}
+.ml-30 { margin-left: 30px}
 .activeCategory { background-color: #a9a9a952 }
+.category{
+  cursor: pointer;
+  padding: 10px;
+}
+.category:hover{
+  background-color: #a9a9a924;
+}
+
+.el-select-dropdown{
+  max-width: 600px !important;
+}
+@media only screen and (max-width: 768px){
+  .el-select-dropdown{
+    margin-left: 5px !important;
+    width: 90% !important;
+  }
+}
+.hidden-md-and-down{
+  display: block;
+}
+@media only screen and (max-width: 768px){
+  .hidden-md-and-down{
+    display: none;
+  }
+}
 </style>
