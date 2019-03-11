@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DataTables;
 use App\PivotPuntosDetalle;
+use Illuminate\Support\Facades\DB;
 
 class PivotPuntosDetalleController extends Controller
 {
@@ -68,5 +69,26 @@ class PivotPuntosDetalleController extends Controller
           ]);
 
       return Datatables::of($data)->make(true);
+    }
+
+    public function getProductsClient($id)
+    {
+      $data = DB::table('productos_detalle_cuba AS a')
+      ->join('puntos_cuba_productos AS b', 'a.producto_cuba_id', 'b.id')
+      ->leftJoin('maestra_multiple AS cat', 'b.categoria_id', 'cat.id')
+      ->leftJoin('maestra_multiple AS um', 'b.unidad_medida_id', 'um.id')
+      ->select([
+          'a.id',
+          'a.cantidad',
+          'b.articulo',
+          'b.valor_aduan AS puntos',
+          'b.limite_come AS limite',
+          'cat.nombre AS categoria',
+          'um.nombre AS unidad_medida',
+          DB::raw('(a.cantidad * b.valor_aduan) AS total_puntos')
+        ])
+      ->where([['a.documento_id', $id]])->get();
+
+      return $data;
     }
 }
