@@ -11,7 +11,7 @@
   <body>
     <div id="cuba">
       <div style="text-align: center">
-        <img src="{{ asset('img/' . $agency->logo) }}" alt="" height="60" style="margin: 0 auto">
+        <img src="{{ asset('storage/' . $agency->logo) }}" alt="" height="60" style="margin: 0 auto">
       </div>
       <cuba-component></cuba-component>
     </div>
