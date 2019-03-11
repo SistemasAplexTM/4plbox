@@ -438,18 +438,14 @@ return DB::table('consignee AS a')
 });
 
 Route::get('/getProductsPoint', function () {
-return DB::table('puntos_cuba_productos AS a')
-->join('maestra_multiple AS b', 'a.unidad_medida_id', 'b.id')
-->select('a.*', 'b.descripcion')
-->get();
+  return DB::table('puntos_cuba_productos AS a')
+  ->join('maestra_multiple AS b', 'a.unidad_medida_id', 'b.id')
+  ->select('a.*', 'b.descripcion')
+  ->get();
 });
 
 Route::get('/getConsigneesById/{id}', function (Consignee $consignee, $id) {
-return $consignee->find($id);
+  return $consignee->find($id);
 });
-
 Route::post('documento/ajaxCreatePublic/{document}', 'DocumentoController@ajaxCreate');
-
-Route::get('pruebaSilent', function(){
-  return view('test/index');
-});
+Route::post('saveProductDetail', 'PuntosController@saveProductDetail');

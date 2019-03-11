@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\ProductDetailCuba;
 
 class PuntosController extends Controller
 {
@@ -40,5 +41,18 @@ class PuntosController extends Controller
       if ($shipper_id) {
         DB::table('shipper_consignee')->insert(['shipper_id' => $shipper_id, 'consignee_id' => $id]);
       }
+    }
+
+    public function saveProductDetail(Request $request)
+    {
+      foreach ($request->dataTable as $key => $value) {
+        ProductDetailCuba::insert([
+          'documento_id' => $request->documento_id,
+          'producto_cuba_id' => (isset($value['id'])) ? $value['id'] : 0,
+          'descripcion' => $value['product'],
+          'cantidad' => $value['cant']
+        ]);
+      }
+      return array('code' => 200);
     }
 }

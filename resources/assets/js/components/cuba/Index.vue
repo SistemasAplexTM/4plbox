@@ -563,8 +563,14 @@ export default {
         'consignee_id': me.dataC.id,
         'created_at': me.getTime()
       }).then(({data}) => {
+        let datos = data.datos
         if (data['code'] == 200) {
-          me.warehouse = data.datos['num_warehouse'];
+          axios.post('/saveProductDetail', {
+            'documento_id' : datos['id'],
+            'dataTable' : me.tableData
+          }).then(({data}) => {
+            me.warehouse = datos['num_warehouse'];
+          }).catch(erro => { console.log(error) })
         } else {
           this.$message.warning(data['error']);
         }
