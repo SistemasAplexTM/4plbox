@@ -73,19 +73,27 @@ class PivotPuntosDetalleController extends Controller
 
     public function getProductsClient($id)
     {
+      // $ids_detalle = DB::table('documento_detalle AS a')
+      // ->select(['a.id'])->where([['a.documento_id', $id]])->get();
+      // echo "<pre>";
+      // print_r($ids_detalle);
+      // echo "</pre>";
+      // exit();
+
       $data = DB::table('productos_detalle_cuba AS a')
-      ->join('puntos_cuba_productos AS b', 'a.producto_cuba_id', 'b.id')
+      ->leftJoin('puntos_cuba_productos AS b', 'a.producto_cuba_id', 'b.id')
       ->leftJoin('maestra_multiple AS cat', 'b.categoria_id', 'cat.id')
       ->leftJoin('maestra_multiple AS um', 'b.unidad_medida_id', 'um.id')
       ->select([
           'a.id',
           'a.cantidad',
-          'b.articulo',
-          'b.valor_aduan AS puntos',
+          'a.producto_cuba_id AS producto_id',
+          DB::raw('IF(a.producto_cuba_id = 0, a.descripcion, b.articulo) AS articulo'),
+          DB::raw('IF(a.producto_cuba_id = 0, 0, b.valor_aduan) AS puntos'),
           'b.limite_come AS limite',
           'cat.nombre AS categoria',
           'um.nombre AS unidad_medida',
-          DB::raw('(a.cantidad * b.valor_aduan) AS total_puntos')
+          DB::raw('(a.cantidad * IF(a.producto_cuba_id = 0, 0, b.valor_aduan)) AS total_puntos')
         ])
       ->where([['a.documento_id', $id]])->get();
 

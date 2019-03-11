@@ -98,9 +98,27 @@ var objVue = new Vue({
         ids_tracking: [],
         contenido_tracking: [],
         points_id_detail: null,
-        show_btn_products: false
+        show_btn_products: false,
+        total_points: 0,
+        data_points: []
+
     },
     methods: {
+      getProductsCuba(data){
+        let me = this;
+        me.data_points = data;
+        me.total_points = 0;
+        var cont = '';
+        for (var i = 0; i < data.length; i++) {
+          me.total_points += data[i].total_puntos;
+          if(i === 0){
+            cont = data[i].articulo;
+          }else{
+            cont = cont + ', ' + data[i].articulo;
+          }
+        }
+        $('#contiene').val(cont);
+      },
       modalSearchProducts(){
         $('#modalAddPointsToDetail').modal('show');
       },
@@ -481,7 +499,6 @@ var objVue = new Vue({
                     $('#emailD').attr('readonly', false);
                     $('#telD').attr('readonly', false);
                     me.disabled_c = false;
-                    llenarSelectPersonalizado('documento', 'localizacion', 'localizacion_id_c', 2);
                     $('#zipD').attr('readonly', false);
                     $('#btnBuscarConsignee').attr('readonly', true);
                 }
@@ -504,7 +521,6 @@ var objVue = new Vue({
                     $('#emailR').attr('readonly', false);
                     $('#telR').attr('readonly', false);
                     me.disabled_s = false;
-                    llenarSelectPersonalizado('documento', 'localizacion', 'localizacion_id', 2);
                     $('#zipR').attr('readonly', false);
                     $('#btnBuscarShipper').attr('readonly', true);
                 }
@@ -848,11 +864,13 @@ var objVue = new Vue({
                     'piezas': piezas,
                     'created_at': this.getTime(),
                     'contador': parseInt(cont),
-                    'ids_tracking': me.ids_tracking
+                    'ids_tracking': me.ids_tracking,
+                    'points': me.data_points
                 }).then(function(response) {
                     if (response.data['code'] == 200) {
                         toastr.success('Registro creado correctamente.');
                         toastr.options.closeButton = true;
+                        me.data_points = [];
                     } else {
                         toastr.warning(response.data['error']);
                         toastr.options.closeButton = true;
