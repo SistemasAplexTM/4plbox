@@ -9,25 +9,49 @@
           previousStepLabel="Anterior"
           nextStepLabel="Siguiente"
           finalStepLabel="Finalizar"
+          ref="my-wizard"
           >
           <div slot="page1">
-            <h4 class="mt-5">Seleccione la categoría de envío</h4>
-            <p>Acá va una descripción acerca de lo que es una categoría de envío.</p>
+            <h4 class="mt-5">Elija un servicio</h4>
             <div class="">
-              <el-radio v-model="category" label="200" border>Paquetería (200 pts)</el-radio>
-              <el-radio v-model="category" label="0" border>Menaje (No tiene puntos límites)</el-radio>
-              <el-radio v-model="category" label="950" border>Equipaje no acompañado (950 Pts)</el-radio>
+              <el-row :gutter="24">
+                  <el-col :xs="24" :sm="24" :md="12" :lg="{span: 4, offset: 6}" :xl="6">
+                    <div class="pointer p-10" :class="[category == 1 ? 'activeCategory' : '' ]" @click="setCategory(1)">
+                      <h3 class="mb-0">PAQUETERÍA</h3>
+                      <small>Envíe paquetes a sus familiares en CUBA</small>
+                      <br>
+                      <br>
+                      <i class="fal fa-boxes fa-7x o-020"></i>
+                    </div>
+                  </el-col>
+                  <el-col :xs="24" :sm="24" :md="12" :lg="4" :xl="6">
+                    <div class="pointer p-10" :class="[category == 2 ? 'activeCategory' : '' ]" @click="setCategory(2)">
+                      <h3 class="mb-0">MENAJE</h3>
+                      <small>Envíe articulos para el hogar a CUBA</small>
+                      <br>
+                      <br>
+                      <i class="fal fa-couch fa-7x o-020"></i>
+                    </div>
+                  </el-col>
+                  <el-col :xs="24" :sm="24" :md="12" :lg="4" :xl="6">
+                    <div class="pointer p-10" :class="[category == 3 ? 'activeCategory' : '' ]" @click="setCategory(3)">
+                      <h3 class="mb-0">EQUIPAJE NO</h3>
+                      <small>acompañado</small>
+                      <br>
+                      <br>
+                      <i class="fal fa-dolly-flatbed-alt fa-7x o-020"></i>
+                    </div>
+                  </el-col>
+              </el-row>
             </div>
           </div>
           <div slot="page2">
-            <!-- <shipper-consignee type="shipper" @data="shipper_id = $event"></shipper-consignee> -->
             <h4 class="mt-5 mb-5">
-              Ingrese número de identificación
+              Ingrese su número de identificación
             </h4>
-            <small>Acá va una descripción acerca de lo que es el usuario que envía.</small>
             <el-row class="mb-20 pb-20 bb justify-center" :gutter="24">
               <el-col :xs="24" :sm="24" :md="24" :lg="{span: 12, offset: 6}" :xl="{span: 12, offset: 6}">
-                <el-input placeholder="Cédula o Pasaporte" v-model="doc" prefix-icon="el-icon-search">
+                <el-input placeholder="Cédula o Pasaporte" v-model="doc" prefix-icon="el-icon-search" v-on:keyup.13="search(doc, type)">
                   <template slot="append" class="">
                     <el-button @click="search(doc, type)" :disabled="doc.length == 0" :loading="loading">
                       <transition name="fade" mode="out-in">
@@ -46,44 +70,44 @@
                 </el-row>
                 <el-row :gutter="24">
                   <el-col :xs="24" :sm="24" :md="12" :lg="{span: 6, offset: 6}" :xl="6">
-                    <el-form-item label="Nombre" prop="primer_nombre">
-                      <el-input v-model="ruleForm.primer_nombre"></el-input>
+                    <el-form-item label="" prop="primer_nombre">
+                      <el-input v-model="ruleForm.primer_nombre" placeholder="Nombre"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="{span: 6, offset: 0}" :xl="6">
-                    <el-form-item label="Apellidos" prop="primer_apellido">
-                      <el-input v-model="ruleForm.primer_apellido"></el-input>
+                    <el-form-item label="" prop="primer_apellido">
+                      <el-input v-model="ruleForm.primer_apellido" placeholder="Apellidos"></el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
                 <el-row :gutter="24">
                   <el-col :xs="24" :sm="24" :md="24" :lg="{span: 12, offset: 6}" :xl="12">
-                    <el-form-item label="Dirección" prop="direccion">
-                      <el-input v-model="ruleForm.direccion"></el-input>
+                    <el-form-item label="" prop="direccion">
+                      <el-input v-model="ruleForm.direccion" placeholder="Dirección"></el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
                 <el-row :gutter="24">
                   <el-col :xs="24" :sm="24" :md="12" :lg="{span: 6, offset: 6}" :xl="6">
-                    <el-form-item label="Ciudad" prop="localizacion_id">
+                    <el-form-item label="" prop="localizacion_id">
                       <city-component @get="setCity($event.id)"/>
                     </el-form-item>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="{span: 6, offset: 0}" :xl="6">
-                    <el-form-item label="Correo" prop="correo">
-                      <el-input v-model="ruleForm.correo" type="email"></el-input>
+                    <el-form-item label="" prop="correo">
+                      <el-input v-model="ruleForm.correo" placeholder="Correo" type="email"></el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
                 <el-row :gutter="24">
                   <el-col :xs="24" :sm="24" :md="12" :lg="{span: 6, offset: 6}" :xl="6">
-                    <el-form-item label="Código postal" prop="zip">
-                      <el-input v-model="ruleForm.zip"></el-input>
+                    <el-form-item label="" prop="zip">
+                      <el-input v-model="ruleForm.zip" placeholder="Código postal"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="{span: 6, offset: 0}" :xl="6">
-                    <el-form-item label="Teléfono" prop="telefono">
-                      <el-input v-model="ruleForm.telefono"></el-input>
+                    <el-form-item label="" prop="telefono">
+                      <el-input v-model="ruleForm.telefono" placeholder="Teléfono"></el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -99,7 +123,7 @@
                 </div>
                 <div class="" v-else>
                   <h3 class="h-big mb-0">
-                    {{ data[0].primer_nombre }} {{ (data[0].primer_apellido) ? data[0].primer_apellido : '' }}
+                    {{ data[0].nombre_full }}
                   </h3>
                   <ul class="data-shipper">
                     <li>{{ data[0].documento }}</li>
@@ -338,7 +362,7 @@ export default {
           slot: 'page4',
         }
       ],
-      category: '0',
+      category: null,
       shipper_id: '',
       consignee_id: '',
       doc: '',
@@ -411,6 +435,10 @@ export default {
       }
       if (currentPage == 0) {
         this.type = 'shipper'
+        if (this.category == null) {
+          this.$message.warning('Elija un servicio')
+          return false
+        }
       }
       if (currentPage == 1) {
         if (this.data.length <= 0) {
@@ -606,6 +634,11 @@ export default {
       }).then(_ => {
         this.refresh()
       }).catch(_ => {});
+    },
+    setCategory(id){
+      this.type = 'shipper'
+      this.category = id
+      this.$refs['my-wizard'].goNext(true)
     }
   }
 };
@@ -640,6 +673,9 @@ html, body {
   text-align: center;
 }
 .o-020 { opacity: 0.20; }
+.p-10 { padding: 10px}
 .p-20 { padding: 20px}
-
+.pb-0 { padding-bottom: 0px}
+.mb-0 { margin-bottom: 0px}
+.activeCategory { background-color: #a9a9a952 }
 </style>
