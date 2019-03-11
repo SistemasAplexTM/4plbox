@@ -622,7 +622,7 @@ export default {
         'tipo_documento_id': 1,
         'type_id': 1,
         'agencia_id': me.agency_id,
-        'tipo_ebmarque_id': 8,
+        'tipo_embarque_id': 8,
         'usuario_id': 1,
         'shipper_id': me.data[0].id,
         'consignee_id': me.dataC.id,

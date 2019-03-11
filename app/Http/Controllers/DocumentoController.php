@@ -146,7 +146,7 @@ class DocumentoController extends Controller
                                     'servicios_id'     => 1,
                                     'forma_pago_id'    => 1,
                                     'tipo_pago_id'     => 4,//prepaid
-                                    'tipo_embarque_id' => ($request->tipo_embarque_id) ? $request->tipo_embarque_id : 7,//aereo
+                                    'tipo_embarque_id' => (isset($request->tipo_embarque_id)) ? $request->tipo_embarque_id : 7,//aereo
                                     'grupo_id'         => 3,//general
                                     'estado_id'        => ($request->tipo_documento_id == 2) ? 27 : 28, //maestra multiple
                                     'created_at'       => $request->created_at,
@@ -517,7 +517,7 @@ class DocumentoController extends Controller
                         ->where('documento_id', $id)
                         ->update([
                             'servicios_id'     => ($request->servicios_id) ? $request->servicios_id : 1,
-                            'tipo_embarque_id' => ($request->tipo_embarque_id) ? $request->tipo_embarque_id : 7,
+                            'tipo_embarque_id' => (isset($request->tipo_embarque_id)) ? $request->tipo_embarque_id : 7,
                         ]);
                 } else {
                     if ($request->document_type === 'guia') {
