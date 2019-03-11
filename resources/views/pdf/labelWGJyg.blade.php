@@ -176,7 +176,7 @@
     <tr>
         <td>
             <div class="fecha">
-                {{ $value->created_at->toFormattedDateString() }}
+                {{ substr($value->created_at, 0, -9) }}
             </div>
             <div class="agencia">
                 {{ $value->agencia }}

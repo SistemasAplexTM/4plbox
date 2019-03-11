@@ -99,7 +99,7 @@
                                         <div class="col-sm-12" v-show="show_buttons">
                                             <label class="control-label col-lg-12">&nbsp;</label>
                                             <a target="blank_" class="btn btn-info btn-sm printDocument" data-toggle="tooltip" data-placement="top" title="Imprimir manifiesto"><i class="fa fa-print"></i> Manifiesto</a>
-                                            <a target="blank_" class="btn btn-info btn-sm printDocumentGuiasCuba" data-toggle="tooltip" data-placement="top" title="Imprimir guias hijas" ><i class="fa fa-print"></i> Guias hijas Cuba</a>
+                                            <!-- <a target="blank_" class="btn btn-info btn-sm printDocumentGuiasCuba" data-toggle="tooltip" data-placement="top" title="Imprimir guias hijas" ><i class="fa fa-print"></i> Guias hijas Cuba</a> -->
                                             <a target="blank_" class="btn btn-info btn-sm printDocumentGuias" data-toggle="tooltip" data-placement="top" title="Imprimir guias hijas" ><i class="fa fa-print"></i> Guias hijas</a>
 																						<div class="btn-group">
 																						  <a class="btn btn-info btn-sm" href="getDataPrintBagsConsolidate" target="blank_"><i class="fa fa-print"></i> Bolsas / Tulas</a>
@@ -378,19 +378,26 @@
 												<div class="col-sm-6">
 													<h3>Seleccione el numero de bolsa</h3>
 														<div class="form-group">
-															<select class="form-control">
-																<option value="">Todas</option>
-																<option value="">1</option>
-																<option value="">2</option>
-															</select>
+															<!-- <select class="form-control" v-model="num_bolsa_selected">
+																<option value="0">Todas</option>
+																<option value="1">1</option>
+																<option value="2">2</option>
+															</select> -->
+															<el-select v-model="num_bolsa_selected">
+														    <el-option
+														      v-for="item in bags"
+														      :key="item.value"
+														      :label="item.label"
+														      :value="item.value">
+														    </el-option>
+														  </el-select>
 														</div>
 												</div>
 												<div class="col-sm-6">
 													<div class="form-group">
 														<h3>&nbsp;</h3>
-														<a hfer="#" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Imprimir Labels Bolsa"><i class="fa fa-print"></i> Bolsas</a>
+														<a @click="printGroup('label')" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Imprimir Labels Bolsa"><i class="fa fa-print"></i> Lables</a>
 														<a hfer="#" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Imprimir Invoice"><i class="fa fa-print"></i> Invoice</a>
-														<a hfer="#" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Imprimir Guias"><i class="fa fa-print"></i> Guias</a>
 													</div>
 												</div>
 										</div>
@@ -607,9 +614,15 @@
 						localizacion_id: null,
 						ciudades: [],
 						tipo_consolidado: 'COURIER',
+						num_bolsa_selected: 0,
+						bags: [],
+						cant_bags: 0
 	        }
 	    },
 		methods: {
+				printGroup(param){
+					window.open('/impresion-group/pdfConsolidadoGroup/' + this.documento.id + '/guia/' + this.num_bolsa_selected, '_blank');
+				},
 				exportLiquimp(){
 					window.open('/exportLiquimp/' + this.documento.id, '_blank');
 				},
@@ -999,7 +1012,7 @@
 											            var format = "PDF";
 											            href_print_label = 'onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format
 																	+'&id=' + full.documento_id + '&agency_id='+ full.agencia_id
-																	+'&document='+ document_print + '&id_detail='+ full.documento_detalle_id + '&id_detail_consol='+ full.id +'&consolidado='+ true +'\')"';
+																	+'&document='+ document_print + '&id_detail='+ full.documento_detalle_id + '&id_detail_consol='+ full.id +'&consolidado='+ true +'&document=guia&label=true\')"';
 		                          }
 		                          if (me.permissions.deleteDetailConsolidado && !me.close) {
 		                              var btn_delete = " <a onclick=\"eliminarConsolidado(" + full.id + ","+false+")\" class='' style='color:#E34724;'><i class='fa fa-trash'></i> Eliminar</a> ";
@@ -1037,75 +1050,88 @@
 										var api = this.api();
 										let datos = api.rows( {page:'current'} ).data();
 										let cont = 0;
-											if(app_type === 'courier'){
-												for (var i = 0; i < datos.length; i++) {
-													// VALIDACION POSICION ARANCELARIA
-													if(datos[i].pa == null){
-														$('#num_guia' + datos[i].id).addClass('text-danger');
-														$('#pa' + datos[i].id).html('No Datos').addClass('text-danger');
-														cont++;
-													}else{
-															$('#pa' + datos[i].id).removeClass('text-danger');
-															if(datos[i].flag_peso == null && datos[i].flag_declarado == null){
-																if(parseFloat(datos[i].declarado2) == 0 || parseFloat(datos[i].peso2) == 0){
-																	$('#num_guia' + datos[i].id).addClass('text-danger');
-																	cont++;
-																}else{
-																	$('#num_guia' + datos[i].id).removeClass('text-danger');
-																}
-															}else{
-																cont++;
-															}
-													}
-												}
-												if(cont === 0 && datos.length > 0){
-													me.show_buttons = true;
-												}else{
-													me.show_buttons = false;
-												}
-											}
 
-
-											if(!me.close){
-												$('.edit, .delete').hide().children('i').css('font-size', '17px');
+										// SABER LA CANTIDAD DE BOLSAS DEL CONSOLIDADO
+										for (var i = 0; i < datos.length; i++) {
+											me.cant_bags = (parseInt(me.cant_bags) < parseInt(datos[i].num_bolsa)) ? datos[i].num_bolsa : me.cant_bags;
+										}
+										for (var i = 0; i < parseInt(me.cant_bags) + 1; i++) {
+											if(i === 0){
+												me.bags.push({value: i, label: 'Todas'});
 											}else{
-												$('.edit, .delete').remove();
+												me.bags.push({value: i, label: 'Bolsa ' + i});
 											}
-                      /* EDITABLE FIELD */
-                      if (me.permissions.editDetail && !me.close) {
-                          $(".td_edit").editable({
-                              ajaxOptions: {
-                                  type: 'post',
-                                  dataType: 'json'
-                              },
-                              url: "updateDetailConsolidado",
-                              validate:function(value){
-                                  if($.trim(value) == ''){
-                                      return 'Este campo es obligatorio!';
-                                  }
-                              },
-                              success: function(response, newValue) {
-                                  me.updateTableDetail();
-                              }
-                          });
-                      }
-                      /* POPOVER PARA LAS GUIAS AGRUPADAS (BADGED) */
-                      $(".pop").popover({ trigger: "manual" , html: true})
-                          .on("mouseenter", function () {
-                              var _this = this;
-                              $(this).popover("show");
-                              $(".popover").on("mouseleave", function () {
-                                  $(_this).popover('hide');
-                              });
-                          }).on("mouseleave", function () {
-                              var _this = this;
-                              setTimeout(function () {
-                                  if (!$(".popover:hover").length) {
-                                      $(_this).popover("hide");
-                                  }
-                              }, 300);
-                      });
-                    },
+										}
+
+										if(app_type === 'courier'){
+											for (var i = 0; i < datos.length; i++) {
+												// VALIDACION POSICION ARANCELARIA
+												if(datos[i].pa == null){
+													$('#num_guia' + datos[i].id).addClass('text-danger');
+													$('#pa' + datos[i].id).html('No Datos').addClass('text-danger');
+													cont++;
+												}else{
+														$('#pa' + datos[i].id).removeClass('text-danger');
+														if(datos[i].flag_peso == null && datos[i].flag_declarado == null){
+															if(parseFloat(datos[i].declarado2) == 0 || parseFloat(datos[i].peso2) == 0){
+																$('#num_guia' + datos[i].id).addClass('text-danger');
+																cont++;
+															}else{
+																$('#num_guia' + datos[i].id).removeClass('text-danger');
+															}
+														}else{
+															cont++;
+														}
+												}
+											}
+											if(cont === 0 && datos.length > 0){
+												me.show_buttons = true;
+											}else{
+												me.show_buttons = false;
+											}
+										}
+
+
+										if(!me.close){
+											$('.edit, .delete').hide().children('i').css('font-size', '17px');
+										}else{
+											$('.edit, .delete').remove();
+										}
+                    /* EDITABLE FIELD */
+                    if (me.permissions.editDetail && !me.close) {
+                        $(".td_edit").editable({
+                            ajaxOptions: {
+                                type: 'post',
+                                dataType: 'json'
+                            },
+                            url: "updateDetailConsolidado",
+                            validate:function(value){
+                                if($.trim(value) == ''){
+                                    return 'Este campo es obligatorio!';
+                                }
+                            },
+                            success: function(response, newValue) {
+                                me.updateTableDetail();
+                            }
+                        });
+                    }
+                    /* POPOVER PARA LAS GUIAS AGRUPADAS (BADGED) */
+                    $(".pop").popover({ trigger: "manual" , html: true})
+                        .on("mouseenter", function () {
+                            var _this = this;
+                            $(this).popover("show");
+                            $(".popover").on("mouseleave", function () {
+                                $(_this).popover('hide');
+                            });
+                        }).on("mouseleave", function () {
+                            var _this = this;
+                            setTimeout(function () {
+                                if (!$(".popover:hover").length) {
+                                    $(_this).popover("hide");
+                                }
+                            }, 300);
+                    });
+                  },
 					        "footerCallback": function (row, data, start, end, display) {
 			                    var api = this.api(), data;
 			                    /*Remove the formatting to get integer data for summation*/

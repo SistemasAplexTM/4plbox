@@ -88,8 +88,8 @@ return [
 'destination'=>'Destination',
 'manifest'=>'Manifest',
 'actions'=>'Actions',
-'new'=>'New'
-'create'=>'Create' 
+'new'=>'New',
+'create'=>'Create'
 
 
 

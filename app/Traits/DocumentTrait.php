@@ -237,7 +237,7 @@ trait DocumentTrait
           return $sql;
     }
 
-    public function pdfLabelDetail($filter, $codigo, $consolidado, $id_detail_consol)
+    public function pdfLabelDetail($filter, $codigo, $consolidado = false, $id_detail_consol = false)
     {
       $sql = DocumentoDetalle::join('documento as a', 'documento_detalle.documento_id', 'a.id')
           ->join('agencia AS b', 'a.agencia_id', 'b.id')
@@ -266,6 +266,63 @@ trait DocumentTrait
               'documento_detalle.num_warehouse',
               'documento_detalle.num_guia',
               'documento_detalle.created_at',
+              'b.descripcion as agencia',
+              'shipper.nombre_full as ship_nomfull',
+              'shipper.direccion as ship_dir',
+              'shipper.telefono as ship_tel',
+              'shipper.correo as ship_email',
+              'shipper.zip as ship_zip',
+              'ciudad_shipper.nombre AS ship_ciudad',
+              'deptos_shipper.descripcion AS ship_depto',
+              'consignee.nombre_full as cons_nomfull',
+              'consignee.direccion as cons_dir',
+              'consignee.telefono as cons_tel',
+              'consignee.documento as cons_documento',
+              'consignee.correo as cons_email',
+              'consignee.zip as cons_zip',
+              'consignee.po_box as cons_pobox',
+              'ciudad_consignee.nombre AS cons_ciudad',
+              'deptos_consignee.descripcion AS cons_depto',
+              'pais.descripcion AS cons_pais',
+              'pais.iso2 AS cons_pais_code',
+              'ciudad_consignee.prefijo'
+          )
+          ->where($filter)
+          ->get();
+          return $sql;
+    }
+
+    public function pdfLabelDetailConsolidado($filter, $codigo)
+    {
+      $sql = DB::table('consolidado_detalle AS c')
+          ->join('documento_detalle as d', 'c.documento_detalle_id', 'd.id')
+          ->join('documento as a', 'd.documento_id', 'a.id')
+          ->join('agencia AS b', 'a.agencia_id', 'b.id')
+          ->leftJoin('shipper', 'd.shipper_id', '=', 'shipper.id')
+          ->leftJoin('consignee', 'd.consignee_id', '=', 'consignee.id')
+          ->leftJoin('localizacion AS ciudad_consignee', 'consignee.localizacion_id', '=', 'ciudad_consignee.id')
+          ->leftJoin('localizacion AS ciudad_shipper', 'shipper.localizacion_id', '=', 'ciudad_shipper.id')
+          ->leftJoin('deptos AS deptos_consignee', 'ciudad_consignee.deptos_id', '=', 'deptos_consignee.id')
+          ->leftJoin('deptos AS deptos_shipper', 'ciudad_shipper.deptos_id', '=', 'deptos_shipper.id')
+          ->leftJoin('pais', 'pais.id', '=', 'deptos_consignee.pais_id')
+          ->select(
+              'd.id',
+              'd.contenido',
+              'd.contenido2',
+              'd.tracking',
+              'd.volumen',
+              'd.valor',
+              'd.declarado2',
+              'd.piezas',
+              'd.largo',
+              'd.ancho',
+              'd.alto',
+              'd.peso',
+              'd.peso2',
+              'd.' . $codigo . ' as codigo',
+              'd.num_warehouse',
+              'd.num_guia',
+              'd.created_at',
               'b.descripcion as agencia',
               'shipper.nombre_full as ship_nomfull',
               'shipper.direccion as ship_dir',

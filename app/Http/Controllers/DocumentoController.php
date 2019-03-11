@@ -1446,24 +1446,24 @@ class DocumentoController extends Controller
                         //     }
                         //   }
                         // }
-                        echo $documento->tipo_embarque_id;
-                        exit();
+                        // echo $documento->tipo_embarque_id;
+                        // exit();
                         if($peso_t === 0 and $decla_t === 0){
                           $this->AddToLog('Impresion Consolidado guias (' . $id . ')');
-                          if($documento->tipo_embarque_id == 8){
+                          // if($documento->tipo_embarque_id == 8){
                             if (env('APP_TYPE') === 'courier') {
                                 if(env('APP_CLIENT') === 'colombiana'){
                                     // return view('pdf/consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
-                                    $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                                    $pdf = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
                                 }else{
-                                    $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf', compact('documento', 'detalle', 'detalleConsolidado'));
+                                    $pdf = PDF::loadView('pdf.consolidadoGuiasPdf', compact('documento', 'detalle', 'detalleConsolidado'));
                                 }
                             }else{
-                                $pdf          = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                                $pdf = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
                             }
-                          }else{
-                            return view('pdf.manifiesto.guiasCuba', compact('documento', 'detalle', 'detalleConsolidado'));
-                          }
+                          // }else{
+                          //   return view('pdf.manifiesto.guiasCuba', compact('documento', 'detalle', 'detalleConsolidado'));
+                          // }
                           $nameDocument = 'Guias -' . $documento->id;
                         }else{
                           $error = 'El peso o valor declarado supera lo permitido por cliente. Por favor revisar.';
@@ -1715,6 +1715,74 @@ class DocumentoController extends Controller
                 return view('pdf/labelWG_2', compact('documento', 'detalle', 'document', 'consolidado', 'dato_consolidado'));
             }
         }
+    }
+
+    public function pdfConsolidadoGroup($id, $document, $num_bolsa)
+    {
+      if ($document === 'guia') {
+          $codigo = 'num_guia';
+      } else {
+          if ($document === 'warehouse') {
+              $codigo = 'num_warehouse';
+          }
+      }
+      $consolidado = null;
+      $dato_consolidado = null;
+      $documento = DB::table('documento')
+          ->leftJoin('shipper', 'documento.shipper_id', 'shipper.id')
+          ->leftJoin('consignee', 'documento.consignee_id', 'consignee.id')
+          ->leftJoin('localizacion as ciudad_consignee', 'consignee.localizacion_id', 'ciudad_consignee.id')
+          ->leftJoin('localizacion as ciudad_shipper', 'shipper.localizacion_id', 'ciudad_shipper.id')
+          ->leftJoin('deptos as deptos_consignee', 'ciudad_consignee.deptos_id', 'deptos_consignee.id')
+          ->leftJoin('deptos as deptos_shipper', 'ciudad_shipper.deptos_id', 'deptos_shipper.id')
+          ->leftJoin('guia_wrh_pivot', 'guia_wrh_pivot.documento_id', 'documento.id')
+          ->join('agencia', 'documento.agencia_id', 'agencia.id')
+          ->leftJoin('localizacion AS ciudad_agencia', 'agencia.localizacion_id', '=', 'ciudad_agencia.id')
+          ->leftJoin('deptos AS deptos_agencia', 'ciudad_agencia.deptos_id', '=', 'deptos_agencia.id')
+          ->leftJoin('pais AS pais_agencia', 'deptos_agencia.pais_id', '=', 'pais_agencia.id')
+          ->select(
+              'documento.*',
+              'shipper.nombre_full as ship_nomfull',
+              'shipper.direccion as ship_dir',
+              'shipper.telefono as ship_tel',
+              'shipper.correo as ship_email',
+              'shipper.zip as ship_zip',
+              'ciudad_shipper.nombre as ship_ciudad',
+              'deptos_shipper.descripcion as ship_depto',
+              'consignee.nombre_full as cons_nomfull',
+              'consignee.direccion as cons_dir',
+              'consignee.telefono as cons_tel',
+              'consignee.documento as cons_documento',
+              'consignee.correo as cons_email',
+              'consignee.zip as cons_zip',
+              'consignee.po_box as cons_pobox',
+              'ciudad_consignee.nombre as cons_ciudad',
+              'deptos_consignee.descripcion as cons_depto',
+              'agencia.descripcion as agencia',
+              'agencia.logo as agencia_logo',
+              'agencia.telefono as agencia_tel',
+              'agencia.direccion as agencia_dir',
+              'agencia.email as agencia_email',
+              'agencia.zip as agencia_zip',
+              'ciudad_agencia.nombre AS agencia_ciudad',
+              'ciudad_agencia.prefijo AS agencia_ciudad_prefijo',
+              'deptos_agencia.descripcion AS agencia_depto',
+              'deptos_agencia.abreviatura AS agencia_depto_prefijo'
+          )
+          ->where([
+              ['documento.deleted_at', null],
+              ['documento.id', $id],
+          ])
+          ->first();
+      $where = [['d.deleted_at', null], ['c.consolidado_id', $id]];
+      if ($num_bolsa != 0) {
+          $where[] = array('c.num_bolsa', $num_bolsa);
+      }
+      $detalle = $this->pdfLabelDetailConsolidado($where, $codigo);
+      // return $detalle;
+      $pdf = PDF::loadView('pdf.labelWGJyg', compact('documento', 'detalle', 'document', 'consolidado', 'dato_consolidado'))
+      ->setPaper(array(25, -25, 260, 360), 'landscape');
+      return $pdf->stream('labelsGroup.pdf');
     }
 
     public function printFile(Request $request){

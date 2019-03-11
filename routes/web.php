@@ -308,6 +308,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('impresion-documento-label/{id}/{document}/{id_detalle?}/{consolidado?}', 'DocumentoController@pdfLabel')->name('documento.pdfLabel');
     Route::get('impresion-documento/pdfContrato', 'DocumentoController@pdfContrato')->name('documento.pdfContrato');
     Route::get('impresion-documento/pdfTsa', 'DocumentoController@pdfTsa')->name('documento.pdfTsa');
+    Route::get('impresion-group/pdfConsolidadoGroup/{id}/{document}/{num_bolsa}', 'DocumentoController@pdfConsolidadoGroup')->name('documento.pdfConsolidadoGroup');
 
     /* PREALERTA */
     Route::get('prealerta', 'PrealertaController@prealertaList')->name('prealerta.list')->middleware('permission:prealerta.list');
