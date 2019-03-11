@@ -193,13 +193,10 @@ class DocumentoController extends Controller
                     }
                 return $answer;
             });
-        } catch (Exception $e) {
-            $error = '';
-            foreach ($e->errorInfo as $key => $value) {
-                $error .= $key . ' - ' . $value . ' <br> ';
-            }
+        } catch (\Exception $e) {
+
             $answer = array(
-                "error"  => $error,
+                "error"  => $e,
                 "code"   => 600,
                 "status" => 500,
             );
