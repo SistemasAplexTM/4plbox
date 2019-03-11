@@ -191,7 +191,7 @@
 			},
       getDataSelect(){
 				var me = this;
-				axios.get('../../administracion/9/selectInput').then(function(response) {
+				axios.get('../../administracion/10/selectInput').then(function(response) {
             me.list = response.data.items;
         }).catch(function(error) {
             console.log(error);

@@ -144,6 +144,7 @@
         <modalconsignee-component></modalconsignee-component>
         <modalarancel-component></modalarancel-component>
         <modalcargosadd-component :showmodal="showmodalAdd"></modalcargosadd-component>
+        <products-cuba-component :id_document="{{ $documento->id }}"></products-cuba-component>
 
         <form class="" id="formDocumento" name="formDocumento" class=" form-horizontal" role="form" action="{{ url('documento/updatedDocument') }}/{{  $documento->id }}" method="post">
                 {{ csrf_field() }}
@@ -610,7 +611,8 @@
                                                           <div class="input-group">
                                                               <input type="text" onkeyup="deleteError($(this).parent());" id="contiene" name="contiene" class="form-control text-write" value="" placeholder="@lang('documents.content')" autocomplete="off">
                                                               <span class="input-group-btn">
-                                                                  <button style="font-size: 19.9px!important;" id="btn-searchTracking" @click="modalSearchTracking()" class="btn btn-primary" type="button" data-toggle='tooltip' title="Buscar trackings"><span class="fa fa-truck"></span></button>
+                                                                  <button v-if="show_btn_products" style="font-size: 19.9px!important;" id="btn-searchProducts" @click="modalSearchProducts()" class="btn btn-warning" type="button" data-toggle='tooltip' title="Productos"><span class="fa fa-map-pin"></span></button>
+                                                                  <button v-else style="font-size: 19.9px!important;" id="btn-searchTracking" @click="modalSearchTracking()" class="btn btn-primary" type="button" data-toggle='tooltip' title="Buscar trackings"><span class="fa fa-truck"></span></button>
                                                               </span>
                                                           </div>
                                                           <small class="help-block" id="Hcontiene" style="display: none">@lang('documents.obligatory_field')</small>

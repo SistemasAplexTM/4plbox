@@ -16,6 +16,17 @@ var objVue = new Vue({
          }
        },
        city_c:function(value){
+         var puntos = null;
+         if(puntos_config != null){
+           puntos = JSON.parse(puntos_config);
+         }
+         if(puntos != null){
+           if(objVue.city_c.pais_id == puntos.pais_id){
+             objVue.show_btn_products = true;
+           }else{
+             objVue.show_btn_products = false;
+           }
+         }
          if (Object.keys(value).length === 0) {
            $('#msn_l2').css('display', 'inline-block');
          }else{
@@ -86,9 +97,13 @@ var objVue = new Vue({
         close: false,
         ids_tracking: [],
         contenido_tracking: [],
-         points_id_detail: null
+        points_id_detail: null,
+        show_btn_products: false
     },
     methods: {
+      modalSearchProducts(){
+        $('#modalAddPointsToDetail').modal('show');
+      },
       setCity(data, option){
           if(option){
             this.city_s = data;

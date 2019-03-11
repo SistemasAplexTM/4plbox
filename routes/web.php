@@ -57,6 +57,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('puntos', 'PivotPuntosDetalleController@store');
     Route::delete('puntos/{id}', 'PivotPuntosDetalleController@destroy');
     Route::get('puntos/{id}', 'PivotPuntosDetalleController@getByIdDetail')->name('getData');
+    Route::get('puntos/getProductsClient/{id}', 'PivotPuntosDetalleController@getProductsClient');
 
     /*--- MODULO USER ---*/
     Route::resource('user', 'UserController', ['except' => ['show', 'create', 'edit']]);
