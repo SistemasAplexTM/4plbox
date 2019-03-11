@@ -1458,11 +1458,9 @@ class DocumentoController extends Controller
                         //     }
                         //   }
                         // }
-                        // echo $documento->tipo_embarque_id;
-                        // exit();
                         if($peso_t === 0 and $decla_t === 0){
                           $this->AddToLog('Impresion Consolidado guias (' . $id . ')');
-                          // if($documento->tipo_embarque_id == 8){
+                          if($documento->transporte_id == 7){
                             if (env('APP_TYPE') === 'courier') {
                                 if(env('APP_CLIENT') === 'colombiana'){
                                     // return view('pdf/consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
@@ -1473,9 +1471,9 @@ class DocumentoController extends Controller
                             }else{
                                 $pdf = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
                             }
-                          // }else{
-                          //   return view('pdf.manifiesto.guiasCuba', compact('documento', 'detalle', 'detalleConsolidado'));
-                          // }
+                          }else{
+                            return view('pdf.manifiesto.guiasCuba', compact('documento', 'detalle', 'detalleConsolidado'));
+                          }
                           $nameDocument = 'Guias -' . $documento->id;
                         }else{
                           $error = 'El peso o valor declarado supera lo permitido por cliente. Por favor revisar.';

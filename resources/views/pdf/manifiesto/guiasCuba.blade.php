@@ -44,6 +44,10 @@
 $cont = 0;
 $contRegistros = 0;
 $toalRegistros = count($detalleConsolidado);
+// echo '<pre>';
+// print_r($documento);
+// echo '<pre>';
+// exit();
 ?>
 
 @if($detalleConsolidado != '')
@@ -71,7 +75,7 @@ $toalRegistros = count($detalleConsolidado);
         ?>>
           <thead>
             <tr>
-              <td style="padding-left: 5px;font-size: 25px">Dole</td>
+              <td style="padding-left: 5px;font-size: 25px"><img src="{{ '/storage/' . $documento->agencia_logo }}" alt="" height="60" style="margin: 0 auto"></td>
               <td style="text-align: right;padding-right: 5px;font-size: 25px">@lang('general.bill_of_lading')</td>
             </tr>
           </thead>
