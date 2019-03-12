@@ -44,10 +44,11 @@
 $cont = 0;
 $contRegistros = 0;
 $toalRegistros = count($detalleConsolidado);
-// echo '<pre>';
-// print_r($documento);
-// echo '<pre>';
-// exit();
+echo '<pre>';
+print_r($documento);
+print_r($detalleConsolidado);
+echo '<pre>';
+exit();
 ?>
 
 @if($detalleConsolidado != '')
@@ -75,8 +76,8 @@ $toalRegistros = count($detalleConsolidado);
         ?>>
           <thead>
             <tr>
-              <td style="padding-left: 5px;font-size: 25px"><img src="{{ '/storage/' . $documento->agencia_logo }}" alt="" height="60" style="margin: 0 auto"></td>
-              <td style="text-align: right;padding-right: 5px;font-size: 25px">@lang('general.bill_of_lading')</td>
+              <td style="padding-left: 5px;font-size: 25px"><img src="{{ '/storage/' . $documento->agencia_logo }}" alt="" height="50" style="margin: 0 auto"></td>
+              <td style="text-align: right;padding-right: 5px;font-size: 25px">BILL OF LADING</td>
             </tr>
           </thead>
           <tbody style="border: 1px solid #030303;">
@@ -90,14 +91,26 @@ $toalRegistros = count($detalleConsolidado);
                           <td colspan="2" class="title">2. EXPORTER (Principal or seller -licensee and address including ZIP Code )</td>
                         </tr>
                         <tr>
-                          <td colspan="" class="p-left">
-                            <pre>exporter</pre>
+                          <td class="p-left">
+                            <div>{{ $value->ship_nomfull }}</div>
                           </td>
                         </tr>
                         <tr>
-                          <td style="width: 70%;height: 40px"></td>
+                          <td class="p-left">
+                            <div>{{ $value->ship_dir }}</div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="p-left" rowspan="2" style="width: 70%;">
+                            <div>{{ $value->ship_ciudad . '-'. $value->ship_depto_ab }}</div>
+                            <div>{{ $value->ship_tel }}</div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="height: 40px"></td>
                           <td class="b-top b-left" valign="top">
                             <div style="font-size: 10px;margin-left: 2px">ZIP CO'DE</div>
+                            <div>{{ $value->ship_zip }}</div>
                           </td>
                         </tr>
                       </table>
@@ -129,7 +142,10 @@ $toalRegistros = count($detalleConsolidado);
                         </tr>
                         <tr>
                           <td colspan="" class="p-left">
-                            <pre>consig</pre>
+                            <div>{{ $value->cons_nomfull }}</div>
+                            <div>{{ $value->cons_dir }}</div>
+                            <div>{{ $value->cons_ciudad . '-'. $value->cons_depto_ab }}</div>
+                            <div>{{ $value->cons_tel }}</div>
                           </td>
                         </tr>
                       </table>
@@ -139,7 +155,9 @@ $toalRegistros = count($detalleConsolidado);
                         <tr>
                           <td valign="top" class="title" style="padding-left: 2px;height: 55px">
                             7. FORWARDING AGENT (Name and address - references )
-                            <div class="var"><pre>forwar agen</pre></div>
+                            <div class="var">
+                              <div>{{ $documento->agencia }}</div>
+                            </div>
                           </td>
                         </tr>
                         <tr>
@@ -396,7 +414,7 @@ $toalRegistros = count($detalleConsolidado);
 <script  type="text/javascript">
       function printHTML() {
              if (window.print) {
-                 window.print();
+                 // window.print();
              }
           }
           document.addEventListener("DOMContentLoaded", function (event) {
