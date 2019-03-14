@@ -98,7 +98,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('master/getOtherCharges/{id}', 'MasterController@getOtherCharges');
     Route::get('master/imprimirLabel/{id_master}', 'MasterController@imprimirLabel');
     Route::get('master/imprimirGuias/{consolidado_id}/{option?}', 'MasterController@imprimirGuias');
-    Route::post('master/getDataConsolidados', 'MasterController@getDataConsolidados');
+    Route::post('master/getDataConsolidados/{type}', 'MasterController@getDataConsolidados');
 
     /*--- MODULO TRACKINGS ---*/
     Route::resource('tracking', 'TrackingController', ['except' => ['show', 'create', 'edit', 'update']]);
@@ -338,7 +338,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     /*--- MODULO BL ---*/
     Route::resource('bill', 'BillLadingController', ['except' => ['show', 'create']]);
-    Route::get('bill/create/{bill?}', 'BillLadingController@create');
+    Route::get('bill/create/{bill?}/{consolidado_id?}', 'BillLadingController@create');
     Route::get('bill/all', 'BillLadingController@getAll')->name('datatable/all');
     Route::get('bill/delete/{id}/{logical?}', 'BillLadingController@delete')->name('BillLading.delete');
     Route::get('bill/imprimir/{id_bill}/{simple?}', 'BillLadingController@imprimir');

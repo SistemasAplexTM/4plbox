@@ -16,10 +16,11 @@ class BillLadingController extends Controller
         return view('templates/bill/index');
     }
 
-    public function create($bill = false)
+    public function create($bill = false, $consolidado_id = null)
     {
         $bill = $bill;
-        return view('templates/bill/create', compact('bill'));
+        $consolidado_id = $consolidado_id;
+        return view('templates/bill/create', compact('bill', 'consolidado_id'));
     }
 
     public function edit($id)
@@ -51,7 +52,7 @@ class BillLadingController extends Controller
             $bill->users_id     = Auth::user()->id;
             if ($bill->save()) {
                 /* REGISRAR DELTALLE */
-                if($request->detail[0]['marks_numbers'] != ''){
+                if($request->detail[0]['number_packages'] != ''){
                     foreach ($request->detail as $value) {
                         $billD                  = (new BillLadingDetail)->fill($value);
                         $billD->bill_lading_id  = $bill->id;
@@ -68,6 +69,12 @@ class BillLadingController extends Controller
                         $billO->save();
                     }
                 }
+
+                if($request->consolidado_id != 'null' and $request->consolidado_id != ''){
+                DB::table('documento')
+                    ->where('id', $request->consolidado_id)
+                    ->update(['bill_id' => $bill->id]);
+                }
             }
 
 
@@ -83,16 +90,16 @@ class BillLadingController extends Controller
 
     public function update(Request $request, $id_bill)
     {
-        
+
         DB::beginTransaction();
         try {
             $bill               = BillLading::findOrFail($id_bill);
             $bill->updated_at   = $request->updated_at;
-            
+
 
             if ($bill->update($request->all())) {
                 /* REGISRAR DELTALLE */
-                if($request->detail[0]['marks_numbers'] != ''){
+                if($request->detail[0]['number_packages'] != ''){
                     BillLadingDetail::where('bill_lading_id', $id_bill)->delete();
                     foreach ($request->detail as $value) {
                         $billD                  = BillLadingDetail::updateOrCreate($value);
@@ -163,7 +170,8 @@ class BillLadingController extends Controller
                 'a.type_move',
                 'a.created_at',
                 'c.name AS usuario',
-                'b.descripcion AS agencia'
+                'b.descripcion AS agencia',
+                'b.logo AS agencia_logo'
             )
             ->where('a.id', $id_bill)
             ->first();
@@ -206,7 +214,7 @@ class BillLadingController extends Controller
 
     public function delete($id,$logical)
     {
-        
+
         if(isset($logical) and $logical == 'true'){
             $data = BillLading::findOrFail($id);
             $now = new \DateTime();
@@ -215,14 +223,14 @@ class BillLadingController extends Controller
                     $answer=array(
                         "datos" => 'Eliminación exitosa.',
                         "code" => 200
-                    ); 
+                    );
                }  else{
                     $answer=array(
                         "error" => 'Error al intentar Eliminar el registro.',
                         "code" => 600
                     );
-               }          
-                
+               }
+
                 return $answer;
         }else{
             $this->destroy($id);

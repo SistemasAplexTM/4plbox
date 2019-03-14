@@ -1146,6 +1146,7 @@ class DocumentoController extends Controller
             ->leftJoin('pais AS pais_agencia', 'deptos_agencia.pais_id', '=', 'pais_agencia.id')
             ->join('users', 'documento.usuario_id', '=', 'users.id')
             ->join('tipo_documento', 'documento.tipo_documento_id', '=', 'tipo_documento.id')
+            ->leftJoin('transportador AS tra', 'documento.central_destino_id', '=', 'tra.id')
             ->select(
                 'documento.*', 'users.name as usuario',
                 'deptos_documento.pais_id AS pais_id_document',
@@ -1192,7 +1193,10 @@ class DocumentoController extends Controller
                 'aerolinea.nombre AS aerolinea',
                 'aeropuerto.nombre AS aeropuerto',
                 'transportador.nombre AS consignee_master',
-                'transportador.ciudad AS ciudad_destino'
+                'transportador.ciudad AS ciudad_destino',
+                'tra.nombre AS trans_nom',
+                'tra.direccion AS trans_dir',
+                'tra.telefono AS trans_tel'
             )
             ->where([
                 ['documento.deleted_at', null],
@@ -1401,6 +1405,8 @@ class DocumentoController extends Controller
                                 'a.consignee AS consignee_json',
                                 'b.num_warehouse',
                                 'b.num_guia',
+                                'b.piezas',
+                                'b.volumen',
                                 'c.nombre_full as ship_nomfull',
                                 'c.direccion as ship_dir',
                                 'c.telefono as ship_tel',

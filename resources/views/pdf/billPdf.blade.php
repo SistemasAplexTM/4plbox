@@ -35,8 +35,8 @@
 			padding-left: 10px;
 		}
 		.var{
-			font-size: 17px;
-		/*font-weight: bold;*/
+			font-size: 14px;
+		font-weight: bold;
 		}
 		.detail .title{
 			padding: 5px;
@@ -44,15 +44,21 @@
 		pre {
 			margin: 0;
 		}
+		.det{
+	    font-size: 17px;
+	    margin-left: 5px;
+	    margin-right: 5px;
+	    font-weight: bold;
+	  }
 	</style>
 </head>
 <body>
 
-	<table class="bill">
+	<table border="0" class="bill" width="100%" cellspacing="0" cellpadding="0">
 		<thead>
 			<tr>
-				<td style="padding-left: 5px;font-size: 25px">Dole</td>
-				<td style="text-align: right;padding-right: 5px;font-size: 25px">@lang('general.bill_of_lading')</td>
+				<td style="padding-left: 5px;font-size: 25px"><img src="{{ '/storage/' . $data->agencia_logo }}" alt="" height="50" style="margin: 0 auto"></td>
+				<td style="text-align: right;padding-right: 5px;font-size: 25px">BILL OF LADING</td>
 			</tr>
 		</thead>
 		<tbody style="border: 1px solid #030303;">
@@ -66,33 +72,36 @@
 										<td colspan="2" class="title">2. EXPORTER (Principal or seller -licensee and address including ZIP Code )</td>
 									</tr>
 									<tr>
-										<td colspan="" class="p-left">
-											<pre>{{ $data->exporter }}</pre>
+										<td rowspan="2" class="p-left">
+											<pre class="var">{{ $data->exporter }}</pre>
 										</td>
 									</tr>
 									<tr>
-										<td style="width: 70%;height: 40px"></td>
-										<td class="b-top b-left" valign="top">
-											<div style="font-size: 10px;margin-left: 2px">ZIP CO'DE</div>
+										<td style="height: 30px"></td>
+										<td class="" valign="">
+											<div class="b-top b-left" style="margin-top: 26px;height: 35px;width:100px;">
+												<div style="font-size: 10px;margin-left: 2px">ZIP CO'DE</div>
+												<div class="var">{{ $data->exporter_zip }}</div>
+											</div>
 										</td>
 									</tr>
 								</table>
 							</td>
-							<td valign="top" class="b-top">
+							<td valign="top" class="b-top" style="width:45%">
 								<table width="100%" cellspacing="0" cellpadding="0" class="">
 									<tr>
 										<td valign="top" class="title b-right" style="width: 50%;padding-left: 2px;height: 35px">5. DOCUMENT NUMBER
-											<div class="var">{{ ($data->document_number != '') ? $data->document_number : '&nbsp;' }}</div>
+											<div class="var" style="font-size:17px;font-weight:bold">{{ ($data->document_number != '') ? $data->document_number : '&nbsp;' }}</div>
 										</td>
 										<td valign="top" class="title" style="padding-left: 2px">5a. B/L NUMBER
-											<div class="var">{{ $data->num_bl }}</div>
+											<div class="var" style="font-size:17px;font-weight:bold">{{ $data->num_bl }}</div>
 										</td>
 									</tr>
 									<tr>
 										<td valign="top" colspan="2" class="title b-top">6. EXPORT REFERENCES</td>
 									</tr>
 									<tr>
-										<td valign="top" colspan="2" class="p-left" style="">{{ $data->export_references }}</td>
+										<td valign="top" colspan="2" class="p-left" style="font-size:17px;font-weight:bold">{{ $data->export_references }}</td>
 									</tr>
 								</table>
 							</td>
@@ -105,7 +114,7 @@
 									</tr>
 									<tr>
 										<td colspan="" class="p-left">
-											<pre>{{ $data->consignee }}</pre>
+											<pre class="var">{{ $data->consignee }}</pre>
 										</td>
 									</tr>
 								</table>
@@ -135,7 +144,7 @@
 									</tr>
 									<tr>
 										<td valign="top" colspan="2" class="p-left" style="height: 70px">
-											<pre>{{ $data->notify_party }}</pre>
+											<pre class="var">{{ $data->notify_party }}</pre>
 										</td>
 									</tr>
 									<tr>
@@ -232,29 +241,29 @@
 							<td colspan="2" class="b-top b-bottom">
 								<table width="100%" cellspacing="0" cellpadding="0" class="detail">
 									<tr style="text-align: center;">
-										<td class="title b-right" style="width: 150px;">MARKS AND NUMBERS <br> (18)</td>
-										<td class="title b-right" style="width: 88px;">NUMBER OF PACKAGES <br> (19)</td>
-										<td class="title b-right" style="width: 300px;">DESCRIPTION OF COMMODITIES <br> (20)</td>
-										<td class="title b-right">GROSS WEIGHT <br> (kilos) (21)</td>
-										<td class="title">MEASUREMENT <br> (22)</td>
+										<td class="title b-right" style="width: 100px;">MARKS AND NUMBERS <br> (18)</td>
+										<td class="title b-right" style="width: 70px;">NUMBER OF PACKAGES <br> (19)</td>
+										<td class="title b-right" style="">DESCRIPTION OF COMMODITIES <br> (20)</td>
+										<td class="title b-right" style="width: 90px;">GROSS WEIGHT <br> (kilos) (21)</td>
+										<td class="title" style="width: 90px;">MEASUREMENT <br> (22)</td>
 									</tr>
 									@if(count($detalle) > 0)
 										@foreach($detalle as $dt)
 											<tr>
-												<td valign="top" class="b-top b-right" style="height: 250px">
-													<div class="var"><pre>{{ $dt->marks_numbers }}</pre></div>
+												<td valign="top" class="b-top b-right" style="height: 200px">
+													<div class="det"><pre>{{ $dt->marks_numbers }}</pre></div>
 												</td>
 												<td valign="top" class="b-top b-right">
-													<div class="var">{{ $dt->number_packages }}</div>
+													<div class="det">{{ $dt->number_packages }}</div>
 												</td>
 												<td valign="top" class="b-top b-right">
-													<div class="var">{{ $dt->description }}</div>
+													<div class="det">{{ $dt->description }}</div>
 												</td>
 												<td valign="top" class="b-top b-right">
-													<div class="var" style="text-align: right;">{{ $dt->gross_weight }} KLS<br>{{ number_format(($dt->gross_weight * 2.20462), 2) }} LBS</div>
+													<div class="det" style="text-align: right;">{{ $dt->gross_weight }} KLS<br>{{ number_format(($dt->gross_weight * 2.20462), 2) }} LBS</div>
 												</td>
 												<td valign="top" class="b-top">
-													<div class="var" style="text-align: right;">{{ $dt->measurement }} FT<br>{{ number_format(($dt->measurement / 35.315),2) }} MT3</div>
+													<div class="det" style="text-align: right;">{{ $dt->measurement }} FT<br>{{ number_format(($dt->measurement / 35.315),2) }} MT3</div>
 												</td>
 											</tr>
 										@endforeach
@@ -294,6 +303,12 @@
 														<?php $total_pp += $ot->ammount_pp; ?>
 														<?php $total_cll += $ot->ammount_cll; ?>
 													@endforeach
+												@else
+													<tr>
+														<td valign="top"  class="b-top b-right" style="height: 180px">$nbsp;</td>
+														<td valign="top"  class="b-top b-right"></td>
+														<td valign="top"  class="b-top b-right"></td>
+													</tr>
 												@endif
 												<tr>
 													<td valign="top"  class="b-top b-right" style="padding: 10px;text-align: right">GRAND TOTAL :</td>
@@ -302,7 +317,7 @@
 												</tr>
 											</table>
 										</td>
-										<td valign="top" width="50%" class="b-top" style="padding: 18px 0px 0px 6px">
+										<td valign="top" width="50%" class="b-top" style="padding: 10px 0px 0px 6px">
 											<table cellspacing="0" cellpadding="0" style="width: 100%">
 												<tr>
 													<td valign="top" colspan="2" style="font-size: 8px;font-weight: bold;text-align: center;text-align: justify">Received by the Carrier for shipment by ocean vessel between port of loading and port of
@@ -316,33 +331,33 @@
 													stated above , one of which being accomplished the others shall be void .</td>
 												</tr>
 												<tr>
-													<td colspan="2" style="padding-top: 20px;">
-														<div style="width: 20%;float: left;">DATED AT</div>
+													<td colspan="2" style="padding-top: 10px;">
+														<div style="width: 20%;float: left;font-size:12px;">DATED AT</div>
 														<div style="width: 80%;float: left;border-bottom: 1px solid #000000;">&nbsp;</div>
 													</td>
 												</tr>
 												<tr>
-													<td colspan="2" style="padding-top: 10px;">
-														<div style="width: 5%;float: left;">BY</div>
+													<td colspan="2" style="padding-top: 5px;">
+														<div style="width: 5%;float: left;font-size:12px;">BY</div>
 														<div style="width: 95%;float: left;border-bottom: 1px solid #000000;">
-															<div style="width: 100%;text-align: center;font-size: 20px;">{{ $data->agent_for_carrier }}</div>
+															<div style="width: 100%;text-align: center;font-size: 20px;" class="var">{{ $data->agent_for_carrier }}</div>
 														</div>
 														<div style="font-size: 12px;text-align: center;">AGENT FOR THE CARRIER</div>
 													</td>
 												</tr>
 												<tr>
 													<td colspan="2" style="padding-top: 5px;">
-														<div style="width: 35%;float: left;">{{ date('m', strtotime($data->date_document)) }}</div>
-														<div style="width: 30%;float: left;text-align: center">{{ date('d', strtotime($data->date_document)) }}</div>
-														<div style="width: 35%;float: left;text-align: right">{{ date('Y', strtotime($data->date_document)) }}</div>
+														<div style="width: 35%;float: left;" class="var">{{ date('m', strtotime($data->date_document)) }}</div>
+														<div style="width: 30%;float: left;text-align: center"class="var">{{ date('d', strtotime($data->date_document)) }}</div>
+														<div style="width: 35%;float: left;text-align: right"class="var">{{ date('Y', strtotime($data->date_document)) }}</div>
 													</td>
 												</tr>
 												<tr><td colspan="2"><div style="border-bottom: 1px solid #000000;"></div></td></tr>
 												<tr>
 													<td colspan="2" style="padding-top: 5px;">
-														<div style="width: 35%;float: left;">MO.</div>
-														<div style="width: 30%;float: left;text-align: center">DAY</div>
-														<div style="width: 35%;float: left;text-align: right;">YEAR</div>
+														<div style="width: 35%;float: left;font-size:12px;">MO.</div>
+														<div style="width: 30%;float: left;text-align: center;font-size:12px;">DAY</div>
+														<div style="width: 35%;float: left;text-align: right;font-size:12px;">YEAR</div>
 													</td>
 												</tr>
 												<tr>
@@ -376,9 +391,3 @@
 	</script>
 </body>
 </html>
-
-
-
-
-
-
