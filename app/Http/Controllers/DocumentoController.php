@@ -26,6 +26,8 @@ use App\DocumentoDetalle;
 use App\MaestraMultiple;
 use App\Servicios;
 use App\TipoDocumento;
+use App\Invoice;
+use App\InvoiceDetail;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -183,6 +185,21 @@ class DocumentoController extends Controller
                             "code"   => 200,
                             "status" => 200,
                         );
+
+                        if($request->self_service){
+                          $incoice = Invoice::create([
+                            'agency_id'     => ($request->agencia_id) ? $request->agencia_id : Auth::user()->agencia_id,
+                            'consecutive'   => $data2->num_warehouse,
+                            'date_document' => date('Y-m-d'),
+                            'shipper_id'    => $data->shipper_id,
+                            'consignee_id'  => $data->consignee_id
+                          ]);
+
+                          InvoiceDetail::create([
+                            'invoice_id'   => $incoice->id,
+                            'document_id'  => $data->id
+                          ]);
+                        }
 
                     } else {
                         $answer = array(

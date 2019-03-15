@@ -711,6 +711,7 @@
                                                             <table class="table table-striped  table-hover" id="whgTable" style="width: 100%;">
                                                                 <thead>
                                                                     <tr>
+                                                                        <th>Item</th>
                                                                         <th style="width: 10%;">@lang('documents.code')</th>
                                                                         <th style="width: 7%;">@lang('documents.pieces')</th>
                                                                         <th style="width: 17%;">@lang('documents.weight')(Lb)</th>
@@ -723,7 +724,7 @@
                                                                 </thead>
                                                                 <tfoot style="background-color: paleturquoise;">
                                                                     <tr>
-                                                                        <td colspan="8">
+                                                                        <td colspan="9">
                                                                             <table style="width: 100%;">
                                                                                 <tr>
                                                                                     <td>
@@ -734,13 +735,13 @@
                                                                                     </td>
                                                                                     <td>
                                                                                         <div class="col-sm-12">
-                                                                                            <label class="">@lang('documents.weight') total</label>
+                                                                                            <label class="">Total lbs</label>
                                                                                             <input type="text" onkeyup="deleteError($(this).parent());" id="pesoDim" name="pesoDim" class="form-control" readonly="" value="{{ isset($documento->peso) ? $documento->peso : 0 }}" style="width: 100px;">
                                                                                         </div>
                                                                                     </td>
                                                                                     <td>
                                                                                         <div class="col-sm-12">
-                                                                                            <label class="">@lang('documents.volume')</label>
+                                                                                            <label class="">Total @lang('documents.volume')</label>
                                                                                             <input type="text" onkeyup="deleteError($(this).parent());" id="volumen" name="volumen" class="form-control" readonly="" value="{{ isset($documento->volumen) ? $documento->volumen : 0 }}" style="width: 100px;">
                                                                                         </div>
                                                                                     </td>
@@ -752,8 +753,7 @@
                                                                                     </td>
                                                                                     <td>
                                                                                         <div class="col-lg-12">
-                                                                                            <label class="">$
-                                                                                            @lang('documents.declared') total</label>
+                                                                                            <label class="">Total @lang('documents.declared')</label>
                                                                                             <input type="text" onkeyup="deleteError($(this).parent());" id="valor_declarado_tbl" class="form-control" readonly="" value="0" style="width: 100px;">
                                                                                         </div>
                                                                                     </td>

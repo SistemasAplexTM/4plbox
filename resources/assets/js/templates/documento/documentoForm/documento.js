@@ -118,17 +118,24 @@ function datatableDetail(){
         processing: false,
         serverSide: false,
         "searching": false,
-        // "order": [[ 0, "desc" ], [ 1, "desc" ]],
+        "order": [[ 0, "desc" ]],
         columns: [{
+          "render": function (data, type, full, meta) {
+            var str = full.num_warehouse;
+            return parseInt(str.substring(9));
+          }
+        },{
             data: 'num_warehouse',
             name: 'num_warehouse',
             "render": function (data, type, full, meta) {
               return '<strong>'+ full.num_warehouse +'</strong>';
-            }
+            },
+            "orderable": false,
         }, {
             "render": function (data, type, full, meta) {
                 return '<a data-name="piezas" data-pk="'+full.id+'" data-value="'+full.piezas+'" class="td_edit" data-type="text" data-placement="right" data-title="Piezas">'+full.piezas+'</a>';
-            }
+            },
+            class:'text-center'
         },  {
             "render": function (data, type, full, meta) {
                 var cadena  = full.dimensiones;
@@ -148,7 +155,8 @@ function datatableDetail(){
                 var pa = full.nom_pa;
                 return ((pa === null) ? '' : pa) + '<a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalArancel('+full.id+', \'whgTable\')"><i class="fal fa-pencil"></i></a>';
             },
-            visible: ((objVue.mostrar.includes(16)) ? true : false),
+            // visible: ((objVue.mostrar.includes(16)) ? true : false),
+            visible: false,
             width: 100
         },
         {
@@ -167,13 +175,13 @@ function datatableDetail(){
                 var btn_delete = '';
                 var btn_points = '';
                 if(full.consolidado == 0){
-                  btn_delete = '<a class="btn btn-danger btn-xs btn-actions" type="button" id="btn_remove'+full.id+'" onclick="eliminar('+full.id+', false)" data-toggle="tooltip" title="Eliminar"><i class="fa fa-times"></i></a> ';
+                  btn_delete = '<a class="btn-actions" type="button" id="btn_remove'+full.id+'" onclick="eliminar('+full.id+', false)" data-toggle="tooltip" title="Eliminar" style="color:#E34724"><i class="fal fa-trash-alt"></i></a> ';
                 }
 
-                btn_addTracking = '<a class="btn btn-info btn-xs btn-actions addTrackings" type="button" id="btn_addtracking'+full.id+'" data-toggle="tooltip" title="Agregar tracking" onclick="addTrackings('+full.id+')"><i class="fa fa-truck"></i> <span id="cant_tracking'+full.id+'">'+full.cantidad+'</span></a> ';
+                btn_addTracking = '<a class="btn btn-info btn-xs btn-actions addTrackings" type="button" id="btn_addtracking'+full.id+'" data-toggle="tooltip" title="Agregar tracking" onclick="addTrackings('+full.id+')"><i class="fal fa-truck"></i> <span id="cant_tracking'+full.id+'">'+full.cantidad+'</span></a> ';
                 if(puntos != null){
                   if(objVue.city_c.pais_id == puntos.pais_id){
-                      btn_points = ' <a class="btn btn-warning btn-xs btn-actions" type="button" id="btn_points'+full.id+'" onclick="insertPoints('+full.id+')" data-toggle="tooltip" title="Puntos"><i class="far fa-map-pin"></i></a> ';
+                      btn_points = ' <a class="btn btn-warning btn-xs btn-actions" type="button" id="btn_points'+full.id+'" onclick="insertPoints('+full.id+')" data-toggle="tooltip" title="Puntos"><i class="fal fa-map-pin"></i></a> ';
                   }
                 }
                 var btn_group = '<div class="btn-group" data-toggle="tooltip" title="Acciones">'+
@@ -181,7 +189,7 @@ function datatableDetail(){
                           '<i class="fa fa-ellipsis-v"></i>'+
                         '</button>'+
                         '<ul class="dropdown-menu dropdown-menu-right pull-right" style="font-size: 15px!important;">'+
-                          '<li><a data-target="#modalAddPoints" data-toggle="modal"><i class="far fa-map-pin"></i> Agregar Puntos</a></li>'+
+                          '<li><a data-target="#modalAddPoints" data-toggle="modal"><i class="fal fa-map-pin"></i> Agregar Puntos</a></li>'+
                           btn_delete +
                         '</ul>'+
                       '</div>';
@@ -256,25 +264,25 @@ function datatableDetail(){
             };
             /*Total over all pages*/
             var vol = api
-                    .column(8)
+                    .column(9)
                     .data()
                     .reduce(function (a, b) {
                         return intVal(Math.ceil(a)) + intVal(Math.ceil(b));
                     }, 0);
             var piezas = api
-                    .column(9)
+                    .column(10)
                     .data()
                     .reduce(function (a, b) {
                         return intVal(a) + intVal(b);
                     }, 0);
             var peso = api
-                    .column(10)
+                    .column(11)
                     .data()
                     .reduce(function (a, b) {
                         return intVal(Math.ceil(a)) + intVal(Math.ceil(b));
                     }, 0);
             var dec = api
-                    .column(11)
+                    .column(12)
                     .data()
                     .reduce(function (a, b) {
                         return intVal(a) + intVal(b);
@@ -304,14 +312,14 @@ function datatableDetail(){
         //VALIDA SI SE MUESTRAN LOS PUNTOS PARA EL PAIS CONFIGURADO
         if(puntos !== null){
           if(objVue.city_c.pais_id === puntos.pais_id){
-            var columna = tbl.column(5);
-            columna.visible(false);
             var columna = tbl.column(6);
+            columna.visible(false);
+            var columna = tbl.column(7);
             columna.visible(true);
           }else{
-            var columna = tbl.column(5);
-            columna.visible(true);
             var columna = tbl.column(6);
+            columna.visible(true);
+            var columna = tbl.column(7);
             columna.visible(false);
           }
         }

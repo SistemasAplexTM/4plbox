@@ -365,6 +365,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('mintic/all', 'MinticController@all');
     Route::get('mintic/searchDocument/{document}', 'MinticController@searchDocument');
     Route::post('mintic/createDetail', 'MinticController@createDetail');
+
+    /* MODULO INVOICE */
+    Route::get('invoice', 'InvoiceController@index')->name('invoce.index');
+    Route::get('invoice/getAll', 'InvoiceController@getAll');
+    Route::get('invoice/pdfLabels/{invoice_id?}', 'InvoiceController@pdfLabels');
 });
 Route::get('aplexConfig/config/{key}', 'AplexConfigController@get')->name('config.config');
 Route::get('aplexConfig/getDataAgencyById/{id}', 'AplexConfigController@getDataAgencyById')->name('aplexConfig.getDataAgencyById');

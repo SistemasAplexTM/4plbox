@@ -35,7 +35,7 @@ return [
 		'contains'         => 'Contiene',
 		'action'           => 'Acción',
 		'volume'           => 'Volumen',
-		'cubic_foot'       => 'Pie cúbico Ft',
+		'cubic_foot'       => 'Total ft³',
 		'message_register' => 'Para poder registrar al menos un detalle es necesario.',
 		'payment_type'     => 'Tipo de pago',
 		'way_to_pay'       => 'Forma de Pago',
