@@ -684,7 +684,8 @@ export default {
         'usuario_id': 1,
         'shipper_id': me.data[0].id,
         'consignee_id': me.dataC.id,
-        'created_at': me.getTime()
+        'created_at': me.getTime(),
+        'self_service': true
       }).then(({data}) => {
         let datos = data.datos
         if (data['code'] == 200) {

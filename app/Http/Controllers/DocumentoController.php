@@ -26,6 +26,8 @@ use App\DocumentoDetalle;
 use App\MaestraMultiple;
 use App\Servicios;
 use App\TipoDocumento;
+use App\Invoice;
+use App\InvoiceDetail;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -184,6 +186,21 @@ class DocumentoController extends Controller
                             "status" => 200,
                         );
 
+                        if($request->self_service){
+                          $incoice = Invoice::create([
+                            'agency_id'     => ($request->agencia_id) ? $request->agencia_id : Auth::user()->agencia_id,
+                            'consecutive'   => $data2->num_warehouse,
+                            'date_document' => date('Y-m-d'),
+                            'shipper_id'    => $data->shipper_id,
+                            'consignee_id'  => $data->consignee_id
+                          ]);
+
+                          InvoiceDetail::create([
+                            'invoice_id'   => $incoice->id,
+                            'document_id'  => $data->id
+                          ]);
+                        }
+
                     } else {
                         $answer = array(
                             "error"  => 'Error al intentar Eliminar el registro.',
@@ -193,13 +210,10 @@ class DocumentoController extends Controller
                     }
                 return $answer;
             });
-        } catch (Exception $e) {
-            $error = '';
-            foreach ($e->errorInfo as $key => $value) {
-                $error .= $key . ' - ' . $value . ' <br> ';
-            }
+        } catch (\Exception $e) {
+
             $answer = array(
-                "error"  => $error,
+                "error"  => $e,
                 "code"   => 600,
                 "status" => 500,
             );
@@ -1149,6 +1163,7 @@ class DocumentoController extends Controller
             ->leftJoin('pais AS pais_agencia', 'deptos_agencia.pais_id', '=', 'pais_agencia.id')
             ->join('users', 'documento.usuario_id', '=', 'users.id')
             ->join('tipo_documento', 'documento.tipo_documento_id', '=', 'tipo_documento.id')
+            ->leftJoin('transportador AS tra', 'documento.central_destino_id', '=', 'tra.id')
             ->select(
                 'documento.*', 'users.name as usuario',
                 'deptos_documento.pais_id AS pais_id_document',
@@ -1195,7 +1210,10 @@ class DocumentoController extends Controller
                 'aerolinea.nombre AS aerolinea',
                 'aeropuerto.nombre AS aeropuerto',
                 'transportador.nombre AS consignee_master',
-                'transportador.ciudad AS ciudad_destino'
+                'transportador.ciudad AS ciudad_destino',
+                'tra.nombre AS trans_nom',
+                'tra.direccion AS trans_dir',
+                'tra.telefono AS trans_tel'
             )
             ->where([
                 ['documento.deleted_at', null],
@@ -1404,17 +1422,21 @@ class DocumentoController extends Controller
                                 'a.consignee AS consignee_json',
                                 'b.num_warehouse',
                                 'b.num_guia',
+                                'b.piezas',
+                                'b.volumen',
                                 'c.nombre_full as ship_nomfull',
                                 'c.direccion as ship_dir',
                                 'c.telefono as ship_tel',
                                 'c.zip as ship_zip',
                                 'e.nombre as ship_ciudad',
                                 'f.descripcion as ship_depto',
+                                'f.abreviatura as ship_depto_ab',
                                 'pais.descripcion as ship_pais',
                                 'd.nombre_full as cons_nomfull',
                                 'd.zip as cons_zip',
                                 'g.nombre as cons_ciudad',
                                 'h.descripcion as cons_depto',
+                                'h.abreviatura as cons_depto_ab',
                                 'd.direccion as cons_dir',
                                 'd.telefono as cons_tel',
                                 'i.descripcion as cons_pais',

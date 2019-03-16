@@ -239,6 +239,34 @@
                     @endcan
                 </ul>
             </li>
+            <li class="active">
+                <a href="" style="background-color: #0eb1ff;; color: white;">
+                    <i class="fal fa-dollar-sign">
+                    </i>
+                    <span class="nav-label">
+                         @lang('layouts.accounting')
+                    </span>
+                    <span class="arrow">
+                        <i class="fas fa-angle-down"></i>
+                    </span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="{{ route('invoce.index') }}">
+                            <spam class="fal fa-file-invoice">
+                            </spam>
+                             @lang('layouts.invoices')
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('receipt.index') }}">
+                            <spam class="fal fa-file-chart-pie">
+                            </spam>
+                             @lang('layouts.report')
+                        </a>
+                    </li>
+                </ul>
+            </li>
             @if(Auth::user()->isRole('admin'))
             {{-- <li class="active">
                 <a href="" style="background-color: #0e9aef; color: white;">

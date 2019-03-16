@@ -7,7 +7,7 @@ return [
 
     //resources/views/templates/bill/create
 
-    'register_of_bill_of_lading'=>'Registro de conocimiento de embarque',
+    'register_of_bill_of_lading'=>'Registro de Bill of Lading',
     'create_new'=>'Crear nuevo',
     'display_name'=>'Nombre para mostrar',
     'account_number'=>'Número de cuenta',
@@ -357,7 +357,7 @@ return [
 
      //billPdf
 
-     'bill_of_lading'=>'Guía de carga',
+     'bill_of_lading'=>'Bill of Lading',
 
       //considadoGuiasPdf
 

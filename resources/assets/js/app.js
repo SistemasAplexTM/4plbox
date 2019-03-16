@@ -59,3 +59,4 @@ Vue.component('points-component', require('./components/ModalPointsComponent.vue
 Vue.component('city-component', require('./components/CityComponent.vue'));
 Vue.component('cuba-component', require('./components/cuba/Index.vue'));
 Vue.component('products-cuba-component', require('./components/cuba/ModalProductsComponent.vue'));
+Vue.component('invoice-component', require('./components/invoice/Index.vue'));

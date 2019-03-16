@@ -57,7 +57,10 @@ var objVue = new Vue({
         //
     },
     created: function() {
-        if ($('#bill_id').val() != null && $('#bill_id').val() != '') {
+        if ($('#consolidado_id').val() != 'null' && $('#consolidado_id').val() != '') {
+          this.consolidado_id = $('#consolidado_id').val();
+        }
+        if ($('#bill_id').val() != 'null' && $('#bill_id').val() != '') {
             this.bill_id = $('#bill_id').val();
             this.editar = true;
             this.edit(this.bill_id);
@@ -65,6 +68,7 @@ var objVue = new Vue({
     },
     data: {
         bill_id: null,
+        consolidado_id: null,
         zip: null,
         document_number: null,
         num_bl: null,
@@ -115,7 +119,7 @@ var objVue = new Vue({
     },
     methods: {
         print(){
-            window.open("../imprimir/" + this.bill_id + '/' + true, '_blank');
+            window.open("/bill/imprimir/" + this.bill_id + '/' + true, '_blank');
         },
         addDetail: function() {
             this.detail.push({
@@ -187,7 +191,8 @@ var objVue = new Vue({
                             var params = [
                                 full.id, "'" + full.display_name + "'", "'" + full.account_number + "'", "'" + full.zip + "'", "'" + texto + "'"
                             ];
-                            var btn_edit = "<a onclick=\"editPartieForm(" + params + ")\" class='btn btn-outline btn-success btn-xs edit' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit'></i></a> ";
+                            var btn_edit = "<a onclick=\"editPartieForm(" + params + ")\" class='edit' data-toggle='tooltip' data-placement='top' title='Editar' style='color:#FFC107;''><i class='fal fa-pencil fa-lg'></i></a> ";
+                            
                         // }
                         // if (permission_delete) {
                             var btn_delete = " <a onclick=\"deletePartie(" + full.id + ")\" id='delete_"+full.id+"' class='btn btn-outline btn-danger btn-xs delete_' data-toggle='tooltip' data-placement='top' title='Confirmar eliminado'><i class='fa fa-check'></i></a> ";
@@ -202,7 +207,8 @@ var objVue = new Vue({
             });
         },
         store: function() {
-            axios.post('../bill', {
+            axios.post('/bill', {
+                'consolidado_id'    : this.consolidado_id,
                 'document_number'   : this.document_number,
                 'num_bl'            : this.num_bl,
                 'zip'               : this.zip,
@@ -233,11 +239,12 @@ var objVue = new Vue({
             }).then(response => {
                 toastr.success('Registro exitoso.');
                 location.reload(true);
-                window.open("imprimir/" + response.data.id_bill + '/' + true,'_blank');
+                window.open("/bill/imprimir/" + response.data.id_bill + '/' + true,'_blank');
             });
         },
         update: function(){
-            axios.put('../' + this.bill_id, {
+            axios.put('/bill/' + this.bill_id, {
+                'consolidado_id'    : this.consolidado_id,
                 'document_number'   : this.document_number,
                 'num_bl'            : this.num_bl,
                 'zip'               : this.zip,
@@ -306,9 +313,9 @@ var objVue = new Vue({
         },
         cancel: function() {
             if(this.editar){
-                window.location.href = '../';
+                window.location.href = '/bill';
             }else{
-                window.location.href = '../bill';
+                window.location.href = '/bill';
             }
         },
         seleccionarPartie(partie, data){

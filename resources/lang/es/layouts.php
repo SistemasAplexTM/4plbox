@@ -68,7 +68,9 @@ return [
     'reports'  =>'Informe General',
     'load_reports'  =>'Informe de carga',
     'distribution_warehouse'  =>'Bodega Reparto',
-
+    'accounting'  =>'Contabilidad',
+    'invoices'  =>'Facturación',
+    'report'  =>'Informe',
 
 
 

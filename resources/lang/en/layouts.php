@@ -65,6 +65,9 @@ return [
     'reports'  =>'General Reports',
     'load_reports'  =>'Load reports',
     'distribution_warehouse'  =>'Distribution Warehouse',
+    'accounting'  =>'Accounting',
+    'invoices'  =>'Invoices',
+    'report'  =>'Report',
 
 
 ];

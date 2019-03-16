@@ -66,7 +66,7 @@ new Vue({
  methods: {
    getData(){
      var me = this;
-     axios.post('master/getDataConsolidados').then(function(response) {
+     axios.post('master/getDataConsolidados/0').then(function(response) {
          me.options = response.data;
      }).catch(function(error) {
          console.log(error);

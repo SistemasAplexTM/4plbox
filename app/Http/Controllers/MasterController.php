@@ -414,15 +414,21 @@ class MasterController extends Controller
         return view('pdf/labels/guiasHijasColombiana', compact('detalle'));
     }
 
-    public function getDataConsolidados()
+    public function getDataConsolidados($type)
     {
       $where = [
               ['a.ciudad_id', '<>', null],
               ['a.master_id', null],
+              ['a.bill_id', null],
               ['a.deleted_at', null],
           ];
       if(!Auth::user()->isRole('admin')){
           $where[] = ['a.agencia_id', Auth::user()->agencia_id];
+      }
+      if($type == 0){
+        $where[] = ['a.transporte_id', 7];
+      }else{
+        $where[] = ['a.transporte_id', 8];
       }
       $data = DB::table('documento AS a')
           ->leftJoin('localizacion AS b', 'a.ciudad_id', 'b.id')

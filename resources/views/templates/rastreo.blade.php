@@ -142,7 +142,13 @@
                                                 <div class="col-lg-7 col-md-7 col-sm-6 col-xs-6">
                                                     <h3 style="font-weight: 900;" id="estado_estado1">@{{ dato.estado }}</h3>
                                                     <span style="font-weight: 300;" id="estado_descripcion1" class="texto">@{{ dato.descripcion }}</span><br>
-                                                    <span style="font-weight: 900;color: black;" id="estado_procedente1">@{{ dato.procedencia }}</span>
+                                                    <span style="font-weight: 900;color: black;" id="estado_procedente1" v-if="dato.status_id === 2">@{{ dato.procedencia }}</span>
+                                                    <template v-if="dato.status_id === 12">
+                                                      <span style="font-weight: 900;color: black;" id="estado_procedente1">@{{ dato.transportadora }}</span><br>
+                                                      <span style="font-weight: 300;" id="estado_descripcion1" class="texto">Rastrear Guía: </span>
+                                                      <span style="font-weight: 900;color: black;" id="estado_procedente1" title="Rastreame" data-toggle="tooltip" data-placement="right"><a :href="dato.transportadora_url_rastreo + dato.transportadora_guia" target="_blank">@{{ dato.transportadora_guia }} <i class="fal fa-map-marker-smile"></i></a></span>
+                                                      {{-- <span style="font-weight: 300;" id="estado_descripcion1" class="texto"><a :href="dato.transportadora_url_rastreo" target="_blank">Rastrear...<i class="fal fa-map-marker-smile"></i></a></span> --}}
+                                                    </template>
                                                 </div>
                                             </div>
                                             <div v-if="Object.keys(datos).length === 0">
