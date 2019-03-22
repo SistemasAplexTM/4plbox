@@ -23,6 +23,7 @@ class User extends Authenticatable
         'actived',
         'agencia_id',
         'referido',
+        'consignee_id',
     ];
 
     /**
