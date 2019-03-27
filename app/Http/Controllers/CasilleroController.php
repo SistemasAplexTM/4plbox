@@ -54,7 +54,7 @@ class CasilleroController extends Controller
             $nombre_full = $request->primer_nombre .' '.$request->primer_apellido;
             $data->nombre_full = $nombre_full;
             $data->casillero = 1;
-            $data->localizacion_id = $request->localizacion_id['id'];
+            $data->localizacion_id = $request->localizacion_id;
             $data->created_at = date('Y-m-d H:i:s');
             $data->save();
             // PO_BOX
@@ -68,11 +68,12 @@ class CasilleroController extends Controller
             $po_box = $caracter . $agencia . '-' . $data->id;
             Consignee::where('id', $data->id)->update(['po_box' =>  $po_box]);
             // REGISTRAR USUARIO
-            User::create([
+            $user = User::create([
                 'name' => $nombre_full,
                 'email' => $request->correo,
                 'password' => bcrypt($request->celular),
-                'agencia_id' => $agencia
+                'agencia_id' => $agencia,
+                'consignee_id' => $data->id
             ]);
             $table = 'consignee';
             $user = DB::table($table)

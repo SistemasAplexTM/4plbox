@@ -60,9 +60,9 @@ class RastreoController extends Controller
                 ['c.deleted_at', null],
                 ['b.view_client', 1],
             ])
-            ->where(function ($query) use ($idStatus, $data) {
-                if($idStatus){
-                  $query->where(["a.status_id", $idStatus]);
+            ->where(function ($query) use ($idStatus, $data, $user_id) {
+                if($idStatus != null && $idStatus != 'null'){
+                  $query->where("a.status_id", $idStatus);
                 }else{
                   // $query->whereRaw(" a.status_id IN (1,2, 5, 6, 7,12) AND (c.num_guia = '" . $data . "' OR c.num_warehouse = '" . $data . "' OR t.codigo = '" . $data . "')");
                   $query->whereRaw(" (c.num_guia = '" . $data . "' OR c.num_warehouse = '" . $data . "' OR t.codigo = '" . $data . "')");
