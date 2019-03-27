@@ -134,7 +134,7 @@
                                                 <tr>
                                                     <th><i class="fa fa-file" aria-hidden="true" id="icono-doc-table"></i> #@lang('documents.documents')</th>
                                                     <th><i class="fa fa-calendar" aria-hidden="true"></i> @lang('documents.date')</th>
-                                                    <th><i class="fa fa-user" aria-hidden="true"></i> @{{ (type_document == 3) ? '@lang('documents.central_destination')' : '@lang('documents.client_consignee')' }}</th>
+                                                    <th><i class="fa fa-user" aria-hidden="true"></i> @lang('documents.consignee')</th>
                                                     <th><i class="fas fa-map-marked-alt" aria-hidden="true"></i> @lang('documents.city')</th>
                                                     <th><i class="fa fa-dollar-sign" aria-hidden="true"></i> @lang('general.rate')</th>
                                                     <th><i class="fa fa-balance-scale" aria-hidden="true"></i> @lang('documents.weight')</th>
@@ -148,9 +148,9 @@
                                 </div>
                                 <div class="col-lg-12" id="tbl2" style="display:none">
                                     <ul class="nav nav-tabs" role="tablist">
-                    							    <li role="warehouses" class="active" @click="pendign"><a href="#courier" aria-controls="courier" role="tab" data-toggle="tab"><i class="fa fa-box-open"></i> COURIER</a></li>
-                                      <li role="warehouses" @click="pendign"><a href="#load" aria-controls="load" role="tab" data-toggle="tab"><i class="fa fa-truck-moving"></i> CARGA</a></li>
-                                      <li role="pending" id="li-pending" @click="pendign"><a href="#pending" aria-controls="pending" role="tab" data-toggle="tab"><i class="fa fa-box"></i> PENDIENTES <span class="pending badge badge-primary ligth">0</span></a></li>
+                    							    <li role="warehouses" class="active" @click="pendign"><a href="#courier" aria-controls="courier" role="tab" data-toggle="tab"><i class="fal fa-box-open"></i> COURIER</a></li>
+                                      <li role="warehouses" @click="pendign"><a href="#load" aria-controls="load" role="tab" data-toggle="tab"><i class="fal fa-truck-moving"></i> CARGA</a></li>
+                                      <li role="pending" id="li-pending" @click="pendign"><a href="#pending" aria-controls="pending" role="tab" data-toggle="tab"><i class="fal fa-box"></i> PENDIENTES <span class="pending badge badge-primary ligth">0</span></a></li>
                     							  </ul>
                                     <div class="tab-content">
                                       <div role="tabpanel" class="tab-pane fade active in" id="courier">
@@ -160,7 +160,7 @@
                                                   <tr>
                                                       <th><i class="fa fa-file" aria-hidden="true" id="icono-doc-table"></i> #@lang('documents.documents')</th>
                                                       <th><i class="fa fa-calendar" aria-hidden="true"></i> @lang('documents.date')</th>
-                                                      <th><i class="fa fa-user" aria-hidden="true"></i> @lang('documents.client_consignee')</th>
+                                                      <th><i class="fa fa-user" aria-hidden="true"></i> @lang('documents.consignee')</th>
                                                       <th><i class="fas fa-map-marked-alt" aria-hidden="true"></i> @lang('documents.city')</th>
                                                       <th><i class="fa fa-dollar-sign" aria-hidden="true"></i> @lang('general.rate')</th>
                                                       <th><i class="fa fa-balance-scale" aria-hidden="true"></i> @lang('documents.weight')</th>
@@ -173,14 +173,14 @@
                                         </div>
                                       </div>
 
-                                      <div role="tabpanel" class="tab-pane fade active" id="load">
+                                      <div role="tabpanel" class="tab-pane fade" id="load">
                                         <div class="table-responsive" style="padding-top:10px;">
                                           <table id="tbl-documento3" class="table table-striped table-hover table-bordered" style="width: 100%;">
                                               <thead>
                                                   <tr>
                                                       <th><i class="fa fa-file" aria-hidden="true" id="icono-doc-table"></i> #@lang('documents.documents')</th>
                                                       <th><i class="fa fa-calendar" aria-hidden="true"></i> @lang('documents.date')</th>
-                                                      <th><i class="fa fa-user" aria-hidden="true"></i> @lang('documents.client_consignee')</th>
+                                                      <th><i class="fa fa-user" aria-hidden="true"></i> @lang('documents.consignee')</th>
                                                       <th><i class="fas fa-map-marked-alt" aria-hidden="true"></i> @lang('documents.city')</th>
                                                       <th><i class="fa fa-dollar-sign" aria-hidden="true"></i> @lang('general.rate')</th>
                                                       <th><i class="fa fa-balance-scale" aria-hidden="true"></i> @lang('documents.weight')</th>
@@ -200,7 +200,7 @@
                                                   <tr>
                                                       <th><i class="fa fa-file" aria-hidden="true" id="icono-doc-table"></i> #@lang('documents.documents')</th>
                                                       <th><i class="fa fa-calendar" aria-hidden="true"></i> @lang('documents.date')</th>
-                                                      <th><i class="fa fa-user" aria-hidden="true"></i> @lang('documents.client_consignee')</th>
+                                                      <th><i class="fa fa-user" aria-hidden="true"></i> @lang('documents.consignee')</th>
                                                       <th><i class="fas fa-map-marked-alt" aria-hidden="true"></i> @lang('documents.city')</th>
                                                       <th><i class="fa fa-dollar-sign" aria-hidden="true"></i> @lang('general.rate')</th>
                                                       <th><i class="fa fa-balance-scale" aria-hidden="true"></i> @lang('documents.weight')</th>

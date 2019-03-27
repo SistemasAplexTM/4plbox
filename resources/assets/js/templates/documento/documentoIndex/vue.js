@@ -158,13 +158,13 @@ var objVue = new Vue({
             if( $('#documentoIndex').data('id_print') != '' && $('#documentoIndex').data('doc_print') != ''){
                 var name = "Nitro PDF Creator (Pro 10)";
                 var format = "PDF";
-                javascript:jsWebClientPrint.print("useDefaultPrinter=false&printerName=" + name + "&filetype="+ format +"&id=" + $('#documentoIndex').data('id_print') + "&agency_id="+agency_id+"&document="+$('#documentoIndex').data('doc_print')+"&label=true")
+                // javascript:jsWebClientPrint.print("useDefaultPrinter=false&printerName=" + name + "&filetype="+ format +"&id=" + $('#documentoIndex').data('id_print') + "&agency_id="+agency_id+"&document="+$('#documentoIndex').data('doc_print')+"&label=true")
 
-                // setTimeout(function() {
+                setTimeout(function() {
                 //   javascript:jsWebClientPrint.print("useDefaultPrinter=false&printerName=" + name + "&filetype="+ format +"&id=" + $('#documentoIndex').data('id_print') + "&agency_id="+agency_id+"&document="+$('#documentoIndex').data('doc_print'))
-                // }, 4000)
+                window.open('impresion-documento-label/' + $('#documentoIndex').data('id_print') + '/'+$('#documentoIndex').data('doc_print'), '_blank');
+              }, 2000);
                 window.open('impresion-documento/' + $('#documentoIndex').data('id_print') + '/'+$('#documentoIndex').data('doc_print'), '_blank');
-                // window.open('impresion-documento-label/' + $('#documentoIndex').data('id_print') + '/'+$('#documentoIndex').data('doc_print'), '_blank');
             }
         },
         sendMail: function(id) {

@@ -186,17 +186,21 @@ class DocumentoController extends Controller
                             "status" => 200,
                         );
 
+                        // INSERCION DE LA FACTURACION
                         if($request->self_service){
-                          $incoice = Invoice::create([
-                            'agency_id'     => ($request->agencia_id) ? $request->agencia_id : Auth::user()->agencia_id,
-                            'consecutive'   => $data2->num_warehouse,
-                            'date_document' => date('Y-m-d'),
-                            'shipper_id'    => $data->shipper_id,
-                            'consignee_id'  => $data->consignee_id
-                          ]);
+                          $invoice = Invoice::where([['shipper_id', $data->shipper_id], ['consignee_id', $data->consignee_id]])->first();
+                          if(!$invoice){
+                            $invoice = Invoice::create([
+                              'agency_id'     => ($request->agencia_id) ? $request->agencia_id : Auth::user()->agencia_id,
+                              'consecutive'   => $data2->num_warehouse,
+                              'date_document' => date('Y-m-d'),
+                              'shipper_id'    => $data->shipper_id,
+                              'consignee_id'  => $data->consignee_id
+                            ]);
+                          }
 
                           InvoiceDetail::create([
-                            'invoice_id'   => $incoice->id,
+                            'invoice_id'   => $invoice->id,
                             'document_id'  => $data->id
                           ]);
                         }
@@ -210,7 +214,7 @@ class DocumentoController extends Controller
                     }
                 return $answer;
             });
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
 
             $answer = array(
                 "error"  => $e,
@@ -1725,9 +1729,6 @@ class DocumentoController extends Controller
 
             $nameDocument = 'Label' . $document . '-' . $documento->id;
             $pdf->save(public_path(). '/files/File.pdf');
-
-            // return $pdf->stream($nameDocument . '.pdf');
-            return true;
         }else{
             if (env('APP_LABEL') === '4x4') {
                 if(env('APP_CLIENT') === 'jyg'){
@@ -1735,18 +1736,17 @@ class DocumentoController extends Controller
                     ->setPaper(array(25, -25, 260, 360), 'landscape');
                     $nameDocument = 'Label' . $document . '-' . $documento->id;
                     $pdf->save(public_path(). '/files/File.pdf');
-                    return true;
                 }else{
                     $pdf = PDF::loadView('pdf.labelWG', compact('documento', 'detalle', 'document', 'consolidado', 'dato_consolidado'))
                     ->setPaper(array(25, -25, 260, 360), 'landscape');
                 }
 
                 $nameDocument = 'Label' . $document . '-' . $documento->id;
-                return $pdf->stream($nameDocument . '.pdf');
             }else{
                 return view('pdf/labelWG_2', compact('documento', 'detalle', 'document', 'consolidado', 'dato_consolidado'));
             }
         }
+        return $pdf->stream($nameDocument . '.pdf');
     }
 
     public function pdfConsolidadoGroup($id, $document, $num_bolsa)

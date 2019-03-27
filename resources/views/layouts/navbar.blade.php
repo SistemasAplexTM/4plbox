@@ -77,7 +77,7 @@
                 </ul>
             </li>
         </ul>
-            
+
         </div>
 
         <ul class="nav navbar-top-links navbar-right">
@@ -91,7 +91,7 @@
             <!--NOTIFICACIONES-->
             <li class="dropdown">
                 <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                    <i class="fa fa-bell" data-toggle='tooltip' data-placement='left' title='Prealertas'></i>  
+                    <i class="fa fa-bell" data-toggle='tooltip' data-placement='left' title='Prealertas'></i>
                 </a>
 
                 <ul class="dropdown-menu dropdown-alerts">
@@ -135,7 +135,7 @@
                 </form>
             </li>
             <li>
-                
+
             </li>
         </ul>
 

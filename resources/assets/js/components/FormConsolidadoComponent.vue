@@ -33,6 +33,11 @@
 		.btn-group>.btn+.dropdown-toggle{
 			height: 34px;
 		}
+		.center-content{
+			display: flex;
+		  justify-content: center;
+		  align-items: center;
+		}
 </style>
 <template>
 	<div>
@@ -53,8 +58,18 @@
                                         <div class="col-sm-12">
                                             <div class="form-group" :class="{ danger: errors.has('central_destino') }">
                                                 <label for="central_destino_id">Central destino (agencia)</label>
-                                                <v-select name="central_destino" :disabled="disabled_agencia" v-model="central_destino_id" label="name" :filterable="false" :options="branchs" @search="onSearchBranch" v-validate="'required'">
-                                                </v-select>
+																								<el-select autocomplete="off" name="central_destino" v-model="central_destino_id" filterable
+											                          placeholder="Central Destino" v-validate.disable="'required'"
+											                          size="medium" value-key="id" :disabled="disabled_agencia">
+											                            <el-option
+											                              v-for="item in branchs"
+											                              :key="item.id"
+											                              :label="item.name"
+											                              :value="item">
+											                            </el-option>
+											                          </el-select>
+                                                <!-- <v-select name="central_destino" :disabled="disabled_agencia" v-model="central_destino_id" label="name" :filterable="false" :options="branchs" @search="onSearchBranch" v-validate="'required'">
+                                                </v-select> -->
                                             </div>
                                             <span class="danger">{{ errors.first('central_destino') }}</span>
                                         </div>
@@ -63,6 +78,16 @@
                                         <div class="col-sm-12">
                                             <div class="form-group" :class="{ danger: errors.has('pais') }">
                                                 <label for="localizacion_id">Ciudad destino</label>
+																								<!-- <el-select autocomplete="off" :disabled="disabled_city"  name="localizacion_id" v-model="localizacion_id"
+																								label="name" filterable :options="ciudades" @search="onSearch" v-validate="'required'"
+											                          size="medium" value-key="id">
+											                            <el-option
+											                              v-for="item in ciudades"
+											                              :key="item.id"
+											                              :label="item.name"
+											                              :value="item">
+											                            </el-option>
+											                          </el-select> -->
 																								<v-select autocomplete="off" :disabled="disabled_city"  name="localizacion_id" v-model="localizacion_id" label="name" :filterable="false" :options="ciudades" @search="onSearch" v-validate="'required'">
                                                     <template slot="no-options">
                                                   		No result
@@ -194,30 +219,30 @@
                                 	<div class="col-sm-12">
                                     	<table id="tbl-consolidado" class="table table-striped table-hover table-bordered dataTable" style="width: 100%;margin-top: 30px;">
                                     		<thead>
-				                                <tr>
-				                                    <th>Bolsa</th>
-				                                    <th>#Guia/WRH</th>
-				                                    <th>Remitente</th>
-				                                    <th>Destinatario</th>
-				                                    <th>P.A</th>
-				                                    <th>Descripción</th>
-				                                    <th>Declarado</th>
-                                            <th>Lb</th>
-				                                    <th>Lb R</th>
-				                                    <th></th>
-				                                </tr>
-				                            </thead>
-				                            <tbody>
-	                                        </tbody>
-	                                        <tfoot>
-				                                <tr>
-				                                    <th style="text-align:right;font-size: 25px;" colspan="6">Totales de esta página:</th>
-				                                    <th id="Tdeclarado"></th>
-                                                    <th id="Tpeso"></th>
-				                                    <th id="TpesoR"></th>
-				                                    <th id="TpesoK"></th>
-				                                </tr>
-				                            </tfoot>
+						                                <tr>
+						                                    <th><i class="fa fa-cubes"></i></th>
+						                                    <th>#Guia/WRH</th>
+						                                    <th>Remitente</th>
+						                                    <th>Destinatario</th>
+						                                    <th>P.A</th>
+						                                    <th>Descripción</th>
+						                                    <th>Dec.</th>
+		                                            <th>Lb</th>
+						                                    <th>Lb R</th>
+						                                    <th></th>
+						                                </tr>
+						                            </thead>
+						                            <tbody>
+			                                  </tbody>
+			                                  <tfoot>
+					                                <tr>
+					                                    <th style="text-align:right;font-size: 25px;" colspan="6">Totales de esta página:</th>
+					                                    <th id="Tdeclarado"></th>
+		                                          <th id="Tpeso"></th>
+					                                    <th id="TpesoR"></th>
+					                                    <th id="TpesoK"></th>
+					                                </tr>
+						                            </tfoot>
                                     	</table>
                                     </div>
                                 </div>
@@ -950,7 +975,7 @@
 															nom_ship = json.nombre;
 					                	}
 					                	me.shipper_contactos[full.shipper_id] = full.shipper_contactos;
-					                	return nom_ship + ' <a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalShipperConsigneeConsolidado('+full.id+', \''+full.shipper_id+'\', \'shipper\')"><i class="fal fa-pencil"></i></a> <a onclick=\"restoreShipperConsignee('+full.id+', \'shipper\')\" class="delete" title="Restaurar original" data-toggle="tooltip" style="float:right;color:#2196F3;margin-right: 5px;"><i class="far fa-sync-alt"></i></a>';
+					                	return '<div class="center-content"><div style="width:80%;float: left;">' + nom_ship + '</div> <div style="width:20%;float: right;"><a  data-toggle="tooltip" title="Canbiar" class="edit" style="color:#FFC107;" onclick="showModalShipperConsigneeConsolidado('+full.id+', \''+full.shipper_id+'\', \'shipper\')"><i class="fal fa-pencil"></i></a> <a onclick=\"restoreShipperConsignee('+full.id+', \'shipper\')\" class="delete" title="Restaurar original" data-toggle="tooltip" style="float:right;color:#2196F3;margin-right: 5px;"><i class="far fa-sync-alt"></i></a></div></div> ';
 					                },
 													visible: ((app_client === 'worldcargo') ? false : true)
 					            },
@@ -966,7 +991,7 @@
 															nom_cons = json.nombre;
 					                	}
 					                	me.consignee_contactos[full.consignee_id] = full.consignee_contactos;
-					                	return nom_cons + ' <a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalShipperConsigneeConsolidado('+full.id+', \''+full.consignee_id+'\',\'consignee\')"><i class="fal fa-pencil"></i></a> <a onclick=\"restoreShipperConsignee('+full.id+',\'consignee\')\" class="delete" title="Restaurar original" data-toggle="tooltip" style="float:right;color:#2196F3;margin-right: 5px;"><i class="far fa-sync-alt"></i></a>';
+					                	return '<div class="center-content"><div style="width:80%;float: left;">' + nom_cons + '</div> <div style="width:20%;float: right;"> <a  data-toggle="tooltip" title="Canbiar" class="edit" style="color:#FFC107;" onclick="showModalShipperConsigneeConsolidado('+full.id+', \''+full.consignee_id+'\',\'consignee\')"><i class="fal fa-pencil"></i></a> <a onclick=\"restoreShipperConsignee('+full.id+',\'consignee\')\" class="delete" title="Restaurar original" data-toggle="tooltip" style="float:right;color:#2196F3;margin-right: 5px;"><i class="far fa-sync-alt"></i></a></div></div>';
 					                }
 					            },
 					            {
@@ -998,10 +1023,10 @@
 		                          var btn_delete = '';
 		                          var document_print = '';
 		                          if(me.localizacion_id.pais_id != pais_id_config){
-		                              // href_print_label = "../../impresion-documento-label/"+ full.documento_id + "/warehouse/"+full.documento_detalle_id+"/consolidado";
+		                              href_print_label = "../../impresion-documento-label/"+ full.documento_id + "/warehouse/"+full.documento_detalle_id+"/consolidado";
 																	document_print = "warehouse";
 		                          }else{
-		                              // href_print_label = "../../impresion-documento-label/"+ full.documento_id + "/guia/"+full.documento_detalle_id+"/consolidado";
+		                              href_print_label = "../../impresion-documento-label/"+ full.documento_id + "/guia/"+full.documento_detalle_id+"/consolidado";
 																	document_print = "guia";
 		                          }
 
@@ -1010,7 +1035,7 @@
 		                              var btn_label =  "<a href='"+href_print_label+"' target='blank_' class=''><i class='fa fa-barcode'></i> Imprimir label</a> ";
 																	var name = "Nitro PDF Creator (Pro 10)";
 											            var format = "PDF";
-											            href_print_label = 'onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format
+											            // href_print_label = 'onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format
 																	+'&id=' + full.documento_id + '&agency_id='+ full.agencia_id
 																	+'&document='+ document_print + '&id_detail='+ full.documento_detalle_id + '&id_detail_consol='+ full.id +'&consolidado='+ true +'&document=guia&label=true\')"';
 		                          }
@@ -1023,7 +1048,8 @@
 		                                  '</button>'+
 		                                  '<ul class="dropdown-menu dropdown-menu-right pull-right" style="font-size: 15px!important;">'+
 		                                    '<li>'+btn_invoice+'</li>'+
-		                                    '<li><a '+href_print_label+'><i class="fa fa-barcode"></i> Imprimir label</a></li>'+
+		                                    // '<li><a '+href_print_label+'><i class="fa fa-barcode"></i> Imprimir label</a></li>'+
+		                                    '<li>'+btn_label+'</li>'+
 		                                    '<li role="separator" class="divider"></li>'+
 		                                    '<li>'+btn_delete+'</li>'+
 		                                  '</ul>'+
@@ -1037,13 +1063,13 @@
 		                  {data: 'declarado2', name: 'declarado2'},
 					        ],
 					        'columnDefs': [
-					        	{ className: "text-center", "targets": [ 0 ], width: 20, },
-					        	{ "targets": [ 1 ], width: 140},
-					        	{ "targets": [ 2,3 ], width: 200},
-					        	{ className: "text-center", "targets": [ 4 ], width: 100 },
-					        	{ "targets": [ 5 ],  width: 400},
-					         	{ className: "text-center", "targets": [ 6,7,8 ],  },
-		                { className: "text-center", "targets": [ 9 ],  },
+					        	// { className: "text-center", "targets": [ 0 ], width: '5%', },
+					        	{ "targets": [ 1 ], width: '10%'},
+					        	{ "targets": [ 2,3 ]},
+					        	{ className: "text-center", "targets": [ 4 ], width: 80 },
+					        	// { "targets": [ 5 ],  width: '20%'},
+					         	// { className: "text-center", "targets": [ 6,7,8 ],  },
+		                // { className: "text-center", "targets": [ 9 ],  },
 					          { "targets": [ 10,11,12 ], visible: false },
 					        ],
 		              "drawCallback": function () {
@@ -1093,9 +1119,9 @@
 
 
 										if(!me.close){
-											$('.edit, .delete').hide().children('i').css('font-size', '17px');
+											$('.edit, .delete').css('opacity','0');
 										}else{
-											$('.edit, .delete').remove();
+											$('.edit, .delete').css('opacity','0');
 										}
                     /* EDITABLE FIELD */
                     if (me.permissions.editDetail && !me.close) {

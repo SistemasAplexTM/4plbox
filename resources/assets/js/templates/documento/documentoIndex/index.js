@@ -152,7 +152,7 @@ function actionsButtons(data, type, full, meta) {
     var btn_edit = '';
     var btn_delete = '';
     var btn_status = '';
-    if (permission_update && (parseInt(full.consolidado_status) === 0) || full.consolidado_status == null) {
+    if (permission_update) {
         var btn_edit = '<a href="documento/' + full.id + '/edit" class="edit" title="Editar" data-toggle="tooltip" style="color:#FFC107;"><i class="fal fa-pencil fa-lg"></i></a>';
         var btn_status = '<a onclick=\"modalChangeStatus(' + full.id + ')\" class="edit" title="Status" data-toggle="tooltip" style="color:#4caf50;"><i class="fal fa-clock fa-lg"></i></a>';
     }
@@ -179,31 +179,33 @@ function actionsButtons(data, type, full, meta) {
         var href_print_view_g = '';
         var href_print_view_w = '';
         if (full.liquidado == 1) {
-            href_print_view_g = "<li><a href='impresion-documento/" + full.id + "/guia' target='_blank'> <spam class='far fa-file-pdf'></spam> Ver Guia</a></li>";
-            href_print_guia = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format +'&id=' + full.id + '&agency_id='+agency_id+'&document=guia\')"> <spam class="fa fa-print"></spam> Guia</a></li>';
+            href_print_view_g = "<li><a href='impresion-documento/" + full.id + "/guia' target='_blank'> <spam class='fal fa-print'></spam> Guia</a></li>";
+            href_print_guia = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format +'&id=' + full.id + '&agency_id='+agency_id+'&document=guia\')"> <spam class="fal fa-print"></spam> Guia</a></li>';
             // href_print_label = "impresion-documento-label/" + full.id + "/guia";
             var name = "Nitro PDF Creator (Pro 10)";
             var format = "PDF";
-            href_print_label_guia = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format +'&id=' + full.id + '&agency_id='+agency_id+'&document=guia&label=true\')"> <spam class="fa fa-print"></spam> Label Guia '+label+'</a></li>';
+            href_print_label_guia = '<li><a href="impresion-documento-label/' + full.id + '/guia" target="_blank"> <spam class="fal fa-print"></spam> Label Guia '+label+'</a></li>';
+            // href_print_label_guia = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format +'&id=' + full.id + '&agency_id='+agency_id+'&document=guia&label=true\')"> <spam class="fa fa-print"></spam> Label Guia '+label+'</a></li>';
             // codigo = full.num_guia;
         }
         // else {
-            href_print_view_w = "<li><a href='impresion-documento/" + full.id + "/warehouse' target='_blank'> <spam class='far fa-file-pdf'></spam> Ver Warehouse</a></li>";
-            href_print_wrh = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format +'&id=' + full.id + '&agency_id='+agency_id+'&document=warehouse\')"> <spam class="fa fa-print"></spam> Warehouse</a></li>';
+            href_print_view_w = "<li><a href='impresion-documento/" + full.id + "/warehouse' target='_blank'> <spam class='fal fa-print'></spam> Warehouse</a></li>";
+            href_print_wrh = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format +'&id=' + full.id + '&agency_id='+agency_id+'&document=warehouse\')"> <spam class="fal fa-print"></spam> Warehouse</a></li>';
             // href_print_label = "impresion-documento-label/" + full.id + "/warehouse";
             var name = "Nitro PDF Creator (Pro 10)";
             var format = "PDF";
-            href_print_label_wrh = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format +'&id=' + full.id + '&agency_id='+agency_id+'&document=warehouse&label=true\')"> <spam class="fa fa-print"></spam> Labels Warehouse '+label+'</a></li>';
+            href_print_label_wrh = '<li><a href="impresion-documento-label/' + full.id + '/warehouse" target="_blank"> <spam class="fal fa-print"></spam> Labels Warehouse '+label+'</a></li>';
+            // href_print_label_wrh = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format +'&id=' + full.id + '&agency_id='+agency_id+'&document=warehouse&label=true\')"> <spam class="fa fa-print"></spam> Labels Warehouse '+label+'</a></li>';
             // codigo = full.num_warehouse;
         // }
 
         var btn_tags = ' <a onclick="openModalTagsDocument(' + full.id + ', \'' + codigo + '\', \'' + full.cons_nomfull + '\', \'' + full.email_cons + '\', \'' + full.cantidad + '\', \'' + full.liquidado + '\', \'' + full.piezas + '\', \'' + full.estatus_color + '\')" data-toggle="modal" data-target="#modalTagDocument" class="" style="font-size: 18px;"><i class="fal fa-arrow-square-right fa-lg" data-toggle="tooltip" title="Tareas"></i></a>';
         var btns = "<div class='btn-group'>" + "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + "<i class='fal fa-print fa-lg'></i> <span class='caret'></span>" + "</button>" + "<ul class='dropdown-menu dropdown-menu-right pull-right'>"
-        + href_print_wrh + " "
+        // + href_print_wrh + " "
         + href_print_label_wrh + " "
-        + href_print_guia + " "
+        // + href_print_guia + " "
         + href_print_label_guia + " "
-        + '<li class="divider"></li> '
+        // + '<li class="divider"></li> '
         + href_print_view_w + " "
         + href_print_view_g + " "
         + "<li><a href='#' onclick=\"sendMail(" + full.id + ")\"> <spam class='fa fa-envelope'></spam> Enviar Mail</a></li>" + "</ul></div>";
@@ -270,7 +272,8 @@ function numDocument(data, type, full, meta) {
       }
       classText = color_badget;
       var status = '<div style="color:'+full.estatus_color+'"><small>' + ((full.estatus == null) ? '' : full.estatus) + '</small></div>';
-      return '<span class=""><i class="fa fa-'+ ((full.agrupadas > 0) ? 'boxes' : 'box-open')+' fa-xs"></i> ' + ((codigo == null) ? full.warehouse : codigo )+ '</span><a style="float: right;cursor:pointer;" class="badge badge-'+ classText +' pop" role="button" data-html="true" data-toggle="popover" data-trigger="hover" title="<b>Documentos agrupadas</b>" data-content="'+((groupGuias == null) ? '' : groupGuias )+'" ' + group + '>'+ ((full.agrupadas == null) ? '' : full.agrupadas)+'</a>' + status;
+      var st = ((full.estatus == null) ? '' : full.estatus);
+      return '<span class="" data-toggle="tooltip" title="'+st+'"><i class="fa fa-'+ ((full.estatus == null) ? 'box' : ((full.agrupadas > 0) ? 'boxes' : 'box-open'))+' fa-xs" style="color:'+full.estatus_color+'"></i> ' + ((codigo == null) ? full.warehouse : codigo )+ '</span><a style="float: right;cursor:pointer;" class="badge badge-'+ classText +' pop" role="button" data-html="true" data-toggle="popover" data-trigger="hover" title="<b>Documentos agrupadas</b>" data-content="'+((groupGuias == null) ? '' : groupGuias )+'" ' + group + '>'+ ((full.agrupadas == null) ? '' : full.agrupadas)+'</a>';
     }else{
       icon = 'boxes';
       if(full.transporte_id == 7){

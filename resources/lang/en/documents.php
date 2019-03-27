@@ -19,7 +19,7 @@ return [
 		'obligatory_field'        => 'Obligatory field',
 		'zip'			  => 'Zip',
 		'send_email'	  => 'Send email',
-		'addressee_consignee'       => 'Addressee (Consignee)',
+		'addressee_consignee'       => 'Consignee',
 		'load_data'                 => 'Load data',
 		'weight'          => 'Weight',
 		'dimensions'      => 'Dimensions',

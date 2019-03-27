@@ -60,10 +60,10 @@ $(function() {
 
     jQuery('#tbl-consolidado').
     on('mouseover', 'tr', function() {
-        jQuery(this).find('.edit, .delete').show();
+        jQuery(this).find('.edit, .delete').css('opacity','1');
     }).
     on('mouseout', 'tr', function() {
-        jQuery(this).find('.edit, .delete').hide();
+        jQuery(this).find('.edit, .delete').css('opacity','0');
     });
 
     jQuery('#whgTable').
@@ -123,7 +123,8 @@ function datatableDetail(){
           "render": function (data, type, full, meta) {
             var str = full.num_warehouse;
             return parseInt(str.substring(9));
-          }
+          },
+          width: 30
         },{
             data: 'num_warehouse',
             name: 'num_warehouse',
