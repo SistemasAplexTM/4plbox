@@ -58,26 +58,15 @@
     <body>
         <?php
             $cont = 0;
-            $toalRegistros = count($detalle);
-            $toalRegistros = 0;
+            $totalRegistros = count($detalle);
             $contRegistros = 0;
-            $piezas = 0;
+            $piezas = $totalRegistros;
             $i = 1;
-        ?>
-        {{-- @foreach ($detalle as $value) --}}
-            <?php $piezas = $detalle[0]->piezas ?>
-        {{-- @endforeach --}}
-        <?php
-        // echo $piezas;
-        // echo '<pre>';
-        // print_r($detalle);
-        // echo '<pre>';
-        // exit();
         ?>
         @foreach ($detalle as $value)
             {{-- @for($i = 1; $i <= $piezas; $i++) --}}
             <?php $contRegistros++ ?>
-            <table border="0" cellpadding="0" cellspacing="0" id="invoice" style="page-break-after:{{ ($contRegistros === $piezas) ? 'avoid' : 'always' }}" width="100%">
+            <table border="0" cellpadding="0" cellspacing="0" id="invoice" style="page-break-after:{{ ($contRegistros === $totalRegistros) ? 'avoid' : 'always' }}" width="100%">
                 <tr>
                     <td>
                         <div class="agency">{{ $invoice->agencia }}</div>
@@ -120,7 +109,7 @@
                         </td>
                         <td style="width:32%">
                           <div class="title">TOTAL PIECES</div>
-                          <div class="piece">{{ $piezas }}</div>
+                          <div class="piece">{{ $totalRegistros }}</div>
                         </td>
                       </tr>
                     </table>
@@ -151,7 +140,7 @@
                     <tr>
                       <td style="width:25%;">
                         <div class="title">DIMENSIONS</div>
-                        <div class="content">{{ substr($value->dimensiones, 7) }}</div>
+                        <div class="content">{{ $value->largo.'x'.$value->ancho.'x'.$value->alto }}</div>
                       </td>
                       <td style="width:25%;">
                         <div class="title">PART NUMBER</div>

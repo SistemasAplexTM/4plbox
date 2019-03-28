@@ -26,24 +26,22 @@
     <body class="fixed-sidebar fixed-nav fixed-nav-basic">
         <div id="wrapper">
             {{-- Sidebar --}}
-        @include('layouts.sidebar')
+            @include('layouts.sidebar')
             <div class="gray-bg" id="page-wrapper">
                 {{-- Navbar --}}
-            @include('layouts.navbar')
-            @yield('breadcrumb')
-            {{-- contenido --}}
+                @include('layouts.navbar')
+                @yield('breadcrumb')
+                {{-- contenido --}}
                 <div class="wrapper wrapper-content animated fadeInRight" id="app">
                     @yield('content')
                 </div>
             </div>
         </div>
         <!-- Scripts -->
-        <script src="{{ asset('js/app.js') }}">
-        </script>
-        <script src="{{ asset('js/plantilla.js') }}">
-        </script>
-        <script src="{{ asset('js/main.js') }}">
-        </script>
+        <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/plantilla.js') }}"></script>
+        <script src="{{ asset('js/main.js') }}"></script>
+        <script src="{{ asset('js/plugins/silentPrint/silentPrint.min.js') }}"></script>
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js">
         </script>
@@ -79,6 +77,30 @@
                         toastr.success('Backup generado.');
                     });
                 });
+
+                //SILENT PRINT
+                // var sp = new SilentPrint();
+                // sp.init(initSuccess, initFail);
+                // function initSuccess() {
+                //   console.log('silentPrint OK!');
+                //   sp.getMachineId(getMachineIdSuccess);
+                //   sp.getPrinterList(getPrinterListSuccess);
+                // }
+                // function initFail() {
+                //   console.log('silentPrint ERROR!');
+                // }
+                //
+                // function getMachineIdSuccess(machineId) {
+                //   console.log('ID: '+ machineId);
+                // }
+                //
+                // function getPrinterListSuccess(list) {
+                //  console.log(list);
+                //  var pathname = window.location.pathname;
+                //  var url = pathname.split('/');
+                //  console.log(url.pop());
+                // }
+
             });
         </script>
     </body>

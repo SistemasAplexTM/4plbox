@@ -169,25 +169,12 @@ class AgenciaController extends Controller
         return AplexConfig::where('key', $key)->first();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $data = Agencia::findOrFail($id);
         $data->delete();
     }
 
-    /**
-     * Actualiza el campo deleted_at del registro seleccionado.
-     *
-     * @param  int  $id
-     * @param  boolean  $deleteLogical
-     * @return \Illuminate\Http\Response
-     */
     public function delete($id, $logical, $table = null)
     {
 
@@ -217,12 +204,6 @@ class AgenciaController extends Controller
         }
     }
 
-    /**
-     * Restaura registro eliminado
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function restaurar($id)
     {
         $data             = Agencia::findOrFail($id);
@@ -230,11 +211,6 @@ class AgenciaController extends Controller
         $data->save();
     }
 
-    /**
-     * Obtener todos los registros de la tabla para el datatable
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function getAll()
     {
         $sql = DB::table('agencia')
@@ -286,13 +262,6 @@ class AgenciaController extends Controller
         return \Response::json($answer);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function updateDetail(Request $request, $id)
     {
         try {
@@ -319,8 +288,13 @@ class AgenciaController extends Controller
         }
     }
 
-     public function getAllUrls($id_agencia)
+    public function getAllUrls($id_agencia)
     {
         return \DataTables::of(DB::table('agencia_urls_publicas')->where([['deleted_at', NULL], ['agencia_id', $id_agencia]])->get())->make(true);
+    }
+
+    public function getSelectBranch()
+    {
+      return DB::table('transportador')->select('id', 'nombre as name')->where([['deleted_at', null], ['consignee', 1]])->get();
     }
 }

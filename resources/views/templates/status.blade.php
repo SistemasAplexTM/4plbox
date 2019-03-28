@@ -103,14 +103,7 @@
                                             <label for="email_plantilla_id" class="control-label gcore-label-top">@lang('general.mail_template'):</label>
                                         </div>
                                         <div class="col-sm-7">
-                                            {{-- <v-select :options="plantillas" name="email_plantilla_id" v-model="email_plantilla_id" label="name" placeholder="@lang('general.mail_template')">
-                                                <template slot="option" slot-scope="option">
-                                                    <span class="fa fa-envelope"></span>
-                                                    <label style="font-size: 15px;"> @{{ option.name }}</label>
-                                                    <div>@{{ option.descripcion_plantilla }}</div>
-                                                </template>
-                                            </v-select> --}}
-                                            <el-select v-model="email_plantilla_id" name="email_plantilla_id" filterable placeholder="@lang('general.mail_template')">
+                                            <el-select v-model="email_plantilla_id" name="email_plantilla_id" filterable placeholder="@lang('general.mail_template')" size="medium">
                                               <el-option
                                                 v-for="item in plantillas"
                                                 :key="item.id"

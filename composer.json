@@ -12,6 +12,7 @@
         "caffeinated/shinobi": "^3.2",
         "fideloper/proxy": "~3.3",
         "guzzlehttp/guzzle": "^6.3",
+        "htmlmin/htmlmin": "^5.7",
         "laracasts/utilities": "^3.0",
         "laravel/framework": "5.5.*",
         "laravel/passport": "~4.0",

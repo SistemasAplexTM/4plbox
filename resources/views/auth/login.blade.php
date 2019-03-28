@@ -13,8 +13,6 @@
 
         <!-- Styles -->
         <link href="{{ asset('css/plantilla.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
-        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-6jHF7Z3XI3fF4XZixAuSu0gGKrXwoX/w3uFPxC56OtjChio7wtTGJWRW53Nhx6Ev" crossorigin="anonymous">
         <style>
                 html, body {
                     background-color: #fff;
@@ -121,6 +119,6 @@
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/plantilla.js') }}"></script>
-        <script src="{{ asset('js/templates/setup.js') }}"></script>
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-6jHF7Z3XI3fF4XZixAuSu0gGKrXwoX/w3uFPxC56OtjChio7wtTGJWRW53Nhx6Ev" crossorigin="anonymous">
     </body>
 </html>

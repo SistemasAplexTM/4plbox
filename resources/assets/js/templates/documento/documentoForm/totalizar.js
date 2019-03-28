@@ -135,14 +135,15 @@ function calculateFlete(flete) {
             if (parseFloat(valor) * parseFloat(tarifa) <= parseFloat(flete)) {
                 return flete;
             } else {
-                if (parseFloat(peso) >= 0 && parseFloat(peso) <= 8) {
-                    return flete;
-                } else {
-                    if (parseFloat(peso) > 8) {
-                        flete = isInteger((parseFloat(valor) * parseFloat(tarifa)));
-                        return flete;
-                    }
-                }
+              return parseFloat(valor) * parseFloat(tarifa);
+                // if (parseFloat(peso) >= 0 && parseFloat(peso) <= 8) {
+                //     return flete;
+                // } else {
+                //     if (parseFloat(peso) > 8) {
+                //         flete = isInteger((parseFloat(valor) * parseFloat(tarifa)));
+                //         return flete;
+                //     }
+                // }
             }
         }
     }
