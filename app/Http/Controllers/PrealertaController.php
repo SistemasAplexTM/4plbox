@@ -143,7 +143,7 @@ class PrealertaController extends Controller
      */
     public function getAll($id_agencia)
     {
-        $sql = Prealerta::join('consignee as b', 'prealerta.consignee_id', 'b.id')
+        $sql = Prealerta::leftJoin('consignee as b', 'prealerta.consignee_id', 'b.id')
         ->join('agencia as c', 'prealerta.agencia_id', 'c.id')
         ->select('prealerta.*', 'b.nombre_full as consignee', 'c.descripcion as agencia')
         ->where([['prealerta.deleted_at', NULL],['prealerta.recibido', 0],['prealerta.agencia_id', $id_agencia]])
