@@ -140,6 +140,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('administracion/{type}/{id}', 'MaestraMultipleController@update')->name('administracion.update');
     Route::delete('administracion/{type}/{id}', 'MaestraMultipleController@destroy')->name('administracion.destroy');
     Route::get('administracion/{type}/selectInput/{tableName?}', 'MaestraMultipleController@selectInput');
+    Route::get('administracion/{type}/getSelect', 'MaestraMultipleController@getSelect');
 
     /*--- MODULO PAIS ---*/
     Route::resource('pais', 'PaisController', ['except' => ['show', 'create', 'edit']]);
@@ -219,6 +220,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('agencia/delete/{id}/{logical?}/{table?}', 'AgenciaController@delete')->name('agencia.delete')->middleware('permission:agencia.delete');
     Route::get('agencia/restaurar/{id}', 'AgenciaController@restaurar');
     Route::get('agencia/selectInput/{tableName}', 'AgenciaController@selectInput');
+    Route::get('agencia/getSelectBranch', 'AgenciaController@getSelectBranch');
 
     /*--- MODULO REMITENTES ---*/
     Route::resource('shipper', 'ShipperController', ['except' => ['show', 'create', 'edit']]);

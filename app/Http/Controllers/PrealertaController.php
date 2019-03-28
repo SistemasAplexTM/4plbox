@@ -74,7 +74,7 @@ class PrealertaController extends Controller
                 "status" => 200,
             );
             return $answer;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $error = '';
             // if (isset($e->errorInfo)) {
             //     foreach ($e->errorInfo as $key => $value) {

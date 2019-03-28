@@ -2385,7 +2385,7 @@ class DocumentoController extends Controller
                 return Mail::to(trim($objConsignee->correo))
                 // ->cc($moreUsers)
                 // ->bcc($evenMoreUsers)
-                    ->send(new \App\Mail\WarehouseEmail($cuerpo_correo, $pdf, $from_self, $asunto_correo));
+                    ->send(new \App\Mail\WarehouseEmail($cuerpo_correo, $from_self, $asunto_correo, $pdf));
             } else {
                 return 'No es una direccion de email valida';
             }

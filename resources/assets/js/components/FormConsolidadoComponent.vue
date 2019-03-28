@@ -59,17 +59,15 @@
                                             <div class="form-group" :class="{ danger: errors.has('central_destino') }">
                                                 <label for="central_destino_id">Central destino (agencia)</label>
 																								<el-select autocomplete="off" name="central_destino" v-model="central_destino_id" filterable
-											                          placeholder="Central Destino" v-validate.disable="'required'"
-											                          size="medium" value-key="id" :disabled="disabled_agencia">
+												                          placeholder="Buscar" v-validate.disable="'required'"
+												                          size="medium" value-key="id" :disabled="disabled_agencia">
 											                            <el-option
 											                              v-for="item in branchs"
 											                              :key="item.id"
 											                              :label="item.name"
-											                              :value="item">
+											                              :value="item.id">
 											                            </el-option>
 											                          </el-select>
-                                                <!-- <v-select name="central_destino" :disabled="disabled_agencia" v-model="central_destino_id" label="name" :filterable="false" :options="branchs" @search="onSearchBranch" v-validate="'required'">
-                                                </v-select> -->
                                             </div>
                                             <span class="danger">{{ errors.first('central_destino') }}</span>
                                         </div>
@@ -78,33 +76,7 @@
                                         <div class="col-sm-12">
                                             <div class="form-group" :class="{ danger: errors.has('pais') }">
                                                 <label for="localizacion_id">Ciudad destino</label>
-																								<!-- <el-select autocomplete="off" :disabled="disabled_city"  name="localizacion_id" v-model="localizacion_id"
-																								label="name" filterable :options="ciudades" @search="onSearch" v-validate="'required'"
-											                          size="medium" value-key="id">
-											                            <el-option
-											                              v-for="item in ciudades"
-											                              :key="item.id"
-											                              :label="item.name"
-											                              :value="item">
-											                            </el-option>
-											                          </el-select> -->
-																								<v-select autocomplete="off" :disabled="disabled_city"  name="localizacion_id" v-model="localizacion_id" label="name" :filterable="false" :options="ciudades" @search="onSearch" v-validate="'required'">
-                                                    <template slot="no-options">
-                                                  		No result
-                                                    </template>
-                                                    <template slot="option" slot-scope="option">
-                                                        <div>
-                                                            {{ option.name }}
-                                                        </div>
-                                                        <small>{{ option.depto }} - {{ option.pais }}</small>
-                                                    </template>
-                                                    <template slot="selected-option" slot-scope="option">
-                                                        <div>
-                                                            {{ option.name }}
-                                                        </div>&nbsp;
-                                                        <small>{{ option.pais }}</small>
-                                                    </template>
-                                                </v-select>
+																								<city-component @get="setCity($event)" :disabled="disabled_city" :selected="city_selected_s"></city-component>
                                             </div>
                                             <span class="danger">{{ errors.first('pais') }}</span>
                                         </div>
@@ -113,8 +85,16 @@
                                         <div class="col-sm-12">
                                             <div class="form-group" :class="{ danger: errors.has('transporte_id') }">
                                                 <label for="transporte_id">Transporte</label>
-                                                <v-select name="transporte_id" v-model="transporte_id" :disabled="disabled_transporte" label="nombre" :filterable="false" :options="transportes" v-validate="'required'">
-                                                </v-select>
+																								<el-select autocomplete="off" name="transporte_id" v-model="transporte_id" filterable
+												                          placeholder="Buscar" v-validate.disable="'required'"
+												                          size="medium" :disabled="disabled_transporte">
+											                            <el-option
+											                              v-for="item in transportes"
+											                              :key="item.id"
+											                              :label="item.nombre"
+											                              :value="item.id">
+											                            </el-option>
+											                          </el-select>
                                             </div>
                                             <span class="danger">{{ errors.first('transporte_id') }}</span>
                                         </div>
@@ -139,38 +119,39 @@
 																				<div class="col-sm-12" v-show="!show_buttons" style="color: #E34724">
 																					<span>Hay valores declarados en cero (0) o valores que superan lo permitido para COURIER o no hay documentos ingresados</span></div>
                                     </div>
-
-                                    <div class="col-sm-6">
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label for="observacion">Observación</label>
-                                                <input type="text" v-model="observacion" name="observacion" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-																		<div class="col-sm-2">
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label for="observacion">Tipo consolidado</label>
-                                                <input type="text" v-model="tipo_consolidado" name="tipo_consolidado" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4" v-if="show_buttons">
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <label for="" style="width: 100%;">&nbsp;</label>
-                                                <button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Descargar Excel Liquimp" @click="exportLiquimp()"><i class="fas fa-cloud-download-alt"></i> Excel</button>
-                                            </div>
-                                        </div>
-																				<div class="col-sm-3">
-                                            <div class="form-group">
-                                                <label for="" style="width: 100%;">&nbsp;</label>
-                                                <button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Descargar Excel Bodega" @click="exportCellar()"><i class="fas fa-cloud-download-alt"></i> Excel Bodega</button>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
+																<div class="row">
+																	<div class="col-sm-6">
+																			<div class="col-sm-12">
+																					<div class="form-group">
+																							<label for="observacion">Observación</label>
+																							<input type="text" v-model="observacion" name="observacion" class="form-control">
+																					</div>
+																			</div>
+																	</div>
+																	<div class="col-sm-2">
+																			<div class="col-sm-12">
+																					<div class="form-group">
+																							<label for="observacion">Tipo consolidado</label>
+																							<input type="text" v-model="tipo_consolidado" name="tipo_consolidado" class="form-control">
+																					</div>
+																			</div>
+																	</div>
+																	<div class="col-sm-4" v-if="show_buttons">
+																			<div class="col-sm-3">
+																					<div class="form-group">
+																							<label for="" style="width: 100%;">&nbsp;</label>
+																							<button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Descargar Excel Liquimp" @click="exportLiquimp()"><i class="fas fa-cloud-download-alt"></i> Excel</button>
+																					</div>
+																			</div>
+																			<div class="col-sm-3">
+																					<div class="form-group">
+																							<label for="" style="width: 100%;">&nbsp;</label>
+																							<button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Descargar Excel Bodega" @click="exportCellar()"><i class="fas fa-cloud-download-alt"></i> Excel Bodega</button>
+																					</div>
+																			</div>
+																	</div>
+																</div>
                                 <div class="row"><div class="hr-line-dashed"></div></div>
                                 <div class="row" v-if="!close">
                                 		<div class="col-sm-2">
@@ -564,36 +545,36 @@
 						}
 	    },
 	    mounted() {
-						this.close = this.documento.close_document;
-		      	$('#document_type').val('consolidado');
-		      	$('.printDocument').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/consolidado');
-		      	$('.printDocumentGuias').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/consolidado_guias');
-		      	$('.printDocumentGuiasCuba').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/consolidado_guias_cuba');
-						this.getDataDetail();
-			      this.getTransportes();
-						if(this.documento.ciudad_id != null){
-							this.localizacion_id = {
-								id: this.documento.ciudad_id,
-								name: this.documento.ciudad,
-								pais: this.documento.pais,
-								pais_id: this.documento.pais_id
-							}
-							this.disabled_city = true;
-						}
-						if(this.documento.central_destino_id != null){
-							this.central_destino_id = {id: this.documento.central_destino_id, name: this.documento.central_destino};
-							this.disabled_agencia = true;
-						}
-						if(this.documento.transporte_id != null){
-							this.transporte_id = {id: this.documento.transporte_id, nombre: this.documento.transporte}
-							this.disabled_transporte = true;
-						}
-						if(this.documento.observaciones != null){
-							this.observacion = this.documento.observaciones;
-						}
-						if(this.documento.observaciones != null){
-							this.tipo_consolidado = this.documento.tipo_consolidado;
-						}
+				this.getSelectBranch();
+				this.getDataDetail();
+				this.getTransportes();
+				this.close = this.documento.close_document;
+      	$('#document_type').val('consolidado');
+      	$('.printDocument').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/consolidado');
+      	$('.printDocumentGuias').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/consolidado_guias');
+      	$('.printDocumentGuiasCuba').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/consolidado_guias_cuba');
+				let me = this;
+				setTimeout(function() {
+					if(me.documento.ciudad_id != null){
+						me.city_selected_s = me.documento.ciudad;
+						me.localizacion_id = me.documento.ciudad_id;
+						me.disabled_city = true;
+					}
+					if(me.documento.central_destino_id != null){
+						me.central_destino_id = me.documento.central_destino_id;
+						me.disabled_agencia = true;
+					}
+					if(me.documento.transporte_id != null){
+						me.transporte_id = me.documento.transporte_id;
+						me.disabled_transporte = true;
+					}
+					if(me.documento.observaciones != null){
+						me.observacion = me.documento.observaciones;
+					}
+					if(me.documento.observaciones != null){
+						me.tipo_consolidado = me.documento.tipo_consolidado;
+					}
+				}, 1500);
 		},
 		created(){
 			/* CUSTOM MESSAGES VE-VALIDATOR*/
@@ -637,6 +618,7 @@
 						show_buttons: true,
 						close: false,
 						localizacion_id: null,
+						city_selected_s: null,
 						ciudades: [],
 						tipo_consolidado: 'COURIER',
 						num_bolsa_selected: 0,
@@ -645,6 +627,15 @@
 	        }
 	    },
 		methods: {
+				setCity(data){
+          this.localizacion_id = data.id;
+          this.pais_id = data.pais_id;
+        },
+				getSelectBranch: function(){
+					axios.get('/agencia/getSelectBranch').then(response => {
+						this.branchs = response.data;
+					});
+				},
 				printGroup(param){
 					window.open('/impresion-group/pdfConsolidadoGroup/' + this.documento.id + '/guia/' + this.num_bolsa_selected, '_blank');
 				},
@@ -657,18 +648,6 @@
 				printLabelBagModal(){
 					$('#modalPrintLabels').modal('show');
 				},
-				onSearch(search, loading) {
-					loading(true);
-					this.search(loading, search, this);
-				},
-				search: _.debounce((loading, search, vm) => {
-					fetch(
-						`/casillero/vueSelectCiudad/${escape(search)}`
-					).then(res => {
-						res.json().then(json => (vm.ciudades = json.items));
-						loading(false);
-					});
-				}, 1000),
 	      agruparGuiasConsolidado: function(){
 	          $('#modalagrupar').modal('hide');
 	          let me = this;
@@ -708,8 +687,8 @@
 				},
 				getTransportes: function(){
 					let me = this;
-			        axios.get('../../administracion/5/all').then(function (response) {
-			            me.transportes = response.data.data;
+			        axios.get('../../administracion/5/getSelect').then(function (response) {
+			            me.transportes = response.data;
 			        }).catch(function (error) {
 			        	console.log(error);
 			            toastr.warning('Error.');
@@ -752,7 +731,7 @@
 						    processing: true,
 						    serverSide: true,
 						    searching: true,
-			                ajax: 'getAllGuiasDisponibles/'+ me.localizacion_id.pais_id+'/'+me.transporte_id.id,
+			                ajax: 'getAllGuiasDisponibles/'+ me.pais_id+'/'+me.transporte_id,
 			                columns: [{
 			                    "render": function (data, type, full, meta) {
 				                	return '<div class="checkbox checkbox-success"><input type="checkbox" data-numguia="' + full.num_guia + '" id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '"></label></div>';
@@ -795,9 +774,9 @@
 			            var me = this;
 			            var rowData = {
 			                'document_type': $('#document_type').val(),
-			                'ciudad_id': me.localizacion_id.id,
-			                'central_destino_id': me.central_destino_id.id,
-	                    'transporte_id': me.transporte_id.id,
+			                'ciudad_id': me.localizacion_id,
+			                'central_destino_id': me.central_destino_id,
+	                    'transporte_id': me.transporte_id,
 			                'observacion': me.observacion,
 			                'tipo_consolidado': me.tipo_consolidado,
 			            }
@@ -854,7 +833,7 @@
 	                    toastr.options.closeButton = true;
 	                }else{
 	                	if(this.validateForm()){
-							axios.get('buscarGuias/' + this.num_guia + '/'+ this.num_bolsa + '/'+ this.localizacion_id.pais_id).then(response => {
+							axios.get('buscarGuias/' + this.num_guia + '/'+ this.num_bolsa + '/'+ this.pais_id).then(response => {
 				                if(response.data.code === 200){
 				                	var table = $('#tbl-consolidado').DataTable();
 									if (!table.data().count()) {
@@ -889,18 +868,6 @@
 				increaseBoxes(){
 					this.num_bolsa = parseInt(this.num_bolsa)+1;
 				},
-				onSearchBranch(search, loading) {
-			      loading(true);
-			      this.searchBranch(loading, search, this);
-			    },
-			    searchBranch: _.debounce((loading, search, vm) => {
-			      fetch(
-			        `../vueSelectTransportadorMaster/${escape(search)}`
-			      ).then(res => {
-			        res.json().then(json => (vm.branchs = json.items));
-			        loading(false);
-			      });
-			    }, 350),
 				getDataDetail(){
 						let me=this;
 						var href_print_label = '';
@@ -937,7 +904,7 @@
 																			error = 'text-danger'
 																		}
 		                                if(me.app_type === 'courier'){
-		                                    if(me.localizacion_id.pais_id != pais_id_config){
+		                                    if(me.pais_id != pais_id_config){
 		                                        return '<span id="num_guia'+full.id+'" class="'+error+'">' + full.num_warehouse + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" role="button" \n\
 		                                            data-html="true" \n\
 		                                            data-toggle="popover" \n\
@@ -1022,7 +989,7 @@
 		                      "render": function (data, type, full, meta) {
 		                          var btn_delete = '';
 		                          var document_print = '';
-		                          if(me.localizacion_id.pais_id != pais_id_config){
+		                          if(me.pais_id != pais_id_config){
 		                              href_print_label = "../../impresion-documento-label/"+ full.documento_id + "/warehouse/"+full.documento_detalle_id+"/consolidado";
 																	document_print = "warehouse";
 		                          }else{

@@ -122,7 +122,7 @@ class Controller extends BaseController
                 'c.descripcion AS depto',
                 'd.descripcion AS pais',
             ])->where([
-            ['a.id', Auth::user()->agencia_id],
+            ['a.id', $id],
             ['a.deleted_at', '=', null],
         ])->first();
     }

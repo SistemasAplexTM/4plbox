@@ -144,7 +144,7 @@
         <modalconsignee-component></modalconsignee-component>
         <modalarancel-component></modalarancel-component>
         <modalcargosadd-component :showmodal="showmodalAdd"></modalcargosadd-component>
-        <products-cuba-component :id_document="{{ $documento->id }}" :points="total_points" :data_p="data_points" @get="getProductsCuba($event)"></products-cuba-component>
+        <products-cuba-component v-if="mostrar.includes(25)" :id_document="{{ $documento->id }}" :points="total_points" :data_p="data_points" @get="getProductsCuba($event)"></products-cuba-component>
 
         <form class="" id="formDocumento" name="formDocumento" class=" form-horizontal" role="form" action="{{ url('documento/updatedDocument') }}/{{  $documento->id }}" method="post">
                 {{ csrf_field() }}
