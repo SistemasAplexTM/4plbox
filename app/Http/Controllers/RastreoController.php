@@ -60,7 +60,7 @@ class RastreoController extends Controller
                 ['c.deleted_at', null],
                 ['b.view_client', 1],
             ])
-            ->where(function ($query) use ($idStatus, $data, $user_id) {
+            ->where(function ($query) use ($idStatus, $data) {
                 if($idStatus != null && $idStatus != 'null'){
                   $query->where("a.status_id", $idStatus);
                 }else{

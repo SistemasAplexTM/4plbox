@@ -45,7 +45,7 @@ class PrealertaController extends Controller
     {
         try {
             $dataUser = Consignee::select('id')->where('correo', $request->email)->first();
-            if (count($dataUser) == 0) {
+            if (!$dataUser) {
                 /* ENVIAR EMAIL */
                 $plantilla = $this->getDataEmailPlantillaById(4);
                 if (isset($plantilla->mensaje) and $plantilla->mensaje != '') {
@@ -74,7 +74,7 @@ class PrealertaController extends Controller
                 "status" => 200,
             );
             return $answer;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $error = '';
             // if (isset($e->errorInfo)) {
             //     foreach ($e->errorInfo as $key => $value) {
@@ -222,7 +222,7 @@ class PrealertaController extends Controller
         try {
             $data      = Prealerta::where('tracking', $request->element)->first();
             $dataTrack = DB::table('tracking')->select('codigo')->where('codigo', $request->element)->first();
-            if (count($data) > 0 || count($dataTrack) > 0) {
+            if ($data || $dataTrack) {
                 $answer = array(
                     "valid"   => false,
                     "message" => "El registro ya se encuentra registrado en nuestra base de datos.",

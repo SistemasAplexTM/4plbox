@@ -32,4 +32,6 @@ Route::group(['prefix' => 'user'], function() {
 });
 Route::group(['middleware' => 'auth:api'], function(){
   Route::get('rastreo/getStatusReport/{data}/{idStatus?}/{user_id?}', 'RastreoController@getStatusReport');
+  Route::get('getAllWarehouse/{user_id?}', 'CasilleroApiController@getAllWarehouse');
+  Route::get('getWarehouse/{warehouse}/{idStatus?}', 'CasilleroApiController@getWarehouse');
 });

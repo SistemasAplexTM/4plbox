@@ -17,8 +17,7 @@
     "laravel-mix": "^2.1.14",
     "lodash": "^4.17.11",
     "vue": "^2.5.17",
-    "vue-side-nav": "^2.0.0",
-    "vue-touch": "git://github.com/vuejs/vue-touch.git#next"
+    "vue-side-nav": "^2.0.0"
   },
   "dependencies": {
     "ajv": "^6.5.3",
