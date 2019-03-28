@@ -1050,6 +1050,7 @@
 																		for (var i = 0; i < datos.length; i++) {
 																			me.cant_bags = (parseInt(me.cant_bags) < parseInt(datos[i].num_bolsa)) ? datos[i].num_bolsa : me.cant_bags;
 																		}
+																		me.bags = [];
 																		for (var i = 0; i < parseInt(me.cant_bags) + 1; i++) {
 																			if(i === 0){
 																				me.bags.push({value: i, label: 'Todas'});
