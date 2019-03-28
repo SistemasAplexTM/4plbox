@@ -558,6 +558,7 @@
 							if(me.documento.ciudad_id != null){
 								me.city_selected_s = me.documento.ciudad;
 								me.localizacion_id = me.documento.ciudad_id;
+								me.pais_id = me.documento.pais_id;
 								me.disabled_city = true;
 							}
 							if(me.documento.central_destino_id != null){
