@@ -545,36 +545,37 @@
 						}
 	    },
 	    mounted() {
-				this.getSelectBranch();
-				this.getDataDetail();
-				this.getTransportes();
-				this.close = this.documento.close_document;
-      	$('#document_type').val('consolidado');
-      	$('.printDocument').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/consolidado');
-      	$('.printDocumentGuias').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/consolidado_guias');
-      	$('.printDocumentGuiasCuba').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/consolidado_guias_cuba');
-				let me = this;
-				setTimeout(function() {
-					if(me.documento.ciudad_id != null){
-						me.city_selected_s = me.documento.ciudad;
-						me.localizacion_id = me.documento.ciudad_id;
-						me.disabled_city = true;
-					}
-					if(me.documento.central_destino_id != null){
-						me.central_destino_id = me.documento.central_destino_id;
-						me.disabled_agencia = true;
-					}
-					if(me.documento.transporte_id != null){
-						me.transporte_id = me.documento.transporte_id;
-						me.disabled_transporte = true;
-					}
-					if(me.documento.observaciones != null){
-						me.observacion = me.documento.observaciones;
-					}
-					if(me.documento.observaciones != null){
-						me.tipo_consolidado = me.documento.tipo_consolidado;
-					}
-				}, 1500);
+						this.getSelectBranch();
+						this.getDataDetail();
+						this.getTransportes();
+						this.close = this.documento.close_document;
+						$('#document_type').val('consolidado');
+						$('.printDocument').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/consolidado');
+						$('.printDocumentGuias').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/consolidado_guias');
+						$('.printDocumentGuiasCuba').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/consolidado_guias_cuba');
+						let me = this;
+						setTimeout(function() {
+							if(me.documento.ciudad_id != null){
+								me.city_selected_s = me.documento.ciudad;
+								me.localizacion_id = me.documento.ciudad_id;
+								me.pais_id = me.documento.pais_id;
+								me.disabled_city = true;
+							}
+							if(me.documento.central_destino_id != null){
+								me.central_destino_id = me.documento.central_destino_id;
+								me.disabled_agencia = true;
+							}
+							if(me.documento.transporte_id != null){
+								me.transporte_id = me.documento.transporte_id;
+								me.disabled_transporte = true;
+							}
+							if(me.documento.observaciones != null){
+								me.observacion = me.documento.observaciones;
+							}
+							if(me.documento.observaciones != null){
+								me.tipo_consolidado = me.documento.tipo_consolidado;
+							}
+						}, 1500);
 		},
 		created(){
 			/* CUSTOM MESSAGES VE-VALIDATOR*/
@@ -1040,90 +1041,93 @@
 					          { "targets": [ 10,11,12 ], visible: false },
 					        ],
 		              "drawCallback": function () {
-										var api = this.api();
-										let datos = api.rows( {page:'current'} ).data();
-										let cont = 0;
+																	var api = this.api();
+																	let datos = api.rows( {page:'current'} ).data();
+																	let cont = 0;
 
-										// SABER LA CANTIDAD DE BOLSAS DEL CONSOLIDADO
-										for (var i = 0; i < datos.length; i++) {
-											me.cant_bags = (parseInt(me.cant_bags) < parseInt(datos[i].num_bolsa)) ? datos[i].num_bolsa : me.cant_bags;
-										}
-										for (var i = 0; i < parseInt(me.cant_bags) + 1; i++) {
-											if(i === 0){
-												me.bags.push({value: i, label: 'Todas'});
-											}else{
-												me.bags.push({value: i, label: 'Bolsa ' + i});
-											}
-										}
+																	// SABER LA CANTIDAD DE BOLSAS DEL CONSOLIDADO
+																	if(datos.length > 0){
+																		for (var i = 0; i < datos.length; i++) {
+																			me.cant_bags = (parseInt(me.cant_bags) < parseInt(datos[i].num_bolsa)) ? datos[i].num_bolsa : me.cant_bags;
+																		}
+																		me.bags = [];
+																		for (var i = 0; i < parseInt(me.cant_bags) + 1; i++) {
+																			if(i === 0){
+																				me.bags.push({value: i, label: 'Todas'});
+																			}else{
+																				me.bags.push({value: i, label: 'Bolsa ' + i});
+																			}
+																		}
+																	}
 
-										if(app_type === 'courier'){
-											for (var i = 0; i < datos.length; i++) {
-												// VALIDACION POSICION ARANCELARIA
-												if(datos[i].pa == null){
-													$('#num_guia' + datos[i].id).addClass('text-danger');
-													$('#pa' + datos[i].id).html('No Datos').addClass('text-danger');
-													cont++;
-												}else{
-														$('#pa' + datos[i].id).removeClass('text-danger');
-														if(datos[i].flag_peso == null && datos[i].flag_declarado == null){
-															if(parseFloat(datos[i].declarado2) == 0 || parseFloat(datos[i].peso2) == 0){
-																$('#num_guia' + datos[i].id).addClass('text-danger');
-																cont++;
-															}else{
-																$('#num_guia' + datos[i].id).removeClass('text-danger');
-															}
-														}else{
-															cont++;
-														}
-												}
-											}
-											if(cont === 0 && datos.length > 0){
-												me.show_buttons = true;
-											}else{
-												me.show_buttons = false;
-											}
-										}
+																	if(app_type === 'courier'){
+																		for (var i = 0; i < datos.length; i++) {
+																			// VALIDACION POSICION ARANCELARIA
+																			if(datos[i].pa == null){
+																				$('#num_guia' + datos[i].id).addClass('text-danger');
+																				$('#pa' + datos[i].id).html('No Datos').addClass('text-danger');
+																				cont++;
+																			}else{
+																					$('#pa' + datos[i].id).removeClass('text-danger');
+																					if(datos[i].flag_peso == null && datos[i].flag_declarado == null){
+																						if(parseFloat(datos[i].declarado2) == 0 || parseFloat(datos[i].peso2) == 0){
+																							$('#num_guia' + datos[i].id).addClass('text-danger');
+																							cont++;
+																						}else{
+																							$('#num_guia' + datos[i].id).removeClass('text-danger');
+																						}
+																					}else{
+																						cont++;
+																					}
+																			}
+																		}
+																		if(cont === 0 && datos.length > 0){
+																			me.show_buttons = true;
+																		}else{
+																			me.show_buttons = false;
+																		}
+																	}
 
 
-										if(!me.close){
-											$('.edit, .delete').css('opacity','0');
-										}else{
-											$('.edit, .delete').css('opacity','0');
-										}
-                    /* EDITABLE FIELD */
-                    if (me.permissions.editDetail && !me.close) {
-                        $(".td_edit").editable({
-                            ajaxOptions: {
-                                type: 'post',
-                                dataType: 'json'
-                            },
-                            url: "updateDetailConsolidado",
-                            validate:function(value){
-                                if($.trim(value) == ''){
-                                    return 'Este campo es obligatorio!';
-                                }
-                            },
-                            success: function(response, newValue) {
-                                me.updateTableDetail();
-                            }
-                        });
-                    }
-                    /* POPOVER PARA LAS GUIAS AGRUPADAS (BADGED) */
-                    $(".pop").popover({ trigger: "manual" , html: true})
-                        .on("mouseenter", function () {
-                            var _this = this;
-                            $(this).popover("show");
-                            $(".popover").on("mouseleave", function () {
-                                $(_this).popover('hide');
-                            });
-                        }).on("mouseleave", function () {
-                            var _this = this;
-                            setTimeout(function () {
-                                if (!$(".popover:hover").length) {
-                                    $(_this).popover("hide");
-                                }
-                            }, 300);
-                    });
+																	if(!me.close){
+																		$('.edit, .delete').css('opacity','0');
+																	}else{
+																		$('.edit, .delete').css('opacity','0');
+																	}
+							                    /* EDITABLE FIELD */
+							                    if (me.permissions.editDetail && !me.close) {
+							                        $(".td_edit").editable({
+							                            ajaxOptions: {
+							                                type: 'post',
+							                                dataType: 'json'
+							                            },
+							                            url: "updateDetailConsolidado",
+							                            validate:function(value){
+							                                if($.trim(value) == ''){
+							                                    return 'Este campo es obligatorio!';
+							                                }
+							                            },
+							                            success: function(response, newValue) {
+							                                me.updateTableDetail();
+							                            }
+							                        });
+							                    }
+							                    /* POPOVER PARA LAS GUIAS AGRUPADAS (BADGED) */
+							                    $(".pop").popover({ trigger: "manual" , html: true})
+							                        .on("mouseenter", function () {
+							                            var _this = this;
+							                            $(this).popover("show");
+							                            $(".popover").on("mouseleave", function () {
+							                                $(_this).popover('hide');
+							                            });
+							                        }).on("mouseleave", function () {
+							                            var _this = this;
+							                            setTimeout(function () {
+							                                if (!$(".popover:hover").length) {
+							                                    $(_this).popover("hide");
+							                                }
+							                            }, 300);
+							                    });
                   },
 					        "footerCallback": function (row, data, start, end, display) {
 			                    var api = this.api(), data;
