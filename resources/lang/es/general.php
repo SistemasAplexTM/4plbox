@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'freight' => 'Flete',
     //resources/views/templates/aplexConfig
     'general' => 'General',
     'configuration' => 'Configuración',
@@ -384,7 +385,7 @@ return [
      'customs'=>'Aduanas',
      'there_is_no_data'=>'No hay datos',
      'total_bag'=>'Total bolsas',
-     'total_guides'=>'Total guidas',
+     'total_guides'=>'Total guias',
      'total_pieces'=>'Total piezas',
      'total_weight'=>'Total peso',
 

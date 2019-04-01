@@ -201,16 +201,16 @@
                                     	<table id="tbl-consolidado" class="table table-striped table-hover table-bordered dataTable" style="width: 100%;margin-top: 30px;">
                                     		<thead>
 						                                <tr>
-						                                    <th><i class="fa fa-cubes"></i></th>
+						                                    <th style="width: 20px;"><i class="fa fa-cubes"></i></th>
 						                                    <th>#Guia/WRH</th>
 						                                    <th>Remitente</th>
 						                                    <th>Destinatario</th>
 						                                    <th>P.A</th>
 						                                    <th>Descripción</th>
-						                                    <th>Dec.</th>
-		                                            <th>Lb</th>
-						                                    <th>Lb R</th>
-						                                    <th></th>
+						                                    <th style="width: 40px;">Dec.</th>
+		                                            <th style="width: 40px;">Lb</th>
+						                                    <th style="width: 40px;">Lb R</th>
+						                                    <th style="width: 20px;"></th>
 						                                </tr>
 						                            </thead>
 						                            <tbody>
@@ -220,8 +220,8 @@
 					                                    <th style="text-align:right;font-size: 25px;" colspan="6">Totales de esta página:</th>
 					                                    <th id="Tdeclarado"></th>
 		                                          <th id="Tpeso"></th>
-					                                    <th id="TpesoR"></th>
-					                                    <th id="TpesoK"></th>
+					                                    <th id="TpesoR" colspan="2"></th>
+					                                    <!-- <th id="TpesoK"></th> -->
 					                                </tr>
 						                            </tfoot>
                                     	</table>
@@ -1024,19 +1024,20 @@
 		                                '</div>';
 		                          // return btn_invoice + btn_label + btn_delete;
 		                          return btn_group;
-		                      }
+		                      },
+
 		                  },
 		                  {data: 'contenido2', name: 'contenido2'},
 		                  {data: 'peso2', name: 'peso2'},
 		                  {data: 'declarado2', name: 'declarado2'},
 					        ],
 					        'columnDefs': [
-					        	// { className: "text-center", "targets": [ 0 ], width: '5%', },
+					        	{ className: "text-center", "targets": [ 0 ], width: '20px', },
 					        	{ "targets": [ 1 ], width: '10%'},
 					        	{ "targets": [ 2,3 ]},
 					        	{ className: "text-center", "targets": [ 4 ], width: 80 },
 					        	// { "targets": [ 5 ],  width: '20%'},
-					         	// { className: "text-center", "targets": [ 6,7,8 ],  },
+					         	{ "targets": [ 6,7,8 ], width: '40px' },
 		                // { className: "text-center", "targets": [ 9 ],  },
 					          { "targets": [ 10,11,12 ], visible: false },
 					        ],
@@ -1178,10 +1179,10 @@
 		                         }
 
 			                    /*Update footer formatCurrency()*/
-		                      $(api.column(6).footer()).html('<spam id="totalDeclarado">$ ' + declarado + '</spam><br>USD');
+		                      $(api.column(6).footer()).html('<spam id="totalDeclarado">' + declarado + '</spam><br>USD');
 			                    $(api.column(7).footer()).html('<spam id="totalPeso">' + libras + ' (Lbs)<br><spam id="totalPesoK">' + isInteger(pesoK) + ' (Kl)</spam></spam>');
-			                    $(api.column(8).footer()).html('<spam id="totalPesoR">' + librasR + ' (Lbs)<br><spam id="totalPesoKR">' + isInteger(pesoKR) + ' (Kl)</spam></spam>');
-			                    $(api.column(9).footer()).html('<spam id="diferenciaL" style="color:'+color1+'">Dif: ' + isInteger(diferenciaL) + ' (Lbs)</spam><br><spam id="diferenciaK" style="color:'+color2+'">Dif: ' + isInteger(diferenciaK) + ' (Kl)</spam>');
+			                    $(api.column(8).footer()).html('<spam id="totalPesoR">' + librasR + ' (Lbs)<br><spam id="totalPesoKR">' + isInteger(pesoKR) + ' (Kl)</spam>');
+			                    // $(api.column(9).footer()).html('<spam id="diferenciaL" style="color:'+color1+'">Dif: ' + isInteger(diferenciaL) + ' (Lbs)</spam><br><spam id="diferenciaK" style="color:'+color2+'">Dif: ' + isInteger(diferenciaK) + ' (Kl)</spam>');
 			                },
 					    }).on('xhr.dt', function ( e, settings, json, xhr ) {
 

@@ -842,6 +842,11 @@ class DocumentoController extends Controller
     public function insertDetail(Request $request)
     {
         try {
+            $pa = null;
+            $config = $this->getConfig('posicion_arancelaria');
+            if($config){
+              $pa = ($config->value != '') ? $config->value : null;
+            }
             for ($z=1; $z <= $request->contador; $z++) {
                 $data = (new DocumentoDetalle)->fill($request->all());
 
@@ -860,6 +865,11 @@ class DocumentoController extends Controller
                 }
                 if ($data->tracking == '') {
                     $data->tracking = null;
+                }
+
+                if($data->arancel_id2 == ''){
+                  $data->posicion_arancelaria_id = $pa;
+                  $data->arancel_id2 = $pa;
                 }
 
                 /* OBTENER EL PREFIJO DE LA CIUDAD DEL CONSIGNEE PARA HACER EL NÚMERO DE GUIA */
@@ -1384,6 +1394,7 @@ class DocumentoController extends Controller
                     if ($document === 'consolidado_guias') {
                         $detalleConsolidado = DB::table('consolidado_detalle as a')
                             ->leftJoin('documento_detalle as b', 'a.documento_detalle_id', '=', 'b.id')
+                            ->leftJoin('posicion_arancelaria as pa', 'b.arancel_id2', 'pa.id')
                             ->leftJoin('shipper as c', 'b.shipper_id', '=', 'c.id')
                             ->leftJoin('consignee as d', 'b.consignee_id', '=', 'd.id')
                             ->leftJoin('localizacion as e', 'c.localizacion_id', '=', 'e.id')
@@ -1448,6 +1459,7 @@ class DocumentoController extends Controller
                                 'j.peso2',
                                 'b.contenido2',
                                 'b.liquidado',
+                                'pa.pa',
                                 DB::raw('(SELECT
                                     ROUND(Sum(b.peso2) * 0.453592) AS peso_total
                                   FROM
@@ -2379,8 +2391,6 @@ class DocumentoController extends Controller
                         'pdf' => $this->pdf($id_documet, 'warehouse'), 'pdf_name' => $objDocumento->num_warehouse
                     );
                 }
-                // print_r($from_self);
-                // exit();
 
                 return Mail::to(trim($objConsignee->correo))
                 // ->cc($moreUsers)
