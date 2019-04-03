@@ -7,12 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Master extends Model
 {
     public $table = "master";
-    
+
     protected $fillable = [
         'aerolinea_inventario_id',
         'shipper_id',
+        'shipper',
         'consignee_id',
+        'consignee',
         'carrier_id',
+        'carrier',
         'agencia_id',
         'aerolineas_id',
         'aeropuertos_id',
