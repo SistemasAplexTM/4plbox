@@ -235,6 +235,7 @@ class MasterController extends Controller
                 'a.total_other_charge_due_agent',
                 'a.total_other_charge_due_carrier',
                 'a.shipper_id',
+                'a.shipper',
                 'a.consignee_id',
                 'a.carrier_id',
                 'b.descripcion',

@@ -111,13 +111,14 @@ function datatableDocument(t, tipo_doc_id, status_id){
           data: 'agencia',
           name: 'e.descripcion',
           searchable: false,
+          visible: (app_client == 'jyg') ? false : true
           // visible: (show_agency != null && show_agency != 0) ? false : true
       }, {
           sortable: false,
           className: 'actions_btn',
           "render": actionsButtons,
           searchable: false,
-          width: 180
+          width: 150
       }],
       'columnDefs': [{
           className: "text-center",
@@ -273,7 +274,11 @@ function numDocument(data, type, full, meta) {
       classText = color_badget;
       var status = '<div style="color:'+full.estatus_color+'"><small>' + ((full.estatus == null) ? '' : full.estatus) + '</small></div>';
       var st = ((full.estatus == null) ? '' : full.estatus);
-      return '<span class="" data-toggle="tooltip" title="'+st+'"><i class="fa fa-'+ ((full.estatus == null) ? 'box' : ((full.agrupadas > 0) ? 'boxes' : 'box-open'))+' fa-xs" style="color:'+full.estatus_color+'"></i> ' + ((codigo == null) ? full.warehouse : codigo )+ '</span><a style="float: right;cursor:pointer;" class="badge badge-'+ classText +' pop" role="button" data-html="true" data-toggle="popover" data-trigger="hover" title="<b>Documentos agrupadas</b>" data-content="'+((groupGuias == null) ? '' : groupGuias )+'" ' + group + '>'+ ((full.agrupadas == null) ? '' : full.agrupadas)+'</a>';
+      var mintic = '';
+      if(full.mintic != '' && full.mintic != null){
+        mintic = '<div><small style="color: #23c6c8;">' + full.mintic + '</small></div>';
+      }
+      return '<span class="" data-toggle="tooltip" title="'+st+'"><i class="fa fa-'+ ((full.estatus == null) ? 'box' : ((full.agrupadas > 0) ? 'boxes' : 'box-open'))+' fa-xs" style="color:'+full.estatus_color+'"></i> ' + ((codigo == null) ? full.warehouse : codigo )+ '</span><a style="float: right;cursor:pointer;" class="badge badge-'+ classText +' pop" role="button" data-html="true" data-toggle="popover" data-trigger="hover" title="<b>Documentos agrupadas</b>" data-content="'+((groupGuias == null) ? '' : groupGuias )+'" ' + group + '>'+ ((full.agrupadas == null) ? '' : full.agrupadas)+'</a> ' + mintic;
     }else{
       icon = 'boxes';
       if(full.transporte_id == 7){

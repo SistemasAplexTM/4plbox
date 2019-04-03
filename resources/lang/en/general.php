@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'freight' => 'Freight',
     //resources/views/templates/aplexConfig
     'configuration' => 'Configuration',
 
@@ -371,7 +372,7 @@ return [
     'cargo_number'=>'Cargo number',
     'flight_date'=>'Flight date',
     'reference_number'=>'Reference number',
-    'pieces'=>'Piezas',
+    'pieces'=>'Pieces',
     'declared'=>'Declared',
     'bag'=>'Bag',
     'customs'=>'customs',
@@ -400,7 +401,7 @@ return [
 
     //guiaPdf
 
-    'identification_card'=>'Identification card',
+    'identification_card'=>'Id. card',
     'shipping_type'=>'Shipping type',
     'shipment'=>'Shipment',
     'observations'=>'Observations',

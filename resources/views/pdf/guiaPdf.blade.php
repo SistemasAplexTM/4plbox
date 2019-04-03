@@ -142,7 +142,7 @@
                                 </tr>
                                 <tr height="20px">
                                     <td><b>@lang('general.address'):</b></td>
-                                    <td colspan="3"><div id="dir" style="height: 28px;">{{ ((isset($documento->ship_dir) and $documento->ship_dir != '') ? $documento->ship_dir : '') }}</div></td>
+                                    <td colspan="3" style="height: 28px;"><div id="dir" style="">{{ ((isset($documento->ship_dir) and $documento->ship_dir != '') ? $documento->ship_dir : '') }}</div></td>
 
                                 </tr>
                                 <tr height="20px">
@@ -159,7 +159,7 @@
                                 </tr>
                                 <tr height="20px">
                                     <td><b>@lang('general.email'):</b></td>
-                                    <td colspan="3" style="font-size: 10px;"> {{ ((isset($documento->ship_email) and $documento->ship_email != '') ? $documento->ship_email : '') }} </td>
+                                    <td colspan="3" style="font-size: 10px;"> {{ ((isset($documento->ship_email) and $documento->ship_email != '') ? $documento->ship_email : '&nbsp;') }} </td>
                                 </tr>
                             </table>
                         </div>
@@ -174,7 +174,7 @@
                                 </tr>
                                 <tr height="20px">
                                     <td><b>@lang('general.address'):</b></td>
-                                    <td colspan="3"><div id="dir" style="height: 28px;">{{ ((isset($documento->cons_dir) and $documento->cons_dir != '') ? $documento->cons_dir : '') }}</div>  </td>
+                                    <td colspan="3" style="height: 28px;"><div id="dir" style="">{{ ((isset($documento->cons_dir) and $documento->cons_dir != '') ? $documento->cons_dir : '') }}</div>  </td>
                                 </tr>
                                 <tr height="20px">
                                     <td><b>@lang('general.phone'):</b></td>
@@ -202,11 +202,11 @@
                             <div id="apDiv7">
                                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                     <tr>
-                                        <td width="10%" height="20"><b>@lang('general.shipping_type'):</b></td>
+                                        <td width="16%" height="20"><b>@lang('general.shipping_type'):</b></td>
                                         <td width="10%"><span style="font-size:12px; font-weight:bold"> {{ ((isset($documento->tipo_embarque) and $documento->tipo_embarque != '') ? $documento->tipo_embarque : '') }} </span></td>
-                                        <td width="13%"><b>@lang('general.declared'):</b></td>
+                                        <td width="10%"><b>@lang('general.declared'):</b></td>
                                         <td width="15%"> {{ $total_declarado }}</td>
-                                        <td width="13%"><b>@lang('general.insurance'):</b></td>
+                                        <td width="10%"><b>@lang('general.insurance'):</b></td>
                                         <td width="14%"> {{ ((isset($documento->seguro) and $documento->seguro != '') ? $documento->seguro : 0) }} </td>
                                         <td width="10%"><b>@lang('general.shipment'):</b></td>
                                         <td width="15%"><span style="font-size:12px; font-weight:bold"> {{ ((isset($documento->tipo_embarque) and $documento->tipo_embarque != '') ? $documento->tipo_embarque : '') }} </span></td>
@@ -292,7 +292,7 @@
                             <table width="100%" border="1" cellpadding="0" cellspacing="1" bordercolor="#000000" style="border-collapse:collapse;">
                                 <tr>
                                     <th width="300px" rowspan="2" scope="col"><span style="font-size:20px; color:#666">Recibe</span></th>
-                                    <th width="" height="10" bgcolor="lightgray" scope="col" style="font-size: 10px;">PIEZAS</th>
+                                    <th width="" height="10" bgcolor="lightgray" scope="col" style="font-size: 10px;">@lang('general.pieces')</th>
                                     <th width="" bgcolor="lightgray" scope="col" style="font-size: 10px;">@lang('general.pounds')</th>
                                     <th width="" bgcolor="lightgray" scope="col" style="font-size: 10px;">VOL. LBS</th>
                                     <th width="" bgcolor="lightgray" scope="col" style="font-size: 10px;">KLS</th>
@@ -321,7 +321,7 @@
                                     <div id="apDiv10">
                                         <table width="100%" border="0" cellspacing="1" cellpadding="0">
                                             <tr>
-                                                <td><b>@lang('general.value'): (Flete+Impuesto)</b></td>
+                                                <td><b>@lang('general.value'): (@lang('general.freight')+@lang('general.tax'))</b></td>
                                                 <?php $sub = ($total_declarado * $documento->impuesto / 100) + ($total_libras * $documento->valor); ?>
                                                 <td align="right"> {{ $subtotal = number_format($sub, 2) }} </td>
                                             </tr>
@@ -340,7 +340,7 @@
                                                 <td align="right">{{ number_format($documento->cargos_add, 2) }} </td>
                                             </tr>
                                             <tr>
-                                                <td><b>Sub Total:</b></td>
+                                                <td><b>Subtotal:</b></td>
                                                 <td align="right"> {{ $total = number_format($sub + $seguro + $documento->cargos_add - $documento->descuento, 2) }}</td>
                                             </tr>
                                         </table>

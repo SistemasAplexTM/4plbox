@@ -115,11 +115,11 @@
     </tr>
     <tr>
         <td colspan="2"><div id="dirAgencia">{{ $documento->agencia_dir }}</div></td>
-        <td colspan="2"><div id="masterawb">Master AWB: {{ $documento->master_id }}</div></td>
+        <td colspan="2"><div id="masterawb">Master AWB: {{ $documento->num_master }}</div></td>
     </tr>
     <tr>
         <td colspan="2"><div id="localAgencia">{{ $documento->agencia_ciudad }}, {{ $documento->agencia_depto }}. {{ $documento->agencia_zip }}</div></td>
-        <td colspan="2"><div id="numManifiesto">N° @lang('general.manifest'): {{ $documento->num_master }}</div></td>
+        <td colspan="2"><div id="numManifiesto">N° @lang('general.manifest'): {{ $documento->consecutivo }}</div></td>
     </tr>
     <tr>
         <td colspan="2"><div id="paisAgencia">{{ $documento->agencia_pais }}</div></td>
@@ -166,7 +166,7 @@
             <td style="width: 5%;"><div id="detalle">#@lang('general.bag')</div></td>
             <td style="width: 20%;"><div id="detalle">@lang('general.guide')</div></td>
             <td style=""><div id="detalle">@lang('general.shipper')</div></td>
-            <td style=""><div id="detalle">@lang('general.recipients')</div></td>
+            <td style=""><div id="detalle">@lang('general.consignee')</div></td>
             <td style="width: 10%;"><div id="detalle">@lang('general.declared')</div></td>
             <td style="width: 5%;"><div id="detalle">@lang('general.pieces')</div></td>
             <td style="width: 5%;"><div id="detalle">@lang('general.weight')</div></td>
@@ -272,7 +272,7 @@
                     </tr>
                     <tr>
                         <td style="text-align: center;font-weight: bold;">@lang('general.total_bag')</td>
-                        <td style="text-align: center;font-weight: bold;">@lang('total_guides')</td>
+                        <td style="text-align: center;font-weight: bold;">@lang('general.total_guides')</td>
                         <td style="text-align: center;font-weight: bold;"></td>
                         <td style="text-align: center;font-weight: bold;"></td>
                         <td style="text-align: center;font-weight: bold;"></td>

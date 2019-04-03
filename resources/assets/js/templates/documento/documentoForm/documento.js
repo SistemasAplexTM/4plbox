@@ -157,7 +157,7 @@ function datatableDetail(){
                 return ((pa === null) ? '' : pa) + '<a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalArancel('+full.id+', \'whgTable\')"><i class="fal fa-pencil"></i></a>';
             },
             // visible: ((objVue.mostrar.includes(16)) ? true : false),
-            visible: false,
+            // visible: false,
             width: 100
         },
         {

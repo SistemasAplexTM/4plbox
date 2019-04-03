@@ -295,11 +295,11 @@
                                     <td align="right">$ {{ $subtotal }} </td>
                                 </tr> --}}
                                 <tr>
-                                  <td><b>Flete: </b></td>
+                                  <td><b>Freight: </b></td>
                                   <td align="right">$ {{ number_format(ceil($documento->flete), 2) }} </td>
                                 </tr>
                                 <tr>
-                                  <td><b>Impuesto: </b></td>
+                                  <td><b>Tax: </b></td>
                                   <td align="right">$ {{ number_format(ceil($total_declarado * $documento->impuesto / 100), 2) }} </td>
                                 </tr>
 

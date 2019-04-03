@@ -122,6 +122,16 @@
                   </div>
                 </div>
               </div>
+              <div class="row" style="display:none;">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label for="datos_shipper">Datos</label>
+                    <div class="input-group" style="width:100%;">
+                      <textarea name="datos_shipper" v-model="datos_shipper" rows="8" style="width:100%;resize:none;"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -192,6 +202,16 @@
                   </div>
                 </div>
               </div>
+              <div class="row" style="display:none;">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label for="datos_consignee">Datos</label>
+                    <div class="input-group" style="width:100%;">
+                      <textarea name="datos_consignee" v-model="datos_consignee" rows="8" style="width:100%;resize:none;"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -258,6 +278,16 @@
                     <div class="input-group">
                       <span class="input-group-addon"><i class="fa fa-address-card"></i></span>
                       <input v-model="carrier.contacto" :disabled="!carrier.disabled" id="contacto" type="text" class="form-control" name="contacto">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row" style="display:none;">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label for="datos_carrier">Datos</label>
+                    <div class="input-group" style="width:100%;">
+                      <textarea name="datos_carrier" v-model="datos_carrier" rows="8" style="width:100%;resize:none;"></textarea>
                     </div>
                   </div>
                 </div>
@@ -691,6 +721,7 @@
           contacto: null,
           crear: false
         },
+        datos_shipper: null,
         consignee: {
           id: null,
           name: null,
@@ -699,6 +730,7 @@
           contacto: null,
           crear: false
         },
+        datos_consignee: null,
         carrier: {
           id: null,
           name: null,
@@ -707,6 +739,7 @@
           contacto: null,
           crear: false
         },
+        datos_carrier: null,
         loadingWizard: false,
         disableAerolinea: false,
         errorMsg: null,
@@ -804,10 +837,16 @@
         if (data.type) {
           if (data.type == 'c') {
             this.consignee = data;
+            this.datos_consignee = data.name + '\n' + data.direccion + '\n' +
+            data.ciudad + ', ' + data.estado + ' ' + data.pais + ' ' + data.zip + '\n' + data.telefono +  '\nContacto: ' + data.contacto;
           }else if(data.type == 'cr'){
             this.carrier = data;
+            this.datos_carrier = data.name + '\n' + data.direccion + '\n' +
+            data.ciudad + ', ' + data.estado + ' ' + data.pais + ' ' + data.zip + '\n' + data.telefono +  '\nContacto: ' + data.contacto;
           }else{
             this.shipper = data;
+            this.datos_shipper = data.name + '\n' + data.direccion + '\n' +
+            data.ciudad + ', ' + data.estado + ' ' + data.pais + ' ' + data.zip + '\n' + data.telefono +  '\nContacto: ' + data.contacto;
           }
         }else{
           if (data == 'c') {
@@ -851,8 +890,11 @@
         axios.post('/master', {
           'num_master': this.num_master,
           'shipper_id': this.shipper.id,
-          'carrier_id': this.carrier.id,
+          'shipper': this.datos_shipper,
           'consignee_id': this.consignee.id,
+          'consignee': this.datos_consignee,
+          'carrier_id': this.carrier.id,
+          'carrier': this.datos_carrier,
           'aerolinea_inventario_id': this.aerolinea_inventario_id,
           'aerolineas_id': this.aerolinea,
           'by_first_carrier': this.aerolinea_name,
@@ -893,8 +935,11 @@
       update: function(){
         axios.put('/master/' + this.master, {
           'shipper_id': this.shipper.id,
+          'shipper': this.datos_shipper,
           'consignee_id': this.consignee.id,
+          'consignee': this.datos_consignee,
           'carrier_id': this.carrier.id,
+          'carrier': this.datos_carrier,
           'aeropuertos_id': this.aeropuerto_salida.id,
           'aeropuertos_id_destino': this.aeropuerto_destino.id,
           'account_information': this.account_information,
@@ -925,8 +970,8 @@
           'updated_at': this.getTime()
         }).then(response => {
             toastr.success('Actualización exitosa.');
-            location.reload(true);
-            window.open("../imprimir/" + response.data.id_master + '/' + true, '_blank');
+            // location.reload(true);
+            // window.open("../imprimir/" + response.data.id_master + '/' + true, '_blank');
         });
       },
       edit(id){
@@ -937,13 +982,16 @@
 
           this.shipper.id = response.data.data.shipper_id;
           this.shipper.name = response.data.data.nombre_shipper;
-          this.shipper.name = response.data.data.nombre_shipper;
 
           this.shipper.direccion = response.data.data.direccion_shipper;
           this.shipper.telefono = response.data.data.telefono_shipper;
           this.shipper.zip = response.data.data.zip_shipper;
           this.shipper.ciudad = response.data.data.ciudad_shipper;
           this.shipper.contacto = response.data.data.contacto_shipper;
+
+          this.datos_shipper = response.data.data.shipper;
+          this.datos_consignee = response.data.data.consignee;
+          this.datos_carrier = response.data.data.carrier;
 
           this.consignee.disabled = false;
           this.consignee.id = response.data.data.consignee_id;
