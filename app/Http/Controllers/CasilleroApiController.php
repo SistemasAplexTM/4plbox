@@ -4,12 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Prealerta;
 
 class CasilleroApiController extends Controller
 {
-    public function getAllWarehouse($user=null)
+    public function getAllWarehouse($user = null, $idStatus = null)
     {
-      $idStatus = null;
+      $columns = ['p.id',
+      'p.codigo AS num_warehouse',
+      'q.descripcion',
+      'q.color',
+      'q.icon',
+      'p.documento_detalle_id',
+      'p.fecha_status',
+      'f.contenido',
+      'f.peso',
+      DB::raw("(SELECT GROUP_CONCAT(tracking.codigo) FROM tracking WHERE tracking.documento_detalle_id = f.id) as tracking")];
+
+      $count = [DB::raw('COUNT(p.id) AS cant'), 'p.status_id'];
       $data = DB::table('status_detalle AS p')
       ->join('status AS q', 'q.id', 'p.status_id')
       ->join(DB::raw("(
@@ -34,18 +46,16 @@ class CasilleroApiController extends Controller
             ) AS f"), 'f.id_last_status', 'p.id'
         )
       ->select(
-        'p.id',
-      	'p.codigo AS num_warehouse',
-      	'q.descripcion',
-      	'q.color',
-      	'q.icon',
-      	'p.documento_detalle_id',
-      	'p.fecha_status',
-      	'f.contenido',
-      	'f.peso',
-        DB::raw("(SELECT GROUP_CONCAT(tracking.codigo) FROM tracking WHERE tracking.documento_detalle_id = f.id) as tracking")
+        ($idStatus != 'count') ? $columns : $count
         )->when($idStatus, function ($query, $idStatus) {
+          if ($idStatus != 'count') {
+            if ($idStatus == 'transito') {
+              return $query->where([["p.status_id", "<>", 7],["p.status_id", "<>", 2]]);
+            }
             return $query->where("p.status_id", $idStatus);
+          }else{
+            return $query->groupBy('p.status_id');
+          }
         })
         ->get();
 
@@ -122,7 +132,12 @@ class CasilleroApiController extends Controller
             'a.num_transportadora'
           )->get();
 
-        $answer = ['code' => 200, 'data' => $data, 'trackings' => 'datos'];
+        $trackings = DB::table('tracking AS a')
+        ->join('documento_detalle AS b', 'a.documento_detalle_id', 'b.id')
+        ->select('a.id', 'a.codigo', 'a.contenido', 'a.created_at')
+        ->where('b.num_warehouse', $warehouse)
+        ->get();
+        $answer = ['code' => 200, 'data' => $data, 'trackings' => $trackings];
 
       return $answer;
     }
@@ -130,5 +145,23 @@ class CasilleroApiController extends Controller
     public function getTrackings($value='')
     {
       // code...
+    }
+
+    public function getAllPrealert($id_agencia,$consignee_id)
+    {
+      $data = Prealerta::leftJoin('consignee as b', 'prealerta.consignee_id', 'b.id')
+      ->join('agencia as c', 'prealerta.agencia_id', 'c.id')
+      ->select('prealerta.*', 'b.nombre_full as consignee', 'c.descripcion as agencia')
+      ->where([['prealerta.deleted_at', NULL],['prealerta.recibido', 0],['prealerta.agencia_id', $id_agencia],['prealerta.consignee_id', $consignee_id]])
+      ->get();
+
+      $answer = ['code' => 200, 'data' => $data];
+      return $answer;
+    }
+
+    public function setPrealert(Request $request)
+    {
+      Prealerta::insert($request->all());
+      return $request->all();
     }
 }

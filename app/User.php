@@ -22,8 +22,8 @@ class User extends Authenticatable
         'password',
         'actived',
         'agencia_id',
-        'referido',
         'consignee_id',
+        'referido',
     ];
 
     /**
