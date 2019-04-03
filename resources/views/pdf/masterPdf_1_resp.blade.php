@@ -322,9 +322,7 @@
 					          </tr>
 					          <tr>
 					            <td colspan="2">
-												<div class=""  style="width:300px;overflow: hidden;">
-													<pre id="shipper_n" class="persons_data">{{ $data->shipper }}</pre>
-												</div>
+														<pre id="shipper_n" class="persons_data">{{ $data->shipper }}</pre>
 														{{-- <div id="shipper_n" class="persons_data"> --}}
 					                    {{-- <div>{{ $data->nombre_shipper }}</div>
 					                    <div>{{ $data->direccion_shipper }}</div>
@@ -376,9 +374,7 @@
 					          </tr>
 					          <tr>
 					            <td height="70px" colspan="2">
-												<div class=""  style="width:300px;overflow: hidden;">
 												<pre id="consignee_n" class="persons_data">{{ $data->consignee }}</pre>
-											</div>
 					                {{-- <div id="consignee_n" class="persons_data">
 					                    <div>{{ $data->nombre_consignee }}</div>
 					                    <div>{{ $data->direccion_consignee }}</div>
@@ -402,9 +398,7 @@
 					  </tr>
 					  <tr class="bottom_line" style="border-bottom: 1px solid {{ $color }};">
 					    <td height="70px" colspan="6" valign="top"><div class="text_titles_tl" style="color: {{ $color }}">Issuing Carrier's Agent Name and City</div>
-								<div class=""  style="width:300px;overflow: hidden;">
 								<pre id="carrier_n" class="persons_data_2">{{ $data->carrier }}</pre>
-							</div>
 									{{-- <div id="carrier_n" class="persons_data_2">
 	                    <div>{{ $data->nombre_carrier }}</div>
 	                    <div>{{ $data->direccion_carrier }}</div>

@@ -27,11 +27,11 @@ class TransportadorRequest extends FormRequest
             'nombre' => 'required',
             'direccion' => 'required',
             'telefono' => 'required',
-            'contacto' => 'required',
             'ciudad' => 'required',
             'estado' => 'required',
             'pais' => 'required',
-            'zip' => 'required',
+            // 'contacto' => 'required',
+            // 'zip' => 'required',
         ];
     }
     public function messages()
@@ -40,11 +40,11 @@ class TransportadorRequest extends FormRequest
             'nombre.required' => 'El :attribute es obligatorio',
             'direccion.required' => 'La :attribute es obligatoria',
             'telefono.required' => 'El :attribute es obligatorio',
-            'contacto.required' => 'El :attribute es obligatorio',
             'ciudad.required' => 'La :attribute es obligatoria',
             'estado.required' => 'El :attribute es obligatorio',
             'pais.required' => 'El :attribute es obligatorio',
-            'zip.required' => 'El :attribute es obligatorio',
+            // 'contacto.required' => 'El :attribute es obligatorio',
+            // 'zip.required' => 'El :attribute es obligatorio',
         ];
     }
 
@@ -54,11 +54,11 @@ class TransportadorRequest extends FormRequest
             'nombre' => 'Nombre',
             'direccion' => 'Dirección',
             'telefono' => 'Teléfono',
-            'contacto' => 'Contacto',
             'ciudad' => 'Ciudad',
             'estado' => 'Estado',
             'pais' => 'País',
-            'zip' => 'ZIP-code',
+            // 'contacto' => 'Contacto',
+            // 'zip' => 'ZIP-code',
         ];
     }
 }

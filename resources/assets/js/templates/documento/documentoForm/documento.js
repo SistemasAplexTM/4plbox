@@ -12,6 +12,11 @@ $(document).ready(function() {
         objVue.resetFormsShipperConsignee(0);
         objVue.resetFormsShipperConsignee(1);
     });
+    $('#modalTrackingsAdd2').on('show.bs.modal', function() {
+        setTimeout(function(){
+          $('#tracking_number').focus();
+        },700);
+    });
     /* LIMPIAR MODALES */
     $('#modalShipper').on('hidden.bs.modal', function() {
         var table = $('#tbl-modalshipper').DataTable();

@@ -92,7 +92,18 @@ class MasterController extends Controller
     {
         $master = $master;
         $consolidado_id = $consolidado_id;
-        return view('templates.master.create', compact('master', 'consolidado_id'));
+        $peso = 0;
+        if($consolidado_id != 'null' and $consolidado_id != null){
+          $peso_consolidado  = DB::table('consolidado_detalle AS a')
+          ->join('documento_detalle AS b', 'a.documento_detalle_id', 'B.id')
+          ->select(DB::raw("ROUND(Sum(b.peso2) * 0.453592) AS peso_total"))
+          ->where([['b.deleted_at', null], ['a.deleted_at', null], ['a.consolidado_id', $consolidado_id]])
+          ->first();
+          if($peso_consolidado and $peso_consolidado != null){
+            $peso = $peso_consolidado->peso_total;
+          }
+        }
+        return view('templates.master.create', compact('master', 'consolidado_id', 'peso'));
     }
     public function update(Request $request, $master)
     {
@@ -237,7 +248,9 @@ class MasterController extends Controller
                 'a.shipper_id',
                 'a.shipper',
                 'a.consignee_id',
+                'a.consignee',
                 'a.carrier_id',
+                'a.carrier',
                 'b.descripcion',
                 'b.direccion',
                 'b.responsable',

@@ -78,7 +78,7 @@
                   </div>
                 </div>
               </div>
-              <div class="row">
+              <!-- <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
                     <label for="telefono">Teléfono</label>
@@ -121,13 +121,13 @@
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="row" style="display:none;">
+              </div> -->
+              <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
                     <label for="datos_shipper">Datos</label>
                     <div class="input-group" style="width:100%;">
-                      <textarea name="datos_shipper" v-model="datos_shipper" rows="8" style="width:100%;resize:none;"></textarea>
+                      <textarea name="datos_shipper" v-model="datos_shipper" rows="6" style="width:100%;resize:none;"></textarea>
                     </div>
                   </div>
                 </div>
@@ -158,7 +158,7 @@
                   </div>
                 </div>
               </div>
-              <div class="row">
+              <!-- <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
                     <label for="telefono">Teléfono</label>
@@ -201,13 +201,13 @@
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="row" style="display:none;">
+              </div> -->
+              <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
                     <label for="datos_consignee">Datos</label>
                     <div class="input-group" style="width:100%;">
-                      <textarea name="datos_consignee" v-model="datos_consignee" rows="8" style="width:100%;resize:none;"></textarea>
+                      <textarea name="datos_consignee" v-model="datos_consignee" rows="6" style="width:100%;resize:none;"></textarea>
                     </div>
                   </div>
                 </div>
@@ -238,7 +238,7 @@
                   </div>
                 </div>
               </div>
-              <div class="row">
+              <!-- <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
                     <label for="telefono">Teléfono</label>
@@ -281,13 +281,13 @@
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="row" style="display:none;">
+              </div> -->
+              <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
                     <label for="datos_carrier">Datos</label>
                     <div class="input-group" style="width:100%;">
-                      <textarea name="datos_carrier" v-model="datos_carrier" rows="8" style="width:100%;resize:none;"></textarea>
+                      <textarea name="datos_carrier" v-model="datos_carrier" rows="6" style="width:100%;resize:none;"></textarea>
                     </div>
                   </div>
                 </div>
@@ -700,7 +700,7 @@
         amount_insurance: null,
         total_other_charge_due_agent: null,
         total_other_charge_due_carrier: null,
-        piezas: null,
+        piezas: 1,
         peso: null,
         optional_shipping_info: null,
         rate_class: '',
@@ -748,7 +748,7 @@
         editing: false
       }
     },
-    props: ["master", "consol"],
+    props: ["master", "consol", "peso_consolidado"],
     watch:{
       peso: function(){
         this.peso_cobrado = this.peso;
@@ -772,6 +772,9 @@
         this.consolidado_id ={
           id: this.consol
         };
+      }
+      if(this.peso_consolidado != 0){
+        this.peso = this.peso_consolidado;
       }
       this.getAerolineas('aerolineas');
       this.getAerolineas('aeropuertos');
@@ -838,15 +841,15 @@
           if (data.type == 'c') {
             this.consignee = data;
             this.datos_consignee = data.name + '\n' + data.direccion + '\n' +
-            data.ciudad + ', ' + data.estado + ' ' + data.pais + ' ' + data.zip + '\n' + data.telefono +  '\nContacto: ' + data.contacto;
+            data.ciudad + ', ' + data.estado + ' ' + data.pais + ' ' + ((data.zip != null) ? data.zip : '') + '\n' + data.telefono +  '\n' + ((data.contacto != null) ? 'Contacto: '+data.contacto : '');
           }else if(data.type == 'cr'){
             this.carrier = data;
             this.datos_carrier = data.name + '\n' + data.direccion + '\n' +
-            data.ciudad + ', ' + data.estado + ' ' + data.pais + ' ' + data.zip + '\n' + data.telefono +  '\nContacto: ' + data.contacto;
+            data.ciudad + ', ' + data.estado + ' ' + data.pais + ' ' + ((data.zip != null) ? data.zip : '') + '\n' + data.telefono +  '\n' + ((data.contacto != null) ? 'Contacto: '+data.contacto : '');
           }else{
             this.shipper = data;
             this.datos_shipper = data.name + '\n' + data.direccion + '\n' +
-            data.ciudad + ', ' + data.estado + ' ' + data.pais + ' ' + data.zip + '\n' + data.telefono +  '\nContacto: ' + data.contacto;
+            data.ciudad + ', ' + data.estado + ' ' + data.pais + ' ' + ((data.zip != null) ? data.zip : '') + '\n' + data.telefono +  '\n' + ((data.contacto != null) ? 'Contacto: '+data.contacto : '');
           }
         }else{
           if (data == 'c') {
@@ -970,11 +973,12 @@
           'updated_at': this.getTime()
         }).then(response => {
             toastr.success('Actualización exitosa.');
-            // location.reload(true);
-            // window.open("../imprimir/" + response.data.id_master + '/' + true, '_blank');
+            location.reload(true);
+            window.open("../imprimir/" + response.data.id_master + '/' + true, '_blank');
         });
       },
       edit(id){
+        let me = this;
         axios.get('../' + id).then(response => {
           this.disableAerolinea = true;
           this.editing = true;
@@ -988,10 +992,8 @@
           this.shipper.zip = response.data.data.zip_shipper;
           this.shipper.ciudad = response.data.data.ciudad_shipper;
           this.shipper.contacto = response.data.data.contacto_shipper;
-
-          this.datos_shipper = response.data.data.shipper;
-          this.datos_consignee = response.data.data.consignee;
-          this.datos_carrier = response.data.data.carrier;
+          this.shipper.estado = response.data.data.estado_shipper;
+          this.shipper.pais = response.data.data.pais_shipper;
 
           this.consignee.disabled = false;
           this.consignee.id = response.data.data.consignee_id;
@@ -1002,6 +1004,8 @@
           this.consignee.zip = response.data.data.zip_consignee;
           this.consignee.ciudad = response.data.data.ciudad_consignee;
           this.consignee.contacto = response.data.data.contacto_consignee;
+          this.consignee.estado = response.data.data.estado_consignee;
+          this.consignee.pais = response.data.data.pais_consignee;
 
           this.carrier.id = response.data.data.carrier_id;
           this.carrier.name = response.data.data.nombre_carrier;
@@ -1011,6 +1015,14 @@
           this.carrier.zip = response.data.data.zip_carrier;
           this.carrier.ciudad = response.data.data.ciudad_carrier;
           this.carrier.contacto = response.data.data.contacto_carrier;
+          this.carrier.estado = response.data.data.estado_carrier;
+          this.carrier.pais = response.data.data.pais_carrier;
+
+          setTimeout(function() {
+            me.datos_shipper = response.data.data.shipper;
+            me.datos_consignee = response.data.data.consignee;
+            me.datos_carrier = response.data.data.carrier;
+          }, 2000)
 
           this.aeropuerto_salida = {id: response.data.data.aeropuertos_id, name: response.data.data.nombre_aeropuerto};
           this.aeropuerto_destino = {id: response.data.data.aeropuertos_id_destino, name: response.data.data.aeropuerto_destino};

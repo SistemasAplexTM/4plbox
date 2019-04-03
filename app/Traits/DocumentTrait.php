@@ -252,7 +252,7 @@ trait DocumentTrait
               'documento_detalle.id',
               'documento_detalle.contenido',
               'documento_detalle.contenido2',
-              'documento_detalle.tracking',
+              // 'documento_detalle.tracking',
               'documento_detalle.volumen',
               'documento_detalle.valor',
               'documento_detalle.declarado2',
@@ -285,7 +285,8 @@ trait DocumentTrait
               'deptos_consignee.descripcion AS cons_depto',
               'pais.descripcion AS cons_pais',
               'pais.iso2 AS cons_pais_code',
-              'ciudad_consignee.prefijo'
+              'ciudad_consignee.prefijo',
+              DB::raw("(SELECT GROUP_CONCAT(tracking.codigo) FROM tracking WHERE tracking.documento_detalle_id = documento_detalle.id) as tracking")
           )
           ->where($filter)
           ->get();

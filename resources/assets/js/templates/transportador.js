@@ -231,11 +231,15 @@ var objVue = new Vue({
             if(data['email'] != 'null'){
                 this.email = data['email'];
             }
-            this.contacto = data['contacto'];
+            if(data['contacto'] != 'null'){
+              this.contacto = data['contacto'];
+            }
             this.ciudad = data['ciudad'];
             this.pais = data['pais'];
             this.estado = data['estado'];
-            this.zip = data['zip'];
+            if(data['zip'] != 'null'){
+              this.zip = data['zip'];
+            }
             this.shipper = data['shipper'];
             this.consignee = data['consignee'];
             this.carrier = data['carrier'];

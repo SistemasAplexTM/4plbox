@@ -93,14 +93,18 @@
                                 </div>
                             </div>
                             <div class="col-lg-2" style="text-align: left;" id="ajaxCreate">
-                                {{-- <div class=""> --}}
+                                @if(env('APP_CLIENT') === 'jyg')
+                                  <div class="" id="btns_group" style="width:100%;">
+                                    <button type="button" class="btn btn-primary" id="crearDoc2" style="width:100%;padding: 9px;"><i class="fa fa-box-open"></i> @lang('documents.create_document')</button>
+                                  </div>
+                                @else
                                   <div class="ui-group-buttons" id="btns_group">
                                       <button type="button" class="btn btn-primary" id="crearDoc2"><i class="fa fa-box-open"></i> Courier</button>
                                       <div class="or"></div>
                                       <button type="button" class="button btn btn-warning" id="crearDoc3"><i class="fa fa-truck-moving"></i> Carga</button>
                                   </div>
-                                    <button type="button"  style="" class="btn btn-primary btn-lg btn-block" id="crearDoc" onclick="createNewDocument_(1)"><i class="fa fa-plus"></i> @lang('documents.create_document')</button>
-                                {{-- </div> --}}
+                                @endif
+                                <button type="button"  style="" class="btn btn-primary btn-lg btn-block" id="crearDoc" onclick="createNewDocument_(1)"><i class="fa fa-plus"></i> @lang('documents.create_document')</button>
                             </div>
                             <div class="col-lg-10">
                                 <div class="col-lg-12" style="font-size: 30px; font-weight:800;border-bottom: 1px solid #CDCDCD;">

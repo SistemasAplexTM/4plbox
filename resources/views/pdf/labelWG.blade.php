@@ -3,7 +3,7 @@
             font-size: 11px;
             font-family: sans-serif;
             font-weight: bold;
-        }    
+        }
         #mvcIcon, #mvcMain{
             display: none;
         }
@@ -157,13 +157,13 @@
             height: 85px;
         }
         #descripcion{
-            font-size: 11px;            
+            font-size: 11px;
         }
         #barcode-name{
         	font-size: 30px;
         }
 </style>
-<?php 
+<?php
 	$cont = 0;
     $toalRegistros = count($detalle);
     $contRegistros = 0;
@@ -227,7 +227,7 @@
                 </div>
                 <div class="datos">
                     <div class="pkgs">Pkgs: 1 </div>
-                    
+
                     <?php $leng = strlen($value->contenido); ?>
                     <div class="des" style="border-top: 1px solid #000;margin-top: 10px;">
                         <span id="descripcion">
