@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Consignee;
 use App\User;
 
 class AuthController extends Controller
@@ -67,7 +68,10 @@ class AuthController extends Controller
       if ($request->remember_me)
           $token->expires_at = Carbon::now()->addWeeks(1);
       $token->save();
+
+      $user = Consignee::find($user->consignee_id);
       return response()->json([
+          'user' => json_encode($user),
           'access_token' => $tokenResult->accessToken,
           'token_type' => 'Bearer',
           'expires_at' => Carbon::parse(
