@@ -6,6 +6,22 @@ $(document).ready(function() {
     if (!permission_ajaxCreate) {
         $('#ajaxCreate').remove();
     }
+    setTimeout(function() {
+      var table2 = $('#tbl-documento2').DataTable();
+      $('#tbl-documento2 tbody').on( 'click', 'tr', function () {
+          if ( $(this).hasClass('selected') ) {
+              $(this).removeClass('selected');
+              $('.edit_document').hide();
+          }
+          else {
+              table2.$('tr.selected').removeClass('selected');
+              $(this).addClass('selected');
+              var tbl_data = table2.row('.selected').data();
+              $('.edit_document').show().attr('href', 'documento/'+tbl_data.id+'/edit');
+              console.log(tbl_data);
+          }
+      });
+    }, 1000);
 });
 
 $(function() {

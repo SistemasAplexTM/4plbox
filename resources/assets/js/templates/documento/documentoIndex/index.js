@@ -68,7 +68,7 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
 }
 
 function datatableDocument(t, tipo_doc_id, status_id){
-  $('#tbl-documento' + t).DataTable({
+  var table = $('#tbl-documento' + t).DataTable({
       processing: true,
       serverSide: true,
       order: [[1, "desc"]],
@@ -179,6 +179,7 @@ function actionsButtons(data, type, full, meta) {
         var href_print_label_wrh = '';
         var href_print_view_g = '';
         var href_print_view_w = '';
+        var invoice = '';
         if (full.liquidado == 1) {
             href_print_view_g = "<li><a href='impresion-documento/" + full.id + "/guia' target='_blank'> <spam class='fal fa-print'></spam> Guia</a></li>";
             href_print_guia = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format +'&id=' + full.id + '&agency_id='+agency_id+'&document=guia\')"> <spam class="fal fa-print"></spam> Guia</a></li>';
@@ -186,6 +187,7 @@ function actionsButtons(data, type, full, meta) {
             var name = "Nitro PDF Creator (Pro 10)";
             var format = "PDF";
             href_print_label_guia = '<li><a href="impresion-documento-label/' + full.id + '/guia" target="_blank"> <spam class="fal fa-print"></spam> Label Guia '+label+'</a></li>';
+            invoice = '<li><a href="impresion-documento/' + full.id + '/invoice_guia" target="_blank"> <spam class="fal fa-print"></spam> Invoice</a></li>';
             // href_print_label_guia = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format +'&id=' + full.id + '&agency_id='+agency_id+'&document=guia&label=true\')"> <spam class="fa fa-print"></spam> Label Guia '+label+'</a></li>';
             // codigo = full.num_guia;
         }
@@ -209,6 +211,7 @@ function actionsButtons(data, type, full, meta) {
         // + '<li class="divider"></li> '
         + href_print_view_w + " "
         + href_print_view_g + " "
+        + invoice + " "
         + "<li><a href='#' onclick=\"sendMail(" + full.id + ")\"> <spam class='fa fa-envelope'></spam> Enviar Mail</a></li>" + "</ul></div>";
 
         return btn_edit + btns + ' ' + btn_tags + btn_delete;

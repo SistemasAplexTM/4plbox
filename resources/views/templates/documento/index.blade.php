@@ -56,6 +56,9 @@
     .ui-group-buttons .btn{width: 48%}
 
     #crearDoc, #btns_group{display: none;}
+    table.dataTable tbody tr.selected{
+      background-color: #B0BED9;
+    }
 </style>
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
@@ -111,6 +114,9 @@
                                     <span id="icono_doc"></span>&nbsp;
                                     <div style="display:inline;" id="nombre_doc">
                                        @lang('documents.warehouse')
+                                    </div>
+                                    <div class="btn_actions" style="display:inline;float:right;">
+                                      <a class="btn btn-warning edit_document" title="Editar" data-toggle="tooltip" style="display:none;"><i class="fal fa-pencil fa-lg"></i></a>
                                     </div>
                                 </div>
                             </div>

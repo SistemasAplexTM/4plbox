@@ -1285,374 +1285,380 @@ class DocumentoController extends Controller
             )
             ->where($where)
             ->get();
-        if ($document === 'guia') {
-            $this->AddToLog('Impresion Guia (' . $documento->id . ')');
-            if (env('APP_TYPE') === 'courier') {
-                if(env('APP_CLIENT') === 'colombiana'){
-                    $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
-                }else{
-                    $pdf = PDF::loadView('pdf.guiaPdf', compact('documento', 'detalle'));
-                }
-            } else {
-                if(env('APP_CLIENT') === 'jexpress'){
-                    $pdf = PDF::loadView('pdf.warehousePdfJexpress', compact('documento', 'detalle'));
-                }else{
-                    $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
-                }
-            }
-            $nameDocument = $documento->num_warehouse;
-        } else {
-            if ($document === 'warehouse') {
-                $this->AddToLog('Impresion warehouse (' . $documento->id . ')');
-                if (env('APP_TYPE') === 'courier') {
-                    if(env('APP_CLIENT') === 'colombiana'){
-                    //     $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
-                    // }else{
+        if($document === 'invoice_guia'){
+          $this->AddToLog('Impresion Invoice (' . $documento->id . ')');
+          $pdf          = PDF::loadView('pdf.invoicePdf', compact('documento', 'detalle'));
+          $nameDocument = 'comercial invoice -' . $documento->id;
+        }else{
+          if ($document === 'guia') {
+              $this->AddToLog('Impresion Guia (' . $documento->id . ')');
+              if (env('APP_TYPE') === 'courier') {
+                  if(env('APP_CLIENT') === 'colombiana'){
+                      $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
+                  }else{
+                      $pdf = PDF::loadView('pdf.guiaPdf', compact('documento', 'detalle'));
+                  }
+              } else {
+                  if(env('APP_CLIENT') === 'jexpress'){
+                      $pdf = PDF::loadView('pdf.warehousePdfJexpress', compact('documento', 'detalle'));
+                  }else{
+                      $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
+                  }
+              }
+              $nameDocument = $documento->num_warehouse;
+          } else {
+              if ($document === 'warehouse') {
+                  $this->AddToLog('Impresion warehouse (' . $documento->id . ')');
+                  if (env('APP_TYPE') === 'courier') {
+                      if(env('APP_CLIENT') === 'colombiana'){
+                      //     $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
+                      // }else{
+                          $pdf = PDF::loadView('pdf.warehousePdf', compact('documento', 'detalle'));
+                      }else{
                         $pdf = PDF::loadView('pdf.warehousePdf', compact('documento', 'detalle'));
-                    }else{
-                      $pdf = PDF::loadView('pdf.warehousePdf', compact('documento', 'detalle'));
-                    }
-                } else {
-                    if(env('APP_CLIENT') === 'jexpress'){
-                        $pdf = PDF::loadView('pdf.warehousePdfJexpress', compact('documento', 'detalle'));
-                    }else{
-                        $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
-                    }
-                }
-                $nameDocument = $documento->num_warehouse;
-            } else {
-                if ($document === 'invoice') {
-                    $detalleConsolidado = DB::table('consolidado_detalle as a')
-                            ->leftJoin('documento_detalle as b', 'a.documento_detalle_id', '=', 'b.id')
-                            ->leftJoin('shipper as c', 'b.shipper_id', '=', 'c.id')
-                            ->leftJoin('consignee as d', 'b.consignee_id', '=', 'd.id')
-                            ->leftJoin('localizacion as e', 'c.localizacion_id', '=', 'e.id')
-                            ->leftJoin('deptos as f', 'e.deptos_id', '=', 'f.id')
-                            ->leftJoin('pais', 'f.pais_id', '=', 'pais.id')
-                            ->leftJoin('localizacion as g', 'd.localizacion_id', '=', 'g.id')
-                            ->leftJoin('deptos as h', 'e.deptos_id', '=', 'h.id')
-                            ->leftJoin('pais as i', 'h.pais_id', '=', 'i.id')
-                            ->leftJoin(DB::raw("(SELECT
-                                        z.agrupado,
-                                        SUM(x.peso) AS peso,
-                                        SUM(x.peso2) AS peso2,
-                                        GROUP_CONCAT(
+                      }
+                  } else {
+                      if(env('APP_CLIENT') === 'jexpress'){
+                          $pdf = PDF::loadView('pdf.warehousePdfJexpress', compact('documento', 'detalle'));
+                      }else{
+                          $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
+                      }
+                  }
+                  $nameDocument = $documento->num_warehouse;
+              } else {
+                  if ($document === 'invoice') {
+                      $detalleConsolidado = DB::table('consolidado_detalle as a')
+                              ->leftJoin('documento_detalle as b', 'a.documento_detalle_id', '=', 'b.id')
+                              ->leftJoin('shipper as c', 'b.shipper_id', '=', 'c.id')
+                              ->leftJoin('consignee as d', 'b.consignee_id', '=', 'd.id')
+                              ->leftJoin('localizacion as e', 'c.localizacion_id', '=', 'e.id')
+                              ->leftJoin('deptos as f', 'e.deptos_id', '=', 'f.id')
+                              ->leftJoin('pais', 'f.pais_id', '=', 'pais.id')
+                              ->leftJoin('localizacion as g', 'd.localizacion_id', '=', 'g.id')
+                              ->leftJoin('deptos as h', 'e.deptos_id', '=', 'h.id')
+                              ->leftJoin('pais as i', 'h.pais_id', '=', 'i.id')
+                              ->leftJoin(DB::raw("(SELECT
+                                          z.agrupado,
+                                          SUM(x.peso) AS peso,
+                                          SUM(x.peso2) AS peso2,
+                                          GROUP_CONCAT(
 
-                                            IF (
-                                                z.flag = 1,
-                                                CONCAT(
+                                              IF (
+                                                  z.flag = 1,
+                                                  CONCAT(
 
-                                                    IF (
-                                                        x.liquidado = 1,
-                                                        CONCAT('<label>- ', x.num_guia, \"</label><a style='float: right;cursor:pointer;color:red' title='Quitar' data-toggle='tooltip' onclick='removerGuiaAgrupada(\",z.id,\")'><i class='fa fa-times' style='font-size: 15px;'></i></a>\"),
-                                                        CONCAT('<label>- ', x.num_warehouse, \"</label><a style='float: right;cursor:pointer;color:red' title='Quitar' data-toggle='tooltip' onclick='removerGuiaAgrupada(\",z.id,\")'><i class='fa fa-times' style='font-size: 15px;'></i></a>\")
-                                                    )
-                                                ),
-                                                NULL
-                                            )
-                                        ) AS guias_agrupadas
+                                                      IF (
+                                                          x.liquidado = 1,
+                                                          CONCAT('<label>- ', x.num_guia, \"</label><a style='float: right;cursor:pointer;color:red' title='Quitar' data-toggle='tooltip' onclick='removerGuiaAgrupada(\",z.id,\")'><i class='fa fa-times' style='font-size: 15px;'></i></a>\"),
+                                                          CONCAT('<label>- ', x.num_warehouse, \"</label><a style='float: right;cursor:pointer;color:red' title='Quitar' data-toggle='tooltip' onclick='removerGuiaAgrupada(\",z.id,\")'><i class='fa fa-times' style='font-size: 15px;'></i></a>\")
+                                                      )
+                                                  ),
+                                                  NULL
+                                              )
+                                          ) AS guias_agrupadas
+                                      FROM
+                                          consolidado_detalle AS z
+                                      INNER JOIN documento_detalle AS x ON z.documento_detalle_id = x.id
+                                      WHERE
+                                          z.deleted_at IS NULL
+                                      AND x.deleted_at IS NULL
+                                      GROUP BY
+                                          z.agrupado
+                                  ) AS j"), 'a.agrupado', 'j.agrupado')
+                              ->select(
+                                  'a.num_bolsa',
+                                  'a.shipper AS shipper_json',
+                                  'a.consignee AS consignee_json',
+                                  'b.num_warehouse',
+                                  'b.num_guia',
+                                  'c.nombre_full as ship_nomfull',
+                                  'c.direccion as ship_dir',
+                                  'c.telefono as ship_tel',
+                                  'c.zip as ship_zip',
+                                  'e.nombre as ship_ciudad',
+                                  'f.descripcion as ship_depto',
+                                  'pais.descripcion as ship_pais',
+                                  'd.nombre_full as cons_nomfull',
+                                  'd.zip as cons_zip',
+                                  'g.nombre as cons_ciudad',
+                                  'h.descripcion as cons_depto',
+                                  'd.direccion as cons_dir',
+                                  'd.telefono as cons_tel',
+                                  'i.descripcion as cons_pais',
+                                  'b.declarado2',
+                                  'j.peso2',
+                                  'b.contenido2',
+                                  'b.liquidado'
+                              )
+                              ->where([['a.deleted_at', null], ['a.documento_detalle_id', $id_detalle], ['a.flag', 0]])
+                              ->get();
+                      $this->AddToLog('Impresion Invoice (' . $documento->id . ')');
+                      $pdf          = PDF::loadView('pdf.invoicePdf', compact('documento', 'detalle', 'detalleConsolidado'));
+                      $nameDocument = 'comercial invoice -' . $documento->id;
+                  } else {
+                      if ($document === 'consolidado_guias') {
+                          $detalleConsolidado = DB::table('consolidado_detalle as a')
+                              ->leftJoin('documento_detalle as b', 'a.documento_detalle_id', '=', 'b.id')
+                              ->leftJoin('posicion_arancelaria as pa', 'b.arancel_id2', 'pa.id')
+                              ->leftJoin('shipper as c', 'b.shipper_id', '=', 'c.id')
+                              ->leftJoin('consignee as d', 'b.consignee_id', '=', 'd.id')
+                              ->leftJoin('localizacion as e', 'c.localizacion_id', '=', 'e.id')
+                              ->leftJoin('deptos as f', 'e.deptos_id', '=', 'f.id')
+                              ->leftJoin('pais', 'f.pais_id', '=', 'pais.id')
+                              ->leftJoin('localizacion as g', 'd.localizacion_id', '=', 'g.id')
+                              ->leftJoin('deptos as h', 'e.deptos_id', '=', 'h.id')
+                              ->leftJoin('pais as i', 'h.pais_id', '=', 'i.id')
+                              ->leftJoin(DB::raw("(SELECT
+                                          z.agrupado,
+                                          SUM(x.peso) AS peso,
+                                          SUM(x.peso2) AS peso2,
+                                          GROUP_CONCAT(
+
+                                              IF (
+                                                  z.flag = 1,
+                                                  CONCAT(
+
+                                                      IF (
+                                                          x.liquidado = 1,
+                                                          CONCAT('<label>- ', x.num_guia, \"</label><a style='float: right;cursor:pointer;color:red' title='Quitar' data-toggle='tooltip' onclick='removerGuiaAgrupada(\",z.id,\")'><i class='fa fa-times' style='font-size: 15px;'></i></a>\"),
+                                                          CONCAT('<label>- ', x.num_warehouse, \"</label><a style='float: right;cursor:pointer;color:red' title='Quitar' data-toggle='tooltip' onclick='removerGuiaAgrupada(\",z.id,\")'><i class='fa fa-times' style='font-size: 15px;'></i></a>\")
+                                                      )
+                                                  ),
+                                                  NULL
+                                              )
+                                          ) AS guias_agrupadas
+                                      FROM
+                                          consolidado_detalle AS z
+                                      INNER JOIN documento_detalle AS x ON z.documento_detalle_id = x.id
+                                      WHERE
+                                          z.deleted_at IS NULL
+                                      AND x.deleted_at IS NULL
+                                      GROUP BY
+                                          z.agrupado
+                                  ) AS j"), 'a.agrupado', 'j.agrupado')
+                              ->select(
+                                  'a.num_bolsa',
+                                  'a.shipper AS shipper_json',
+                                  'a.consignee AS consignee_json',
+                                  'b.num_warehouse',
+                                  'b.num_guia',
+                                  'b.piezas',
+                                  'b.volumen',
+                                  'c.nombre_full as ship_nomfull',
+                                  'c.direccion as ship_dir',
+                                  'c.telefono as ship_tel',
+                                  'c.zip as ship_zip',
+                                  'e.nombre as ship_ciudad',
+                                  'f.descripcion as ship_depto',
+                                  'f.abreviatura as ship_depto_ab',
+                                  'pais.descripcion as ship_pais',
+                                  'd.nombre_full as cons_nomfull',
+                                  'd.zip as cons_zip',
+                                  'g.nombre as cons_ciudad',
+                                  'h.descripcion as cons_depto',
+                                  'h.abreviatura as cons_depto_ab',
+                                  'd.direccion as cons_dir',
+                                  'd.telefono as cons_tel',
+                                  'i.descripcion as cons_pais',
+                                  'b.declarado2',
+                                  'j.peso2',
+                                  'b.contenido2',
+                                  'b.liquidado',
+                                  'pa.pa',
+                                  DB::raw('(SELECT
+                                      ROUND(Sum(b.peso2) * 0.453592) AS peso_total
                                     FROM
-                                        consolidado_detalle AS z
-                                    INNER JOIN documento_detalle AS x ON z.documento_detalle_id = x.id
+                                      consolidado_detalle AS a
+                                    INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
                                     WHERE
-                                        z.deleted_at IS NULL
-                                    AND x.deleted_at IS NULL
-                                    GROUP BY
-                                        z.agrupado
-                                ) AS j"), 'a.agrupado', 'j.agrupado')
-                            ->select(
-                                'a.num_bolsa',
-                                'a.shipper AS shipper_json',
-                                'a.consignee AS consignee_json',
-                                'b.num_warehouse',
-                                'b.num_guia',
-                                'c.nombre_full as ship_nomfull',
-                                'c.direccion as ship_dir',
-                                'c.telefono as ship_tel',
-                                'c.zip as ship_zip',
-                                'e.nombre as ship_ciudad',
-                                'f.descripcion as ship_depto',
-                                'pais.descripcion as ship_pais',
-                                'd.nombre_full as cons_nomfull',
-                                'd.zip as cons_zip',
-                                'g.nombre as cons_ciudad',
-                                'h.descripcion as cons_depto',
-                                'd.direccion as cons_dir',
-                                'd.telefono as cons_tel',
-                                'i.descripcion as cons_pais',
-                                'b.declarado2',
-                                'j.peso2',
-                                'b.contenido2',
-                                'b.liquidado'
-                            )
-                            ->where([['a.deleted_at', null], ['a.documento_detalle_id', $id_detalle], ['a.flag', 0]])
-                            ->get();
-                    $this->AddToLog('Impresion Invoice (' . $documento->id . ')');
-                    $pdf          = PDF::loadView('pdf.invoicePdf', compact('documento', 'detalle', 'detalleConsolidado'));
-                    $nameDocument = 'comercial invoice -' . $documento->id;
-                } else {
-                    if ($document === 'consolidado_guias') {
-                        $detalleConsolidado = DB::table('consolidado_detalle as a')
-                            ->leftJoin('documento_detalle as b', 'a.documento_detalle_id', '=', 'b.id')
-                            ->leftJoin('posicion_arancelaria as pa', 'b.arancel_id2', 'pa.id')
-                            ->leftJoin('shipper as c', 'b.shipper_id', '=', 'c.id')
-                            ->leftJoin('consignee as d', 'b.consignee_id', '=', 'd.id')
-                            ->leftJoin('localizacion as e', 'c.localizacion_id', '=', 'e.id')
-                            ->leftJoin('deptos as f', 'e.deptos_id', '=', 'f.id')
-                            ->leftJoin('pais', 'f.pais_id', '=', 'pais.id')
-                            ->leftJoin('localizacion as g', 'd.localizacion_id', '=', 'g.id')
-                            ->leftJoin('deptos as h', 'e.deptos_id', '=', 'h.id')
-                            ->leftJoin('pais as i', 'h.pais_id', '=', 'i.id')
-                            ->leftJoin(DB::raw("(SELECT
-                                        z.agrupado,
-                                        SUM(x.peso) AS peso,
-                                        SUM(x.peso2) AS peso2,
-                                        GROUP_CONCAT(
-
-                                            IF (
-                                                z.flag = 1,
-                                                CONCAT(
-
-                                                    IF (
-                                                        x.liquidado = 1,
-                                                        CONCAT('<label>- ', x.num_guia, \"</label><a style='float: right;cursor:pointer;color:red' title='Quitar' data-toggle='tooltip' onclick='removerGuiaAgrupada(\",z.id,\")'><i class='fa fa-times' style='font-size: 15px;'></i></a>\"),
-                                                        CONCAT('<label>- ', x.num_warehouse, \"</label><a style='float: right;cursor:pointer;color:red' title='Quitar' data-toggle='tooltip' onclick='removerGuiaAgrupada(\",z.id,\")'><i class='fa fa-times' style='font-size: 15px;'></i></a>\")
-                                                    )
-                                                ),
-                                                NULL
-                                            )
-                                        ) AS guias_agrupadas
+                                      a.deleted_at IS NULL
+                                    AND b.deleted_at IS NULL
+                                    AND b.consignee_id = d.id
+                                  ) AS peso_total'),
+                                  DB::raw('(SELECT
+                                      Sum(b.declarado2) AS declarado_total
                                     FROM
-                                        consolidado_detalle AS z
-                                    INNER JOIN documento_detalle AS x ON z.documento_detalle_id = x.id
+                                      consolidado_detalle AS a
+                                    INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
                                     WHERE
-                                        z.deleted_at IS NULL
-                                    AND x.deleted_at IS NULL
-                                    GROUP BY
-                                        z.agrupado
-                                ) AS j"), 'a.agrupado', 'j.agrupado')
-                            ->select(
-                                'a.num_bolsa',
-                                'a.shipper AS shipper_json',
-                                'a.consignee AS consignee_json',
-                                'b.num_warehouse',
-                                'b.num_guia',
-                                'b.piezas',
-                                'b.volumen',
-                                'c.nombre_full as ship_nomfull',
-                                'c.direccion as ship_dir',
-                                'c.telefono as ship_tel',
-                                'c.zip as ship_zip',
-                                'e.nombre as ship_ciudad',
-                                'f.descripcion as ship_depto',
-                                'f.abreviatura as ship_depto_ab',
-                                'pais.descripcion as ship_pais',
-                                'd.nombre_full as cons_nomfull',
-                                'd.zip as cons_zip',
-                                'g.nombre as cons_ciudad',
-                                'h.descripcion as cons_depto',
-                                'h.abreviatura as cons_depto_ab',
-                                'd.direccion as cons_dir',
-                                'd.telefono as cons_tel',
-                                'i.descripcion as cons_pais',
-                                'b.declarado2',
-                                'j.peso2',
-                                'b.contenido2',
-                                'b.liquidado',
-                                'pa.pa',
-                                DB::raw('(SELECT
-                                    ROUND(Sum(b.peso2) * 0.453592) AS peso_total
-                                  FROM
-                                    consolidado_detalle AS a
-                                  INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
-                                  WHERE
-                                    a.deleted_at IS NULL
-                                  AND b.deleted_at IS NULL
-                                  AND b.consignee_id = d.id
-                                ) AS peso_total'),
-                                DB::raw('(SELECT
-                                    Sum(b.declarado2) AS declarado_total
-                                  FROM
-                                    consolidado_detalle AS a
-                                  INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
-                                  WHERE
-                                    a.deleted_at IS NULL
-                                  AND b.deleted_at IS NULL
-                                  AND b.consignee_id = d.id
-                                ) AS declarado_total')
-                            )
-                            ->where([['a.deleted_at', null], ['a.consolidado_id', $id], ['a.flag', 0]])
-                            ->get();
-                        // VALIDAR QUE EL PESO Y EL DECLARADO NO SUPEREN LO MAXIMO ESTABLECIDO
-                        $peso_t = 0;
-                        $decla_t = 0;
-                        // if (count($detalleConsolidado) > 0) {
-                        //   foreach ($detalleConsolidado as $key) {
-                        //     if($key->peso_total > 50){
-                        //       $peso_t++;
-                        //     }
-                        //     if($key->declarado_total > 2000){
-                        //       $decla_t++;
-                        //     }
-                        //   }
-                        // }
-                        if($peso_t === 0 and $decla_t === 0){
-                          $this->AddToLog('Impresion Consolidado guias (' . $id . ')');
-                          if($documento->transporte_id == 7){
-                            if (env('APP_TYPE') === 'courier') {
-                                if(env('APP_CLIENT') === 'colombiana'){
-                                    // return view('pdf/consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
-                                    $pdf = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
-                                }else{
-                                    $pdf = PDF::loadView('pdf.consolidadoGuiasPdf', compact('documento', 'detalle', 'detalleConsolidado'));
-                                }
-                            }else{
-                                $pdf = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
-                            }
-                          }else{
-                            return view('pdf.manifiesto.guiasCuba', compact('documento', 'detalle', 'detalleConsolidado'));
-                          }
-                          $nameDocument = 'Guias -' . $documento->id;
-                        }else{
-                          $error = 'El peso o valor declarado supera lo permitido por cliente. Por favor revisar.';
-                          return view('errors/generalError', compact('error'));
-                        }
-                    } else {
-                        if ($document === 'consolidado') {
-                            $detalleConsolidado = DB::table('consolidado_detalle as a')
-                                ->leftJoin('documento_detalle as b', 'a.documento_detalle_id', '=', 'b.id')
-                                ->leftJoin('shipper as c', 'b.shipper_id', '=', 'c.id')
-                                ->leftJoin('consignee as d', 'b.consignee_id', '=', 'd.id')
-                                ->leftJoin('localizacion as e', 'c.localizacion_id', '=', 'e.id')
-                                ->leftJoin('deptos as f', 'e.deptos_id', '=', 'f.id')
-                                ->leftJoin('pais', 'f.pais_id', '=', 'pais.id')
-                                ->leftJoin('localizacion as g', 'd.localizacion_id', '=', 'g.id')
-                                ->leftJoin('deptos as h', 'e.deptos_id', '=', 'h.id')
-                                ->leftJoin('pais as i', 'h.pais_id', '=', 'i.id')
-                                ->leftJoin(DB::raw("(SELECT
-                                        z.agrupado,
-                                        SUM(x.peso) AS peso,
-                                        SUM(x.peso2) AS peso2,
-                                        GROUP_CONCAT(
-
-                                            IF (
-                                                z.flag = 1,
-                                                CONCAT(
-
-                                                    IF (
-                                                        x.liquidado = 1,
-                                                        CONCAT('<label>- ', x.num_guia, ' (', x.peso2, ' lbs) ', ' ($ ', x.declarado2, '.00) ', \"</label><a style='float: right;cursor:pointer;color:red' title='Quitar' data-toggle='tooltip' onclick='removerGuiaAgrupada(\",z.id,\")'><i class='fa fa-times' style='font-size: 15px;'></i></a>\"),
-                                                        CONCAT('<label>- ', x.num_warehouse, ' (', x.peso2, ' lbs) ', ' ($ ', x.declarado2, '.00) ', \"</label><a style='float: right;cursor:pointer;color:red' title='Quitar' data-toggle='tooltip' onclick='removerGuiaAgrupada(\",z.id,\")'><i class='fa fa-times' style='font-size: 15px;'></i></a>\")
-                                                    )
-                                                ),
-                                                NULL
-                                            )
-                                        ) AS guias_agrupadas
-                                    FROM
-                                        consolidado_detalle AS z
-                                    INNER JOIN documento_detalle AS x ON z.documento_detalle_id = x.id
-                                    WHERE
-                                        z.deleted_at IS NULL
-                                    AND x.deleted_at IS NULL
-                                    GROUP BY
-                                        z.agrupado
-                                ) AS j"), 'a.agrupado', 'j.agrupado')
-                                ->select(
-                                    'a.num_bolsa',
-                                    'a.shipper AS shipper_json',
-                                    'a.consignee AS consignee_json',
-                                    'b.num_warehouse',
-                                    'b.num_guia',
-                                    'b.volumen',
-                                    DB::raw('CONCAT_WS(" ", c . primer_nombre, c . segundo_nombre, c . primer_apellido, c . segundo_apellido) as nom_ship'),
-                                    'c.direccion as dir_ship',
-                                    'c.telefono as tel_ship',
-                                    'c.zip as zip_ship',
-                                    'e.nombre as ciu_ship',
-                                    'f.descripcion as depto_ship',
-                                    'pais.descripcion as pais_ship',
-                                    DB::raw('CONCAT_WS(" ", d . primer_nombre, d . segundo_nombre, d . primer_apellido, d . segundo_apellido) as nom_cons'),
-                                    'd.zip as zip_cons',
-                                    'g.nombre as ciu_cons',
-                                    'h.descripcion as depto_cons',
-                                    'd.direccion as dir_cons',
-                                    'd.telefono as tel_cons',
-                                    'i.descripcion as pais_cons',
-                                    'b.declarado2',
-                                    'j.peso2',
-                                    'b.contenido2',
-                                    'b.liquidado',
-                                    'b.piezas',
-                                    DB::raw('(SELECT
-                                  			ROUND(Sum(b.peso2) * 0.453592) AS peso_total
-                                  		FROM
-                                  			consolidado_detalle AS a
-                                  		INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
-                                  		WHERE
-                                  			a.deleted_at IS NULL
-                                  		AND b.deleted_at IS NULL
-                                  		AND b.consignee_id = d.id
-                                  	) AS peso_total'),
-                                    DB::raw('(SELECT
-                                  			Sum(b.declarado2) AS declarado_total
-                                  		FROM
-                                  			consolidado_detalle AS a
-                                  		INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
-                                  		WHERE
-                                  			a.deleted_at IS NULL
-                                  		AND b.deleted_at IS NULL
-                                  		AND b.consignee_id = d.id
-                                  	) AS declarado_total')
-                                )
-                                ->where([['a.deleted_at', null], ['a.consolidado_id', $id], ['a.flag', 0]])
-                                ->orderBy('b.created_at', 'ASC')
-                                ->get();
-
-                            // VALIDAR QUE EL PESO Y EL DECLARADO NO SUPEREN LO MAXIMO ESTABLECIDO
-                            $peso_t = 0;
-                            $decla_t = 0;
-                            // if (count($detalleConsolidado) > 0) {
-                            //   foreach ($detalleConsolidado as $key) {
-                            //     if($key->peso_total > 50){
-                            //       $peso_t++;
-                            //     }
-                            //     if($key->declarado_total > 2000){
-                            //       $decla_t++;
-                            //     }
-                            //   }
-                            // }
-                            if($peso_t === 0 and $decla_t === 0){
-                              $this->AddToLog('Impresion Consolidado (' . $id . ')');
+                                      a.deleted_at IS NULL
+                                    AND b.deleted_at IS NULL
+                                    AND b.consignee_id = d.id
+                                  ) AS declarado_total')
+                              )
+                              ->where([['a.deleted_at', null], ['a.consolidado_id', $id], ['a.flag', 0]])
+                              ->get();
+                          // VALIDAR QUE EL PESO Y EL DECLARADO NO SUPEREN LO MAXIMO ESTABLECIDO
+                          $peso_t = 0;
+                          $decla_t = 0;
+                          // if (count($detalleConsolidado) > 0) {
+                          //   foreach ($detalleConsolidado as $key) {
+                          //     if($key->peso_total > 50){
+                          //       $peso_t++;
+                          //     }
+                          //     if($key->declarado_total > 2000){
+                          //       $decla_t++;
+                          //     }
+                          //   }
+                          // }
+                          if($peso_t === 0 and $decla_t === 0){
+                            $this->AddToLog('Impresion Consolidado guias (' . $id . ')');
+                            if($documento->transporte_id == 7){
                               if (env('APP_TYPE') === 'courier') {
                                   if(env('APP_CLIENT') === 'colombiana'){
-                                      $pdf          = PDF::loadView('pdf.consolidadoPdfColombiana', compact('documento', 'detalle', 'detalleConsolidado'));
+                                      // return view('pdf/consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                                      $pdf = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
                                   }else{
-                                    if($documento->pais_id_document === $pais_id_puntos){
-                                      //FORMATO PARA CUBA
-                                      $pdf          = PDF::loadView('pdf.manifiesto.formatoCuba', compact('documento', 'detalle', 'detalleConsolidado'));
-                                    }else{
-                                      $pdf          = PDF::loadView('pdf.consolidadoPdf', compact('documento', 'detalle', 'detalleConsolidado'));
-                                    }
+                                      $pdf = PDF::loadView('pdf.consolidadoGuiasPdf', compact('documento', 'detalle', 'detalleConsolidado'));
                                   }
                               }else{
-                                // return view('pdf/consolidadoPdfColombiana', compact('documento', 'detalle', 'detalleConsolidado'));
-                                // ESTE FORMATO ES PARA WORDCARGO
-                                if($documento->transporte_id == 1){
-                                  $pdf          = PDF::loadView('pdf.consolidadoPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
-                                }
-                                if($documento->transporte_id == 2){
-                                  $pdf          = PDF::loadView('pdf.consolidadoPdf2Maritimo', compact('documento', 'detalle', 'detalleConsolidado'));
-                                }
+                                  $pdf = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
                               }
-                              $nameDocument = $documento->tipo_documento . '-' . $documento->id;
                             }else{
-                              $error = 'El peso o valor declarado supera lo permitido por cliente. Por favor revisar.';
-                              return view('errors/generalError', compact('error'));
+                              return view('pdf.manifiesto.guiasCuba', compact('documento', 'detalle', 'detalleConsolidado'));
                             }
-                        }
-                    }
-                }
-            }
+                            $nameDocument = 'Guias -' . $documento->id;
+                          }else{
+                            $error = 'El peso o valor declarado supera lo permitido por cliente. Por favor revisar.';
+                            return view('errors/generalError', compact('error'));
+                          }
+                      } else {
+                          if ($document === 'consolidado') {
+                              $detalleConsolidado = DB::table('consolidado_detalle as a')
+                                  ->leftJoin('documento_detalle as b', 'a.documento_detalle_id', '=', 'b.id')
+                                  ->leftJoin('shipper as c', 'b.shipper_id', '=', 'c.id')
+                                  ->leftJoin('consignee as d', 'b.consignee_id', '=', 'd.id')
+                                  ->leftJoin('localizacion as e', 'c.localizacion_id', '=', 'e.id')
+                                  ->leftJoin('deptos as f', 'e.deptos_id', '=', 'f.id')
+                                  ->leftJoin('pais', 'f.pais_id', '=', 'pais.id')
+                                  ->leftJoin('localizacion as g', 'd.localizacion_id', '=', 'g.id')
+                                  ->leftJoin('deptos as h', 'e.deptos_id', '=', 'h.id')
+                                  ->leftJoin('pais as i', 'h.pais_id', '=', 'i.id')
+                                  ->leftJoin(DB::raw("(SELECT
+                                          z.agrupado,
+                                          SUM(x.peso) AS peso,
+                                          SUM(x.peso2) AS peso2,
+                                          GROUP_CONCAT(
+
+                                              IF (
+                                                  z.flag = 1,
+                                                  CONCAT(
+
+                                                      IF (
+                                                          x.liquidado = 1,
+                                                          CONCAT('<label>- ', x.num_guia, ' (', x.peso2, ' lbs) ', ' ($ ', x.declarado2, '.00) ', \"</label><a style='float: right;cursor:pointer;color:red' title='Quitar' data-toggle='tooltip' onclick='removerGuiaAgrupada(\",z.id,\")'><i class='fa fa-times' style='font-size: 15px;'></i></a>\"),
+                                                          CONCAT('<label>- ', x.num_warehouse, ' (', x.peso2, ' lbs) ', ' ($ ', x.declarado2, '.00) ', \"</label><a style='float: right;cursor:pointer;color:red' title='Quitar' data-toggle='tooltip' onclick='removerGuiaAgrupada(\",z.id,\")'><i class='fa fa-times' style='font-size: 15px;'></i></a>\")
+                                                      )
+                                                  ),
+                                                  NULL
+                                              )
+                                          ) AS guias_agrupadas
+                                      FROM
+                                          consolidado_detalle AS z
+                                      INNER JOIN documento_detalle AS x ON z.documento_detalle_id = x.id
+                                      WHERE
+                                          z.deleted_at IS NULL
+                                      AND x.deleted_at IS NULL
+                                      GROUP BY
+                                          z.agrupado
+                                  ) AS j"), 'a.agrupado', 'j.agrupado')
+                                  ->select(
+                                      'a.num_bolsa',
+                                      'a.shipper AS shipper_json',
+                                      'a.consignee AS consignee_json',
+                                      'b.num_warehouse',
+                                      'b.num_guia',
+                                      'b.volumen',
+                                      DB::raw('CONCAT_WS(" ", c . primer_nombre, c . segundo_nombre, c . primer_apellido, c . segundo_apellido) as nom_ship'),
+                                      'c.direccion as dir_ship',
+                                      'c.telefono as tel_ship',
+                                      'c.zip as zip_ship',
+                                      'e.nombre as ciu_ship',
+                                      'f.descripcion as depto_ship',
+                                      'pais.descripcion as pais_ship',
+                                      DB::raw('CONCAT_WS(" ", d . primer_nombre, d . segundo_nombre, d . primer_apellido, d . segundo_apellido) as nom_cons'),
+                                      'd.zip as zip_cons',
+                                      'g.nombre as ciu_cons',
+                                      'h.descripcion as depto_cons',
+                                      'd.direccion as dir_cons',
+                                      'd.telefono as tel_cons',
+                                      'i.descripcion as pais_cons',
+                                      'b.declarado2',
+                                      'j.peso2',
+                                      'b.contenido2',
+                                      'b.liquidado',
+                                      'b.piezas',
+                                      DB::raw('(SELECT
+                                    			ROUND(Sum(b.peso2) * 0.453592) AS peso_total
+                                    		FROM
+                                    			consolidado_detalle AS a
+                                    		INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
+                                    		WHERE
+                                    			a.deleted_at IS NULL
+                                    		AND b.deleted_at IS NULL
+                                    		AND b.consignee_id = d.id
+                                    	) AS peso_total'),
+                                      DB::raw('(SELECT
+                                    			Sum(b.declarado2) AS declarado_total
+                                    		FROM
+                                    			consolidado_detalle AS a
+                                    		INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
+                                    		WHERE
+                                    			a.deleted_at IS NULL
+                                    		AND b.deleted_at IS NULL
+                                    		AND b.consignee_id = d.id
+                                    	) AS declarado_total')
+                                  )
+                                  ->where([['a.deleted_at', null], ['a.consolidado_id', $id], ['a.flag', 0]])
+                                  ->orderBy('b.created_at', 'ASC')
+                                  ->get();
+
+                              // VALIDAR QUE EL PESO Y EL DECLARADO NO SUPEREN LO MAXIMO ESTABLECIDO
+                              $peso_t = 0;
+                              $decla_t = 0;
+                              // if (count($detalleConsolidado) > 0) {
+                              //   foreach ($detalleConsolidado as $key) {
+                              //     if($key->peso_total > 50){
+                              //       $peso_t++;
+                              //     }
+                              //     if($key->declarado_total > 2000){
+                              //       $decla_t++;
+                              //     }
+                              //   }
+                              // }
+                              if($peso_t === 0 and $decla_t === 0){
+                                $this->AddToLog('Impresion Consolidado (' . $id . ')');
+                                if (env('APP_TYPE') === 'courier') {
+                                    if(env('APP_CLIENT') === 'colombiana'){
+                                        $pdf          = PDF::loadView('pdf.consolidadoPdfColombiana', compact('documento', 'detalle', 'detalleConsolidado'));
+                                    }else{
+                                      if($documento->pais_id_document === $pais_id_puntos){
+                                        //FORMATO PARA CUBA
+                                        $pdf          = PDF::loadView('pdf.manifiesto.formatoCuba', compact('documento', 'detalle', 'detalleConsolidado'));
+                                      }else{
+                                        $pdf          = PDF::loadView('pdf.consolidadoPdf', compact('documento', 'detalle', 'detalleConsolidado'));
+                                      }
+                                    }
+                                }else{
+                                  // return view('pdf/consolidadoPdfColombiana', compact('documento', 'detalle', 'detalleConsolidado'));
+                                  // ESTE FORMATO ES PARA WORDCARGO
+                                  if($documento->transporte_id == 1){
+                                    $pdf          = PDF::loadView('pdf.consolidadoPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                                  }
+                                  if($documento->transporte_id == 2){
+                                    $pdf          = PDF::loadView('pdf.consolidadoPdf2Maritimo', compact('documento', 'detalle', 'detalleConsolidado'));
+                                  }
+                                }
+                                $nameDocument = $documento->tipo_documento . '-' . $documento->id;
+                              }else{
+                                $error = 'El peso o valor declarado supera lo permitido por cliente. Por favor revisar.';
+                                return view('errors/generalError', compact('error'));
+                              }
+                          }
+                      }
+                  }
+              }
+          }
         }
         if($view){
           return $pdf->stream($nameDocument . '.pdf'); //visualizar en el navegador
@@ -2736,6 +2742,7 @@ class DocumentoController extends Controller
 
             if (isset($request->value) and $request->name === 'peso') {
                 $data->peso = $request->value;
+                $data->peso2 = $request->value;
             }
             if (isset($request->value) and $request->name === 'contenido') {
                 $data->contenido = $request->value;

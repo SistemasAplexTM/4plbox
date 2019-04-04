@@ -271,7 +271,7 @@
                                         <td align='center' id="cont_detalle">{{ $val->ancho }}</td>
                                         <td align='center' id="cont_detalle">{{ $val->alto }}</td>
                                         <?php $arr = preg_split("/ /", $val->dimensiones); ?>
-                                        <td align='center' id="cont_detalle">{{ $arr[0] }}</td>
+                                        <td align='center' id="cont_detalle">{{ $val->peso }}</td>
                                         <td align='center' id="cont_detalle">{{ $val->volumen }}</td>
                                         <td align='center' id="cont_detalle">{{ number_format(($val->volumen / 2.204622), 2) }}</td>
                                         <td align='center' id="cont_detalle">{{ $pie = number_format(($val->largo * $val->ancho * $val->alto) / 1728, 2) }}</td>

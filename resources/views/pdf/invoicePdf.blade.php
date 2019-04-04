@@ -78,13 +78,14 @@
     $contRegistros = 0;
     $cont=0;
 
-
-    $detalle = $detalleConsolidado;
-    //echo $detalle[$cont]->num_guia;
-    //echo '<pre>';
-    //print_r($detalle);
-    //echo '</pre>';
-    //exit();
+    if(isset($detalleConsolidado)){
+      $detalle = $detalleConsolidado;
+    }
+    // echo $detalle[$cont]->num_guia;
+    // echo '<pre>';
+    // print_r($detalle);
+    // echo '</pre>';
+    // exit();
     ?>
     <body style="margin-top: -25px;">
     	@foreach($detalle as $val)
@@ -212,7 +213,7 @@
                                         <td align="CENTER"><div id="detalle">{{ '$' . number_format($detalle[$cont]->declarado2, 2) }}</div></td>
                                     </tr>
                                     <?php $total = $total +$detalle[$cont]->declarado2; ?>
-                                    
+
 
                                     <tr>
                                         <th colspan="3"><div id="total">Total</div></th>
@@ -247,11 +248,11 @@
                             </div>
                         </td>
                     </tr>
-                    <?php if ($i === 0): ?>  
+                    <?php if ($i === 0): ?>
                         <tr>
                             <td colspan="4" align="CENTER"><div id="space2">&nbsp;</div></td>
                         </tr>
-                    <?php endif; ?> 
+                    <?php endif; ?>
                 </table>
             <?php endfor; ?>
             <?php $cont++; ?>

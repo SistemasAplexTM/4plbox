@@ -172,7 +172,7 @@
 ?>
 @foreach ($detalle as $value)
 <?php $contRegistros++ ?>
-<table border="0" cellpadding="0" cellspacing="0" id="reciboWarehouse" style="page-break-after:{{ ($contRegistros === $toalRegistros) ? 'avoid' : 'always' }}" width="100%">
+<table border="0" cellpadding="0" cellspacing="0" class="reciboWarehouse" id="reciboWarehouse" style="page-break-after:{{ ($contRegistros === $toalRegistros) ? 'avoid' : 'always' }}" width="100%">
     <tr>
         <td>
             <div class="fecha">
