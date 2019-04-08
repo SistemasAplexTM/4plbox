@@ -2746,6 +2746,7 @@ class DocumentoController extends Controller
             }
             if (isset($request->value) and $request->name === 'contenido') {
                 $data->contenido = $request->value;
+                $data->contenido2 = $request->value;
             }
             if (isset($request->value) and $request->name === 'declarado') {
                 $data->valor = $request->value;

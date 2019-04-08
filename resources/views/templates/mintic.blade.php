@@ -63,6 +63,7 @@
                     <div class="row">
                       <div class="col-lg-12">
                         <div class="table-responsive">
+                          {{-- <h1>@{{ cantidad }}</h1> --}}
                           <table id="tbl-pais" class="table table-striped table-hover table-bordered" style="width: 100%;">
                             <thead>
                               <tr>

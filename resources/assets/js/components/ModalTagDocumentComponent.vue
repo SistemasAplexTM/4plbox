@@ -293,11 +293,11 @@
   		    		this.urlPrint = 'impresion-documento/'+val.id+'/warehouse';
   					this.urlPrintLabel = 'impresion-documento-label/'+val.id+'/warehouse';
   	    		}
+            this.getDatas();
     				this.getSelectStatus();
     	      this.getSelectWarehouses();
             this.getStatus();
             this.getNotas();
-            this.getDatas();
             this.getSelectTransportadoras();
     			},
     			id_status: function (newQuestion) {

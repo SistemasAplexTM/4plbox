@@ -57,7 +57,10 @@
 
     #crearDoc, #btns_group{display: none;}
     table.dataTable tbody tr.selected{
-      background-color: #B0BED9;
+      background-color: #d4e4fb;
+    }
+    .btn_actions > .btn, .btn_actions > .btn-group > .btn {
+      font-size:12px!important;
     }
 </style>
 <div class="row wrapper border-bottom white-bg page-heading">
@@ -116,7 +119,19 @@
                                        @lang('documents.warehouse')
                                     </div>
                                     <div class="btn_actions" style="display:inline;float:right;">
-                                      <a class="btn btn-warning edit_document" title="Editar" data-toggle="tooltip" style="display:none;"><i class="fal fa-pencil fa-lg"></i></a>
+                                      <div class="btn-group print_document" style="display:none;">
+                                          <button data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle" aria-expanded="false" style="padding-top: 3px;padding-bottom: 3px;"><i class='fal fa-print fa-lg'></i> <span class="caret"></span></button>
+                                          <ul class="dropdown-menu dropdown-menu-right pull-right">
+                                              <li><a href="#">Action</a></li>
+                                              <li><a href="#">Another action</a></li>
+                                              <li><a href="#">Something else here</a></li>
+                                              <li class="divider"></li>
+                                              <li><a href="#">Separated link</a></li>
+                                          </ul>
+                                      </div>
+                                      <a class="btn btn-warning btn-outline edit_document" title="Editar" data-toggle="tooltip" style="display:none;"><i class="fal fa-pencil fa-lg"></i></a>
+                                      <a class="btn btn-success btn-outline tags_document" data-toggle="modal" data-target="#modalTagDocument" style="display:none;"><i class="fal fa-arrow-square-right fa-lg" data-toggle="tooltip" title="" data-original-title="Tareas"></i></a>
+                                      <a class="btn btn-danger btn-outline delete_document" title="Eliminar" data-toggle="tooltip" style="display:none;"><i class="fal fa-trash-alt fa-lg"></i></a>
                                     </div>
                                 </div>
                             </div>

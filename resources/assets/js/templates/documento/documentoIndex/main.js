@@ -12,12 +12,19 @@ $(document).ready(function() {
           if ( $(this).hasClass('selected') ) {
               $(this).removeClass('selected');
               $('.edit_document').hide();
+              $('.tags_document').hide();
+              $('.delete_document').hide();
+              $('.print_document').hide();
           }
           else {
               table2.$('tr.selected').removeClass('selected');
               $(this).addClass('selected');
               var tbl_data = table2.row('.selected').data();
               $('.edit_document').show().attr('href', 'documento/'+tbl_data.id+'/edit');
+              $('.tags_document').show().attr('onclick',
+              "openModalTagsDocument("+tbl_data.id+", '"+tbl_data.num_warehouse+"','"+tbl_data.cons_nomfull+"', '"+tbl_data.email_cons+"', '0', "+tbl_data.liquidado+", "+tbl_data.piezas+", '"+tbl_data.estatus_color+"')");
+              $('.delete_document').show().attr('onclick', 'modalEliminar('+tbl_data.id+')');
+              $('.print_document').show();
               console.log(tbl_data);
           }
       });

@@ -253,7 +253,7 @@
                                         </div>
                                         <label class="control-label col-sm-1">@lang('documents.zip'): </label>
                                         <div class="col-sm-4">
-                                            <input type="number" placeholder="Zip" id="zipR" name="zipR" class="form-control" onkeyup="deleteError($(this).parent());">
+                                            <input type="text" placeholder="Zip" id="zipR" name="zipR" class="form-control" onkeyup="deleteError($(this).parent());">
                                         </div>
                                         <small class="help-block" style="display: none;"></small>
                                     </div>
@@ -341,7 +341,7 @@
                                             <label class="control-label col-sm-1">C.P: </label>
                                             <div class="col-sm-4">
                                                 <div class="input-group">
-                                                    <input type="number" placeholder="@lang('general.postal_code')" id="zipD" name="zipD" class="form-control" onkeyup="deleteError($(this).parent());">
+                                                    <input type="text" placeholder="@lang('general.postal_code')" id="zipD" name="zipD" class="form-control" onkeyup="deleteError($(this).parent());">
                                                     <span class="input-group-btn">
                                                         <button class="btn btn-primary" id="buttonPostalCode" data-toggle="tooltip" data-placement="top" title="Generar" type="button"><span class="fa fa-map-marker"></span></button>
                                                     </span>

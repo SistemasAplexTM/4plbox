@@ -40,7 +40,8 @@ var objVue = new Vue({
     data: {
       warehouse: null,
       desc: 'Mintic 1',
-      detail: []
+      detail: [],
+      cantidad: 0
     },
     methods:{
       addWarehouse(){
@@ -54,6 +55,7 @@ var objVue = new Vue({
               return;
             }
             me.detail.push(data.data)
+            // me.cantidad = row.length + 1;
             this.warehouse = null
           }else{
             toastr.warning(data.msg);
