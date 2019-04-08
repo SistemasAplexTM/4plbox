@@ -762,7 +762,7 @@
 			                    name: 'peso2'
 			                }, {
 			                    "render": function (data, type, full, meta) {
-				                	return '$ '+full.declarado2;
+				                	return '$ '+ full.declarado2;
 				                }
 			                }]
 			            });

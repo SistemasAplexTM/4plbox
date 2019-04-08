@@ -33,7 +33,7 @@
                               <div class="col-sm-12">
                                     <label for="descripcion" class="control-label gcore-label-top">Warehouse:</label>
                                     <div class="input-group">
-                                      <input v-model="warehouse" @keyup.enter="addWarehouse" placeholder="Núm. warehouse" class="form-control" type="text" autofocus/>
+                                      <input v-model="warehouse" @keyup.enter="addWarehouse" placeholder="Núm. warehouse" class="form-control" :disabled="disabled" ref="wrh" type="text" autofocus/>
                                       <span class="input-group-btn">
                                         <button @click="addWarehouse" type="button" class="btn btn-primary">
                                           <i class="fal fa-plus"></i>
@@ -63,11 +63,10 @@
                     <div class="row">
                       <div class="col-lg-12">
                         <div class="table-responsive">
-                          {{-- <h1>@{{ cantidad }}</h1> --}}
                           <table id="tbl-pais" class="table table-striped table-hover table-bordered" style="width: 100%;">
                             <thead>
                               <tr>
-                                <th>Warehouse</th>
+                                <th>Warehouse totales @{{ cantidad }}</th>
                                 <th>@lang('general.actions')</th>
                               </tr>
                             </thead>
