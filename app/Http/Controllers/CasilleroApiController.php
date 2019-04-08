@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Prealerta;
+use App\Consignee;
 
 class CasilleroApiController extends Controller
 {
@@ -163,5 +164,29 @@ class CasilleroApiController extends Controller
     {
       Prealerta::insert($request->all());
       return $request->all();
+    }
+
+    public function updateUser(Request $request)
+    {
+      Consignee::where('id', $request->id)->update($request->all());
+      return ['code' => 200];
+    }
+
+    public function findUser($id)
+    {
+      $data = Consignee::find($id);
+      return ['code' => 200, 'data' => $data];
+    }
+    public function getContacts($id)
+    {
+      $data = Consignee::find($id);
+      return ['code' => 200, 'data' => $data];
+    }
+
+    public function setContacts(Request $request, $id)
+    {
+      return $request->all();
+      $data = Consignee::find($id);
+      return ['code' => 200, 'data' => $data];
     }
 }

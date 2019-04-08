@@ -36,4 +36,8 @@ Route::group(['middleware' => 'auth:api'], function(){
   Route::get('getWarehouse/{warehouse}/{idStatus?}', 'CasilleroApiController@getWarehouse');
   Route::get('getAllPrealert/{agency_id}/{consignee_id}', 'CasilleroApiController@getAllPrealert');
   Route::post('setPrealert', 'CasilleroApiController@setPrealert');
+  Route::get('user/{id}', 'CasilleroApiController@findUser');
+  Route::get('user/contacts/{id}', 'CasilleroApiController@getContacts');
+  Route::postt('user/setContacts/{id}', 'CasilleroApiController@setContacts');
+  Route::put('user/update', 'CasilleroApiController@updateUser');
 });
