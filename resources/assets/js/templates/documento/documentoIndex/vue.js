@@ -162,8 +162,13 @@ var objVue = new Vue({
 
                 setTimeout(function() {
                 //   javascript:jsWebClientPrint.print("useDefaultPrinter=false&printerName=" + name + "&filetype="+ format +"&id=" + $('#documentoIndex').data('id_print') + "&agency_id="+agency_id+"&document="+$('#documentoIndex').data('doc_print'))
-                window.open('impresion-documento-label/' + $('#documentoIndex').data('id_print') + '/'+$('#documentoIndex').data('doc_print'), '_blank');
-              }, 2000);
+                  window.open('impresion-documento-label/' + $('#documentoIndex').data('id_print') + '/'+$('#documentoIndex').data('doc_print'), '_blank');
+                }, 1000);
+                if($('#documentoIndex').data('doc_print') == 'guia'){
+                  setTimeout(function() {
+                    window.open('impresion-documento/' + $('#documentoIndex').data('id_print') + '/invoice_guia', '_blank');
+                  }, 1500);
+                }
                 window.open('impresion-documento/' + $('#documentoIndex').data('id_print') + '/'+$('#documentoIndex').data('doc_print'), '_blank');
             }
         },

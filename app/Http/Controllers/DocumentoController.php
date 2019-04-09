@@ -1900,7 +1900,7 @@ class DocumentoController extends Controller
     {
 
         $detalle = DocumentoDetalle::join('documento as b', 'documento_detalle.documento_id', 'b.id')
-            ->select('documento_detalle.id', 'b.consignee_id')
+            ->select('documento_detalle.id', 'documento_detalle.agrupado', 'documento_detalle.flag', 'b.consignee_id')
             ->where([
                 ['documento_detalle.deleted_at', null],
             ])
@@ -1908,6 +1908,8 @@ class DocumentoController extends Controller
             ->first();
 
         if ($detalle) {
+          // VERIFICAR SI EL NUMERO INGRESADO NO ESTE DENTRO DE UNA MINTIC
+          if($detalle->id == $detalle->agrupado and $detalle->flag == 0){
             /* VERIFICAR QUE EL NUMERO INGRESADO NO ESTE EN OTRO CONSOLIDADO O YA ESTE INGRESADO */
             $cons_detail = DB::table('consolidado_detalle as a')
                 ->join('documento as b', 'a.consolidado_id', 'b.id')
@@ -1968,6 +1970,16 @@ class DocumentoController extends Controller
                     "data" => 'El número de Guía / WRH ingresado, ya se encuentra registrado en el consolidado # ' . $cons_detail->consecutivo,
                 );
             }
+          }else{
+            $det = DB::table('documento_detalle as a')
+                ->select('a.mintic')
+                ->where([['a.id', $detalle->agrupado]])
+                ->first();
+            $answer = array(
+                "code" => 600,
+                "data" => 'El documento ingresado esta dentro de la ' . $det->mintic
+            );
+          }
 
         } else {
             $answer = array(
@@ -2208,7 +2220,7 @@ class DocumentoController extends Controller
                 'a.liquidado',
                 'a.peso2',
                 'e.pais_id',
-                DB::raw('IFNULL(a.declarado2,0) as declarado2')
+                DB::raw('IFNULL(ROUND(a.declarado2, 2),0) as declarado2')
             )
             ->groupBy(
                 'a.id',
@@ -2746,6 +2758,7 @@ class DocumentoController extends Controller
             }
             if (isset($request->value) and $request->name === 'contenido') {
                 $data->contenido = $request->value;
+                $data->contenido2 = $request->value;
             }
             if (isset($request->value) and $request->name === 'declarado') {
                 $data->valor = $request->value;
@@ -3053,4 +3066,42 @@ class DocumentoController extends Controller
           ->first();
         return $estatus;
     }
+
+    // esta consulta era para el sidebar right
+    // public function getDataDocument($data)
+    // {
+    //     /* ESTATUS DEL DOCUMENTO */
+    //     $datos = DB::table('documento_detalle as c')
+    //         ->join('documento as d', 'c.documento_id', 'd.id')
+    //         ->join('shipper as e', 'd.shipper_id', 'e.id')
+    //         ->join('consignee as f', 'd.consignee_id', 'f.id')
+    //         ->join('localizacion as g', 'f.localizacion_id', 'g.id')
+    //         ->join('deptos as h', 'g.deptos_id', 'h.id')
+    //         ->join('pais as i', 'h.pais_id', 'i.id')
+    //         ->leftJoin('tracking as t', 'c.id', 't.documento_detalle_id')
+    //         ->select(
+    //           'c.id',
+    //           'c.peso',
+    //           'c.num_warehouse',
+    //           'c.num_guia',
+    //           'e.nombre_full AS procedencia',
+    //           'f.nombre_full AS consignee',
+    //           'c.num_consolidado',
+    //           'g.nombre AS ciudad',
+    //           'h.descripcion AS depto',
+    //           'i.descripcion AS pais',
+    //             DB::raw("(SELECT GROUP_CONCAT(tracking.codigo) FROM tracking WHERE tracking.documento_detalle_id = c.id) as tracking")
+    //         )
+    //         ->where([
+    //             ['c.deleted_at', null]
+    //         ])
+    //         ->wwhereRaw("(c.num_guia LIKE '%" . $data . "' OR c.num_warehouse LIKE '%" . $data . "' OR t.codigo LIKE '" . $data . "%')")
+    //         ->get();
+    //
+    //     $answer = array(
+    //         "data" => $datos,
+    //         "code"  => 200,
+    //     );
+    //     return $answer;
+    // }
 }

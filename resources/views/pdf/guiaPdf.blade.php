@@ -73,6 +73,10 @@
     $total_volumen = 0;
     $total_volumen_cft = 0;
     $total_volumen_cmt = 0;
+    // echo '<pre>';
+    // print_r($detalle);
+    // echo '<pre>';
+    // exit();
 
     ?>
     @if(count($detalle) > 0)
@@ -213,7 +217,7 @@
                                     </tr>
                                     <tr>
                                         <td valign="top"><b>@lang('general.observations'):</b></td>
-                                        <td colspan="5" valign="top"><span style="padding:4px 0 0 0"> {{ ((isset($documento->observaciones) and $documento->observaciones != '') ? $documento->observaciones : '') }} </span></td>
+                                        <td colspan="5" valign="top"><span style="padding:4px 0 0 0"> PA: {{ ((isset($detalle[0]->nom_pa) and $detalle[0]->nom_pa != '') ? $detalle[0]->nom_pa : '') }} {{ ((isset($documento->observaciones) and $documento->observaciones != '') ? $documento->observaciones : '') }}</span></td>
                                     </tr>
                                     <tr>
                                         <td colspan="2" valign="top"><b></b></td>

@@ -36,6 +36,7 @@
                     @yield('content')
                 </div>
             </div>
+            @include('layouts.sidebarRight')
         </div>
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}"></script>
@@ -48,6 +49,9 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js">
         </script>
         <script type="text/javascript">
+          var objVue = new Vue({
+            el: '#right-sidebar',
+          })
             document.body.style.zoom="90%";
             $(document).ready(function(){
                 $('#in_documento').on('click', function(){

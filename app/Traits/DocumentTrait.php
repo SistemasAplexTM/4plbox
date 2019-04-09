@@ -187,14 +187,25 @@ trait DocumentTrait
                         AND z.agrupado = a.id
                         AND z.flag = 1
                       ) AS agrupadas'),
+            DB::raw('(SELECT
+                        z.num_warehouse
+                      FROM
+                        documento_detalle AS z
+                      WHERE
+                        z.deleted_at IS NULL
+                        AND z.id = a.agrupado
+                        AND z.flag = 0
+                      ) AS padre'),
               $qr_group,
               'a.mintic',
               DB::raw('"ciudad" AS ciudad')
             )
             ->where($filter)
             ->where('b.carga_courier', 1)
-            ->whereRaw('(a.flag = 0 OR a.flag is null)')
-            ->orderBy('b.created_at', 'DESC');
+            // ->whereRaw('(a.flag = 0 OR a.flag is null)')
+            ->orderBy('a.agrupado', 'DESC')
+            ->orderBy('a.flag', 'ASC')
+            ->orderBy('b.created_at', 'ASC');
         return $sql;
     }
 

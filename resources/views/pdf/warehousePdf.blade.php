@@ -210,7 +210,7 @@
                                 </tr>
                                 <tr>
                                     <td valign="top" style="height: 50px;"><b>@lang('general.observations'):</b></td>
-                                    <td height="15" colspan="5" valign="top"><span style="padding:4px 0 0 0"> {{ ((isset($documento->observaciones) and $documento->observaciones != '') ? $documento->observaciones : '') }} </span></td>
+                                    <td height="15" colspan="5" valign="top"><span style="padding:4px 0 0 0"> PA: {{ ((isset($detalle[0]->nom_pa) and $detalle[0]->nom_pa != '') ? $detalle[0]->nom_pa : '') }} {{ ((isset($documento->observaciones) and $documento->observaciones != '') ? $documento->observaciones : '') }} </span></td>
                                 </tr>
                             </table>
                         </div>

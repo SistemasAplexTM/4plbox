@@ -106,12 +106,12 @@ $(function() {
 });
 
 function datatableDetail(){
-    //     if ($.fn.DataTable.isDataTable('#whgTable')) {
-    // var table = $('#whgTable').DataTable();
-    //     table.clear();
-    //         $('#whgTable tbody').empty();
-    //         $('#whgTable').dataTable().fnDestroy();
-    //     }
+        if ($.fn.DataTable.isDataTable('#whgTable')) {
+    var table = $('#whgTable').DataTable();
+        table.clear();
+            $('#whgTable tbody').empty();
+            $('#whgTable').dataTable().fnDestroy();
+        }
     var puntos = null;
     if(puntos_config != null){
       puntos = JSON.parse(puntos_config);

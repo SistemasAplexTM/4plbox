@@ -575,7 +575,7 @@
 							if(me.documento.observaciones != null){
 								me.tipo_consolidado = me.documento.tipo_consolidado;
 							}
-						}, 1500);
+						}, 5500);
 		},
 		created(){
 			/* CUSTOM MESSAGES VE-VALIDATOR*/
@@ -762,7 +762,7 @@
 			                    name: 'peso2'
 			                }, {
 			                    "render": function (data, type, full, meta) {
-				                	return '$ '+full.declarado2;
+				                	return '$ '+ full.declarado2;
 				                }
 			                }]
 			            });

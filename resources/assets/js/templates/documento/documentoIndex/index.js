@@ -71,7 +71,8 @@ function datatableDocument(t, tipo_doc_id, status_id){
   var table = $('#tbl-documento' + t).DataTable({
       processing: true,
       serverSide: true,
-      order: [[1, "desc"]],
+      lengthMenu: [[20, 40, 50, 80, 100, 200, 500], [20, 40, 50, 80, 100, 200, 500]],
+      // order: [[1, "desc"]],
       ajax: {
           "url": 'documento/all/documento_detalle',
           "data": function(d) {
@@ -280,8 +281,13 @@ function numDocument(data, type, full, meta) {
       var mintic = '';
       if(full.mintic != '' && full.mintic != null){
         mintic = '<div><small style="color: #23c6c8;">' + full.mintic + '</small></div>';
+      }else{
+        if(full.flag == 1){
+          var str = full.padre;
+          mintic = '<div><small style="color: #23c6c8;padding-left:15px">' + str + '</small></div>';
+        }
       }
-      return '<span class="" data-toggle="tooltip" title="'+st+'"><i class="fa fa-'+ ((full.estatus == null) ? 'box' : ((full.agrupadas > 0) ? 'boxes' : 'box-open'))+' fa-xs" style="color:'+full.estatus_color+'"></i> ' + ((codigo == null) ? full.warehouse : codigo )+ '</span><a style="float: right;cursor:pointer;" class="badge badge-'+ classText +' pop" role="button" data-html="true" data-toggle="popover" data-trigger="hover" title="<b>Documentos agrupadas</b>" data-content="'+((groupGuias == null) ? '' : groupGuias )+'" ' + group + '>'+ ((full.agrupadas == null) ? '' : full.agrupadas)+'</a> ' + mintic;
+      return '<span class="" data-toggle="tooltip" title="'+st+'"><i class="fa fa-'+ ((full.estatus == null) ? 'box' : ((full.agrupadas > 0) ? 'boxes' : ((full.flag == 1) ? 'minus' : 'box-open')))+' fa-xs" style="color:'+ ((full.flag == 1) ? '#E34724' : full.estatus_color) +'"></i> ' + ((codigo == null) ? full.warehouse : codigo )+ '</span><a style="float: right;cursor:pointer;" class="badge badge-'+ classText +' pop" role="button" data-html="true" data-toggle="popover" data-trigger="hover" title="<b>Documentos agrupadas</b>" data-content="'+((groupGuias == null) ? '' : groupGuias )+'" ' + group + '>'+ ((full.agrupadas == null) ? '' : full.agrupadas)+'</a> ' + mintic;
     }else{
       icon = 'boxes';
       if(full.transporte_id == 7){

@@ -52,6 +52,7 @@ Vue.component('modalguias-component', require('./components/ModalGuiasComponent.
 Vue.component('modaltagdocument-component', require('./components/ModalTagDocumentComponent.vue'));
 Vue.component('modalreciboentrega-component', require('./components/ModalReciboEntregaComponent.vue'));
 Vue.component('rigthsidebar-component', require('./components/RigthSidebarComponent.vue'));
+Vue.component('right-sidebar', require('./components/RightSidebar.vue'));
 Vue.component('consol_bodega-component', require('./components/ConsolBodegaComponent.vue'));
 Vue.component('config-component', require('./components/config/Index.vue'));
 Vue.component('agency-integrations-component', require('./components/agency_integrations/Index.vue'));
