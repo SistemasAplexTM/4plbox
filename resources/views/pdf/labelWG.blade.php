@@ -235,7 +235,7 @@
                         </span>
                     </div>
                     <div class="servicio">
-                        
+
                         <div class="iatacode">
                             {{ $value->prefijo }}/{{ $value->cons_pais_code }}
                         </div>

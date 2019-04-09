@@ -575,7 +575,7 @@
 							if(me.documento.observaciones != null){
 								me.tipo_consolidado = me.documento.tipo_consolidado;
 							}
-						}, 1500);
+						}, 5500);
 		},
 		created(){
 			/* CUSTOM MESSAGES VE-VALIDATOR*/
