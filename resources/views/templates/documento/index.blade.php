@@ -277,7 +277,8 @@
                         </h4>
                     </div>
                     <div class="modal-body">
-                        <form id="formGuiasAgrupar">
+                      <modal-cambiar-status-consolidado :document_id="id_consolidado_selected"/>
+                        {{-- <form id="formGuiasAgrupar">
                             <p>Selecione el estatus que desea aplicar a este consolidado y sus documentos internos.</p>
                             <div class="row">
                                 <div class="col-sm-8">
@@ -293,7 +294,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        </form> --}}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

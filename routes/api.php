@@ -38,6 +38,6 @@ Route::group(['middleware' => 'auth:api'], function(){
   Route::post('setPrealert', 'CasilleroApiController@setPrealert');
   Route::get('user/{id}', 'CasilleroApiController@findUser');
   Route::get('user/contacts/{id}', 'CasilleroApiController@getContacts');
-  Route::postt('user/setContacts/{id}', 'CasilleroApiController@setContacts');
+  Route::post('user/setContacts/{id}', 'CasilleroApiController@setContacts');
   Route::put('user/update', 'CasilleroApiController@updateUser');
 });

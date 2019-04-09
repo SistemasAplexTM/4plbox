@@ -1,0 +1,102 @@
+<style lang="css" scoped>
+
+
+
+</style>
+
+<template lang="html">
+
+<div class="row">
+    <div class="col-lg-12">
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="trackings" class="active"><a href="#recibido" aria-controls="recibido" role="tab" data-toggle="tab"><i class="fa fa-barcode"></i> Recibido</a></li>
+          <li role="trackings"><a href="#bodega" aria-controls="bodega" role="tab" data-toggle="tab"><i class="fa fa-clock"></i> Estados</a></li>
+        </ul>
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane fade active in" id="recibido">
+             <div class="row form-group" id="register">
+                 <div class="col-lg-6" :class="{ 'has-error': errors.has('warehouse') }">
+                     <el-input autofocus="true" size="medium" placeholder="Código de warehouse" v-model="form.warehouse" @keyup.enter="setData"></el-input>
+                     <small class="help-block">{{ errors.first('warehouse') }}</small>
+                 </div>
+                 <div class="col-lg-6" :class="{ 'has-error': errors.has('estatus') }">
+                  <status-component :default="1" @get="form.estatus_id = $event.id"/>
+                 </div>
+                 <transition name="fade">
+                     <div class="col-lg-6 form-group" :class="{ 'has-error': errors.has('transportadora') }" v-if='show'>
+                         <el-select name="transportadora" v-model="form.transportadora_id" filterable placeholder="Transportadoras locales" v-validate.disable="'required'" size="medium">
+                             <el-option v-for="item in form.transportadora" :key="item.id" :label="item.name" :value="item.id">
+                                 <span style="float: left">{{ item.name }}</span>
+                                 <span style="float: right; color: #8492a6; font-size: 13px">{{ item.pais }}</span>
+                             </el-option>
+                         </el-select>
+                         <small class="help-block">{{ errors.first('transportadora') }}</small>
+                     </div>
+                 </transition>
+                 <transition name="fade">
+                     <div class="col-lg-6 form-group" :class="{ 'has-error': errors.has('guia_transportadora') }" v-if='show'>
+                         <el-input name="guia_transportadora" placeholder="Número de guia transportadora" prefix-icon="el-icon-edit-outlin" v-model="form.guia_transportadora" v-validate.disable="'required'" size="medium">
+                         </el-input>
+                         <small class="help-block">{{ errors.first('guia_transportadora') }}</small>
+                     </div>
+                 </transition>
+                 <div class="col-lg-10">
+                     <input type="text" class="form-control" v-model="form.observacion" placeholder="Observación">
+                 </div>
+                 <div class="col-lg-2">
+                     <button class="btn btn-primary" data-toggle="tooltip" title="Agregar" @click="setData"><i class="fa fa-plus"></i></button>
+                 </div>
+             </div>
+          </div>
+          <div role="tabpanel" class="tab-pane fade" id="bodega">
+          <div class="table-responsive" style="margin-top: 10px">
+           <h1>otro</h1>
+          </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+</template>
+
+<script>
+
+export default {
+  data(){
+    return {
+     form: {
+      estatus_id: 1,
+      observacion: null,
+      warehouse: null,
+      transportadora: [],
+      transportadora_id: null,
+     },
+     show: false
+    };
+  },
+  props: ["document_id"],
+  methods:{
+   setData(){
+    axios.post('cambiarStatusConsolidado/'+ this.document_id, this.form).then(({data}) => {
+     if (data.code == 200) {
+      toastr.success('Registrado con éxito.');
+      this.reset()
+     }else{
+      toastr.error('El warehouse no se encuentra en este consolidado.');
+     }
+    }).catch(error => { console.log(error) })
+   },
+   reset(){
+    this.form = {
+     estatus_id: null,
+     observacion: null,
+     warehouse: null,
+     transportadora: [],
+     transportadora_id: null
+    }
+    this.show = false
+   }
+  }
+}
+
+</script>

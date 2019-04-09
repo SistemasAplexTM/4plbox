@@ -372,6 +372,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('invoice', 'InvoiceController@index')->name('invoce.index');
     Route::get('invoice/getAll', 'InvoiceController@getAll');
     Route::get('invoice/pdfLabels/{invoice_id?}', 'InvoiceController@pdfLabels');
+    /* CAMBIAR STATUS CONSOLIDADO */
+    Route::post('cambiarStatusConsolidado/{document_id}', 'StatusController@cambiarStatusConsolidado');
 });
 Route::get('aplexConfig/config/{key}', 'AplexConfigController@get')->name('config.config');
 Route::get('aplexConfig/getDataAgencyById/{id}', 'AplexConfigController@getDataAgencyById')->name('aplexConfig.getDataAgencyById');

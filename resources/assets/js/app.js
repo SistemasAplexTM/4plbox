@@ -60,3 +60,5 @@ Vue.component('city-component', require('./components/CityComponent.vue'));
 Vue.component('cuba-component', require('./components/cuba/Index.vue'));
 Vue.component('products-cuba-component', require('./components/cuba/ModalProductsComponent.vue'));
 Vue.component('invoice-component', require('./components/invoice/Index.vue'));
+Vue.component('modal-cambiar-status-consolidado', require('./components/ModalCambiarStatusConsolidado.vue'));
+Vue.component('status-component', require('./components/Status.vue'));

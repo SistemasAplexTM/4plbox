@@ -7,6 +7,8 @@ use App\Status;
 use DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\DocumentoDetalle;
+use Auth;
 
 class StatusController extends Controller
 {
@@ -212,5 +214,23 @@ class StatusController extends Controller
             "code" => 200,
             "data" => $data,
         );
+    }
+
+    public function cambiarStatusConsolidado(Request $request, $document_id)
+    {
+     $answer = ['code' => 600];
+     $data = DocumentoDetalle::where('num_warehouse', $request->warehouse)->first();
+     if ($data) {
+      DB::table('status_detalle')
+      ->insert([
+       'status_id' => $request->estatus_id,
+       'usuario_id' => Auth::id(),
+       'documento_detalle_id' => $data->id,
+       'codigo' => $request->warehouse,
+       'observacion' => $request->observacion
+      ]);
+      $answer = ['code' => 200];
+     }
+     return $answer;
     }
 }
