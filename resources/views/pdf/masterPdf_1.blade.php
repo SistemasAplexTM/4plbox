@@ -322,8 +322,8 @@
 					          </tr>
 					          <tr>
 					            <td colspan="2">
-												<div class=""  style="width:300px;overflow: hidden;">
-													<pre id="shipper_n" class="persons_data">{{ $data->shipper }}</pre>
+												<div class=""  style="width:300px;">
+													<pre id="shipper_n" class="persons_data" style="{{ (strlen($data->shipper) > 150) ? 'font-size:10px;' : '' }}">{{ $data->shipper }}</pre>
 												</div>
 														{{-- <div id="shipper_n" class="persons_data"> --}}
 					                    {{-- <div>{{ $data->nombre_shipper }}</div>
@@ -376,8 +376,8 @@
 					          </tr>
 					          <tr>
 					            <td height="70px" colspan="2">
-												<div class=""  style="width:300px;overflow: hidden;">
-												<pre id="consignee_n" class="persons_data">{{ $data->consignee }}</pre>
+												<div class=""  style="width:300px;">
+												<pre id="consignee_n" class="persons_data" style="{{ (strlen($data->consignee) > 150) ? 'font-size:10px;' : '' }}">{{ $data->consignee }}</pre>
 											</div>
 					                {{-- <div id="consignee_n" class="persons_data">
 					                    <div>{{ $data->nombre_consignee }}</div>
