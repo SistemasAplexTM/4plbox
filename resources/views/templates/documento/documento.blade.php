@@ -690,8 +690,8 @@
                                                           <!-- Split button -->
                                                               <label for="btn_add" class="control-label" style="padding-top: 2px;width: 100%">&nbsp;</label>
                                                               <div class="btn-group">
-                                                                <button type="button" class="btn btn-info btn-sm btnBlock" id="btn_add" value="0" @click="addDetail()">@lang('documents.add')</button>
-                                                                <button type="button" class="btn btn-info btn-sm dropdown-toggle btnBlock" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 35px;">
+                                                                <button type="button" :disabled="disabled_client" class="btn btn-info btn-sm btnBlock" id="btn_add" value="0" @click="addDetail()">@lang('documents.add')</button>
+                                                                <button type="button" :disabled="disabled_client" class="btn btn-info btn-sm dropdown-toggle btnBlock" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 35px;">
                                                                   <span class="caret"></span>
                                                                   <span class="sr-only">Toggle Dropdown</span>
                                                                 </button>

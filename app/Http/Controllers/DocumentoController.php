@@ -2205,6 +2205,9 @@ class DocumentoController extends Controller
         if(!Auth::user()->isRole('admin')){
             $filter[] = ['b.agencia_id', Auth::user()->agencia_id];
         }
+        if(env('APP_CLIENT') == 'jyg'){
+          $filter[] = ['a.liquidado', 1];
+        }
 
         $detalle = DB::table('documento_detalle AS a')
             ->join('documento as b', 'a.documento_id', 'b.id')

@@ -313,6 +313,11 @@ function datatableDetail(){
                 // $('#btn_add').siblings('button').attr('disabled', true);
             }
         }
+        if(app_client === 'jyg'){
+          if(json.data.length === 1){
+            objVue.disabled_client = true;
+          }
+        }
         objVue.totalizeDocument();
 
         //VALIDA SI SE MUESTRAN LOS PUNTOS PARA EL PAIS CONFIGURADO

@@ -100,7 +100,8 @@ var objVue = new Vue({
         points_id_detail: null,
         show_btn_products: false,
         total_points: 0,
-        data_points: []
+        data_points: [],
+        disabled_client: false //desabilita el boton de agregar en el detalle si el cliente es jyg
 
     },
     methods: {

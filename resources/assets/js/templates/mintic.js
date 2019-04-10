@@ -55,7 +55,6 @@ var objVue = new Vue({
               toastr.warning('EL warehouse ya se encuentra en esta mintic');
               me.disabled = false
               this.warehouse = null
-              console.log(this.$refs.wrh);
               setTimeout(function() {
                 me.$refs.wrh.focus();
               },200)

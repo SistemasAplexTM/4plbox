@@ -269,7 +269,7 @@
                                         </td>
                                         <?php $leng = strlen($val->contenido); ?>
                                         <td id="cont_detalle" style="height: 50px;">
-                                            {{ (($leng > 215) ? str_replace(',', '-', substr($val->contenido, 0, 215)) : str_replace(',', ', ', $val->contenido)) }} **- trackings ({{ str_replace(',', ', ', $val->tracking) }})
+                                            {{ (($leng > 215) ? str_replace(',', '-', substr($val->contenido, 0, 215)) : str_replace(',', ', ', $val->contenido)) }} **- trackings ({{ str_replace(',', ', ', $val->trackings) }})
                                         </td>
                                         <td align='center' id="cont_detalle">{{ $val->largo }}</td>
                                         <td align='center' id="cont_detalle">{{ $val->ancho }}</td>

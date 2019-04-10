@@ -16,7 +16,7 @@
           <div role="tabpanel" class="tab-pane fade active in" id="recibido">
              <div class="row form-group" id="register">
                  <div class="col-lg-6" :class="{ 'has-error': errors.has('warehouse') }">
-                     <el-input autofocus="true" size="medium" placeholder="Código de warehouse" v-model="form.warehouse" @keyup.enter.native="setData"></el-input>
+                     <el-input ref="warehouse_state" size="medium" placeholder="Código de warehouse" v-model="form.warehouse" @keyup.enter.native="setData"></el-input>
                      <small class="help-block">{{ errors.first('warehouse') }}</small>
                  </div>
                  <div class="col-lg-6" :class="{ 'has-error': errors.has('estatus') }">
@@ -75,6 +75,14 @@ export default {
     };
   },
   props: ["document_id"],
+  mounted(){
+    let me = this;
+    $('#modalChangeStatus').on('show.bs.modal', function() {
+      setTimeout(function() {
+        me.$refs.warehouse_state.focus();
+      },500)
+    });
+  },
   methods:{
    setData(){
     axios.post('cambiarStatusConsolidado/'+ this.document_id, this.form).then(({data}) => {
@@ -94,6 +102,7 @@ export default {
      transportadora: [],
      transportadora_id: null
     }
+    me.$refs.warehouse_state.focus();
     this.show = false
    }
   }
