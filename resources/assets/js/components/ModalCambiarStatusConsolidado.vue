@@ -16,7 +16,7 @@
           <div role="tabpanel" class="tab-pane fade active in" id="recibido">
              <div class="row form-group" id="register">
                  <div class="col-lg-6" :class="{ 'has-error': errors.has('warehouse') }">
-                     <el-input autofocus="true" size="medium" placeholder="Código de warehouse" v-model="form.warehouse" @keyup.enter="setData"></el-input>
+                     <el-input autofocus="true" size="medium" placeholder="Código de warehouse" v-model="form.warehouse" @keyup.enter.native="setData"></el-input>
                      <small class="help-block">{{ errors.first('warehouse') }}</small>
                  </div>
                  <div class="col-lg-6" :class="{ 'has-error': errors.has('estatus') }">
