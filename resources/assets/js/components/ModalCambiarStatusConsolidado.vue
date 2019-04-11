@@ -49,10 +49,25 @@
              </div>
           </div>
           <div role="tabpanel" class="tab-pane fade" id="bodega">
-          <div class="table-responsive" style="margin-top: 10px">
-           <h1>otro</h1>
+           <form id="formGuiasAgrupar" style="margin-top: 10px">
+               <p>Selecione el estatus que desea aplicar a este consolidado y sus documentos internos.</p>
+               <div class="row">
+                   <div class="col-sm-8">
+                       <div class="form-group">
+                           <label for="status_id">Estatus actual</label>
+                           <status-component :default="defaultStatus" @get="status_id = $event.id"/>
+                           <!-- <v-select name="status_id" v-model="status_id" label="descripcion" :filterable="false" :options="status"></v-select> -->
+                       </div>
+                   </div>
+                   <div class="col-sm-4">
+                       <div class="form-group">
+                           <label for="status_id" style="width: 100%;">&nbsp;</label>
+                           <button class="ladda-button btn btn-primary btn-sm" data-style="expand-right" type="button" data-toggle="tooltip" title="Agregar estatus a guias" @click="addStatusConsolidado()"><i class="fa fa-save"></i> Cambiar</button>
+                       </div>
+                   </div>
+               </div>
+           </form>
           </div>
-        </div>
         </div>
     </div>
 </div>
@@ -65,13 +80,15 @@ export default {
   data(){
     return {
      form: {
+      status_id: null,
       estatus_id: 1,
       observacion: null,
       warehouse: null,
       transportadora: [],
       transportadora_id: null,
      },
-     show: false
+     show: false,
+     defaultStatus: null
     };
   },
   props: ["document_id"],
@@ -80,6 +97,7 @@ export default {
     $('#modalChangeStatus').on('show.bs.modal', function() {
       setTimeout(function() {
         me.$refs.warehouse_state.focus();
+        me.getStatusDocument()
       },500)
     });
   },
@@ -104,7 +122,34 @@ export default {
     }
     me.$refs.warehouse_state.focus();
     this.show = false
-   }
+   },
+   addStatusConsolidado: function(){
+     var l = Ladda.create(document.querySelector('.ladda-button'));
+     // console.log(l);
+     l.start();
+     let me = this;
+     axios.post('documento/' + me.document_id + '/addStatusToGuias',{
+         'status_id': me.status_id
+     }).then(function (response) {
+         l.stop();
+         toastr.success('Registro Exitoso.');
+     }).catch(function (error) {
+         l.stop();
+         console.log(error);
+         toastr.warning('Error.');
+         toastr.options.closeButton = true;
+     });
+   },
+   getStatusDocument: function(){
+     let me = this;
+     axios.post('documento/' + me.document_id + '/getStatusDocument').then(({data}) => {
+       me.defaultStatus = data.estado_id
+     }).catch(function (error) {
+       console.log(error);
+       toastr.warning('Error.');
+       toastr.options.closeButton = true;
+     });
+   },
   }
 }
 
