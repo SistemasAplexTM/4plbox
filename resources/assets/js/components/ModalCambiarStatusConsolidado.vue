@@ -113,6 +113,7 @@ export default {
     }).catch(error => { console.log(error) })
    },
    reset(){
+    let me = this;
     this.form = {
      estatus_id: null,
      observacion: null,
