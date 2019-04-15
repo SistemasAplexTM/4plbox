@@ -173,7 +173,6 @@ class TrackingController extends Controller
          }
        }
 
-
         $data = Tracking::leftJoin('consignee AS b', 'tracking.consignee_id', 'b.id')
             ->leftJoin('documento_detalle AS c', 'tracking.documento_detalle_id', 'c.id')
             ->select(

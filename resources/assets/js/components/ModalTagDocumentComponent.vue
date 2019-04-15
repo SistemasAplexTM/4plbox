@@ -101,7 +101,11 @@
                 <div role="tabpanel" class="tab-pane fade active in" id="tracking">
                   <div class="form-group cont-tracking">
 
-                    <div v-for="val in trackings" class="tracking"><i class="fa fa-truck fa-xs"></i> {{ val.codigo }}</div>
+                    <div v-for="val in trackings" class="tracking">
+                      <i class="fa fa-truck fa-xs"></i> {{ val.codigo }}<br>
+                      <i class="fal fa-minus fa-xs"></i> Contenido: <strong>{{ val.contenido }}</strong><br>
+                      <i class="fal fa-minus fa-xs"></i> Peso: <strong>{{ val.peso }} Lbs</strong>
+                    </div>
                   </div>
                 </div>
 

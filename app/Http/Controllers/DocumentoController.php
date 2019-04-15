@@ -157,7 +157,7 @@ class DocumentoController extends Controller
 
                             /* GENERAR NUMERO DE GUIA */
                             $caracteres      = strlen($consecutivo);
-                            $sumarCaracteres = 7 - $caracteres;
+                            $sumarCaracteres = 8 - $caracteres;
                             $carcater        = '0';
                             $prefijo         = $tipo->prefijo;
                             // $prefijo2        = 'CLO';
@@ -485,7 +485,7 @@ class DocumentoController extends Controller
 
                         /* GENERAR NUMERO DE GUIA */
                         $caracteres      = strlen($data->consecutivo);
-                        $sumarCaracteres = 7 - $caracteres;
+                        $sumarCaracteres = 8 - $caracteres;
                         $carcater        = '0';
                         $prefijo         = (isset($prefijoGuia->prefijo) and $prefijoGuia->prefijo != '') ? $prefijoGuia->prefijo : '';
                         $prefijoPais     = (isset($prefijoGuia->iso2) and $prefijoGuia->iso2 != '') ? $prefijoGuia->iso2 : '';
@@ -522,7 +522,11 @@ class DocumentoController extends Controller
 
                 /* GENERAR NUMERO DE GUIA A LOS DETALLES DEL DOCUMENTO */
                 foreach ($detalle as $val) {
-                    $num_guia = $prefijo . $data->consecutivo . $val->paquete . $prefijoPais;
+                    $paquete = '';
+                    if(env('APP_CLIENT') != 'jyg'){
+                      $paquete = $val->paquete;
+                    }
+                    $num_guia = trim($prefijo . $data->consecutivo . $paquete . $prefijoPais);
                     DocumentoDetalle::where('id', $val->id)->update([
                         'shipper_id'   => $data->shipper_id,
                         'consignee_id' => $data->consignee_id,
@@ -891,21 +895,26 @@ class DocumentoController extends Controller
                         ['documento_detalle.documento_id', $data->documento_id],
                     ])->get();
                 // $data->num_guia      = $documento->num_guia . '' . (count($documentoD) + 1);
+                // PARA JYG QUITARLE EL UNO AL NUMERO DE GUIA Y WRH
+                $paquete = '';
+                if(env('APP_CLIENT') != 'jyg'){
+                  $paquete = (count($documentoD) + 1);
+                }
 
                 /* GENERAR NUMERO DE GUIA */
                 $caracteres      = strlen($documento->consecutivo);
-                $sumarCaracteres = 7 - $caracteres;
+                $sumarCaracteres = 8 - $caracteres;
                 $carcater        = '0';
                 $prefijo         = (isset($prefijoGuia->prefijo) and $prefijoGuia->prefijo != '') ? $prefijoGuia->prefijo : 'CLO';
                 $prefijoPais     = (isset($prefijoGuia->iso2) and $prefijoGuia->iso2 != '') ? $prefijoGuia->iso2 : 'CO';
                 for ($i = 1; $i <= $sumarCaracteres; $i++) {
                     $prefijo = $prefijo . $carcater;
                 }
-                $data->num_guia = $prefijo . $documento->consecutivo . (count($documentoD) + 1) . $prefijoPais;
+                $data->num_guia = trim($prefijo . $documento->consecutivo . $paquete . $prefijoPais);
                 $data->paquete  = (count($documentoD) + 1);
 
                 /* GENERAR NUMERO DE WAREHOUSE */
-                $data->num_warehouse = $documento->num_warehouse . '' . (count($documentoD) + 1);
+                $data->num_warehouse = trim($documento->num_warehouse . '' . $paquete);
                 if ($documento->liquidado === 1) {
                     $data->liquidado = 1;
                 }
@@ -2911,7 +2920,7 @@ class DocumentoController extends Controller
     {
       $trackings = DB::table('documento_detalle as a')
         ->leftJoin('tracking as b', 'a.id', 'b.documento_detalle_id')
-          ->select('b.codigo')
+          ->select('b.codigo', 'a.contenido', 'a.peso')
           ->where([['a.deleted_at', null], ['b.deleted_at', null], ['a.documento_id', $id]])
           ->get();
       $answer = array(

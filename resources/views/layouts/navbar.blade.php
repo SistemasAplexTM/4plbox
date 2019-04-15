@@ -6,7 +6,7 @@
     }
 </style>
 <div  id="navbar">
-<div class="row border-bottom">
+<div class="row border-bottom" id="navbar_index">
     <nav class="navbar navbar-fixed-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header" style="width: 60%;">
             <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
@@ -76,8 +76,10 @@
                     </li>
                 </ul>
             </li>
+            <li class="dropdown navbar minimalize-styl-2" style="margin-top: 10px;margin-bottom:0px;width: 300px;">
+              <search></search>
+            </li>
         </ul>
-
         </div>
 
         <ul class="nav navbar-top-links navbar-right">

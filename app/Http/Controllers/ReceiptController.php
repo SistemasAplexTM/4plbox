@@ -217,6 +217,19 @@ class ReceiptController extends Controller
 
   public function getDocument($id)
   {
+    // $data = Receipt::leftjoin('consignee AS b', 'factura.consignee_id', 'b.id')
+    // ->select('factura.agencia_id',
+    // 'factura.consignee_id',
+    // 'factura.usuario_id',
+    // 'factura.numero_recibo',
+    // 'factura.cliente',
+    // 'factura.cliente_datos',
+    // 'factura.transportador',
+    // 'factura.created_at',
+    // 'b.nombre_full AS consignee')
+    // ->where('factura.id', $id)
+    // ->get();
+    // return $data;
     return Receipt::find($id);
   }
 
@@ -242,8 +255,19 @@ class ReceiptController extends Controller
   public function printReceipt($id)
   {
     $agencia = Agencia::find(Auth::user()->agencia_id);
-    $recibo = Receipt::where('factura.id', $id)
-    ->join('users AS b', 'usuario_id', 'b.id')
+    $recibo = Receipt::leftjoin('consignee AS b', 'factura.consignee_id', 'b.id')
+    ->join('users AS c', 'factura.usuario_id', 'c.id')
+    ->select('factura.agencia_id',
+    'factura.consignee_id',
+    'factura.usuario_id',
+    'factura.numero_recibo',
+    'factura.cliente',
+    'factura.cliente_datos',
+    'factura.transportador',
+    'factura.created_at',
+    'b.nombre_full AS consignee',
+    'c.name')
+    ->where('factura.id', $id)
     ->first();
     $reciboD = ReceiptDetail::where('factura_id', $id)
     ->join('documento_detalle AS b', 'documento_detalle_id', 'b.id')
