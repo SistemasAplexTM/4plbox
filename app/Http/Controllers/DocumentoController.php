@@ -3068,7 +3068,7 @@ class DocumentoController extends Controller
          'Excel Bodega.xlsx', \Maatwebsite\Excel\Excel::XLSX);
     }
 
-    public function getStatusDocument(Request $request, $id)
+    public function getStatusDocument($id)
     {
       $estatus = Documento::select('documento.estado_id')
           ->where([
@@ -3076,7 +3076,7 @@ class DocumentoController extends Controller
               ['documento.id', $id],
           ])
           ->first();
-        return $estatus;
+      return $estatus;
     }
 
     // esta consulta era para el sidebar right

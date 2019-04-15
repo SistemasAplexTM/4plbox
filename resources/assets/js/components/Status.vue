@@ -18,6 +18,11 @@ export default {
   }
  },
  props: ['default'],
+ watch:{
+  default(newVal, oldVal){
+   this.setDefault(newVal)
+  }
+ },
  mounted(){
   this.getData()
  },
@@ -26,16 +31,17 @@ export default {
    let me = this
    axios.get('status/all').then(({data}) => {
     me.status = data.data
-    if (me.default) {
-     var result = me.status.filter(({id}) => id == me.default );
-     me.selected = result[0]
-    }
+    me.setDefault(me.default);
    }).catch((error) => {
       console.log(error);
    });
   },
   handleSelect(item) {
     this.$emit('get', item);
+  },
+  setDefault(value){
+   var result = this.status.filter(({id}) => id == value );
+   this.selected = result[0]
   }
  }
 }

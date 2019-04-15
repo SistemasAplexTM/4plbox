@@ -221,15 +221,22 @@ class StatusController extends Controller
      $answer = ['code' => 600];
      $data = DocumentoDetalle::where('num_warehouse', $request->warehouse)->first();
      if ($data) {
-      DB::table('status_detalle')
-      ->insert([
-       'status_id' => $request->estatus_id,
-       'usuario_id' => Auth::id(),
-       'documento_detalle_id' => $data->id,
-       'codigo' => $request->warehouse,
-       'observacion' => $request->observacion
-      ]);
-      $answer = ['code' => 200];
+      $consolidado_detalle = DB::table('consolidado_detalle')
+      ->select('id')->where([
+       ['documento_detalle_id', $data->id],
+       ['consolidado_id', $document_id]
+       ])->first();
+      if ($consolidado_detalle) {
+       DB::table('status_detalle')
+       ->insert([
+        'status_id' => $request->estatus_id,
+        'usuario_id' => Auth::id(),
+        'documento_detalle_id' => $data->id,
+        'codigo' => $request->warehouse,
+        'observacion' => $request->observacion
+       ]);
+       $answer = ['code' => 200];
+      }
      }
      return $answer;
     }

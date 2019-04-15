@@ -65,7 +65,7 @@ var objVue = new Vue({
         me.typeDocumentList();
         setTimeout(function () {
           me.printDocument();
-          me.getStatus();
+          // me.getStatus();
         },1500)
         $('#date').val(this.getTime());
     },
@@ -104,7 +104,7 @@ var objVue = new Vue({
         getStatusDocument: function(){
             let me = this;
             axios.post('documento/' + me.id_consolidado_selected + '/getStatusDocument').then(function (response) {
-                console.log(response.data);
+                // console.log(' ahsdias ', response.data);
             }).catch(function (error) {
                 console.log(error);
                 toastr.warning('Error.');
