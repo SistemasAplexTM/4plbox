@@ -172,7 +172,7 @@
                                         <th>Consignee</th>
                                         <th>Dirección</th>
                                         <th>Teléfono</th>
-                                        <th>Acciones</th>
+                                        <th style="width: 90px;">Acciones</th>
                                     </tr>
                                 </thead>
                             </table>

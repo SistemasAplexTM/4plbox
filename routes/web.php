@@ -123,6 +123,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('receipt/getDocument/{id}', 'ReceiptController@getDocument');
     Route::post('receipt/checkReceipt', 'ReceiptController@checkReceipt');
     Route::get('receipt/printReceipt/{id}', 'ReceiptController@printReceipt');
+    Route::get('receipt/changeStatus/{id}', 'ReceiptController@changeStatus');
     // Route::post('receipt/validar_tracking', 'ReceiptController@validar_tracking');
 
     /*--- MODULO MODULOS ---*/
