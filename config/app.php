@@ -183,7 +183,6 @@ return [
         Milon\Barcode\BarcodeServiceProvider::class,
         Caffeinated\Shinobi\ShinobiServiceProvider::class,
         Spatie\Backup\BackupServiceProvider::class,
-        BC\Laravel\DropboxDriver\ServiceProvider::class,
 
     ],
 

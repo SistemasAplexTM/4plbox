@@ -93,17 +93,27 @@ class MasterController extends Controller
         $master = $master;
         $consolidado_id = $consolidado_id;
         $peso = 0;
+        $piezas = 1;
         if($consolidado_id != 'null' and $consolidado_id != null){
           $peso_consolidado  = DB::table('consolidado_detalle AS a')
-          ->join('documento_detalle AS b', 'a.documento_detalle_id', 'B.id')
+          ->join('documento_detalle AS b', 'a.documento_detalle_id', 'b.id')
           ->select(DB::raw("ROUND(Sum(b.peso2) * 0.453592) AS peso_total"))
           ->where([['b.deleted_at', null], ['a.deleted_at', null], ['a.consolidado_id', $consolidado_id]])
           ->first();
           if($peso_consolidado and $peso_consolidado != null){
             $peso = $peso_consolidado->peso_total;
           }
+
+          $piezas_consolidado  = DB::table('consolidado_detalle AS a')
+          ->join('documento_detalle AS b', 'a.documento_detalle_id', 'b.id')
+          ->select(DB::raw("Count(DISTINCT a.num_bolsa) AS cantidad"))
+          ->where([['b.deleted_at', null], ['a.deleted_at', null], ['a.consolidado_id', $consolidado_id]])
+          ->first();
+          if($piezas_consolidado and $piezas_consolidado != null){
+            $piezas = $piezas_consolidado->cantidad;
+          }
         }
-        return view('templates.master.create', compact('master', 'consolidado_id', 'peso'));
+        return view('templates.master.create', compact('master', 'consolidado_id', 'peso', 'piezas'));
     }
     public function update(Request $request, $master)
     {

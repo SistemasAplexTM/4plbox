@@ -285,22 +285,20 @@ class ReceiptController extends Controller
   public function changeStatus($id)
   {
     $data = ReceiptDetail::where('factura_id', $id)->get();
-    foreach ($data as $value) {
-      DB::table('status_detalle')->insert([
+    if($data){
+      foreach ($data as $value) {
+        DB::table('status_detalle')->insert([
           [
-              'status_id'            => 7,
-              'usuario_id'           => Auth::user()->id,
-              'documento_detalle_id' => $value->documento_detalle_id,
-              'codigo'               => '',
-              'fecha_status'         => date('Y-m-d H:i:s'),
-              'observacion'          => 'Se agrego desde el recibo de entrega',
+            'status_id'            => 7,
+            'usuario_id'           => Auth::user()->id,
+            'documento_detalle_id' => $value->documento_detalle_id,
+            'codigo'               => '',
+            'fecha_status'         => date('Y-m-d H:i:s'),
+            'observacion'          => 'Se agrego desde el recibo de entrega',
           ],
-      ]);
+        ]);
+      }
     }
 
-    // echo '<pre>';
-    // print_r($data);
-    // echo '</pre>';
-    // exit();
   }
 }

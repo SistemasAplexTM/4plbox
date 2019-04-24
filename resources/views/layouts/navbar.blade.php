@@ -76,7 +76,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="dropdown navbar minimalize-styl-2" style="margin-top: 10px;margin-bottom:0px;width: 300px;">
+            <li class="dropdown navbar minimalize-styl-2" style="margin-top: 10px;margin-bottom:0px;width: 400px;">
               <search></search>
             </li>
         </ul>
@@ -127,11 +127,11 @@
                 <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                     <i class="fas fa-sign-out-alt"></i> @lang('layouts.log_out')
                 </a>
-                <li>
+                {{-- <li>
                     <a class="right-sidebar-toggle" id="sidebar-rigth">
                         <i class="fa fa-tasks"></i>
                     </a>
-                </li>
+                </li> --}}
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     {{ csrf_field() }}
                 </form>
@@ -143,5 +143,5 @@
 
     </nav>
 </div>
-<rigthsidebar-component :object="datos"></rigthsidebar-component>
+{{-- <rigthsidebar-component :object="datos"></rigthsidebar-component> --}}
 </div>

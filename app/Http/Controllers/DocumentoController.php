@@ -2104,8 +2104,8 @@ class DocumentoController extends Controller
                 'f.id AS pa_id',
                 'f.pa',
                 'c.declarado2',
-                'g.peso2',
-                'g.peso',
+                DB::raw('ROUND(g.peso2,1) as peso2'),
+                DB::raw('ROUND(g.peso,1) as peso'),
                 'g.guias_agrupadas',
                 'c.liquidado',
                 DB::raw('(SELECT Count(z.id) FROM consolidado_detalle AS z WHERE z.agrupado = a.documento_detalle_id AND z.deleted_at IS NULL AND z.flag = 1) AS agrupadas'),
@@ -3080,40 +3080,46 @@ class DocumentoController extends Controller
     }
 
     // esta consulta era para el sidebar right
-    // public function getDataDocument($data)
-    // {
-    //     /* ESTATUS DEL DOCUMENTO */
-    //     $datos = DB::table('documento_detalle as c')
-    //         ->join('documento as d', 'c.documento_id', 'd.id')
-    //         ->join('shipper as e', 'd.shipper_id', 'e.id')
-    //         ->join('consignee as f', 'd.consignee_id', 'f.id')
-    //         ->join('localizacion as g', 'f.localizacion_id', 'g.id')
-    //         ->join('deptos as h', 'g.deptos_id', 'h.id')
-    //         ->join('pais as i', 'h.pais_id', 'i.id')
-    //         ->leftJoin('tracking as t', 'c.id', 't.documento_detalle_id')
-    //         ->select(
-    //           'c.id',
-    //           'c.peso',
-    //           'c.num_warehouse',
-    //           'c.num_guia',
-    //           'e.nombre_full AS procedencia',
-    //           'f.nombre_full AS consignee',
-    //           'c.num_consolidado',
-    //           'g.nombre AS ciudad',
-    //           'h.descripcion AS depto',
-    //           'i.descripcion AS pais',
-    //             DB::raw("(SELECT GROUP_CONCAT(tracking.codigo) FROM tracking WHERE tracking.documento_detalle_id = c.id) as tracking")
-    //         )
-    //         ->where([
-    //             ['c.deleted_at', null]
-    //         ])
-    //         ->wwhereRaw("(c.num_guia LIKE '%" . $data . "' OR c.num_warehouse LIKE '%" . $data . "' OR t.codigo LIKE '" . $data . "%')")
-    //         ->get();
-    //
-    //     $answer = array(
-    //         "data" => $datos,
-    //         "code"  => 200,
-    //     );
-    //     return $answer;
-    // }
+    public function getDataSearchDocument($data = false)
+    {
+      if($data === 'false'){
+        $data = false;
+      }
+        /* ESTATUS DEL DOCUMENTO */
+        $datos = DB::table('documento_detalle as c')
+            ->join('documento as d', 'c.documento_id', 'd.id')
+            ->join('shipper as e', 'd.shipper_id', 'e.id')
+            ->join('consignee as f', 'd.consignee_id', 'f.id')
+            ->join('localizacion as g', 'f.localizacion_id', 'g.id')
+            ->join('deptos as h', 'g.deptos_id', 'h.id')
+            ->join('pais as i', 'h.pais_id', 'i.id')
+            ->leftJoin('tracking as t', 'c.id', 't.documento_detalle_id')
+            ->select(
+              'c.id',
+              'c.peso',
+              'c.valor AS declarado',
+              'c.num_warehouse AS name',
+              'c.num_guia',
+              'e.nombre_full AS procedencia',
+              'f.nombre_full AS consignee',
+              'c.num_consolidado',
+              'g.nombre AS ciudad',
+              'h.descripcion AS depto',
+              'i.descripcion AS pais',
+                DB::raw("(SELECT GROUP_CONCAT(tracking.codigo) FROM tracking WHERE tracking.documento_detalle_id = c.id) as tracking")
+            )
+            ->where([
+                ['c.deleted_at', null]
+            ])
+            ->when($data, function ($query, $data) {
+                return $query->whereRaw("(c.num_guia LIKE '%" . $data . "' OR c.num_warehouse LIKE '%" . $data . "' OR t.codigo LIKE '" . $data . "%')");
+            })
+            ->get();
+
+        $answer = array(
+            "data" => $datos,
+            "code"  => 200,
+        );
+        return $answer;
+    }
 }
