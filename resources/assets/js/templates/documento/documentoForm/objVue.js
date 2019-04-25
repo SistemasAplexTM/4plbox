@@ -811,6 +811,7 @@ var objVue = new Vue({
             $('#modalCargosAdd').modal('show');
         },
         addDetail: function(tipo) {
+            this.disabled_client = true;
             var id_documento = $('#id_documento').val();
             var consignee_id = $('#consignee_id').val();
             var shipper_id = $('#shipper_id').val();
@@ -873,6 +874,7 @@ var objVue = new Vue({
                         toastr.options.closeButton = true;
                         me.data_points = [];
                     } else {
+                        this.disabled_client = false;
                         toastr.warning(response.data['error']);
                         toastr.options.closeButton = true;
                     }
@@ -888,6 +890,7 @@ var objVue = new Vue({
 
                     me.refreshTableDetail();
                 }).catch(function(error) {
+                  this.disabled_client = false;
                     console.log(error);
                     if (error.response.status === 422) {
                         me.formErrors = error.response.data; //guardo los errores

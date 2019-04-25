@@ -268,7 +268,7 @@
                         <td></td>
                         <td></td>
                         <td style="text-align: center;font-weight: bold;">{{ $totPiezas }}</td>
-                        <td colspan="2" style="text-align: center;font-weight: bold;">{{ $peso }}</td>
+                        <td colspan="2" style="text-align: center;font-weight: bold;">{{ round($peso, 2) }}</td>
                     </tr>
                     <tr>
                         <td style="text-align: center;font-weight: bold;">@lang('general.total_bag')</td>

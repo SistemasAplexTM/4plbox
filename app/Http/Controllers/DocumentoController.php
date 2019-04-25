@@ -1496,6 +1496,7 @@ class DocumentoController extends Controller
                                   ) AS declarado_total')
                               )
                               ->where([['a.deleted_at', null], ['a.consolidado_id', $id], ['a.flag', 0]])
+                              ->orderBy('b.num_warehouse', 'ASC')
                               ->get();
                           // VALIDAR QUE EL PESO Y EL DECLARADO NO SUPEREN LO MAXIMO ESTABLECIDO
                           $peso_t = 0;
@@ -1619,7 +1620,7 @@ class DocumentoController extends Controller
                                     	) AS declarado_total')
                                   )
                                   ->where([['a.deleted_at', null], ['a.consolidado_id', $id], ['a.flag', 0]])
-                                  ->orderBy('b.created_at', 'ASC')
+                                  ->orderBy('b.num_warehouse', 'ASC')
                                   ->get();
 
                               // VALIDAR QUE EL PESO Y EL DECLARADO NO SUPEREN LO MAXIMO ESTABLECIDO
@@ -3012,7 +3013,7 @@ class DocumentoController extends Controller
               ['a.deleted_at', null],
               ['b.deleted_at', null],
               ['a.consolidado_id', $id],
-        ])->get();
+        ])->orderBy('b.num_warehouse', 'ASC')->get();
         return Excel::download(new ConsolidadoExport('exports.excelLiquimp', array('datos' => $data,)),
          'Excel Liquimp.xlsx', \Maatwebsite\Excel\Excel::XLSX);
     }
@@ -3063,7 +3064,7 @@ class DocumentoController extends Controller
               ['a.deleted_at', null],
               ['b.deleted_at', null],
               ['a.consolidado_id', $id],
-        ])->get();
+        ])->orderBy('b.num_warehouse', 'ASC')->get();
         return Excel::download(new ConsolidadoExport('exports.excelBodega', array('datos' => $data,)),
          'Excel Bodega.xlsx', \Maatwebsite\Excel\Excel::XLSX);
     }

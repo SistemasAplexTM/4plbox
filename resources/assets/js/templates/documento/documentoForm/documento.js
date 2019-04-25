@@ -126,8 +126,9 @@ function datatableDetail(){
         "order": [[ 0, "desc" ]],
         columns: [{
           "render": function (data, type, full, meta) {
-            var str = full.num_warehouse;
-            return parseInt(str.substring(9));
+            var str = full.paquete;
+            return parseInt(str);
+            // return parseInt(str.substring(9));
           },
           width: 30
         },{
@@ -316,6 +317,8 @@ function datatableDetail(){
         if(app_client === 'jyg'){
           if(json.data.length === 1){
             objVue.disabled_client = true;
+          }else{
+            objVue.disabled_client = false;
           }
         }
         objVue.totalizeDocument();

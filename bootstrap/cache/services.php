@@ -46,7 +46,6 @@
     42 => 'Milon\\Barcode\\BarcodeServiceProvider',
     43 => 'Caffeinated\\Shinobi\\ShinobiServiceProvider',
     44 => 'Spatie\\Backup\\BackupServiceProvider',
-    45 => 'BC\\Laravel\\DropboxDriver\\ServiceProvider',
   ),
   'eager' => 
   array (
@@ -82,7 +81,6 @@
     29 => 'Milon\\Barcode\\BarcodeServiceProvider',
     30 => 'Caffeinated\\Shinobi\\ShinobiServiceProvider',
     31 => 'Spatie\\Backup\\BackupServiceProvider',
-    32 => 'BC\\Laravel\\DropboxDriver\\ServiceProvider',
   ),
   'deferred' => 
   array (
