@@ -28,8 +28,10 @@
 </template>
 
 <script>
+import debounce from 'lodash/debounce'
+
 export default {
-  props:["disabled", "selected"],
+  props:["data", "disabled", "selected"],
   data(){
     return {
       options: [],
@@ -41,11 +43,38 @@ export default {
   watch:{
     selected:function(value) {
       this.city_id = value
+    },
+    data:function(value) {
+      this.list = value;
     }
   },
   mounted(){
-    this.getData();
+    let me = this;
+    /* SE EJECUTA SI DATA ESTA INDEFINIDO O LIST NO TIENE NADA */
+    // window.addEventListener("load", function(event) {
+    //   console.log('entro');
+    //   if(me.list.length === 0){
+    //       me.getData();
+    //   }
+    // });
+    // document.onreadystatechange = () => {
+    //   if (document.readyState == "complete") {
+    //     console.log('entro');
+    //     if(me.list.length === 0){
+    //         me.getData();
+    //     }
+    //   }
+    // }
   },
+  updated: debounce(function () {
+      let me = this;
+      this.$nextTick(() => {
+        console.log('test');
+        if(me.list.length === 0){
+            me.getData();
+        }
+      })
+  }, 800), // increase to ur needs
   methods:{
     getData(){
       var me = this;
