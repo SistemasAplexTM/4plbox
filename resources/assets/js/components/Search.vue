@@ -29,6 +29,8 @@
           <br>
           <span style="color: #8492a6; font-size: 13px">
             <i class="fa fa-truck icon"></i> {{ item.tracking }}
+            <br>
+            <i class="fa fa-comment-edit icon"></i> {{ item.contenido }}
           </span>
         </div>
       </el-option>

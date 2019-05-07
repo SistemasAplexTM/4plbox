@@ -27,22 +27,24 @@ var objVue = new Vue({
              objVue.show_btn_products = false;
            }
          }
-         if (Object.keys(value).length === 0) {
-           $('#msn_l2').css('display', 'inline-block');
-         }else{
-           refreshTable('whgTable');
-           $('#msn_l2').css('display', 'none');
-         }
+         setTimeout(() => {
+           if (Object.keys(value).length === 0) {
+             $('#msn_l2').css('display', 'inline-block');
+           }else{
+             refreshTable('whgTable');
+             $('#msn_l2').css('display', 'none');
+           }
+         }, 2000);
        }
     },
     mounted: function() {
         $('#date').val(this.getTime());
+        this.searchShipperConsignee($('#shipper_id').val(), 'shipper');
+        this.searchShipperConsignee($('#consignee_id').val(), 'consignee');
         this.getSelectCity();
     },
     created: function() {
         this.liquidado = $('#document_type').data('liquidado');
-        this.searchShipperConsignee($('#shipper_id').val(), 'shipper');
-        this.searchShipperConsignee($('#consignee_id').val(), 'consignee');
         this.showHiddeFields();
         /* CUSTOM MESSAGES VE-VALIDATOR*/
         const dict = {
@@ -102,10 +104,22 @@ var objVue = new Vue({
         show_btn_products: false,
         total_points: 0,
         data_points: [],
-        disabled_client: false //desabilita el boton de agregar en el detalle si el cliente es jyg
-
+        disabled_client: false, //desabilita el boton de agregar en el detalle si el cliente es jyg
+        dataSelectShipper: [],
+        dataSelectConsignee: []
     },
     methods: {
+      changueShipperConsigneeDetail(id){
+        $('#modalChangeShipperConsignee').modal('show');
+        if(this.dataSelectShipper.length == 0){
+          axios.get('/shipper/all').then(response => {
+            this.dataSelectShipper = response.data.data;
+          });
+          axios.get('/consignee/all').then(response => {
+            this.dataSelectConsignee = response.data.data;
+          });
+        }
+      },
       getProductsCuba(data){
         let me = this;
         me.data_points = data;
@@ -566,23 +580,31 @@ var objVue = new Vue({
           $('#pais_id_D').val(data['pais_id']);
         }
       },
-      searchShipperConsignee: function(id, table) {
+      searchShipperConsignee: function(id, table, selected) {
           var me = this;
           if (id != '') {
               if (table === 'shipper') {
+                if(selected){
                   axios.get('../../' + table + '/getDataById/' + id).then(response => {
                       data = response.data;
                       me.placeShipperConsignee(data, table);
                       $('#shipper_id').val(id);
                       $('#modalShipper').modal('hide');
                   });
+                }else{
+                  me.placeShipperConsignee(shipper_data, table);
+                }
               } else {
+                if(selected){
                   axios.get('../../' + table + '/getDataById/' + id).then(response => {
                       data = response.data;
                       me.placeShipperConsignee(data, table);
                       $('#consignee_id').val(id);
                       $('#modalConsignee').modal('hide');
                   });
+                }else{
+                  me.placeShipperConsignee(consignee_data, table);
+                }
               }
           }
       },
@@ -693,7 +715,7 @@ var objVue = new Vue({
               columns: [{
                   sortable: false,
                   "render": function(data, type, full, meta) {
-                      var btn_selet = "<button onclick=\"selectShipperConsignee(" + full.id + ", 'shipper')\" class='btn-primary btn-xs' data-toggle='tooltip' title='Seleccionar'>Seleccionar <i class='fa fa-check'></i></button> ";
+                      var btn_selet = "<button onclick=\"selectShipperConsignee(" + full.id + ", 'shipper', true)\" class='btn-primary btn-xs' data-toggle='tooltip' title='Seleccionar'>Seleccionar <i class='fa fa-check'></i></button> ";
                       return btn_selet;
                   }
               }, {
@@ -742,7 +764,7 @@ var objVue = new Vue({
               columns: [{
                   sortable: false,
                   "render": function(data, type, full, meta) {
-                      var btn_selet = "<button onclick=\"selectShipperConsignee(" + full.id + ", 'consignee')\" class='btn-primary btn-xs' data-toggle='tooltip' title='Seleccionar'>Seleccionar <i class='fa fa-check'></i></button> ";
+                      var btn_selet = "<button onclick=\"selectShipperConsignee(" + full.id + ", 'consignee', true)\" class='btn-primary btn-xs' data-toggle='tooltip' title='Seleccionar'>Seleccionar <i class='fa fa-check'></i></button> ";
                       return btn_selet;
                   }
               }, {
@@ -1047,12 +1069,12 @@ var objVue = new Vue({
       },
       getSelectCity(){
         var me = this;
-        axios.get('/ciudad/getSelectCity').then(function(response) {
-            me.citys = response.data.data;
-        }).catch(function(error) {
-            console.log(error);
-            toastr.warning('Error: -' + error);
-        });
+        // axios.get('/ciudad/getSelectCity').then(function(response) {
+            me.citys = citys_data;
+        // }).catch(function(error) {
+        //     console.log(error);
+        //     toastr.warning('Error: -' + error);
+        // });
       },
       // onSearchCity(search, loading) {
       //     loading(true);

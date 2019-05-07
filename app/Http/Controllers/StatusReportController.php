@@ -21,7 +21,7 @@ class StatusReportController extends Controller
     {
         return view('templates/statusReport');
     }
-    
+
     public function store(StatusReportRequest $request)
     {
         try {
@@ -176,7 +176,21 @@ class StatusReportController extends Controller
                 'c.num_consolidado',
                 'c.liquidado',
                 'd.id as usuario_id',
-                'd.name'
+                'd.name',
+                DB::raw('IF (
+              	b.id = 5,
+              	(
+              		SELECT
+              			x.consecutivo
+              		FROM
+              			consolidado_detalle AS z
+              		INNER JOIN documento AS x ON z.consolidado_id = x.id
+              		WHERE
+              			z.documento_detalle_id = a.documento_detalle_id
+              		AND z.deleted_at IS NULL
+              	),
+              	NULL
+              ) AS consolidado')
             )
             ->where([
                 ['a.deleted_at', null],

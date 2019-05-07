@@ -17,14 +17,19 @@ export default {
    status: []
   }
  },
- props: ['default'],
+ props: ['default', 'data'],
  watch:{
   default(newVal, oldVal){
    this.setDefault(newVal)
   }
  },
  mounted(){
-  this.getData()
+    if(typeof this.data !== "undefined"){
+      this.status = this.data;
+      this.setDefault(this.default);
+    }else{
+      this.getData()
+    }
  },
  methods: {
   getData(){

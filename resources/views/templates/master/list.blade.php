@@ -108,6 +108,38 @@
             </div>
         </div>
     </div>
+
+    <!-- MODAL IMPRIMIR LABELS POR BOLSA -->
+		<div class="modal fade bs-example" id="modalPrintLabelsMaster" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" style="width: 30%!important">
+						<div class="modal-content">
+								<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+										<h4 class="modal-title" id="myModalLabel">
+												<i class="fa fa-barcode"></i> Labels Bolsas
+										</h4>
+								</div>
+								<div class="modal-body">
+									<div class="row">
+										<div class="col-sm-12">
+                      <el-input
+                        name="type"
+                        placeholder="Tipo de servicio"
+                        prefix-icon="el-icon-edit-outlin"
+                        v-model="type"
+                        v-validate.disable="'required'" size="medium">
+                      </el-input>
+										</div>
+									</div>
+
+								</div>
+								<div class="modal-footer">
+										<button type="button" id="" @click="createLabelBags()" class="btn btn-primary" data-dismiss="modal">Imprimir</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+								</div>
+						</div>
+				</div>
+		</div>
 </div>
 @endsection
 

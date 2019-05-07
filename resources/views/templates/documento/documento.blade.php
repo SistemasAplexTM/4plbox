@@ -130,6 +130,9 @@
         font-weight: bold;
         margin-bottom: 5px;
     }
+    table.dataTable tbody tr.selected{
+      background-color: #d4e4fb;
+    }
 
 </style>
 <link href="{{ asset('css/plugins/dataTables/keyTable.dataTables.min.css') }}">
@@ -705,7 +708,7 @@
                                           </div>
                                         </div>
                                         <div class="row pasos_guia" id="grilla_guia">
-                                            <div class="col-lg-12">
+                                            <div class="">
                                                     <div class="form-group">
                                                         <div class="table-responsive">
                                                             <table class="table table-striped  table-hover" id="whgTable" style="width: 100%;">
@@ -873,6 +876,8 @@
 
         {{-- MODAL AGREGAR TRACKINGS --}}
         @include('templates/documento/modals/modalTracking')
+        {{-- MODAL AGREGAR TRACKINGS --}}
+        @include('templates/documento/modals/modalChangeShipperConsignee')
 
         {{-- MODAL AGREGAR PUNTOS --}}
         <points-component v-if="mostrar.includes(66)" :id_detail="points_id_detail"></points-component>

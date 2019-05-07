@@ -99,6 +99,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('master/imprimirLabel/{id_master}', 'MasterController@imprimirLabel');
     Route::get('master/imprimirGuias/{consolidado_id}/{option?}', 'MasterController@imprimirGuias');
     Route::post('master/getDataConsolidados/{type}', 'MasterController@getDataConsolidados');
+    Route::get('master/hawb/{id}', 'MasterController@createHawb');
+    Route::get('master/{id}/getDataPrintBagsConsolidate/{type?}', 'DocumentoController@getDataPrintBagsConsolidate');
 
     /*--- MODULO TRACKINGS ---*/
     Route::resource('tracking', 'TrackingController', ['except' => ['show', 'create', 'edit', 'update']]);

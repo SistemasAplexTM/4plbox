@@ -6,6 +6,7 @@ use App\AerolineaInventario;
 use App\Master;
 use App\MasterDetalle;
 use App\DocumentoDetalle;
+use App\MasterCargosAdicionales;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;
@@ -344,6 +345,7 @@ class MasterController extends Controller
             ->leftJoin('documento AS f', 'f.master_id', 'a.id')
             ->select(
                 'a.id',
+                'a.master_id',
                 'c.nombre AS aerolinea',
                 'e.nombre AS ciudad',
                 'a.num_master',
@@ -461,5 +463,62 @@ class MasterController extends Controller
           ->select(['a.id', 'a.consecutivo AS consolidado', DB::raw('SUBSTRING_INDEX(`a`.`created_at`, " ", 1) as fecha'), 'b.nombre AS ciudad'])
           ->where($where)->get();
       return $data;
+    }
+
+    public function createHawb($id)
+    {
+      DB::beginTransaction();
+      try {
+        /* BUSCAR HOUSES DE ESTA MASTER */
+        $houses = Master::select(DB::raw('Count(master.id) AS cantidad'))
+        ->where([['master.master_id', $id], ['master.deleted_at', NULL]])
+        ->first();
+        /* CREACION DE LA NUEVA MASTER */
+        $master = Master::find($id);
+        $newMaster = $master->replicate();
+        $newMaster->master_id = $id;
+        $newMaster->num_master = $master->num_master . '_' . ($houses->cantidad + 1);
+        $newMaster->save();
+
+        /* ENCONTRAR DETALLE ASOCIADO */
+        $detalle = MasterDetalle::select(
+          'id',
+          'master_id',
+          'piezas',
+          'peso',
+          'peso_kl',
+          'unidad_medida',
+          'rate_class',
+          'commodity_item',
+          'peso_cobrado',
+          'tarifa',
+          'total',
+          'descripcion'
+          )
+        ->where([['master_detalle.master_id', $id], ['master_detalle.deleted_at', NULL]])
+        ->first();
+        $newDetalle = $detalle->replicate();
+        $newDetalle->master_id = $newMaster->id;
+        $newDetalle->save();
+
+        /* ENCONTRAR CARGOS ADICIONALES */
+        $cargos_id = MasterCargosAdicionales::select('id')
+        ->where([['master_id', $id]])
+        ->get();
+        if($cargos_id){  
+          foreach ($cargos_id as $val) {
+            $cargos = MasterCargosAdicionales::find($val->id);
+            $newCargos = $cargos->replicate();
+            $newCargos->master_id = $newMaster->id;
+            $newCargos->save();
+          }
+        }
+
+        DB::commit();
+        return array('code' => 200);
+      } catch (Exception $e) {
+          DB::rollback();
+          return $e;
+      }
     }
 }

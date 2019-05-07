@@ -20,7 +20,7 @@
                      <small class="help-block">{{ errors.first('warehouse') }}</small>
                  </div>
                  <div class="col-lg-6" :class="{ 'has-error': errors.has('estatus') }">
-                  <status-component :default="1" @get="form.estatus_id = $event.id"/>
+                  <status-component :data="status" :default="1" @get="form.estatus_id = $event.id"/>
                  </div>
                  <transition name="fade">
                      <div class="col-lg-6 form-group" :class="{ 'has-error': errors.has('transportadora') }" v-if='show'>
@@ -55,7 +55,7 @@
                    <div class="col-sm-8">
                        <div class="form-group">
                            <label for="status_id">Estatus actual</label>
-                           <status-component :default="defaultStatus" @get="status_id = $event.id"/>
+                           <status-component :data="status" :default="defaultStatus" @get="status_id = $event.id"/>
                            <!-- <v-select name="status_id" v-model="status_id" label="descripcion" :filterable="false" :options="status"></v-select> -->
                        </div>
                    </div>
@@ -91,7 +91,7 @@ export default {
      defaultStatus: null
     };
   },
-  props: ["document_id"],
+  props: ["document_id", "status"],
   mounted(){
     let me = this;
     $('#modalChangeStatus').on('show.bs.modal', function() {

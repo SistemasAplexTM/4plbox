@@ -65,7 +65,6 @@ var objVue = new Vue({
         me.typeDocumentList();
         setTimeout(function () {
           me.printDocument();
-          // me.getStatus();
         },1500)
         $('#date').val(this.getTime());
     },
@@ -114,9 +113,19 @@ var objVue = new Vue({
         pendign(){
           setTimeout(function() {
             if($('#li-pending').hasClass('active')){
+              if (!$.fn.DataTable.isDataTable('#tbl-documento4')) {
+                datatableDocument(4, 1);
+              }
               $('.pending').removeClass('ligth');
             }else{
-              $('.pending').addClass('ligth');
+              if($('#li-load').hasClass('active')){
+                if (!$.fn.DataTable.isDataTable('#tbl-documento3')) {
+                  datatableDocument(3, 1);
+                }
+                $('.pending').addClass('ligth');
+              }else{
+                $('.pending').addClass('ligth');
+              }
             }
           },100)
         },

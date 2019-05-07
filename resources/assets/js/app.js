@@ -64,3 +64,4 @@ Vue.component('invoice-component', require('./components/invoice/Index.vue'));
 Vue.component('modal-cambiar-status-consolidado', require('./components/ModalCambiarStatusConsolidado.vue'));
 Vue.component('status-component', require('./components/Status.vue'));
 Vue.component('search', require('./components/Search.vue'));
+Vue.component('shipper-consignee-select', require('./components/ShipperConsigneeSelect.vue'));

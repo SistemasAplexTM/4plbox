@@ -49,32 +49,18 @@ export default {
     }
   },
   mounted(){
-    let me = this;
-    /* SE EJECUTA SI DATA ESTA INDEFINIDO O LIST NO TIENE NADA */
-    // window.addEventListener("load", function(event) {
-    //   console.log('entro');
-    //   if(me.list.length === 0){
-    //       me.getData();
-    //   }
-    // });
-    // document.onreadystatechange = () => {
-    //   if (document.readyState == "complete") {
-    //     console.log('entro');
-    //     if(me.list.length === 0){
-    //         me.getData();
-    //     }
-    //   }
-    // }
+    //
   },
   updated: debounce(function () {
       let me = this;
       this.$nextTick(() => {
-        console.log('test');
-        if(me.list.length === 0){
-            me.getData();
-        }
+        setTimeout(() => {
+          if(me.list.length === 0){
+              me.getData();
+          }
+        }, 2000);
       })
-  }, 800), // increase to ur needs
+  }, 1000), // increase to ur needs
   methods:{
     getData(){
       var me = this;
