@@ -105,11 +105,59 @@ var objVue = new Vue({
         total_points: 0,
         data_points: [],
         disabled_client: false, //desabilita el boton de agregar en el detalle si el cliente es jyg
+        loading_save_ship:false,
+        loading_save_cons:false,
         dataSelectShipper: [],
-        dataSelectConsignee: []
+        dataSelectConsignee: [],
+        detail_edit_id : null,
+        shipper: [],
+        consignee: [],
+        shipper_id: null,
+        consignee_id: null,
     },
     methods: {
-      changueShipperConsigneeDetail(id){
+      saveChange(op){
+        if (op === 'shipper') {
+          this.loading_save_ship = true;
+          axios.get('/documento/updateShipperConsignee/' + this.detail_edit_id + '/' + this.shipper_id + '/shipper').then(response => {
+            if (response.data['code'] == 200) {
+                toastr.success('Actualizacion exitosa');
+                toastr.options.closeButton = true;
+            } else {
+                toastr.warning(response.data['error']);
+                toastr.options.closeButton = true;
+            }
+            this.loading_save_ship = false;
+          });
+        }else{
+          this.loading_save_cons = true;
+          axios.get('/documento/updateShipperConsignee/' + this.detail_edit_id + '/' + this.consignee_id + '/consignee').then(response => {
+            if (response.data['code'] == 200) {
+                toastr.success('Actualizacion exitosa');
+                toastr.options.closeButton = true;
+            } else {
+                toastr.warning(response.data['error']);
+                toastr.options.closeButton = true;
+            }
+            this.loading_save_cons = false;
+          });
+        }
+      },
+      setDataShipperConsignee(data, op){
+        if(op){
+          this.shipper = data;
+          this.shipper_id = data.id;
+        }else{
+          this.consignee = data;
+          this.consignee_id = data.id;
+        }
+        console.log('data: ',data);
+      },
+      changueShipperConsigneeDetail(id, shipper_id, consignee_id){
+        this.detail_edit_id = id;
+        this.shipper_id = shipper_id;
+        this.consignee_id = consignee_id;
+
         $('#modalChangeShipperConsignee').modal('show');
         if(this.dataSelectShipper.length == 0){
           axios.get('/shipper/all').then(response => {

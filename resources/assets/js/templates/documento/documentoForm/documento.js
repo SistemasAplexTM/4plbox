@@ -1,5 +1,9 @@
 let modalName = '';
 $(document).ready(function() {
+    $('#modalChangeShipperConsignee').on('hidden.bs.modal', function() {
+        objVue.loading_save_ship = false;
+        objVue.loading_save_cons = false;
+    });
     setIdPaisConfig();
     // setTimeout(function() {
     //   var table2 = $('#whgTable').DataTable();
@@ -210,7 +214,7 @@ function datatableDetail(){
                   btn_delete = '<a class="btn-actions" type="button" id="btn_remove'+full.id+'" onclick="eliminar('+full.id+', false)" data-toggle="tooltip" title="Eliminar" style="color:#E34724"><i class="fal fa-trash-alt"></i></a> ';
                 }
 
-                btn_ship_cons = '<a class="btn btn-primary btn-xs btn-actions" type="button" id="btn_ship_cons'+full.id+'" onclick="changueShipperConsignee('+full.id+')" data-toggle="tooltip" title="Camibar"><i class="fal fa-user"></i></a> ';
+                btn_ship_cons = '<a class="btn btn-primary btn-xs btn-actions" type="button" id="btn_ship_cons'+full.id+'" onclick="changueShipperConsignee('+full.id+', '+full.shipper_id+', '+full.consignee_id+')" data-toggle="tooltip" title="Camibar"><i class="fal fa-user"></i></a> ';
                 btn_addTracking = '<a class="btn btn-info btn-xs btn-actions addTrackings" type="button" id="btn_addtracking'+full.id+'" data-toggle="tooltip" title="Agregar tracking" onclick="addTrackings('+full.id+')"><i class="fal fa-truck"></i> <span id="cant_tracking'+full.id+'">'+full.cantidad+'</span></a> ';
                 if(puntos != null){
                   if(objVue.city_c.pais_id == puntos.pais_id){
@@ -576,6 +580,6 @@ function formatRepoSelectionPoints(repo) {
     return repo.text || repo.id + ' - ' + repo.text;
 }
 
-function changueShipperConsignee(id) {
-  objVue.changueShipperConsigneeDetail(id);
+function changueShipperConsignee(id, shipper_id, consignee_id) {
+  objVue.changueShipperConsigneeDetail(id, shipper_id, consignee_id);
 }

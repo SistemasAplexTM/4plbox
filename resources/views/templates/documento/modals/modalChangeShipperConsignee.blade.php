@@ -17,32 +17,44 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-6">
-                        <div class="form-group">
+                      <div class="row">
                           <div class="col-lg-12">
                             <h2>Shipper</h2>
                             <hr>
                           </div>
-                          <div class="col-lg-10">
-                            <shipper-consignee-select :data="dataSelectShipper" :option="'shipper'"></shipper-consignee-select>
+                          <div class="col-lg-9">
+                            <shipper-consignee-select :data="dataSelectShipper" :shipper_id="shipper_id" :option="'shipper'" @get="setDataShipperConsignee($event, true)"></shipper-consignee-select>
                           </div>
-                          <div class="col-lg-2">
-                            <button type="button" class="ladda-button ladda-button-demo btn btn-primary"  data-style="zoom-in" title="Cambiar"><i class="fal fa-exchange"></i></button>
+                          <div class="col-lg-3">
+                            <el-button type="success" class="btn-change" size="medium" :loading="loading_save_ship" @click="saveChange('shipper')"><i v-if="!loading_save_ship" class="fa fa-exchange"></i></el-button>
                           </div>
-                        </div>
+                          <div class="col-lg-12" style="margin-top: 15px;">
+                            <p><i class="fa fa-user"></i> @{{ shipper.nombre_full }}</p>
+                            <p><i class="fa fa-phone"></i> @{{ shipper.telefono }}</p>
+                            <p><i class="fa fa-map-marker-alt"></i> @{{ shipper.direccion }} / @{{ shipper.ciudad }}</p>
+                            <p>@{{ shipper.zip }}</p>
+                          </div>
+                      </div>
                     </div>
                     <div class="col-lg-6">
-                        <div class="form-group">
+                      <div class="row">
                           <div class="col-lg-12">
                             <h2>Consignee</h2>
                             <hr>
                           </div>
-                          <div class="col-lg-10">
-                            <shipper-consignee-select :data="dataSelectConsignee" :option="'consignee'"></shipper-consignee-select>
+                          <div class="col-lg-9">
+                            <shipper-consignee-select :data="dataSelectConsignee" :consignee_id="consignee_id" :option="'consignee'" @get="setDataShipperConsignee($event, false)"></shipper-consignee-select>
                           </div>
-                          <div class="col-lg-2">
-                            <button type="button" class="ladda-button ladda-button-demo btn btn-primary"  data-style="zoom-in" title="Cambiar"><i class="fal fa-exchange"></i></button>
+                          <div class="col-lg-3">
+                            <el-button type="success" class="btn-change" size="medium" :loading="loading_save_cons" @click="saveChange('consignee')"><i v-if="!loading_save_cons" class="fa fa-exchange"></i></el-button>
                           </div>
-                        </div>
+                          <div class="col-lg-12" style="margin-top: 15px;">
+                            <p><i class="fa fa-user"></i> @{{ consignee.nombre_full }}</p>
+                            <p><i class="fa fa-phone"></i> @{{ consignee.telefono }}</p>
+                            <p><i class="fa fa-map-marker-alt"></i> @{{ consignee.direccion }} / @{{ shipper.ciudad }}</p>
+                            <p>@{{ consignee.zip }}</p>
+                          </div>
+                      </div>
                     </div>
                   </div>
               </form>

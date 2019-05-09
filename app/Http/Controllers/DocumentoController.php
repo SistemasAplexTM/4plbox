@@ -595,11 +595,11 @@ class DocumentoController extends Controller
                       $paquete = $val->paquete;
                     }
                     $num_guia = trim($prefijo . $data->consecutivo . $paquete . $prefijoPais);
-                    DocumentoDetalle::where('id', $val->id)->update([
-                        'shipper_id'   => $data->shipper_id,
-                        'consignee_id' => $data->consignee_id,
-                        'num_guia'     => $num_guia,
-                    ]);
+                    // DocumentoDetalle::where('id', $val->id)->update([
+                    //     'shipper_id'   => $data->shipper_id,
+                    //     'consignee_id' => $data->consignee_id,
+                    //     'num_guia'     => $num_guia,
+                    // ]);
                     /* ACTUALIZAR CONSIGNEE EN EL TRACKING */
                     DB::table('tracking')->where([['documento_detalle_id', $val->id]])->update(['consignee_id' => $data->consignee_id]);
                 }
@@ -3221,5 +3221,19 @@ class DocumentoController extends Controller
             "code"  => 200,
         );
         return $answer;
+    }
+
+    public function updateShipperConsignee($id, $data_id, $op){
+      $update = ['consignee_id' => $data_id];
+      if($op == 'shipper'){
+        $update = ['shipper_id' => $data_id];
+      }
+      DB::table('documento_detalle')
+          ->where('id', $id)
+          ->update($update);
+      $answer = array(
+          'code' => 200,
+      );
+      return $answer;
     }
 }

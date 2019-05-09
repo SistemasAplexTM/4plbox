@@ -133,6 +133,9 @@
     table.dataTable tbody tr.selected{
       background-color: #d4e4fb;
     }
+    .btn-change{
+      width: 100%;
+    }
 
 </style>
 <link href="{{ asset('css/plugins/dataTables/keyTable.dataTables.min.css') }}">
