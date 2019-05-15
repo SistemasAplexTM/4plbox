@@ -23,7 +23,7 @@
                             <hr>
                           </div>
                           <div class="col-lg-9">
-                            <shipper-consignee-select :data="dataSelectShipper" :shipper_id="shipper_id" :option="'shipper'" @get="setDataShipperConsignee($event, true)"></shipper-consignee-select>
+                            <shipper-consignee-select :data="{{ json_encode($shippers) }}" :shipper_id="shipper_id" :option="'shipper'" @get="setDataShipperConsignee($event, true)"></shipper-consignee-select>
                           </div>
                           <div class="col-lg-3">
                             <el-button type="success" class="btn-change" size="medium" :loading="loading_save_ship" @click="saveChange('shipper')"><i v-if="!loading_save_ship" class="fa fa-exchange"></i></el-button>
@@ -43,7 +43,7 @@
                             <hr>
                           </div>
                           <div class="col-lg-9">
-                            <shipper-consignee-select :data="dataSelectConsignee" :consignee_id="consignee_id" :option="'consignee'" @get="setDataShipperConsignee($event, false)"></shipper-consignee-select>
+                            <shipper-consignee-select :data="{{ json_encode($consignees) }}" :consignee_id="consignee_id" :option="'consignee'" @get="setDataShipperConsignee($event, false)"></shipper-consignee-select>
                           </div>
                           <div class="col-lg-3">
                             <el-button type="success" class="btn-change" size="medium" :loading="loading_save_cons" @click="saveChange('consignee')"><i v-if="!loading_save_cons" class="fa fa-exchange"></i></el-button>

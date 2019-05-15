@@ -42,7 +42,7 @@ export default {
    consignee_id(newVal, oldVal){
       setTimeout(() => {
        this.setDefault(newVal)
-      }, 1000);
+     }, 1000);
    },
    data(newVal, oldVal){
      this.list = newVal;

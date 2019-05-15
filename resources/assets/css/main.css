@@ -2,12 +2,12 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
 /* CARGANDO*/
 
-.el-select-dropdown{
+.el-select-dropdown, .el-picker-panel{
   z-index: 9999!important;
 }
 
-.el-select{
-  width: 100%;
+.el-select, .el-date-editor.el-input{
+  width: 100%!important;
 }
 .btn_action_edit{
   color:#FFC107;

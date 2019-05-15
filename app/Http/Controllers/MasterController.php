@@ -6,6 +6,7 @@ use App\AerolineaInventario;
 use App\Master;
 use App\MasterDetalle;
 use App\DocumentoDetalle;
+use App\Documento;
 use App\MasterCargosAdicionales;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -356,7 +357,21 @@ class MasterController extends Controller
                 'b.tarifa',
                 'g.nombre AS consignee',
                 'g.contacto AS contacto',
-                'a.created_at'
+                'a.created_at',
+                DB::raw("(SELECT
+                z.trm
+                FROM
+                impuesto_master AS z
+                WHERE
+                z.master_id = a.id AND
+                z.deleted_at IS NULL) AS trm"),
+                DB::raw("(SELECT
+                z.fecha_liquidacion
+                FROM
+                impuesto_master AS z
+                WHERE
+                z.master_id = a.id AND
+                z.deleted_at IS NULL) AS fecha_liquidacion")
             )
             ->where([
                 ['a.deleted_at', null],
@@ -505,7 +520,7 @@ class MasterController extends Controller
         $cargos_id = MasterCargosAdicionales::select('id')
         ->where([['master_id', $id]])
         ->get();
-        if($cargos_id){  
+        if($cargos_id){
           foreach ($cargos_id as $val) {
             $cargos = MasterCargosAdicionales::find($val->id);
             $newCargos = $cargos->replicate();
@@ -517,6 +532,53 @@ class MasterController extends Controller
         DB::commit();
         return array('code' => 200);
       } catch (Exception $e) {
+          DB::rollback();
+          return $e;
+      }
+    }
+
+    public function saveCostMaster(Request $request)
+    {
+      DB::beginTransaction();
+      try {
+        if($request->cost_edit){
+          DB::table('impuesto_master')
+              ->where('master_id', $request->master_id)
+              ->update([
+                'fecha_liquidacion' => $request->cost_date,
+                'rate' => $request->cost_rate,
+                'trm' => $request->cost_trm,
+                'peso' => $request->cost_weight,
+              ]);
+        }else{
+          DB::table('impuesto_master')->insert(
+              [
+                  'master_id' => $request->master_id,
+                  'fecha_liquidacion' => $request->cost_date,
+                  'rate' => $request->cost_rate,
+                  'trm' => $request->cost_trm,
+                  'peso' => $request->cost_weight,
+                  'created_at' => date('Y-m-d H:i:s')
+              ]
+          );
+
+        }
+        DB::commit();
+        return array('code' => 200);
+      } catch (\Exception $e) {
+          DB::rollback();
+          return $e;
+      }
+    }
+
+    public function saveMasterTaxDetail($master_id)
+    {
+      DB::beginTransaction();
+      try {
+        $consolidate = D
+        DB::commit();
+        return true;
+      } catch (\Exception $e) {
           DB::rollback();
           return $e;
       }

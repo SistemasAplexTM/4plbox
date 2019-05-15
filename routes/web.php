@@ -15,7 +15,7 @@ Route::get('lang/{lang}', function($lang) {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'DocumentoController@index')->name('home');
 
 Route::get('master/buscar/{dato}/{type?}', 'MasterController@getSoC');
 Route::group(['middleware' => 'auth'], function () {
@@ -101,6 +101,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('master/getDataConsolidados/{type}', 'MasterController@getDataConsolidados');
     Route::get('master/hawb/{id}', 'MasterController@createHawb');
     Route::get('master/{id}/getDataPrintBagsConsolidate/{type?}', 'DocumentoController@getDataPrintBagsConsolidate');
+    Route::post('master/saveCostMaster', 'MasterController@saveCostMaster');
 
     /*--- MODULO TRACKINGS ---*/
     Route::resource('tracking', 'TrackingController', ['except' => ['show', 'create', 'edit', 'update']]);

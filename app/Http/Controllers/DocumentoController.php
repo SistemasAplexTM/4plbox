@@ -29,6 +29,8 @@ use App\Status;
 use App\TipoDocumento;
 use App\Invoice;
 use App\InvoiceDetail;
+use App\Shipper;
+use App\Consignee;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -392,6 +394,8 @@ class DocumentoController extends Controller
             'citys_data'  => json_decode(json_encode($citys)),
         ]);
         $this->AddToLog('Documento ver (' . $id . ') consecutivo (' . $documento->consecutivo . ')');
+        $shippers = Shipper::all();
+        $consignees = Consignee::all();
         return view('templates/documento/documento', compact(
             'documento',
             'detalle',
@@ -403,6 +407,8 @@ class DocumentoController extends Controller
             'formaPagos',
             'grupos',
             'func',
+            'shippers',
+            'consignees',
             'wcpScript'
         ));
     }
@@ -457,6 +463,8 @@ class DocumentoController extends Controller
                 $data             = Documento::findOrFail($id);
                 $data->updated_at = $request->date;
                 $data->agencia_id = $request->agencia_id;
+                $shipper_old = $data->shipper_id;
+                $consignee_old = $data->consignee_id;
                 if ($request->opEditarShip) {
                     //CREACION O ACTUALIZACION DEL SHIPPER O CONSIGNEE
                     $idsShipCons      = $this->createOrUpdateShipperConsignee($request->all());
@@ -594,12 +602,17 @@ class DocumentoController extends Controller
                     if(env('APP_CLIENT') != 'jyg'){
                       $paquete = $val->paquete;
                     }
-                    $num_guia = trim($prefijo . $data->consecutivo . $paquete . $prefijoPais);
-                    // DocumentoDetalle::where('id', $val->id)->update([
-                    //     'shipper_id'   => $data->shipper_id,
-                    //     'consignee_id' => $data->consignee_id,
-                    //     'num_guia'     => $num_guia,
-                    // ]);
+                    // $num_guia = trim($prefijo . $data->consecutivo . $paquete . $prefijoPais);
+                    $num_guia = trim($prefijo . $data->consecutivo);
+
+                    $datos = array('num_guia' => $num_guia);
+                    if ($shipper_old != $request->shipper_id) {
+                      $datos['shipper_id'] = $data->shipper_id;
+                    }
+                    if ($consignee_old != $request->consignee_id) {
+                      $datos['consignee_id'] = $data->consignee_id;
+                    }
+                    DocumentoDetalle::where('id', $val->id)->update($datos);
                     /* ACTUALIZAR CONSIGNEE EN EL TRACKING */
                     DB::table('tracking')->where([['documento_detalle_id', $val->id]])->update(['consignee_id' => $data->consignee_id]);
                 }
@@ -978,7 +991,8 @@ class DocumentoController extends Controller
                 for ($i = 1; $i <= $sumarCaracteres; $i++) {
                     $prefijo = $prefijo . $carcater;
                 }
-                $data->num_guia = trim($prefijo . $documento->consecutivo . $paquete . $prefijoPais);
+                // $data->num_guia = trim($prefijo . $documento->consecutivo . $paquete . $prefijoPais);
+                $data->num_guia = trim($prefijo . $documento->consecutivo . $paquete);
                 $data->paquete  = (count($documentoD) + 1);
 
                 /* GENERAR NUMERO DE WAREHOUSE */

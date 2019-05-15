@@ -880,7 +880,7 @@
         {{-- MODAL AGREGAR TRACKINGS --}}
         @include('templates/documento/modals/modalTracking')
         {{-- MODAL AGREGAR TRACKINGS --}}
-        @include('templates/documento/modals/modalChangeShipperConsignee')
+        @include('templates/documento/modals/modalChangeShipperConsignee', ['shippers' => $shippers, 'consignees' => $consignees])
 
         {{-- MODAL AGREGAR PUNTOS --}}
         <points-component v-if="mostrar.includes(66)" :id_detail="points_id_detail"></points-component>

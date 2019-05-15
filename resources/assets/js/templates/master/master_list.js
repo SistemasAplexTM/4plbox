@@ -39,6 +39,7 @@ $(document).ready(function () {
                     if (permission_delete) {
                         var btn_delete = '<li style="color:#E34724;"><a onclick=\"modalEliminar()\"><i class="fal fa-trash-alt fa-lg"></i> Eliminar</a></li>';
                     }
+                    var btn_cost = '<li><a onclick="createCost('+ full.id +', \''+ full.num_master +'\', \''+ full.peso +'\', \''+ full.peso_kl +'\', \''+ full.tarifa +'\', \''+ full.trm +'\', \''+ full.fecha_liquidacion +'\')"><i class="fal fa-file-invoice-dollar fa-lg"></i> Crear Costos</a></li>';
                     if(full.consolidado_id != null){
                       btn_consolidado = "<li class='divider'></li>" +
                          "<li><a href='impresion-documento/" +full.consolidado_id +"/consolidado' target='_blank'> <spam class='fa fa-print'></spam> Consolidado</a></li>" +
@@ -52,6 +53,7 @@ $(document).ready(function () {
                        "<ul class='dropdown-menu dropdown-menu-right pull-right'>" +
                         btn_edit +
                         btn_hawb +
+                        btn_cost +
                         '<li role="separator" class="divider"></li>' +
                         btn_delete +
                          "</ul></div>";
@@ -80,6 +82,21 @@ function createHouse(id, master) {
     objVue.createHouseAwb(id, master);
 }
 
+function createCost(id, master, peso, peso_kl, tarifa, trm, fecha_liquidacion) {
+    objVue.id_master = id;
+    objVue.master = master;
+    objVue.cost_weight_lb = peso;
+    objVue.cost_weight = peso_kl;
+    objVue.cost_rate = tarifa;
+    objVue.cost_trm = (trm !== null && trm !== "null" && trm !== '') ? trm : null;
+    objVue.cost_date = (fecha_liquidacion !== null && fecha_liquidacion !== "null" && fecha_liquidacion !== '') ? fecha_liquidacion : objVue.getTime();
+    objVue.cost_edit = false;
+    if (trm !== null && trm !== "null" && trm !== '') {
+      objVue.cost_edit = true;
+    }
+    $('#modalMasterCost').modal('show');
+}
+
 function createLabel(id, master) {
     objVue.id_master = id;
     objVue.master = master;
@@ -90,6 +107,7 @@ var objVue = new Vue({
  el: '#master_list',
  mounted(){
    this.getData();
+   this.cost_date = this.getTime();
  },
  data:{
    options: [],
@@ -99,8 +117,47 @@ var objVue = new Vue({
    master: null,
    type: 'COURIER',
    loading: false,
+   cost_date: null,
+   cost_trm: null,
+   cost_rate: 0,
+   cost_weight: 0,
+   cost_weight_lb: 0,
+   cost_loading: false,
+   cost_edit: false,// PARA SABER SI EDITO O CREO EL COSTO DE LA MASTER
+   cost_text_save: 'Continuar',
  },
  methods: {
+   saveCost(){
+     let me = this;
+     var data = {
+       master_id : this.id_master,
+       cost_date : this.cost_date,
+       cost_trm : this.cost_trm,
+       cost_rate : this.cost_rate,
+       cost_weight : this.cost_weight,
+       cost_edit : this.cost_edit,
+     }
+     me.cost_loading = true;
+     me.cost_text_save = 'Guardando...';
+     axios.post('master/saveCostMaster', data).then(function(response) {
+         if (response.data['code'] == 200) {
+            me.cost_loading = false;
+            me.cost_text_save = 'Continuar';
+            toastr.success('Registro guardado correctamente');
+            refreshTable('tbl-master');
+         }else{
+           me.cost_loading = false;
+           me.cost_text_save = 'Continuar';
+         }
+     }).catch(function(error) {
+         console.log(error);
+         me.cost_loading = false;
+         me.cost_text_save = 'Continuar';
+         toastr.error("Error." + error, {
+             timeOut: 50000
+         });
+     });
+   },
    createLabelBags(){
      window.open('master/' + this.id_master + '/getDataPrintBagsConsolidate/' + this.type);
    },

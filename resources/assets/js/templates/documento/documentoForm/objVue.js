@@ -160,12 +160,12 @@ var objVue = new Vue({
 
         $('#modalChangeShipperConsignee').modal('show');
         if(this.dataSelectShipper.length == 0){
-          axios.get('/shipper/all').then(response => {
-            this.dataSelectShipper = response.data.data;
-          });
-          axios.get('/consignee/all').then(response => {
-            this.dataSelectConsignee = response.data.data;
-          });
+          // axios.get('/shipper/all').then(response => {
+          //   this.dataSelectShipper = response.data.data;
+          // });
+          // axios.get('/consignee/all').then(response => {
+          //   this.dataSelectConsignee = response.data.data;
+          // });
         }
       },
       getProductsCuba(data){
