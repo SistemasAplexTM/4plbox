@@ -41,7 +41,7 @@ export default {
   },
   setDefault(value){
    var result = this.status.filter(({id}) => id == value );
-   this.selected = result[0]
+   this.selected = result
   }
  }
 }
