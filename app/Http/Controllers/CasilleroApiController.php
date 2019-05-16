@@ -6,19 +6,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Prealerta;
 use App\Consignee;
+use App\AplexConfig;
 
 class CasilleroApiController extends Controller
 {
     public function getAllWarehouse($user = null, $idStatus = null)
     {
       $columns = ['p.id',
-      'p.codigo AS num_warehouse',
+      // 'p.codigo AS num_warehouse',
       'q.descripcion',
       'q.color',
       'q.icon',
       'p.documento_detalle_id',
       'p.fecha_status',
       'f.contenido',
+      'f.num_warehouse',
       'f.peso',
       DB::raw("(SELECT GROUP_CONCAT(tracking.codigo) FROM tracking WHERE tracking.documento_detalle_id = f.id) as tracking")];
 
@@ -29,6 +31,7 @@ class CasilleroApiController extends Controller
         SELECT
           MAX(z.id) AS id_last_status,
           n.consignee_id,
+          m.num_warehouse,
           m.contenido,
           m.id,
           m.peso
@@ -188,5 +191,11 @@ class CasilleroApiController extends Controller
       return $request->all();
       $data = Consignee::find($id);
       return ['code' => 200, 'data' => $data];
+    }
+
+    public function getUrlZopim($agency_id)
+    {
+      $data = AplexConfig::where('key', 'zopim_script_'.$agency_id)->first();
+      return ['code' => 200, 'url' => $data->value];
     }
 }

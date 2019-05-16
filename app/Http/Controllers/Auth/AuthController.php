@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Consignee;
+use App\Agencia;
 use App\User;
 
 class AuthController extends Controller
@@ -70,8 +71,10 @@ class AuthController extends Controller
       $token->save();
 
       $user = Consignee::find($user->consignee_id);
+      $agencia = Agencia::find($user->agencia_id);
       return response()->json([
           'user' => json_encode($user),
+          'agencia' => json_encode($agencia),
           'access_token' => $tokenResult->accessToken,
           'token_type' => 'Bearer',
           'expires_at' => Carbon::parse(
