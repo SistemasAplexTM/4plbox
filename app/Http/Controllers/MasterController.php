@@ -6,6 +6,8 @@ use App\AerolineaInventario;
 use App\Master;
 use App\MasterDetalle;
 use App\DocumentoDetalle;
+use App\Documento;
+use App\MasterCargosAdicionales;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;
@@ -93,17 +95,27 @@ class MasterController extends Controller
         $master = $master;
         $consolidado_id = $consolidado_id;
         $peso = 0;
+        $piezas = 1;
         if($consolidado_id != 'null' and $consolidado_id != null){
           $peso_consolidado  = DB::table('consolidado_detalle AS a')
-          ->join('documento_detalle AS b', 'a.documento_detalle_id', 'B.id')
+          ->join('documento_detalle AS b', 'a.documento_detalle_id', 'b.id')
           ->select(DB::raw("ROUND(Sum(b.peso2) * 0.453592) AS peso_total"))
           ->where([['b.deleted_at', null], ['a.deleted_at', null], ['a.consolidado_id', $consolidado_id]])
           ->first();
           if($peso_consolidado and $peso_consolidado != null){
             $peso = $peso_consolidado->peso_total;
           }
+
+          $piezas_consolidado  = DB::table('consolidado_detalle AS a')
+          ->join('documento_detalle AS b', 'a.documento_detalle_id', 'b.id')
+          ->select(DB::raw("Count(DISTINCT a.num_bolsa) AS cantidad"))
+          ->where([['b.deleted_at', null], ['a.deleted_at', null], ['a.consolidado_id', $consolidado_id]])
+          ->first();
+          if($piezas_consolidado and $piezas_consolidado != null){
+            $piezas = $piezas_consolidado->cantidad;
+          }
         }
-        return view('templates.master.create', compact('master', 'consolidado_id', 'peso'));
+        return view('templates.master.create', compact('master', 'consolidado_id', 'peso', 'piezas'));
     }
     public function update(Request $request, $master)
     {
@@ -334,6 +346,7 @@ class MasterController extends Controller
             ->leftJoin('documento AS f', 'f.master_id', 'a.id')
             ->select(
                 'a.id',
+                'a.master_id',
                 'c.nombre AS aerolinea',
                 'e.nombre AS ciudad',
                 'a.num_master',
@@ -344,7 +357,21 @@ class MasterController extends Controller
                 'b.tarifa',
                 'g.nombre AS consignee',
                 'g.contacto AS contacto',
-                'a.created_at'
+                'a.created_at',
+                DB::raw("(SELECT
+                z.trm
+                FROM
+                impuesto_master AS z
+                WHERE
+                z.master_id = a.id AND
+                z.deleted_at IS NULL) AS trm"),
+                DB::raw("(SELECT
+                z.fecha_liquidacion
+                FROM
+                impuesto_master AS z
+                WHERE
+                z.master_id = a.id AND
+                z.deleted_at IS NULL) AS fecha_liquidacion")
             )
             ->where([
                 ['a.deleted_at', null],
@@ -451,5 +478,109 @@ class MasterController extends Controller
           ->select(['a.id', 'a.consecutivo AS consolidado', DB::raw('SUBSTRING_INDEX(`a`.`created_at`, " ", 1) as fecha'), 'b.nombre AS ciudad'])
           ->where($where)->get();
       return $data;
+    }
+
+    public function createHawb($id)
+    {
+      DB::beginTransaction();
+      try {
+        /* BUSCAR HOUSES DE ESTA MASTER */
+        $houses = Master::select(DB::raw('Count(master.id) AS cantidad'))
+        ->where([['master.master_id', $id], ['master.deleted_at', NULL]])
+        ->first();
+        /* CREACION DE LA NUEVA MASTER */
+        $master = Master::find($id);
+        $newMaster = $master->replicate();
+        $newMaster->master_id = $id;
+        $newMaster->num_master = $master->num_master . '_' . ($houses->cantidad + 1);
+        $newMaster->save();
+
+        /* ENCONTRAR DETALLE ASOCIADO */
+        $detalle = MasterDetalle::select(
+          'id',
+          'master_id',
+          'piezas',
+          'peso',
+          'peso_kl',
+          'unidad_medida',
+          'rate_class',
+          'commodity_item',
+          'peso_cobrado',
+          'tarifa',
+          'total',
+          'descripcion'
+          )
+        ->where([['master_detalle.master_id', $id], ['master_detalle.deleted_at', NULL]])
+        ->first();
+        $newDetalle = $detalle->replicate();
+        $newDetalle->master_id = $newMaster->id;
+        $newDetalle->save();
+
+        /* ENCONTRAR CARGOS ADICIONALES */
+        $cargos_id = MasterCargosAdicionales::select('id')
+        ->where([['master_id', $id]])
+        ->get();
+        if($cargos_id){
+          foreach ($cargos_id as $val) {
+            $cargos = MasterCargosAdicionales::find($val->id);
+            $newCargos = $cargos->replicate();
+            $newCargos->master_id = $newMaster->id;
+            $newCargos->save();
+          }
+        }
+
+        DB::commit();
+        return array('code' => 200);
+      } catch (Exception $e) {
+          DB::rollback();
+          return $e;
+      }
+    }
+
+    public function saveCostMaster(Request $request)
+    {
+      DB::beginTransaction();
+      try {
+        if($request->cost_edit){
+          DB::table('impuesto_master')
+              ->where('master_id', $request->master_id)
+              ->update([
+                'fecha_liquidacion' => $request->cost_date,
+                'rate' => $request->cost_rate,
+                'trm' => $request->cost_trm,
+                'peso' => $request->cost_weight,
+              ]);
+        }else{
+          DB::table('impuesto_master')->insert(
+              [
+                  'master_id' => $request->master_id,
+                  'fecha_liquidacion' => $request->cost_date,
+                  'rate' => $request->cost_rate,
+                  'trm' => $request->cost_trm,
+                  'peso' => $request->cost_weight,
+                  'created_at' => date('Y-m-d H:i:s')
+              ]
+          );
+
+        }
+        DB::commit();
+        return array('code' => 200);
+      } catch (\Exception $e) {
+          DB::rollback();
+          return $e;
+      }
+    }
+
+    public function saveMasterTaxDetail($master_id)
+    {
+      DB::beginTransaction();
+      try {
+        $consolidate = D
+        DB::commit();
+        return true;
+      } catch (\Exception $e) {
+          DB::rollback();
+          return $e;
+      }
     }
 }

@@ -187,7 +187,7 @@
         <td>
             @if(env('APP_CLIENT') != 'worldcargo')
                 <div class="remitente">
-                    {{ ($shipper != null) ? $shipper->nombre : $documento->ship_nomfull }}
+                    {{ ($shipper != null) ? $shipper->nombre : $value->ship_nomfull }}
                 </div>
             @endif
         </td>
@@ -197,7 +197,7 @@
             <div class="telefono">
                 @if(env('APP_CLIENT') != 'worldcargo')
                     @lang('general.phone'):
-                    {{ ($shipper != null) ? $shipper->telefono : $documento->ship_tel }}
+                    {{ ($shipper != null) ? $shipper->telefono : $value->ship_tel }}
                 @endif
             </div>
         </td>
@@ -209,10 +209,10 @@
                      @lang('general.consignee'):
                 </div>
                 <div class="nomDesti">
-                    {{ ($consignee != null) ? $consignee->nombre : $documento->cons_nomfull }}
+                    {{ ($consignee != null) ? $consignee->nombre : $value->cons_nomfull }}
                 </div>
                 <div class="dirDesti">
-                    {{ ($consignee != null) ? $consignee->direccion : $documento->cons_dir }}
+                    {{ ($consignee != null) ? $consignee->direccion : $value->cons_dir }}
                 </div>
             </div>
         </td>
@@ -220,7 +220,7 @@
     <tr>
         <td>
             <div class="ciudad">
-                {{ ($consignee != null) ? $consignee->ciudad : $documento->cons_ciudad }}
+                {{ ($consignee != null) ? $consignee->ciudad : $value->cons_ciudad }}
             </div>
         </td>
     </tr>

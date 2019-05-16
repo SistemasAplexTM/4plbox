@@ -1,6 +1,32 @@
 let modalName = '';
 $(document).ready(function() {
+    $('#modalChangeShipperConsignee').on('hidden.bs.modal', function() {
+        objVue.loading_save_ship = false;
+        objVue.loading_save_cons = false;
+    });
     setIdPaisConfig();
+    // setTimeout(function() {
+    //   var table2 = $('#whgTable').DataTable();
+    //   $('#whgTable tbody').on( 'click', 'tr', function () {
+    //       if ( $(this).hasClass('selected') ) {
+    //           $(this).removeClass('selected');
+    //           // $('.edit_document').hide();
+    //           // $('.tags_document').hide();
+    //           // $('.delete_document').hide();
+    //           // $('.print_document').hide();
+    //       }
+    //       else {
+    //           table2.$('tr.selected').removeClass('selected');
+    //           $(this).addClass('selected');
+    //           var tbl_data = table2.row('.selected').data();
+    //           // $('.edit_document').show().attr('href', 'documento/'+tbl_data.id+'/edit');
+    //           // $('.tags_document').show().attr('onclick',
+    //           // "openModalTagsDocument("+tbl_data.id+", '"+tbl_data.num_warehouse+"','"+tbl_data.cons_nomfull+"', '"+tbl_data.email_cons+"', '0', "+tbl_data.liquidado+", "+tbl_data.piezas+", '"+tbl_data.estatus_color+"')");
+    //           // $('.delete_document').show().attr('onclick', 'modalEliminar('+tbl_data.id+')');
+    //           // $('.print_document').show();
+    //       }
+    //   });
+    // }, 1000);
     $('#tracking').tagsinput();
     //toggle `popup` / `inline` mode
     $.fn.editable.defaults.mode = 'inline';
@@ -106,18 +132,21 @@ $(function() {
 });
 
 function datatableDetail(){
-        if ($.fn.DataTable.isDataTable('#whgTable')) {
-    var table = $('#whgTable').DataTable();
+    if ($.fn.DataTable.isDataTable('#whgTable')) {
+      var table = $('#whgTable').DataTable();
         table.clear();
             $('#whgTable tbody').empty();
             $('#whgTable').dataTable().fnDestroy();
-        }
+    }
     var puntos = null;
     if(puntos_config != null){
       puntos = JSON.parse(puntos_config);
     }
     var tbl = $('#whgTable').DataTable({
-        ajax: 'getDataDetailDocument',
+        "ajax": {
+            "url": "getDataDetailDocument",
+            "type": "GET"
+        },
         // "paging":   false,
         // "info":     false,
         processing: false,
@@ -126,8 +155,9 @@ function datatableDetail(){
         "order": [[ 0, "desc" ]],
         columns: [{
           "render": function (data, type, full, meta) {
-            var str = full.num_warehouse;
-            return parseInt(str.substring(9));
+            var str = full.paquete;
+            return parseInt(str);
+            // return parseInt(str.substring(9));
           },
           width: 30
         },{
@@ -184,6 +214,7 @@ function datatableDetail(){
                   btn_delete = '<a class="btn-actions" type="button" id="btn_remove'+full.id+'" onclick="eliminar('+full.id+', false)" data-toggle="tooltip" title="Eliminar" style="color:#E34724"><i class="fal fa-trash-alt"></i></a> ';
                 }
 
+                btn_ship_cons = '<a class="btn btn-primary btn-xs btn-actions" type="button" id="btn_ship_cons'+full.id+'" onclick="changueShipperConsignee('+full.id+', '+full.shipper_id+', '+full.consignee_id+')" data-toggle="tooltip" title="Camibar"><i class="fal fa-user"></i></a> ';
                 btn_addTracking = '<a class="btn btn-info btn-xs btn-actions addTrackings" type="button" id="btn_addtracking'+full.id+'" data-toggle="tooltip" title="Agregar tracking" onclick="addTrackings('+full.id+')"><i class="fal fa-truck"></i> <span id="cant_tracking'+full.id+'">'+full.cantidad+'</span></a> ';
                 if(puntos != null){
                   if(objVue.city_c.pais_id == puntos.pais_id){
@@ -200,7 +231,7 @@ function datatableDetail(){
                         '</ul>'+
                       '</div>';
 
-                return btn_addTracking + btn_points + btn_delete;
+                return btn_addTracking + btn_ship_cons +  btn_points + btn_delete;
             },
             width: 105
         }, {
@@ -316,6 +347,8 @@ function datatableDetail(){
         if(app_client === 'jyg'){
           if(json.data.length === 1){
             objVue.disabled_client = true;
+          }else{
+            objVue.disabled_client = false;
           }
         }
         objVue.totalizeDocument();
@@ -412,8 +445,8 @@ function saveTableDetail(id_fila) {
     objVue.saveTableDetail(data);
 }
 
-function selectShipperConsignee(id, table) {
-    objVue.searchShipperConsignee(id, table);
+function selectShipperConsignee(id, table, selected) {
+    objVue.searchShipperConsignee(id, table, selected);
 }
 
 function eliminarConsolidado(id, logical) {
@@ -545,4 +578,8 @@ function formatRepoPoints(repo) {
 
 function formatRepoSelectionPoints(repo) {
     return repo.text || repo.id + ' - ' + repo.text;
+}
+
+function changueShipperConsignee(id, shipper_id, consignee_id) {
+  objVue.changueShipperConsigneeDetail(id, shipper_id, consignee_id);
 }

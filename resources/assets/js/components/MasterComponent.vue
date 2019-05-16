@@ -748,7 +748,7 @@
         editing: false
       }
     },
-    props: ["master", "consol", "peso_consolidado"],
+    props: ["master", "consol", "peso_consolidado", "piezas_consolidado"],
     watch:{
       peso: function(){
         this.peso_cobrado = this.peso;
@@ -776,6 +776,10 @@
       if(this.peso_consolidado != 0){
         this.peso = this.peso_consolidado;
       }
+      if(this.piezas_consolidado != null){
+        this.piezas = this.piezas_consolidado;
+      }
+
       this.getAerolineas('aerolineas');
       this.getAerolineas('aeropuertos');
       this.getOtherCharges();

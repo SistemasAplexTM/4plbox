@@ -130,6 +130,12 @@
         font-weight: bold;
         margin-bottom: 5px;
     }
+    table.dataTable tbody tr.selected{
+      background-color: #d4e4fb;
+    }
+    .btn-change{
+      width: 100%;
+    }
 
 </style>
 <link href="{{ asset('css/plugins/dataTables/keyTable.dataTables.min.css') }}">
@@ -144,7 +150,7 @@
         <modalconsignee-component></modalconsignee-component>
         <modalarancel-component></modalarancel-component>
         <modalcargosadd-component :showmodal="showmodalAdd"></modalcargosadd-component>
-        <products-cuba-component v-if="mostrar.includes(25)" :id_document="{{ $documento->id }}" :points="total_points" :data_p="data_points" @get="getProductsCuba($event)"></products-cuba-component>
+        <products-cuba-component v-if="mostrar.includes(66)" :id_document="{{ $documento->id }}" :points="total_points" :data_p="data_points" @get="getProductsCuba($event)"></products-cuba-component>
 
         <form class="" id="formDocumento" name="formDocumento" class=" form-horizontal" role="form" action="{{ url('documento/updatedDocument') }}/{{  $documento->id }}" method="post">
                 {{ csrf_field() }}
@@ -248,7 +254,7 @@
                                         <label class="control-label col-sm-2">@lang('documents.city'): </label>
                                         <div class="col-sm-5" onclick ="deleteError($(this));">
                                             <input type="hidden" id="localizacion_id" name="localizacion_id" value="">
-                                            <city-component @get="setCity($event, true)" :disabled="disabled_s" :selected="city_selected_s"></city-component>
+                                            <city-component @get="setCity($event, true)" :data="citys" :disabled="disabled_s" :selected="city_selected_s"></city-component>
                                             <small class="help-block has-error" id="msn_l1" style="display: none;">@lang('documents.obligatory_field')</small>
                                         </div>
                                         <label class="control-label col-sm-1">@lang('documents.zip'): </label>
@@ -335,7 +341,7 @@
                                             <label class="control-label col-sm-2">@lang('documents.city'): </label>
                                             <div class="col-sm-5" onclick ="deleteError($(this));">
                                               <input type="hidden" id="localizacion_id_c" name="localizacion_id_c" value="">
-                                                <city-component @get="setCity($event, false)" :disabled="disabled_c" :selected="city_selected_c"></city-component>
+                                                <city-component @get="setCity($event, false)" :data="citys" :disabled="disabled_c" :selected="city_selected_c"></city-component>
                                                 <small class="help-block has-error" id="msn_l2" style="display: none;">@lang('documents.obligatory_field')</small>
                                             </div>
                                             <label class="control-label col-sm-1">C.P: </label>
@@ -705,7 +711,7 @@
                                           </div>
                                         </div>
                                         <div class="row pasos_guia" id="grilla_guia">
-                                            <div class="col-lg-12">
+                                            <div class="">
                                                     <div class="form-group">
                                                         <div class="table-responsive">
                                                             <table class="table table-striped  table-hover" id="whgTable" style="width: 100%;">
@@ -873,9 +879,11 @@
 
         {{-- MODAL AGREGAR TRACKINGS --}}
         @include('templates/documento/modals/modalTracking')
+        {{-- MODAL AGREGAR TRACKINGS --}}
+        @include('templates/documento/modals/modalChangeShipperConsignee', ['shippers' => $shippers, 'consignees' => $consignees])
 
         {{-- MODAL AGREGAR PUNTOS --}}
-        <points-component :id_detail="points_id_detail"></points-component>
+        <points-component v-if="mostrar.includes(66)" :id_detail="points_id_detail"></points-component>
     </div>
 @endsection
 

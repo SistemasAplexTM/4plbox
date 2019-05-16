@@ -2,11 +2,11 @@ let mix = require('laravel-mix');
  mix.scripts([
   	/*-- Scripts de la plantilla --*/
    	'resources/assets/js/jquery/jquery-2.1.1.js',
-    	'resources/assets/js/bootstrap/bootstrap.min.js',
-    	'resources/assets/js/plugins/metisMenu/jquery.metisMenu.js',
-    	'resources/assets/js/plugins/slimscroll/jquery.slimscroll.min.js',
-    	'resources/assets/js/inspinia.js',
-    	'resources/assets/js/plugins/pace/pace.min.js',
+  	'resources/assets/js/bootstrap/bootstrap.min.js',
+  	'resources/assets/js/plugins/metisMenu/jquery.metisMenu.js',
+  	'resources/assets/js/plugins/slimscroll/jquery.slimscroll.min.js',
+  	'resources/assets/js/inspinia.js',
+  	'resources/assets/js/plugins/pace/pace.min.js',
     	// 'resources/assets/js/plugins/fontAwesome5/all.min.js',
 
     'resources/assets/js/plugins/toastr/toastr.min.js',
@@ -20,7 +20,7 @@ let mix = require('laravel-mix');
    	'resources/assets/js/plugins/datapicker/bootstrap-datepicker.js',
    	'resources/assets/js/plugins/daterangepicker/daterangepicker.js',
    	'resources/assets/js/plugins/select2/select2.full.min.js',
-      'resources/assets/js/plugins/dropzone/dropzone.js',
+    'resources/assets/js/plugins/dropzone/dropzone.js',
    	'resources/assets/js/plugins/bootstrapToogle/bootstrap-toggle.min.js',
   // 	// 'resources/assets/js/plugins/switchery/switchery.js',------------------------ delete
   // 	// 'resources/assets/js/plugins/formatCurrency/jquery.formatCurrency-1.4.0.min.js',------------------------ delete

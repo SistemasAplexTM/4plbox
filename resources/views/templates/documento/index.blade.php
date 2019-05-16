@@ -174,8 +174,8 @@
                                 <div class="col-lg-12" id="tbl2" style="display:none">
                                     <ul class="nav nav-tabs" role="tablist">
                     							    <li role="warehouses" class="active" @click="pendign"><a href="#courier" aria-controls="courier" role="tab" data-toggle="tab"><i class="fal fa-box-open"></i> COURIER</a></li>
-                                      <li role="warehouses" @click="pendign"><a href="#load" aria-controls="load" role="tab" data-toggle="tab"><i class="fal fa-truck-moving"></i> CARGA</a></li>
-                                      <li role="pending" id="li-pending" @click="pendign"><a href="#pending" aria-controls="pending" role="tab" data-toggle="tab"><i class="fal fa-box"></i> PENDIENTES <span class="pending badge badge-primary ligth">0</span></a></li>
+                                      <li role="load" id="li-load" @click="pendign"><a href="#load" aria-controls="load" role="tab" data-toggle="tab"><i class="fal fa-truck-moving"></i> CARGA</a></li>
+                                      <li role="pending" id="li-pending" @click="pendign"><a href="#pending" aria-controls="pending" role="tab" data-toggle="tab"><i class="fal fa-box"></i> PENDIENTES <span class="pending badge badge-primary ligth">{{ $pendientes->cantidad }}</span></a></li>
                     							  </ul>
                                     <div class="tab-content">
                                       <div role="tabpanel" class="tab-pane fade active in" id="courier">
@@ -292,24 +292,7 @@
                         </h4>
                     </div>
                     <div class="modal-body">
-                      <modal-cambiar-status-consolidado :document_id="id_consolidado_selected"/>
-                        {{-- <form id="formGuiasAgrupar">
-                            <p>Selecione el estatus que desea aplicar a este consolidado y sus documentos internos.</p>
-                            <div class="row">
-                                <div class="col-sm-8">
-                                    <div class="form-group">
-                                        <label for="status_id">Estatus actual</label>
-                                        <v-select name="status_id" v-model="status_id" label="descripcion" :filterable="false" :options="status"></v-select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="status_id" style="width: 100%;">&nbsp;</label>
-                                        <button class="ladda-button btn btn-primary btn-sm" data-style="expand-right" type="button" data-toggle="tooltip" title="Agregar estatus a guias" @click="addStatusConsolidado()"><i class="fa fa-save"></i> Cambiar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form> --}}
+                      <modal-cambiar-status-consolidado :document_id="id_consolidado_selected" :status="{{ json_encode($status_list) }}"/>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

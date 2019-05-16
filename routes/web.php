@@ -15,7 +15,7 @@ Route::get('lang/{lang}', function($lang) {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'DocumentoController@index')->name('home');
 
 Route::get('master/buscar/{dato}/{type?}', 'MasterController@getSoC');
 Route::group(['middleware' => 'auth'], function () {
@@ -99,6 +99,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('master/imprimirLabel/{id_master}', 'MasterController@imprimirLabel');
     Route::get('master/imprimirGuias/{consolidado_id}/{option?}', 'MasterController@imprimirGuias');
     Route::post('master/getDataConsolidados/{type}', 'MasterController@getDataConsolidados');
+    Route::get('master/hawb/{id}', 'MasterController@createHawb');
+    Route::get('master/{id}/getDataPrintBagsConsolidate/{type?}', 'DocumentoController@getDataPrintBagsConsolidate');
+    Route::post('master/saveCostMaster', 'MasterController@saveCostMaster');
 
     /*--- MODULO TRACKINGS ---*/
     Route::resource('tracking', 'TrackingController', ['except' => ['show', 'create', 'edit', 'update']]);
@@ -123,6 +126,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('receipt/getDocument/{id}', 'ReceiptController@getDocument');
     Route::post('receipt/checkReceipt', 'ReceiptController@checkReceipt');
     Route::get('receipt/printReceipt/{id}', 'ReceiptController@printReceipt');
+    Route::get('receipt/changeStatus/{id}', 'ReceiptController@changeStatus');
     // Route::post('receipt/validar_tracking', 'ReceiptController@validar_tracking');
 
     /*--- MODULO MODULOS ---*/
@@ -306,6 +310,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('documento/getDataByDocument/{id}', 'DocumentoController@getDataByDocument');
     Route::get('documento/{id}/getDataPrintBagsConsolidate', 'DocumentoController@getDataPrintBagsConsolidate');
     Route::get('documento/getDataDocument/{data}', 'DocumentoController@getDataPrintBagsConsolidate');
+    Route::get('documento/getDataSearchDocument/{data?}', 'DocumentoController@getDataSearchDocument');
+    Route::get('documento/updateShipperConsignee/{id}/{data_id}/{op}', 'DocumentoController@updateShipperConsignee');
 
     /*  REPORTES - IMPRESIONES EN PDF */
     Route::get('impresion-documento/{id}/{document}/{id_detalle?}', 'DocumentoController@pdf')->name('documento.pdf');

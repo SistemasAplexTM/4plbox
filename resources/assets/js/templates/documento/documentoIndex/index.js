@@ -21,9 +21,17 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
     if (reinitialite) {
       if ($.fn.DataTable.isDataTable('#tbl-documento' + t)) {
         $('#tbl-documento' + t).dataTable().fnDestroy();
+        $('#tbl-documento  tbody' + t).empty();
         if(t == 2){
-          $('#tbl-documento3').dataTable().fnDestroy();
-          $('#tbl-documento4').dataTable().fnDestroy();
+          $('#tbl-documento2  tbody').empty();
+          if ($.fn.DataTable.isDataTable('#tbl-documento3')) {
+            $('#tbl-documento3').dataTable().fnDestroy();
+          }
+          $('#tbl-documento3  tbody').empty();
+          if ($.fn.DataTable.isDataTable('#tbl-documento4')) {
+            $('#tbl-documento4').dataTable().fnDestroy();
+          }
+          $('#tbl-documento4  tbody').empty();
         }
       }
     }
@@ -32,7 +40,7 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
     }
     // SI MUESTRO LOS WAREHOUSES ENTONCES LISTO LAS DOS GRILLAS DEL TAB
     if(t === 2){
-      for (var i = 2; i <= 4; i++) {
+      for (var i = 2; i <= 2; i++) {
         datatableDocument(i, tipo_doc_id, status_id);
       }
     }else{

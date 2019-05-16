@@ -28,8 +28,10 @@
 </template>
 
 <script>
+import debounce from 'lodash/debounce'
+
 export default {
-  props:["disabled", "selected"],
+  props:["data", "disabled", "selected"],
   data(){
     return {
       options: [],
@@ -41,11 +43,24 @@ export default {
   watch:{
     selected:function(value) {
       this.city_id = value
+    },
+    data:function(value) {
+      this.list = value;
     }
   },
   mounted(){
-    this.getData();
+    //
   },
+  updated: debounce(function () {
+      let me = this;
+      this.$nextTick(() => {
+        setTimeout(() => {
+          if(me.list.length === 0){
+              me.getData();
+          }
+        }, 2000);
+      })
+  }, 1000), // increase to ur needs
   methods:{
     getData(){
       var me = this;

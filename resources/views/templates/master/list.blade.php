@@ -22,9 +22,6 @@
     #tbl-master_wrapper{
         padding-bottom: 230px;
     }
-    .el-select-dropdown{
-      z-index: 9999!important;
-    }
 </style>
 <div class="row" id="master_list">
 	<div class="col-lg-12">
@@ -108,6 +105,98 @@
             </div>
         </div>
     </div>
+
+    <!-- MODAL IMPRIMIR LABELS POR BOLSA -->
+		<div class="modal fade bs-example" id="modalPrintLabelsMaster" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" style="width: 30%!important">
+						<div class="modal-content">
+								<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+										<h4 class="modal-title" id="myModalLabel">
+												<i class="fa fa-barcode"></i> Labels Bolsas
+										</h4>
+								</div>
+								<div class="modal-body">
+									<div class="row">
+										<div class="col-sm-12">
+                      <el-input
+                        name="type"
+                        placeholder="Tipo de servicio"
+                        prefix-icon="el-icon-edit-outlin"
+                        v-model="type"
+                        v-validate.disable="'required'" size="medium">
+                      </el-input>
+										</div>
+									</div>
+
+								</div>
+								<div class="modal-footer">
+										<button type="button" id="" @click="createLabelBags()" class="btn btn-primary" data-dismiss="modal">Imprimir</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+								</div>
+						</div>
+				</div>
+		</div>
+
+    <!-- MODAL INGRESAR COSTOS MASTER -->
+		<div class="modal fade bs-example" id="modalMasterCost" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" style="width: 35%!important">
+						<div class="modal-content">
+								<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+										<h4 class="modal-title" id="myModalLabel">
+												<i class="fal fa-file-invoice-dollar"></i> Impuestos Master @{{ master }}
+										</h4>
+								</div>
+								<div class="modal-body">
+                  <div class="form-group">
+  									<div class="row">
+  										<div class="col-sm-6">
+                        <label for="">Fecha liquidación</label>
+                        <el-date-picker
+                          v-model="cost_date"
+                          type="date"
+                          placeholder=""
+                          value-format="yyyy-MM-dd"
+                          name="cost_date"
+                          size="medium">
+                        </el-date-picker>
+  										</div>
+                      <div class="col-sm-6">
+                        <label for="">TRM</label>
+                        <el-input
+                          name="type"
+                          placeholder="TRM actual"
+                          prefix-icon="el-icon-edit"
+                          v-model="cost_trm"
+                          size="medium">
+                        </el-input>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <label for="">Peso</label>
+                        <div>
+                          @{{ cost_weight }} Kl -
+                          @{{ cost_weight_lb }} Lb
+                        </div>
+  										</div>
+                      <div class="col-sm-6">
+                        <label for="">Rate</label>
+                        <div>@{{ cost_rate }}</div>
+  										</div>
+                    </div>
+									</div>
+								</div>
+								<div class="modal-footer">
+                    <el-button type="primary" @click="saveCost()" :loading="cost_loading" size="medium">@{{ cost_text_save }}</el-button>
+                    <el-button size="medium" data-dismiss="modal">Cerrar</el-button>
+								</div>
+						</div>
+				</div>
+		</div>
 </div>
 @endsection
 

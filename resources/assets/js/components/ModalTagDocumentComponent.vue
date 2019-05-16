@@ -101,7 +101,11 @@
                 <div role="tabpanel" class="tab-pane fade active in" id="tracking">
                   <div class="form-group cont-tracking">
 
-                    <div v-for="val in trackings" class="tracking"><i class="fa fa-truck fa-xs"></i> {{ val.codigo }}</div>
+                    <div v-for="val in trackings" class="tracking">
+                      <i class="fa fa-truck fa-xs"></i> {{ val.codigo }}<br>
+                      <i class="fal fa-minus fa-xs"></i> Contenido: <strong>{{ val.contenido }}</strong><br>
+                      <i class="fal fa-minus fa-xs"></i> Peso: <strong>{{ val.peso }} Lbs</strong>
+                    </div>
                   </div>
                 </div>
 
@@ -382,7 +386,7 @@
   	                }, {
   	                	sortable: false,
   	                	"render": function (data, type, full, meta) {
-  		                    return '<span style="color:#439a46;font-weight: 900;">'+full.num_warehouse+'</span><div>'+full.status_name+'</div> ';
+  		                    return '<span style="color:#439a46;font-weight: 900;">'+full.num_warehouse+'</span><div>'+full.status_name+ ' ' + ((full.consolidado !== null) ? '(' +full.consolidado+')' : '') + ' </div> ';
   		                }
   	                }, {
   	                    data: 'observacion',
