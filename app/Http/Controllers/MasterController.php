@@ -115,6 +115,8 @@ class MasterController extends Controller
             $piezas = $piezas_consolidado->cantidad;
           }
         }
+        echo $peso . ' - - '.$piezas;
+        exit();
         return view('templates.master.create', compact('master', 'consolidado_id', 'peso', 'piezas'));
     }
     public function update(Request $request, $master)
@@ -235,6 +237,7 @@ class MasterController extends Controller
             ->leftJoin('pais AS x', 'deptos.pais_id', 'x.id')
             ->select(
                 'a.num_master',
+                'a.master_id',
                 'a.account_information',
                 'a.agent_iata_code',
                 'a.num_account',

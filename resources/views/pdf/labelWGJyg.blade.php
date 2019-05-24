@@ -169,6 +169,10 @@
       $consignee = json_decode($dato_consolidado->consignee);
     }
   }
+  // echo '<pre>';
+  // print_r($documento);
+  // echo '</pre>';
+  // exit();
 ?>
 @foreach ($detalle as $value)
 <?php $contRegistros++ ?>
@@ -183,11 +187,16 @@
             </div>
         </td>
     </tr>
+
     <tr>
         <td>
             @if(env('APP_CLIENT') != 'worldcargo')
                 <div class="remitente">
+                  @if($documento->liquidado)
                     {{ ($shipper != null) ? $shipper->nombre : $value->ship_nomfull }}
+                  @else
+                    {{ '&nbsp;' }}
+                  @endif
                 </div>
             @endif
         </td>
@@ -196,8 +205,12 @@
         <td>
             <div class="telefono">
                 @if(env('APP_CLIENT') != 'worldcargo')
+                  @if($documento->liquidado)
                     @lang('general.phone'):
                     {{ ($shipper != null) ? $shipper->telefono : $value->ship_tel }}
+                  @else
+                    {{ '&nbsp;' }}
+                  @endif
                 @endif
             </div>
         </td>
@@ -205,14 +218,26 @@
     <tr>
         <td>
             <div id="destinatario">
+              @if($documento->liquidado)
                 <div class="recibe">
                      @lang('general.consignee'):
                 </div>
+              @else
+                {{ '&nbsp;' }}
+              @endif
                 <div class="nomDesti">
+                  @if($documento->liquidado)
                     {{ ($consignee != null) ? $consignee->nombre : $value->cons_nomfull }}
+                  @else
+                    {{ '&nbsp;' }}
+                  @endif
                 </div>
                 <div class="dirDesti">
+                  @if($documento->liquidado)
                     {{ ($consignee != null) ? $consignee->direccion : $value->cons_dir }}
+                  @else
+                    {{ '&nbsp;' }}
+                  @endif
                 </div>
             </div>
         </td>
@@ -224,6 +249,7 @@
             </div>
         </td>
     </tr>
+
     <tr>
         <td>
             <div class="datosAdd">

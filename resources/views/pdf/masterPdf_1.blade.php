@@ -299,7 +299,7 @@
 					    </table></td>
 					    <td align="center"><table width="40%" style="text-align:right; font-size:18px;">
 					      <tr>
-					        <td width="40%">{{ $data->codigo_aerolinea  }}</td>
+					        <td width="40%">{{ ($data->master_id != '') ? 'HAWB' : '' }}{{ $data->codigo_aerolinea  }}</td>
 					        <td width="5%"> - </td>
 					        <td width="55%" align="center">{{ substr($data->num_master,3) }}</td>
 					      </tr>
@@ -779,7 +779,7 @@
 
 					    </td>
 					    <td width="64%" colspan="3" valign="top" class="left_line bottom_line  rigth_line " style="border-left: 1px solid {{ $color }}; border-right: 1px solid {{ $color }};border-bottom: 1px solid {{ $color }};"><div class="margin_div text_titles_tl" style="color: {{ $color }}">Other Charges</div>
-					    <table width="90%" align="center">
+					    {{-- <table width="90%" align="center">
 						  <tr class="bottom_line" style="border-bottom: 1px solid {{ $color }};">
 						    <td height="15px">Description</td>
 						    <td>Amount</td>
@@ -798,7 +798,7 @@
 							    </td>
 							  </tr>
 						  @endforeach
-						</table>
+						</table> --}}
 
 					    </td>
 					  </tr>
@@ -1004,7 +1004,7 @@
 					            </table>
 					    </td>
 					    <td rowspan="2" class=" left_line" style="border-left: 1px solid {{ $color }};">&nbsp;</td>
-					    <td align="center" rowspan="2"><div id="master_bottom" style="font-size:18px" >{{ $data->codigo_aerolinea .'-'. substr($data->num_master,3) }}</div></td>
+					    <td align="center" rowspan="2"><div id="master_bottom" style="font-size:18px" >{{ ($data->master_id != '') ? 'HAWB' : '' }}{{ $data->codigo_aerolinea .'-'. substr($data->num_master,3) }}</div></td>
 					  </tr>
 					  <tr>
 					    <td width="18%" class="left_line bottom_line bg_azul" style="border-left: 1px solid {{ $color }};border-bottom: 1px solid {{ $color }};background-color:{{ $background }};">

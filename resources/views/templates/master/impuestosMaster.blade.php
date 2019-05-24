@@ -21,7 +21,7 @@
 <style type="text/css">
 
 </style>
-<div class="row" id="master_list">
+<div class="row" id="master_hijas">
 	<div class="col-lg-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
@@ -56,5 +56,5 @@
 @endsection
 
 @section('scripts')
-{{-- <script src="{{ asset('js/templates/master/master_list.js') }}"></script> --}}
+<script src="{{ asset('js/templates/master/master_impuestos.js') }}"></script>
 @endsection
