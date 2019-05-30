@@ -71,6 +71,8 @@ return [
     'accounting'  =>'Contabilidad',
     'invoices'  =>'Facturación',
     'report'  =>'Informe',
+    'employees'  =>'Empleados',
+
 
 
 
