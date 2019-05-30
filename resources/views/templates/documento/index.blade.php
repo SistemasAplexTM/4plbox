@@ -173,7 +173,7 @@
                                 </div>
                                 <div class="col-lg-12" id="tbl2" style="display:none">
                                     <ul class="nav nav-tabs" role="tablist">
-                    							    <li role="warehouses" class="active" @click="pendign"><a href="#courier" aria-controls="courier" role="tab" data-toggle="tab"><i class="fal fa-box-open"></i> COURIER</a></li>
+                    							    <li role="warehouses" class="active" @click="pendign"><a href="#courier" aria-controls="courier" role="tab" data-toggle="tab"><i class="fal fa-box-open"></i> COURIER <button class="btn btn-info btn-circle" title="Filtrar" onclick="listDocument(2, 1, null, null, true, '2019/03/01-2019/05/30');" data-toggle="tooltip" style="margin-left: 10px;font-size: 10px!important;width: 20px;height: 20px;"><i class="fa fa-filter" style="margin-right: 0;"></i></button></a></li>
                                       <li role="load" id="li-load" @click="pendign"><a href="#load" aria-controls="load" role="tab" data-toggle="tab"><i class="fal fa-truck-moving"></i> CARGA</a></li>
                                       <li role="pending" id="li-pending" @click="pendign"><a href="#pending" aria-controls="pending" role="tab" data-toggle="tab"><i class="fal fa-box"></i> PENDIENTES <span class="pending badge badge-primary ligth">{{ $pendientes->cantidad }}</span></a></li>
                     							  </ul>

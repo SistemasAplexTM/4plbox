@@ -785,34 +785,43 @@ class DocumentoController extends Controller
       JavaScript::put(['show_agency' => $show]);
       // print_r($data->value);
       // exit();
-      $filter = [['b.deleted_at', null],
+      $filter = false;
+      $where = [['b.deleted_at', null],
         ['e.deleted_at', null],
         ['b.tipo_documento_id', $request->id_tipo_doc]];
         if(!Auth::user()->isRole('admin')){
-            $filter[] = ['b.agencia_id', Auth::user()->agencia_id];
+            $where[] = ['b.agencia_id', Auth::user()->agencia_id];
         }
         /* GRILLA */
         if ($request->id_tipo_doc == 3) {
-            $sql = $this->getAllConsolidated($filter);
+            $sql = $this->getAllConsolidated($where);
         } else {
             // if(env('APP_TYPE') == 'courier'){
             if($request->type == 3){
-              $sql = $this->getAllLoad($filter);
+              $sql = $this->getAllLoad($where);
             }else{
-              $filter = [['a.deleted_at', null],
+              $where = [['a.deleted_at', null],
               ['b.deleted_at', null],
               ['b.tipo_documento_id', $request->id_tipo_doc]];
               if(!Auth::user()->isRole('admin')){
-                $filter[] = ['b.agencia_id', Auth::user()->agencia_id];
+                $where[] = ['b.agencia_id', Auth::user()->agencia_id];
               }
               if($request->type == 2){
-                $filter[] = ['a.num_warehouse', '<>', NULL ];
+                $where[] = ['a.num_warehouse', '<>', NULL ];
+                if($request->filter){
+                  // $where[] = ['a.num_warehouse', $request->filter ];
+                  $filter = true;
+                }
+                // echo '<pre>';
+                // print_r($where);
+                // echo '</pre>';
+                // exit();
               }else{
                 if($request->type == 4){
-                  $filter[] = ['a.num_warehouse', NULL ];
+                  $where[] = ['a.num_warehouse', NULL ];
                 }
               }
-              $sql = $this->getAllCourier($filter);
+              $sql = $this->getAllCourier($where, $filter);
             }
         }
 

@@ -2,7 +2,7 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
     objVue.type_document = tipo_doc_id;
     var href_print = '';
     var href_print_label = '';
-    var status_id = '';
+    var filtro = '';
     /* MOSTRAR LABELS DE ESTADOS SI ES WAREHOUSE */
     var labels = '';
     if(parseInt(tipo_doc_id) === 3){
@@ -36,15 +36,15 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
       }
     }
     if(typeof filter != 'undefined'){
-        status_id = filter;
+        filtro = filter;
     }
     // SI MUESTRO LOS WAREHOUSES ENTONCES LISTO LAS DOS GRILLAS DEL TAB
     if(t === 2){
       for (var i = 2; i <= 2; i++) {
-        datatableDocument(i, tipo_doc_id, status_id);
+        datatableDocument(i, tipo_doc_id, filtro);
       }
     }else{
-      datatableDocument(t, tipo_doc_id, status_id);
+      datatableDocument(t, tipo_doc_id, filtro);
     }
 
     if(typeof filter == 'undefined'){
@@ -75,7 +75,7 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
 
 }
 
-function datatableDocument(t, tipo_doc_id, status_id){
+function datatableDocument(t, tipo_doc_id, filtro){
   var table = $('#tbl-documento' + t).DataTable({
       processing: true,
       serverSide: true,
@@ -86,7 +86,7 @@ function datatableDocument(t, tipo_doc_id, status_id){
           "data": function(d) {
               d.id_tipo_doc = tipo_doc_id;
               d.type = t;
-              d.status_id = status_id;
+              d.filter = filtro;
           }
       },
       columns: [{

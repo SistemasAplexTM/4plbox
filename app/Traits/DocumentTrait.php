@@ -77,7 +77,7 @@ trait DocumentTrait
         return $sql;
     }
 
-    public function getAllCourier($filter)
+    public function getAllCourier($where, $filter)
     {
         $label_1 = "<a style='float:right;cursor:pointer;color:red' title='Quitar' data-toggle='tooltip' onclick='removerDocumentoAgrupado(";
         $label_2 = ")'><i class='fa fa-times' style='font-size: 15px;'></i></a>";
@@ -200,9 +200,14 @@ trait DocumentTrait
               'a.mintic',
               DB::raw('"ciudad" AS ciudad')
             )
-            ->where($filter)
+            ->where($where)
             ->where('b.carga_courier', 1)
-            ->havingRaw("Date_format(b.created_at, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)")
+            // ->when($filter, function ($query, $filter) {
+            //     return $query->whereBetween('b.created_at', ['2019-04-25','2019-05-30']);
+            //   }, function ($query) {
+            //     return $query->havingRaw("Date_format(b.created_at, '%Y-%m-%d') >= DATE_SUB('2019-04-25', INTERVAL DATEDIFF('2019-05-30', '2019-04-30') DAY)");
+            //   })
+              // ->havingRaw("Date_format(b.created_at, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)");
             // ->whereRaw('(a.flag = 0 OR a.flag is null)')
             ->orderBy('a.agrupado', 'DESC')
             ->orderBy('a.flag', 'ASC')
