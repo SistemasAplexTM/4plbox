@@ -44,6 +44,7 @@ class CasilleroApiController extends Controller
           n.consignee_id = $user
         GROUP BY
           n.consignee_id,
+          m.num_warehouse,
           m.id
         ORDER BY
           m.id DESC
