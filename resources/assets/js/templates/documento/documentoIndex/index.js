@@ -108,18 +108,22 @@ function datatableDocument(t, tipo_doc_id, status_id){
           data: 'valor',
           name: 'b.valor',
           searchable: false,
+          sortable: false,
           visible: (tipo_doc_id != 3) ? true : false
       },  {
           data: 'peso',
           name: 'b.peso',
           searchable: false,
+          sortable: false,
       }, {
           "render": showVolumen,
           searchable: false,
+          sortable: false,
       }, {
           data: 'agencia',
           name: 'e.descripcion',
           searchable: false,
+          sortable: false,
           visible: (app_client == 'jyg') ? false : true
           // visible: (show_agency != null && show_agency != 0) ? false : true
       }, {

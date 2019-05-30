@@ -202,7 +202,7 @@ trait DocumentTrait
             )
             ->where($filter)
             ->where('b.carga_courier', 1)
-            // ->havingRaw("Date_format(b.created_at, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)")
+            ->havingRaw("Date_format(b.created_at, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)")
             // ->whereRaw('(a.flag = 0 OR a.flag is null)')
             ->orderBy('a.agrupado', 'DESC')
             ->orderBy('a.flag', 'ASC')
