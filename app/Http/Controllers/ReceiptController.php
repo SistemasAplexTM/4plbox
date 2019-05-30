@@ -269,7 +269,7 @@ class ReceiptController extends Controller
     'c.name')
     ->where('factura.id', $id)
     ->first();
-    $reciboD = ReceiptDetail::where('factura_id', $id)
+    $reciboD = ReceiptDetail::where([['factura_id', $id], ['factura_detalle.deleted_at', null]])
     ->join('documento_detalle AS b', 'documento_detalle_id', 'b.id')
     ->get();
     $cliente = json_decode($recibo->cliente_datos);

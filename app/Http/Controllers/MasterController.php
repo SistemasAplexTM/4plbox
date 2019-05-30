@@ -115,6 +115,8 @@ class MasterController extends Controller
             $piezas = $piezas_consolidado->cantidad;
           }
         }
+        echo $peso . ' - - '.$piezas;
+        exit();
         return view('templates.master.create', compact('master', 'consolidado_id', 'peso', 'piezas'));
     }
     public function update(Request $request, $master)
@@ -235,6 +237,7 @@ class MasterController extends Controller
             ->leftJoin('pais AS x', 'deptos.pais_id', 'x.id')
             ->select(
                 'a.num_master',
+                'a.master_id',
                 'a.account_information',
                 'a.agent_iata_code',
                 'a.num_account',
@@ -543,15 +546,17 @@ class MasterController extends Controller
       try {
         if($request->cost_edit){
           DB::table('impuesto_master')
-              ->where('master_id', $request->master_id)
-              ->update([
-                'fecha_liquidacion' => $request->cost_date,
-                'rate' => $request->cost_rate,
-                'trm' => $request->cost_trm,
-                'peso' => $request->cost_weight,
-              ]);
+          ->where('master_id', $request->master_id)
+          ->update([
+            'fecha_liquidacion' => $request->cost_date,
+            'rate' => $request->cost_rate,
+            'trm' => $request->cost_trm,
+            'peso' => $request->cost_weight,
+          ]);
+          $data = DB::table('impuesto_master')->where('master_id', $request->master_id)->first();
+          $this->saveMasterTaxDetail($data->id, $request->master_id);
         }else{
-          DB::table('impuesto_master')->insert(
+          $id = DB::table('impuesto_master')->insertGetId(
               [
                   'master_id' => $request->master_id,
                   'fecha_liquidacion' => $request->cost_date,
@@ -561,7 +566,7 @@ class MasterController extends Controller
                   'created_at' => date('Y-m-d H:i:s')
               ]
           );
-
+          $this->saveMasterTaxDetail($id, $request->master_id);
         }
         DB::commit();
         return array('code' => 200);
@@ -571,16 +576,58 @@ class MasterController extends Controller
       }
     }
 
-    public function saveMasterTaxDetail($master_id)
+    public function saveMasterTaxDetail($impuesto_master_id, $master_id)
     {
       DB::beginTransaction();
       try {
-        $consolidate = D
+        $consolidate = Documento::where('master_id', $master_id)->first();
+        $masterD = MasterDetalle::where('master_id', $master_id)->first();
+        $hijas = DB::table('consolidado_detalle AS a')
+        ->join('documento_detalle AS b', 'a.documento_detalle_id', 'b.id')
+        ->join('posicion_arancelaria AS c', 'c.id', 'b.arancel_id2')
+        ->select(
+            'a.id',
+            'a.documento_detalle_id',
+            'b.declarado2 AS declarado',
+            'b.peso2 AS peso',
+            'c.arancel',
+            'c.iva'
+        )
+        ->where([['a.deleted_at', null], ['a.consolidado_id', $consolidate->id]])
+        ->get();
+        foreach ($hijas as $key => $val) {
+
+          $seguro = $val->declarado * 0.005;
+          $flete = $val->peso * $masterD->tarifa;
+          $baseArancel = $val->declarado + $seguro + $flete;
+          $arancel = round($baseArancel * $val->arancel, 2);
+          $baseIva = $baseArancel + $arancel;
+          $iva = round($baseIva * $val->iva, 2);
+
+          $data = array(
+            'impuesto_master_id' => $impuesto_master_id,
+            'documento_id' => $val->documento_detalle_id,
+            'seguro' => $seguro,
+            'flete' => $flete,
+            'costo' => $val->declarado,
+            'arancel' => $arancel,
+            'iva' => $iva,
+            'total_impuesto' => $arancel + $iva,
+            'porcentaje_iva' => $val->iva,
+            'porcentaje_arancel' => $val->arancel
+          );
+          DB::table('impuesto_hijas')->insert($data);
+        }
         DB::commit();
         return true;
       } catch (\Exception $e) {
           DB::rollback();
           return $e;
       }
+    }
+
+    public function impuestosMaster($id)
+    {
+      return view('templates.master.impuestosMaster');
     }
 }

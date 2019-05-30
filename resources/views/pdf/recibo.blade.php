@@ -96,7 +96,7 @@
     <table border="0" cellspacing="0" cellpadding="0" id="tableCabecera" style="width: 100%;">
       <tr>
         <td>
-          <div id="infoCli"><strong>Fecha:</strong> <?php echo $recibo->created_at; ?></div>
+          <div id="infoCli"><strong>Fecha:</strong> <?php echo substr($recibo->created_at, 0 , 10); ?></div>
         </td>
         <td>
           <div id="infoCli"><strong>Transportador:</strong> <?php echo $recibo->transportador; ?></div>

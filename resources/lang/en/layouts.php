@@ -68,6 +68,7 @@ return [
     'accounting'  =>'Accounting',
     'invoices'  =>'Invoices',
     'report'  =>'Report',
+    'employees'  =>'Employees',
 
 
 ];

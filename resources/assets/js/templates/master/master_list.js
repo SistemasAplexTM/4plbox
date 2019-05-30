@@ -144,7 +144,7 @@ var objVue = new Vue({
             me.cost_loading = false;
             me.cost_text_save = 'Continuar';
             toastr.success('Registro guardado correctamente');
-            refreshTable('tbl-master');
+            location.href = "master/"+ me.id_master +"/impuestosMaster";
          }else{
            me.cost_loading = false;
            me.cost_text_save = 'Continuar';

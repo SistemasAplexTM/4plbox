@@ -33,6 +33,7 @@ class AplexConfigController extends Controller
       $menu2 = array(
         array('icon' => 'cog', 'route' => 'settings', 'url' => false, 'desc' => 'general.general', 'perm' => 'administracion.index'),
         array('icon' => 'store', 'route' => 'agencia.index', 'url' => false, 'desc' => 'layouts.agencies', 'perm' => 'agencia.index'),
+        array('icon' => 'users', 'route' => 'empleado.index', 'url' => false, 'desc' => 'layouts.employees', 'perm' => 'agencia.index'),
         array('icon' => 'money-bill', 'route' => 'arancel.index', 'url' => false, 'desc' => 'layouts.tariffs', 'perm' => 'arancel.index'),
         array('icon' => 'box-check', 'route' => 'status.index', 'url' => false, 'desc' => 'layouts.status', 'perm' => 'status.index'),
         array('icon' => 'truck', 'route' => 'transportador.index', 'url' => false, 'desc' => 'layouts.transporters', 'perm' => 'transportador.index'),

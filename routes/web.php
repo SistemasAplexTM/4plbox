@@ -102,6 +102,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('master/hawb/{id}', 'MasterController@createHawb');
     Route::get('master/{id}/getDataPrintBagsConsolidate/{type?}', 'DocumentoController@getDataPrintBagsConsolidate');
     Route::post('master/saveCostMaster', 'MasterController@saveCostMaster');
+    Route::get('master/{id}/impuestosMaster', 'MasterController@impuestosMaster');
 
     /*--- MODULO TRACKINGS ---*/
     Route::resource('tracking', 'TrackingController', ['except' => ['show', 'create', 'edit', 'update']]);
@@ -381,6 +382,28 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('invoice/pdfLabels/{invoice_id?}', 'InvoiceController@pdfLabels');
     /* CAMBIAR STATUS CONSOLIDADO */
     Route::post('cambiarStatusConsolidado/{document_id}', 'StatusController@cambiarStatusConsolidado');
+
+
+    /*--- MODULO EMPLEADOS ---*/
+    Route::resource('empleado', 'EmpleadoController', ['except' => ['show', 'create', 'edit']]);
+    Route::get('empleado/all', 'EmpleadoController@getAll')->name('datatable/all');
+    Route::get('empleado/delete/{id}/{logical?}', 'EmpleadoController@delete')->name('empleado.delete');
+    Route::get('empleado/restaurar/{id}', 'EmpleadoController@restaurar');
+
+    /*--- MODULO RADICADO CLIENTES ---*/
+    Route::resource('radicado_clientes', 'RadicadoClienteController', ['except' => ['show', 'create', 'edit']]);
+    Route::get('radicado_clientes/all', 'RadicadoClienteController@getAll')->name('datatable/all');
+    Route::get('radicado_clientes/delete/{id}/{logical?}', 'RadicadoClienteController@delete')->name('radicado_clientes.delete');
+    Route::get('radicado_clientes/restaurar/{id}', 'RadicadoClienteController@restaurar');
+
+    /*--- MODULO RADICADO ---*/
+    Route::resource('radicado', 'RadicadoController', ['except' => ['show', 'create', 'edit']]);
+    Route::get('radicado/all', 'RadicadoController@getAll')->name('datatable/all');
+    Route::get('radicado/delete/{id}/{logical?}', 'RadicadoController@delete')->name('radicado.delete');
+    Route::get('radicado/restaurar/{id}', 'RadicadoController@restaurar');
+    Route::get('radicado/getClientes', 'RadicadoController@getClientes');
+    Route::get('radicado/getEmpleados', 'RadicadoController@getEmpleados');
+    Route::get('radicado/imprimir/{id}', 'RadicadoController@imprimir');
 });
 Route::get('aplexConfig/config/{key}', 'AplexConfigController@get')->name('config.config');
 Route::get('aplexConfig/getDataAgencyById/{id}', 'AplexConfigController@getDataAgencyById')->name('aplexConfig.getDataAgencyById');

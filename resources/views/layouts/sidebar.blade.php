@@ -218,6 +218,20 @@
                              @lang('layouts.receipt')
                         </a>
                     </li>
+                    <li>
+                      <a href="{{ route('radicado.index') }}">
+                        <spam class="fal fa-file-contract">
+                        </spam>
+                        Radicados
+                      </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('radicado_clientes.index') }}">
+                            <spam class="fal fa-users">
+                            </spam>
+                             @lang('layouts.clients')
+                        </a>
+                    </li>
                     @endcan
                 </ul>
             </li>
