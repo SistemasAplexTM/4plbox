@@ -33,8 +33,8 @@ class CasilleroApiController extends Controller
           n.consignee_id,
           m.num_warehouse,
           m.contenido,
-          m.id,
-          m.peso
+          m.peso,
+          m.id
         FROM
           status_detalle AS z
         INNER JOIN status AS x ON z.status_id = x.id
@@ -44,6 +44,9 @@ class CasilleroApiController extends Controller
           n.consignee_id = $user
         GROUP BY
           n.consignee_id,
+          m.num_warehouse,
+          m.contenido,
+          m.peso,
           m.id
         ORDER BY
           m.id DESC
