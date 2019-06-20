@@ -72,7 +72,7 @@ return [
     'invoices'  =>'Facturación',
     'report'  =>'Informe',
     'employees'  =>'Empleados',
-
+    'cost'  =>'Costos',
 
 
 

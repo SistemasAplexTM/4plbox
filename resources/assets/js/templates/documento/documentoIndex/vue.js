@@ -81,8 +81,92 @@ var objVue = new Vue({
         status_id: {id: 5, descripcion: 'Consolidada'},
         status: [],
         id_consolidado_selected: null,
+        dialogVisible: false,
+        // filter
+        warehouse: null,
+        options: [],
+        list: [],
+        loading: false,
+        states: ["Alabama", "Alaska", "Arizona",
+        "Arkansas", "California", "Colorado",
+        "Connecticut", "Delaware", "Florida",
+        "Georgia", "Hawaii", "Idaho", "Illinois",
+        "Indiana", "Iowa", "Kansas", "Kentucky",
+        "Louisiana", "Maine", "Maryland",
+        "Massachusetts", "Michigan", "Minnesota",
+        "Mississippi", "Missouri", "Montana",
+        "Nebraska", "Nevada", "New Hampshire",
+        "New Jersey", "New Mexico", "New York",
+        "North Carolina", "North Dakota", "Ohio",
+        "Oklahoma", "Oregon", "Pennsylvania",
+        "Rhode Island", "South Carolina",
+        "South Dakota", "Tennessee", "Texas",
+        "Utah", "Vermont", "Virginia",
+        "Washington", "West Virginia", "Wisconsin",
+        "Wyoming"],
+        client_id: [],
+        pickerOptions: {
+          shortcuts: [{
+            text: '-Ult. semana',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '-Ult mes',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '-Ult. 3 meses',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit('pick', [start, end]);
+            }
+          }]
+        },
+        date_range: ''
     },
     methods: {
+      filterDocument(){
+        var filter = {
+          'warehouse' : this.warehouse,
+          'consignee_id' : this.client_id,
+          'dates' : this.date_range
+        }
+        listDocument(1, null, null, null, true, filter);
+        this.dialogVisible = false;
+      },
+      remoteMethod(query) {
+        if (query !== '') {
+          this.loading = true;
+          setTimeout(() => {
+            this.loading = false;
+            this.options = this.list.filter(item => {
+              return item.nombre_full.toLowerCase()
+                .indexOf(query.toLowerCase()) > -1;
+            });
+          }, 200);
+        } else {
+          this.options = [];
+        }
+      },
+      openFilter(){
+        var me = this;
+        axios.get('/consignee/getSelect').then(function(response) {
+            me.list = response.data.data;
+        }).catch(function(error) {
+            console.log(error);
+            toastr.warning('Error: -' + error);
+        });
+      },
         addStatusConsolidado: function(){
             var l = Ladda.create(document.querySelector('.ladda-button'));
             console.log(l);

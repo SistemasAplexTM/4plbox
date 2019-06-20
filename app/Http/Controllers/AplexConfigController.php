@@ -27,7 +27,8 @@ class AplexConfigController extends Controller
         array('icon' => 'road', 'route' => 'transport/aeropuertos', 'url' => true, 'desc' => 'layouts.airports', 'perm' => 'transport.index'),
         array('icon' => 'share-alt', 'route' => 'servicios.index', 'url' => false, 'desc' => 'layouts.services', 'perm' => 'servicios.index'),
         array('icon' => 'reply-all', 'route' => 'administracion/5', 'url' => true, 'desc' => 'layouts.type_boardings', 'perm' => 'administracion.index'),
-        array('icon' => 'shopping-bag', 'route' => 'administracion/6', 'url' => true, 'desc' => 'layouts.type_packagings', 'perm' => 'administracion.index')
+        array('icon' => 'shopping-bag', 'route' => 'administracion/6', 'url' => true, 'desc' => 'layouts.type_packagings', 'perm' => 'administracion.index'),
+        array('icon' => 'dollar-sign', 'route' => 'administracion/12', 'url' => true, 'desc' => 'layouts.cost', 'perm' => 'administracion.index')
       );
 
       $menu2 = array(

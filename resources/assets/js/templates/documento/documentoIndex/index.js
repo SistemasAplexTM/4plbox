@@ -80,7 +80,7 @@ function datatableDocument(t, tipo_doc_id, filtro){
       processing: true,
       serverSide: true,
       lengthMenu: [[20, 40, 50, 80, 100, 200, 500], [20, 40, 50, 80, 100, 200, 500]],
-      // order: [[1, "desc"]],
+      order: [[0, "desc"]],
       ajax: {
           "url": 'documento/all/documento_detalle',
           "data": function(d) {
@@ -91,10 +91,10 @@ function datatableDocument(t, tipo_doc_id, filtro){
       },
       columns: [{
           "render": numDocument,
-          name: (tipo_doc_id != 3) ? 'a.num_warehouse' : 'b.id',
+          name: (tipo_doc_id != 3) ? 'num_warehouse' : 'b.id',
       }, {
           data: 'fecha',
-          name: 'b.created_at',
+          name: 'fecha',
           width: 80
       }, {
           data: (tipo_doc_id != 3) ? 'cons_nomfull' : 'central_destino',
@@ -283,8 +283,7 @@ function numDocument(data, type, full, meta) {
             }
           }
       }
-
-      if(full.consolidado_status == 0){
+      if(full.consolidado_status === 0){
         group = ' onclick="agruparGuiasIndex('+full.detalle_id+')"';
       }
       classText = color_badget;

@@ -783,8 +783,6 @@ class DocumentoController extends Controller
         $show = null;
       }
       JavaScript::put(['show_agency' => $show]);
-      // print_r($data->value);
-      // exit();
       $filter = false;
       $where = [['b.deleted_at', null],
         ['e.deleted_at', null],
@@ -809,13 +807,8 @@ class DocumentoController extends Controller
               if($request->type == 2){
                 $where[] = ['a.num_warehouse', '<>', NULL ];
                 if($request->filter){
-                  // $where[] = ['a.num_warehouse', $request->filter ];
-                  $filter = true;
+                  $filter = $request->filter;
                 }
-                // echo '<pre>';
-                // print_r($where);
-                // echo '</pre>';
-                // exit();
               }else{
                 if($request->type == 4){
                   $where[] = ['a.num_warehouse', NULL ];
@@ -824,8 +817,11 @@ class DocumentoController extends Controller
               $sql = $this->getAllCourier($where, $filter);
             }
         }
-
-        return \DataTables::of($sql)->make(true);
+        // echo '<pre>';
+        // print_r($sql);
+        // echo '<pre>';
+        // exit();
+        return Datatables::of($sql)->make(true);
     }
 
     public function selectInput(Request $request, $tableName)
@@ -1670,6 +1666,7 @@ class DocumentoController extends Controller
                                       'b.num_warehouse',
                                       'b.num_guia',
                                       'b.volumen',
+                                      'c.nombre_full as ship_nomfull',
                                       DB::raw('CONCAT_WS(" ", c . primer_nombre, c . segundo_nombre, c . primer_apellido, c . segundo_apellido) as nom_ship'),
                                       'c.direccion as dir_ship',
                                       'c.telefono as tel_ship',
@@ -1677,6 +1674,7 @@ class DocumentoController extends Controller
                                       'e.nombre as ciu_ship',
                                       'f.descripcion as depto_ship',
                                       'pais.descripcion as pais_ship',
+                                      'd.nombre_full as cons_nomfull',
                                       DB::raw('CONCAT_WS(" ", d . primer_nombre, d . segundo_nombre, d . primer_apellido, d . segundo_apellido) as nom_cons'),
                                       'd.zip as zip_cons',
                                       'g.nombre as ciu_cons',

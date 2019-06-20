@@ -173,7 +173,11 @@
                                 </div>
                                 <div class="col-lg-12" id="tbl2" style="display:none">
                                     <ul class="nav nav-tabs" role="tablist">
-                    							    <li role="warehouses" class="active" @click="pendign"><a href="#courier" aria-controls="courier" role="tab" data-toggle="tab"><i class="fal fa-box-open"></i> COURIER <button class="btn btn-info btn-circle" title="Filtrar" onclick="listDocument(2, 1, null, null, true, '2019/03/01-2019/05/30');" data-toggle="tooltip" style="margin-left: 10px;font-size: 10px!important;width: 20px;height: 20px;"><i class="fa fa-filter" style="margin-right: 0;"></i></button></a></li>
+                    							    <li role="warehouses" class="active" @click="pendign"><a href="#courier" aria-controls="courier" role="tab" data-toggle="tab"><i class="fal fa-box-open"></i> COURIER
+                                        <button class="btn btn-info btn-circle" title="Filtrar" @click="dialogVisible = true" data-toggle="tooltip" style="margin-left: 10px;font-size: 10px!important;width: 20px;height: 20px;">
+                                          <i class="fa fa-filter" style="margin-right: 0;"></i>
+                                        </button>
+                                      </a></li>
                                       <li role="load" id="li-load" @click="pendign"><a href="#load" aria-controls="load" role="tab" data-toggle="tab"><i class="fal fa-truck-moving"></i> CARGA</a></li>
                                       <li role="pending" id="li-pending" @click="pendign"><a href="#pending" aria-controls="pending" role="tab" data-toggle="tab"><i class="fal fa-box"></i> PENDIENTES <span class="pending badge badge-primary ligth">{{ $pendientes->cantidad }}</span></a></li>
                     							  </ul>
@@ -300,6 +304,66 @@
                 </div>
             </div>
         </div>
+
+        {{-- MODAL FILTRAR DOCUMENTO --}}
+        <el-dialog
+          :visible.sync="dialogVisible"
+          width="25%" :append-to-body="true" @open="openFilter">
+          <span slot="title"><i class="fa fa-filter"></i> Buscar Documento</span>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="form-group">
+                <el-input size="medium" clearable placeholder="# Warehouse" v-model="warehouse"></el-input>
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="form-group">
+                <el-select
+                  size="medium" clearable
+                  v-model="client_id"
+                  filterable
+                  remote
+                  reserve-keyword
+                  placeholder="Buscar destinatario"
+                  :remote-method="remoteMethod"
+                  :loading="loading"
+                  loading-text="Cargando..."
+                  no-data-text="No hay datos">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.id"
+                    :label="item.nombre_full"
+                    :value="item.id">
+                  </el-option>
+                </el-select>
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="form-group">
+                <el-date-picker
+                  size="medium"
+                  v-model="date_range"
+                  type="daterange"
+                  align="right"
+                  unlink-panels
+                  range-separator="-"
+                  start-placeholder="Fecha de inicio"
+                  end-placeholder="Fecha de fin"
+                  :picker-options="pickerOptions"
+                  format="yyyy/MM/dd"
+                  value-format="yyyy-MM-dd">
+                </el-date-picker>
+              </div>
+            </div>
+          </div>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">Cancelar</el-button>
+            <el-button type="primary" @click="filterDocument" icon="el-icon-search">Filtrar</el-button>
+          </span>
+        </el-dialog>
+
+      </div>
+
     </div>
 @endsection
 

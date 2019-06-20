@@ -297,7 +297,7 @@ class ConsigneeController extends Controller
                 ['correo', $request->email],
                 ['agencia_id', $request->agencia_id]
             ])->first();
-            
+
             if (count($dataUser) > 0) {
                 $answer = array(
                     "valid"   => false,
@@ -454,6 +454,17 @@ class ConsigneeController extends Controller
             'items' => $tags,
         );
         return $answer;
+    }
+
+    public function getSelect(){
+      $data = Consignee::where([
+              ['deleted_at', null],
+          ])->get();
+          $answer = array(
+              'code' => 200,
+              'data' => $data
+          );
+        return \Response::json($answer);
     }
 
 }

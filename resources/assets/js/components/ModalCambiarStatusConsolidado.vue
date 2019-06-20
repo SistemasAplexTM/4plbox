@@ -88,7 +88,8 @@ export default {
       transportadora_id: null,
      },
      show: false,
-     defaultStatus: null
+     defaultStatus: null,
+
     };
   },
   props: ["document_id", "status"],

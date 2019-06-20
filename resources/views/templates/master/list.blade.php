@@ -58,7 +58,7 @@
         </div>
     </div>
 
-    <!-- MODAL CAMBIAR STATUS CONSOLIDADO -->
+    <!-- MODAL ASOCIAR CONSOLIDADO -->
     <div class="modal fade bs-example" id="modalCreateMaster" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" style="width:30%;">
             <div class="modal-content">

@@ -115,8 +115,6 @@ class MasterController extends Controller
             $piezas = $piezas_consolidado->cantidad;
           }
         }
-        echo $peso . ' - - '.$piezas;
-        exit();
         return view('templates.master.create', compact('master', 'consolidado_id', 'peso', 'piezas'));
     }
     public function update(Request $request, $master)

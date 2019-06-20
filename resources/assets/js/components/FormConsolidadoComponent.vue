@@ -117,7 +117,9 @@
 																						</div>
                                         </div>
 																				<div class="col-sm-12" v-show="!show_buttons" style="color: #E34724">
-																					<span>Hay valores declarados en cero (0) o valores que superan lo permitido para COURIER o no hay documentos ingresados</span></div>
+																					<span>Hay valores declarados en cero (0) o valores que superan lo permitido para COURIER o no hay documentos ingresados</span>
+																					<a @click="show_buttons = true" class="btn btn-info btn-sm">Deseo continuar</a>
+																				</div>
                                     </div>
                                 </div>
 																<div class="row">

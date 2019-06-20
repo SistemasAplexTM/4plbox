@@ -79,25 +79,6 @@ trait DocumentTrait
 
     public function getAllCourier($where, $filter)
     {
-      $dates = false;
-      if($filter['dates'] == '' and $filter['warehouse'] == '' and $filter['consignee_id'] == ''){
-        $fFin = strtotime('+1 day' , strtotime(date('Y-m-d')));
-        $fFin = date('Y-m-d' , $fFin);
-        $nuevafecha = strtotime('-8 day' , strtotime($fFin)) ;
-        $fIni = date('Y-m-d' , $nuevafecha);
-        $dates = array(
-          'inicio' => $fIni,
-          'fin' => $fFin,
-        );
-      }else{
-        if($filter['dates'] != ''){
-          $dates = array(
-            'inicio' => $filter['dates'][0],
-            'fin' => $filter['dates'][1],
-          );
-        }
-      }
-
         $label_1 = "<a style='float:right;cursor:pointer;color:red' title='Quitar' data-toggle='tooltip' onclick='removerDocumentoAgrupado(";
         $label_2 = ")'><i class='fa fa-times' style='font-size: 15px;'></i></a>";
 
@@ -153,7 +134,7 @@ trait DocumentTrait
           ->leftJoin('shipper AS d', 'b.shipper_id', 'd.id')
           ->leftJoin('agencia AS e', 'b.agencia_id', 'e.id')
           ->select(
-          	'a.id AS detalle_id',
+            'a.id AS detalle_id',
             'b.id',
           	'b.valor_libra',
           	'b.valor',
@@ -198,15 +179,6 @@ trait DocumentTrait
                   		LIMIT 1
                   	) AS estatus_color"),
             DB::raw('(SELECT
-                        Count(z.id)
-                      FROM
-                        documento_detalle AS z
-                      WHERE
-                        z.deleted_at IS NULL
-                        AND z.agrupado = a.id
-                        AND z.flag = 1
-                      ) AS agrupadas'),
-            DB::raw('(SELECT
                         z.num_warehouse
                       FROM
                         documento_detalle AS z
@@ -215,24 +187,81 @@ trait DocumentTrait
                         AND z.id = a.agrupado
                         AND z.flag = 0
                       ) AS padre'),
-              $qr_group,
-              'a.mintic',
-              DB::raw('"ciudad" AS ciudad')
+                      DB::raw('"ciudad" AS ciudad')
             )
             ->where($where)
             ->where('b.carga_courier', 1)
-            ->when($filter['warehouse'], function ($query, $data) {
-              return $query->where('a.num_warehouse', 'LIKE', "%".$data."");
-            })
-            ->when($dates, function ($query, $data) {
-              return $query->whereBetween('b.created_at', [$data['inicio'],$data['fin']]);
-            })
-            ->when($filter['consignee_id'], function ($query, $data) {
-              return $query->where('b.consignee_id', $data);
-              })
+            ->whereBetween('b.created_at', ['2019-05-25','2019-06-18'])
+            // ->when($filter, function ($query, $filter) {
+            //     return $query->whereBetween('b.created_at', ['2019-04-25','2019-05-30']);
+            //   }, function ($query) {
+            //     return $query->havingRaw("Date_format(b.created_at, '%Y-%m-%d') >= DATE_SUB('2019-04-25', INTERVAL DATEDIFF('2019-05-30', '2019-04-30') DAY)");
+            //   })
+            // ->havingRaw("Date_format(b.created_at, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)")
+            // ->whereRaw('(a.flag = 0 OR a.flag is null)')
             ->orderBy('a.agrupado', 'DESC')
             ->orderBy('a.flag', 'ASC')
-            ->orderBy('b.created_at', 'ASC');
+            ->orderBy('b.created_at', 'ASC')->get();
+
+            $ids = array();
+            foreach ($sql as $key => $value) {
+                $ids[] = $value->detalle_id;
+            }
+
+            // AGRUPADOS
+            $agrupados =  DB::table('documento_detalle AS z')
+            ->select(DB::raw('Count(z.id) AS cantidad'), 'z.agrupado')
+            ->where([
+              ['z.deleted_at', null],
+              ['z.flag', 1]
+            ])
+            ->whereIn('z.agrupado', $ids)
+            ->groupBy('z.agrupado')
+            ->get();
+
+            foreach ($sql as $key => $value) {
+                $sql[$key]->agrupadas = 0;
+                foreach ($agrupados as $keyA => $valA) {
+                  if($value->detalle_id === $valA->agrupado){
+                    $sql[$key]->agrupadas = $valA->cantidad;
+                  }
+                }
+            }
+
+            // GUIAS AGRUPADAS
+            $gAgrupadas =  DB::table('documento_detalle AS x')
+            ->select('x.agrupado', DB::raw('GROUP_CONCAT(
+              CONCAT(
+                x.num_warehouse,
+                "@",
+                x.peso,
+                "@",
+                x.valor,
+                "@",
+                x.id
+              )
+            ) AS groupy'))
+            ->where([
+              ['x.deleted_at', null],
+              ['x.flag', 1]
+            ])
+            ->whereIn('x.agrupado', $ids)
+            ->groupBy('x.agrupado')
+            ->get();
+
+            foreach ($sql as $key => $value) {
+                $sql[$key]->guias_agrupadas = null;
+                foreach ($gAgrupadas as $keyA => $valA) {
+                  if($value->detalle_id === $valA->agrupado){
+                    $sql[$key]->guias_agrupadas = $valA->groupy;
+                  }
+                }
+            }
+
+            // echo '<pre>';
+            // print_r($sql);
+            // echo '<pre>';
+            // exit();
         return $sql;
     }
 
