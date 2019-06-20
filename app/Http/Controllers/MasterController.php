@@ -7,6 +7,7 @@ use App\Master;
 use App\MasterDetalle;
 use App\DocumentoDetalle;
 use App\Documento;
+use App\MasterCostos;
 use App\MasterCargosAdicionales;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -538,7 +539,7 @@ class MasterController extends Controller
       }
     }
 
-    public function saveCostMaster(Request $request)
+    public function saveTaxMaster(Request $request)
     {
       DB::beginTransaction();
       try {
@@ -627,5 +628,19 @@ class MasterController extends Controller
     public function impuestosMaster($id)
     {
       return view('templates.master.impuestosMaster');
+    }
+
+    public function saveCostMaster(Request $request)
+    {
+      DB::beginTransaction();
+      try {
+        $cost = (new MasterCostos)->fill($request->all());
+        $cost->save();
+        DB::commit();
+        return array('code' => 200);
+      } catch (\Exception $e) {
+          DB::rollback();
+          return $e;
+      }
     }
 }

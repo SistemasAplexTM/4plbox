@@ -138,8 +138,8 @@
 				</div>
 		</div>
 
-    <!-- MODAL INGRESAR COSTOS MASTER -->
-		<div class="modal fade bs-example" id="modalMasterCost" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <!-- MODAL INGRESAR IMPUESTOS MASTER -->
+		<div class="modal fade bs-example" id="modalMasterTax" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog" style="width: 35%!important">
 						<div class="modal-content">
 								<div class="modal-header">
@@ -154,11 +154,11 @@
   										<div class="col-sm-6">
                         <label for="">Fecha liquidación</label>
                         <el-date-picker
-                          v-model="cost_date"
+                          v-model="tax_date"
                           type="date"
                           placeholder=""
                           value-format="yyyy-MM-dd"
-                          name="cost_date"
+                          name="tax_date"
                           size="medium">
                         </el-date-picker>
   										</div>
@@ -168,7 +168,7 @@
                           name="type"
                           placeholder="TRM actual"
                           prefix-icon="el-icon-edit"
-                          v-model="cost_trm"
+                          v-model="tax_trm"
                           size="medium">
                         </el-input>
                       </div>
@@ -179,19 +179,92 @@
                       <div class="col-sm-6">
                         <label for="">Peso</label>
                         <div>
-                          @{{ cost_weight }} Kl -
-                          @{{ cost_weight_lb }} Lb
+                          @{{ tax_weight }} Kl -
+                          @{{ tax_weight_lb }} Lb
                         </div>
   										</div>
                       <div class="col-sm-6">
                         <label for="">Rate</label>
-                        <div>@{{ cost_rate }}</div>
+                        <div>@{{ tax_rate }}</div>
   										</div>
                     </div>
 									</div>
 								</div>
 								<div class="modal-footer">
-                    <el-button type="primary" @click="saveCost()" :loading="cost_loading" size="medium">@{{ cost_text_save }}</el-button>
+                    <el-button type="primary" @click="saveTax()" :loading="text_loading" size="medium">@{{ text_save }}</el-button>
+                    <el-button size="medium" data-dismiss="modal">Cerrar</el-button>
+								</div>
+						</div>
+				</div>
+		</div>
+
+    <!-- MODAL COSTOS MASTER -->
+		<div class="modal fade bs-example" id="modalMasterCost" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" style="">
+						<div class="modal-content">
+								<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+										<h4 class="modal-title" id="myModalLabel">
+												<i class="fal fa-file-invoice-dollar"></i> Costos Master @{{ master }}
+										</h4>
+								</div>
+								<div class="modal-body">
+                  <div class="form-group">
+  									<div class="row">
+  										<div class="col-sm-6">
+                        <label for="">Seleccionar Costo</label>
+                        <el-select v-model="cost_costo_id" filterable
+                        clearable placeholder="Costos" size="medium">
+                          <el-option
+                            v-for="item in costos"
+                            :key="item.id"
+                            :label="item.nombre"
+                            :value="item.id">
+                          </el-option>
+                        </el-select>
+  										</div>
+                      <div class="col-sm-6">
+                        <label for="">Seleccionar Moneda</label>
+                        <el-select v-model="cost_moneda_id" filterable
+                        clearable placeholder="Monedas" size="medium" value-key="id"
+                        @change="setMoneda">
+                          <el-option
+                            v-for="item in monedas"
+                            :key="item.id"
+                            :label="item.descripcion"
+                            :value="item">
+                            <span style="float: left">@{{ item.descripcion }}</span>
+                            <span style="float: right; color: #8492a6; font-size: 13px">@{{ item.moneda }} @{{ item.simbolo }}</span>
+                          </el-option>
+                        </el-select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <label for="">Valor @{{ moneda }}</label>
+                        <el-input
+                          placeholder="Valor"
+                          prefix-icon="el-icon-edit"
+                          v-model="cost_valor"
+                          size="medium">
+                        </el-input>
+  										</div>
+                      <div class="col-sm-6">
+                        <label for="">TRM</label>
+                        <el-input
+                          placeholder="TRM"
+                          prefix-icon="el-icon-edit"
+                          v-model="cost_trm"
+                          size="medium">
+                        </el-input>
+  										</div>
+                    </div>
+									</div>
+								</div>
+								<div class="modal-footer">
+                    <el-button type="primary" @click="saveCost()" :loading="text_loading" size="medium">@{{ text_save }}</el-button>
                     <el-button size="medium" data-dismiss="modal">Cerrar</el-button>
 								</div>
 						</div>
