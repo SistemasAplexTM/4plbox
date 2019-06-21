@@ -19,5 +19,6 @@ class MasterCostos extends Model
         'descripcion',
         'valor',
         'trm',
+        'costo_gasto',
     ];
 }

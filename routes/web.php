@@ -104,6 +104,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('master/{id}/impuestosMaster', 'MasterController@impuestosMaster');
     Route::post('master/saveTaxMaster', 'MasterController@saveTaxMaster');
     Route::post('master/saveCostMaster', 'MasterController@saveCostMaster');
+    Route::get('master/getCosts/{master_id}', 'MasterController@getCosts');
+    Route::delete('master/deleteCost/{id}', 'MasterController@deleteCost');
 
     /*--- MODULO TRACKINGS ---*/
     Route::resource('tracking', 'TrackingController', ['except' => ['show', 'create', 'edit', 'update']]);

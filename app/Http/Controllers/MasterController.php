@@ -643,4 +643,52 @@ class MasterController extends Controller
           return $e;
       }
     }
+
+    public function getCosts($master_id)
+    {
+      DB::beginTransaction();
+      try {
+        $data = DB::table('master_costos AS a')
+        ->join('moneda AS b', 'a.moneda_id', 'b.id')
+        ->leftJoin('maestra_multiple AS c', 'a.costos_id', 'c.id')
+        ->select(
+            'a.id',
+            'a.master_id',
+            'a.moneda_id',
+            'a.costos_id',
+            'a.descripcion',
+            'a.valor',
+            'a.trm',
+            'a.costo_gasto',
+            'b.moneda',
+            'b.simbolo',
+            'c.nombre'
+        )
+        ->where([
+          ['a.deleted_at', null],
+          ['a.master_id', $master_id]
+        ])
+        ->orderBy('a.costo_gasto', 'ASC')
+        ->get();
+        DB::commit();
+        return array('data' => $data);
+      } catch (\Exception $e) {
+          DB::rollback();
+          return $e;
+      }
+    }
+
+    public function deleteCost($id)
+    {
+      DB::beginTransaction();
+      try {
+        $data = MasterCostos::findOrFail($id);
+        $data->delete();
+        DB::commit();
+        return array('code' => 200);
+      } catch (\Exception $e) {
+          DB::rollback();
+          return $e;
+      }
+    }
 }

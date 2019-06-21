@@ -117,6 +117,19 @@ var objVue = new Vue({
    this.getData();
    this.tax_date = this.getTime();
  },
+ watch:{
+   write:function(value){
+    if(value){
+      this.icon_cost = 'fa fa-hand-pointer';
+      this.icon_title = 'Seleccionar';
+      this.text_cost = 'Descripción';
+    }else{
+      this.icon_cost = 'fa fa-user-edit';
+      this.icon_title = 'Escribir';
+      this.text_cost = 'Seleccionar Costo o Gasto';
+    }
+   },
+ },
  data:{
    options: [],
    consolidado_id: null,
@@ -135,6 +148,7 @@ var objVue = new Vue({
    tax_weight_lb: 0,
    tax_edit: false,// PARA SABER SI EDITO O CREO EL COSTO DE LA MASTER
    //VARIABLES PARA COST
+   costo_gasto: '0',
    cost_trm: null,
    cost_valor: null,
    cost_descripcion: null,
@@ -143,8 +157,32 @@ var objVue = new Vue({
    costos: [],
    monedas: [],
    moneda: null,
+   costs: [],
+   write: false,
+   icon_cost: 'fa fa-user-edit',
+   icon_title: 'Escribir',
+   text_cost: 'Seleccionar Costo o Gasto',
  },
  methods: {
+   deleteCost(id){
+     let me = this;
+     axios.delete('master/deleteCost/' + id).then(function(response) {
+       me.getCosts();
+       toastr.success('Registro eliminado correctamente');
+     }).catch(function(error) {
+         console.log(error);
+         toastr.warning('Error: -' + error);
+     });
+   },
+   getCosts(){
+     let me = this;
+     axios.get('master/getCosts/' + this.id_master).then(function(response) {
+       me.costs = response.data.data;
+     }).catch(function(error) {
+         console.log(error);
+         toastr.warning('Error: -' + error);
+     });
+   },
    saveCost(){
      let me = this;
      var data = {
@@ -153,6 +191,8 @@ var objVue = new Vue({
        valor : this.cost_valor,
        moneda_id : this.cost_moneda_id.id,
        costos_id : this.cost_costo_id,
+       descripcion : this.cost_descripcion,
+       costo_gasto : this.costo_gasto,
      }
      me.text_loading = true;
      me.text_save = 'Guardando...';
@@ -160,6 +200,13 @@ var objVue = new Vue({
          if (response.data['code'] == 200) {
             me.text_loading = false;
             me.text_save = 'Continuar';
+            me.cost_trm = null;
+            me.cost_valor = null;
+            me.cost_moneda_id = null;
+            me.cost_costo_id = null;
+            me.cost_descripcion = null;
+            me.costo_gasto = '0';
+            me.getCosts();
             toastr.success('Registro guardado correctamente');
          }else{
            me.text_loading = false;
@@ -195,6 +242,8 @@ var objVue = new Vue({
          console.log(error);
          toastr.warning('Error: -' + error);
      });
+
+     this.getCosts();
    },
    saveTax(){
      let me = this;
