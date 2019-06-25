@@ -24,6 +24,7 @@
     "element-ui": "^2.5.4",
     "imagemin": "^5.3.1",
     "sweetalert2": "^7.26.26",
+    "v-money": "^0.8.1",
     "vee-validate": "^2.1.1",
     "vue-form-generator": "^2.3.2",
     "vue-form-wizard": "^0.8.4",

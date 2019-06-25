@@ -164,6 +164,9 @@ var objVue = new Vue({
    text_cost: 'Seleccionar Costo o Gasto',
  },
  methods: {
+   formatNumber(data){
+     return new Intl.NumberFormat("en-IN").format(data);
+   },
    deleteCost(id){
      let me = this;
      axios.delete('master/deleteCost/' + id).then(function(response) {

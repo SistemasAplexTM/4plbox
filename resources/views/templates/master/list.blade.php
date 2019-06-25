@@ -309,8 +309,8 @@
                                     <el-tag :type="(item.costo_gasto == '1') ? 'warning' : ''" size="mini">@{{ (item.costo_gasto == '1') ? 'Gasto' : 'Costo' }}</el-tag>
                                     @{{ (item.descripcion != null) ? item.descripcion : item.nombre }}
                                 </td>
-                                <td><small style="color: #adadad;">@{{ item.moneda }} @{{ item.simbolo }}</small> @{{ item.valor }}</td>
-                                <td>@{{ item.trm }}</td>
+                                <td><small style="color: #adadad;">@{{ item.moneda }} @{{ item.simbolo }}</small> @{{ formatNumber(item.valor) }}</td>
+                                <td>$ @{{ formatNumber(item.trm) }}</td>
                                 <td style="width: 10%;">
                                   <a @click="deleteCost(item.id)" style="color:#E34724;" data-toggle="tooltip" title="Eliminar">
                                   <i class="fal fa-trash-alt fa-lg"></i>

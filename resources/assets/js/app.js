@@ -19,17 +19,14 @@ import Element from 'element-ui'
 import locale from 'element-ui/lib/locale/lang/en'
 import Spinner from 'vue-spinkit'
 import 'element-ui/lib/theme-chalk/index.css';
+import money from 'v-money'
+
+Vue.use(money, {precision: 4})
 // Localize takes the locale object as the second argument (optional) and merges it.
 Validator.localize('es', es);
 // Install the Plugin.
 Vue.use(VeeValidate);
-// Vue.use(Select);
-// Vue.use(Option);
-// Vue.use(Input);
-// Vue.use(InputNumber);
-// Vue.use(Button);
-// Vue.use(Table);
-// Vue.use(TableColumn);
+
 Vue.use(Element, {locale})
 
 import VueGoodWizard from 'vue-good-wizard';
