@@ -12,6 +12,7 @@ class CasilleroApiController extends Controller
 {
     public function getAllWarehouse($user = null, $idStatus = null)
     {
+     // DB::connection()->enableQueryLog();
       $columns = ['p.id',
       // 'p.codigo AS num_warehouse',
       'q.descripcion',
@@ -53,8 +54,8 @@ class CasilleroApiController extends Controller
             ) AS f"), 'f.id_last_status', 'p.id'
         )
       ->select(
-        ($idStatus != 'count') ? $columns : $count
-        )->when($idStatus, function ($query, $idStatus) {
+        ($idStatus != 'count') ? $columns : $count)
+        ->when($idStatus, function ($query, $idStatus) {
           if ($idStatus != 'count') {
             if ($idStatus == 'transito') {
               return $query->where([["p.status_id", "<>", 7],["p.status_id", "<>", 2]]);
@@ -65,7 +66,7 @@ class CasilleroApiController extends Controller
           }
         })
         ->get();
-
+        // return DB::getQueryLog();
         $answer = array(
           "data" => $data,
           "code"  => 200,
@@ -105,19 +106,16 @@ class CasilleroApiController extends Controller
             'u.url_rastreo AS transportadora_url_rastreo',
             'a.num_transportadora AS transportadora_guia',
             DB::raw("(SELECT GROUP_CONCAT(tracking.codigo) FROM tracking WHERE tracking.documento_detalle_id = c.id) as tracking")
-          )
-          ->where([
+          )->where([
               ['c.deleted_at', null],
               ['b.view_client', 1],
-          ])
-          ->where(function ($query) use ($idStatus, $warehouse) {
+          ])->where(function ($query) use ($idStatus, $warehouse) {
               if($idStatus != null && $idStatus != 'null'){
                 $query->where("a.status_id", $idStatus);
               }else{
                 $query->whereRaw("(c.num_warehouse = '" . $warehouse . "')");
               }
-          })
-          ->groupBy(
+          })->groupBy(
             'a.id',
             'c.id',
             'b.descripcion',
@@ -166,6 +164,18 @@ class CasilleroApiController extends Controller
       return $answer;
     }
 
+    public function getCantPrealert($id_agencia,$consignee_id)
+    {
+      $data = Prealerta::leftJoin('consignee as b', 'prealerta.consignee_id', 'b.id')
+      ->join('agencia as c', 'prealerta.agencia_id', 'c.id')
+      ->select('prealerta.*', 'b.nombre_full as consignee', 'c.descripcion as agencia')
+      ->where([['prealerta.deleted_at', NULL],['prealerta.recibido', 0],['prealerta.agencia_id', $id_agencia],['prealerta.consignee_id', $consignee_id]])
+      ->count();
+
+      $answer = ['code' => 200, 'data' => $data];
+      return $answer;
+    }
+
     public function setPrealert(Request $request)
     {
       Prealerta::insert($request->all());
@@ -183,6 +193,7 @@ class CasilleroApiController extends Controller
       $data = Consignee::find($id);
       return ['code' => 200, 'data' => $data];
     }
+
     public function getContacts($id)
     {
       $data = Consignee::find($id);
@@ -191,8 +202,9 @@ class CasilleroApiController extends Controller
 
     public function setContacts(Request $request, $id)
     {
-      return $request->all();
-      $data = Consignee::find($id);
+      $data = Consignee::where('id', $id)->update([
+       'contactos_json' => json_encode(["campos" => [$request->all()]])
+      ]);
       return ['code' => 200, 'data' => $data];
     }
 
