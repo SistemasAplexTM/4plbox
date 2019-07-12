@@ -691,4 +691,15 @@ class MasterController extends Controller
           return $e;
       }
     }
+
+    public function generateXml($id)
+    {
+      $data = array('ano' => '220');
+      $content = view('templates.master.fileXml', compact('data'))->render();
+      \File::put(storage_path().'/file.xml', $content);
+      return response()->make($content, 200)
+      ->header('Content-Type', 'application/xml')
+      ->header('Content-Disposition', 'attachment; filename="Dmuisca.xml"');
+
+    }
 }

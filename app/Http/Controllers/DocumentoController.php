@@ -600,7 +600,7 @@ class DocumentoController extends Controller
                 foreach ($detalle as $val) {
                     $paquete = '';
                     if(env('APP_CLIENT') != 'jyg'){
-                      $paquete = $val->paquete;
+                      $paquete = 'P'.$val->paquete;
                     }
                     // $num_guia = trim($prefijo . $data->consecutivo . $paquete . $prefijoPais);
                     $num_guia = trim($prefijo . $data->consecutivo);
@@ -984,7 +984,7 @@ class DocumentoController extends Controller
                 // PARA JYG QUITARLE EL UNO AL NUMERO DE GUIA Y WRH
                 $paquete = '';
                 if(env('APP_CLIENT') != 'jyg'){
-                  $paquete = (count($documentoD) + 1);
+                  $paquete = 'P'.(count($documentoD) + 1);
                 }
 
                 /* GENERAR NUMERO DE GUIA */

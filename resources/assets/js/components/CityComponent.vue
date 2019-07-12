@@ -21,7 +21,7 @@
         :label="item.name"
         :value="item">
         <span style="float: left">{{ item.name }}</span>
-        <span style="float: right; color: #8492a6; font-size: 13px">{{ item.prefijo_pais }}</span>
+        <span style="float: right; color: #8492a6; font-size: 13px"><small>{{ item.deptos }} / {{ item.prefijo_pais }}</small></span>
       </el-option>
     </el-select>
   </div>

@@ -106,6 +106,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('master/saveCostMaster', 'MasterController@saveCostMaster');
     Route::get('master/getCosts/{master_id}', 'MasterController@getCosts');
     Route::delete('master/deleteCost/{id}', 'MasterController@deleteCost');
+    Route::get('master/generateXml/{id}', 'MasterController@generateXml');
 
     /*--- MODULO TRACKINGS ---*/
     Route::resource('tracking', 'TrackingController', ['except' => ['show', 'create', 'edit', 'update']]);
@@ -442,11 +443,11 @@ Route::post('shipper/existEmail', 'ShipperController@existEmail');
 /* VALIDAR USERNAME */
 Route::get('validarUsername/{element}', 'UserController@validarUsername');
 
-/*--- CASILLERO ---*/
-Route::post('casillero/validar/validar_email', 'CasilleroController@validar_email');
-Route::get('casillero/vueSelectCiudad/{term}', 'CasilleroController@buscar_ciudad');
-Route::post('casillero', 'CasilleroController@store');
-Route::get('casillero/{id}', 'CasilleroController@index');
+/*--- REGISTRO CASILLERO ---*/
+Route::post('registro/validar/validar_email', 'CasilleroController@validar_email');
+Route::get('registro/vueSelectCiudad/{term}', 'CasilleroController@buscar_ciudad');
+Route::post('registro', 'CasilleroController@store');
+Route::get('registro/{id}', 'CasilleroController@index');
 
 Route::get('obtener_contactos/{id}/{table}', 'ShipperController@getContactos');
 Route::post('agregar_contactos/{id}/{table}', 'ShipperController@storeContacto');

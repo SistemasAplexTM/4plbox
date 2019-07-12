@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Consignee;
 use App\Ciudad;
 use App\User;
+use App\Agencia;
 use App\AplexConfig;
 
 class CasilleroController extends Controller
@@ -59,13 +60,25 @@ class CasilleroController extends Controller
             $data->save();
             // PO_BOX
             $agencia = $request->agencia_id;
-            $caracteres = strlen($agencia);
+            $pref = '';
+            $prefijo_pobox = Agencia::select('prefijo_pobox')->where('id', $request->agencia_id)->first();
+            if($prefijo_pobox->prefijo_pobox == null){
+               $pref = $request->agencia_id;
+            }else{
+                $pref = $prefijo_pobox->prefijo_pobox;
+            }
+            $caracteres      = strlen($pref);
+
+            // $caracteres = strlen($agencia);
             $sumarCaracteres =  $caracteres - $caracteres;
             $caracter = '';
-            for ($i=0; $i <= $sumarCaracteres ; $i++) {
-                $caracter = $caracter . '0';
+            if($prefijo_pobox->prefijo_pobox == null){
+              for ($i=0; $i <= $sumarCaracteres ; $i++) {
+                  $caracter = $caracter . '0';
+              }
             }
-            $po_box = $caracter . $agencia . '-' . $data->id;
+
+            $po_box = $caracter . $pref . '-' . $data->id;
             Consignee::where('id', $data->id)->update(['po_box' =>  $po_box]);
             // REGISTRAR USUARIO
             $user = User::create([

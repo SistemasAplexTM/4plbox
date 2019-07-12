@@ -117,7 +117,6 @@ export default {
     let me = this;
     this.form = {
      estatus_id: null,
-     observacion: null,
      warehouse: null,
      transportadora: [],
      transportadora_id: null

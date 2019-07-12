@@ -593,7 +593,7 @@
                                               <div class="col-sm-2">
                                                       <div class="form-group"  id="Valpeso">
                                                           <label class="peso">@lang('documents.weight')</label>
-                                                          <input type="number" class="form-control text-write" onkeyup="deleteError($(this).parent());" id="peso" name="peso" maxlength="4" placeholder="Lb" value="">
+                                                          <input type="number" class="form-control text-write" onkeyup="deleteError($(this).parent());removeBtnBlock(this.value)" id="peso" name="peso" maxlength="4" placeholder="Lb" value="">
                                                           <small class="help-block" id="Hpeso" style="display: none">@lang('documents.these_data_are_required')</small>
                                                       </div>
                                               </div>

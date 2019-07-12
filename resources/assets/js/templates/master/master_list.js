@@ -43,6 +43,7 @@ $(document).ready(function () {
                         var btn_delete = '<li style="color:#E34724;"><a onclick=\"modalEliminar()\"><i class="fal fa-trash-alt fa-lg"></i> Eliminar</a></li>';
                     }
                     var btn_cost = '<li><a onclick="createCost('+ full.id +', \''+ full.num_master +'\', \''+ full.peso +'\', \''+ full.peso_kl +'\', \''+ full.tarifa +'\')"><i class="fal fa-file-invoice-dollar fa-lg"></i> Crear Costos</a></li>';
+                    var btn_xml = '<li><a href="master/generateXml/'+full.id+'" target="_blank"><i class="fal fa-file-export fa-lg"></i> Generar XML</a></li>';
                     if(full.consolidado_id != null){
                       btn_consolidado = "<li class='divider'></li>" +
                          "<li><a href='impresion-documento/" +full.consolidado_id +"/consolidado' target='_blank'> <spam class='fa fa-print'></spam> Consolidado</a></li>" +
@@ -56,7 +57,9 @@ $(document).ready(function () {
                        "<ul class='dropdown-menu dropdown-menu-right pull-right'>" +
                         btn_edit +
                         btn_hawb +
+                        '<li role="separator" class="divider"></li>' +
                         btn_cost +
+                        btn_xml +
                         '<li role="separator" class="divider"></li>' +
                         btn_delete +
                          "</ul></div>";
@@ -164,9 +167,6 @@ var objVue = new Vue({
    text_cost: 'Seleccionar Costo o Gasto',
  },
  methods: {
-   formatNumber(data){
-     return new Intl.NumberFormat("en-IN").format(data);
-   },
    deleteCost(id){
      let me = this;
      axios.delete('master/deleteCost/' + id).then(function(response) {

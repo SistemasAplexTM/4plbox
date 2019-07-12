@@ -131,6 +131,12 @@ $(function() {
     });
 });
 
+function removeBtnBlock(el){
+  if(el != ''){
+    objVue.disabled_client = true;
+  }
+}
+
 function datatableDetail(){
     if ($.fn.DataTable.isDataTable('#whgTable')) {
       var table = $('#whgTable').DataTable();

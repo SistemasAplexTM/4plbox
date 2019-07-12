@@ -16,7 +16,7 @@
                 </div>
                 <div class="form-group">
                   <label>Ingrese correo</label>
-                  <input v-model="email" type="email" name="email" id="email" class="form-control" placeholder="Correo">
+                  <input v-model="email_p" type="email" name="email_p" id="email_p" class="form-control" placeholder="Correo">
                 </div>
                 <div class="form-group">
                     <button type="button" class="ladda-button btn btn-primary btn-sm" data-style="expand-right" name="button" @click="save">Guardar <span class="ladda-spinner"></span></button>
@@ -33,7 +33,7 @@ export default {
   name: 'PayPal',
   data(){
     return{
-      email: '',
+      email_p: '',
       actived: null
     }
   },
@@ -43,7 +43,7 @@ export default {
       var l = $('.ladda-button').ladda();
       l.ladda( 'start' );
       axios.post('../../config/agency_paypal_' + this.agency_id +'/type/false', {
-        email: this.email,
+        email: this.email_p,
         actived: this.actived
       }).then(response => {
         toastr.success('Registro creado correctamente.');
@@ -58,7 +58,7 @@ export default {
       axios.get('../../getConfig/agency_paypal_' + this.agency_id).then(({data}) => {
         if (data.value) {
           var data = JSON.parse(data.value)
-          this.email = data.email
+          this.email_p = data.email
           this.actived = data.actived
         }
       });
