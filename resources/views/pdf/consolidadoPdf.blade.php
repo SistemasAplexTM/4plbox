@@ -103,6 +103,7 @@
         font-size: 9px;
     }
 </style>
+
 <!--<a class="btn"  onclick="print()" id="imprimir" ><i class="icon-print"></i> Imprimir Chrome</a>-->
 <table  cellspacing="0" cellpadding="0" id="tableContainer" border="0">
     <tr>
@@ -182,7 +183,7 @@
         $cont = 0;
         ?>
         @if($detalleConsolidado)
-        {{ var_dump($detalleConsolidado) }}
+        {{-- {{ var_dump($detalleConsolidado) }} --}}
             @foreach($detalleConsolidado as $val)
             <?php
                 $shipper_json = '';
@@ -209,13 +210,13 @@
 
                     </td>
                     <td>
-                        <div id="remitente">{{ ($val->shipper_json) ? $shipper_json->nombre : $val->nom_ship }}</div>
+                        <div id="remitente">{{ ($val->shipper_json) ? $shipper_json->nombre : $val->ship_nomfull }}</div>
                         <div id="remitente">{{ ($val->shipper_json) ? $shipper_json->direccion : $val->dir_ship }}</div>
                         <div id="remitente">{{ ($val->shipper_json) ? $shipper_json->telefono : $val->tel_ship }}</div>
                         <div id="remitente">{{ ($val->shipper_json) ? $shipper_json->ciudad : $val->ciu_ship }} / {{ ($val->shipper_json) ? $shipper_json->pais : $val->pais_ship }}</div>
                     </td>
                     <td>
-                        <div id="destinatario">{{ ($val->consignee_json) ? $consignee_json->nombre : $val->nom_cons }}</div>
+                        <div id="destinatario">{{ ($val->consignee_json) ? $consignee_json->nombre : $val->cons_nomfull }}</div>
                         <div id="destinatario">{{ ($val->consignee_json) ? $consignee_json->direccion : $val->dir_cons }}</div>
                         <div id="destinatario">{{ ($val->consignee_json) ? $consignee_json->telefono : $val->tel_cons }}</div>
                         <div id="destinatario">{{ ($val->consignee_json) ? $consignee_json->ciudad : $val->ciu_cons }} / {{ ($val->consignee_json) ? $consignee_json->pais : $val->pais_cons }}</div>

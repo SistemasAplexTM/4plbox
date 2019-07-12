@@ -1,4 +1,7 @@
 $(document).ready(function () {
+  $('#modalMasterCost').on('show.bs.modal', function() {
+    objVue.getDataSelectCost();
+  });
     $('#tbl-master').DataTable({
         ajax: 'master/all/reg',
         "order": [[ 2, "desc" ]],
@@ -39,7 +42,8 @@ $(document).ready(function () {
                     if (permission_delete) {
                         var btn_delete = '<li style="color:#E34724;"><a onclick=\"modalEliminar()\"><i class="fal fa-trash-alt fa-lg"></i> Eliminar</a></li>';
                     }
-                    var btn_cost = '<li><a onclick="createCost('+ full.id +', \''+ full.num_master +'\', \''+ full.peso +'\', \''+ full.peso_kl +'\', \''+ full.tarifa +'\', \''+ full.trm +'\', \''+ full.fecha_liquidacion +'\')"><i class="fal fa-file-invoice-dollar fa-lg"></i> Crear Costos</a></li>';
+                    var btn_cost = '<li><a onclick="createCost('+ full.id +', \''+ full.num_master +'\', \''+ full.peso +'\', \''+ full.peso_kl +'\', \''+ full.tarifa +'\')"><i class="fal fa-file-invoice-dollar fa-lg"></i> Crear Costos</a></li>';
+                    var btn_xml = '<li><a href="master/generateXml/'+full.id+'" target="_blank"><i class="fal fa-file-export fa-lg"></i> Generar XML</a></li>';
                     if(full.consolidado_id != null){
                       btn_consolidado = "<li class='divider'></li>" +
                          "<li><a href='impresion-documento/" +full.consolidado_id +"/consolidado' target='_blank'> <spam class='fa fa-print'></spam> Consolidado</a></li>" +
@@ -53,7 +57,9 @@ $(document).ready(function () {
                        "<ul class='dropdown-menu dropdown-menu-right pull-right'>" +
                         btn_edit +
                         btn_hawb +
+                        '<li role="separator" class="divider"></li>' +
                         btn_cost +
+                        btn_xml +
                         '<li role="separator" class="divider"></li>' +
                         btn_delete +
                          "</ul></div>";
@@ -82,19 +88,24 @@ function createHouse(id, master) {
     objVue.createHouseAwb(id, master);
 }
 
-function createCost(id, master, peso, peso_kl, tarifa, trm, fecha_liquidacion) {
+function createTax(id, master, peso, peso_kl, tarifa, trm, fecha_liquidacion) {
     objVue.id_master = id;
     objVue.master = master;
-    objVue.cost_weight_lb = peso;
-    objVue.cost_weight = peso_kl;
-    objVue.cost_rate = tarifa;
-    objVue.cost_trm = (trm !== null && trm !== "null" && trm !== '') ? trm : null;
-    objVue.cost_date = (fecha_liquidacion !== null && fecha_liquidacion !== "null" && fecha_liquidacion !== '') ? fecha_liquidacion : objVue.getTime();
-    objVue.cost_edit = false;
+    objVue.tax_weight_lb = peso;
+    objVue.tax_weight = peso_kl;
+    objVue.tax_rate = tarifa;
+    objVue.tax_trm = (trm !== null && trm !== "null" && trm !== '') ? trm : null;
+    objVue.tax_date = (fecha_liquidacion !== null && fecha_liquidacion !== "null" && fecha_liquidacion !== '') ? fecha_liquidacion : objVue.getTime();
+    objVue.tax_edit = false;
     if (trm !== null && trm !== "null" && trm !== '') {
-      objVue.cost_edit = true;
+      objVue.tax_edit = true;
     }
-    $('#modalMasterCost').modal('show');
+    $('#modalMasterTax').modal('show');
+}
+
+function createCost(id, master, peso, peso_kl, tarifa) {
+  objVue.id_master = id;
+  $('#modalMasterCost').modal('show');
 }
 
 function createLabel(id, master) {
@@ -107,7 +118,20 @@ var objVue = new Vue({
  el: '#master_list',
  mounted(){
    this.getData();
-   this.cost_date = this.getTime();
+   this.tax_date = this.getTime();
+ },
+ watch:{
+   write:function(value){
+    if(value){
+      this.icon_cost = 'fa fa-hand-pointer';
+      this.icon_title = 'Seleccionar';
+      this.text_cost = 'Descripción';
+    }else{
+      this.icon_cost = 'fa fa-user-edit';
+      this.icon_title = 'Escribir';
+      this.text_cost = 'Seleccionar Costo o Gasto';
+    }
+   },
  },
  data:{
    options: [],
@@ -116,43 +140,140 @@ var objVue = new Vue({
    id_master: null,
    master: null,
    type: 'COURIER',
+   text_loading: false,
+   text_save: 'Continuar',
+   // VARIALBES PARA TAX
    loading: false,
-   cost_date: null,
+   tax_date: null,
+   tax_trm: null,
+   tax_rate: 0,
+   tax_weight: 0,
+   tax_weight_lb: 0,
+   tax_edit: false,// PARA SABER SI EDITO O CREO EL COSTO DE LA MASTER
+   //VARIABLES PARA COST
+   costo_gasto: '0',
    cost_trm: null,
-   cost_rate: 0,
-   cost_weight: 0,
-   cost_weight_lb: 0,
-   cost_loading: false,
-   cost_edit: false,// PARA SABER SI EDITO O CREO EL COSTO DE LA MASTER
-   cost_text_save: 'Continuar',
+   cost_valor: null,
+   cost_descripcion: null,
+   cost_moneda_id: null,
+   cost_costo_id: null,
+   costos: [],
+   monedas: [],
+   moneda: null,
+   costs: [],
+   write: false,
+   icon_cost: 'fa fa-user-edit',
+   icon_title: 'Escribir',
+   text_cost: 'Seleccionar Costo o Gasto',
  },
  methods: {
+   deleteCost(id){
+     let me = this;
+     axios.delete('master/deleteCost/' + id).then(function(response) {
+       me.getCosts();
+       toastr.success('Registro eliminado correctamente');
+     }).catch(function(error) {
+         console.log(error);
+         toastr.warning('Error: -' + error);
+     });
+   },
+   getCosts(){
+     let me = this;
+     axios.get('master/getCosts/' + this.id_master).then(function(response) {
+       me.costs = response.data.data;
+     }).catch(function(error) {
+         console.log(error);
+         toastr.warning('Error: -' + error);
+     });
+   },
    saveCost(){
      let me = this;
      var data = {
        master_id : this.id_master,
-       cost_date : this.cost_date,
-       cost_trm : this.cost_trm,
-       cost_rate : this.cost_rate,
-       cost_weight : this.cost_weight,
-       cost_edit : this.cost_edit,
+       trm : this.cost_trm,
+       valor : this.cost_valor,
+       moneda_id : this.cost_moneda_id.id,
+       costos_id : this.cost_costo_id,
+       descripcion : this.cost_descripcion,
+       costo_gasto : this.costo_gasto,
      }
-     me.cost_loading = true;
-     me.cost_text_save = 'Guardando...';
+     me.text_loading = true;
+     me.text_save = 'Guardando...';
      axios.post('master/saveCostMaster', data).then(function(response) {
          if (response.data['code'] == 200) {
-            me.cost_loading = false;
-            me.cost_text_save = 'Continuar';
+            me.text_loading = false;
+            me.text_save = 'Continuar';
+            me.cost_trm = null;
+            me.cost_valor = null;
+            me.cost_moneda_id = null;
+            me.cost_costo_id = null;
+            me.cost_descripcion = null;
+            me.costo_gasto = '0';
+            me.getCosts();
             toastr.success('Registro guardado correctamente');
-            location.href = "master/"+ me.id_master +"/impuestosMaster";
          }else{
-           me.cost_loading = false;
-           me.cost_text_save = 'Continuar';
+           me.text_loading = false;
+           me.text_save = 'Continuar';
          }
      }).catch(function(error) {
          console.log(error);
-         me.cost_loading = false;
-         me.cost_text_save = 'Continuar';
+         me.text_loading = false;
+         me.text_save = 'Continuar';
+         toastr.error("Error." + error, {
+             timeOut: 50000
+         });
+     });
+   },
+   setMoneda(data){
+     this.moneda = null;
+     if(data != ''){
+       this.moneda = '(' + data.moneda + ' ' + data.simbolo + ')';
+     }
+   },
+   getDataSelectCost(){
+     let me = this;
+     axios.get('administracion/12/all').then(function(response) {
+       me.costos = response.data.data;
+     }).catch(function(error) {
+         console.log(error);
+         toastr.warning('Error: -' + error);
+     });
+
+     axios.get('moneda/all').then(function(response) {
+       me.monedas = response.data.data;
+     }).catch(function(error) {
+         console.log(error);
+         toastr.warning('Error: -' + error);
+     });
+
+     this.getCosts();
+   },
+   saveTax(){
+     let me = this;
+     var data = {
+       master_id : this.id_master,
+       tax_date : this.tax_date,
+       tax_trm : this.tax_trm,
+       tax_rate : this.tax_rate,
+       tax_weight : this.tax_weight,
+       tax_edit : this.tax_edit,
+     }
+     me.tax_loading = true;
+     me.tax_text_save = 'Guardando...';
+     axios.post('master/saveTaxMaster', data).then(function(response) {
+         if (response.data['code'] == 200) {
+            me.tax_loading = false;
+            me.tax_text_save = 'Continuar';
+            toastr.success('Registro guardado correctamente');
+            location.href = "master/"+ me.id_master +"/impuestosMaster";
+         }else{
+           me.tax_loading = false;
+           me.tax_text_save = 'Continuar';
+         }
+     }).catch(function(error) {
+         console.log(error);
+         me.tax_loading = false;
+         me.tax_text_save = 'Continuar';
          toastr.error("Error." + error, {
              timeOut: 50000
          });

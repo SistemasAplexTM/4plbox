@@ -236,6 +236,9 @@ Vue.mixin({
             let val = (value / 1).toFixed(2).replace('.', ',')
             return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
         },
+        formatNumber(data){
+          return new Intl.NumberFormat("en-IN").format(data);
+        },
         getTime() {
             var d = new Date,
                 dformat = [d.getFullYear(), (d.getMonth() + 1).padLeft(),

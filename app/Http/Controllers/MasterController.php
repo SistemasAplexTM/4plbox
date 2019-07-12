@@ -7,6 +7,7 @@ use App\Master;
 use App\MasterDetalle;
 use App\DocumentoDetalle;
 use App\Documento;
+use App\MasterCostos;
 use App\MasterCargosAdicionales;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -115,8 +116,6 @@ class MasterController extends Controller
             $piezas = $piezas_consolidado->cantidad;
           }
         }
-        echo $peso . ' - - '.$piezas;
-        exit();
         return view('templates.master.create', compact('master', 'consolidado_id', 'peso', 'piezas'));
     }
     public function update(Request $request, $master)
@@ -540,7 +539,7 @@ class MasterController extends Controller
       }
     }
 
-    public function saveCostMaster(Request $request)
+    public function saveTaxMaster(Request $request)
     {
       DB::beginTransaction();
       try {
@@ -629,5 +628,78 @@ class MasterController extends Controller
     public function impuestosMaster($id)
     {
       return view('templates.master.impuestosMaster');
+    }
+
+    public function saveCostMaster(Request $request)
+    {
+      DB::beginTransaction();
+      try {
+        $cost = (new MasterCostos)->fill($request->all());
+        $cost->save();
+        DB::commit();
+        return array('code' => 200);
+      } catch (\Exception $e) {
+          DB::rollback();
+          return $e;
+      }
+    }
+
+    public function getCosts($master_id)
+    {
+      DB::beginTransaction();
+      try {
+        $data = DB::table('master_costos AS a')
+        ->join('moneda AS b', 'a.moneda_id', 'b.id')
+        ->leftJoin('maestra_multiple AS c', 'a.costos_id', 'c.id')
+        ->select(
+            'a.id',
+            'a.master_id',
+            'a.moneda_id',
+            'a.costos_id',
+            'a.descripcion',
+            'a.valor',
+            'a.trm',
+            'a.costo_gasto',
+            'b.moneda',
+            'b.simbolo',
+            'c.nombre'
+        )
+        ->where([
+          ['a.deleted_at', null],
+          ['a.master_id', $master_id]
+        ])
+        ->orderBy('a.costo_gasto', 'ASC')
+        ->get();
+        DB::commit();
+        return array('data' => $data);
+      } catch (\Exception $e) {
+          DB::rollback();
+          return $e;
+      }
+    }
+
+    public function deleteCost($id)
+    {
+      DB::beginTransaction();
+      try {
+        $data = MasterCostos::findOrFail($id);
+        $data->delete();
+        DB::commit();
+        return array('code' => 200);
+      } catch (\Exception $e) {
+          DB::rollback();
+          return $e;
+      }
+    }
+
+    public function generateXml($id)
+    {
+      $data = array('ano' => '220');
+      $content = view('templates.master.fileXml', compact('data'))->render();
+      \File::put(storage_path().'/file.xml', $content);
+      return response()->make($content, 200)
+      ->header('Content-Type', 'application/xml')
+      ->header('Content-Disposition', 'attachment; filename="Dmuisca.xml"');
+
     }
 }

@@ -160,7 +160,7 @@ var objVue = new Vue({
                   var l = Ladda.create(document.querySelector('.ladda-button'));
                   l.start();
                     let me = this;
-                    axios.post('../casillero',{
+                    axios.post('../registro',{
                         'agencia_id': this.agencia_id,
                         // 'listId': this.listId.id_list,
                         'localizacion_id': this.localizacion_id,

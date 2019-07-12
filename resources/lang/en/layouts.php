@@ -69,6 +69,7 @@ return [
     'invoices'  =>'Invoices',
     'report'  =>'Report',
     'employees'  =>'Employees',
+    'cost'  =>'Cost',
 
 
 ];

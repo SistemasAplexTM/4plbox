@@ -561,10 +561,10 @@
                           <td>
                             <div class="form-group" :class="{'has-error': errors.has('tarifa') }">
                               <div class="input-group">
-                                <input v-validate="{ rules: { required: !this.min} }" name="tarifa" v-model="tarifa" type="number" class="form-control" :readonly="min">
+                                <input v-validate="{ rules: { required: !this.min} }" name="tarifa" v-model="tarifa" type="number" class="form-control">
                                 <span class="input-group-addon" data-toggle='tooltip' data-placement='top' title='MIN'>
-                                  <i class="fa fa-check" @click.prevent="min = true;tarifa=null" v-show="!min"></i>
-                                  <i class="fa fa-times" @click.prevent="min = false;tarifa=null" v-show="min"></i>
+                                  <i class="fa fa-check" @click.prevent="min = true;" v-show="!min"></i>
+                                  <i class="fa fa-times" @click.prevent="min = false;" v-show="min"></i>
                                 </span>
                               </div>
                             </div>

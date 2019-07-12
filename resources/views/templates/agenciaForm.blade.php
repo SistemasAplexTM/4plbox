@@ -337,8 +337,8 @@
                                                                 <td><input type="text" id="segu{{ $data->id }}" name="" value="{{ $data->seguro }}" class="form-control" readonly></td>
 
                                                                 <td>
-                                                                    <button class="btn btn-xs btn_edit btn-warning" type="button" id="btn_edit{{ $data->id }}" onclick="editRowServices({{ $count }}, {{ $data->id }})"><i class="fa fa-edit" data-toggle="tooltip" data-placement="top" title="Editar"></i></button>
-                                                                    <button class="btn btn-danger btn-xs btn_remove" type="button" onclick="removeRowServices({{ $count }}, {{ $data->id }})" id="{{ $data->id }}"><i class="fa fa-times" data-toggle="tooltip" data-placement="top" title="Eliminar"></i></button></td>
+                                                                    <button class="btn btn-xs btn_edit btn-success" type="button" id="btn_edit{{ $data->id }}" onclick="editRowServices({{ $count }}, {{ $data->id }})"><i class="fal fa-edit" data-toggle="tooltip" data-placement="top" title="Editar"></i></button>
+                                                                    <button class="btn btn-danger btn-xs btn_remove" type="button" onclick="removeRowServices({{ $count }}, {{ $data->id }})" id="{{ $data->id }}"><i class="fal fa-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></i></button></td>
                                                               </tr>
                                                               <?php $count++; ?>
                                                             @endforeach
@@ -401,7 +401,7 @@
                                                             </tr>
                                                             <tr>
                                                                 <td>@lang('general.locker')</td>
-                                                                <td></td>
+                                                                <td><a target="_blank" href="{{ url('/') }}">{{ url('/') }}</a></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>

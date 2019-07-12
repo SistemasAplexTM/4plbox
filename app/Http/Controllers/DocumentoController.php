@@ -600,7 +600,7 @@ class DocumentoController extends Controller
                 foreach ($detalle as $val) {
                     $paquete = '';
                     if(env('APP_CLIENT') != 'jyg'){
-                      $paquete = $val->paquete;
+                      $paquete = 'P'.$val->paquete;
                     }
                     // $num_guia = trim($prefijo . $data->consecutivo . $paquete . $prefijoPais);
                     $num_guia = trim($prefijo . $data->consecutivo);
@@ -783,40 +783,45 @@ class DocumentoController extends Controller
         $show = null;
       }
       JavaScript::put(['show_agency' => $show]);
-      // print_r($data->value);
-      // exit();
-      $filter = [['b.deleted_at', null],
+      $filter = false;
+      $where = [['b.deleted_at', null],
         ['e.deleted_at', null],
         ['b.tipo_documento_id', $request->id_tipo_doc]];
         if(!Auth::user()->isRole('admin')){
-            $filter[] = ['b.agencia_id', Auth::user()->agencia_id];
+            $where[] = ['b.agencia_id', Auth::user()->agencia_id];
         }
         /* GRILLA */
         if ($request->id_tipo_doc == 3) {
-            $sql = $this->getAllConsolidated($filter);
+            $sql = $this->getAllConsolidated($where);
         } else {
             // if(env('APP_TYPE') == 'courier'){
             if($request->type == 3){
-              $sql = $this->getAllLoad($filter);
+              $sql = $this->getAllLoad($where);
             }else{
-              $filter = [['a.deleted_at', null],
+              $where = [['a.deleted_at', null],
               ['b.deleted_at', null],
               ['b.tipo_documento_id', $request->id_tipo_doc]];
               if(!Auth::user()->isRole('admin')){
-                $filter[] = ['b.agencia_id', Auth::user()->agencia_id];
+                $where[] = ['b.agencia_id', Auth::user()->agencia_id];
               }
               if($request->type == 2){
-                $filter[] = ['a.num_warehouse', '<>', NULL ];
+                $where[] = ['a.num_warehouse', '<>', NULL ];
+                if($request->filter){
+                  $filter = $request->filter;
+                }
               }else{
                 if($request->type == 4){
-                  $filter[] = ['a.num_warehouse', NULL ];
+                  $where[] = ['a.num_warehouse', NULL ];
                 }
               }
-              $sql = $this->getAllCourier($filter);
+              $sql = $this->getAllCourier($where, $filter);
             }
         }
-
-        return \DataTables::of($sql)->make(true);
+        // echo '<pre>';
+        // print_r($sql);
+        // echo '<pre>';
+        // exit();
+        return Datatables::of($sql)->make(true);
     }
 
     public function selectInput(Request $request, $tableName)
@@ -979,7 +984,7 @@ class DocumentoController extends Controller
                 // PARA JYG QUITARLE EL UNO AL NUMERO DE GUIA Y WRH
                 $paquete = '';
                 if(env('APP_CLIENT') != 'jyg'){
-                  $paquete = (count($documentoD) + 1);
+                  $paquete = 'P'.(count($documentoD) + 1);
                 }
 
                 /* GENERAR NUMERO DE GUIA */
@@ -1661,6 +1666,7 @@ class DocumentoController extends Controller
                                       'b.num_warehouse',
                                       'b.num_guia',
                                       'b.volumen',
+                                      'c.nombre_full as ship_nomfull',
                                       DB::raw('CONCAT_WS(" ", c . primer_nombre, c . segundo_nombre, c . primer_apellido, c . segundo_apellido) as nom_ship'),
                                       'c.direccion as dir_ship',
                                       'c.telefono as tel_ship',
@@ -1668,6 +1674,7 @@ class DocumentoController extends Controller
                                       'e.nombre as ciu_ship',
                                       'f.descripcion as depto_ship',
                                       'pais.descripcion as pais_ship',
+                                      'd.nombre_full as cons_nomfull',
                                       DB::raw('CONCAT_WS(" ", d . primer_nombre, d . segundo_nombre, d . primer_apellido, d . segundo_apellido) as nom_cons'),
                                       'd.zip as zip_cons',
                                       'g.nombre as ciu_cons',

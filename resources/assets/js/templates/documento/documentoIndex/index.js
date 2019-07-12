@@ -2,7 +2,7 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
     objVue.type_document = tipo_doc_id;
     var href_print = '';
     var href_print_label = '';
-    var status_id = '';
+    var filtro = '';
     /* MOSTRAR LABELS DE ESTADOS SI ES WAREHOUSE */
     var labels = '';
     if(parseInt(tipo_doc_id) === 3){
@@ -36,15 +36,15 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
       }
     }
     if(typeof filter != 'undefined'){
-        status_id = filter;
+        filtro = filter;
     }
     // SI MUESTRO LOS WAREHOUSES ENTONCES LISTO LAS DOS GRILLAS DEL TAB
     if(t === 2){
       for (var i = 2; i <= 2; i++) {
-        datatableDocument(i, tipo_doc_id, status_id);
+        datatableDocument(i, tipo_doc_id, filtro);
       }
     }else{
-      datatableDocument(t, tipo_doc_id, status_id);
+      datatableDocument(t, tipo_doc_id, filtro);
     }
 
     if(typeof filter == 'undefined'){
@@ -75,26 +75,26 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
 
 }
 
-function datatableDocument(t, tipo_doc_id, status_id){
+function datatableDocument(t, tipo_doc_id, filtro){
   var table = $('#tbl-documento' + t).DataTable({
       processing: true,
       serverSide: true,
       lengthMenu: [[20, 40, 50, 80, 100, 200, 500], [20, 40, 50, 80, 100, 200, 500]],
-      // order: [[1, "desc"]],
+      order: [[0, "desc"]],
       ajax: {
           "url": 'documento/all/documento_detalle',
           "data": function(d) {
               d.id_tipo_doc = tipo_doc_id;
               d.type = t;
-              d.status_id = status_id;
+              d.filter = filtro;
           }
       },
       columns: [{
           "render": numDocument,
-          name: (tipo_doc_id != 3) ? 'a.num_warehouse' : 'b.id',
+          name: (tipo_doc_id != 3) ? 'num_warehouse' : 'b.id',
       }, {
           data: 'fecha',
-          name: 'b.created_at',
+          name: 'fecha',
           width: 80
       }, {
           data: (tipo_doc_id != 3) ? 'cons_nomfull' : 'central_destino',
@@ -108,18 +108,22 @@ function datatableDocument(t, tipo_doc_id, status_id){
           data: 'valor',
           name: 'b.valor',
           searchable: false,
+          sortable: false,
           visible: (tipo_doc_id != 3) ? true : false
       },  {
           data: 'peso',
           name: 'b.peso',
           searchable: false,
+          sortable: false,
       }, {
           "render": showVolumen,
           searchable: false,
+          sortable: false,
       }, {
           data: 'agencia',
           name: 'e.descripcion',
           searchable: false,
+          sortable: false,
           visible: (app_client == 'jyg') ? false : true
           // visible: (show_agency != null && show_agency != 0) ? false : true
       }, {
@@ -279,8 +283,7 @@ function numDocument(data, type, full, meta) {
             }
           }
       }
-
-      if(full.consolidado_status == 0){
+      if(full.consolidado_status === 0){
         group = ' onclick="agruparGuiasIndex('+full.detalle_id+')"';
       }
       classText = color_badget;

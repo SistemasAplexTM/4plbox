@@ -88,7 +88,8 @@ export default {
       transportadora_id: null,
      },
      show: false,
-     defaultStatus: null
+     defaultStatus: null,
+
     };
   },
   props: ["document_id", "status"],
@@ -116,7 +117,6 @@ export default {
     let me = this;
     this.form = {
      estatus_id: null,
-     observacion: null,
      warehouse: null,
      transportadora: [],
      transportadora_id: null

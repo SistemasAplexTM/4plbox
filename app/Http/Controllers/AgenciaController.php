@@ -92,13 +92,13 @@ class AgenciaController extends Controller
     public function update(AgenciaRequest $request, $id)
     {
 
-      $configMC = $this->getAplexConfig('agency_mc');
-      $value = array(
-        'list' => [array(
-          'id_agency' => $id,
-          'id_list' => $request->all()['listId']
-        )]
-      );
+      // $configMC = $this->getAplexConfig('agency_mc_'.$id);
+      // $value = array(
+      //   'list' => [array(
+      //     'id_agency' => $id,
+      //     'id_list' => $request->all()['listId']
+      //   )]
+      // );
       // $this->createAplexConfig('agency_mc', $value, $configMC);
       //
       // echo '<pre>';
@@ -133,7 +133,8 @@ class AgenciaController extends Controller
         /* REGISTRAR EL DETALLE */
         $agencia_id = $data->id;
 
-        for ($i = 0; $i < count($request->input('servicios_id')); $i++) {
+        if ($request->input('servicios_id') != '') {
+          for ($i = 0; $i < count($request->input('servicios_id')); $i++) {
             $detalle                   = new AgenciaDetalle;
             $detalle->agencia_id       = $agencia_id;
             $detalle->servicios_id     = $request->input('servicios_id')[$i];
@@ -141,6 +142,7 @@ class AgenciaController extends Controller
             $detalle->tarifa_agencia   = $request->input('tarifa_agencia')[$i];
             $detalle->seguro           = $request->input('seguro')[$i];
             $detalle->save();
+          }
         }
 
         return redirect()->route('agencia.index');

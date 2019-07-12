@@ -101,8 +101,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('master/getDataConsolidados/{type}', 'MasterController@getDataConsolidados');
     Route::get('master/hawb/{id}', 'MasterController@createHawb');
     Route::get('master/{id}/getDataPrintBagsConsolidate/{type?}', 'DocumentoController@getDataPrintBagsConsolidate');
-    Route::post('master/saveCostMaster', 'MasterController@saveCostMaster');
     Route::get('master/{id}/impuestosMaster', 'MasterController@impuestosMaster');
+    Route::post('master/saveTaxMaster', 'MasterController@saveTaxMaster');
+    Route::post('master/saveCostMaster', 'MasterController@saveCostMaster');
+    Route::get('master/getCosts/{master_id}', 'MasterController@getCosts');
+    Route::delete('master/deleteCost/{id}', 'MasterController@deleteCost');
+    Route::get('master/generateXml/{id}', 'MasterController@generateXml');
 
     /*--- MODULO TRACKINGS ---*/
     Route::resource('tracking', 'TrackingController', ['except' => ['show', 'create', 'edit', 'update']]);
@@ -135,6 +139,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('modulo/all', 'ModuloController@getAll')->name('datatable/all');
     Route::get('modulo/delete/{id}/{logical?}', 'ModuloController@delete')->name('modulo.delete');
     Route::get('modulo/restaurar/{id}', 'ModuloController@restaurar');
+
+    /*--- MODULO MONEDA ---*/
+    Route::resource('moneda', 'MonedaController', ['except' => ['show', 'create', 'edit']]);
+    Route::get('moneda/all', 'MonedaController@getAll')->name('datatable/all');
+    Route::get('moneda/delete/{id}/{logical?}', 'MonedaController@delete')->name('moneda.delete');
+    Route::get('moneda/restaurar/{id}', 'MonedaController@restaurar');
 
     /*---- Rutas para la tabla MaestraMultiple ----*/
     Route::get('administracion/{type}/all', 'MaestraMultipleController@getAll');
@@ -243,6 +253,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('consignee/selectInput/{tableName}', 'ConsigneeController@selectInput');
     Route::get('consignee/getDataById/{id}', 'ConsigneeController@getDataById');
     Route::get('consignee/generarCasillero/{id}', 'ConsigneeController@generarCasillero');
+    Route::get('consignee/getSelect', 'ConsigneeController@getSelect');
 
     /*--- MODULO EMAIL TEMPLATES ---*/
     Route::resource('emailTemplate', 'EmailTemplateController', ['except' => ['show', 'create', 'edit']]);
@@ -432,11 +443,11 @@ Route::post('shipper/existEmail', 'ShipperController@existEmail');
 /* VALIDAR USERNAME */
 Route::get('validarUsername/{element}', 'UserController@validarUsername');
 
-/*--- CASILLERO ---*/
-Route::post('casillero/validar/validar_email', 'CasilleroController@validar_email');
-Route::get('casillero/vueSelectCiudad/{term}', 'CasilleroController@buscar_ciudad');
-Route::post('casillero', 'CasilleroController@store');
-Route::get('casillero/{id}', 'CasilleroController@index');
+/*--- REGISTRO CASILLERO ---*/
+Route::post('registro/validar/validar_email', 'CasilleroController@validar_email');
+Route::get('registro/vueSelectCiudad/{term}', 'CasilleroController@buscar_ciudad');
+Route::post('registro', 'CasilleroController@store');
+Route::get('registro/{id}', 'CasilleroController@index');
 
 Route::get('obtener_contactos/{id}/{table}', 'ShipperController@getContactos');
 Route::post('agregar_contactos/{id}/{table}', 'ShipperController@storeContacto');
