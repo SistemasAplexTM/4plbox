@@ -1,4 +1,4 @@
-var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialite, filter) {
+var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialite, filter, courier_carga) {
     objVue.type_document = tipo_doc_id;
     var href_print = '';
     var href_print_label = '';
@@ -13,6 +13,10 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
       $('#btns_group').css('display','none');
     }else{
       var t = 2;
+      console.log(courier_carga);
+      if(!courier_carga){
+        t = 3;
+      }
       $('#tbl2').css('display','inline-block');
       $('#tbl1').css('display','none');
       $('#btns_group').css('display','inline-block');
@@ -35,7 +39,7 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
         }
       }
     }
-    if(typeof filter != 'undefined'){
+    if(typeof filter != 'undefined' && filter != false){
         filtro = filter;
     }
     // SI MUESTRO LOS WAREHOUSES ENTONCES LISTO LAS DOS GRILLAS DEL TAB

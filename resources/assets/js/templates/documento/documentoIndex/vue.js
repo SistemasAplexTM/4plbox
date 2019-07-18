@@ -138,17 +138,40 @@ var objVue = new Vue({
         fileList:[],
         headerFile:{
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
+        },
+        errorUpload:[],
+        upload_s: false,
+        // variable para saber que pestaña mostrar de la grilla principal de documentos si courier (true) o carga (false)
+        courier_carga:false,
     },
     methods: {
-      handleChange(file, fileList) {
-        this.fileList = fileList.slice(-3);
+      insertStatusUploadDocument(){
+        let me = this;
+        me.upload_s = true
+        axios.get('documento/insertStatusUploadDocument').then(function (response) {
+          console.log(response.data);
+          if (response.data == 200) {
+            me.upload_s = false;
+          };
+        }).catch(function (error) {
+            console.log(error);
+            toastr.warning('Error.');
+            toastr.options.closeButton = true;
+        });
       },
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
+      handleSuccess(response, file, fileList) {
+        $('.el-upload').toggle("slow");
+        let me = this;
+        axios.get('documento/validateUploadDocs').then(function (response) {
+          me.errorUpload = response.data;
+        }).catch(function (error) {
+            console.log(error);
+            toastr.warning('Error.');
+            toastr.options.closeButton = true;
+        });
       },
-      handlePreview(file) {
-        console.log(file);
+      handleRemove(file, fileList){
+        $('.el-upload').toggle("slow");
       },
       handleExceed(files, fileList) {
         this.$message.warning(`El límite es 1, haz seleccionado ${files.length} archivos esta vez, añade hasta ${files.length + fileList.length}`);
@@ -226,6 +249,11 @@ var objVue = new Vue({
                 }
                 $('.pending').addClass('ligth');
               }else{
+                if ($('#default').hasClass('active')) {
+                  if (!$.fn.DataTable.isDataTable('#tbl-documento2')) {
+                    datatableDocument(2, 1);
+                  }
+                }
                 $('.pending').addClass('ligth');
               }
             }
@@ -293,11 +321,13 @@ var objVue = new Vue({
             });
         },
         typeDocumentList: function() {
+          let me = this;
             axios.get('tipoDocumento/all').then(function(response) {
                 $.each(response.data.data, function(key, value) {
                     var lista = '<button type="button" id="btn' + value.id + '" ' + ' onclick="listDocument(' + value.id + ',\'' + value.nombre + '\',\'' + value.icono + '\',\'' + value.funcionalidades + '\',\'' + true + '\')"' + ' class="btn btn-default btn-block" style="text-align:left;">' + ' <i class="' + value.icono + '" aria-hidden="true"></i>  ' + value.nombre +'</button>';
                     if (value.id == 1) {
-                        listDocument(value.id, value.nombre, value.icono, value.funcionalidades);
+                      console.log(me.courier_carga);
+                      listDocument(value.id, value.nombre, value.icono, value.funcionalidades, false, false, me.courier_carga);
                     }
                     $('#listaDocumentos').append(lista);
                 });

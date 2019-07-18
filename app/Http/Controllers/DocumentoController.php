@@ -37,6 +37,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Traits\DocumentTrait;
 use App\Exports\ConsolidadoExport;
+use Rap2hpoutre\FastExcel\FastExcel;
 
 class DocumentoController extends Controller
 {
@@ -796,7 +797,10 @@ class DocumentoController extends Controller
         } else {
             // if(env('APP_TYPE') == 'courier'){
             if($request->type == 3){
-              $sql = $this->getAllLoad($where);
+              if($request->filter){
+                $filter = $request->filter;
+              }
+              $sql = $this->getAllLoad($where, $filter);
             }else{
               $where = [['a.deleted_at', null],
               ['b.deleted_at', null],
@@ -3260,6 +3264,51 @@ class DocumentoController extends Controller
 
     public function uploadFileStatus(Request $request)
     {
-      return $request->file('file');
+      DB::table('tbl_status_aux')->truncate();
+      $data = (new FastExcel)->import($request->file('file'), function ($line){
+        DB::table('tbl_status_aux')->insert([
+          [
+            'wh'                  => trim($line['warehouse']),
+            'status'              => trim($line['status']),
+            'transportadora'      => trim($line['transportadora']),
+            'guia_transportadora' => trim($line['guia_transportadora'])
+          ],
+        ]);
+      });
+     return 200;
+    }
+
+    public function validateUploadDocs()
+    {
+      $data = DB::table('tbl_status_aux AS a')
+        ->leftjoin('documento_detalle AS b', 'a.wh', 'b.num_warehouse')
+        ->leftjoin('status AS c', 'a.status', 'c.descripcion')
+        ->select(
+          'a.status',
+          'c.id AS status_id',
+          'a.wh',
+          'b.id AS documento_detalle_id'
+          )
+        ->where('b.num_warehouse', null)
+        ->orWhere('c.id', null)
+        ->get();
+
+      return $data;
+    }
+
+    public function insertStatusUploadDocument()
+    {
+      return 200;
+      // INSERT INTO status_detalle (status_id, usuario_id, documento_detalle_id, codigo, transportadora, num_transportadora ) SELECT
+      // c.id AS status_id,
+      // 1 AS usuario_id,
+      // b.id AS documento_detalle_id,
+      // a.wh,
+      // a.transportadora,
+      // a.guia_transportadora AS num_transportadora
+      // FROM
+      // 	tbl_status_aux AS a
+      // 	INNER JOIN documento_detalle AS b ON a.wh = b.num_warehouse
+      // 	INNER JOIN `status` AS c ON a.`status` = c.descripcion;
     }
 }

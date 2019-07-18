@@ -275,7 +275,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('tipoDocumento/getPlantillasEmail', 'TipoDocumentoController@getPlantillasEmail');
 
     /*--- MODULO DOCUMENTO ---*/
-    Route::resource('documento', 'DocumentoController', ['except' => ['create']]);
+    Route::resource('documento', 'DocumentoController', ['except' => ['create', 'show']]);
 
     Route::post('documento/insertDetail', 'DocumentoController@insertDetail')->name('documento.insertDetail');
     Route::post('documento/editDetail', 'DocumentoController@editDetail')->name('documento.editDetail');
@@ -325,6 +325,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('documento/getDataSearchDocument/{data?}', 'DocumentoController@getDataSearchDocument');
     Route::get('documento/updateShipperConsignee/{id}/{data_id}/{op}', 'DocumentoController@updateShipperConsignee');
     Route::post('documento/uploadFileStatus', 'DocumentoController@uploadFileStatus');
+    Route::get('documento/validateUploadDocs', 'DocumentoController@validateUploadDocs');
+    Route::get('documento/insertStatusUploadDocument', 'DocumentoController@insertStatusUploadDocument');
 
     /*  REPORTES - IMPRESIONES EN PDF */
     Route::get('impresion-documento/{id}/{document}/{id_detalle?}', 'DocumentoController@pdf')->name('documento.pdf');

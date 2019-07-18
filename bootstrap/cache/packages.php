@@ -107,6 +107,13 @@
       'Mailchimp' => 'NZTim\\Mailchimp\\MailchimpFacade',
     ),
   ),
+  'rap2hpoutre/fast-excel' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Rap2hpoutre\\FastExcel\\Providers\\FastExcelServiceProvider',
+    ),
+  ),
   'spatie/laravel-backup' => 
   array (
     'providers' => 
