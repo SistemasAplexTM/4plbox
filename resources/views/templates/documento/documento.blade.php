@@ -593,7 +593,7 @@
                                               <div class="col-sm-2">
                                                       <div class="form-group"  id="Valpeso">
                                                           <label class="peso">@lang('documents.weight')</label>
-                                                          <input type="number" class="form-control text-write" onkeyup="deleteError($(this).parent());removeBtnBlock(this.value)" id="peso" name="peso" maxlength="4" placeholder="Lb" value="">
+                                                          <input type="number" class="form-control text-write" onkeyup="deleteError($(this).parent());" id="peso" name="peso" maxlength="4" placeholder="Lb" value="">
                                                           <small class="help-block" id="Hpeso" style="display: none">@lang('documents.these_data_are_required')</small>
                                                       </div>
                                               </div>
@@ -696,8 +696,8 @@
                                                           <!-- Split button -->
                                                               <label for="btn_add" class="control-label" style="padding-top: 2px;width: 100%">&nbsp;</label>
                                                               <div class="btn-group">
-                                                                <button type="button" :disabled="disabled_client" class="btn btn-info btn-sm btnBlock" id="btn_add" value="0" @click="addDetail()">@lang('documents.add')</button>
-                                                                <button type="button" :disabled="disabled_client" class="btn btn-info btn-sm dropdown-toggle btnBlock" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 35px;">
+                                                                <button type="button" class="btn btn-info btn-sm btnBlock" id="btn_add" value="0" @click="addDetail()">@lang('documents.add')</button>
+                                                                <button type="button" class="btn btn-info btn-sm dropdown-toggle btnBlock" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 35px;">
                                                                   <span class="caret"></span>
                                                                   <span class="sr-only">Toggle Dropdown</span>
                                                                 </button>

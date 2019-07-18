@@ -3257,4 +3257,9 @@ class DocumentoController extends Controller
       );
       return $answer;
     }
+
+    public function uploadFileStatus(Request $request)
+    {
+      return $request->file('file');
+    }
 }

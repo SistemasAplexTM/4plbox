@@ -324,6 +324,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('documento/getDataDocument/{data}', 'DocumentoController@getDataPrintBagsConsolidate');
     Route::get('documento/getDataSearchDocument/{data?}', 'DocumentoController@getDataSearchDocument');
     Route::get('documento/updateShipperConsignee/{id}/{data_id}/{op}', 'DocumentoController@updateShipperConsignee');
+    Route::post('documento/uploadFileStatus', 'DocumentoController@uploadFileStatus');
 
     /*  REPORTES - IMPRESIONES EN PDF */
     Route::get('impresion-documento/{id}/{document}/{id_detalle?}', 'DocumentoController@pdf')->name('documento.pdf');

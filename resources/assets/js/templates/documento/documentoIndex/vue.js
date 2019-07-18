@@ -82,6 +82,7 @@ var objVue = new Vue({
         status: [],
         id_consolidado_selected: null,
         dialogVisible: false,
+        uploadFileStatus: false,
         // filter
         warehouse: null,
         options: [],
@@ -132,9 +133,26 @@ var objVue = new Vue({
             }
           }]
         },
-        date_range: ''
+        date_range: '',
+
+        fileList:[],
+        headerFile:{
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
     },
     methods: {
+      handleChange(file, fileList) {
+        this.fileList = fileList.slice(-3);
+      },
+      handleRemove(file, fileList) {
+        console.log(file, fileList);
+      },
+      handlePreview(file) {
+        console.log(file);
+      },
+      handleExceed(files, fileList) {
+        this.$message.warning(`El límite es 1, haz seleccionado ${files.length} archivos esta vez, añade hasta ${files.length + fileList.length}`);
+      },
       filterDocument(){
         var filter = {
           'warehouse' : this.warehouse,

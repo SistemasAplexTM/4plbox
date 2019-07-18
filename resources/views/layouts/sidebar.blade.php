@@ -4,7 +4,7 @@
             <li class="nav-header">
                 <div class="dropdown profile-element">
                     <span>
-                        <img alt="image" class="img-circle" id="imgProfile" src="{{ asset('storage/') }}/{{ Session::get('logo') }}" style="width: 70px;height: 70px;background-color: #fff"/>
+                        <img alt="image" class="img-circle" id="imgProfile" src="{{ asset('storage/') }}/{{ Session::get('logo') }}" style="width: 150px;height: 50px;background-color: #fff"/>
                     </span>
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <span class="clear">
