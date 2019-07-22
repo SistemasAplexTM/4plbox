@@ -189,7 +189,7 @@
                                           <button class="btn btn-info btn-circle" title="Filtrar" @click="dialogVisible = true" data-toggle="tooltip" style="margin-left: 10px;font-size: 10px!important;width: 20px;height: 20px;">
                                             <i class="fa fa-filter" style="margin-right: 0;"></i>
                                           </button>
-                                          <button class="btn btn-success btn-circle" title="Subir archivo de estatus" @click="uploadFileStatus = true" data-toggle="tooltip" style="margin-left: 10px;font-size: 10px!important;width: 20px;height: 20px;">
+                                          <button class="btn btn-success btn-circle" title="Subir archivo de status" @click="uploadFileStatus = true" data-toggle="tooltip" style="margin-left: 10px;font-size: 10px!important;width: 20px;height: 20px;">
                                             <i class="fa fa-upload" style="margin-right: 0;margin-top: -3px;"></i>
                                           </button>
                                         </a></li>

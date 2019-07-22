@@ -3284,6 +3284,7 @@ class DocumentoController extends Controller
         ->leftjoin('documento_detalle AS b', 'a.wh', 'b.num_warehouse')
         ->leftjoin('status AS c', 'a.status', 'c.descripcion')
         ->select(
+          DB::raw('(a.id + 1) AS fila'),
           'a.status',
           'c.id AS status_id',
           'a.wh',
@@ -3291,6 +3292,7 @@ class DocumentoController extends Controller
           )
         ->where('b.num_warehouse', null)
         ->orWhere('c.id', null)
+        ->orderBy('fila', 'ASC')
         ->get();
 
       return $data;

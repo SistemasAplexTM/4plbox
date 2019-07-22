@@ -780,7 +780,8 @@ var objVue = new Vue({
                   name: 'shipper.zip',
               }, {
                   data: 'agencia',
-                  name: 'agencia.descripcion'
+                  name: 'agencia.descripcion',
+                  searchable: false,
               }]
           });
       },
@@ -829,7 +830,8 @@ var objVue = new Vue({
                   name: 'consignee.zip'
               }, {
                   data: 'agencia',
-                  name: 'agencia.descripcion'
+                  name: 'agencia.descripcion',
+                  searchable: false,
               }]
           });
       },
