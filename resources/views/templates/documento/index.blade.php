@@ -400,20 +400,30 @@
             </div>
           </div>
           <div class="row" style="margin-top: 30px;">
-            <el-alert
-              :closable="false"
-              title="Atención! Por favor verifique la información del archivo"
-              type="warning"
-              show-icon
-              v-if="errorUpload.length > 0">
-              <div style="margin-top: 13px;">
-                  <p v-for="error in errorUpload">
-                    - @{{ error.wh }}
-                    <el-tag type="info" size="mini" style="float: right;" v-if="error.documento_detalle_id === null">Warehouse <i class="fal fa-times"></i></el-tag>
-                    <el-tag type="danger" size="mini" style="float: right;" v-if="error.status_id === null">Status <i class="fal fa-times"></i></el-tag>
-                  </p>
-              </div>
-            </el-alert>
+            <div class="col-lg-12">
+              <el-alert
+                :closable="false"
+                title="Atención! Por favor verifique la información del archivo"
+                type="warning"
+                show-icon
+                v-if="errorUpload.length > 0">
+                <div style="margin-top: 13px;">
+                    <p v-for="error in errorUpload">
+                      - @{{ error.wh }}
+                      <el-tag type="info" size="mini" style="float: right;" v-if="error.documento_detalle_id === null">Warehouse <i class="fal fa-times"></i></el-tag>
+                      <el-tag type="danger" size="mini" style="float: right;" v-if="error.status_id === null">Status <i class="fal fa-times"></i></el-tag>
+                    </p>
+                </div>
+              </el-alert>
+              <el-alert
+                v-if="uploadSuccess"
+                :title="title_msn"
+                :type="type_msn"
+                show-icon
+                :closable="false">
+                <div>@{{ textSuccess }}</div>
+              </el-alert>
+            </div>
           </div>
           <span slot="footer" class="dialog-footer">
             <el-button type="primary" :loading="upload_s" :disabled="errorUpload.length !== 0" @click="insertStatusUploadDocument"><i class="fal fa-upload"></i> Cargar Status</el-button>

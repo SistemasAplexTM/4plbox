@@ -3266,12 +3266,20 @@ class DocumentoController extends Controller
     {
       DB::table('tbl_status_aux')->truncate();
       $data = (new FastExcel)->import($request->file('file'), function ($line){
+        $trans = trim($line['transportadora']);
+        $guia = trim($line['guia_transportadora']);
+        if($trans == ''){
+          $trans = null;
+        }
+        if($guia == ''){
+          $guia = null;
+        }
         DB::table('tbl_status_aux')->insert([
           [
             'wh'                  => trim($line['warehouse']),
             'status'              => trim($line['status']),
-            'transportadora'      => trim($line['transportadora']),
-            'guia_transportadora' => trim($line['guia_transportadora'])
+            'transportadora'      => $trans,
+            'guia_transportadora' => $guia
           ],
         ]);
       });
@@ -3300,17 +3308,24 @@ class DocumentoController extends Controller
 
     public function insertStatusUploadDocument()
     {
-      return 200;
-      // INSERT INTO status_detalle (status_id, usuario_id, documento_detalle_id, codigo, transportadora, num_transportadora ) SELECT
-      // c.id AS status_id,
-      // 1 AS usuario_id,
-      // b.id AS documento_detalle_id,
-      // a.wh,
-      // a.transportadora,
-      // a.guia_transportadora AS num_transportadora
-      // FROM
-      // 	tbl_status_aux AS a
-      // 	INNER JOIN documento_detalle AS b ON a.wh = b.num_warehouse
-      // 	INNER JOIN `status` AS c ON a.`status` = c.descripcion;
+      try {
+        $data = DB::select("INSERT INTO status_detalle (status_id, usuario_id, documento_detalle_id, codigo, transportadora, num_transportadora ) SELECT
+        c.id AS status_id,
+        1 AS usuario_id,
+        b.id AS documento_detalle_id,
+        a.wh,
+        a.transportadora,
+        a.guia_transportadora AS num_transportadora
+        FROM
+        tbl_status_aux AS a
+        INNER JOIN documento_detalle AS b ON a.wh = b.num_warehouse
+        INNER JOIN status AS c ON a.status = c.descripcion;");
+
+        return array('code' => 200);
+
+      } catch (\Exception $e) {
+        return array('error' => $e, 'code' => 500);
+      }
+
     }
 }
