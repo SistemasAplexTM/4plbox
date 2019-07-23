@@ -51,7 +51,8 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
       datatableDocument(t, tipo_doc_id, filtro);
     }
 
-    if(typeof filter == 'undefined'){
+    if(typeof filter == 'undefined' || filter === false){
+      console.log(t, filter);
         if(tipo_doc_id == '1'){
             labels =    '<label for="creado" class="lb_status badge badge-default">Creado</label> ' +
                         '<label for="bodega" class="lb_status badge badge-success">En bodega</label> '+
@@ -69,7 +70,7 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
         }
         // $('#icono_doc').removeClass(className).addClass(icon);
         $('#icono_doc').empty().append('<i class="'+icon+'"></i>');
-        if(t == 2){
+        if(t == 2 || t == 3){
           $('#crearDoc2').attr('onclick', 'createNewDocument_(' + tipo_doc_id + ',\'' + nom + '\',\'' + funcionalidades + '\', \'Courier\', 1)');
           $('#crearDoc3').attr('onclick', 'createNewDocument_(' + tipo_doc_id + ',\'' + nom + '\',\'' + funcionalidades + '\', \'Carga\', 0)');
         }else{
