@@ -61,6 +61,7 @@ class PrealertaController extends Controller
                 }
                 $data->correo = $request->email;
                 $data->tracking    = $request['tracking'];
+                $data->contenido    = $request['contenido'];
                 $data->agencia_id  = $id_agencia;
                 $data->instruccion = $request['instruccion'];
                 $data->despachar = ($request['despachar']) ? 1 : 0;

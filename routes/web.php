@@ -201,6 +201,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('transportador/all', 'TransportadorController@getAll')->name('datatable/all');
     Route::get('transportador/delete/{id}/{logical?}', 'TransportadorController@delete')->name('transportador.delete');
     Route::get('transportador/restaurar/{id}', 'TransportadorController@restaurar');
+    Route::get('transportador/getLogo/{id}', 'TransportadorController@getLogo');
+    Route::post('transportador/uploadImage', 'TransportadorController@uploadImage');
 
     /*--- MODULO STATUS ---*/
     Route::resource('status', 'StatusController', ['except' => ['show', 'create', 'edit']]);

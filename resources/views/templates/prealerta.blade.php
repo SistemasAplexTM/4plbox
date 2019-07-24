@@ -61,6 +61,14 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="form-group">
+                                                    <label class="control-label" for="email">@lang('general.content') </label>
+                                                    <input type="text" name="contenido" class="form-control" placeholder="@lang('general.content')" v-model="contenido">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
                                                 <input type='checkbox' data-toggle="toggle" id='despachar' data-size='mini' data-on="Despachar" data-off="Esperar" data-width="100" data-style="ios" data-onstyle="primary" data-offstyle="warning">
                                                 <span id="msn1" v-if="despachar">@lang('general.dispatch_immediately')</span>
                                                 <span id="msn2" v-if="!despachar">@lang('general.wait_until_you_decide')</span>

@@ -304,6 +304,12 @@ var objVue = new Vue({
             var res = response.data;
             if (response.data['code'] == 200) {
               $('#modalCreateReceipt').modal('hide');
+              me.shipper_id = null
+              me.peso = null
+              me.piezas = 1
+              me.largo = 0
+              me.ancho = 0
+              me.alto = 0
               // toastr.success('Registro creado correctamente.');
               me.updateTable();
             } else {

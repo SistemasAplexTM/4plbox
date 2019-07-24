@@ -18,6 +18,14 @@
 @endsection
 
 @section('content')
+  <style>
+    .el-upload{
+      text-align: initial;
+    }
+    .el-upload__input{
+      position: absolute;
+    }
+  </style>
     <div class="row" id="transportador">
         <form id="formtransportador" enctype="multipart/form-data" class="form-horizontal" role="form" action="" method="post">
             <div class="col-lg-5">
@@ -25,12 +33,12 @@
                     <div class="ibox-title">
                         <h5>@lang('general.registration_of_transported')</h5>
                         <div class="ibox-tools">
-                            
+
                         </div>
                     </div>
                     <div class="ibox-content">
                         <!--***** contenido ******-->
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.nombre}">
                                         <div class="col-sm-4">
@@ -43,7 +51,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.direccion}">
                                         <div class="col-sm-4">
@@ -56,7 +64,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.telefono}">
                                         <div class="col-sm-4">
@@ -69,7 +77,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.email}">
                                         <div class="col-sm-4">
@@ -82,7 +90,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.contacto}">
                                         <div class="col-sm-4">
@@ -95,7 +103,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.ciudad}">
                                         <div class="col-sm-4">
@@ -108,7 +116,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.estado}">
                                         <div class="col-sm-4">
@@ -121,7 +129,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.pais}">
                                         <div class="col-sm-4">
@@ -134,7 +142,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.zip}">
                                         <div class="col-sm-4">
@@ -147,27 +155,58 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
+                            <div class="col-lg-12">
+                              <div class="col-sm-4">
+                                  <label for="zip" class="control-label gcore-label-top"></label>
+                              </div>
+                              <div class="col-lg-8">
+                                  <div class="form-group"  :class="{'has-error': listErrors.zip}">
+                                      <div class="checkbox checkbox-success checkbox-inline">
+                                          <input type="checkbox" id="shipper" name="shipper" v-model="shipper">
+                                          <label for="shipper"><i class="fa fa-user"></i> @lang('general.shipper')</label>
+                                      </div>
+                                     <div class="checkbox checkbox-success checkbox-inline">
+                                          <input type="checkbox" id="consignee" name="consignee" v-model="consignee">
+                                          <label for="consignee"><i class="far fa-user"></i> @lang('general.consignee')</label>
+                                      </div>
+                                     <div class="checkbox checkbox-success checkbox-inline">
+                                          <input type="checkbox" id="carrier" name="carrier" v-model="carrier">
+                                          <label for="carrier"><i class="fa fa-plane"></i>  @lang('general.carrier') </label>
+                                      </div>
+                                  </div>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-lg-12">
                                 <div class="col-lg-12">
-                                    <div class="form-group" style="float: right;" :class="{'has-error': listErrors.zip}">
-                                        <div class="checkbox checkbox-success checkbox-inline">
-                                            <input type="checkbox" id="shipper" name="shipper" v-model="shipper">
-                                            <label for="shipper"><i class="fa fa-user"></i> @lang('general.shipper')</label>
-                                        </div>
-                                       <div class="checkbox checkbox-success checkbox-inline">
-                                            <input type="checkbox" id="consignee" name="consignee" v-model="consignee">
-                                            <label for="consignee"><i class="far fa-user"></i> @lang('general.consignee')</label>
-                                        </div>
-                                       <div class="checkbox checkbox-success checkbox-inline">
-                                            <input type="checkbox" id="carrier" name="carrier" v-model="carrier">
-                                            <label for="carrier"><i class="fa fa-plane"></i>  @lang('general.carrier') </label>
-                                        </div>
-                                    </div>
+                                  <div class="form-group">
+                                      <div class="col-sm-4">
+                                          <label for="zip" class="control-label gcore-label-top"></label>
+                                      </div>
+                                      <div class="col-sm-8">
+                                        <el-upload
+                                          class="upload-demo"
+                                          ref="upload"
+                                          action="#"
+                                          :http-request="addAttachment"
+                                          :auto-upload="false"
+                                          :headers="headerFile"
+                                          :on-remove="handleRemove"
+                                          :file-list="fileList"
+                                          :limit="1"
+                                          accept="image/png, image/jpeg"
+                                          list-type="picture">
+                                          <el-button size="small" type="primary"><i class="fal fa-upload"></i> Clic para subir Logo</el-button>
+                                          <div slot="tip" class="el-upload__tip">Solo archivos jpg/png con un tamaño menor de 500kb</div>
+                                        </el-upload>
+                                      </div>
+                                  </div>
                                 </div>
                             </div>
                         </div>
-                        
+
 
                         <div class="row">
                             @include('layouts.buttons')
@@ -209,7 +248,7 @@
                                 </tr>
                             </tfoot>
                         </table>
-                    </div>             
+                    </div>
                 </div>
             </div>
         </div>

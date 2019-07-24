@@ -70,6 +70,7 @@ mix.copyDirectory('resources/assets/js/reports', 'public/js/reports');
  mix.copyDirectory('resources/assets/js/plugins', 'public/js/plugins');
  mix.copyDirectory('resources/assets/css/plugins', 'public/css/plugins');
  mix.copyDirectory('resources/assets/img', 'public/img');
+ mix.copyDirectory('resources/assets/download', 'public/download');
  mix.copyDirectory('resources/assets/fonts', 'public/fonts');
  mix.copyDirectory('resources/assets/css/font-awesome', 'public/css/font-awesome');
  mix.copyDirectory('resources/assets/css/hoverEfects', 'public/css/hoverEfects');

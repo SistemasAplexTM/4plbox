@@ -96,14 +96,14 @@ function datatableDocument(t, tipo_doc_id, filtro){
       },
       columns: [{
           "render": numDocument,
-          name: (tipo_doc_id != 3) ? 'num_warehouse' : 'b.id',
+          name: (tipo_doc_id != 3) ? 'b.num_warehouse' : 'b.id',
       }, {
           data: 'fecha',
-          name: 'fecha',
+          name: 'b.created_at',
           width: 80
       }, {
           data: (tipo_doc_id != 3) ? 'cons_nomfull' : 'central_destino',
-          name: (tipo_doc_id != 3) ? 'c.nombre_full' : 'central_destino.nombre'
+          name: (tipo_doc_id != 3) ? 'consignee.nombre_full' : 'central_destino.nombre'
       },{
           data: 'ciudad',
           name: 'ciudad',

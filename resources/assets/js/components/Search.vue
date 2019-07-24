@@ -10,7 +10,8 @@
         size="small"
         :remote-method="remoteMethod"
         :loading="loading"
-        value-key="id">
+        value-key="id"
+        @focus="loadData">
       <el-option
         v-for="item in options4"
         :key="item.id"
@@ -49,9 +50,12 @@ export default {
       }
     },
     mounted() {
-      this.getData();
+      // this.getData();
     },
     methods: {
+      loadData(){
+        this.getData();
+      },
       getData(){
         var me = this;
         axios.get('/documento/getDataSearchDocument/' + false).then(function(response) {

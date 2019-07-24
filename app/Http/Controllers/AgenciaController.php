@@ -51,7 +51,8 @@ class AgenciaController extends Controller
         //obtenemos el campo file definido en el formulario
         if ($request->file('logo')) {
             //obtenemos el nombre del archivo
-            $data->logo = trim($request->file('logo')->getClientOriginalName());
+            $extension = trim($request->file('logo')->getClientOriginalExtension());
+            $data->logo = base64_encode(trim($request->file('logo')->getClientOriginalName()) . date('Y-m-d hh:mm:ss')) . '.'.$extension;
             //indicamos que queremos guardar un nuevo archivo en el disco local
             \Storage::disk('public')->put('storage/'.$data->logo, \File::get($request->file('logo'))); //se guardara en 'public/storage'
         }
@@ -123,7 +124,8 @@ class AgenciaController extends Controller
         //obtenemos el campo file definido en el formulario
         if ($request->file('logo')) {
             //obtenemos el nombre del archivo
-            $requestData['logo'] = trim($request->file('logo')->getClientOriginalName());
+            $extension = trim($request->file('logo')->getClientOriginalExtension());
+            $requestData['logo'] = base64_encode(trim($request->file('logo')->getClientOriginalName()) . date('Y-m-d hh:mm:ss')) . '.'.$extension;
             //indicamos que queremos guardar un nuevo archivo en el disco local
             \Storage::disk('public')->put('storage/'.$requestData['logo'], \File::get($request->file('logo'))); //se guardara en 'public/storage'
         }

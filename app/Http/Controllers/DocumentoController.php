@@ -607,12 +607,12 @@ class DocumentoController extends Controller
                     $num_guia = trim($prefijo . $data->consecutivo);
 
                     $datos = array('num_guia' => $num_guia);
-                    if ($shipper_old != $request->shipper_id) {
+                    // if ($shipper_old != $request->shipper_id) {
                       $datos['shipper_id'] = $data->shipper_id;
-                    }
-                    if ($consignee_old != $request->consignee_id) {
+                    // }
+                    // if ($consignee_old != $request->consignee_id) {
                       $datos['consignee_id'] = $data->consignee_id;
-                    }
+                    // }
                     DocumentoDetalle::where('id', $val->id)->update($datos);
                     /* ACTUALIZAR CONSIGNEE EN EL TRACKING */
                     DB::table('tracking')->where([['documento_detalle_id', $val->id]])->update(['consignee_id' => $data->consignee_id]);
@@ -3210,6 +3210,7 @@ class DocumentoController extends Controller
         $data = false;
       }
         /* ESTATUS DEL DOCUMENTO */
+        // DB::connection()->enableQueryLog();
         $datos = DB::table('documento_detalle as c')
             ->join('documento as d', 'c.documento_id', 'd.id')
             ->join('shipper as e', 'd.shipper_id', 'e.id')
@@ -3239,7 +3240,23 @@ class DocumentoController extends Controller
             ->when($data, function ($query, $data) {
                 return $query->whereRaw("(c.num_guia LIKE '%" . $data . "' OR c.num_warehouse LIKE '%" . $data . "' OR t.codigo LIKE '" . $data . "%')");
             })
+            ->groupBy(
+              'c.id',
+              'c.peso',
+              'declarado',
+              'name',
+              'c.num_guia',
+              'c.contenido',
+              'procedencia',
+              'consignee',
+              'c.num_consolidado',
+              'ciudad',
+              'depto',
+              'pais',
+              'tracking'
+              )
             ->get();
+            // return DB::getQueryLog();
 
         $answer = array(
             "data" => $datos,
@@ -3266,8 +3283,8 @@ class DocumentoController extends Controller
     {
       DB::table('tbl_status_aux')->truncate();
       $data = (new FastExcel)->import($request->file('file'), function ($line){
-        $trans = trim($line['transportadora']);
-        $guia = trim($line['guia_transportadora']);
+        $trans = trim($line['Transportadora']);
+        $guia = trim($line['Guia_transportadora']);
         if($trans == ''){
           $trans = null;
         }
@@ -3276,8 +3293,8 @@ class DocumentoController extends Controller
         }
         DB::table('tbl_status_aux')->insert([
           [
-            'wh'                  => trim($line['warehouse']),
-            'status'              => trim($line['status']),
+            'wh'                  => trim($line['Warehouse']),
+            'status'              => trim($line['Status']),
             'transportadora'      => $trans,
             'guia_transportadora' => $guia
           ],

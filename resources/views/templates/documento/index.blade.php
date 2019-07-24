@@ -68,6 +68,9 @@
     .el-alert__content{
       width: 100%;
     }
+    .downloadLink{
+      font-weight: bold;
+    }
 </style>
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
@@ -395,7 +398,7 @@
                 :file-list="fileList" :limit="1">
                 <i class="el-icon-upload"></i>
                 <div class="el-upload__text">Suelta tu archivo aquí o <em>haz clic para cargar</em></div>
-                <div slot="tip" class="el-upload__tip">Solo archivos xlsx con un tamaño menor de 2MB</div>
+                <div slot="tip" class="el-upload__tip">Solo archivos xlsx con un tamaño menor de 2MB. <a href="{{ asset('/download/Status.xlsx') }}" target="_blank" class="downloadLink">Descargar archivo demo aqui <i class="fal fa-download"></i></a></div>
               </el-upload>
             </div>
           </div>

@@ -210,13 +210,9 @@
     <tr>
         <td>
             <div id="destinatario">
-              @if($documento->liquidado)
                 <div class="recibe">
                      @lang('general.consignee'):
                 </div>
-              @else
-                {{ '&nbsp;' }}
-              @endif
                 <div class="nomDesti">
                     {{ ($consignee != null) ? $consignee->nombre : $value->cons_nomfull }}
                 </div>

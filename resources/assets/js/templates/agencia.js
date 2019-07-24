@@ -24,7 +24,17 @@ $(document).ready(function() {
             name: 'telefono'
         }, {
             data: 'logo',
-            name: 'logo'
+            name: 'logo',
+            "render": function (data, type, full, meta) {
+              var image = 'icon-no-image.svg';
+              var title = 'No image';
+              if(full.logo != '' && full.logo != 'null' && full.logo != null){
+                title = full.descripcion;
+                image = full.logo;
+              }
+              return '<img src="/storage/'+image+'" alt="Pedidos" height="50" width="100" title="'+title+'">';
+            },
+            class: 'text-center'
         }, {
             sortable: false,
             "render": function(data, type, full, meta) {
