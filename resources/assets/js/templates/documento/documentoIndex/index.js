@@ -1,4 +1,4 @@
-var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialite, filter) {
+var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialite, filter, courier_carga) {
     objVue.type_document = tipo_doc_id;
     var href_print = '';
     var href_print_label = '';
@@ -13,6 +13,10 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
       $('#btns_group').css('display','none');
     }else{
       var t = 2;
+      console.log(courier_carga);
+      if(!courier_carga){
+        t = 3;
+      }
       $('#tbl2').css('display','inline-block');
       $('#tbl1').css('display','none');
       $('#btns_group').css('display','inline-block');
@@ -35,7 +39,7 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
         }
       }
     }
-    if(typeof filter != 'undefined'){
+    if(typeof filter != 'undefined' && filter != false){
         filtro = filter;
     }
     // SI MUESTRO LOS WAREHOUSES ENTONCES LISTO LAS DOS GRILLAS DEL TAB
@@ -47,7 +51,8 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
       datatableDocument(t, tipo_doc_id, filtro);
     }
 
-    if(typeof filter == 'undefined'){
+    if(typeof filter == 'undefined' || filter === false){
+      console.log(t, filter);
         if(tipo_doc_id == '1'){
             labels =    '<label for="creado" class="lb_status badge badge-default">Creado</label> ' +
                         '<label for="bodega" class="lb_status badge badge-success">En bodega</label> '+
@@ -65,7 +70,7 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
         }
         // $('#icono_doc').removeClass(className).addClass(icon);
         $('#icono_doc').empty().append('<i class="'+icon+'"></i>');
-        if(t == 2){
+        if(t == 2 || t == 3){
           $('#crearDoc2').attr('onclick', 'createNewDocument_(' + tipo_doc_id + ',\'' + nom + '\',\'' + funcionalidades + '\', \'Courier\', 1)');
           $('#crearDoc3').attr('onclick', 'createNewDocument_(' + tipo_doc_id + ',\'' + nom + '\',\'' + funcionalidades + '\', \'Carga\', 0)');
         }else{
@@ -91,14 +96,14 @@ function datatableDocument(t, tipo_doc_id, filtro){
       },
       columns: [{
           "render": numDocument,
-          name: (tipo_doc_id != 3) ? 'num_warehouse' : 'b.id',
+          name: (tipo_doc_id != 3) ? 'b.num_warehouse' : 'b.id',
       }, {
           data: 'fecha',
-          name: 'fecha',
+          name: 'b.created_at',
           width: 80
       }, {
           data: (tipo_doc_id != 3) ? 'cons_nomfull' : 'central_destino',
-          name: (tipo_doc_id != 3) ? 'c.nombre_full' : 'central_destino.nombre'
+          name: (tipo_doc_id != 3) ? 'consignee.nombre_full' : 'central_destino.nombre'
       },{
           data: 'ciudad',
           name: 'ciudad',

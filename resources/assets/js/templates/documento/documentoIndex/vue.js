@@ -82,6 +82,7 @@ var objVue = new Vue({
         status: [],
         id_consolidado_selected: null,
         dialogVisible: false,
+        uploadFileStatus: false,
         // filter
         warehouse: null,
         options: [],
@@ -132,9 +133,75 @@ var objVue = new Vue({
             }
           }]
         },
-        date_range: ''
+        date_range: '',
+
+        fileList:[],
+        headerFile:{
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        errorUpload:[],
+        upload_s: false,
+        uploadSuccess: false,
+        textSuccess: 'Archivo listo para ser cargado',
+        title_msn: '',
+        type_msn: 'info',
+        // variable para saber que pestaña mostrar de la grilla principal de documentos si courier (true) o carga (false)
+        courier_carga:false,
     },
     methods: {
+      insertStatusUploadDocument(){
+        let me = this;
+        me.upload_s = true
+        axios.get('documento/insertStatusUploadDocument').then(function (response) {
+          console.log(response.data);
+          if (response.data.code == 200) {
+            me.uploadSuccess = false
+            me.upload_s = false;
+            me.uploadSuccess = true
+            me.title_msn = 'Proceso finalizado!',
+            me.type_msn = 'success',
+            me.textSuccess = 'Los status han sido agregados correctamente'
+          }else{
+            console.log(response.data);
+            if(response.data.error.errorInfo[2]){
+              toastr.warning('Error.', response.data.error.errorInfo[2]);
+            }else{
+              toastr.warning('Error.', response.data.error);
+            }
+            toastr.options.closeButton = true;
+            me.upload_s = false;
+          };
+        }).catch(function (error) {
+            console.log(error);
+            toastr.warning('Error.', error.message);
+            toastr.options.closeButton = true;
+        });
+      },
+      handleSuccess(response, file, fileList) {
+        $('.el-upload').toggle("slow");
+        let me = this;
+        axios.get('documento/validateUploadDocs').then(function (response) {
+          me.errorUpload = response.data;
+          if(response.data.length === 0){
+            me.uploadSuccess = true
+          }
+        }).catch(function (error) {
+            console.log(error);
+            toastr.warning('Error.');
+            toastr.options.closeButton = true;
+        });
+      },
+      handleRemove(file, fileList){
+        $('.el-upload').toggle("slow");
+        this.errorUpload = []
+        this.uploadSuccess = false
+        this.title_msn = '',
+        this.type_msn = 'info',
+        this.textSuccess = 'Archivo listo para ser cargado'
+      },
+      handleExceed(files, fileList) {
+        this.$message.warning(`El límite es 1, haz seleccionado ${files.length} archivos esta vez, añade hasta ${files.length + fileList.length}`);
+      },
       filterDocument(){
         var filter = {
           'warehouse' : this.warehouse,
@@ -208,6 +275,11 @@ var objVue = new Vue({
                 }
                 $('.pending').addClass('ligth');
               }else{
+                if ($('#default').hasClass('active')) {
+                  if (!$.fn.DataTable.isDataTable('#tbl-documento2')) {
+                    datatableDocument(2, 1);
+                  }
+                }
                 $('.pending').addClass('ligth');
               }
             }
@@ -275,11 +347,13 @@ var objVue = new Vue({
             });
         },
         typeDocumentList: function() {
+          let me = this;
             axios.get('tipoDocumento/all').then(function(response) {
                 $.each(response.data.data, function(key, value) {
                     var lista = '<button type="button" id="btn' + value.id + '" ' + ' onclick="listDocument(' + value.id + ',\'' + value.nombre + '\',\'' + value.icono + '\',\'' + value.funcionalidades + '\',\'' + true + '\')"' + ' class="btn btn-default btn-block" style="text-align:left;">' + ' <i class="' + value.icono + '" aria-hidden="true"></i>  ' + value.nombre +'</button>';
                     if (value.id == 1) {
-                        listDocument(value.id, value.nombre, value.icono, value.funcionalidades);
+                      console.log(me.courier_carga);
+                      listDocument(value.id, value.nombre, value.icono, value.funcionalidades, false, false, me.courier_carga);
                     }
                     $('#listaDocumentos').append(lista);
                 });

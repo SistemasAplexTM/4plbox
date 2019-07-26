@@ -37,6 +37,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Traits\DocumentTrait;
 use App\Exports\ConsolidadoExport;
+use Rap2hpoutre\FastExcel\FastExcel;
 
 class DocumentoController extends Controller
 {
@@ -606,12 +607,12 @@ class DocumentoController extends Controller
                     $num_guia = trim($prefijo . $data->consecutivo);
 
                     $datos = array('num_guia' => $num_guia);
-                    if ($shipper_old != $request->shipper_id) {
+                    // if ($shipper_old != $request->shipper_id) {
                       $datos['shipper_id'] = $data->shipper_id;
-                    }
-                    if ($consignee_old != $request->consignee_id) {
+                    // }
+                    // if ($consignee_old != $request->consignee_id) {
                       $datos['consignee_id'] = $data->consignee_id;
-                    }
+                    // }
                     DocumentoDetalle::where('id', $val->id)->update($datos);
                     /* ACTUALIZAR CONSIGNEE EN EL TRACKING */
                     DB::table('tracking')->where([['documento_detalle_id', $val->id]])->update(['consignee_id' => $data->consignee_id]);
@@ -796,7 +797,10 @@ class DocumentoController extends Controller
         } else {
             // if(env('APP_TYPE') == 'courier'){
             if($request->type == 3){
-              $sql = $this->getAllLoad($where);
+              if($request->filter){
+                $filter = $request->filter;
+              }
+              $sql = $this->getAllLoad($where, $filter);
             }else{
               $where = [['a.deleted_at', null],
               ['b.deleted_at', null],
@@ -3206,6 +3210,7 @@ class DocumentoController extends Controller
         $data = false;
       }
         /* ESTATUS DEL DOCUMENTO */
+        // DB::connection()->enableQueryLog();
         $datos = DB::table('documento_detalle as c')
             ->join('documento as d', 'c.documento_id', 'd.id')
             ->join('shipper as e', 'd.shipper_id', 'e.id')
@@ -3235,7 +3240,23 @@ class DocumentoController extends Controller
             ->when($data, function ($query, $data) {
                 return $query->whereRaw("(c.num_guia LIKE '%" . $data . "' OR c.num_warehouse LIKE '%" . $data . "' OR t.codigo LIKE '" . $data . "%')");
             })
+            ->groupBy(
+              'c.id',
+              'c.peso',
+              'declarado',
+              'name',
+              'c.num_guia',
+              'c.contenido',
+              'procedencia',
+              'consignee',
+              'c.num_consolidado',
+              'ciudad',
+              'depto',
+              'pais',
+              'tracking'
+              )
             ->get();
+            // return DB::getQueryLog();
 
         $answer = array(
             "data" => $datos,
@@ -3256,5 +3277,72 @@ class DocumentoController extends Controller
           'code' => 200,
       );
       return $answer;
+    }
+
+    public function uploadFileStatus(Request $request)
+    {
+      DB::table('tbl_status_aux')->truncate();
+      $data = (new FastExcel)->import($request->file('file'), function ($line){
+        $trans = trim($line['Transportadora']);
+        $guia = trim($line['Guia_transportadora']);
+        if($trans == ''){
+          $trans = null;
+        }
+        if($guia == ''){
+          $guia = null;
+        }
+        DB::table('tbl_status_aux')->insert([
+          [
+            'wh'                  => trim($line['Warehouse']),
+            'status'              => trim($line['Status']),
+            'transportadora'      => $trans,
+            'guia_transportadora' => $guia
+          ],
+        ]);
+      });
+     return 200;
+    }
+
+    public function validateUploadDocs()
+    {
+      $data = DB::table('tbl_status_aux AS a')
+        ->leftjoin('documento_detalle AS b', 'a.wh', 'b.num_warehouse')
+        ->leftjoin('status AS c', 'a.status', 'c.descripcion')
+        ->select(
+          DB::raw('(a.id + 1) AS fila'),
+          'a.status',
+          'c.id AS status_id',
+          'a.wh',
+          'b.id AS documento_detalle_id'
+          )
+        ->where('b.num_warehouse', null)
+        ->orWhere('c.id', null)
+        ->orderBy('fila', 'ASC')
+        ->get();
+
+      return $data;
+    }
+
+    public function insertStatusUploadDocument()
+    {
+      try {
+        $data = DB::select("INSERT INTO status_detalle (status_id, usuario_id, documento_detalle_id, codigo, transportadora, num_transportadora ) SELECT
+        c.id AS status_id,
+        1 AS usuario_id,
+        b.id AS documento_detalle_id,
+        a.wh,
+        a.transportadora,
+        a.guia_transportadora AS num_transportadora
+        FROM
+        tbl_status_aux AS a
+        INNER JOIN documento_detalle AS b ON a.wh = b.num_warehouse
+        INNER JOIN status AS c ON a.status = c.descripcion;");
+
+        return array('code' => 200);
+
+      } catch (\Exception $e) {
+        return array('error' => $e, 'code' => 500);
+      }
+
     }
 }

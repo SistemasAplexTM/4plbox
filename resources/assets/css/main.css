@@ -8,6 +8,9 @@
 .el-select, .el-date-editor.el-input, .el-date-editor{
   width: 100%!important;
 }
+.el-upload__input{
+  visibility: hidden;
+}
 .btn_action_edit{
   color:#FFC107;
 }

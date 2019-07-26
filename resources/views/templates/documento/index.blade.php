@@ -62,6 +62,15 @@
     .btn_actions > .btn, .btn_actions > .btn-group > .btn {
       font-size:12px!important;
     }
+    .el-upload-list{
+      height: 0;
+    }
+    .el-alert__content{
+      width: 100%;
+    }
+    .downloadLink{
+      font-weight: bold;
+    }
 </style>
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
@@ -173,16 +182,24 @@
                                 </div>
                                 <div class="col-lg-12" id="tbl2" style="display:none">
                                     <ul class="nav nav-tabs" role="tablist">
-                    							    <li role="warehouses" class="active" @click="pendign"><a href="#courier" aria-controls="courier" role="tab" data-toggle="tab"><i class="fal fa-box-open"></i> COURIER
-                                        <button class="btn btn-info btn-circle" title="Filtrar" @click="dialogVisible = true" data-toggle="tooltip" style="margin-left: 10px;font-size: 10px!important;width: 20px;height: 20px;">
-                                          <i class="fa fa-filter" style="margin-right: 0;"></i>
-                                        </button>
-                                      </a></li>
-                                      <li role="load" id="li-load" @click="pendign"><a href="#load" aria-controls="load" role="tab" data-toggle="tab"><i class="fal fa-truck-moving"></i> CARGA</a></li>
+                    							    <li role="warehouses" id="default" :class="{ active: courier_carga }" @click="pendign">
+                                        <a href="#courier" aria-controls="courier" role="tab" data-toggle="tab"><i class="fal fa-box-open"></i> COURIER
+
+                                        </a>
+                                      </li>
+                                      <li role="load" :class="{ active: !courier_carga }" id="li-load" @click="pendign">
+                                        <a href="#load" aria-controls="load" role="tab" data-toggle="tab"><i class="fal fa-truck-moving"></i> CARGA
+                                          <button class="btn btn-info btn-circle" title="Filtrar" @click="dialogVisible = true" data-toggle="tooltip" style="margin-left: 10px;font-size: 10px!important;width: 20px;height: 20px;">
+                                            <i class="fa fa-filter" style="margin-right: 0;"></i>
+                                          </button>
+                                          <button class="btn btn-success btn-circle" title="Subir archivo de status" @click="uploadFileStatus = true" data-toggle="tooltip" style="margin-left: 10px;font-size: 10px!important;width: 20px;height: 20px;">
+                                            <i class="fa fa-upload" style="margin-right: 0;margin-top: -3px;"></i>
+                                          </button>
+                                        </a></li>
                                       <li role="pending" id="li-pending" @click="pendign"><a href="#pending" aria-controls="pending" role="tab" data-toggle="tab"><i class="fal fa-box"></i> PENDIENTES <span class="pending badge badge-primary ligth">{{ $pendientes->cantidad }}</span></a></li>
                     							  </ul>
                                     <div class="tab-content">
-                                      <div role="tabpanel" class="tab-pane fade active in" id="courier">
+                                      <div role="tabpanel" class="tab-pane fade" :class="{ active: courier_carga, in: courier_carga  }" id="courier">
                                         <div class="table-responsive" style="padding-top:10px;">
                                           <table id="tbl-documento2" class="table table-striped table-hover table-bordered" style="width: 100%;">
                                               <thead>
@@ -202,7 +219,7 @@
                                         </div>
                                       </div>
 
-                                      <div role="tabpanel" class="tab-pane fade" id="load">
+                                      <div role="tabpanel" class="tab-pane fade" :class="{ active: !courier_carga, in: !courier_carga }" id="load">
                                         <div class="table-responsive" style="padding-top:10px;">
                                           <table id="tbl-documento3" class="table table-striped table-hover table-bordered" style="width: 100%;">
                                               <thead>
@@ -359,6 +376,61 @@
           <span slot="footer" class="dialog-footer">
             <el-button @click="dialogVisible = false">Cancelar</el-button>
             <el-button type="primary" @click="filterDocument" icon="el-icon-search">Filtrar</el-button>
+          </span>
+        </el-dialog>
+
+
+
+        {{-- MODAL SUBIR ESTATUS DOCUMENTO --}}
+        <el-dialog
+          :visible.sync="uploadFileStatus"
+          width="40%" :append-to-body="true">
+          <span slot="title"><i class="fa fa-upload"></i> Cargar archivo</span>
+          <div class="row">
+            <div class="col-lg-12" style="text-align: center;">
+              <el-upload
+                class="upload-demo"
+                drag
+                action="/documento/uploadFileStatus"
+                :headers="headerFile"
+                :on-success="handleSuccess"
+                :on-remove="handleRemove"
+                :file-list="fileList" :limit="1">
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text">Suelta tu archivo aquí o <em>haz clic para cargar</em></div>
+                <div slot="tip" class="el-upload__tip">Solo archivos xlsx con un tamaño menor de 2MB. <a href="{{ asset('/download/Status.xlsx') }}" target="_blank" class="downloadLink">Descargar archivo demo aqui <i class="fal fa-download"></i></a></div>
+              </el-upload>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 30px;">
+            <div class="col-lg-12">
+              <el-alert
+                :closable="false"
+                title="Atención! Por favor verifique la información del archivo"
+                type="warning"
+                show-icon
+                v-if="errorUpload.length > 0">
+                <div style="margin-top: 13px;">
+                    <p v-for="error in errorUpload">
+                      - @{{ error.wh }}
+                      <el-tag type="info" size="mini" style="float: right;" v-if="error.documento_detalle_id === null">Warehouse <i class="fal fa-times"></i></el-tag>
+                      <el-tag type="danger" size="mini" style="float: right;" v-if="error.status_id === null">Status <i class="fal fa-times"></i></el-tag>
+                    </p>
+                </div>
+              </el-alert>
+              <el-alert
+                v-if="uploadSuccess"
+                :title="title_msn"
+                :type="type_msn"
+                show-icon
+                :closable="false">
+                <div>@{{ textSuccess }}</div>
+              </el-alert>
+            </div>
+          </div>
+          <span slot="footer" class="dialog-footer">
+            <el-button type="primary" :loading="upload_s" :disabled="errorUpload.length !== 0" @click="insertStatusUploadDocument"><i class="fal fa-upload"></i> Cargar Status</el-button>
+            <el-button @click="uploadFileStatus = false"><i class="fal fa-times"></i> Cerrar</el-button>
           </span>
         </el-dialog>
 

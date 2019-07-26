@@ -201,6 +201,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('transportador/all', 'TransportadorController@getAll')->name('datatable/all');
     Route::get('transportador/delete/{id}/{logical?}', 'TransportadorController@delete')->name('transportador.delete');
     Route::get('transportador/restaurar/{id}', 'TransportadorController@restaurar');
+    Route::get('transportador/getLogo/{id}', 'TransportadorController@getLogo');
+    Route::post('transportador/uploadImage', 'TransportadorController@uploadImage');
 
     /*--- MODULO STATUS ---*/
     Route::resource('status', 'StatusController', ['except' => ['show', 'create', 'edit']]);
@@ -275,7 +277,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('tipoDocumento/getPlantillasEmail', 'TipoDocumentoController@getPlantillasEmail');
 
     /*--- MODULO DOCUMENTO ---*/
-    Route::resource('documento', 'DocumentoController', ['except' => ['create']]);
+    Route::resource('documento', 'DocumentoController', ['except' => ['create', 'show']]);
 
     Route::post('documento/insertDetail', 'DocumentoController@insertDetail')->name('documento.insertDetail');
     Route::post('documento/editDetail', 'DocumentoController@editDetail')->name('documento.editDetail');
@@ -324,6 +326,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('documento/getDataDocument/{data}', 'DocumentoController@getDataPrintBagsConsolidate');
     Route::get('documento/getDataSearchDocument/{data?}', 'DocumentoController@getDataSearchDocument');
     Route::get('documento/updateShipperConsignee/{id}/{data_id}/{op}', 'DocumentoController@updateShipperConsignee');
+    Route::post('documento/uploadFileStatus', 'DocumentoController@uploadFileStatus');
+    Route::get('documento/validateUploadDocs', 'DocumentoController@validateUploadDocs');
+    Route::get('documento/insertStatusUploadDocument', 'DocumentoController@insertStatusUploadDocument');
 
     /*  REPORTES - IMPRESIONES EN PDF */
     Route::get('impresion-documento/{id}/{document}/{id_detalle?}', 'DocumentoController@pdf')->name('documento.pdf');

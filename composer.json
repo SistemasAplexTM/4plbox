@@ -21,6 +21,7 @@
         "milon/barcode": "^5.3",
         "nztim/mailchimp": "^3.7",
         "paragonie/random_compat": "2.*",
+        "rap2hpoutre/fast-excel": "^1.2",
         "spatie/laravel-backup": "^5.10",
         "yajra/laravel-datatables-oracle": "^8.3"
     },

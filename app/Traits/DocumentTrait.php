@@ -9,8 +9,26 @@ use App\DocumentoDetalle;
 
 trait DocumentTrait
 {
-    public function getAllLoad($filter)
+    public function getAllLoad($where, $filter)
     {
+      $dates = false;
+      if($filter['dates'] == '' and $filter['warehouse'] == '' and $filter['consignee_id'] == ''){
+        $fFin = strtotime('+1 day' , strtotime(date('Y-m-d')));
+        $fFin = date('Y-m-d' , $fFin);
+        $nuevafecha = strtotime('-8 day' , strtotime($fFin)) ;
+        $fIni = date('Y-m-d' , $nuevafecha);
+        $dates = array(
+          'inicio' => $fIni,
+          'fin' => $fFin,
+        );
+      }else{
+        if($filter['dates'] != ''){
+          $dates = array(
+            'inicio' => $filter['dates'][0],
+            'fin' => $filter['dates'][1],
+          );
+        }
+      }
       $sql = DB::table('documento AS b')
           ->leftJoin('shipper', 'b.shipper_id', '=', 'shipper.id')
           ->leftJoin('consignee', 'b.consignee_id', '=', 'consignee.id')
@@ -56,7 +74,16 @@ trait DocumentTrait
               'b.carga_courier',
               DB::raw('"ciudad" AS ciudad')
           )
-          ->where($filter)
+          ->where($where)
+          ->when($filter['warehouse'], function ($query, $data) {
+            return $query->where('b.num_warehouse', 'LIKE', "%".$data."");
+          })
+          ->when($dates, function ($query, $data) {
+            return $query->whereBetween('b.created_at', [$data['inicio'],$data['fin']]);
+          })
+          ->when($filter['consignee_id'], function ($query, $data) {
+            return $query->where('b.consignee_id', $data);
+          })
           ->where('b.carga_courier', 0)
           ->groupBy(
               'b.id',
@@ -229,7 +256,7 @@ trait DocumentTrait
             })
             ->when($filter['consignee_id'], function ($query, $data) {
               return $query->where('b.consignee_id', $data);
-              })
+            })
             ->orderBy('a.agrupado', 'DESC')
             ->orderBy('a.flag', 'ASC')
             ->orderBy('b.created_at', 'ASC');

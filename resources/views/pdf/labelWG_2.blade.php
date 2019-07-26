@@ -77,6 +77,7 @@
             $toalRegistros = 0;
             $contRegistros = 0;
             $piezas = 0;
+          
         ?>
         @foreach ($detalle as $value)
             <?php $piezas += $value->piezas ?>

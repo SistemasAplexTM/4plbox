@@ -4,7 +4,7 @@
             <li class="nav-header">
                 <div class="dropdown profile-element">
                     <span>
-                        <img alt="image" class="img-circle" id="imgProfile" src="{{ asset('storage/') }}/{{ Session::get('logo') }}" style="width: 70px;height: 70px;background-color: #fff"/>
+                        <img alt="image" class="" id="imgProfile" src="{{ asset('storage/') }}/{{ Session::get('logo') }}" style="width: 170px;height: 60px;background-color: #fff"/>
                     </span>
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <span class="clear">
@@ -70,13 +70,13 @@
                     </li>
                     @endcan
                     @can('documento.index')
-                    <li>
+                    {{-- <li>
                         <a href="{{ url('mintic') }}">
                             <spam class="fa fa-clipboard">
                             </spam>
                              Mintic
                         </a>
-                    </li>
+                    </li> --}}
                     @endcan
 
                     @can('master.index')
@@ -174,7 +174,7 @@
                 </li>
             @endif
             @can('master.index')
-              <li class="active">
+              {{-- <li class="active">
                   <a href="" style="background-color: #d6c600; color: white;">
                       <i class="fa fa-puzzle-piece">
                       </i>
@@ -194,11 +194,11 @@
                           </a>
                       </li>
                   </ul>
-              </li>
+              </li> --}}
             @endcan
 
 
-            <li class="active">
+            {{-- <li class="active">
                 <a href="" style="background-color: #2a3fa5; color: white;">
                     <i class="fa fa-address-card">
                     </i>
@@ -234,8 +234,8 @@
                     </li>
                     @endcan
                 </ul>
-            </li>
-            <li class="active">
+            </li> --}}
+            {{-- <li class="active">
                 <a href="" style="background-color: #0eb1ff;; color: white;">
                     <i class="fal fa-dollar-sign">
                     </i>
@@ -262,7 +262,7 @@
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li> --}}
             {{-- SOLO LO VE ADMINISTRADOR Y GESTION --}}
             @if(Auth::user()->isRole('admin'))
               <li class="active" style="">

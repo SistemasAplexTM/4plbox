@@ -168,4 +168,24 @@ class TransportadorController extends Controller
     {
         return \DataTables::of(Transportador::query()->where('deleted_at', '=', NULL))->make(true);
     }
+
+    public function uploadImage(Request $request)
+    {
+      if ($request->file('file')) {
+          $data = Transportador::findOrFail($request->id);
+          //obtenemos el nombre del archivo
+          $data->logo = trim($request->file('file')->getClientOriginalName());
+          $data->logo_url = trim('storage/'.$data->logo);
+          $data->save();
+          //indicamos que queremos guardar un nuevo archivo en el disco local
+          \Storage::disk('public')->put('storage/'.$data->logo, \File::get($request->file('file'))); //se guardara en 'public/storage'
+      }
+      return $request->all();
+    }
+
+    public function getLogo($id)
+    {
+      $data = Transportador::findOrFail($id);
+      return ['name' => $data->logo, 'url' => $data->logo_url];
+    }
 }

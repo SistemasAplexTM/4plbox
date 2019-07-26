@@ -7,14 +7,7 @@ import vSelect from 'vue-select'
 
 import es from 'vee-validate/dist/locale/es';
 import VeeValidate, { Validator } from 'vee-validate';
-// import {
-// Select,
-// Option,
-// Input,
-// InputNumber,
-// Button,
-// Table,
-// TableColumn, } from 'element-ui';
+
 import Element from 'element-ui'
 import locale from 'element-ui/lib/locale/lang/en'
 import Spinner from 'vue-spinkit'
