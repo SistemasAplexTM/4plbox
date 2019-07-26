@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Prealerta;
 use App\Consignee;
 use App\AplexConfig;
+use App\Agencia;
 
 class CasilleroApiController extends Controller
 {
@@ -239,5 +240,17 @@ class CasilleroApiController extends Controller
     {
       $data = AplexConfig::where('key', 'zopim_script_'.$agency_id)->first();
       return ['code' => 200, 'url' => $data->value];
+    }
+
+    public function getPaypal($agency_id)
+    {
+      $data = AplexConfig::where('key', 'agency_paypal_'.$agency_id)->first();
+      return ['code' => 200, 'data' => $data];
+    }
+
+    public function getLogo($agency_id)
+    {
+      $data = Agencia::where('id', $agency_id)->first();
+      return ['code' => 200, 'data' => $data->logo];
     }
 }
