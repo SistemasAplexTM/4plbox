@@ -379,8 +379,6 @@
           </span>
         </el-dialog>
 
-
-
         {{-- MODAL SUBIR ESTATUS DOCUMENTO --}}
         <el-dialog
           :visible.sync="uploadFileStatus"

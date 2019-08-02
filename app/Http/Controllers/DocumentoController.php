@@ -373,20 +373,7 @@ class DocumentoController extends Controller
             $tipoGuia        = TipoDocumento::findOrFail(1); //el 1 es el tipo de documento guia hija
             $funcionalidades = json_decode($tipoGuia->funcionalidades);
         }
-        $citys = DB::table('localizacion AS a')
-            ->join('deptos', 'a.deptos_id', 'deptos.id')
-            ->join('pais', 'deptos.pais_id', 'pais.id')
-            ->select(['a.id',
-            'a.nombre as name',
-            'a.prefijo',
-            'deptos.descripcion as deptos',
-            'deptos.id as deptos_id',
-            'pais.descripcion as pais',
-            'pais.id as pais_id',
-            'pais.iso3 AS prefijo_pais'])
-            ->where([
-                ['a.deleted_at', null],
-            ])->get();
+        $citys = [];
         JavaScript::put([
             'functionalities_doc' => $funcionalidades,
             'functionalities_db'  => json_decode(json_encode($funcionalidades_doc)),

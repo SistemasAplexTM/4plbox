@@ -47,6 +47,7 @@
     43 => 'Milon\\Barcode\\BarcodeServiceProvider',
     44 => 'Caffeinated\\Shinobi\\ShinobiServiceProvider',
     45 => 'Spatie\\Backup\\BackupServiceProvider',
+    46 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
   ),
   'eager' => 
   array (
@@ -83,6 +84,7 @@
     30 => 'Milon\\Barcode\\BarcodeServiceProvider',
     31 => 'Caffeinated\\Shinobi\\ShinobiServiceProvider',
     32 => 'Spatie\\Backup\\BackupServiceProvider',
+    33 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
   ),
   'deferred' => 
   array (

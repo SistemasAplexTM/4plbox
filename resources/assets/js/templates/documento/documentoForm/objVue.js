@@ -31,7 +31,6 @@ var objVue = new Vue({
            if (Object.keys(value).length === 0) {
              $('#msn_l2').css('display', 'inline-block');
            }else{
-             // refreshTable('whgTable');
              $('#msn_l2').css('display', 'none');
            }
          }, 2000);
@@ -693,8 +692,6 @@ var objVue = new Vue({
           var me = this;
           axios.get('../restaurar/' + data.id + '/documento_detalle').then(response => {
               toastr.success('Registro restaurado.');
-              // refreshTable('whgTable');
-              // me.totalizeDocument();
               me.refreshTableDetail();
           });
       },
@@ -708,9 +705,6 @@ var objVue = new Vue({
                   });
                   toastr.options.closeButton = true;
                   me.refreshTableDetail();
-                  // refreshTable('whgTable');
-                  // me.totalizeDocument();
-                  // $('#fila' + data.id).remove();
               });
           } else {
             swal({
@@ -728,9 +722,6 @@ var objVue = new Vue({
                       toastr.success('Registro eliminado correctamente.');
                       toastr.options.closeButton = true;
                       me.refreshTableDetail();
-                      // refreshTable('whgTable');
-                      // me.totalizeDocument();
-                      // $('#fila' + data.id).remove();
                   });
                 }
             });
@@ -959,7 +950,6 @@ var objVue = new Vue({
                   $('#tracking').tagsinput('removeAll');
                   $('#contiene').val('');
                   $('#valDeclarado').val('');
-                  // refreshTable('whgTable');
 
                   me.refreshTableDetail();
               }).catch(function(error) {

@@ -473,7 +473,7 @@ Route::get('DocumentoController', 'DocumentoController@printFile');
 
 Route::get('formatNumber', 'AplexConfigController@formatNumber');
 
-Route::get('ciudad/getSelectCity', 'CiudadController@getSelectCity');
+Route::get('ciudad/getSelectCity/{filter}', 'CiudadController@getSelectCity');
 
 Route::get('selfService/{id?}', 'PuntosController@index');
 

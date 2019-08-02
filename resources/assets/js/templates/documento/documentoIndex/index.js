@@ -13,7 +13,6 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
       $('#btns_group').css('display','none');
     }else{
       var t = 2;
-      console.log(courier_carga);
       if(!courier_carga){
         t = 3;
       }
@@ -52,7 +51,6 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
     }
 
     if(typeof filter == 'undefined' || filter === false){
-      console.log(t, filter);
         if(tipo_doc_id == '1'){
             labels =    '<label for="creado" class="lb_status badge badge-default">Creado</label> ' +
                         '<label for="bodega" class="lb_status badge badge-success">En bodega</label> '+
@@ -96,14 +94,14 @@ function datatableDocument(t, tipo_doc_id, filtro){
       },
       columns: [{
           "render": numDocument,
-          name: (tipo_doc_id != 3) ? 'b.num_warehouse' : 'b.id',
+          name: (tipo_doc_id != 3) ? ((t === 3) ? 'b.num_warehouse' : 'a.num_warehouse') : 'b.id',
       }, {
           data: 'fecha',
           name: 'b.created_at',
           width: 80
       }, {
           data: (tipo_doc_id != 3) ? 'cons_nomfull' : 'central_destino',
-          name: (tipo_doc_id != 3) ? 'consignee.nombre_full' : 'central_destino.nombre'
+          name: (tipo_doc_id != 3) ? ((t === 3) ? 'consignee.nombre_full' : 'c.nombre_full') : 'central_destino.nombre'
       },{
           data: 'ciudad',
           name: 'ciudad',
@@ -136,7 +134,7 @@ function datatableDocument(t, tipo_doc_id, filtro){
           className: 'actions_btn',
           "render": actionsButtons,
           searchable: false,
-          width: 150
+          width: 160
       }],
       'columnDefs': [{
           className: "text-center",
