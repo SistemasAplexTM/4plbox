@@ -7,12 +7,12 @@ use Illuminate\Support\Facades\DB;
 use App\Prealerta;
 use App\Consignee;
 use App\AplexConfig;
+use App\Agencia;
 
 class CasilleroApiController extends Controller
 {
     public function getAllWarehouse($user = null, $idStatus = null)
     {
-     // DB::connection()->enableQueryLog();
       $columns = ['p.id',
       // 'p.codigo AS num_warehouse',
       'q.descripcion',
@@ -66,7 +66,6 @@ class CasilleroApiController extends Controller
           }
         })
         ->get();
-        // return DB::getQueryLog();
         $answer = array(
           "data" => $data,
           "code"  => 200,
@@ -76,6 +75,7 @@ class CasilleroApiController extends Controller
 
     public function getWarehouse($warehouse, $idStatus)
     {
+     // DB::connection()->enableQueryLog();
       $data = DB::table('status_detalle as a')
           ->join('status as b', 'a.status_id', 'b.id')
           ->join('documento_detalle as c', 'a.documento_detalle_id', 'c.id')
@@ -136,6 +136,7 @@ class CasilleroApiController extends Controller
             'u.url_rastreo',
             'a.num_transportadora'
           )->get();
+          // return DB::getQueryLog();
 
         $trackings = DB::table('tracking AS a')
         ->join('documento_detalle AS b', 'a.documento_detalle_id', 'b.id')
@@ -154,12 +155,13 @@ class CasilleroApiController extends Controller
 
     public function getAllPrealert($id_agencia,$consignee_id)
     {
+     // DB::connection()->enableQueryLog();
       $data = Prealerta::leftJoin('consignee as b', 'prealerta.consignee_id', 'b.id')
       ->join('agencia as c', 'prealerta.agencia_id', 'c.id')
       ->select('prealerta.*', 'b.nombre_full as consignee', 'c.descripcion as agencia')
       ->where([['prealerta.deleted_at', NULL],['prealerta.recibido', 0],['prealerta.agencia_id', $id_agencia],['prealerta.consignee_id', $consignee_id]])
       ->get();
-
+      // return DB::getQueryLog();
       $answer = ['code' => 200, 'data' => $data];
       return $answer;
     }
@@ -184,13 +186,39 @@ class CasilleroApiController extends Controller
 
     public function updateUser(Request $request)
     {
-      Consignee::where('id', $request->id)->update($request->all());
+      Consignee::where('id', $request->id)->update([
+       'tipo_identificacion_id' => $request->tipo_identificacion_id,
+       'agencia_id' => $request->agencia_id,
+       'localizacion_id' => $request->localizacion_id,
+       'documento' => $request->documento,
+       'primer_nombre' => $request->primer_nombre,
+       'segundo_nombre' => $request->segundo_nombre,
+       'primer_apellido' => $request->primer_apellido,
+       'segundo_apellido' => $request->segundo_apellido,
+       'direccion' => $request->direccion,
+       'telefono' => $request->telefono,
+       'celular' => $request->celular,
+       'correo' => $request->correo,
+       'zip' => $request->zip,
+       'tarifa' => $request->tarifa,
+       'po_box' => $request->po_box,
+       'estatus' => $request->estatus,
+       'nombre_full' => $request->nombre_full,
+       'casillero' => $request->casillero,
+       'password_casillero' => $request->password_casillero,
+       'direccion2' => $request->direccion2,
+       'acepta_condiciones' => $request->acepta_condiciones,
+       'recibir_info' => $request->recibir_info,
+       'cliente_id' => $request->cliente_id,
+      ]);
       return ['code' => 200];
     }
 
     public function findUser($id)
     {
-      $data = Consignee::find($id);
+     // DB::connection()->enableQueryLog();
+      $data = Consignee::where('id',$id)->with('city')->get();
+      // return DB::getQueryLog();
       return ['code' => 200, 'data' => $data];
     }
 
@@ -212,5 +240,17 @@ class CasilleroApiController extends Controller
     {
       $data = AplexConfig::where('key', 'zopim_script_'.$agency_id)->first();
       return ['code' => 200, 'url' => $data->value];
+    }
+
+    public function getPaypal($agency_id)
+    {
+      $data = AplexConfig::where('key', 'agency_paypal_'.$agency_id)->first();
+      return ['code' => 200, 'data' => $data];
+    }
+
+    public function getLogo($agency_id)
+    {
+      $data = Agencia::where('id', $agency_id)->first();
+      return ['code' => 200, 'data' => $data->logo];
     }
 }

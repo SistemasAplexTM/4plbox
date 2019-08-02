@@ -24,10 +24,11 @@ Route::namespace('Auth')->group(function () {
     });
   });
 });
+Route::get('getLogo/{agency_id}', 'CasilleroApiController@getLogo');
 Route::group(['prefix' => 'user'], function() {
     Route::get('/', function() {
       // authenticated user. Use User::find() to get the user from db by id
-     return request()->user();
+     return request()->user()->id();
     })->middleware('auth:api');
 });
 Route::group(['middleware' => 'auth:api'], function(){
@@ -43,4 +44,5 @@ Route::group(['middleware' => 'auth:api'], function(){
   Route::put('user/update', 'CasilleroApiController@updateUser');
   Route::get('getSelectCity', 'CiudadController@getSelectCity');
   Route::get('getUrlZopim/{agency_id}', 'CasilleroApiController@getUrlZopim');
+  Route::get('getPaypal/{agency_id}', 'CasilleroApiController@getPaypal');
 });

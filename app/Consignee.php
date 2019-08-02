@@ -37,4 +37,9 @@ class Consignee extends Model
         'recibir_info',
         'cliente_id',
     ];
+
+    public function city()
+   {
+       return $this->belongsTo('App\Ciudad', 'localizacion_id', 'id')->select(['id', 'nombre']);
+   }
 }
