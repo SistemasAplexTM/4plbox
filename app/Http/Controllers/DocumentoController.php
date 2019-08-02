@@ -603,8 +603,9 @@ class DocumentoController extends Controller
                     if(env('APP_CLIENT') != 'jyg'){
                       $paquete = 'P'.$val->paquete;
                     }
+                    $num_guia = trim($prefijo . $data->consecutivo . $paquete);
                     // $num_guia = trim($prefijo . $data->consecutivo . $paquete . $prefijoPais);
-                    $num_guia = trim($prefijo . $data->consecutivo);
+                    // $num_guia = trim($prefijo . $data->consecutivo);
 
                     $datos = array('num_guia' => $num_guia);
                     // if ($shipper_old != $request->shipper_id) {
@@ -3345,4 +3346,5 @@ class DocumentoController extends Controller
       }
 
     }
+
 }

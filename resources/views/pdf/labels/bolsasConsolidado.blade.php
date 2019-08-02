@@ -64,7 +64,8 @@
                 <table width="100%;" border="1" cellspacing="0" cellpadding="0" id="tableContainer" style="page-break-after:<?php if ($contRegistros === (1 * $totalRegistros)): ?>avoid;<?php else: ?>always<?php endif; ?>">
                     <tr>
                         <td style="width: 70%;">
-                            <img class="" id="" style="height: 300px; width: 550px;" src="{{ asset('storage/') }}/{{ ((isset($data[0]->logo) and $data[0]->logo != '') ? $data[0]->logo : 'logo.png') }}" />
+                            <img class="" id="" style="height: 300px; width: 550px;" src="{{ public_path() . '/storage/' }}/{{ ((isset($data[0]->logo) and $data[0]->logo != '') ? $data[0]->logo : 'logo.png') }}" />
+                            {{-- <img class="" id="" style="height: 300px; width: 550px;" src="{{ asset('storage/') }}/{{ ((isset($data[0]->logo) and $data[0]->logo != '') ? $data[0]->logo : 'logo.png') }}" /> --}}
                         </td>
                         <td align="CENTER">
                             <span id="tipoCarga">Pieza <div>{{ $i + 1 . ' / ' . $totalRegistros }}</div></span>

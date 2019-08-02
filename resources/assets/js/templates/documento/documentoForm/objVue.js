@@ -31,7 +31,7 @@ var objVue = new Vue({
            if (Object.keys(value).length === 0) {
              $('#msn_l2').css('display', 'inline-block');
            }else{
-             refreshTable('whgTable');
+             // refreshTable('whgTable');
              $('#msn_l2').css('display', 'none');
            }
          }, 2000);

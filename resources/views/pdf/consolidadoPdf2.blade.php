@@ -43,7 +43,7 @@
     <thead>
         <tr>
             <th colspan="2" width="300px">
-              <img alt="image" class="img-circle" id="logo" height="70px" style="margin-bottom: 10px;" src="{{ asset('storage/') }}/{{ ((isset($documento->agencia_logo) and $documento->agencia_logo != '') ? $documento->agencia_logo : 'logo.png') }}"/>
+              {{-- <img alt="image" class="img-circle" id="logo" height="70px" style="margin-bottom: 10px;" src="{{ asset('storage/') }}/{{ ((isset($documento->agencia_logo) and $documento->agencia_logo != '') ? $documento->agencia_logo : 'logo.png') }}"/> --}}
             </th>
             <th>&nbsp;</th>
             <th width="250px" style="text-align: right;">

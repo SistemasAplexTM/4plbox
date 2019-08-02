@@ -1,0 +1,13 @@
+﻿2019-07-24
+1. Limpiar el formulario modal cuando se crear un warehouse desde la pantalla recibo de tracking.==============
+2. Revisar por qué la consulta global de tracking muestra 3 tracking cuando busco uno.=========================
+3. En la pantalla de prealertas permitir que el cliente ingrese el contenido también. =========================
+4. Colocar un archivo Excel de ejemplo de como debe ser el archivo para actualizarstatus masivamente.==========
+5. Dejar en la grilla las cajas que no están consolidadas.
+5. El logo cuando guarde que cambie el nombre =================================================================
+6. Registrar shipper y consignee desde un componente aparte.. que se cree y se seleccione en el documento
+2. La ayuda del inventario de la master
+
+2019-07-25
+
+

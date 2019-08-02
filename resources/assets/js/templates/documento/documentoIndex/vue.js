@@ -352,7 +352,6 @@ var objVue = new Vue({
                 $.each(response.data.data, function(key, value) {
                     var lista = '<button type="button" id="btn' + value.id + '" ' + ' onclick="listDocument(' + value.id + ',\'' + value.nombre + '\',\'' + value.icono + '\',\'' + value.funcionalidades + '\',\'' + true + '\')"' + ' class="btn btn-default btn-block" style="text-align:left;">' + ' <i class="' + value.icono + '" aria-hidden="true"></i>  ' + value.nombre +'</button>';
                     if (value.id == 1) {
-                      console.log(me.courier_carga);
                       listDocument(value.id, value.nombre, value.icono, value.funcionalidades, false, false, me.courier_carga);
                     }
                     $('#listaDocumentos').append(lista);

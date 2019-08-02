@@ -183,6 +183,7 @@ return [
         Milon\Barcode\BarcodeServiceProvider::class,
         Caffeinated\Shinobi\ShinobiServiceProvider::class,
         Spatie\Backup\BackupServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],
 
@@ -240,6 +241,7 @@ return [
         'DNS2D'        => Milon\Barcode\Facades\DNS2DFacade::class,
         'LogActivity'  => App\Helpers\LogActivity::class,
         'HTMLMin'      => HTMLMin\HTMLMin\Facades\HTMLMin::class,
+        'Excel'        => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
 ];
