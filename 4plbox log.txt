@@ -8,6 +8,12 @@
 6. Registrar shipper y consignee desde un componente aparte.. que se cree y se seleccione en el documento
 2. La ayuda del inventario de la master
 
-2019-07-25
+2019-08-05
+
+1. Revisar en los status que si se habilita un envio de email
+2. Revisar el badget de los pendientes que me muestra una info al iniciar y otra al seleccionarlo o mostrarlos todos
+
+
+claudia
 
 

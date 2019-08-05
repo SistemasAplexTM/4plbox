@@ -1,6 +1,7 @@
 $(document).ready(function() {
     $('#tbl-status').DataTable({
         ajax: 'status/all',
+        lengthMenu: [[20, 40, 50, 80, 100, 200, 500], [20, 40, 50, 80, 100, 200, 500]],
         columns: [{
             data: 'descripcion',
             name: 'descripcion',

@@ -880,7 +880,7 @@
         {{-- MODAL AGREGAR TRACKINGS --}}
         @include('templates/documento/modals/modalTracking')
         {{-- MODAL AGREGAR TRACKINGS --}}
-        @include('templates/documento/modals/modalChangeShipperConsignee', ['shippers' => $shippers, 'consignees' => $consignees])
+        @include('templates/documento/modals/modalChangeShipperConsignee')
 
         {{-- MODAL AGREGAR PUNTOS --}}
         <points-component v-if="mostrar.includes(66)" :id_detail="points_id_detail"></points-component>
@@ -888,9 +888,6 @@
 @endsection
 
 @section('scripts')
-{!! $wcpScript; !!}
-{{-- <script src="{{ asset('js/plugins/dataTables/dataTables.keyTable.min.js') }}"></script> --}}
-{{-- <script src="{{ asset('js/plugins/dataTables/fnFilterClear.js') }}"></script> --}}
 <script src="{{ asset('js/templates/documento/documentoForm/objVue.js') }}"></script>
 <script src="{{ asset('js/templates/documento/documentoForm/documento.js') }}"></script>
 <script src="{{ asset('js/templates/documento/documentoForm/totalizar.js') }}"></script>

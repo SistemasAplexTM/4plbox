@@ -329,6 +329,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('documento/uploadFileStatus', 'DocumentoController@uploadFileStatus');
     Route::get('documento/validateUploadDocs', 'DocumentoController@validateUploadDocs');
     Route::get('documento/insertStatusUploadDocument', 'DocumentoController@insertStatusUploadDocument');
+    Route::get('documento/getDataShipperConsignee/{table}/{data}', 'DocumentoController@getDataShipperConsignee');
+    Route::get('documento/getDataShipperConsigneeById/{table}/{id}', 'DocumentoController@getDataShipperConsigneeById');
 
     /*  REPORTES - IMPRESIONES EN PDF */
     Route::get('impresion-documento/{id}/{document}/{id_detalle?}', 'DocumentoController@pdf')->name('documento.pdf');

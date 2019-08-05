@@ -249,7 +249,6 @@ class DocumentoController extends Controller
 
     public function edit($id, $liquidar = false)
     {
-        $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('DocumentoController@printFile'), Session::getId());
         // OBTENEMOS EL ID DEL PAIS QUE ESTA REGISTRADO EN LA CONFIGURACION DE APLEX_CONFIG
         // PARA UTILIZARLO EN EL CONSOLIDADO
 
@@ -382,8 +381,6 @@ class DocumentoController extends Controller
             'citys_data'  => json_decode(json_encode($citys)),
         ]);
         $this->AddToLog('Documento ver (' . $id . ') consecutivo (' . $documento->consecutivo . ')');
-        $shippers = Shipper::all();
-        $consignees = Consignee::all();
         return view('templates/documento/documento', compact(
             'documento',
             'detalle',
@@ -394,10 +391,7 @@ class DocumentoController extends Controller
             'tipoPagos',
             'formaPagos',
             'grupos',
-            'func',
-            'shippers',
-            'consignees',
-            'wcpScript'
+            'func'
         ));
     }
 
@@ -3332,6 +3326,46 @@ class DocumentoController extends Controller
         return array('error' => $e, 'code' => 500);
       }
 
+    }
+
+    public function getDataShipperConsignee($table, $data)
+    {
+      if ($table == 'shipper') {
+        $datos = Shipper::where([
+          ['nombre_full', 'LIKE', '%' . $data . '%'],
+          ['deleted_at', null]
+          ])->get();
+      }else{
+        $datos = Consignee::where([
+          ['nombre_full', 'LIKE', '%' . $data . '%'],
+          ['deleted_at', null]
+          ])->get();
+      }
+          $answer = array(
+              'code' => 200,
+              'data' => $datos
+          );
+        return \Response::json($answer);
+    }
+
+    public function getDataShipperConsigneeById($table, $id)
+    {
+      if ($table == 'shipper') {
+        $datos = Shipper::where([
+          ['id', $id],
+          ['deleted_at', null]
+          ])->first();
+      }else{
+        $datos = Consignee::where([
+          ['id', $id],
+          ['deleted_at', null]
+          ])->first();
+      }
+          $answer = array(
+              'code' => 200,
+              'data' => $datos
+          );
+        return \Response::json($answer);
     }
 
 }

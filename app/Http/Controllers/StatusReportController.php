@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\DocumentoDetalle;
+use App\Documento;
 use App\Http\Requests\StatusReportRequest;
 use App\StatusReport;
+use App\Status;
 use Auth;
 use DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class StatusReportController extends Controller
 {
@@ -38,6 +41,17 @@ class StatusReportController extends Controller
                 $data->fecha_status         = date('Y-m-d H:i:s');
                 $data->created_at           = date('Y-m-d H:i:s');
                 $data->save();
+
+                $status = Status::select('id', 'json_data', 'email')->where('id', $request->status_id)->first();
+                if($status->json_data !== null){
+                  $datos = json_decode($status->json_data);
+                  if(isset($datos->email_template_id) and $datos->email_template_id != '' and $status->email !== 0){
+                    $detail = DocumentoDetalle::select('documento_id')->where('id', $value['id'])->first();
+                    $document = Documento::select('consignee_id', 'agencia_id')->where('id', $detail->documento_id)->first();
+                    $this->sendEmailStatus($document->agencia_id, $document->consignee_id, $datos->email_template_id);
+                  }
+                }
+
                 $this->AddToLog('Status creado id(' . $data->id . ')');
               }
               $answer = array(

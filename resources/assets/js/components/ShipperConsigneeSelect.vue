@@ -1,77 +1,96 @@
 <template lang="html">
-  <el-select v-model="value_id"
-    placeholder="Seleccione"
-    filterable
+  <el-autocomplete
     clearable
-    remote
-    reserve-keyword
-    value-key="id"
+    class="inline-input"
+    v-model="value_id.nombre_full"
+    :fetch-suggestions="querySearch"
+    :trigger-on-focus="false"
+    placeholder="Seleccione"
+    @select="handleSelect"
     size="medium"
-    :remote-method="remoteMethod"
-    :loading="loading"
-    @change="handleSelect">
-    <el-option
-      v-for="item in options"
-      :key="item.id"
-      :label="item.nombre_full"
-      :value="item">
-      <span style="float: left">{{ item.nombre_full }}</span>
-      <span style="float: right; color: #8492a6; font-size: 13px">{{ item.ciudad }}</span>
-    </el-option>
-  </el-select>
+  >
+    <template slot-scope="{ item }">
+      <div>
+        <label class="value_item"><i class="fal fa-user"></i> {{ item.nombre_full }}</label>
+        <!-- <div>
+        <small>
+          {{ item.ciudad }}
+        </small>
+         </div> -->
+      </div>
+    </template>
+  </el-autocomplete>
 </template>
 
 <script>
 export default {
-  props: ['data', 'shipper_id', 'consignee_id', 'option'],
+  props: ['shipper_id', 'consignee_id', 'option'],
   data() {
     return {
       options: [],
       value: [],
       list: [],
       loading: false,
-      value_id: null
+      value_id: {}
     }
   },
   watch:{
    shipper_id(newVal, oldVal){
       setTimeout(() => {
         this.setDefault(newVal)
-      }, 1000);
+      }, 100);
    },
    consignee_id(newVal, oldVal){
       setTimeout(() => {
        this.setDefault(newVal)
-     }, 1000);
-   },
-   data(newVal, oldVal){
-     this.list = newVal;
+     }, 100);
    }
   },
   methods: {
     setDefault(value){
-       var result = this.list.filter(({id}) => id == value );
-       this.value_id = result[0].nombre_full;
-       this.value = result[0]
-       this.$emit('get', result[0]);
+       var me = this;
+       var datos = null;
+       if(me.option == 'shipper'){
+         axios.get('/documento/getDataShipperConsigneeById/shipper/'+value).then(function(response) {
+           datos = response.data.data;
+           me.value_id = datos;
+           me.$emit('get', datos);
+         }).catch(function(error) {
+           console.log(error);
+           toastr.warning('Error: -' + error);
+         });
+       }else{
+         axios.get('/documento/getDataShipperConsigneeById/consignee/'+value).then(function(response) {
+           datos = response.data.data;
+           me.value_id = datos;
+           me.$emit('get', datos);
+         }).catch(function(error) {
+           console.log(error);
+           toastr.warning('Error: -' + error);
+         });
+       }
+
     },
-    remoteMethod(query) {
-      if (query !== '') {
-        this.loading = true;
-        setTimeout(() => {
-          this.loading = false;
-          this.options = this.list.filter(item => {
-            if(item.nombre_full !== null){
-              return item.nombre_full.toLowerCase()
-              .indexOf(query.toLowerCase()) > -1;
-            }
-          });
-        }, 200);
-      } else {
-        this.options = [];
+    querySearch(queryString, cb) {
+      var me = this;
+      if(me.option == 'shipper'){
+        axios.get('/documento/getDataShipperConsignee/shipper/'+queryString).then(function(response) {
+          cb(response.data.data);
+        }).catch(function(error) {
+          console.log(error);
+          toastr.warning('Error: -' + error);
+        });
+      }else{
+        axios.get('/documento/getDataShipperConsignee/consignee/'+queryString).then(function(response) {
+          cb(response.data.data);
+        }).catch(function(error) {
+          console.log(error);
+          toastr.warning('Error: -' + error);
+        });
       }
     },
     handleSelect(item) {
+      this.value_id = item;
       this.$emit('get', item);
     }
   }
@@ -79,4 +98,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
+  .el-autocomplete{
+    width: 100%!important;
+  }
 </style>
