@@ -29,6 +29,7 @@ trait DocumentTrait
           );
         }
       }
+      $where[] = ['b.carga_courier', 0];
       $sql = DB::table('documento AS b')
           ->leftJoin('shipper', 'b.shipper_id', '=', 'shipper.id')
           ->leftJoin('consignee', 'b.consignee_id', '=', 'consignee.id')
@@ -84,7 +85,6 @@ trait DocumentTrait
           ->when($filter['consignee_id'], function ($query, $data) {
             return $query->where('b.consignee_id', $data);
           })
-          ->where('b.carga_courier', 0)
           ->groupBy(
               'b.id',
               'b.liquidado',
@@ -104,10 +104,10 @@ trait DocumentTrait
         return $sql;
     }
 
-    public function getAllCourier($where, $filter)
+    public function getAllCourier($where, $filter, $type)
     {
       $dates = false;
-      if($filter['dates'] == '' and $filter['warehouse'] == '' and $filter['consignee_id'] == ''){
+      if($filter['dates'] == '' and $filter['warehouse'] == '' and $filter['consignee_id'] == '' and $type != 4){
         $fFin = strtotime('+1 day' , strtotime(date('Y-m-d')));
         $fFin = date('Y-m-d' , $fFin);
         $nuevafecha = strtotime('-8 day' , strtotime($fFin)) ;
@@ -117,12 +117,16 @@ trait DocumentTrait
           'fin' => $fFin,
         );
       }else{
-        if($filter['dates'] != ''){
+        if($filter['dates'] != '' and $type != 4){
           $dates = array(
             'inicio' => $filter['dates'][0],
             'fin' => $filter['dates'][1],
           );
         }
+      }
+
+      if ($type != 4) {
+        $where[] = ['b.carga_courier', 1];
       }
 
         $label_1 = "<a style='float:right;cursor:pointer;color:red' title='Quitar' data-toggle='tooltip' onclick='removerDocumentoAgrupado(";
@@ -180,74 +184,73 @@ trait DocumentTrait
           ->leftJoin('shipper AS d', 'b.shipper_id', 'd.id')
           ->leftJoin('agencia AS e', 'b.agencia_id', 'e.id')
           ->select(
-          	'a.id AS detalle_id',
-            'b.id',
-          	'b.valor_libra',
-          	'b.valor',
-          	'b.liquidado',
-          	'b.tipo_documento_id',
-          	'b.consecutivo AS codigo',
-          	'b.created_at AS fecha',
-          	'b.num_warehouse AS warehouse',
-          	'c.nombre_full AS cons_nomfull',
-          	'c.correo AS email_cons',
-          	'd.nombre_full AS ship_nomfull',
-          	'e.descripcion AS agencia',
-          	'a.piezas',
-          	'a.peso',
-          	'a.volumen',
-          	'a.num_warehouse',
-          	'a.num_guia',
-          	'a.consolidado AS consolidado_status',
-          	'a.agrupado',
-          	'a.flag',
-          	'b.carga_courier',
-            DB::raw("(SELECT
-                  			x.descripcion AS estatus
-                  		FROM
-                  			status_detalle AS z
-                  		INNER JOIN `status` AS x ON z.status_id = x.id
-                  		WHERE
-                  			z.documento_detalle_id = a.id
-                  		ORDER BY
-                  			z.id DESC
-                  		LIMIT 1
-                  	) AS estatus"),
-            DB::raw("(SELECT
-                  			x.color AS estatus_color
-                  		FROM
-                  			status_detalle AS z
-                  		INNER JOIN `status` AS x ON z.status_id = x.id
-                  		WHERE
-                  			z.documento_detalle_id = a.id
-                  		ORDER BY
-                  			z.id DESC
-                  		LIMIT 1
-                  	) AS estatus_color"),
-            DB::raw('(SELECT
-                        Count(z.id)
-                      FROM
-                        documento_detalle AS z
-                      WHERE
-                        z.deleted_at IS NULL
-                        AND z.agrupado = a.id
-                        AND z.flag = 1
-                      ) AS agrupadas'),
-            DB::raw('(SELECT
-                        z.num_warehouse
-                      FROM
-                        documento_detalle AS z
-                      WHERE
-                        z.deleted_at IS NULL
-                        AND z.id = a.agrupado
-                        AND z.flag = 0
-                      ) AS padre'),
-              $qr_group,
-              'a.mintic',
-              DB::raw('"ciudad" AS ciudad')
+            	'a.id AS detalle_id',
+              'b.id',
+            	'b.valor_libra',
+            	'b.valor',
+            	'b.liquidado',
+            	'b.tipo_documento_id',
+            	'b.consecutivo AS codigo',
+            	'b.created_at AS fecha',
+            	'b.num_warehouse AS warehouse',
+            	'c.nombre_full AS cons_nomfull',
+            	'c.correo AS email_cons',
+            	'd.nombre_full AS ship_nomfull',
+            	'e.descripcion AS agencia',
+            	'a.piezas',
+            	'a.peso',
+            	'a.volumen',
+            	'a.num_warehouse',
+            	'a.num_guia',
+            	'a.consolidado AS consolidado_status',
+            	'a.agrupado',
+            	'a.flag',
+            	'b.carga_courier',
+              DB::raw("(SELECT
+                    			x.descripcion AS estatus
+                    		FROM
+                    			status_detalle AS z
+                    		INNER JOIN `status` AS x ON z.status_id = x.id
+                    		WHERE
+                    			z.documento_detalle_id = a.id
+                    		ORDER BY
+                    			z.id DESC
+                    		LIMIT 1
+                    	) AS estatus"),
+              DB::raw("(SELECT
+                    			x.color AS estatus_color
+                    		FROM
+                    			status_detalle AS z
+                    		INNER JOIN `status` AS x ON z.status_id = x.id
+                    		WHERE
+                    			z.documento_detalle_id = a.id
+                    		ORDER BY
+                    			z.id DESC
+                    		LIMIT 1
+                    	) AS estatus_color"),
+              DB::raw('(SELECT
+                          Count(z.id)
+                        FROM
+                          documento_detalle AS z
+                        WHERE
+                          z.deleted_at IS NULL
+                          AND z.agrupado = a.id
+                          AND z.flag = 1
+                        ) AS agrupadas'),
+              DB::raw('(SELECT
+                          z.num_warehouse
+                        FROM
+                          documento_detalle AS z
+                        WHERE
+                          z.deleted_at IS NULL
+                          AND z.id = a.agrupado
+                          AND z.flag = 0
+                        ) AS padre'),
+                $qr_group,
+                'a.mintic',
+                DB::raw('"ciudad" AS ciudad')
             )
             ->where($where)
-            ->where('b.carga_courier', 1)
             ->when($filter['warehouse'], function ($query, $data) {
               return $query->where('a.num_warehouse', 'LIKE', "%".$data."");
             })

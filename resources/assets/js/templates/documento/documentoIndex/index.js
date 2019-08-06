@@ -94,7 +94,7 @@ function datatableDocument(t, tipo_doc_id, filtro){
       },
       columns: [{
           "render": numDocument,
-          name: (tipo_doc_id != 3) ? ((t === 3) ? 'b.num_warehouse' : 'a.num_warehouse') : 'b.id',
+          name: (tipo_doc_id != 3) ? ((t === 3 || t === 4) ? 'b.num_warehouse' : 'a.num_warehouse') : 'b.id',
       }, {
           data: 'fecha',
           name: 'b.created_at',
@@ -131,7 +131,7 @@ function datatableDocument(t, tipo_doc_id, filtro){
           // visible: (show_agency != null && show_agency != 0) ? false : true
       }, {
           sortable: false,
-          className: 'actions_btn',
+          className: '',
           "render": actionsButtons,
           searchable: false,
           width: 160
@@ -181,11 +181,17 @@ function actionsButtons(data, type, full, meta) {
         if (permission_delete && (parseInt(full.cantidad) === 0)) {
             btn_delete = '<a onclick=\"modalEliminar(' + full.id + ')\" class="delete" title="Eliminar" data-toggle="tooltip" style="color:#E34724;"><i class="fal fa-trash-alt fa-lg"></i></a>';
         }
-        if(app_type === 'courier'){
-          var btns = "<div class='btn-group'>" + "<button type='button' class='btn btn-default dropdown-toggle btn-s' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + "<i class='fal fa-print fa-lg'></i><span class='caret'></span>" + "</button>" + "<ul class='dropdown-menu dropdown-menu-right pull-right'>" + "<li><a href='impresion-documento/" + full.id + "/consolidado' target='_blank'> <spam class='fa fa-print'></spam> Imprimir manifiesto</a></li>" + "<li><a href='impresion-documento/" + full.id + "/consolidado_guias' target='_blank'> <spam class='fa fa-print'></spam> Imprimir Guias</a></li>" + "<li role='separator' class='divider'></li> " + "<li><a href='impresion-documento/pdfContrato' target='_blank'> <spam class='fa fa-print'></spam> Imprimir contrato</a></li>" + "<li><a href='impresion-documento/pdfTsa' target='_blank'> <spam class='fa fa-print'></spam> Imprimir TSA</a></li>" + "</ul></div>";
-        }else{
-          var btns = "<div class='btn-group'>" + "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + "<i class='fal fa-print fa-lg'></i><span class='caret'></span>" + "</button>" + "<ul class='dropdown-menu dropdown-menu-right pull-right'>" + "<li><a href='impresion-documento/" + full.id + "/consolidado' target='_blank'> <spam class='fa fa-print'></spam> Imprimir manifiesto</a></li>" + "<li><a href='impresion-documento/" + full.id + "/consolidado_guias' target='_blank'> <spam class='fa fa-print'></spam> Imprimir Guias</a></li>" + "<li role='separator' class='divider'></li> " + "<li><a href='impresion-documento/pdfContrato' target='_blank'> <spam class='fa fa-print'></spam> Imprimir contrato</a></li>" + "<li><a href='impresion-documento/pdfTsa' target='_blank'> <spam class='fa fa-print'></spam> Imprimir TSA</a></li>" + "</ul></div>";
-        }
+
+        var btns = "<div class='btn-group'>"
+        + "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"
+        + "<i class='fal fa-print fa-lg'></i> <span class='caret'></span>" + "</button>"
+        + "<ul class='dropdown-menu dropdown-menu-right pull-right'>"
+        + "<li><a href='impresion-documento/" + full.id + "/consolidado' target='_blank'> <spam class='fa fa-print'></spam> Imprimir manifiesto</a></li>"
+        + "<li><a href='impresion-documento/" + full.id + "/consolidado_guias' target='_blank'> <spam class='fa fa-print'></spam> Imprimir Guias</a></li>"
+        + "<li role='separator' class='divider'></li>"
+        + "<li><a href='impresion-documento/pdfContrato' target='_blank'> <spam class='fa fa-print'></spam> Imprimir contrato</a></li>"
+        + "<li><a href='impresion-documento/pdfTsa' target='_blank'> <spam class='fa fa-print'></spam> Imprimir TSA</a></li>"
+        + "</ul></div>";
         return btn_edit + ' ' + btns + ' ' + btn_status + ' ' +  btn_delete;
     } else {
         var codigo = full.num_warehouse;
@@ -255,7 +261,10 @@ function numDocument(data, type, full, meta) {
         color_badget = 'default';
     }else{
         if (full.tipo_documento_id != 3) {
-            codigo = full.num_warehouse;
+          codigo = full.num_warehouse;
+            if (full.num_warehouse === null) {
+              codigo = full.warehouse;
+            }
             cant = full.piezas;
             if (full.liquidado == 1) {
                 // if(app_type === 'courier'){codigo = full.num_guia;}
@@ -303,15 +312,18 @@ function numDocument(data, type, full, meta) {
       }
       return '<span class="" data-toggle="tooltip" title="'+st+'"><i class="fa fa-'+ ((full.estatus == null) ? 'box' : ((full.agrupadas > 0) ? 'boxes' : ((full.flag == 1) ? 'minus' : 'box-open')))+' fa-xs" style="color:'+ ((full.flag == 1) ? '#E34724' : full.estatus_color) +'"></i> ' + ((codigo == null) ? full.warehouse : codigo )+ '</span><a style="float: right;cursor:pointer;" class="badge badge-'+ classText +' pop" role="button" data-html="true" data-toggle="popover" data-trigger="hover" title="<b>Documentos agrupadas</b>" data-content="'+((groupGuias == null) ? '' : groupGuias )+'" ' + group + '>'+ ((full.agrupadas == null) ? '' : full.agrupadas)+'</a> ' + mintic;
     }else{
-      icon = 'boxes';
+      icon = 'fal fa-boxes';
       if(full.transporte_id == 7){
-        icon = 'plane';
+        icon = 'fal fa-plane';
       }
       if(full.transporte_id == 8){
-        icon = 'ship';
+        icon = 'fal fa-ship';
+      }
+      if (full.num_warehouse === null) {
+        icon = 'fa fa-box';
       }
 
-      return '<strong>' + ((codigo == null) ? '' : codigo) + '<strong> <i class="fal fa-'+ icon +'"></i> <span style="float: right;" class="badge badge-' + color_badget + '" data-toggle="tooltip" data-placement="top" title="" data-original-title="Total piezas">' + cant + '</span>';
+      return '<i class="'+ icon +'"></i> <strong>' + ((codigo == null) ? '' : codigo) + '<strong> <span style="float: right;" class="badge badge-' + color_badget + '" data-toggle="tooltip" data-placement="top" title="" data-original-title="Total piezas">' + ((cant === null) ? 0 : cant) + '</span>';
     }
 }
 

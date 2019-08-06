@@ -347,7 +347,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('aerolinea_inventario/{id}', 'AerolineasInventarioController@update')->name('aerolinea_inventario.update');
     Route::post('aerolinea_inventario', 'AerolineasInventarioController@store')->name('aerolinea_inventario.store');
     Route::get('aerolinea_inventario/get/{aerolinea}', 'AerolineasInventarioController@getByAerolinea');
-    Route::get('aerolinea_inventario/all', 'AerolineasInventarioController@getAll');
+    Route::get('aerolinea_inventario/all/{used?}', 'AerolineasInventarioController@getAll');
     Route::get('aerolinea_inventario', 'AerolineasInventarioController@index')->name('aerolinea_inventario.index');
 
     /*--- MODULO CLIENTES ---*/

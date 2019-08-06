@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-include_once(app_path() . '\WebClientPrint\WebClientPrint.php');
+// include_once(app_path() . '\WebClientPrint\WebClientPrint.php');
 use Neodynamic\SDK\Web\WebClientPrint;
 use Neodynamic\SDK\Web\Utils;
 use Neodynamic\SDK\Web\DefaultPrinter;
@@ -67,8 +67,6 @@ class DocumentoController extends Controller
     public function index()
     {
         $this->assignPermissionsJavascript('documento');
-        $wcppScriptDetect = WebClientPrint::createWcppDetectionScript(action('WebClientPrintController@processRequest'), Session::getId());
-        $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('DocumentoController@printFile'), Session::getId());
         $status_list = Status::select('id', 'descripcion', 'color', 'icon')
             ->where([['deleted_at', null]])
             ->get();
@@ -77,12 +75,13 @@ class DocumentoController extends Controller
           ->select(DB::raw('Count(a.num_warehouse) AS cantidad'))
           ->where([
             ['a.deleted_at', null],
+            ['a.tipo_documento_id', 1],
             ['b.num_warehouse', null],
             ['b.deleted_at', null]
           ])
           ->whereNotNull('a.num_warehouse')
           ->first();
-        return view('templates.documento.index', compact('status_list', 'pendientes', 'wcpScript', 'wcppScriptDetect'));
+        return view('templates.documento.index', compact('status_list', 'pendientes'));
     }
 
     public function create($tipo_documento_id)
@@ -785,8 +784,7 @@ class DocumentoController extends Controller
               $sql = $this->getAllLoad($where, $filter);
             }else{
               $where = [['a.deleted_at', null],
-              ['b.deleted_at', null],
-              ['b.tipo_documento_id', $request->id_tipo_doc]];
+              ['b.deleted_at', null], ['b.tipo_documento_id', $request->id_tipo_doc]];
               if(!Auth::user()->isRole('admin')){
                 $where[] = ['b.agencia_id', Auth::user()->agencia_id];
               }
@@ -800,13 +798,9 @@ class DocumentoController extends Controller
                   $where[] = ['a.num_warehouse', NULL ];
                 }
               }
-              $sql = $this->getAllCourier($where, $filter);
+              $sql = $this->getAllCourier($where, $filter, $request->type);
             }
         }
-        // echo '<pre>';
-        // print_r($sql);
-        // echo '<pre>';
-        // exit();
         return Datatables::of($sql)->make(true);
     }
 

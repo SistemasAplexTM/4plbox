@@ -3,17 +3,15 @@
 2. Revisar por qué la consulta global de tracking muestra 3 tracking cuando busco uno.=========================
 3. En la pantalla de prealertas permitir que el cliente ingrese el contenido también. =========================
 4. Colocar un archivo Excel de ejemplo de como debe ser el archivo para actualizarstatus masivamente.==========
-5. Dejar en la grilla las cajas que no están consolidadas.
-5. El logo cuando guarde que cambie el nombre =================================================================
-6. Registrar shipper y consignee desde un componente aparte.. que se cree y se seleccione en el documento
-2. La ayuda del inventario de la master
 
 2019-08-05
+5. El logo cuando guarde que cambie el nombre =============================================================================
+1. Revisar en los status que si se habilita un envio de email =============================================================
 
-1. Revisar en los status que si se habilita un envio de email
-2. Revisar el badget de los pendientes que me muestra una info al iniciar y otra al seleccionarlo o mostrarlos todos
-
-
-claudia
-
-
+2019-08-06
+1. Revision del boton de impresion de la grilla de consolidados ya que estaba diferente del boton de Impresion
+  de la grilla de documentos. Se acomodo y se ajustaron los botones de las grillas a la izquierda para mejor visualizacion.======
+2. Revisar el badget de los pendientes que me muestra una info al iniciar y otra al seleccionarlo o mostrarlos todos=============
+2. La ayuda del inventario de la master =========================================================================================
+6. Registrar shipper y consignee desde un componente aparte.. que se cree y se seleccione en el documento
+5. Dejar en la grilla las cajas que no están consolidadas.

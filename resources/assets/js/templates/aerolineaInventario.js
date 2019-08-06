@@ -1,60 +1,79 @@
 $(document).ready(function() {
-    $('#tbl-aerolinea_inventario').DataTable({
-        ajax: 'aerolinea_inventario/all',
-        columns: [{
-            data: 'consecutivo_creacion',
-            name: 'consecutivo_creacion'
-        }, {
-            data: 'aerolinea',
-            name: 'aerolinea'
-        }, {
-            data: 'guia',
-            name: 'guia'
-        }, {
-            sortable: false,
-            "render": function(data, type, full, meta) {
-                var btn_edit = '';
-                var btn_delete = '';
-                var btns = '';
-                // if (permission_update) {
-                    var params = [
-                        full.id,
-                        full.aerolinea_id, "'" + full.aerolinea + "'", "'" + full.guia + "'"
-                    ];
-                    var btn_edit = "<a onclick=\"edit(" + params + ")\" class='btn btn-outline btn-success btn-xs' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit'></i></a> ";
-                // }
-                // if (permission_delete) {
-                    if (full.usado == '0') {
-                        btns += btn_delete = " <a onclick=\"eliminar(" + full.id + "," + true + ")\" class='btn btn-outline btn-danger btn-xs' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-trash'></i></a> ";
-                    }
-                // }
-                return btns;
-            }
-        }],
-        "drawCallback": function(settings) {
-            var api = this.api();
-            var rows = api.rows({
-                page: 'current'
-            }).nodes();
-            var last = null;
-            api.column(1, {
-                page: 'current'
-            }).data().each(function(group, i) {
-                if (last !== group) {
-                    // var btn_delete = " <a onclick=\"eliminar(" + i + ")\" class='btn btn-outline btn-danger btn-xs' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-trash'></i></a> ";
-                    $(rows).eq(i).before('<tr class="group"><td colspan="3"><h3>' + group + '</h3></td></tr>');
-                    last = group;
-                }
-            });
-        },
-        "columnDefs": [{
-            "targets": 0,
-            "width": "0%",
-            "visible": false,
-            "searchable": false
-        }, ]
-    });
+
 });
+
+function datatableCreate(table, used) {
+  $('#tbl-' + table).DataTable({
+      lengthMenu: [[20, 40, 50, 80, 100, 200, 500], [20, 40, 50, 80, 100, 200, 500]],
+      ajax: {
+          "url": 'aerolinea_inventario/all',
+          "data": function(d) {
+              d.used = used;
+          }
+      },
+      columns: [{
+          data: 'consecutivo_creacion',
+          name: 'consecutivo_creacion'
+      }, {
+          data: 'aerolinea',
+          name: 'aerolinea'
+      }, {
+          data: 'guia',
+          name: 'guia',
+          "render": function (data, type, full, meta) {
+            return full.codigo + ' ' + full.guia;
+          },
+      }, {
+          sortable: false,
+          "render": function(data, type, full, meta) {
+              var btn_edit = '';
+              var btn_delete = '';
+              var btns = '';
+              // if (permission_update) {
+                  var params = [
+                      full.id,
+                      full.aerolinea_id, "'" + full.aerolinea + "'", "'" + full.guia + "'"
+                  ];
+                  var btn_edit = "<a onclick=\"edit(" + params + ")\" class='btn btn-outline btn-success btn-xs' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit'></i></a> ";
+              // }
+              // if (permission_delete) {
+                  if (full.usado == '0') {
+                      btns += btn_delete = " <a onclick=\"eliminar(" + full.id + "," + true + ")\" class='btn btn-outline btn-danger btn-xs' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-trash'></i></a> ";
+                  }
+              // }
+              return btns;
+          }
+      }],
+      "drawCallback": function(settings) {
+          var api = this.api();
+          var rows = api.rows({
+              page: 'current'
+          }).nodes();
+          var last = null;
+          api.column(1, {
+              page: 'current'
+          }).data().each(function(group, i) {
+              if (last !== group) {
+                  // var btn_delete = " <a onclick=\"eliminar(" + i + ")\" class='btn btn-outline btn-danger btn-xs' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-trash'></i></a> ";
+                  $(rows).eq(i).before('<tr class="group"><td colspan="3"><h3>' + group + '</h3></td></tr>');
+                  last = group;
+              }
+          });
+      },
+      "columnDefs": [{
+          "targets": 0,
+          "width": "0%",
+          "visible": false,
+          "searchable": false
+      },{
+          "targets": 1,
+          "width": "50%"
+      }, {
+          "targets": 2,
+          "width": "40%"
+      }, ]
+  });
+}
 
 function edit(id) {
     var data = {
@@ -76,6 +95,10 @@ var objVue = new Vue({
     },
     created() {
         this.getAerolinea();
+    },
+    mounted(){
+      datatableCreate('aerolinea_inventario', 0);
+      datatableCreate('aerolinea_inventario1', 1);
     },
     methods: {
         create: function(data) {
