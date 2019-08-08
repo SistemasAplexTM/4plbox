@@ -40,8 +40,8 @@ h5 {
 }
 .nav > li > a {
   color: #a7b1c2;
-  font-weight: 600;
-  padding: 14px 20px 14px 25px;
+  /* font-weight: 600; */
+  /* padding: 14px 20px 14px 25px; */
 }
 .nav.navbar-right > li > a {
   color: #999c9e;
@@ -110,7 +110,7 @@ h5 {
   font-weight: normal;
 }
 .dropdown-menu > li > a.font-bold {
-  font-weight: 600;
+  /* font-weight: 600; */
 }
 .navbar-top-links .dropdown-menu li {
   display: block;
@@ -3638,7 +3638,7 @@ body.body-small .footer.fixed {
 }
 .nav-tabs > li > a {
   color: #A7B1C2;
-  font-weight: 600;
+  /* font-weight: 600; */
   padding: 10px 20px 10px 25px;
 }
 .nav-tabs > li > a:hover,

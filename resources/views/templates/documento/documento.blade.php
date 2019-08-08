@@ -152,7 +152,7 @@
         <modalcargosadd-component :showmodal="showmodalAdd"></modalcargosadd-component>
         <products-cuba-component v-if="mostrar.includes(66)" :id_document="{{ $documento->id }}" :points="total_points" :data_p="data_points" @get="getProductsCuba($event)"></products-cuba-component>
 
-        <form class="" id="formDocumento" name="formDocumento" class=" form-horizontal" role="form" action="{{ url('documento/updatedDocument') }}/{{  $documento->id }}" method="post">
+        <form class="" autocomplete="off" id="formDocumento" name="formDocumento" class=" form-horizontal" role="form" action="{{ url('documento/updatedDocument') }}/{{  $documento->id }}" method="post">
                 {{ csrf_field() }}
                 <input type="hidden" class="form-control" id="date" name="date" readonly="">
                 <input type="hidden" class="form-control" id="id_documento" name="id_documento"  value="{{ $documento->id }}" readonly="">
@@ -203,21 +203,21 @@
                     <div class="col-lg-6" style="margin-bottom: 20px;" v-if="mostrar.includes(25)">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
-                                <h5><span class="fa fa-arrow-circle-up"> </span> @lang('documents.sender_shipper') <span style="color: coral; display: none;" id="msnEditarShip">@lang('documents.prepared_for_editing')</span></h5>
+                                <h5><span class="fal fa-plane-departure"> </span> @lang('documents.sender_shipper') <span style="color: coral; display: none;" id="msnEditarShip">@lang('documents.prepared_for_editing')</span></h5>
 
                             </div>
                             <div class="ibox-content col-lg-12" :class="[mostrar.includes(22) ? 'wrh' : 'guia' ]">
                                 <div class="row">
                                     <div class="col-sm-12"  data-container="body" data-trigger="focus" data-toggle="popover" data-placement="top" data-content="Para registrar un nuevo Shipper, hacer clic en el icono (Reset Shipper) e ingresar los nuevos datos." style="padding-left: 0px; padding-right: 0px;">
                                         <div class="form-group">
-                                            <label class="control-label col-sm-2">@lang('documents.name'): </label>
+                                            <label class="control-label col-sm-2">@lang('documents.name'): <samp id="require">*</samp></label>
                                             <div class="col-sm-10">
                                                 <div class="input-group"  style="margin-bottom: 5px;" :class="{ 'has-error': errors.has('nombreR') }">
-                                                    <input type="search" data-id="nomBuscarShipper" id="nombreR" name="nombreR" placeholder="@lang('documents.type_to_search')" class="form-control" onkeyup="deleteError($(this).parent());" v-model="nombreR" v-validate="'required'">
+                                                    <input type="search" autocomplete="off" data-id="nomBuscarShipper" id="nombreR" name="nombreR" placeholder="@lang('documents.type_to_search')" class="form-control" onkeyup="deleteError($(this).parent());" v-model="nombreR" v-validate="'required'">
                                                     <span class="input-group-btn">
-                                                        <button id="btnBuscarShipper" @click="modalShipper(true)" class="btn btn-primary" type="button" data-toggle='tooltip' title="Buscar Shipper"><span class="fa fa-search"></span> @lang('documents.search')</button>
-                                                        <button id="btnEditShipper" @click="editFormsShipperConsignee(0)" class="btn btn-success" type="button" data-toggle='tooltip' title="Editar Shipper"><span class="fa fa-edit"></span>&nbsp;</button>
-                                                        <button id="btnResetShipper" @click="resetFormsShipperConsignee(0)" class="btn btn-default" type="button" data-toggle='tooltip' title="Reset Shipper"><span class="fa fa-sync"></span>&nbsp;</button>
+                                                        <button id="btnBuscarShipper" @click="modalShipper(true)" class="btn btn-primary" type="button" data-toggle='tooltip' title="Buscar"><span class="fal fa-search"></span>&nbsp;</button>
+                                                        <button id="btnEditShipper" @click="editFormsShipperConsignee(0)" class="btn btn-success" type="button" data-toggle='tooltip' title="Editar"><span class="fal fa-edit"></span>&nbsp;</button>
+                                                        <button id="btnResetShipper" @click="resetFormsShipperConsignee(0)" class="btn btn-default" type="button" data-toggle='tooltip' title="Reset"><span class="fal fa-sync"></span>&nbsp;</button>
                                                     </span>
                                                 </div>
                                                 <small class="help-block has-error">@{{ errors.first('nombreR') }}</small>
@@ -226,9 +226,9 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="control-label col-sm-2">@lang('documents.address'): </label>
+                                    <label class="control-label col-sm-2">@lang('documents.address'): <samp id="require">*</samp></label>
                                     <div class="col-sm-10" :class="{ 'has-error': errors.has('direccionR') }">
-                                        <input type="text" id="direccionR" name="direccionR" placeholder="@lang('documents.address')" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());" v-model="direccionR" v-validate="'required'">
+                                        <input type="text" autocomplete="off" id="direccionR" name="direccionR" placeholder="@lang('documents.address')" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());" v-model="direccionR" v-validate="'required'">
                                         <small class="help-block has-error">@{{ errors.first('direccionR') }}</small>
                                     </div>
                                 </div>
@@ -237,12 +237,12 @@
                                      <div class="row">
                                         <label class="control-label col-sm-2">@lang('documents.email'):</label>
                                         <div class="col-sm-5" :class="{ 'has-error': errors.has('emailR') }">
-                                            <input type="email" placeholder="Example@example.com" id="emailR" name="emailR" class="form-control" v-validate.disable="'unique_s'">
+                                            <input type="email" autocomplete="off" placeholder="Example@example.com" id="emailR" name="emailR" class="form-control" v-validate.disable="'unique_s'">
                                             <small class="help-block has-error">@{{ errors.first('emailR') }}</small>
                                         </div>
                                         <label class="control-label col-sm-1">@lang('documents.phone'): </label>
                                         <div class="col-sm-4">
-                                            <input type="tel" data-mask="(999) 999-9999" placeholder="@lang('documents.phone')" id="telR" name="telR" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());">
+                                            <input type="tel" autocomplete="off" data-mask="(999) 999-9999" placeholder="@lang('documents.phone')" id="telR" name="telR" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());">
                                             <small class="help-block has-error">@{{ errors.first('telR') }}</small>
                                         </div>
                                         <small class="help-block" style="display: none;"></small>
@@ -251,15 +251,15 @@
 
                                     <!-- /Grupo Doble 2 -->
                                      <div class="row">
-                                        <label class="control-label col-sm-2">@lang('documents.city'): </label>
+                                        <label class="control-label col-sm-2">@lang('documents.city'): <samp id="require">*</samp></label>
                                         <div class="col-sm-5" onclick ="deleteError($(this));">
                                             <input type="hidden" id="localizacion_id" name="localizacion_id" value="">
-                                            <city-component @get="setCity($event, true)" :data="citys" :disabled="disabled_s" :selected="city_selected_s"></city-component>
+                                            <city-component @get="setCity($event, true)" :data="citys" :disabled="disabled_s" :selected="city_selected_s" autocomplete="off"></city-component>
                                             <small class="help-block has-error" id="msn_l1" style="display: none;">@lang('documents.obligatory_field')</small>
                                         </div>
                                         <label class="control-label col-sm-1">@lang('documents.zip'): </label>
                                         <div class="col-sm-4">
-                                            <input type="text" placeholder="Zip" id="zipR" name="zipR" class="form-control" onkeyup="deleteError($(this).parent());">
+                                            <input type="text" autocomplete="off" placeholder="Zip" id="zipR" name="zipR" class="form-control" onkeyup="deleteError($(this).parent());">
                                         </div>
                                         <small class="help-block" style="display: none;"></small>
                                     </div>
@@ -274,7 +274,7 @@
                                             <div class="form-group">
                                                 <div class="checkbox checkbox-success checkbox-inline">
                                                     <input type="checkbox" id="enviarEmailRemitente" name="enviarEmailRemitente" value="t" style="margin-left: -50px;">
-                                                    <label for="enviarEmailRemitente"> @lang('documents.send_email') <i class="fa fa-envelope-open"></i></label>
+                                                    <label for="enviarEmailRemitente"> @lang('documents.send_email') <i class="fal fa-envelope-open"></i></label>
                                                 </div>
                                             </div>
                                         </div>
@@ -286,7 +286,7 @@
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
                                 <h5>
-                                    <span class="fa fa-arrow-circle-down"> </span> @lang('documents.addressee_consignee')
+                                    <span class="fal fa-plane-arrival"> </span> @lang('documents.addressee_consignee')
                                     <span style="color: coral; display: none;" id="msnEditarCons">@lang('documents.prepared_for_editing')</span>
                                     <label class="po">PO#</label>
                                     <input type="text" id="poBoxD" name="poBoxD" class="" value="{{ isset($documento->po_box) ? $documento->po_box : '' }}" style="border-color: transparent;color: blue;" readonly="">
@@ -296,15 +296,15 @@
                                 <div class="row">
                                     <div class="col-sm-12"  data-container="body" data-trigger="focus" data-toggle="popover" data-placement="top" data-content="Para registrar un nuevo Consignee para este Shipper, hacer clic en el icono (Reset Consignee) e ingresar los nuevos datos." style="padding-left: 0px; padding-right: 0px;">
                                         <div class="form-group">
-                                            <label class="control-label col-sm-2">@lang('documents.name'): </label>
+                                            <label class="control-label col-sm-2">@lang('documents.name'): <samp id="require">*</samp></label>
                                             <div class="col-sm-10">
                                                 <input type="hidden" value="" id="urlBuscarConsignee">
                                                 <div class="input-group" style="margin-bottom: 5px;" :class="{ 'has-error': errors.has('nombreD') }">
                                                     <input type="search" data-id="nomBuscarConsignee" class="form-control" id="nombreD" name="nombreD" placeholder="@lang('documents.type_to_search')" onkeyup="deleteError($(this).parent());" v-model="nombreD" v-validate="'required'">
                                                     <span class="input-group-btn">
-                                                        <button class="btn btn-primary" @click="modalConsignee(true)" id="btnBuscarConsignee" type="button" data-toggle='tooltip' title="Buscar consignee"><span class="fa fa-search"></span>@lang('documents.search')</button>
-                                                        <button id="btnEditConsignee" @click="editFormsShipperConsignee(1)" class="btn btn-success" type="button" data-toggle='tooltip' title="Editar consignee"><span class="fa fa-edit"></span>&nbsp;</button>
-                                                        <button id="btnResetConsignee" @click="resetFormsShipperConsignee(1)" class="btn btn-default" type="button" data-toggle='tooltip' title="Reset consignee"><span class="fa fa-sync"></span>&nbsp;</button>
+                                                        <button class="btn btn-primary" @click="modalConsignee(true)" id="btnBuscarConsignee" type="button" data-toggle='tooltip' title="Buscar"><span class="fal fa-search"></span>&nbsp;</button>
+                                                        <button id="btnEditConsignee" @click="editFormsShipperConsignee(1)" class="btn btn-success" type="button" data-toggle='tooltip' title="Editar"><span class="fal fa-edit"></span>&nbsp;</button>
+                                                        <button id="btnResetConsignee" @click="resetFormsShipperConsignee(1)" class="btn btn-default" type="button" data-toggle='tooltip' title="Reset"><span class="fal fa-sync"></span>&nbsp;</button>
                                                         </span>
                                                 </div><!-- /input-group -->
                                                 <small class="help-block has-error">@{{ errors.first('nombreD') }}</small>
@@ -314,7 +314,7 @@
                                 </div>
                                     <div class="row">
                                         <div class="form-group">
-                                            <label class="control-label col-sm-2">@lang('documents.address'): </label>
+                                            <label class="control-label col-sm-2">@lang('documents.address'): <samp id="require">*</samp></label>
                                             <div class="col-sm-10" :class="{ 'has-error': errors.has('direccionD') }">
                                                 <input type="text" placeholder="@lang('documents.address')" id="direccionD" name="direccionD" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());" v-model="direccionD" v-validate="'required'">
                                                 <small class="help-block has-error">@{{ errors.first('direccionD') }}</small>
@@ -338,18 +338,18 @@
                                     <div class="row">
                                     <!-- /Grupo Doble 2 -->
                                         <div class="form-group">
-                                            <label class="control-label col-sm-2">@lang('documents.city'): </label>
+                                            <label class="control-label col-sm-2">@lang('documents.city'): <samp id="require">*</samp></label>
                                             <div class="col-sm-5" onclick ="deleteError($(this));">
                                               <input type="hidden" id="localizacion_id_c" name="localizacion_id_c" value="">
                                                 <city-component @get="setCity($event, false)" :data="citys" :disabled="disabled_c" :selected="city_selected_c"></city-component>
                                                 <small class="help-block has-error" id="msn_l2" style="display: none;">@lang('documents.obligatory_field')</small>
                                             </div>
-                                            <label class="control-label col-sm-1">C.P: </label>
+                                            <label class="control-label col-sm-1">C.P:<samp id="require">*</samp></label>
                                             <div class="col-sm-4">
                                                 <div class="input-group">
                                                     <input type="text" placeholder="@lang('general.postal_code')" id="zipD" name="zipD" class="form-control" onkeyup="deleteError($(this).parent());">
                                                     <span class="input-group-btn">
-                                                        <button class="btn btn-primary" id="buttonPostalCode" data-toggle="tooltip" data-placement="top" title="Generar" type="button"><span class="fa fa-map-marker"></span></button>
+                                                        <button class="btn btn-primary" id="buttonPostalCode" data-toggle="tooltip" data-placement="top" title="Generar" type="button"><span class="fal fa-map-marker"></span></button>
                                                     </span>
                                                 </div><!-- /input-group -->
                                             </div>
@@ -366,7 +366,7 @@
                                         <div class="form-group">
                                             <div class="checkbox checkbox-success checkbox-inline">
                                                 <input type="checkbox" id="enviarEmailDestinatario" name="enviarEmailDestinatario" value="t" style="margin-left: -50px;" v-model="enviarEmailDestinatario">
-                                                <label for="enviarEmailDestinatario"> @lang('documents.send_email') <i class="fa fa-envelope-open"></i></label>
+                                                <label for="enviarEmailDestinatario"> @lang('documents.send_email') <i class="fal fa-envelope-open"></i></label>
                                             </div>
                                         </div>
                                     </div>
@@ -395,7 +395,7 @@
                                     <div class="ibox-content col-lg-12" :class="[mostrar.includes(22) ? 'wrh' : 'guia' ]">
                                         <div class="form-group"  style="margin-top: 15px;">
                                             <div class="col-sm-6">
-                                                <label for="tipo_embarque_id" class="">@lang('documents.type_boarding') - <span class="fa fa-ship"></span><span class="fa fa-plane"></span></label>
+                                                <label for="tipo_embarque_id" class="">@lang('documents.type_boarding') - <span class="fal fa-ship"></span><span class="fal fa-plane"></span></label>
                                                 <select id="tipo_embarque_id" name="tipo_embarque_id" class="form-control text-write" onchange="deleteError($(this).parent());llenarSelectServicio($(this).val())">
                                                     @if(isset($embarques) and $embarques)
                                                         @foreach($embarques as $embarque)
@@ -469,7 +469,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-6">
-                                                <label class="control-label" for="impuesto"><div class="col-sm-12" data-trigger="hover"  data-container="body" data-toggle="popover" data-placement="right" data-content="Valor por el cual se calculara el impuesto sobre el valor declarado. (Por defecto 28%)" style="padding-left: 0px; padding-right: 0px;"><i class="fa fa-question-circle" style="cursor: pointer; color: coral;"></i> % @lang('documents.tax'): </div></label>
+                                                <label class="control-label" for="impuesto"><div class="col-sm-12" data-trigger="hover"  data-container="body" data-toggle="popover" data-placement="right" data-content="Valor por el cual se calculara el impuesto sobre el valor declarado. (Por defecto 28%)" style="padding-left: 0px; padding-right: 0px;"><i class="fal fa-question-circle" style="cursor: pointer; color: coral;"></i> % @lang('documents.tax'): </div></label>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="input-group m-b">
@@ -502,7 +502,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-6">
-                                                <label class="control-label" for="flete"><div class="col-sm-12"  data-container="body" data-trigger="hover"  data-toggle="popover" data-placement="right" data-content="Si el calculo es sobre el volumen (Vol), se evaluara quien es mayor (Peso o Volumen), si es mayor el volumen, se multiplicara por la tarifa. Si es mayor el peso, la diferencia (Peso-Volumen) sera multiplicada por la tarifa." style="padding-left: 0px; padding-right: 0px;"><i class="fa fa-question-circle" style="cursor: pointer; color: coral;"></i> @lang('documents.freight'): (<span id="cobrarPor"></span>)</div></label>
+                                                <label class="control-label" for="flete"><div class="col-sm-12"  data-container="body" data-trigger="hover"  data-toggle="popover" data-placement="right" data-content="Si el calculo es sobre el volumen (Vol), se evaluara quien es mayor (Peso o Volumen), si es mayor el volumen, se multiplicara por la tarifa. Si es mayor el peso, la diferencia (Peso-Volumen) sera multiplicada por la tarifa." style="padding-left: 0px; padding-right: 0px;"><i class="fal fa-question-circle" style="cursor: pointer; color: coral;"></i> @lang('documents.freight'): (<span id="cobrarPor"></span>)</div></label>
                                             </div>
 
                                             <div class="col-sm-6">
@@ -536,7 +536,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-6">
-                                                <button class="btn btn-info" id="btnBuscarCargosAdd" type="button" @click="modalAdditionalCharges()"><span class="fa fa-plus"></span> @lang('documents.charges') </button>
+                                                <button class="btn btn-info" id="btnBuscarCargosAdd" type="button" @click="modalAdditionalCharges()"><span class="fal fa-plus"></span> @lang('documents.charges') </button>
                                             </div>
 
                                             <div class="col-sm-6">
@@ -578,7 +578,7 @@
                     <div class="col-lg-8">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
-                                <h5>@lang('documents.load_data')</h5>
+                                <h5><i class="fal fa-box-open"></i> @lang('documents.load_data')</h5>
                                 <div class="ibox-tools">
 
                                 </div>
@@ -618,8 +618,8 @@
                                                           <div class="input-group">
                                                               <input type="text" onkeyup="deleteError($(this).parent());" id="contiene" name="contiene" class="form-control text-write" value="" placeholder="@lang('documents.content')" autocomplete="off">
                                                               <span class="input-group-btn">
-                                                                  <button v-if="show_btn_products" style="font-size: 19.9px!important;" id="btn-searchProducts" @click="modalSearchProducts()" class="btn btn-warning" type="button" data-toggle='tooltip' title="Productos"><span class="fa fa-map-pin"></span></button>
-                                                                  <button v-else style="font-size: 19.9px!important;" id="btn-searchTracking" @click="modalSearchTracking()" class="btn btn-primary" type="button" data-toggle='tooltip' title="Buscar trackings"><span class="fa fa-truck"></span></button>
+                                                                  <button v-if="show_btn_products" style="font-size: 19.9px!important;" id="btn-searchProducts" @click="modalSearchProducts()" class="btn btn-warning" type="button" data-toggle='tooltip' title="Productos"><span class="fal fa-map-pin"></span></button>
+                                                                  <button v-else style="font-size: 19.9px!important;" id="btn-searchTracking" @click="modalSearchTracking()" class="btn btn-primary" type="button" data-toggle='tooltip' title="Buscar trackings"><span class="fal fa-truck"></span></button>
                                                               </span>
                                                           </div>
                                                           <small class="help-block" id="Hcontiene" style="display: none">@lang('documents.obligatory_field')</small>
@@ -669,7 +669,7 @@
                                                               <label style="display: none;" for="" class=""></label>
                                                               <div class="input-group">
                                                                   <span class="input-group-btn" onclick="deleteError($(this).parent());">
-                                                                      <button class="btn btn-primary" id="btnBuscarPA" type="button" @click="modalArancel()"><small><span class="fa fa-search"></span> P.A (Adu.)</small></button>
+                                                                      <button class="btn btn-primary" id="btnBuscarPA" type="button" @click="modalArancel()"><small><span class="fal fa-search"></span> P.A (Adu.)</small></button>
                                                                   </span>
                                                                   <input type="text" placeholder="@lang('general.select')" class="form-control" readonly="" value="" id="pa" name="pa" onkeyup="deleteError($(this).parent());">
                                                               </div><!-- /input-group -->
@@ -690,7 +690,7 @@
                                                       <div class="form-group">
                                                           <div class="input-group">
                                                               <!--para quitar el efecto de bloqueo del boton, quitar la clase btnBlock-->
-                                                              {{-- <button class="btn btn-info btn-sm btnBlock" type="button" id="btn_add" value="0" @click="addDetail()" style="width: 100%;"><span class="fa fa-plus" ></span> @lang('documents.add')</button> --}}
+                                                              {{-- <button class="btn btn-info btn-sm btnBlock" type="button" id="btn_add" value="0" @click="addDetail()" style="width: 100%;"><span class="fal fa-plus" ></span> @lang('documents.add')</button> --}}
 
 
                                                           <!-- Split button -->
@@ -846,23 +846,23 @@
                                             <div class="form-group">
                                                 <div class="col-sm-12 col-sm-offset-0 guardar">
                                                     @if(env('APP_CLIENT') == 'jexpress')
-                                                        <button type="button" class="btn btn-success ladda-button" id="saveForm" data-style="expand-right" @click="saveDocument('all')"><i class="fa fa-save fa-fw"></i>@lang('documents.save_changes')</button>
+                                                        <button type="button" class="btn btn-success ladda-button" id="saveForm" data-style="expand-right" @click="saveDocument('all')"><i class="fal fa-save fa-fw"></i>@lang('documents.save_changes')</button>
                                                     @else
                                                     <div class="btn-group dropup">
-                                                        <button type="button" class="btn btn-success ladda-button" id="saveForm" data-style="expand-right" @click="saveDocument('print')"><i class="fa fa-save fa-fw"></i> @lang('documents.save_changes_print')</button>
+                                                        <button type="button" class="btn btn-success ladda-button" id="saveForm" data-style="expand-right" @click="saveDocument('print')"><i class="fal fa-save fa-fw"></i> @lang('documents.save_changes_print')</button>
                                                         <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 35px;">
                                                             <span class="caret"></span>
                                                             <span class="sr-only">Toggle Dropdown</span>
                                                         </button>
                                                         <ul class="dropdown-menu">
-                                                            <li><a @click="saveDocument()"><i class="fa fa-print"></i> @lang('documents.save_changes')</a></li>
-                                                            <li><a @click="saveDocument('email')"><i class="fa fa-envelope"></i> @lang('documents.save_changes_email')</a></li>
-                                                            <li><a @click="saveDocument('all')"><i class="fa fa-mail-bulk"></i> @lang('documents.save_changes_email_print')</a></li>
+                                                            <li><a @click="saveDocument()"><i class="fal fa-print"></i> @lang('documents.save_changes')</a></li>
+                                                            <li><a @click="saveDocument('email')"><i class="fal fa-envelope"></i> @lang('documents.save_changes_email')</a></li>
+                                                            <li><a @click="saveDocument('all')"><i class="fal fa-mail-bulk"></i> @lang('documents.save_changes_email_print')</a></li>
                                                         </ul>
                                                     </div>
                                                     @endif
 
-                                                    <a href="{{ route('documento.index') }}" type="button" class="btn btn-white"><i class="fa fa-times fa-fw"></i> @lang('documents.cancel') </a>
+                                                    <a href="{{ route('documento.index') }}" type="button" class="btn btn-white"><i class="fal fa-times fa-fw"></i> @lang('documents.cancel') </a>
                                                 </div>
                                             </div>
                                         </div>

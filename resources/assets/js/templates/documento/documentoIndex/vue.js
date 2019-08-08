@@ -2,151 +2,151 @@
 var objVue = new Vue({
     el: '#documentoIndex',
     watch:{
-        status_id:function(value){
-            var status_id = '';
-            if(value != null){
-                status_id = value.id;
-            }
-            listDocument(this.type_document, null, null, null, true, status_id);
-        },
-        datosAgrupar:function(val){
-            let me = this;
-            if ($.fn.DataTable.isDataTable('#tbl-modalagrupar')) {
-                $('#tbl-modalagrupar tbody').empty();
-                $('#tbl-modalagrupar').dataTable().fnDestroy();
-            }
-            var table = $('#tbl-modalagrupar').DataTable({
-                "language": {
-                    "paginate": {
-                        "previous": "Anterior",
-                        "next": "Siguiente",
-                    },
-                    /*"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",*/
-                    "info": "Registros del _START_ al _END_  de un total de _TOTAL_",
-                    "search": "Buscar",
-                    "lengthMenu": "Mostrar _MENU_ Registros",
-                    "infoEmpty": "Mostrando registros del 0 al 0",
-                    "emptyTable": "No hay datos disponibles en la tabla",
-                    "infoFiltered": "(Filtrando para _MAX_ Registros totales)",
-                    "zeroRecords": "No se encontraron registros coincidentes",
-                },
-                "order": [[ 1, "desc" ]],
-                processing: true,
-                serverSide: true,
-                searching: true,
-                ajax: 'documento/0/getGuiasAgrupar/'+ val.id+'/document',
-                columns: [{
-                    "render": function (data, type, full, meta) {
-                        return '<div class="checkbox checkbox-success"><input type="checkbox" data-id_guia="' + full.id + '" id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '"></label></div>';
-                    }
-                }, {
-                    data: 'codigo',
-                    name: 'codigo'
-                }, {
-                    data: 'peso',
-                    name: 'peso'
-                }]
-            });
-            $('#modalagrupar').modal('show');
-        },
-        removerAgrupado:function(option){
-              let me = this;
-              axios.get('documento/0/removerGuiaAgrupada/' + option.id + '/' + option.id + '/' + true).then(response => {
-                  toastr.success('Registro quitado correctamente.');
-                  refreshTable('tbl-documento2');
-              }).catch(function(error) {
-                  console.log(error);
-                  toastr.warning('Error: -' + error);
-              });
+      status_id:function(value){
+          var status_id = '';
+          if(value != null){
+              status_id = value.id;
           }
+          listDocument(this.type_document, null, null, null, true, status_id);
+      },
+      datosAgrupar:function(val){
+          let me = this;
+          if ($.fn.DataTable.isDataTable('#tbl-modalagrupar')) {
+              $('#tbl-modalagrupar tbody').empty();
+              $('#tbl-modalagrupar').dataTable().fnDestroy();
+          }
+          var table = $('#tbl-modalagrupar').DataTable({
+              "language": {
+                  "paginate": {
+                      "previous": "Anterior",
+                      "next": "Siguiente",
+                  },
+                  /*"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",*/
+                  "info": "Registros del _START_ al _END_  de un total de _TOTAL_",
+                  "search": "Buscar",
+                  "lengthMenu": "Mostrar _MENU_ Registros",
+                  "infoEmpty": "Mostrando registros del 0 al 0",
+                  "emptyTable": "No hay datos disponibles en la tabla",
+                  "infoFiltered": "(Filtrando para _MAX_ Registros totales)",
+                  "zeroRecords": "No se encontraron registros coincidentes",
+              },
+              "order": [[ 1, "desc" ]],
+              processing: true,
+              serverSide: true,
+              searching: true,
+              ajax: 'documento/0/getGuiasAgrupar/'+ val.id+'/document',
+              columns: [{
+                  "render": function (data, type, full, meta) {
+                      return '<div class="checkbox checkbox-success"><input type="checkbox" data-id_guia="' + full.id + '" id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '"></label></div>';
+                  }
+              }, {
+                  data: 'codigo',
+                  name: 'codigo'
+              }, {
+                  data: 'peso',
+                  name: 'peso'
+              }]
+          });
+          $('#modalagrupar').modal('show');
+      },
+      removerAgrupado:function(option){
+            let me = this;
+            axios.get('documento/0/removerGuiaAgrupada/' + option.id + '/' + option.id + '/' + true).then(response => {
+                toastr.success('Registro quitado correctamente.');
+                refreshTable('tbl-documento2');
+            }).catch(function(error) {
+                console.log(error);
+                toastr.warning('Error: -' + error);
+            });
+        }
     },
     mounted: function() {
       let me = this;
-        me.typeDocumentList();
-        setTimeout(function () {
-          me.printDocument();
-        },1500)
-        $('#date').val(this.getTime());
+      me.typeDocumentList();
+      setTimeout(function () {
+        me.printDocument();
+      },1500)
+      $('#date').val(this.getTime());
     },
     created(){
       //
     },
     data: {
-        id_status: null,
-        tableDelete: null,
-        params: {},
-        type_document: null,
-        datosAgrupar: {},
-        removerAgrupado: {}, //es para poder remover guias agrupadas en el consolidado
-        status_id: {id: 5, descripcion: 'Consolidada'},
-        status: [],
-        id_consolidado_selected: null,
-        dialogVisible: false,
-        uploadFileStatus: false,
-        // filter
-        warehouse: null,
-        options: [],
-        list: [],
-        loading: false,
-        states: ["Alabama", "Alaska", "Arizona",
-        "Arkansas", "California", "Colorado",
-        "Connecticut", "Delaware", "Florida",
-        "Georgia", "Hawaii", "Idaho", "Illinois",
-        "Indiana", "Iowa", "Kansas", "Kentucky",
-        "Louisiana", "Maine", "Maryland",
-        "Massachusetts", "Michigan", "Minnesota",
-        "Mississippi", "Missouri", "Montana",
-        "Nebraska", "Nevada", "New Hampshire",
-        "New Jersey", "New Mexico", "New York",
-        "North Carolina", "North Dakota", "Ohio",
-        "Oklahoma", "Oregon", "Pennsylvania",
-        "Rhode Island", "South Carolina",
-        "South Dakota", "Tennessee", "Texas",
-        "Utah", "Vermont", "Virginia",
-        "Washington", "West Virginia", "Wisconsin",
-        "Wyoming"],
-        client_id: [],
-        pickerOptions: {
-          shortcuts: [{
-            text: '-Ult. semana',
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit('pick', [start, end]);
-            }
-          }, {
-            text: '-Ult mes',
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              picker.$emit('pick', [start, end]);
-            }
-          }, {
-            text: '-Ult. 3 meses',
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-              picker.$emit('pick', [start, end]);
-            }
-          }]
-        },
-        date_range: '',
+      id_status: null,
+      tableDelete: null,
+      params: {},
+      type_document: null,
+      datosAgrupar: {},
+      removerAgrupado: {}, //es para poder remover guias agrupadas en el consolidado
+      status_id: {id: 5, descripcion: 'Consolidada'},
+      status: [],
+      id_consolidado_selected: null,
+      dialogVisible: false,
+      uploadFileStatus: false,
+      // filter
+      warehouse: null,
+      options: [],
+      list: [],
+      loading: false,
+      states: ["Alabama", "Alaska", "Arizona",
+      "Arkansas", "California", "Colorado",
+      "Connecticut", "Delaware", "Florida",
+      "Georgia", "Hawaii", "Idaho", "Illinois",
+      "Indiana", "Iowa", "Kansas", "Kentucky",
+      "Louisiana", "Maine", "Maryland",
+      "Massachusetts", "Michigan", "Minnesota",
+      "Mississippi", "Missouri", "Montana",
+      "Nebraska", "Nevada", "New Hampshire",
+      "New Jersey", "New Mexico", "New York",
+      "North Carolina", "North Dakota", "Ohio",
+      "Oklahoma", "Oregon", "Pennsylvania",
+      "Rhode Island", "South Carolina",
+      "South Dakota", "Tennessee", "Texas",
+      "Utah", "Vermont", "Virginia",
+      "Washington", "West Virginia", "Wisconsin",
+      "Wyoming"],
+      client_id: [],
+      pickerOptions: {
+        shortcuts: [{
+          text: '-Ult. semana',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '-Ult mes',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '-Ult. 3 meses',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+            picker.$emit('pick', [start, end]);
+          }
+        }]
+      },
+      date_range: '',
 
-        fileList:[],
-        headerFile:{
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        errorUpload:[],
-        upload_s: false,
-        uploadSuccess: false,
-        textSuccess: 'Archivo listo para ser cargado',
-        title_msn: '',
-        type_msn: 'info',
-        // variable para saber que pestaña mostrar de la grilla principal de documentos si courier (true) o carga (false)
-        courier_carga:false,
+      fileList:[],
+      headerFile:{
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      errorUpload:[],
+      upload_s: false,
+      uploadSuccess: false,
+      textSuccess: 'Archivo listo para ser cargado',
+      title_msn: '',
+      type_msn: 'info',
+      // variable para saber que pestaña mostrar de la grilla principal de documentos si courier (true) o carga (false)
+      courier_carga:true,
     },
     methods: {
       insertStatusUploadDocument(){
@@ -208,7 +208,8 @@ var objVue = new Vue({
           'consignee_id' : this.client_id,
           'dates' : this.date_range
         }
-        listDocument(1, null, null, null, true, filter);
+        var courier_carga = this.courier_carga;
+        listDocument(1, null, null, null, true, filter, courier_carga);
         this.dialogVisible = false;
       },
       remoteMethod(query) {

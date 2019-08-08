@@ -28,7 +28,7 @@
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
                         <li>
                             <a href="{{ route('home') }}">
-                                <i class="fa fa-home">
+                                <i class="fal fa-home">
                                 </i>
                                 @lang('layouts.home')
 
@@ -36,7 +36,7 @@
                         </li>
                         <li>
                             <a href="#">
-                                <i class="fa fa-user">
+                                <i class="fal fa-user">
                                 </i>
                                     @lang('layouts.profile')
 
@@ -50,7 +50,7 @@
             </li>
             <li class="active" id="firstMenu">
                 <a href="" style="background-color: #BA55D3; color: white;">
-                    <i class="fa fa-th-large">
+                    <i class="fal fa-th-large">
                     </i>
                     <span class="nav-label">
                          @lang('layouts.load')
@@ -63,7 +63,7 @@
                     @can('documento.index')
                     <li>
                         <a href="{{ route('documento.index') }}">
-                            <spam class="fa fa-clipboard">
+                            <spam class="fal fa-clipboard">
                             </spam>
                              @lang('layouts.documents')
                         </a>
@@ -72,7 +72,7 @@
                     @can('documento.index')
                     {{-- <li>
                         <a href="{{ url('mintic') }}">
-                            <spam class="fa fa-clipboard">
+                            <spam class="fal fa-clipboard">
                             </spam>
                              Mintic
                         </a>
@@ -82,7 +82,7 @@
                     @can('master.index')
                     <li>
                         <a href="{{ route('master.index') }}">
-                            <spam class="fa fa-plane">
+                            <spam class="fal fa-plane">
                             </spam>
                             @lang('layouts.master_guide')
 
@@ -92,7 +92,7 @@
                     @can('bill.index')
                     <li>
                         <a href="{{ route('bill.index') }}">
-                            <spam class="fa fa-ship">
+                            <spam class="fal fa-ship">
                             </spam>
                          @lang('layouts.bill_of_lading')
                         </a>
@@ -102,7 +102,7 @@
             </li>
             <li class="active">
                 <a href="" style="background-color: #5cb85c; color: white;">
-                    <i class="fa fa-user">
+                    <i class="fal fa-user">
                     </i>
                             <span class="nav-label">
                                 @lang('layouts.account')
@@ -115,7 +115,7 @@
                     @can('shipper.index')
                     <li>
                         <a href="{{ route('shipper.index') }}">
-                            <spam class="fa fa-plane-departure"></spam>
+                            <spam class="fal fa-plane-departure"></spam>
                             </spam>
                                  @lang('layouts.shipper')
                         </a>
@@ -124,7 +124,7 @@
                     @can('consignee.index')
                     <li>
                         <a href="{{ route('consignee.index') }}">
-                            <spam class="fa fa-plane-arrival"></spam>
+                            <spam class="fal fa-plane-arrival"></spam>
                                 @lang('layouts.consignee')
 
                         </a>
@@ -133,7 +133,7 @@
                     @can('clientes.index')
                     <li>
                         <a href="{{ route('clientes.index') }}">
-                            <spam class="fa fa-users">
+                            <spam class="fal fa-users">
                             </spam>
                                 @lang('layouts.clients')
                         </a>
@@ -144,7 +144,7 @@
             @if(env('APP_TYPE') === 'courier')
                 <li class="active">
                     <a href="" style="background-color: brown; color: white;">
-                        <i class="fa fa-address-card">
+                        <i class="fal fa-address-card">
                         </i>
                         <span class="nav-label">
                              @lang('layouts.lockens')
@@ -156,7 +156,7 @@
                     <ul class="nav nav-second-level">
                         <li>
                             <a href="{{ route('prealerta.list') }}">
-                                <spam class="fa fa-exclamation-triangle">
+                                <spam class="fal fa-exclamation-triangle">
                                 </spam>
                                 @lang('layouts.alerts')
                             </a>
@@ -164,7 +164,7 @@
                         @can('tracking.index')
                         <li>
                             <a href="{{ route('tracking.index') }}">
-                                <spam class="fa fa-cubes">
+                                <spam class="fal fa-cubes">
                                 </spam>
                                   @lang('layouts.trackings_receipt')
                             </a>
@@ -176,7 +176,7 @@
             @can('master.index')
               {{-- <li class="active">
                   <a href="" style="background-color: #d6c600; color: white;">
-                      <i class="fa fa-puzzle-piece">
+                      <i class="fal fa-puzzle-piece">
                       </i>
                               <span class="nav-label">
                                   @lang('layouts.reports')
@@ -188,7 +188,7 @@
                   <ul class="nav nav-second-level">
                       <li>
                           <a href="{{ route('report.index') }}">
-                              <spam class="fa fa-file">
+                              <spam class="fal fa-file">
                               </spam>
                                    @lang('layouts.load_reports')
                           </a>
@@ -200,7 +200,7 @@
 
             {{-- <li class="active">
                 <a href="" style="background-color: #2a3fa5; color: white;">
-                    <i class="fa fa-address-card">
+                    <i class="fal fa-address-card">
                     </i>
                     <span class="nav-label">
                          @lang('layouts.distribution_warehouse')
@@ -267,7 +267,7 @@
             @if(Auth::user()->isRole('admin'))
               <li class="active" style="">
                   <a href="#" style="background-color: #017767; color: white;">
-                      <i class="fa fa-cogs">
+                      <i class="fal fa-cogs">
                       </i>
                       <span class="nav-label">
                                @lang('layouts.administration')
@@ -279,7 +279,7 @@
                   <ul class="nav nav-second-level collapse">
                       <li>
                           <a href="{{ route('config.index') }}">
-                              <spam class="fa fa-cogs">
+                              <spam class="fal fa-cogs">
                               </spam>
                                @lang('general.configuration')
                           </a>
@@ -287,14 +287,14 @@
                       @if(Auth::user()->email === 'jhonnyalejo2212@gmail.com')
                       <li>
                           <a href="{{ url('administracion/7') }}">
-                              <spam class="fa fa-code-fork">
+                              <spam class="fal fa-code-fork">
                               </spam>
                               @lang('layouts.functions')
                           </a>
                       </li>
                       <li>
                           <a href="{{ route('modulo.index') }}">
-                              <spam class="fa fa-window-restore">
+                              <spam class="fal fa-window-restore">
                               </spam>
                              @lang('layouts.modules')
                           </a>
@@ -305,7 +305,7 @@
             @endif
             <li class="active" style="">
                 <a href="#" style="background-color: #ff1d1d; color: white;">
-                    <i class="fa fa-key">
+                    <i class="fal fa-key">
                     </i>
                     <span class="nav-label">
                     @lang('layouts.security')
@@ -319,7 +319,7 @@
                     @can('user.index')
                     <li>
                         <a href="{{ route('user.index') }}">
-                            <spam class="fa fa-user">
+                            <spam class="fal fa-user">
                             </spam>
                             @lang('layouts.users')
                         </a>
@@ -328,7 +328,7 @@
                     @can('rol.index')
                     <li>
                         <a href="{{ route('rol.index') }}">
-                            <spam class="fa fa-sitemap">
+                            <spam class="fal fa-sitemap">
                             </spam>
                              @lang('layouts.roles')
                         </a>
@@ -337,7 +337,7 @@
                     @can('rol.index')
                     <li>
                         <a href="{{ route('accessControl.index') }}">
-                            <spam class="fa fa-address-book">
+                            <spam class="fal fa-address-book">
                             </spam>
                                 @lang('layouts.access_controls')
                         </a>

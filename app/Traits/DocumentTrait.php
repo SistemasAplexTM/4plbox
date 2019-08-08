@@ -252,7 +252,7 @@ trait DocumentTrait
             )
             ->where($where)
             ->when($filter['warehouse'], function ($query, $data) {
-              return $query->where('a.num_warehouse', 'LIKE', "%".$data."");
+              return $query->where('a.num_warehouse', 'LIKE', "%".$data."%");
             })
             ->when($dates, function ($query, $data) {
               return $query->whereBetween('b.created_at', [$data['inicio'],$data['fin']]);

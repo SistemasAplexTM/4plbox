@@ -55,7 +55,7 @@
           var objVueNav = new Vue({
             el: '#navbar_index',
           })
-            document.body.style.zoom="90%";
+            // document.body.style.zoom="90%";
             $(document).ready(function(){
                 $('#in_documento').on('click', function(){
                     window.location.href = '{{ route('documento.index') }}';

@@ -18,7 +18,7 @@ return [
 		'city'             => 'Ciudad',
 		'obligatory_field' => 'Campo obligatorio',
 		'zip'              => 'Zip',
-		'send_email'       => 'Enviar Correo',
+		'send_email'       => 'Enviar',
 		'addressee_consignee'        => 'Destinatario',
 		'load_data'					 => 'Datos de la carga',
 		'weight'           => 'Peso',

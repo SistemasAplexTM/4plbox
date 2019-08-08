@@ -18,7 +18,7 @@ return [
 		'city'            => 'City',
 		'obligatory_field'        => 'Obligatory field',
 		'zip'			  => 'Zip',
-		'send_email'	  => 'Send email',
+		'send_email'	  => 'Send',
 		'addressee_consignee'       => 'Consignee',
 		'load_data'                 => 'Load data',
 		'weight'          => 'Weight',

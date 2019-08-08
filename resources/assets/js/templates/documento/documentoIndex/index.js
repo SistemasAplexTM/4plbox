@@ -79,6 +79,7 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
 }
 
 function datatableDocument(t, tipo_doc_id, filtro){
+  console.log(t, tipo_doc_id, filtro);
   var table = $('#tbl-documento' + t).DataTable({
       processing: true,
       serverSide: true,
