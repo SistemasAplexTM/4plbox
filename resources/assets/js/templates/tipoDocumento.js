@@ -27,10 +27,10 @@ $(document).ready(function() {
                         full.id, "'" + full.nombre + "'", "'" + full.prefijo + "'", "'" + full.icono + "'", "'" + full.consecutivo_inicial + "'", "'" + full.funcionalidades + "'", "'" + full.credenciales + "'",
                         id_email, "'" + full.descripcion_plantilla + "'", "'" + full.email_copia + "'", "'" + full.email_copia_oculta + "'",
                     ];
-                    var btn_edit = "<a onclick=\"edit(" + params + ")\" class='btn btn-outline btn-success btn-xs' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit'></i></a> ";
+                    var btn_edit = "<a onclick=\"edit(" + params + ")\" class='edit_btn' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fal fa-pencil fa-lg'></i></a> ";
                 }
                 if (permission_delete) {
-                    var btn_delete = " <a onclick=\"eliminar(" + full.id + "," + true + ")\" class='btn btn-outline btn-danger btn-xs' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-trash'></i></a> ";
+                    var btn_delete = " <a onclick=\"eliminar(" + full.id + "," + true + ")\" class='delete_btn' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fal fa-trash-alt fa-lg'></i></a> ";
                 }
                 return btn_edit + btn_delete;
             }

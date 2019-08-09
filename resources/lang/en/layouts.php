@@ -34,7 +34,7 @@ return [
     'reports'=>'Reports',
     'lockens'=>'LOCKERS',
     'alerts'=>'Alerts',
-    'maintenances'=>'Maintenances',
+    'maintenances'=>'MAINTENANCES',
     'email_templates'=>'Email Templates',
     'payment_methods'=>'Payment Methods',
     'payment_types'=>'Payment types',

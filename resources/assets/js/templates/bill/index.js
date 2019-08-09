@@ -15,10 +15,10 @@ $(document).ready(function () {
                     var btn_edit = '';
                     var btn_delete = '';
                     // if (permission_update) {
-                        var btn_edit = '<a href="bill/create/' + full.id + '" class="edit" title="Editar" data-toggle="tooltip" style="color:#FFC107;"><i class="fal fa-pencil fa-lg"></i></a>';
+                        var btn_edit = '<a href="bill/create/' + full.id + '" class="edit_btn" title="Editar" data-toggle="tooltip"><i class="fal fa-pencil fa-lg"></i></a>';
                     // }
                     // if (permission_delete) {
-                        var btn_delete = '<a onclick=\"eliminar(' + full.id + ',' + true + ')\" class="delete" title="Eliminar" data-toggle="tooltip" style="color:#E34724;"><i class="fal fa-trash-alt fa-lg"></i></a>';
+                        var btn_delete = '<a onclick=\"eliminar(' + full.id + ',' + true + ')\" class="delete_btn" title="Eliminar" data-toggle="tooltip"><i class="fal fa-trash-alt fa-lg"></i></a>';
                     // }
                     // var btns = "<div class='btn-group'>" +
                     //  "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" +

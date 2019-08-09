@@ -214,7 +214,7 @@
                     </div>
                 </div>
             </div>
-        </form>
+
         <div class="col-lg-7">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
@@ -252,6 +252,7 @@
                 </div>
             </div>
         </div>
+        </form>
     </div>
 @endsection
 

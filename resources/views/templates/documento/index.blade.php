@@ -141,7 +141,10 @@
                                       <a class="btn btn-warning btn-outline edit_document" title="Editar" data-toggle="tooltip" style="display:none;"><i class="fal fa-pencil fa-lg"></i></a>
                                       <a class="btn btn-success btn-outline tags_document" data-toggle="modal" data-target="#modalTagDocument" style="display:none;"><i class="fal fa-arrow-square-right fa-lg" data-toggle="tooltip" title="" data-original-title="Tareas"></i></a>
                                       <a class="btn btn-danger btn-outline delete_document" title="Eliminar" data-toggle="tooltip" style="display:none;"><i class="fal fa-trash-alt fa-lg"></i></a>
+                                      <a class="btn btn-info filter_document" title="Filtrar" data-toggle="tooltip" @click="dialogVisible = true;" v-if="showFilter"><i class="fal fa-filter fa-lg"></i></a>
+                                      <a class="btn btn-success upload_document" title="Subir archivo de status" data-toggle="tooltip" @click="uploadFileStatus = true" v-if="showFilter"><i class="fal fa-upload fa-lg"></i></a>
                                     </div>
+
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -184,19 +187,10 @@
                                     <ul class="nav nav-tabs" role="tablist">
                     							    <li role="warehouses" id="default" :class="{ active: courier_carga }" @click="pendign">
                                         <a href="#courier" aria-controls="courier" role="tab" data-toggle="tab"><i class="fal fa-box-open"></i> COURIER
-                                          <button class="btn btn-info btn-circle" title="Filtrar" @click="dialogVisible = true; courier_carga = true" data-toggle="tooltip" style="margin-left: 10px;font-size: 10px!important;width: 20px;height: 20px;">
-                                            <i class="fal fa-filter" style="margin-right: 0;"></i>
-                                          </button>
                                         </a>
                                       </li>
                                       <li role="load" :class="{ active: !courier_carga }" id="li-load" @click="pendign">
                                         <a href="#load" aria-controls="load" role="tab" data-toggle="tab"><i class="fal fa-truck-moving"></i> CARGA
-                                          <button class="btn btn-info btn-circle" title="Filtrar" @click="dialogVisible = true; courier_carga = false" data-toggle="tooltip" style="margin-left: 10px;font-size: 10px!important;width: 20px;height: 20px;">
-                                            <i class="fal fa-filter" style="margin-right: 0;"></i>
-                                          </button>
-                                          <button class="btn btn-success btn-circle" title="Subir archivo de status" @click="uploadFileStatus = true" data-toggle="tooltip" style="margin-left: 10px;font-size: 10px!important;width: 20px;height: 20px;">
-                                            <i class="fal fa-upload" style="margin-right: 0;margin-top: -3px;"></i>
-                                          </button>
                                         </a></li>
                                       <li role="pending" id="li-pending" @click="pendign"><a href="#pending" aria-controls="pending" role="tab" data-toggle="tab"><i class="fal fa-box"></i> PENDIENTES <span class="pending badge badge-primary ligth">{{ $pendientes->cantidad }}</span></a></li>
                     							  </ul>

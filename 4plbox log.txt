@@ -14,8 +14,11 @@
 2. Revisar el badget de los pendientes que me muestra una info al iniciar y otra al seleccionarlo o mostrarlos todos=============
 2. La ayuda del inventario de la master =========================================================================================
 
-2019-08-08
-1. en la ayuda del logo de la agencia que diga 170px por 60px y a si debe registrar el logo.
-2. los cards de la configuracion que valla centrada y meter la seguridad alli.
-6. Registrar shipper y consignee desde un componente aparte.. que se cree y se seleccione en el documento
-5. Dejar en la grilla las cajas que no están consolidadas.
+2019-08-09
+-. los cards de la configuracion que valla centrada y meter la seguridad alli.
+-. Organizar mejor los cards, colocar el titulo visible y con icono.
+-. los iconos de todas las grillas que sean iguales.
+
+-. en la ayuda del logo de la agencia que diga 170px por 60px y a si debe registrar el logo.
+-. Registrar shipper y consignee desde un componente aparte.. que se cree y se seleccione en el documento
+-. Dejar en la grilla las cajas que no están consolidadas.

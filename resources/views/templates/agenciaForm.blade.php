@@ -321,7 +321,7 @@
                                                             <th>@lang('general.insurance')</th>
                                                             <th>@lang('general.agency_rate')</th>
                                                             <th>$ @lang('general.insurance')</th>
-                                                            <th>@lang('general.actions')</th>
+                                                            <th width="100px">@lang('general.actions')</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -337,8 +337,8 @@
                                                                 <td><input type="text" id="segu{{ $data->id }}" name="" value="{{ $data->seguro }}" class="form-control" readonly></td>
 
                                                                 <td>
-                                                                    <button class="btn btn-xs btn_edit btn-success" type="button" id="btn_edit{{ $data->id }}" onclick="editRowServices({{ $count }}, {{ $data->id }})"><i class="fal fa-edit" data-toggle="tooltip" data-placement="top" title="Editar"></i></button>
-                                                                    <button class="btn btn-danger btn-xs btn_remove" type="button" onclick="removeRowServices({{ $count }}, {{ $data->id }})" id="{{ $data->id }}"><i class="fal fa-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></i></button></td>
+                                                                  <a onclick="editRowServices({{ $count }}, {{ $data->id }})" id="btn_edit{{ $data->id }}" class='btn_edit edit_btn' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fal fa-pencil fa-lg'></i></a>
+                                                                  <a class="delete_btn btn_remove" onclick="removeRowServices({{ $count }}, {{ $data->id }})" id="{{ $data->id }}"><i class="fal fa-trash-alt fa-lg" data-toggle="tooltip" data-placement="top" title="Eliminar"></i></a></td>
                                                               </tr>
                                                               <?php $count++; ?>
                                                             @endforeach

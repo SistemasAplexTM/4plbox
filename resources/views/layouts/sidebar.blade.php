@@ -303,48 +303,6 @@
                   </ul>
               </li>
             @endif
-            <li class="active" style="">
-                <a href="#" style="background-color: #ff1d1d; color: white;">
-                    <i class="fal fa-key">
-                    </i>
-                    <span class="nav-label">
-                    @lang('layouts.security')
-
-                    </span>
-                    <span class="arrow">
-                        <i class="fas fa-angle-down"></i>
-                    </span>
-                </a>
-                <ul class="nav nav-second-level collapse">
-                    @can('user.index')
-                    <li>
-                        <a href="{{ route('user.index') }}">
-                            <spam class="fal fa-user">
-                            </spam>
-                            @lang('layouts.users')
-                        </a>
-                    </li>
-                    @endcan
-                    @can('rol.index')
-                    <li>
-                        <a href="{{ route('rol.index') }}">
-                            <spam class="fal fa-sitemap">
-                            </spam>
-                             @lang('layouts.roles')
-                        </a>
-                    </li>
-                    @endcan
-                    @can('rol.index')
-                    <li>
-                        <a href="{{ route('accessControl.index') }}">
-                            <spam class="fal fa-address-book">
-                            </spam>
-                                @lang('layouts.access_controls')
-                        </a>
-                    </li>
-                    @endcan
-                </ul>
-            </li>
         </ul>
     </div>
 </nav>

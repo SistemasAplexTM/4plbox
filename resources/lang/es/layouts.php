@@ -35,7 +35,7 @@ return [
     'reports'=>'Reportes',
     'lockens'=>'CASILLEROS',
     'alerts'=>'Alertas',
-    'maintenances'=>'Mantenimientos',
+    'maintenances'=>'MANTENIMIENTOS',
     'print_config'=>'Impresoras',
     'email_templates'=>'Plantilla de Correos',
     'payment_methods'=>'Formas de Pagos',

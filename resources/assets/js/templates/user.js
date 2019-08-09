@@ -34,10 +34,10 @@ $(window).load(function() {
                         age_id, "'" + full.rol_name + "'", "'" + full.name_agencia + "'",
                         full.actived,
                     ];
-                    var btn_edit = "<a onclick=\"edit(" + params + ")\" class='btn btn-outline btn-success btn-xs' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit'></i></a> ";
+                    var btn_edit = "<a onclick=\"edit(" + params + ")\" class='edit_btn' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fal fa-pencil fa-lg'></i></a> ";
                 }
                 if (permission_delete) {
-                    var btn_delete = " <a onclick=\"eliminar(" + full.id + "," + true + ")\" class='btn btn-outline btn-danger btn-xs' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-trash'></i></a> ";
+                    var btn_delete = " <a onclick=\"eliminar(" + full.id + "," + true + ")\" class='delete_btn' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fal fa-trash-alt fa-lg'></i></a> ";
                 }
                 return btn_edit + btn_delete;
             }
@@ -280,7 +280,7 @@ var objVue = new Vue({
         },
         update: function() {
             this.$validator.validateAll(['agencia_id', 'name', 'email', 'rol_id']).then((result) => {
-                
+
                 if (result) {
                     var activo = 0;
                     if (this.actived) {
@@ -296,7 +296,7 @@ var objVue = new Vue({
                     }
                     if(this.changue_password != null){
                         data['password'] = this.password;
-                        data['password_confirm'] = this.password_confirm; 
+                        data['password_confirm'] = this.password_confirm;
                     }
                     console.log(data);
                     axios.put('user/' + this.id, {

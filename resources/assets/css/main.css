@@ -4,6 +4,24 @@
 body{
     font-family: "Roboto Condensed";
 }
+.edit_btn{
+  color:#FFC107;
+}
+.edit_btn:hover{
+  color: #ffd860;
+}
+.create_btn{
+  color:#439a46;
+}
+.create_btn:hover{
+  color: #29b12e;
+}
+.delete_btn{
+  color:#ff380b;
+}
+.delete_btn:hover{
+  color: #f97e63;
+}
 
 table > thead > tr > th{
   font-weight: 200;
@@ -31,18 +49,7 @@ label{
 .el-upload__input{
   visibility: hidden;
 }
-.btn_action_edit{
-  color:#FFC107;
-}
-.btn_action_edit:hover{
-  color:#ffd860;
-}
-.btn_action_delete{
-  color:#E34724;
-}
-.btn_action_delete:hover{
-  color:#ff9982;
-}
+
 .m5{
   margin: 5px;
 }

@@ -27,7 +27,7 @@
                     </div>
                     <div class="ibox-content">
                         <!--***** contenido ******-->
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.pais_id}">
                                         <div class="col-sm-4">
@@ -42,7 +42,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.deptos_id}">
                                         <div class="col-sm-4">
@@ -57,7 +57,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                          
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.nombre}">
                                         <div class="col-sm-4">
@@ -70,7 +70,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                          
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.prefijo}">
                                         <div class="col-sm-4">
@@ -91,7 +91,7 @@
                     </div>
                 </div>
             </div>
-        </form>
+
         <div class="col-lg-7">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
@@ -126,10 +126,11 @@
                                 </tr>
                             </tfoot>
                         </table>
-                    </div>             
+                    </div>
                 </div>
             </div>
         </div>
+        </form>
     </div>
 @endsection
 

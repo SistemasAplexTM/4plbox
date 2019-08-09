@@ -48,10 +48,10 @@ $(document).ready(function() {
                     var params = [
                         full.id, "'" + full.descripcion + "'", "'" + full.descripcion_general + "'", "'" + full.color + "'", "'" + full.email + "'", "'" + full.view_client + "'", "'" + full.icon + "'", "'" + full.json_data + "'"
                     ];
-                    var btn_edit = "<a onclick=\"edit(" + params + ")\" class='btn_action_edit' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fal fa-pencil fa-lg'></i></a> ";
+                    var btn_edit = "<a onclick=\"edit(" + params + ")\" class='edit_btn' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fal fa-pencil fa-lg'></i></a> ";
                 }
                 if (permission_delete) {
-                    var btn_delete = " <a onclick=\"eliminar(" + full.id + "," + false + ")\" class='btn_action_delete' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fal fa-trash-alt fa-lg'></i></a> ";
+                    var btn_delete = " <a onclick=\"eliminar(" + full.id + "," + false + ")\" class='delete_btn' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fal fa-trash-alt fa-lg'></i></a> ";
                 }
                 return btn_edit + btn_delete;
             }

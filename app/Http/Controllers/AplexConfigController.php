@@ -45,7 +45,13 @@ class AplexConfigController extends Controller
         array('icon' => 'file', 'route' => 'tipoDocumento.index', 'url' => false, 'desc' => 'layouts.document_types', 'perm' => 'tipoDocumento.index'),
         array('icon' => 'history', 'route' => 'logActivity.index', 'url' => false, 'desc' => 'layouts.logs', 'perm' => 'logActivity.index'),
       );
-      return view('templates.aplexConfig.config', compact('menu','menu2'));
+
+      $menu3 = array(
+        array('icon' => 'user', 'route' => 'user.index', 'url' => false, 'desc' => 'layouts.users', 'perm' => 'user.index'),
+        array('icon' => 'sitemap', 'route' => 'rol.index', 'url' => false, 'desc' => 'layouts.roles', 'perm' => 'rol.index'),
+        array('icon' => 'address-book', 'route' => 'accessControl.index', 'url' => false, 'desc' => 'layouts.access_controls', 'perm' => 'rol.index')
+      );
+      return view('templates.aplexConfig.config', compact('menu','menu2', 'menu3'));
     }
 
     public function get($key){

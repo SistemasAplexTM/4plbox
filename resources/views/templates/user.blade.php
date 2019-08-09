@@ -54,12 +54,12 @@
                     <div class="ibox-title">
                         <h5>@lang('general.user_registration')</h5>
                         <div class="ibox-tools">
-                            
+
                         </div>
                     </div>
                     <div class="ibox-content">
                         <!--***** contenido ******-->
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{ 'has-error': errors.has('agencia_id') }">
                                         <div class="col-sm-5">
@@ -71,8 +71,8 @@
                                         </div>
                                     </div>
                             </div>
-                        </div> 
-                        <div class="row">                            
+                        </div>
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{ 'has-error': errors.has('name') }">
                                         <div class="col-sm-5">
@@ -85,7 +85,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{ 'has-error': errors.has('email') }">
                                         <div class="col-sm-5">
@@ -98,7 +98,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row" v-if="changue_password">                            
+                        <div class="row" v-if="changue_password">
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <div class="col-sm-5">
@@ -110,7 +110,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" v-if="mostrar_password || !changue_password">                            
+                        <div class="row" v-if="mostrar_password || !changue_password">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{ 'has-error': errors.has('password') }">
                                         <div class="col-sm-5">
@@ -123,7 +123,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row" v-if="mostrar_password || !changue_password">                            
+                        <div class="row" v-if="mostrar_password || !changue_password">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{ 'has-error': errors.has('password_confirm') }">
                                         <div class="col-sm-5">
@@ -136,7 +136,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{ 'has-error': errors.has('rol_id') }">
                                         <div class="col-sm-5">
@@ -149,7 +149,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="col-sm-5">
@@ -171,45 +171,45 @@
                     </div>
                 </div>
             </div>
-        </form>
-        <div class="col-lg-8">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>@lang('general.user')</h5>
-                    <div class="ibox-tools">
+            <div class="col-lg-8">
+              <div class="ibox float-e-margins">
+                  <div class="ibox-title">
+                      <h5>@lang('general.user')</h5>
+                      <div class="ibox-tools">
 
-                    </div>
-                </div>
-                <div class="ibox-content">
-                    <!--***** contenido ******-->
-                    <div class="table-responsive">
-                        <table id="tbl-user" class="table table-striped table-hover table-bordered" style="width: 100%;">
-                            <thead>
-                                <tr>
-                                    <th>@lang('general.name')</th>
-                                    <th>@lang('general.email')</th>
-                                    <th>@lang('general.credential')</th>
-                                    <th>@lang('general.agency')</th>
-                                    <th>@lang('general.actions')</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                      </div>
+                  </div>
+                  <div class="ibox-content">
+                      <!--***** contenido ******-->
+                      <div class="table-responsive">
+                          <table id="tbl-user" class="table table-striped table-hover table-bordered" style="width: 100%;">
+                              <thead>
+                                  <tr>
+                                      <th>@lang('general.name')</th>
+                                      <th>@lang('general.email')</th>
+                                      <th>@lang('general.credential')</th>
+                                      <th>@lang('general.agency')</th>
+                                      <th>@lang('general.actions')</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
 
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>@lang('general.name')</th>
-                                    <th>@lang('general.email')</th>
-                                    <th>@lang('general.credential')</th>
-                                    <th>@lang('general.agency')</th>
-                                    <th>@lang('general.actions')</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>             
-                </div>
+                              </tbody>
+                              <tfoot>
+                                  <tr>
+                                      <th>@lang('general.name')</th>
+                                      <th>@lang('general.email')</th>
+                                      <th>@lang('general.credential')</th>
+                                      <th>@lang('general.agency')</th>
+                                      <th>@lang('general.actions')</th>
+                                  </tr>
+                              </tfoot>
+                          </table>
+                      </div>
+                  </div>
+              </div>
             </div>
-        </div>
+        </form>
     </div>
 @endsection
 
