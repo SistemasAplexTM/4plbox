@@ -754,7 +754,7 @@ var objVue = new Vue({
               columns: [{
                   sortable: false,
                   "render": function(data, type, full, meta) {
-                      var btn_selet = "<button onclick=\"selectShipperConsignee(" + full.id + ", 'shipper', true)\" class='btn-primary btn-xs' data-toggle='tooltip' title='Seleccionar'>Seleccionar <i class='fa fa-check'></i></button> ";
+                      var btn_selet = "<div class='text-center'><button onclick=\"selectShipperConsignee(" + full.id + ", 'shipper', true)\" class='btn-primary btn-xs' data-toggle='tooltip' title='Seleccionar'><i class='fal fa-check'></i></button></div> ";
                       return btn_selet;
                   }
               }, {
@@ -767,8 +767,8 @@ var objVue = new Vue({
                   data: 'ciudad',
                   name: 'localizacion.nombre'
               }, {
-                  data: 'zip',
-                  name: 'shipper.zip',
+                  data: 'correo',
+                  name: 'shipper.correo',
               }, {
                   data: 'agencia',
                   name: 'agencia.descripcion',
@@ -804,7 +804,7 @@ var objVue = new Vue({
               columns: [{
                   sortable: false,
                   "render": function(data, type, full, meta) {
-                      var btn_selet = "<button onclick=\"selectShipperConsignee(" + full.id + ", 'consignee', true)\" class='btn-primary btn-xs' data-toggle='tooltip' title='Seleccionar'>Seleccionar <i class='fa fa-check'></i></button> ";
+                      var btn_selet = "<div class='text-center'><button onclick=\"selectShipperConsignee(" + full.id + ", 'consignee', true)\" class='btn-primary btn-xs' data-toggle='tooltip' title='Seleccionar'><i class='fal fa-check'></i></button></div> ";
                       return btn_selet;
                   }
               }, {
@@ -817,8 +817,8 @@ var objVue = new Vue({
                   data: 'ciudad',
                   name: 'localizacion.nombre'
               }, {
-                  data: 'zip',
-                  name: 'consignee.zip'
+                  data: 'correo',
+                  name: 'consignee.correo'
               }, {
                   data: 'agencia',
                   name: 'agencia.descripcion',

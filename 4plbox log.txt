@@ -15,9 +15,17 @@
 2. La ayuda del inventario de la master =========================================================================================
 
 2019-08-09
--. los cards de la configuracion que valla centrada y meter la seguridad alli.
--. Organizar mejor los cards, colocar el titulo visible y con icono.
--. los iconos de todas las grillas que sean iguales.
+-. los cards de la configuracion que valla centrada y meter la seguridad alli.===================================================
+-. Organizar mejor los cards, colocar el titulo visible y con icono.=============================================================
+-. los iconos de todas las grillas que sean iguales.=============================================================================
+
+
+1. En CONSOLIDADO los botones y el mensaje no aparecen hasta que el comsolidado tenga un registro.
+2. En CONSOLIDADO el mensaje de error debe salir arriba
+3. Enm CONSOLIDADO la validación que se realizó es solo si el destino es para el país COLOMBIA.
+4. En CONFIGURACIÓN Hay un error al ir a las impresoras.
+5. En BL y AWB si los consolidados se están mostrando de accuerdo al medio de envío.
+6. En CONSOLIDADO Los botones de descargar Excel salen solamente si el destino es COLOMBIA.
 
 -. en la ayuda del logo de la agencia que diga 170px por 60px y a si debe registrar el logo.
 -. Registrar shipper y consignee desde un componente aparte.. que se cree y se seleccione en el documento

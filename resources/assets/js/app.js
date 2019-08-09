@@ -53,3 +53,4 @@ Vue.component('modal-cambiar-status-consolidado', require('./components/ModalCam
 Vue.component('status-component', require('./components/Status.vue'));
 Vue.component('search', require('./components/Search.vue'));
 Vue.component('shipper-consignee-select', require('./components/ShipperConsigneeSelect.vue'));
+Vue.component('filter-upload', require('./components/FilterUpload.vue'));

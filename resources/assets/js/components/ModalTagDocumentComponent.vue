@@ -73,25 +73,25 @@
 	            <div class="modal-header">
 	                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 	                <h4 class="modal-title" id="myModalLabel">
-	                    <label id="num_track"><i class="fa fa-cubes"></i> {{ num_track }} <span class="badge badge-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Cantidad de cajas" style="font-size:17px;">{{ cantidad }}</span></label>
+	                    <label id="num_track"><i class="fal fa-cubes"></i> {{ num_track }} <span class="badge badge-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Cantidad de cajas" style="font-size:17px;">{{ cantidad }}</span></label>
 	                </h4>
 	                <div class="">
-	                	<span><i class="fa fa-user"></i> {{ cliente_cons }}</span>
+	                	<span><i class="fal fa-user"></i> {{ cliente_cons }}</span>
 	                	<button @click="openUrl(urlSendEmail)" data-style="expand-right" class="ladda-button btn btn-info dim button_print" data-toggle="tooltip" title="Enviar email" id="btn-sendEmail">
-	                		<i class="fa fa-envelope fa-lg" style=""></i>
+	                		<i class="fal fa-envelope fa-lg" style=""></i>
 	                	</button>
 	                </div>
-	                <div class=""><span><i class="fa fa-envelope "></i> {{ cliente_email }}</span></div>
+	                <div class=""><span><i class="fal fa-envelope "></i> {{ cliente_email }}</span></div>
 	            </div>
 	            <div class="modal-body">
 	            	<div class="row">
 		            	<div class="col-lg-12">
 		                    <!-- Nav tabs -->
 							  <ul class="nav nav-tabs" role="tablist">
-							    <!-- <li role="presentation" class="active"><a href="#general" aria-controls="general" role="tab" data-toggle="tab"><i class="fa fa-file-signature"></i> General</a></li> -->
-							    <li role="presentation" class="active"><a href="#tracking" aria-controls="tracking" role="tab" data-toggle="tab"><i class="fa fa-truck"></i> Trackings</a></li>
-							    <li role="presentation" @click="is_active = true"><a href="#status" aria-controls="status" role="tab" data-toggle="tab"><i class="fa fa-clock"></i> Status</a></li>
-							    <li role="presentation"><a href="#notas" aria-controls="notas" role="tab" data-toggle="tab"><i class="fa fa-comments"></i> Notas</a></li>
+							    <!-- <li role="presentation" class="active"><a href="#general" aria-controls="general" role="tab" data-toggle="tab"><i class="fal fa-file-signature"></i> General</a></li> -->
+							    <li role="presentation" class="active"><a href="#tracking" aria-controls="tracking" role="tab" data-toggle="tab"><i class="fal fa-truck"></i> Trackings</a></li>
+							    <li role="presentation" @click="is_active = true"><a href="#status" aria-controls="status" role="tab" data-toggle="tab"><i class="fal fa-clock"></i> Status</a></li>
+							    <li role="presentation"><a href="#notas" aria-controls="notas" role="tab" data-toggle="tab"><i class="fal fa-comments"></i> Notas</a></li>
 							  </ul>
 							<div class="tab-content">
                 <!-- <div role="tabpanel" class="tab-pane fade active in" id="general">
@@ -102,7 +102,7 @@
                   <div class="form-group cont-tracking">
 
                     <div v-for="val in trackings" class="tracking">
-                      <i class="fa fa-truck fa-xs"></i> {{ val.codigo }}<br>
+                      <i class="fal fa-truck fa-xs"></i> {{ val.codigo }}<br>
                       <i class="fal fa-minus fa-xs"></i> Contenido: <strong>{{ val.contenido }}</strong><br>
                       <i class="fal fa-minus fa-xs"></i> Peso: <strong>{{ val.peso }} Lbs</strong>
                     </div>
@@ -170,7 +170,7 @@
     								        	<input type="text" class="form-control" v-model="observacion" placeholder="Observación">
     								        </div>
     										<div class="col-lg-2">
-    											<button class="btn btn-primary" data-toggle="tooltip" title="Agregar" @click="createStatusReport()"><i class="fa fa-plus"></i></button>
+    											<button class="btn btn-primary" data-toggle="tooltip" title="Agregar" @click="createStatusReport()"><i class="fal fa-plus"></i></button>
     										</div>
 							        </div>
 					            <div class="table-responsive" v-show="is_active">
@@ -195,7 +195,7 @@
 								        	<small class="help-block">{{ errors.first('nota_name') }}</small>
 								        </div>
 								        <div class="col-lg-2">
-    											<button class="btn btn-primary" data-toggle="tooltip" title="Agregar" @click="createNota()"><i class="fa fa-plus"></i></button>
+    											<button class="btn btn-primary" data-toggle="tooltip" title="Agregar" @click="createNota()"><i class="fal fa-plus"></i></button>
     										</div>
 							        </div>
 									          <div class="table-responsive">
@@ -396,7 +396,7 @@
   	                    name: 'usuario_id'
   	                },{
   	                    "render": function (data, type, full, meta) {
-  		                	return '<a class="btn btn-danger btn-xs btn-outline" data-toggle="tooltip" title="Eliminar" onclick="deleteStatusNota('+full.id+', \'statusReport\')"><i class="fa fa-trash"></i></a>';
+  		                	return '<a class="delete_btn" data-toggle="tooltip" title="Eliminar" onclick="deleteStatusNota('+full.id+', \'statusReport\')"><i class="fal fa-trash-alt fa-lg"></i></a>';
   		                }
   	                }, ]
   	            });
@@ -498,7 +498,7 @@
   	                    name: 'name'
   	                },{
   	                    "render": function (data, type, full, meta) {
-  		                	return '<a class="btn btn-danger btn-xs btn-outline" data-toggle="tooltip" title="Eliminar" onclick="deleteStatusNota('+full.id+', \'notas\')"><i class="fa fa-trash"></i></a>';
+  		                	return '<a class="delete_btn" data-toggle="tooltip" title="Eliminar" onclick="deleteStatusNota('+full.id+', \'notas\')"><i class="fal fa-trash-alt fa-lg"></i></a>';
   		                }
   	                }, ]
   	            });

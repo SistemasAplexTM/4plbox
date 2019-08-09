@@ -187,7 +187,8 @@ class ConsigneeController extends Controller
                     'localizacion.id AS localizacion_id',
                     'localizacion.nombre AS ciudad',
                     'agencia.descripcion AS agencia',
-                    'consignee.zip'
+                    'consignee.zip',
+                    'consignee.correo'
                 )
                 ->where($where)
                 ->orderBy('consignee.nombre_full');
@@ -322,7 +323,7 @@ class ConsigneeController extends Controller
                     'password' => bcrypt($celular),
                 ]);
             }
-            
+
             $user = $this->getDataConsigneeOrShipperById($id_consignee, 'consignee');
             $plantilla = DB::table('plantillas_correo AS a')
                 ->select([

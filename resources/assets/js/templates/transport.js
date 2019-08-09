@@ -7,20 +7,11 @@ $(document).ready(function() {
             data: 'nombre',
             name: 'nombre'
         }, {
-            data: 'direccion',
-            name: 'direccion'
-        }, {
             data: 'ciudad',
             name: 'localizacion.nombre'
-        }, {
-            data: 'estado',
-            name: 'deptos.descripcion'
-        }, {
+        },  {
             data: 'pais',
             name: 'pais.descripcion'
-        }, {
-            data: 'zip',
-            name: 'zip'
         }, {
             data: 'codigo',
             name: 'codigo'
