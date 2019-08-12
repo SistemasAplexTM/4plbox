@@ -304,10 +304,10 @@ function numDocument(data, type, full, meta) {
       return '<span class="" data-toggle="tooltip" title="'+st+'"><i class="fa fa-'+ ((full.estatus == null) ? 'box' : ((full.agrupadas > 0) ? 'boxes' : ((full.flag == 1) ? 'minus' : 'box-open')))+' fa-xs" style="color:'+ ((full.flag == 1) ? '#E34724' : full.estatus_color) +'"></i> ' + ((codigo == null) ? full.warehouse : codigo )+ '</span><a style="float: right;cursor:pointer;" class="badge badge-'+ classText +' pop" role="button" data-html="true" data-toggle="popover" data-trigger="hover" title="<b>Documentos agrupadas</b>" data-content="'+((groupGuias == null) ? '' : groupGuias )+'" ' + group + '>'+ ((full.agrupadas == null) ? '' : full.agrupadas)+'</a> ' + mintic;
     }else{
       icon = 'fal fa-boxes';
-      if(full.transporte_id == 7){
+      if(full.transporte_id == 1){
         icon = 'fal fa-plane';
       }
-      if(full.transporte_id == 8){
+      if(full.transporte_id == 2){
         icon = 'fal fa-ship';
       }
       if (full.num_warehouse === null) {

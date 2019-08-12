@@ -38,8 +38,10 @@ var objVue = new Vue({
     },
     mounted: function() {
         $('#date').val(this.getTime());
-        this.searchShipperConsignee($('#shipper_id').val(), 'shipper');
-        this.searchShipperConsignee($('#consignee_id').val(), 'consignee');
+        if (!this.mostrar.includes(24)) {
+          this.searchShipperConsignee($('#shipper_id').val(), 'shipper');
+          this.searchShipperConsignee($('#consignee_id').val(), 'consignee');
+        }
         this.getSelectCity();
     },
     created: function() {

@@ -164,7 +164,7 @@ class DocumentoController extends Controller
                                     'servicios_id'     => 1,
                                     'forma_pago_id'    => 1,
                                     'tipo_pago_id'     => 4,//prepaid
-                                    'tipo_embarque_id' => (isset($request->tipo_embarque_id)) ? $request->tipo_embarque_id : 7,//aereo
+                                    'tipo_embarque_id' => (isset($request->tipo_embarque_id)) ? $request->tipo_embarque_id : 1,//aereo
                                     'grupo_id'         => 3,//general
                                     'estado_id'        => ($request->tipo_documento_id == 2) ? 27 : 28, //maestra multiple
                                     'created_at'       => $request->created_at,
@@ -605,7 +605,7 @@ class DocumentoController extends Controller
                         ->where('documento_id', $id)
                         ->update([
                             'servicios_id'     => ($request->servicios_id) ? $request->servicios_id : 1,
-                            'tipo_embarque_id' => (isset($request->tipo_embarque_id)) ? $request->tipo_embarque_id : 7,
+                            'tipo_embarque_id' => (isset($request->tipo_embarque_id)) ? $request->tipo_embarque_id : 1,
                         ]);
                 } else {
                     if ($request->document_type === 'guia') {
@@ -613,7 +613,7 @@ class DocumentoController extends Controller
                             ->where('documento_id', $id)
                             ->update([
                                 'servicios_id'     => ($request->servicios_id) ? $request->servicios_id : 1,
-                                'tipo_embarque_id' => ($request->tipo_embarque_id) ? $request->tipo_embarque_id : 7,
+                                'tipo_embarque_id' => ($request->tipo_embarque_id) ? $request->tipo_embarque_id : 1,
                                 'tipo_pago_id'     => $request->tipo_pago_id,
                                 'forma_pago_id'    => $request->forma_pago_id,
                                 'grupo_id'         => $request->grupo_id,
@@ -1580,7 +1580,7 @@ class DocumentoController extends Controller
                           // }
                           if($peso_t === 0 and $decla_t === 0){
                             $this->AddToLog('Impresion Consolidado guias (' . $id . ')');
-                            if($documento->transporte_id == 7){
+                            if($documento->transporte_id == 1){
                               if (env('APP_TYPE') === 'courier') {
                                   if(env('APP_CLIENT') === 'colombiana'){
                                       // return view('pdf/consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));

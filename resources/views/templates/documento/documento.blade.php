@@ -146,10 +146,10 @@
     {{-- DEFAULT VALUES --}}
     <?php $id_pa = ((env('APP_CLIENT') != 'worldcargo') ? 234 : 1) ?> {{-- id de la posicion por defecto --}}
     <div class="row" id="documento">
-        <modalshipper-component></modalshipper-component>
-        <modalconsignee-component></modalconsignee-component>
+        <modalshipper-component v-if="!mostrar.includes(24)"></modalshipper-component>
+        <modalconsignee-component v-if="!mostrar.includes(24)"></modalconsignee-component>
         <modalarancel-component></modalarancel-component>
-        <modalcargosadd-component :showmodal="showmodalAdd"></modalcargosadd-component>
+        <modalcargosadd-component v-if="!mostrar.includes(24)" :showmodal="showmodalAdd"></modalcargosadd-component>
         <products-cuba-component v-if="mostrar.includes(66)" :id_document="{{ $documento->id }}" :points="total_points" :data_p="data_points" @get="getProductsCuba($event)"></products-cuba-component>
 
         <form class="" autocomplete="off" id="formDocumento" name="formDocumento" class=" form-horizontal" role="form" action="{{ url('documento/updatedDocument') }}/{{  $documento->id }}" method="post">

@@ -35,7 +35,7 @@
                 </h5>
                 <div class="ibox-tools">
                     {{-- <a href="{{ url('bill/create') }}" data-toggle="tooltip" title="Crear bill of lading" class="btn btn-primary" >Nuevo <i class="fa fa-plus" style="font-size: small;"></i></a> --}}
-                    <a class="btn btn-primary" data-toggle="tooltip" title="Crear nueva master"><span data-toggle="modal" data-target="#modalCreateMaster">@lang('master.new') <i class="fal fa-plus" style="font-size: small;"></i></span></a>
+                    <a class="btn btn-primary" data-toggle="tooltip" title="Crear nuevo BL"><span data-toggle="modal" data-target="#modalCreateBL">@lang('master.new') <i class="fal fa-plus" style="font-size: small;"></i></span></a>
                 </div>
             </div>
             <div class="ibox-content">
@@ -58,8 +58,8 @@
             </div>
         </div>
 
-        <!-- MODAL CAMBIAR STATUS CONSOLIDADO -->
-        <div class="modal fade bs-example" id="modalCreateMaster" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <!-- MODAL CREAR BL -->
+        <div class="modal fade bs-example" id="modalCreateBL" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog" style="width:30%;">
                 <div class="modal-content">
                     <div class="modal-header">

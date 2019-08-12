@@ -469,9 +469,9 @@ class MasterController extends Controller
           $where[] = ['a.agencia_id', Auth::user()->agencia_id];
       }
       if($type == 0){
-        $where[] = ['a.transporte_id', 7];
+        $where[] = ['a.transporte_id', 1];
       }else{
-        $where[] = ['a.transporte_id', 8];
+        $where[] = ['a.transporte_id', 2];
       }
       $data = DB::table('documento AS a')
           ->leftJoin('localizacion AS b', 'a.ciudad_id', 'b.id')

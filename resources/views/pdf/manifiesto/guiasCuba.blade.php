@@ -54,7 +54,6 @@ $toalRegistros = count($detalleConsolidado);
 // print_r($documento);
 // print_r($detalleConsolidado);
 // echo '<pre>';
-// exit();
 ?>
 
 @if($detalleConsolidado != '')

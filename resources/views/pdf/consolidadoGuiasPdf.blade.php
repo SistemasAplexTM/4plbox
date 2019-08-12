@@ -106,7 +106,6 @@
 $cont = 0;
 $contRegistros = 0;
 $toalRegistros = count($detalleConsolidado);
-
 ?>
 
 @if($detalleConsolidado != '')

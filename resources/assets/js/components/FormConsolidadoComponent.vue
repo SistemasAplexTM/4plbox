@@ -116,10 +116,10 @@
 																						  </ul>
 																						</div>
                                         </div>
-																				<div class="col-sm-12" v-show="!show_buttons" style="color: #E34724">
-																					<span>Hay valores declarados en cero (0) o valores que superan lo permitido para COURIER o no hay documentos ingresados</span>
-																					<a @click="show_buttons = true" class="btn btn-info btn-sm">Deseo continuar</a>
-																				</div>
+																					<div class="col-sm-12" v-show="!show_buttons && show_msn" style="color: #E34724">
+																						<span>Hay valores declarados en cero (0), valores que superan lo permitido para COURIER o no hay documentos ingresados</span>
+																						<a @click="show_buttons = true" class="btn btn-info btn-sm">Deseo continuar</a>
+																					</div>
                                     </div>
                                 </div>
 																<div class="row">
@@ -139,7 +139,7 @@
 																					</div>
 																			</div>
 																	</div>
-																	<div class="col-sm-4" v-if="show_buttons">
+																	<div class="col-sm-4" v-if="show_buttons && pais_id == pais_id_config">
 																			<div class="col-sm-3">
 																					<div class="form-group">
 																							<label for="" style="width: 100%;">&nbsp;</label>
@@ -425,117 +425,117 @@
 <script>
 
     export default {
-    	props: {
-						documento: {
-				      type: Object,
-				      required: true
-				    },contactos: {
-				      type: Object,
-				      required: false
-				    },restore: {
-			        type: Object,
-			        required: false
-			      },agrupar: {
-			        type: Object,
-			        required: false
-			      },removeragrupado: {
-			        type: Object,
-			        required: false
-			      },permission: {
-			        type: Object,
-			        required: false
-			      },app_type: {
-			        type: String,
-			        required: true
-			      },app_client: {
-			        type: String,
-			        required: true
-			      },
-						pais_id_config:[String, Number],
-						close_document:{
-							type: Boolean,
-			        required: false
-						}
-    	},
-    	watch:{
-						close_document:function(val){
-						this.close = val;
-						this.updateTableDetail();
-						},
-						permission:function(values){
-						  this.permissions = values;
-						},
-						contactos:function(option){
-						this.contactos_fields = null;
-						      if(option.opcion === 'shipper'){
-						          var id = option.idShipCons;
-						      	$('#modalShipperConsigneeConsolidado').modal('show');
-						      	this.tituloModal = 'Remitente (Shipper)';
-						      	var contact = this.shipper_contactos[id];
-						      	if(contact != null){
-						        	this.contactos_fields = (JSON.parse(contact.replace(/&quot;/g, '"'))).campos;
-						        }
-						      }
-						      if(option.opcion === 'consignee'){
-						          var id = option.idShipCons;
-						      	$('#modalShipperConsigneeConsolidado').modal('show');
-						      	this.tituloModal = 'Destinatario (Consignee)';
-						      	var contact = this.consignee_contactos[id];
-						      	if(contact != null){
-						        	this.contactos_fields = (JSON.parse(contact.replace(/&quot;/g, '"'))).campos;
-						        }
-						      }
-						},
-						restore:function(option){
-						    let me = this;
-						    axios.get('restoreShipperConsignee/' + option.id + '/' + option.table).then(response => {
-						        toastr.success('Registro original restaurado.');
-						        me.updateTableDetail();
-						    }).catch(function(error) {
-						        console.log(error);
-						        toastr.warning('Error: -' + error);
-						    });
-						},
-						agrupar:function(option){
-						    let me = this;
-						    if ($.fn.DataTable.isDataTable('#tbl-modalagrupar')) {
-						        $('#tbl-modalagrupar tbody').empty();
-						        $('#tbl-modalagrupar').dataTable().fnDestroy();
-						    }
-						    var table = $('#tbl-modalagrupar').DataTable({
-						        "language": {
-						            "paginate": {
-						                "previous": "Anterior",
-						                "next": "Siguiente",
-						            },
-						            /*"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",*/
-						            "info": "Registros del _START_ al _END_  de un total de _TOTAL_",
-						            "search": "Buscar",
-						            "lengthMenu": "Mostrar _MENU_ Registros",
-						            "infoEmpty": "Mostrando registros del 0 al 0",
-						            "emptyTable": "No hay datos disponibles en la tabla",
-						            "infoFiltered": "(Filtrando para _MAX_ Registros totales)",
-						            "zeroRecords": "No se encontraron registros coincidentes",
-						        },
-						        processing: true,
-						        serverSide: true,
-						        searching: true,
-						        ajax: 'getGuiasAgrupar/'+ option.id,
-						        columns: [{
-						            "render": function (data, type, full, meta) {
-						                return '<div class="checkbox checkbox-success"><input type="checkbox" data-id_guia="' + full.documento_detalle_id + '" id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '"></label></div>';
-						            }
-						        }, {
-						            data: 'codigo',
-						            name: 'codigo'
-						        }, {
-						            data: 'peso2',
-						            name: 'peso2'
-						        }]
-						    });
-						    $('#modalagrupar').modal('show');
-						},
-						removeragrupado:function(option){
+	  	props: {
+				documento: {
+		      type: Object,
+		      required: true
+		    },contactos: {
+		      type: Object,
+		      required: false
+		    },restore: {
+	        type: Object,
+	        required: false
+	      },agrupar: {
+	        type: Object,
+	        required: false
+	      },removeragrupado: {
+	        type: Object,
+	        required: false
+	      },permission: {
+	        type: Object,
+	        required: false
+	      },app_type: {
+	        type: String,
+	        required: true
+	      },app_client: {
+	        type: String,
+	        required: true
+	      },
+				pais_id_config:[String, Number],
+				close_document:{
+					type: Boolean,
+	        required: false
+				}
+	  	},
+	  	watch:{
+				close_document:function(val){
+					this.close = val;
+					this.updateTableDetail();
+				},
+				permission:function(values){
+				  this.permissions = values;
+				},
+				contactos:function(option){
+					this.contactos_fields = null;
+		      if(option.opcion === 'shipper'){
+		          var id = option.idShipCons;
+		      	$('#modalShipperConsigneeConsolidado').modal('show');
+		      	this.tituloModal = 'Remitente (Shipper)';
+		      	var contact = this.shipper_contactos[id];
+		      	if(contact != null){
+		        	this.contactos_fields = (JSON.parse(contact.replace(/&quot;/g, '"'))).campos;
+		        }
+		      }
+		      if(option.opcion === 'consignee'){
+		          var id = option.idShipCons;
+		      	$('#modalShipperConsigneeConsolidado').modal('show');
+		      	this.tituloModal = 'Destinatario (Consignee)';
+		      	var contact = this.consignee_contactos[id];
+		      	if(contact != null){
+		        	this.contactos_fields = (JSON.parse(contact.replace(/&quot;/g, '"'))).campos;
+		        }
+		      }
+				},
+				restore:function(option){
+				    let me = this;
+				    axios.get('restoreShipperConsignee/' + option.id + '/' + option.table).then(response => {
+				        toastr.success('Registro original restaurado.');
+				        me.updateTableDetail();
+				    }).catch(function(error) {
+				        console.log(error);
+				        toastr.warning('Error: -' + error);
+				    });
+				},
+				agrupar:function(option){
+				    let me = this;
+				    if ($.fn.DataTable.isDataTable('#tbl-modalagrupar')) {
+				        $('#tbl-modalagrupar tbody').empty();
+				        $('#tbl-modalagrupar').dataTable().fnDestroy();
+				    }
+				    var table = $('#tbl-modalagrupar').DataTable({
+				        "language": {
+				            "paginate": {
+				                "previous": "Anterior",
+				                "next": "Siguiente",
+				            },
+				            /*"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",*/
+				            "info": "Registros del _START_ al _END_  de un total de _TOTAL_",
+				            "search": "Buscar",
+				            "lengthMenu": "Mostrar _MENU_ Registros",
+				            "infoEmpty": "Mostrando registros del 0 al 0",
+				            "emptyTable": "No hay datos disponibles en la tabla",
+				            "infoFiltered": "(Filtrando para _MAX_ Registros totales)",
+				            "zeroRecords": "No se encontraron registros coincidentes",
+				        },
+				        processing: true,
+				        serverSide: true,
+				        searching: true,
+				        ajax: 'getGuiasAgrupar/'+ option.id,
+				        columns: [{
+				            "render": function (data, type, full, meta) {
+				                return '<div class="checkbox checkbox-success"><input type="checkbox" data-id_guia="' + full.documento_detalle_id + '" id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '"></label></div>';
+				            }
+				        }, {
+				            data: 'codigo',
+				            name: 'codigo'
+				        }, {
+				            data: 'peso2',
+				            name: 'peso2'
+				        }]
+				    });
+				    $('#modalagrupar').modal('show');
+				},
+				removeragrupado:function(option){
 						    let me = this;
 						    axios.get('removerGuiaAgrupada/' + option.id + '/' + option.id_guia_detalle).then(response => {
 						        toastr.success('Registro quitado correctamente.');
@@ -547,656 +547,659 @@
 						}
 	    },
 	    mounted() {
-						this.getSelectBranch();
-						this.getDataDetail();
-						this.getTransportes();
-						this.close = this.documento.close_document;
-						$('#document_type').val('consolidado');
-						$('.printDocument').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/consolidado');
-						$('.printDocumentGuias').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/consolidado_guias');
-						$('.printDocumentGuiasCuba').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/consolidado_guias_cuba');
-						let me = this;
-						setTimeout(function() {
-							if(me.documento.ciudad_id != null){
-								me.city_selected_s = me.documento.ciudad;
-								me.localizacion_id = me.documento.ciudad_id;
-								me.pais_id = me.documento.pais_id;
-								me.disabled_city = true;
-							}
-							if(me.documento.central_destino_id != null){
-								me.central_destino_id = me.documento.central_destino_id;
-								me.disabled_agencia = true;
-							}
-							if(me.documento.transporte_id != null){
-								me.transporte_id = me.documento.transporte_id;
-								me.disabled_transporte = true;
-							}
-							if(me.documento.observaciones != null){
-								me.observacion = me.documento.observaciones;
-							}
-							if(me.documento.observaciones != null){
-								me.tipo_consolidado = me.documento.tipo_consolidado;
-							}
-						}, 5500);
-		},
-		created(){
-			/* CUSTOM MESSAGES VE-VALIDATOR*/
-	        const dict = {
-	            custom: {
-	                transporte_id: {
-	                    required: 'El Transporte es obligatorio'
-	                },
-	                localizacion_id: {
-	                    required: 'La ciudad es obligatorio'
-	                },
-	                central_destino_id: {
-	                    required: 'La Central destino es obligatoria'
-	                }
+				this.getSelectBranch();
+				this.getDataDetail();
+				this.getTransportes();
+				this.close = this.documento.close_document;
+				$('#document_type').val('consolidado');
+				$('.printDocument').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/consolidado');
+				$('.printDocumentGuias').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/consolidado_guias');
+				$('.printDocumentGuiasCuba').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/consolidado_guias_cuba');
+				let me = this;
+				setTimeout(function() {
+					if(me.documento.ciudad_id != null){
+						me.city_selected_s = me.documento.ciudad;
+						me.localizacion_id = me.documento.ciudad_id;
+						me.pais_id = me.documento.pais_id;
+						me.disabled_city = true;
+					}
+					if(me.documento.central_destino_id != null){
+						me.central_destino_id = me.documento.central_destino_id;
+						me.disabled_agencia = true;
+					}
+					if(me.documento.transporte_id != null){
+						me.transporte_id = me.documento.transporte_id;
+						me.disabled_transporte = true;
+					}
+					if(me.documento.observaciones != null){
+						me.observacion = me.documento.observaciones;
+					}
+					if(me.documento.observaciones != null){
+						me.tipo_consolidado = me.documento.tipo_consolidado;
+					}
+				}, 100);
+			},
+			created(){
+				/* CUSTOM MESSAGES VE-VALIDATOR*/
+	      const dict = {
+	        custom: {
+	            transporte_id: {
+	                required: 'El Transporte es obligatorio'
+	            },
+	            localizacion_id: {
+	                required: 'La ciudad es obligatorio'
+	            },
+	            central_destino_id: {
+	                required: 'La Central destino es obligatoria'
 	            }
-	        };
-	        this.$validator.localize('es', dict);
-	    },
-		data () {
-	        return {
-            transporte_id: null,
-	        	transportes: [],
-	        	countries: [],
-	        	branchs: [],
-	        	services: [],
-	        	details: [],
-            contactos_fields: [],
-            shipper_contactos: {},
-            consignee_contactos: {},
-	        	permissions: {},
-	        	num_bolsa: 1,
-	        	pais_id: null,
-	        	central_destino_id: null,
-	        	observacion: null,
-	        	num_guia: null,
-	        	disabled_transporte: false,
-	        	disabled_agencia: false,
-	        	disabled_city: false,
-	        	msn:'',
-	        	tituloModal:'',
-						show_buttons: true,
-						close: false,
-						localizacion_id: null,
-						city_selected_s: null,
-						ciudades: [],
-						tipo_consolidado: 'COURIER',
-						num_bolsa_selected: 0,
-						bags: [],
-						cant_bags: 0
 	        }
+	      };
+	      this.$validator.localize('es', dict);
 	    },
-		methods: {
-				setCity(data){
-          this.localizacion_id = data.id;
-          this.pais_id = data.pais_id;
-        },
-				getSelectBranch: function(){
-					axios.get('/agencia/getSelectBranch').then(response => {
-						this.branchs = response.data;
-					});
-				},
-				printGroup(param){
-					window.open('/impresion-group/pdfConsolidadoGroup/' + this.documento.id + '/guia/' + this.num_bolsa_selected, '_blank');
-				},
-				exportLiquimp(){
-					window.open('/exportLiquimp/' + this.documento.id, '_blank');
-				},
-				exportCellar(){
-					window.open('/exportCellar/' + this.documento.id, '_blank');
-				},
-				printLabelBagModal(){
-					$('#modalPrintLabels').modal('show');
-				},
-	      agruparGuiasConsolidado: function(){
-	          $('#modalagrupar').modal('hide');
-	          let me = this;
-	          var datos = $("#formGuiasAgrupar").serializeArray();
-	          var ids = {};
-	          $.each(datos, function(i, field) {
-	              if (field.name === 'chk[]') {
-	                  ids[i] =  $('#chk' + field.value).data('id_guia');
-	              }
-	          });
-	          axios.post('agruparGuiasConsolidadoCreate',{
-	              'id_detalle': me.agrupar.id,
-	              'ids_guias': ids
-	          }).then(function (response) {
-	              toastr.success('Se agrupo correctamente.');
-	              me.updateTableDetail();
-	          }).catch(function (error) {
-	              console.log(error);
-	              toastr.warning('Error.');
-	              toastr.options.closeButton = true;
-	          });
-	      },
-				selectedShipperConsignee: function(campos){
-					let me = this;
-			        axios.post('createContactsConsolidadoDetalle',{
-			        	'campos': campos,
-			        	'data': me.contactos
-			        }).then(function (response) {
-			            toastr.success('Cambio Exitoso.');
-	                    $('#modalShipperConsigneeConsolidado').modal('hide');
-	                    me.updateTableDetail();
-			        }).catch(function (error) {
-			        	console.log(error);
-			            toastr.warning('Error.');
-	                	toastr.options.closeButton = true;
-			        });
-				},
-				getTransportes: function(){
-					let me = this;
-			        axios.get('../../administracion/5/getSelect').then(function (response) {
-			            me.transportes = response.data;
-			        }).catch(function (error) {
-			        	console.log(error);
-			            toastr.warning('Error.');
-	                	toastr.options.closeButton = true;
-			        });
-				},
-				addGuiasToConsolidadoModal: function(){
-					let me = this;
-					var datos = $("#formGuiasConsolidado").serializeArray();
-			        $.each(datos, function(i, field) {
-			            if (field.name === 'chk[]') {
-			                 me.addGuiasToConsolidado($('#chk' + field.value).data('numguia'));
-			            }
-			        });
-				},
-				getModalGuias: function(){
-			        var me = this;
-					if(me.localizacion_id != null && me.central_destino_id != null && me.transporte_id != null){
-			            var codigoGW='';
-			            $('#modalguiasconsolidado').modal('show');
-			            if ($.fn.DataTable.isDataTable('#tbl-modalguiasconsolidado')) {
-			                $('#tbl-modalguiasconsolidado tbody').empty();
-			                $('#tbl-modalguiasconsolidado').dataTable().fnDestroy();
-			            }
-			            var table = $('#tbl-modalguiasconsolidado').DataTable({
-			            	"language": {
-						        "paginate": {
-						            "previous": "Anterior",
-						            "next": "Siguiente",
-						        },
-						        /*"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",*/
-						        "info": "Registros del _START_ al _END_  de un total de _TOTAL_",
-						        "search": "Buscar",
-						        "lengthMenu": "Mostrar _MENU_ Registros",
-						        "infoEmpty": "Mostrando registros del 0 al 0",
-						        "emptyTable": "No hay datos disponibles en la tabla",
-						        "infoFiltered": "(Filtrando para _MAX_ Registros totales)",
-						        "zeroRecords": "No se encontraron registros coincidentes",
-						    },
-						    processing: true,
-						    serverSide: true,
-						    searching: true,
-			                ajax: 'getAllGuiasDisponibles/'+ me.pais_id+'/'+me.transporte_id,
-			                columns: [{
-			                    "render": function (data, type, full, meta) {
-				                	return '<div class="checkbox checkbox-success"><input type="checkbox" data-numguia="' + full.num_guia + '" id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '"></label></div>';
-				                }
-			                }, {
-			                    data: 'created_at',
-			                    name: 'created_at'
-			                }, {
-			                    "render": function (data, type, full, meta) {
-	                                // if(me.app_type === 'courier'){
-	                                //     if(full.liquidado == 0){
-	                                //         codigoGW = full.num_warehouse;
-	                                //         return full.num_warehouse;
-	                                //     }else{
-	                                //         if(full.liquidado == 1){
-	                                //             codigoGW = full.num_guia;
-	                                //             return full.num_guia;
-	                                //         }
-	                                //     }
-	                                // }else{
-	                                //     codigoGW = full.num_warehouse;
-	                                    return full.num_warehouse;
-	                                // }
-				                }
-			                }, {
-			                    data: 'peso2',
-			                    name: 'peso2'
-			                }, {
-			                    "render": function (data, type, full, meta) {
-				                	return '$ '+ full.declarado2;
-				                }
-			                }]
-			            });
-			        }else{
-			        	toastr.info('Porfavor, selecciona una central destino, un pais y un transporte para poder continuar.');
-			        }
-		        },
-				saveConsolidado: function() {
-					if(this.validateForm()){
-			            var me = this;
-			            var rowData = {
-			                'document_type': $('#document_type').val(),
-			                'ciudad_id': me.localizacion_id,
-			                'central_destino_id': me.central_destino_id,
-	                    'transporte_id': me.transporte_id,
-			                'observacion': me.observacion,
-			                'tipo_consolidado': me.tipo_consolidado,
-			            }
-			            axios.put('../'+$('#id_documento').val(), rowData).then(function (response) {
-				            toastr.success('Registro actualizado correctamente.');
-		                	toastr.options.closeButton = true;
-		                	me.disabled_agencia = true;
-		                	me.disabled_city = true;
-		                	me.disabled_transporte = true;
+			data () {
+		        return {
+	            transporte_id: null,
+		        	transportes: [],
+		        	countries: [],
+		        	branchs: [],
+		        	services: [],
+		        	details: [],
+	            contactos_fields: [],
+	            shipper_contactos: {},
+	            consignee_contactos: {},
+		        	permissions: {},
+		        	num_bolsa: 1,
+		        	pais_id: null,
+		        	central_destino_id: null,
+		        	observacion: null,
+		        	num_guia: null,
+		        	disabled_transporte: false,
+		        	disabled_agencia: false,
+		        	disabled_city: false,
+		        	msn:'',
+		        	tituloModal:'',
+							show_buttons: false,
+							show_msn: false,
+							close: false,
+							localizacion_id: null,
+							city_selected_s: null,
+							ciudades: [],
+							tipo_consolidado: 'COURIER',
+							num_bolsa_selected: 0,
+							bags: [],
+							cant_bags: 0
+		        }
+		    },
+			methods: {
+					setCity(data){
+	          this.localizacion_id = data.id;
+	          this.pais_id = data.pais_id;
+	        },
+					getSelectBranch: function(){
+						axios.get('/agencia/getSelectBranch').then(response => {
+							this.branchs = response.data;
+						});
+					},
+					printGroup(param){
+						window.open('/impresion-group/pdfConsolidadoGroup/' + this.documento.id + '/guia/' + this.num_bolsa_selected, '_blank');
+					},
+					exportLiquimp(){
+						window.open('/exportLiquimp/' + this.documento.id, '_blank');
+					},
+					exportCellar(){
+						window.open('/exportCellar/' + this.documento.id, '_blank');
+					},
+					printLabelBagModal(){
+						$('#modalPrintLabels').modal('show');
+					},
+		      agruparGuiasConsolidado: function(){
+		          $('#modalagrupar').modal('hide');
+		          let me = this;
+		          var datos = $("#formGuiasAgrupar").serializeArray();
+		          var ids = {};
+		          $.each(datos, function(i, field) {
+		              if (field.name === 'chk[]') {
+		                  ids[i] =  $('#chk' + field.value).data('id_guia');
+		              }
+		          });
+		          axios.post('agruparGuiasConsolidadoCreate',{
+		              'id_detalle': me.agrupar.id,
+		              'ids_guias': ids
+		          }).then(function (response) {
+		              toastr.success('Se agrupo correctamente.');
+		              me.updateTableDetail();
+		          }).catch(function (error) {
+		              console.log(error);
+		              toastr.warning('Error.');
+		              toastr.options.closeButton = true;
+		          });
+		      },
+					selectedShipperConsignee: function(campos){
+						let me = this;
+				        axios.post('createContactsConsolidadoDetalle',{
+				        	'campos': campos,
+				        	'data': me.contactos
+				        }).then(function (response) {
+				            toastr.success('Cambio Exitoso.');
+		                    $('#modalShipperConsigneeConsolidado').modal('hide');
+		                    me.updateTableDetail();
 				        }).catch(function (error) {
+				        	console.log(error);
 				            toastr.warning('Error.');
 		                	toastr.options.closeButton = true;
 				        });
-				    }
-		   	},
-	      validateForm: function() {
-	      	let me = this;
-	          if(me.central_destino_id == null){
-	          	me.msn = 'Es necesario seleccionar una central destino para continuar.';
-	          	return false;
-	          }
-	          if(me.localizacion_id == null){
-	          	me.msn = 'Es necesario seleccionar una ciudad para continuar.';
-	          	return false;
-	          }
-	          if(me.transporte_id == null){
-	          	me.msn = 'Es necesario seleccionar un transporte para continuar.';
-	          	return false;
-	          }
-	          return true;
-	      },
-        cancelDocument: function() {
-            window.location.href = '../';
-        },
-				updateDataDetail(rowData) {
-			        var me = this;
-			        axios.put('updateDetailConsolidado', {rowData}).then(function (response) {
-			            toastr.success('Registro actualizado correctamente.');
-	                	toastr.options.closeButton = true;
-	                	me.updateTableDetail();
-			        }).catch(function (error) {
-			            toastr.success('Error.');
-	                	toastr.options.closeButton = true;
-			        });
-			    },
-				addGuiasToConsolidado: function(num_guia){
-					if(num_guia){
-						this.num_guia = num_guia;
-					}
-					let me = this;
-	                me.msn = '';
-	                if(this.num_guia == ''){
-						toastr.warning('Debe ingresar un numero de guia o warehouse para continuar.');
-	                    toastr.options.closeButton = true;
-	                }else{
-	                	if(this.validateForm()){
-							axios.get('buscarGuias/' + this.num_guia + '/'+ this.num_bolsa + '/'+ this.pais_id).then(response => {
-				                if(response.data.code === 200){
-				                	var table = $('#tbl-consolidado').DataTable();
-									if (!table.data().count()) {
-										this.saveConsolidado();
-										this.disabled_city = true;
-										this.disabled_agencia = true;
-										this.disabled_transporte = true;
-									}
-				                	me.updateTableDetail();
-				                	toastr.success('Registro agregado correctamente.');
-			                    	toastr.options.closeButton = true;
-			                    	this.num_guia = '';
-				                }else{
-				                	if(response.data.code === 600){
-				                		me.msn = response.data.data;
-				                		this.num_guia = '';
-				                	}
-				                }
-				            }).catch(function(error) {
-				                console.log(error);
-				                toastr.error("Error.", {
-				                    timeOut: 50000
-				                });
-				            });
-				        }
-			        }
-				},
-				updateTableDetail(){
-					var table = $('#tbl-consolidado').DataTable();
-		            table.ajax.reload();
-				},
-				increaseBoxes(){
-					this.num_bolsa = parseInt(this.num_bolsa)+1;
-				},
-				getDataDetail(){
-						let me=this;
-						var href_print_label = '';
-						/* SOLO SI ES EL DOCUMNTO CONSOLIDADO*/
-					    var table = $('#tbl-consolidado').DataTable({
-					        // keys: true,
-					        processing: true,
-					        serverSide: true,
-					        responsive: true,
-									lengthMenu: [[40, 50, 80, 100, 200, -1], [40, 50, 80, 100, 200, "All"]],
-					        ajax: 'getAllConsolidadoDetalle',
-					        columns: [
-					            {data: 'num_bolsa', name: 'num_bolsa'},
-					            {
-					                "render": function (data, type, full, meta) {
-		                                var groupGuias = full.guias_agrupadas;
-		                                var btn_delete = "<a style='float: right;cursor:pointer;''><i class='fal fa-times'></i></a>";
-		                                if(groupGuias != null && groupGuias != 'null' && groupGuias != ''){
-		                                    groupGuias = groupGuias.replace(/,/g, "<br>");
-		                                    groupGuias = groupGuias.replace(/@/g, ",");//SEPARADOR AL CREAR EL ONCLIC EN EL CONTROLADOR
-		                                }else{
-		                                    groupGuias = '';
-		                                }
-		                                var color = 'default';
-		                                if(parseInt(full.agrupadas) > 0){
-		                                    color = 'primary';
-		                                }
-																		let group = ' onclick="agruparGuias('+full.id+')"';
-																		if(me.close){
-																			group = '';
-																		}
-																		var error = '';
-																		if(full.flag_declarado != 0 && full.flag_declarado != null || parseFloat(full.declarado2) === 0 || full.flag_peso != null &&  full.flag_peso != 0 || parseFloat(full.peso2) === 0){
-																			error = 'text-danger'
-																		}
-		                                if(me.app_type === 'courier'){
-		                                    if(me.pais_id != pais_id_config){
-		                                        return '<span id="num_guia'+full.id+'" class="'+error+'">' + full.num_warehouse + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" role="button" \n\
-		                                            data-html="true" \n\
-		                                            data-toggle="popover" \n\
-		                                            data-trigger="hover" \n\
-		                                            title="<b>Guias agrupadas</b>" \n\
-		                                            data-content="'+groupGuias+'" ' + group + '>'+full.agrupadas+'</a>';
-		                                    }else{
-	                                          return '<span id="num_guia'+full.id+'" class="'+error+'">' + full.num_guia + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" \n\
-	                                          role="button" \n\
-	                                          data-html="true" \n\
-	                                          data-toggle="popover" \n\
-	                                          data-trigger="hover" \n\
-	                                          title="<b>Guias agrupadas</b>" \n\
-	                                          data-content="'+groupGuias+'" ' + group + '>'+full.agrupadas+'</a>';
-		                                    }
-		                                }else{
-		                                    return '<span id="num_guia'+full.id+'" class="'+error+'">' + full.num_warehouse + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" role="button" \n\
-		                                            data-html="true" \n\
-		                                            data-toggle="popover" \n\
-		                                            data-trigger="hover" \n\
-		                                            title="<b>Guias agrupadas</b>" \n\
-		                                            data-content="'+groupGuias+'" ' + group + '>'+full.agrupadas+'</a>';
-		                                }
-					                }
-					            },
-					            {
-					                "render": function (data, type, full, meta) {
-					                	var nom_ship = full.shipper;
-					                	var json = '';
-					                	if(full.shipper == null){
-					                		nom_ship = '';
-					                	}
-					                	if(full.shipper_json != null){
-															json = JSON.parse(full.shipper_json.replace(/&quot;/g, '"'));
-															nom_ship = json.nombre;
-					                	}
-					                	me.shipper_contactos[full.shipper_id] = full.shipper_contactos;
-					                	return '<div class="center-content"><div style="width:80%;float: left;">' + nom_ship + '</div> <div style="width:20%;float: right;"><a  data-toggle="tooltip" title="Cambiar" class="edit" style="color:#FFC107;" onclick="showModalShipperConsigneeConsolidado('+full.id+', \''+full.shipper_id+'\', \'shipper\')"><i class="fal fa-pencil"></i></a> <a onclick=\"restoreShipperConsignee('+full.id+', \'shipper\')\" class="delete" title="Restaurar original" data-toggle="tooltip" style="float:right;color:#2196F3;margin-right: 5px;"><i class="far fa-sync-alt"></i></a></div></div> ';
-					                },
-													visible: ((app_client === 'worldcargo') ? false : true)
-					            },
-					            {
-					                "render": function (data, type, full, meta) {
-					                	var nom_cons = full.consignee;
-					                	var json = '';
-					                	if(full.consignee == null){
-					                		nom_cons = '';
-					                	}
-					                	if(full.consignee_json != null){
-															json = JSON.parse(full.consignee_json.replace(/&quot;/g, '"'));
-															nom_cons = json.nombre;
-					                	}
-					                	me.consignee_contactos[full.consignee_id] = full.consignee_contactos;
-					                	return '<div class="center-content"><div style="width:80%;float: left;">' + nom_cons + '</div> <div style="width:20%;float: right;"> <a  data-toggle="tooltip" title="Cambiar" class="edit" style="color:#FFC107;" onclick="showModalShipperConsigneeConsolidado('+full.id+', \''+full.consignee_id+'\',\'consignee\')"><i class="fal fa-pencil"></i></a> <a onclick=\"restoreShipperConsignee('+full.id+',\'consignee\')\" class="delete" title="Restaurar original" data-toggle="tooltip" style="float:right;color:#2196F3;margin-right: 5px;"><i class="far fa-sync-alt"></i></a></div></div>';
-					                }
-					            },
-					            {
-		                      "render": function (data, type, full, meta) {
-		                          var pa = (full.pa == null) ? '' : full.pa;
-		                          return '<span id="pa'+ full.id +'">' + pa + '</span>' + '<a  data-toggle="tooltip" title="Cambiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalArancel('+full.documento_detalle_id+', \'tbl-consolidado\')"><i class="fal fa-pencil"></i></a>';
-		                      },
-													visible: ((app_client === 'worldcargo') ? false : true)
-		                  },
-		                  {
-		                      "render": function (data, type, full, meta) {
-		                          return '<a data-name="contenido2" data-pk="'+full.documento_detalle_id+'" class="td_edit" data-type="text" data-placement="right" data-title="Contenido">'+full.contenido2+'</a>';
-		                      }
-		                  },
-		                  {
-		                      "render": function (data, type, full, meta) {
-		                          return '<a data-name="declarado2" data-pk="'+full.documento_detalle_id+'" class="td_edit '+ ((full.flag_declarado != null && full.flag_declarado != 0 || parseFloat(full.declarado2) === 0) ? 'text-danger' : '') +'" data-type="text" data-placement="right" data-title="Declarado">'+full.declarado2+'</a>';
-		                      }
-		                  },
-		                  {
-		                      "render": function (data, type, full, meta) {
-		                          return '<a id="peso'+ full.consignee_id +'" data-name="peso2" data-pk="'+full.documento_detalle_id+'" class="td_edit '+ ((full.flag_peso != null && full.flag_peso != 0 || parseFloat(full.peso2) === 0) ? 'text-danger' : '') +'" data-type="text" data-placement="right" data-title="Peso">'+full.peso2+'</a>';
-		                      }
-		                  },
-		                  {data: 'peso', name: 'peso'},
-		                  {
-		                      sortable: false,
-		                      "render": function (data, type, full, meta) {
-		                          var btn_delete = '';
-		                          var document_print = '';
-		                          if(me.pais_id != pais_id_config){
-		                              href_print_label = "../../impresion-documento-label/"+ full.documento_id + "/warehouse/"+full.documento_detalle_id+"/consolidado";
-																	document_print = "warehouse";
-		                          }else{
-		                              href_print_label = "../../impresion-documento-label/"+ full.documento_id + "/guia/"+full.documento_detalle_id+"/consolidado";
-																	document_print = "guia";
-		                          }
-
-		                          var btn_invoice =  "<a href='../../impresion-documento/" + full.documento_id + "/invoice/"+full.documento_detalle_id+"' target='blank_' class=''><i class='fa fa-file' ></i> Imprimir invoice</a> ";
-		                          if (me.permissions.pdfLabel) {
-		                              var btn_label =  "<a href='"+href_print_label+"' target='blank_' class=''><i class='fa fa-barcode'></i> Imprimir label</a> ";
-																	var name = "Nitro PDF Creator (Pro 10)";
-											            var format = "PDF";
-											            // href_print_label = 'onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format
-																	+'&id=' + full.documento_id + '&agency_id='+ full.agencia_id
-																	+'&document='+ document_print + '&id_detail='+ full.documento_detalle_id + '&id_detail_consol='+ full.id +'&consolidado='+ true +'&document=guia&label=true\')"';
-		                          }
-		                          if (me.permissions.deleteDetailConsolidado && !me.close) {
-		                              var btn_delete = " <a onclick=\"eliminarConsolidado(" + full.id + ","+false+")\" class='' style='color:#E34724;'><i class='fa fa-trash'></i> Eliminar</a> ";
-		                          }
-		                          var btn_group = '<div class="btn-group" data-toggle="tooltip" title="Acciones">'+
-		                                  '<button type="button" class="btn btn-default btn-outline dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
-		                                    '<i class="fa fa-ellipsis-v"></i>'+
-		                                  '</button>'+
-		                                  '<ul class="dropdown-menu dropdown-menu-right pull-right" style="font-size: 15px!important;">'+
-		                                    '<li>'+btn_invoice+'</li>'+
-		                                    // '<li><a '+href_print_label+'><i class="fa fa-barcode"></i> Imprimir label</a></li>'+
-		                                    '<li>'+btn_label+'</li>'+
-		                                    '<li role="separator" class="divider"></li>'+
-		                                    '<li>'+btn_delete+'</li>'+
-		                                  '</ul>'+
-		                                '</div>';
-		                          // return btn_invoice + btn_label + btn_delete;
-		                          return btn_group;
-		                      },
-
-		                  },
-		                  {data: 'contenido2', name: 'contenido2'},
-		                  {data: 'peso2', name: 'peso2'},
-		                  {data: 'declarado2', name: 'declarado2'},
-					        ],
-					        'columnDefs': [
-					        	{ className: "text-center", "targets": [ 0 ], width: '20px', },
-					        	{ "targets": [ 1 ], width: '10%'},
-					        	{ "targets": [ 2,3 ]},
-					        	{ className: "text-center", "targets": [ 4 ], width: 80 },
-					        	// { "targets": [ 5 ],  width: '20%'},
-					         	{ "targets": [ 6,7,8 ], width: '40px' },
-		                // { className: "text-center", "targets": [ 9 ],  },
-					          { "targets": [ 10,11,12 ], visible: false },
-					        ],
-		              "drawCallback": function () {
-																	var api = this.api();
-																	let datos = api.rows( {page:'current'} ).data();
-																	let cont = 0;
-
-																	// SABER LA CANTIDAD DE BOLSAS DEL CONSOLIDADO
-																	if(datos.length > 0){
-																		for (var i = 0; i < datos.length; i++) {
-																			me.cant_bags = (parseInt(me.cant_bags) < parseInt(datos[i].num_bolsa)) ? datos[i].num_bolsa : me.cant_bags;
-																		}
-																		me.bags = [];
-																		for (var i = 0; i < parseInt(me.cant_bags) + 1; i++) {
-																			if(i === 0){
-																				me.bags.push({value: i, label: 'Todas'});
-																			}else{
-																				me.bags.push({value: i, label: 'Bolsa ' + i});
-																			}
-																		}
-																	}
-
-																	if(app_type === 'courier'){
-																		for (var i = 0; i < datos.length; i++) {
-																			// VALIDACION POSICION ARANCELARIA
-																			if(datos[i].pa == null){
-																				$('#num_guia' + datos[i].id).addClass('text-danger');
-																				$('#pa' + datos[i].id).html('No Datos').addClass('text-danger');
-																				cont++;
-																			}else{
-																					$('#pa' + datos[i].id).removeClass('text-danger');
-																					if(datos[i].flag_peso == null && datos[i].flag_declarado == null){
-																						if(parseFloat(datos[i].declarado2) == 0 || parseFloat(datos[i].peso2) == 0){
-																							$('#num_guia' + datos[i].id).addClass('text-danger');
-																							cont++;
-																						}else{
-																							$('#num_guia' + datos[i].id).removeClass('text-danger');
-																						}
-																					}else{
-																						cont++;
-																					}
-																			}
-																		}
-																		if(cont === 0 && datos.length > 0){
-																			me.show_buttons = true;
-																		}else{
-																			me.show_buttons = false;
-																		}
-																	}
-
-
-																	if(!me.close){
-																		$('.edit, .delete').css('opacity','0');
-																	}else{
-																		$('.edit, .delete').css('opacity','0');
-																	}
-							                    /* EDITABLE FIELD */
-							                    if (me.permissions.editDetail && !me.close) {
-							                        $(".td_edit").editable({
-							                            ajaxOptions: {
-							                                type: 'post',
-							                                dataType: 'json'
-							                            },
-							                            url: "updateDetailConsolidado",
-							                            validate:function(value){
-							                                if($.trim(value) == ''){
-							                                    return 'Este campo es obligatorio!';
-							                                }
-							                            },
-							                            success: function(response, newValue) {
-							                                me.updateTableDetail();
-							                            }
-							                        });
-							                    }
-							                    /* POPOVER PARA LAS GUIAS AGRUPADAS (BADGED) */
-							                    $(".pop").popover({ trigger: "manual" , html: true})
-							                        .on("mouseenter", function () {
-							                            var _this = this;
-							                            $(this).popover("show");
-							                            $(".popover").on("mouseleave", function () {
-							                                $(_this).popover('hide');
-							                            });
-							                        }).on("mouseleave", function () {
-							                            var _this = this;
-							                            setTimeout(function () {
-							                                if (!$(".popover:hover").length) {
-							                                    $(_this).popover("hide");
-							                                }
-							                            }, 300);
-							                    });
-                  },
-					        "footerCallback": function (row, data, start, end, display) {
-			                    var api = this.api(), data;
-			                    /*Remove the formatting to get integer data for summation*/
-			                    var intVal = function (i) {
-			                        return typeof i === 'string' ?
-			                                i.replace(/[\$,]/g, '') * 1 :
-			                                typeof i === 'number' ?
-			                                i : 0;
-			                    };
-			                    /*Total over all pages*/
-			                    var total_cantidad = api
-			                            .column(8)
-			                            .data()
-			                            .reduce(function (a, b) {
-			                                return intVal(a) + intVal(b);
-			                            }, 0);
-		                        var librasR= api
-		                                .column(8, {page: 'current'})
-		                                .data()
-		                                .reduce(function (a, b) {
-		                                    return intVal(a) + intVal(b);
-		                                }, 0);
-		                        var libras= api
-		                                .column(11, {page: 'current'})
-		                                .data()
-		                                .reduce(function (a, b) {
-		                                    return intVal(a) + intVal(b);
-		                                }, 0);
-		                        var declarado= api
-		                                .column(12, {page: 'current'})
-		                                .data()
-		                                .reduce(function (a, b) {
-		                                    return intVal(a) + intVal(b);
-		                                }, 0);
-		                         var pesoK = libras * 0.453592;
-		                         var pesoKR = librasR * 0.453592;
-
-		                         var diferenciaL = librasR - libras;
-		                         var color1 = 'rgb(203, 23, 30)';
-		                         if(diferenciaL === 0){
-		                            color1 = '#4caf50';
-		                         }
-		                         var color2 = 'rgb(203, 23, 30)';
-		                         var diferenciaK = pesoKR - pesoK;
-		                         if(diferenciaK === 0){
-		                            color2 = '#4caf50';
-		                         }
-
-			                    /*Update footer formatCurrency()*/
-		                      $(api.column(6).footer()).html('<spam id="totalDeclarado">' + declarado + '</spam><br>USD');
-			                    $(api.column(7).footer()).html('<spam id="totalPeso">' + libras + ' (Lbs)<br><spam id="totalPesoK">' + isInteger(pesoK) + ' (Kl)</spam></spam>');
-			                    $(api.column(8).footer()).html('<spam id="totalPesoR">' + librasR + ' (Lbs)<br><spam id="totalPesoKR">' + isInteger(pesoKR) + ' (Kl)</spam>');
-			                    // $(api.column(9).footer()).html('<spam id="diferenciaL" style="color:'+color1+'">Dif: ' + isInteger(diferenciaL) + ' (Lbs)</spam><br><spam id="diferenciaK" style="color:'+color2+'">Dif: ' + isInteger(diferenciaK) + ' (Kl)</spam>');
-			                },
-					    }).on('xhr.dt', function ( e, settings, json, xhr ) {
-
-					    });
-					    table.on('key', function (e, datatable, key, cell, originalEvent) {
-					        if (key == 13) {
-					            cell.data( $(cell.node()).html() ).draw();
-					            var rowData = datatable.row( cell.index().row ).data();
-					            me.updateDataDetail(rowData);
-					        }
-					    });
 					},
-			}
+					getTransportes: function(){
+						let me = this;
+				        axios.get('../../administracion/5/getSelect').then(function (response) {
+				            me.transportes = response.data;
+				        }).catch(function (error) {
+				        	console.log(error);
+				            toastr.warning('Error.');
+		                	toastr.options.closeButton = true;
+				        });
+					},
+					addGuiasToConsolidadoModal: function(){
+						let me = this;
+						var datos = $("#formGuiasConsolidado").serializeArray();
+				        $.each(datos, function(i, field) {
+				            if (field.name === 'chk[]') {
+				                 me.addGuiasToConsolidado($('#chk' + field.value).data('numguia'));
+				            }
+				        });
+					},
+					getModalGuias: function(){
+				        var me = this;
+						if(me.localizacion_id != null && me.central_destino_id != null && me.transporte_id != null){
+				            var codigoGW='';
+				            $('#modalguiasconsolidado').modal('show');
+				            if ($.fn.DataTable.isDataTable('#tbl-modalguiasconsolidado')) {
+				                $('#tbl-modalguiasconsolidado tbody').empty();
+				                $('#tbl-modalguiasconsolidado').dataTable().fnDestroy();
+				            }
+				            var table = $('#tbl-modalguiasconsolidado').DataTable({
+				            	"language": {
+							        "paginate": {
+							            "previous": "Anterior",
+							            "next": "Siguiente",
+							        },
+							        /*"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",*/
+							        "info": "Registros del _START_ al _END_  de un total de _TOTAL_",
+							        "search": "Buscar",
+							        "lengthMenu": "Mostrar _MENU_ Registros",
+							        "infoEmpty": "Mostrando registros del 0 al 0",
+							        "emptyTable": "No hay datos disponibles en la tabla",
+							        "infoFiltered": "(Filtrando para _MAX_ Registros totales)",
+							        "zeroRecords": "No se encontraron registros coincidentes",
+							    },
+							    processing: true,
+							    serverSide: true,
+							    searching: true,
+				                ajax: 'getAllGuiasDisponibles/'+ me.pais_id+'/'+me.transporte_id,
+				                columns: [{
+				                    "render": function (data, type, full, meta) {
+					                	return '<div class="checkbox checkbox-success"><input type="checkbox" data-numguia="' + full.num_guia + '" id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '"></label></div>';
+					                }
+				                }, {
+				                    data: 'created_at',
+				                    name: 'created_at'
+				                }, {
+				                    "render": function (data, type, full, meta) {
+		                                // if(me.app_type === 'courier'){
+		                                //     if(full.liquidado == 0){
+		                                //         codigoGW = full.num_warehouse;
+		                                //         return full.num_warehouse;
+		                                //     }else{
+		                                //         if(full.liquidado == 1){
+		                                //             codigoGW = full.num_guia;
+		                                //             return full.num_guia;
+		                                //         }
+		                                //     }
+		                                // }else{
+		                                //     codigoGW = full.num_warehouse;
+		                                    return full.num_warehouse;
+		                                // }
+					                }
+				                }, {
+				                    data: 'peso2',
+				                    name: 'peso2'
+				                }, {
+				                    "render": function (data, type, full, meta) {
+					                	return '$ '+ full.declarado2;
+					                }
+				                }]
+				            });
+				        }else{
+				        	toastr.info('Porfavor, selecciona una central destino, un pais y un transporte para poder continuar.');
+				        }
+			        },
+					saveConsolidado: function() {
+						if(this.validateForm()){
+				            var me = this;
+				            var rowData = {
+				                'document_type': $('#document_type').val(),
+				                'ciudad_id': me.localizacion_id,
+				                'central_destino_id': me.central_destino_id,
+		                    'transporte_id': me.transporte_id,
+				                'observacion': me.observacion,
+				                'tipo_consolidado': me.tipo_consolidado,
+				            }
+				            axios.put('../'+$('#id_documento').val(), rowData).then(function (response) {
+					            toastr.success('Registro actualizado correctamente.');
+			                	toastr.options.closeButton = true;
+			                	me.disabled_agencia = true;
+			                	me.disabled_city = true;
+			                	me.disabled_transporte = true;
+					        }).catch(function (error) {
+					            toastr.warning('Error.');
+			                	toastr.options.closeButton = true;
+					        });
+					    }
+			   	},
+		      validateForm: function() {
+		      	let me = this;
+		          if(me.central_destino_id == null){
+		          	me.msn = 'Es necesario seleccionar una central destino para continuar.';
+		          	return false;
+		          }
+		          if(me.localizacion_id == null){
+		          	me.msn = 'Es necesario seleccionar una ciudad para continuar.';
+		          	return false;
+		          }
+		          if(me.transporte_id == null){
+		          	me.msn = 'Es necesario seleccionar un transporte para continuar.';
+		          	return false;
+		          }
+		          return true;
+		      },
+	        cancelDocument: function() {
+	            window.location.href = '../';
+	        },
+					updateDataDetail(rowData) {
+				        var me = this;
+				        axios.put('updateDetailConsolidado', {rowData}).then(function (response) {
+				            toastr.success('Registro actualizado correctamente.');
+		                	toastr.options.closeButton = true;
+		                	me.updateTableDetail();
+				        }).catch(function (error) {
+				            toastr.success('Error.');
+		                	toastr.options.closeButton = true;
+				        });
+				    },
+					addGuiasToConsolidado: function(num_guia){
+						if(num_guia){
+							this.num_guia = num_guia;
+						}
+						let me = this;
+		                me.msn = '';
+		                if(this.num_guia == ''){
+							toastr.warning('Debe ingresar un numero de guia o warehouse para continuar.');
+		                    toastr.options.closeButton = true;
+		                }else{
+		                	if(this.validateForm()){
+								axios.get('buscarGuias/' + this.num_guia + '/'+ this.num_bolsa + '/'+ this.pais_id).then(response => {
+					                if(response.data.code === 200){
+					                	var table = $('#tbl-consolidado').DataTable();
+										if (!table.data().count()) {
+											this.saveConsolidado();
+											this.disabled_city = true;
+											this.disabled_agencia = true;
+											this.disabled_transporte = true;
+										}
+					                	me.updateTableDetail();
+					                	toastr.success('Registro agregado correctamente.');
+				                    	toastr.options.closeButton = true;
+				                    	this.num_guia = '';
+					                }else{
+					                	if(response.data.code === 600){
+					                		me.msn = response.data.data;
+					                		this.num_guia = '';
+					                	}
+					                }
+					            }).catch(function(error) {
+					                console.log(error);
+					                toastr.error("Error.", {
+					                    timeOut: 50000
+					                });
+					            });
+					        }
+				        }
+					},
+					updateTableDetail(){
+						var table = $('#tbl-consolidado').DataTable();
+			            table.ajax.reload();
+					},
+					increaseBoxes(){
+						this.num_bolsa = parseInt(this.num_bolsa)+1;
+					},
+					getDataDetail(){
+							let me=this;
+							var href_print_label = '';
+							/* SOLO SI ES EL DOCUMNTO CONSOLIDADO*/
+						    var table = $('#tbl-consolidado').DataTable({
+						        // keys: true,
+						        processing: true,
+						        serverSide: true,
+						        responsive: true,
+										lengthMenu: [[40, 50, 80, 100, 200, -1], [40, 50, 80, 100, 200, "All"]],
+						        ajax: 'getAllConsolidadoDetalle',
+						        columns: [
+						            {data: 'num_bolsa', name: 'num_bolsa'},
+						            {
+						                "render": function (data, type, full, meta) {
+			                                var groupGuias = full.guias_agrupadas;
+			                                var btn_delete = "<a style='float: right;cursor:pointer;''><i class='fal fa-times'></i></a>";
+			                                if(groupGuias != null && groupGuias != 'null' && groupGuias != ''){
+			                                    groupGuias = groupGuias.replace(/,/g, "<br>");
+			                                    groupGuias = groupGuias.replace(/@/g, ",");//SEPARADOR AL CREAR EL ONCLIC EN EL CONTROLADOR
+			                                }else{
+			                                    groupGuias = '';
+			                                }
+			                                var color = 'default';
+			                                if(parseInt(full.agrupadas) > 0){
+			                                    color = 'primary';
+			                                }
+																			let group = ' onclick="agruparGuias('+full.id+')"';
+																			if(me.close){
+																				group = '';
+																			}
+																			var error = '';
+																			if(me.pais_id == pais_id_config && full.flag_declarado != 0 && (full.flag_declarado != null || parseFloat(full.declarado2) === 0 || full.flag_peso != null &&  full.flag_peso != 0 || parseFloat(full.peso2) === 0)){
+																				error = 'text-danger'
+																			}
+			                                if(me.app_type === 'courier'){
+			                                    if(me.pais_id != pais_id_config){
+			                                        return '<span id="num_guia'+full.id+'" class="'+error+'">' + full.num_warehouse + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" role="button" \n\
+			                                            data-html="true" \n\
+			                                            data-toggle="popover" \n\
+			                                            data-trigger="hover" \n\
+			                                            title="<b>Guias agrupadas</b>" \n\
+			                                            data-content="'+groupGuias+'" ' + group + '>'+full.agrupadas+'</a>';
+			                                    }else{
+		                                          return '<span id="num_guia'+full.id+'" class="'+error+'">' + full.num_guia + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" \n\
+		                                          role="button" \n\
+		                                          data-html="true" \n\
+		                                          data-toggle="popover" \n\
+		                                          data-trigger="hover" \n\
+		                                          title="<b>Guias agrupadas</b>" \n\
+		                                          data-content="'+groupGuias+'" ' + group + '>'+full.agrupadas+'</a>';
+			                                    }
+			                                }else{
+			                                    return '<span id="num_guia'+full.id+'" class="'+error+'">' + full.num_warehouse + '</span><a style="float: right;cursor:pointer;" class="badge badge-'+color+' pop" role="button" \n\
+			                                            data-html="true" \n\
+			                                            data-toggle="popover" \n\
+			                                            data-trigger="hover" \n\
+			                                            title="<b>Guias agrupadas</b>" \n\
+			                                            data-content="'+groupGuias+'" ' + group + '>'+full.agrupadas+'</a>';
+			                                }
+						                }
+						            },
+						            {
+						                "render": function (data, type, full, meta) {
+						                	var nom_ship = full.shipper;
+						                	var json = '';
+						                	if(full.shipper == null){
+						                		nom_ship = '';
+						                	}
+						                	if(full.shipper_json != null){
+																json = JSON.parse(full.shipper_json.replace(/&quot;/g, '"'));
+																nom_ship = json.nombre;
+						                	}
+						                	me.shipper_contactos[full.shipper_id] = full.shipper_contactos;
+						                	return '<div class="center-content"><div style="width:80%;float: left;">' + nom_ship + '</div> <div style="width:20%;float: right;"><a  data-toggle="tooltip" title="Cambiar" class="edit" style="color:#FFC107;" onclick="showModalShipperConsigneeConsolidado('+full.id+', \''+full.shipper_id+'\', \'shipper\')"><i class="fal fa-pencil"></i></a> <a onclick=\"restoreShipperConsignee('+full.id+', \'shipper\')\" class="delete" title="Restaurar original" data-toggle="tooltip" style="float:right;color:#2196F3;margin-right: 5px;"><i class="far fa-sync-alt"></i></a></div></div> ';
+						                },
+														visible: ((app_client === 'worldcargo') ? false : true)
+						            },
+						            {
+						                "render": function (data, type, full, meta) {
+						                	var nom_cons = full.consignee;
+						                	var json = '';
+						                	if(full.consignee == null){
+						                		nom_cons = '';
+						                	}
+						                	if(full.consignee_json != null){
+																json = JSON.parse(full.consignee_json.replace(/&quot;/g, '"'));
+																nom_cons = json.nombre;
+						                	}
+						                	me.consignee_contactos[full.consignee_id] = full.consignee_contactos;
+						                	return '<div class="center-content"><div style="width:80%;float: left;">' + nom_cons + '</div> <div style="width:20%;float: right;"> <a  data-toggle="tooltip" title="Cambiar" class="edit" style="color:#FFC107;" onclick="showModalShipperConsigneeConsolidado('+full.id+', \''+full.consignee_id+'\',\'consignee\')"><i class="fal fa-pencil"></i></a> <a onclick=\"restoreShipperConsignee('+full.id+',\'consignee\')\" class="delete" title="Restaurar original" data-toggle="tooltip" style="float:right;color:#2196F3;margin-right: 5px;"><i class="far fa-sync-alt"></i></a></div></div>';
+						                }
+						            },
+						            {
+			                      "render": function (data, type, full, meta) {
+			                          var pa = (full.pa == null) ? '' : full.pa;
+			                          return '<span id="pa'+ full.id +'">' + pa + '</span>' + '<a  data-toggle="tooltip" title="Cambiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalArancel('+full.documento_detalle_id+', \'tbl-consolidado\')"><i class="fal fa-pencil"></i></a>';
+			                      },
+														visible: ((app_client === 'worldcargo') ? false : true)
+			                  },
+			                  {
+			                      "render": function (data, type, full, meta) {
+			                          return '<a data-name="contenido2" data-pk="'+full.documento_detalle_id+'" class="td_edit" data-type="text" data-placement="right" data-title="Contenido">'+full.contenido2+'</a>';
+			                      }
+			                  },
+			                  {
+			                      "render": function (data, type, full, meta) {
+			                          return '<a data-name="declarado2" data-pk="'+full.documento_detalle_id+'" class="td_edit '+ ((full.flag_declarado != null && full.flag_declarado != 0 || parseFloat(full.declarado2) === 0) ? ((me.pais_id == pais_id_config) ? 'text-danger' : '') : '') +'" data-type="text" data-placement="right" data-title="Declarado">'+full.declarado2+ '</a>';
+			                      }
+			                  },
+			                  {
+			                      "render": function (data, type, full, meta) {
+			                          return '<a id="peso'+ full.consignee_id +'" data-name="peso2" data-pk="'+full.documento_detalle_id+'" class="td_edit '+ ((full.flag_peso != null && full.flag_peso != 0 || parseFloat(full.peso2) === 0) ? 'text-danger' : '') +'" data-type="text" data-placement="right" data-title="Peso">'+full.peso2+'</a>';
+			                      }
+			                  },
+			                  {data: 'peso', name: 'peso'},
+			                  {
+			                      sortable: false,
+			                      "render": function (data, type, full, meta) {
+			                          var btn_delete = '';
+			                          var document_print = '';
+			                          if(me.pais_id != pais_id_config){
+			                              href_print_label = "../../impresion-documento-label/"+ full.documento_id + "/warehouse/"+full.documento_detalle_id+"/consolidado";
+																		document_print = "warehouse";
+			                          }else{
+			                              href_print_label = "../../impresion-documento-label/"+ full.documento_id + "/guia/"+full.documento_detalle_id+"/consolidado";
+																		document_print = "guia";
+			                          }
+
+			                          var btn_invoice =  "<a href='../../impresion-documento/" + full.documento_id + "/invoice/"+full.documento_detalle_id+"' target='blank_' class=''><i class='fa fa-file' ></i> Imprimir invoice</a> ";
+			                          if (me.permissions.pdfLabel) {
+			                              var btn_label =  "<a href='"+href_print_label+"' target='blank_' class=''><i class='fa fa-barcode'></i> Imprimir label</a> ";
+																		var name = "Nitro PDF Creator (Pro 10)";
+												            var format = "PDF";
+												            // href_print_label = 'onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format
+																		+'&id=' + full.documento_id + '&agency_id='+ full.agencia_id
+																		+'&document='+ document_print + '&id_detail='+ full.documento_detalle_id + '&id_detail_consol='+ full.id +'&consolidado='+ true +'&document=guia&label=true\')"';
+			                          }
+			                          if (me.permissions.deleteDetailConsolidado && !me.close) {
+			                              var btn_delete = " <a onclick=\"eliminarConsolidado(" + full.id + ","+false+")\" class='' style='color:#E34724;'><i class='fa fa-trash'></i> Eliminar</a> ";
+			                          }
+			                          var btn_group = '<div class="btn-group" data-toggle="tooltip" title="Acciones">'+
+			                                  '<button type="button" class="btn btn-default btn-outline dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
+			                                    '<i class="fa fa-ellipsis-v"></i>'+
+			                                  '</button>'+
+			                                  '<ul class="dropdown-menu dropdown-menu-right pull-right" style="font-size: 15px!important;">'+
+			                                    '<li>'+btn_invoice+'</li>'+
+			                                    // '<li><a '+href_print_label+'><i class="fa fa-barcode"></i> Imprimir label</a></li>'+
+			                                    '<li>'+btn_label+'</li>'+
+			                                    '<li role="separator" class="divider"></li>'+
+			                                    '<li>'+btn_delete+'</li>'+
+			                                  '</ul>'+
+			                                '</div>';
+			                          // return btn_invoice + btn_label + btn_delete;
+			                          return btn_group;
+			                      },
+
+			                  },
+			                  {data: 'contenido2', name: 'contenido2'},
+			                  {data: 'peso2', name: 'peso2'},
+			                  {data: 'declarado2', name: 'declarado2'},
+						        ],
+						        'columnDefs': [
+						        	{ className: "text-center", "targets": [ 0 ], width: '20px', },
+						        	{ "targets": [ 1 ], width: '10%'},
+						        	{ "targets": [ 2,3 ]},
+						        	{ className: "text-center", "targets": [ 4 ], width: 80 },
+						        	// { "targets": [ 5 ],  width: '20%'},
+						         	{ "targets": [ 6,7,8 ], width: '40px' },
+			                // { className: "text-center", "targets": [ 9 ],  },
+						          { "targets": [ 10,11,12 ], visible: false },
+						        ],
+			              "drawCallback": function () {
+																		var api = this.api();
+																		let datos = api.rows( {page:'current'} ).data();
+																		let cont = 0;
+
+																		// SABER LA CANTIDAD DE BOLSAS DEL CONSOLIDADO
+																		if(datos.length > 0){
+																			for (var i = 0; i < datos.length; i++) {
+																				me.cant_bags = (parseInt(me.cant_bags) < parseInt(datos[i].num_bolsa)) ? datos[i].num_bolsa : me.cant_bags;
+																			}
+																			me.bags = [];
+																			for (var i = 0; i < parseInt(me.cant_bags) + 1; i++) {
+																				if(i === 0){
+																					me.bags.push({value: i, label: 'Todas'});
+																				}else{
+																					me.bags.push({value: i, label: 'Bolsa ' + i});
+																				}
+																			}
+																		}
+																		if(app_type === 'courier' && me.pais_id == pais_id_config){
+																			for (var i = 0; i < datos.length; i++) {
+																				// VALIDACION POSICION ARANCELARIA
+																				if(datos[i].pa == null){
+																					$('#num_guia' + datos[i].id).addClass('text-danger');
+																					$('#pa' + datos[i].id).html('No Datos').addClass('text-danger');
+																					cont++;
+																				}else{
+																						$('#pa' + datos[i].id).removeClass('text-danger');
+																						if(datos[i].flag_peso == null && datos[i].flag_declarado == null){
+																							if(parseFloat(datos[i].declarado2) == 0 || parseFloat(datos[i].peso2) == 0){
+																								$('#num_guia' + datos[i].id).addClass('text-danger');
+																								cont++;
+																							}else{
+																								$('#num_guia' + datos[i].id).removeClass('text-danger');
+																							}
+																						}else{
+																							cont++;
+																						}
+																				}
+																			}
+																		}
+																			if(datos.length > 0){
+																				me.show_msn = true;
+																			}
+																			if(cont === 0 && datos.length > 0){
+																				me.show_buttons = true;
+																			}else{
+																				me.show_buttons = false;
+																			}
+
+
+																		if(!me.close){
+																			$('.edit, .delete').css('opacity','0');
+																		}else{
+																			$('.edit, .delete').css('opacity','0');
+																		}
+								                    /* EDITABLE FIELD */
+								                    if (me.permissions.editDetail && !me.close) {
+								                        $(".td_edit").editable({
+								                            ajaxOptions: {
+								                                type: 'post',
+								                                dataType: 'json'
+								                            },
+								                            url: "updateDetailConsolidado",
+								                            validate:function(value){
+								                                if($.trim(value) == ''){
+								                                    return 'Este campo es obligatorio!';
+								                                }
+								                            },
+								                            success: function(response, newValue) {
+								                                me.updateTableDetail();
+								                            }
+								                        });
+								                    }
+								                    /* POPOVER PARA LAS GUIAS AGRUPADAS (BADGED) */
+								                    $(".pop").popover({ trigger: "manual" , html: true})
+								                        .on("mouseenter", function () {
+								                            var _this = this;
+								                            $(this).popover("show");
+								                            $(".popover").on("mouseleave", function () {
+								                                $(_this).popover('hide');
+								                            });
+								                        }).on("mouseleave", function () {
+								                            var _this = this;
+								                            setTimeout(function () {
+								                                if (!$(".popover:hover").length) {
+								                                    $(_this).popover("hide");
+								                                }
+								                            }, 300);
+								                    });
+	                  },
+						        "footerCallback": function (row, data, start, end, display) {
+				                    var api = this.api(), data;
+				                    /*Remove the formatting to get integer data for summation*/
+				                    var intVal = function (i) {
+				                        return typeof i === 'string' ?
+				                                i.replace(/[\$,]/g, '') * 1 :
+				                                typeof i === 'number' ?
+				                                i : 0;
+				                    };
+				                    /*Total over all pages*/
+				                    var total_cantidad = api
+				                            .column(8)
+				                            .data()
+				                            .reduce(function (a, b) {
+				                                return intVal(a) + intVal(b);
+				                            }, 0);
+			                        var librasR= api
+			                                .column(8, {page: 'current'})
+			                                .data()
+			                                .reduce(function (a, b) {
+			                                    return intVal(a) + intVal(b);
+			                                }, 0);
+			                        var libras= api
+			                                .column(11, {page: 'current'})
+			                                .data()
+			                                .reduce(function (a, b) {
+			                                    return intVal(a) + intVal(b);
+			                                }, 0);
+			                        var declarado= api
+			                                .column(12, {page: 'current'})
+			                                .data()
+			                                .reduce(function (a, b) {
+			                                    return intVal(a) + intVal(b);
+			                                }, 0);
+			                         var pesoK = libras * 0.453592;
+			                         var pesoKR = librasR * 0.453592;
+
+			                         var diferenciaL = librasR - libras;
+			                         var color1 = 'rgb(203, 23, 30)';
+			                         if(diferenciaL === 0){
+			                            color1 = '#4caf50';
+			                         }
+			                         var color2 = 'rgb(203, 23, 30)';
+			                         var diferenciaK = pesoKR - pesoK;
+			                         if(diferenciaK === 0){
+			                            color2 = '#4caf50';
+			                         }
+
+				                    /*Update footer formatCurrency()*/
+			                      $(api.column(6).footer()).html('<spam id="totalDeclarado">' + declarado + '</spam><br>USD');
+				                    $(api.column(7).footer()).html('<spam id="totalPeso">' + libras + ' (Lbs)<br><spam id="totalPesoK">' + isInteger(pesoK) + ' (Kl)</spam></spam>');
+				                    $(api.column(8).footer()).html('<spam id="totalPesoR">' + librasR + ' (Lbs)<br><spam id="totalPesoKR">' + isInteger(pesoKR) + ' (Kl)</spam>');
+				                    // $(api.column(9).footer()).html('<spam id="diferenciaL" style="color:'+color1+'">Dif: ' + isInteger(diferenciaL) + ' (Lbs)</spam><br><spam id="diferenciaK" style="color:'+color2+'">Dif: ' + isInteger(diferenciaK) + ' (Kl)</spam>');
+				                },
+						    }).on('xhr.dt', function ( e, settings, json, xhr ) {
+
+						    });
+						    table.on('key', function (e, datatable, key, cell, originalEvent) {
+						        if (key == 13) {
+						            cell.data( $(cell.node()).html() ).draw();
+						            var rowData = datatable.row( cell.index().row ).data();
+						            me.updateDataDetail(rowData);
+						        }
+						    });
+						},
+				}
     }
 </script>
