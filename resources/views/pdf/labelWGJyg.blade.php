@@ -169,10 +169,6 @@
       $consignee = json_decode($dato_consolidado->consignee);
     }
   }
-  // echo '<pre>';
-  // print_r($documento);
-  // echo '</pre>';
-  // exit();
 ?>
 @foreach ($detalle as $value)
 <?php $contRegistros++ ?>

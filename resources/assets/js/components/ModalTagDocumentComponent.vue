@@ -115,18 +115,19 @@
     										<div class="col-lg-6" :class="{ 'has-error': errors.has('warehouse') }">
                           <el-select v-model="warehouse_codigo" name="warehouse"
                           multiple filterable  placeholder="Warehouse/Guia" value-key="id"
-                          collapse-tags v-validate.disable="'required'" size="medium">
+                          collapse-tags v-validate.disable="'required'" size="medium" :disabled="disabled_w">
                               <el-option
                                 v-for="item in warehouses"
                                 :key="item.id"
                                 :label="item.name"
                                 :value="item">
                               </el-option>
-                            </el-select>
+                          </el-select>
     											<small class="help-block">{{ errors.first('warehouse') }}</small>
     										</div>
     						        <div class="col-lg-6" :class="{ 'has-error': errors.has('estatus') }">
-                          <el-select name="estatus" v-model="estatus_id" filterable
+                          <status-component :default="defaultStatus" @get="selectStatus($event)"/>
+                          <!-- <el-select name="estatus" v-model="estatus_id" filterable
                           placeholder="Status" v-validate.disable="'required'"
                           size="medium" @change="selectStatus" value-key="id">
                             <el-option
@@ -135,7 +136,7 @@
                               :label="item.name"
                               :value="item">
                             </el-option>
-                          </el-select>
+                          </el-select> -->
     											<small class="help-block">{{ errors.first('estatus') }}</small>
     										</div>
                         <transition name="fade">
@@ -273,16 +274,21 @@
             transportadora: [],
             transportadora_id: null,
             guia_transportadora: null,
-            show: false
+            show: false,
+            disabled_w: false,
+            defaultStatus: false,
           }
 	    },
   	  watch:{
   	    	params: function (val) {
+            this.warehouse_codigo= [];
+            this.disabled_w = false;
   	    		this.id_document = val.id;
   	    		this.cliente_cons = val.cliente;
   	    		this.cliente_email = val.correo;
   	    		this.num_track = val.codigo;
   	    		this.cantidad = (val.cantidad == 'undefined') ? '' : val.cantidad;
+  	    		this.detalle_id = (val.detalle_id == 'undefined') ? '' : val.detalle_id;
   	    		if(val.correo == 'Sin correo' || val.correo == ''){
   	    			$('#btn-sendEmail').attr('disabled', true);
   	    		}else{
@@ -297,12 +303,21 @@
   		    		this.urlPrint = 'impresion-documento/'+val.id+'/warehouse';
   					this.urlPrintLabel = 'impresion-documento-label/'+val.id+'/warehouse';
   	    		}
+            this.getSelectWarehouses();
             this.getDatas();
     				this.getSelectStatus();
-    	      this.getSelectWarehouses();
             this.getStatus();
             this.getNotas();
             this.getSelectTransportadoras();
+            if(this.detalle_id !== ''){
+              setTimeout(() => {
+                this.warehouse_codigo = [{
+                  id: this.detalle_id,
+                  name: this.num_track,
+                }]
+                this.disabled_w = true;
+              }, 1000);
+            }
     			},
     			id_status: function (newQuestion) {
     				if(newQuestion != null){
@@ -316,6 +331,7 @@
   	    },
   		methods: {
         selectStatus(val){
+          this.estatus_id = val;
           if(val.transportadora == 1){
             this.show = true;
           }else{
@@ -333,7 +349,7 @@
   			},
   			resetForm: function() {
           this.estatus_id= null,
-          this.warehouse_codigo= [],
+          // this.warehouse_codigo= [],
         	this.nota= null,
         	this.observacion= null,
           this.transportadora_id= null,
@@ -386,7 +402,7 @@
   	                }, {
   	                	sortable: false,
   	                	"render": function (data, type, full, meta) {
-  		                    return '<span style="color:#439a46;font-weight: 900;">'+full.num_warehouse+'</span><div>'+full.status_name+ ' ' + ((full.consolidado !== null) ? '(' +full.consolidado+')' : '') + ' </div> ';
+  		                    return '<span style="color:#439a46;font-weight: 900;">'+full.num_warehouse+'</span><div><i class="'+full.status_icon+ '" style="color: '+full.status_color+ '"></i> '+full.status_name+ ' ' + ((full.consolidado !== null) ? '(' +full.consolidado+')' : '') + ' </div> ';
   		                }
   	                }, {
   	                    data: 'observacion',

@@ -405,7 +405,7 @@
 													<div class="form-group">
 														<h3>&nbsp;</h3>
 														<a @click="printGroup('label')" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Imprimir Labels Bolsa"><i class="fa fa-print"></i> Lables</a>
-														<a hfer="#" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Imprimir Invoice"><i class="fa fa-print"></i> Invoice</a>
+														<a hfer="#" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Imprimir"><i class="fa fa-print"></i> Factura Proforma</a>
 													</div>
 												</div>
 										</div>
@@ -1001,7 +1001,7 @@
 																		document_print = "guia";
 			                          }
 
-			                          var btn_invoice =  "<a href='../../impresion-documento/" + full.documento_id + "/invoice/"+full.documento_detalle_id+"' target='blank_' class=''><i class='fa fa-file' ></i> Imprimir invoice</a> ";
+			                          var btn_proforma =  "<a href='../../impresion-documento/" + full.documento_id + "/invoice/"+full.documento_detalle_id+"' target='blank_' class=''><i class='fa fa-file' ></i> Factura Proforma</a> ";
 			                          if (me.permissions.pdfLabel) {
 			                              var btn_label =  "<a href='"+href_print_label+"' target='blank_' class=''><i class='fa fa-barcode'></i> Imprimir label</a> ";
 																		var name = "Nitro PDF Creator (Pro 10)";
@@ -1018,14 +1018,14 @@
 			                                    '<i class="fa fa-ellipsis-v"></i>'+
 			                                  '</button>'+
 			                                  '<ul class="dropdown-menu dropdown-menu-right pull-right" style="font-size: 15px!important;">'+
-			                                    '<li>'+btn_invoice+'</li>'+
+			                                    '<li>'+btn_proforma+'</li>'+
 			                                    // '<li><a '+href_print_label+'><i class="fa fa-barcode"></i> Imprimir label</a></li>'+
 			                                    '<li>'+btn_label+'</li>'+
 			                                    '<li role="separator" class="divider"></li>'+
 			                                    '<li>'+btn_delete+'</li>'+
 			                                  '</ul>'+
 			                                '</div>';
-			                          // return btn_invoice + btn_label + btn_delete;
+			                          // return btn_proforma + btn_label + btn_delete;
 			                          return btn_group;
 			                      },
 

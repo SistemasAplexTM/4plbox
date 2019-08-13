@@ -1,10 +1,13 @@
 <template lang="html">
- <el-select v-model="selected" placeholder="Status" value-key="id" @change="handleSelect">
+ <el-select v-model="selected" placeholder="Status" value-key="id" @change="handleSelect" filterable size="medium">
    <el-option
      v-for="item in status"
      :key="item.id"
      :label="item.descripcion"
      :value="item">
+     <div>
+       <i :class="item.icon" style="text-align: center;width: 25px;" :style="'color:'+ item.color"></i> {{ item.descripcion }}
+     </div>
    </el-option>
  </el-select>
 </template>

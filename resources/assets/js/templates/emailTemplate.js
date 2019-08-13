@@ -63,8 +63,29 @@ var objVue = new Vue({
         editar: 0,
         formErrors: {},
         listErrors: {},
+        testingCode: '',
     },
     methods: {
+        copyTestingCode (val) {
+          this.testingCode = val;
+          setTimeout(function () {
+            let testingCodeToCopy = document.querySelector('#testing-code')
+            testingCodeToCopy.setAttribute('type', 'text')    // 不是 hidden 才能複製
+            testingCodeToCopy.select()
+
+            try {
+              var successful = document.execCommand('copy');
+              var msg = successful ? 'successful' : 'unsuccessful';
+              toastr.success('Copiado correctamente');
+            } catch (err) {
+              toastr.warning('Ops! No se copio correctamente.');
+            }
+
+            /* unselect the range */
+            testingCodeToCopy.setAttribute('type', 'hidden')
+            window.getSelection().removeAllRanges()
+          }, 100);
+        },
         resetForm: function() {
             this.id = '';
             this.agencia_id = '';

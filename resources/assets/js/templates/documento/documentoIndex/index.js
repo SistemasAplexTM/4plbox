@@ -20,7 +20,6 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
       $('#crearDoc').css('display','none');
       objVue.showFilter = true;
     }
-    console.log('t= ' + t);
     if (reinitialite) {
       if ($.fn.DataTable.isDataTable('#tbl-documento' + t)) {
         $('#tbl-documento' + t).dataTable().fnDestroy();
@@ -80,7 +79,6 @@ var listDocument = function(tipo_doc_id, nom, icon, funcionalidades, reinitialit
 }
 
 function datatableDocument(t, tipo_doc_id, filtro){
-  console.log('asd =' + t, 't='+tipo_doc_id, filtro);
   var table = $('#tbl-documento' + t).DataTable({
       processing: true,
       serverSide: true,
@@ -203,14 +201,14 @@ function actionsButtons(data, type, full, meta) {
         var href_print_label_wrh = '';
         var href_print_view_g = '';
         var href_print_view_w = '';
-        var invoice = '';
+        var proforma = '';
         if (full.liquidado == 1) {
-            href_print_view_g = "<li><a href='impresion-documento/" + full.id + "/guia' target='_blank'> <spam class='fal fa-print'></spam> Guia</a></li>";
-            href_print_guia = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format +'&id=' + full.id + '&agency_id='+agency_id+'&document=guia\')"> <spam class="fal fa-print"></spam> Guia</a></li>';
+            href_print_view_g = "<li><a href='impresion-documento/" + full.id + "/guia' target='_blank'> <spam class='fal fa-print'></spam> Invoice</a></li>";
+            href_print_guia = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format +'&id=' + full.id + '&agency_id='+agency_id+'&document=guia\')"> <spam class="fal fa-print"></spam> Invoice</a></li>';
             var name = "Nitro PDF Creator (Pro 10)";
             var format = "PDF";
-            href_print_label_guia = '<li><a href="impresion-documento-label/' + full.id + '/guia" target="_blank"> <spam class="fal fa-print"></spam> Label Guia '+label+'</a></li>';
-            invoice = '<li><a href="impresion-documento/' + full.id + '/invoice_guia" target="_blank"> <spam class="fal fa-print"></spam> Invoice</a></li>';
+            href_print_label_guia = '<li><a href="impresion-documento-label/' + full.id + '/guia" target="_blank"> <spam class="fal fa-print"></spam> Label Invoice '+label+'</a></li>';
+            proforma = '<li><a href="impresion-documento/' + full.id + '/invoice_guia" target="_blank"> <spam class="fal fa-print"></spam> Factura Proforma</a></li>';
         }
         href_print_view_w = "<li><a href='impresion-documento/" + full.id + "/warehouse' target='_blank'> <spam class='fal fa-print'></spam> Warehouse</a></li>";
         href_print_wrh = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype='+ format +'&id=' + full.id + '&agency_id='+agency_id+'&document=warehouse\')"> <spam class="fal fa-print"></spam> Warehouse</a></li>';
@@ -218,13 +216,13 @@ function actionsButtons(data, type, full, meta) {
         var name = "Nitro PDF Creator (Pro 10)";
         var format = "PDF";
         href_print_label_wrh = '<li><a href="impresion-documento-label/' + full.id + '/warehouse" target="_blank"> <spam class="fal fa-print"></spam> Labels Warehouse '+label+'</a></li>';
-        var btn_tags = ' <a onclick="openModalTagsDocument(' + full.id + ', \'' + codigo + '\', \'' + full.cons_nomfull + '\', \'' + full.email_cons + '\', \'' + full.cantidad + '\', \'' + full.liquidado + '\', \'' + full.piezas + '\', \'' + full.estatus_color + '\')" data-toggle="modal" data-target="#modalTagDocument" class="" style="font-size: 18px;"><i class="fal fa-arrow-square-right fa-lg" data-toggle="tooltip" title="Tareas"></i></a>';
+        var btn_tags = ' <a onclick="openModalTagsDocument(' + full.id + ', \'' + codigo + '\', \'' + full.cons_nomfull + '\', \'' + full.email_cons + '\', \'' + full.cantidad + '\', \'' + full.liquidado + '\', \'' + full.piezas + '\', \'' + full.estatus_color + '\', \'' + full.detalle_id + '\')" data-toggle="modal" data-target="#modalTagDocument" class="" style="font-size: 18px;"><i class="fal fa-arrow-square-right fa-lg" data-toggle="tooltip" title="Tareas"></i></a>';
         var btns = "<div class='btn-group'>" + "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + "<i class='fal fa-print fa-lg'></i> <span class='caret'></span>" + "</button>" + "<ul class='dropdown-menu dropdown-menu-right pull-right'>"
+        + href_print_view_g + " "
+        + href_print_view_w + " "
         + href_print_label_wrh + " "
         + href_print_label_guia + " "
-        + href_print_view_w + " "
-        + href_print_view_g + " "
-        + invoice + " "
+        + proforma + " "
         + "<li><a href='#' onclick=\"sendMail(" + full.id + ")\"> <spam class='fa fa-envelope'></spam> Enviar Mail</a></li>" + "</ul></div>";
 
         return btn_edit + btns + ' ' + btn_tags + btn_delete;

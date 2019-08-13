@@ -548,6 +548,7 @@ class Controller extends BaseController
             '({ciudad_agencia})'  => ($objAgencia) ? $objAgencia->ciudad : '',
             '({estado_agencia})'  => ($objAgencia) ? $objAgencia->depto : '',
             '({pais_agencia})'    => ($objAgencia) ? $objAgencia->pais : '',
+            '({logo_agencia})'    => ($objAgencia) ? $objAgencia->logo : '',
         );
         return $replacements;
     }

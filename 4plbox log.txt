@@ -1,12 +1,12 @@
 ﻿2019-07-24
-1. Limpiar el formulario modal cuando se crear un warehouse desde la pantalla recibo de tracking.==============
-2. Revisar por qué la consulta global de tracking muestra 3 tracking cuando busco uno.=========================
-3. En la pantalla de prealertas permitir que el cliente ingrese el contenido también. =========================
-4. Colocar un archivo Excel de ejemplo de como debe ser el archivo para actualizarstatus masivamente.==========
+1. Limpiar el formulario modal cuando se crear un warehouse desde la pantalla recibo de tracking.===============================
+2. Revisar por qué la consulta global de tracking muestra 3 tracking cuando busco uno.==========================================
+3. En la pantalla de prealertas permitir que el cliente ingrese el contenido también. ==========================================
+4. Colocar un archivo Excel de ejemplo de como debe ser el archivo para actualizarstatus masivamente.===========================
 
 2019-08-05
-5. El logo cuando guarde que cambie el nombre =============================================================================
-1. Revisar en los status que si se habilita un envio de email =============================================================
+5. El logo cuando guarde que cambie el nombre ==================================================================================
+1. Revisar en los status que si se habilita un envio de email ==================================================================
 
 2019-08-06
 1. Revision del boton de impresion de la grilla de consolidados ya que estaba diferente del boton de Impresion
@@ -25,17 +25,28 @@
 2. En CONSOLIDADO el mensaje de error debe salir arriba
 3. Enm CONSOLIDADO la validación que se realizó es solo si el destino es para el país COLOMBIA.==================================
 5. En BL y AWB si los consolidados se están mostrando de accuerdo al medio de envío. ============================================
+6. En CONSOLIDADO Los botones de descargar Excel salen solamente si el destino es COLOMBIA. =====================================
 
+2019-08-13
+-. colocar el icono del estatus en el listado de estatus del documento (cajita).=================================================
+-. Organizar busqueda por cliente en la grilla de master. =======================================================================
+-. En la pestaña de courier al aplicar el estatus, que ya este seleccionado y bloqueado el campo de seleccionar warehouse.=======
+-. en el modal de cambiar estatus del consolidado, intercambiar las pociciones de los tabs.======================================
+-. colocar iconos al select de los estatus del consolidado en la grilla principal.===============================================
+4. En CONFIGURACIÓN Hay un error al ir a las impresoras.=========================================================================
 
-4. En CONFIGURACIÓN Hay un error al ir a las impresoras.
-6. En CONSOLIDADO Los botones de descargar Excel salen solamente si el destino es COLOMBIA.
-7. En EMAIL TEMPLATE, el logo debe ser variable, cada agencia envía email.
+-. cambiar la forma de pago del documento en un componente modal, que elija el tipo de pago y si es COD guardar
+   y si es PP mostrar forma de pago y luego si guardar.
+
+-. ***el tab recibido de cambiar status en el consolidado pasar a una vista sola, Logistica en Destino.
+   (despachar transportadora, despachar en los camiones, agregar status a las cajas etc).
+
 8. En RECIBOS DE CARGA, que se puedan imprimir en formatos de Guías MASTER y BL si es Marítimo.
-9. CARGA Agregar Forma de Pago como en factura.
-10. Crear facturas para QuickBook
-11. Exportar archivo para QuickBook
-Esto último lo está pidiendo un cliente nuevo que no conozco.
-Pero nos recomendaron.
+7. En EMAIL TEMPLATE, el logo debe ser variable, cada agencia envía email.
+10. Crear facturas para QuickBook.
+11. Exportar archivo para QuickBook.
+    Esto último lo está pidiendo un cliente nuevo que no conozco.
+    Pero nos recomendaron.
 
 
 -. en la ayuda del logo de la agencia que diga 170px por 60px y a si debe registrar el logo.

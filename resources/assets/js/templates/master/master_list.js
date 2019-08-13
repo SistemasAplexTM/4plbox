@@ -16,15 +16,16 @@ $(document).ready(function () {
             {data: 'aerolinea', name: 'aerolinea'},
             {data: 'created_at', name: 'created_at'},
             {data: 'tarifa', name: 'tarifa'},
-            {data: 'peso', name: 'peso'},
-            {data: 'peso_kl', name: 'peso_kl'},//peso lb
+            {data: 'peso', name: 'peso', filterable: false},
+            {data: 'peso_kl', name: 'peso_kl', filterable: false},//peso lb
             {
-                "render": function (data, type, full, meta) {
-                    return full.consignee + '<div style="font-size:13px;color:#adadad;">Contacto: '+full.contacto+'</div>';
-                }
+              name: 'consignee',
+              "render": function (data, type, full, meta) {
+                  return full.consignee + '<div style="font-size:13px;color:#adadad;">Contacto: '+full.contacto+'</div>';
+              }
             },
             {data: 'ciudad', name: 'ciudad'},
-            {data: 'consecutivo', name: 'consecutivo'},
+            {data: 'consecutivo', name: 'consecutivo', sortable: false, filterable: false},
             {
                 sortable: false,
                 "render": function (data, type, full, meta) {
@@ -59,7 +60,7 @@ $(document).ready(function () {
                         btn_hawb +
                         '<li role="separator" class="divider"></li>' +
                         btn_cost +
-                        btn_xml +
+                        // btn_xml +
                         '<li role="separator" class="divider"></li>' +
                         btn_delete +
                          "</ul></div>";

@@ -9,11 +9,11 @@
 <div class="row">
     <div class="col-lg-12">
         <ul class="nav nav-tabs" role="tablist">
-          <li role="trackings" class="active"><a href="#recibido" aria-controls="recibido" role="tab" data-toggle="tab"><i class="fa fa-barcode"></i> Recibido</a></li>
-          <li role="trackings"><a href="#bodega" aria-controls="bodega" role="tab" data-toggle="tab"><i class="fa fa-clock"></i> Estados</a></li>
+          <li role="trackings" class="active"><a href="#bodega" aria-controls="bodega" role="tab" data-toggle="tab"><i class="fa fa-clock"></i> Estados</a></li>
+          <li role="trackings"><a href="#recibido" aria-controls="recibido" role="tab" data-toggle="tab"><i class="fa fa-barcode"></i> Recibido</a></li>
         </ul>
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane fade active in" id="recibido">
+          <div role="tabpanel" class="tab-pane fade" id="recibido">
              <div class="row form-group" id="register">
                  <div class="col-lg-6" :class="{ 'has-error': errors.has('warehouse') }">
                      <el-input ref="warehouse_state" size="medium" placeholder="Código de warehouse" v-model="form.warehouse" @keyup.enter.native="setData"></el-input>
@@ -48,7 +48,7 @@
                  </div>
              </div>
           </div>
-          <div role="tabpanel" class="tab-pane fade" id="bodega">
+          <div role="tabpanel" class="tab-pane fade active in" id="bodega">
            <form id="formGuiasAgrupar" style="margin-top: 10px">
                <p>Selecione el estatus que desea aplicar a este consolidado y sus documentos internos.</p>
                <div class="row">
@@ -56,7 +56,6 @@
                        <div class="form-group">
                            <label for="status_id">Estatus actual</label>
                            <status-component :data="status" :default="defaultStatus" @get="status_id = $event.id"/>
-                           <!-- <v-select name="status_id" v-model="status_id" label="descripcion" :filterable="false" :options="status"></v-select> -->
                        </div>
                    </div>
                    <div class="col-sm-4">

@@ -185,6 +185,8 @@ class StatusReportController extends Controller
                 'a.num_transportadora',
                 'b.id AS status_id',
                 'b.descripcion AS status_name',
+                'b.color AS status_color',
+                'b.icon AS status_icon',
                 'c.num_warehouse',
                 'c.num_guia',
                 'c.num_consolidado',

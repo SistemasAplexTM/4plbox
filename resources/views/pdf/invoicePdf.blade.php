@@ -203,10 +203,10 @@
                                     <?php $total = 0; ?>
 									<tr>
                                         <td align="CENTER"><div id="detalle">{{ 1 }}</div></td>
-                                        <?php $leng = strlen($detalle[$cont]->contenido); ?>
+                                        <?php $leng = strlen($detalle[$cont]->contenido2); ?>
                                         <td align="CENTER">
                                         	<div id="detalle" style="font-size: 12px; height: 45px;">
-                                        		{{ ($leng > 215) ? str_replace(',', ', ', substr($detalle[$cont]->contenido, 0, 215)) : str_replace(',', ', ', $detalle[$cont]->contenido) }}
+                                        		{{ ($leng > 215) ? str_replace(',', ', ', substr($detalle[$cont]->contenido2, 0, 215)) : str_replace(',', ', ', $detalle[$cont]->contenido2) }}
                                         	</div>
                                         </td>
                                         <td align="CENTER"><div id="detalle">{{ '$' . number_format($detalle[$cont]->declarado2, 2) }}</div></td>
