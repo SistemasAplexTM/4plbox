@@ -233,7 +233,7 @@ var objVue = new Vue({
    },
    getDataSelectCost(){
      let me = this;
-     axios.get('administracion/12/all').then(function(response) {
+     axios.get('administracion/10/all').then(function(response) {
        me.costos = response.data.data;
      }).catch(function(error) {
          console.log(error);

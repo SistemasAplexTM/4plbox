@@ -35,6 +35,11 @@
 -. colocar iconos al select de los estatus del consolidado en la grilla principal.===============================================
 4. En CONFIGURACIÓN Hay un error al ir a las impresoras.=========================================================================
 
+2019-08-14
+-. Se modifico tabla monedas de la BD y se agregaron registros.
+-. Se modifico tabla de master_costos y se agregaron registros.
+-. Se acomodod formulario de costos master y se probo funcionalidad.
+
 -. cambiar la forma de pago del documento en un componente modal, que elija el tipo de pago y si es COD guardar
    y si es PP mostrar forma de pago y luego si guardar.
 
