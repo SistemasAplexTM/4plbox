@@ -25,7 +25,7 @@
 </style>
 <div class="row" id="master_list">
 	<div class="col-lg-12">
-        <div class="ibox float-e-margins">
+    <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <h5>
                     @lang('master.registered_guides')
@@ -56,7 +56,7 @@
                 </div>
             </div>
         </div>
-    </div>
+  </div>
 
     <!-- MODAL ASOCIAR CONSOLIDADO -->
     <div class="modal fade bs-example" id="modalCreateMaster" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -113,7 +113,7 @@
 								<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 										<h4 class="modal-title" id="myModalLabel">
-												<i class="fa fa-barcode"></i> Labels Bolsas
+												<i class="fal fa-barcode"></i> Labels Bolsas
 										</h4>
 								</div>
 								<div class="modal-body">
@@ -209,84 +209,78 @@
 										</h4>
 								</div>
 								<div class="modal-body">
-                  <ul class="nav nav-tabs" role="tablist">
-                    <li role="cost_form" class="active"><a href="#cost_form" aria-controls="cost_form" role="tab" data-toggle="tab"><i class="fal fa-dollar-sign"></i> Registrar</a></li>
-                    <li role="cost_list" class=""><a href="#cost_list" aria-controls="cost_list" role="tab" data-toggle="tab"><i class="fal fa-list"></i> Listado</a></li>
-                  </ul>
-                  <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane fade active in" id="cost_form">
-                      <div class="col-sm-6">
-                        <div class="form-group">
-        									<div class="row" style="margin-top:10px;">
-        										<div class="col-sm-12">
-                              <label for="">@{{ text_cost }}</label>
-                              <a style="float:right;color:dodgerblue;" data-toggle="tooltip"
-                              :title="icon_title" :data-original-title="icon_title" @click="write = !write">
-                                <i :class="icon_cost"></i>
-                              </a>
-                              <el-select v-model="cost_costo_id" filterable
-                              clearable placeholder="Costos y Gastos" size="medium"
-                              v-show="!write">
-                                <el-option
-                                  v-for="item in costos"
-                                  :key="item.id"
-                                  :label="item.nombre"
-                                  :value="item.id">
-                                </el-option>
-                              </el-select>
-                              <el-input
-                                placeholder="Descripción"
-                                prefix-icon="el-icon-edit"
-                                v-model="cost_descripcion"
-                                size="medium"
-                                v-show="write">
-                              </el-input>
-        										</div>
-                            <div class="col-sm-12">
-                              <label for="">Seleccionar Moneda</label>
-                              <el-select v-model="cost_moneda_id" filterable
-                              clearable placeholder="Monedas" size="medium" value-key="id"
-                              @change="setMoneda">
-                                <el-option
-                                  v-for="item in monedas"
-                                  :key="item.id"
-                                  :label="item.descripcion"
-                                  :value="item">
-                                  <span style="float: left">@{{ item.descripcion }}</span>
-                                  <span style="float: right; color: #8492a6; font-size: 13px">@{{ item.moneda }} @{{ item.simbolo }}</span>
-                                </el-option>
-                              </el-select>
-                            </div>
-                            <div class="col-sm-12">
-                              <label for="">Valor @{{ moneda }}</label>
-                              <el-input
-                                placeholder="Valor"
-                                prefix-icon="el-icon-edit"
-                                v-model="cost_valor"
-                                size="medium">
-                              </el-input>
-        										</div>
-                            <div class="col-sm-12">
-                              <label for="">TRM</label>
-                              <el-input
-                                placeholder="TRM"
-                                prefix-icon="el-icon-edit"
-                                v-model="cost_trm"
-                                size="medium">
-                              </el-input>
-        										</div>
-                            <div class="col-sm-12">
-                              <label for="">Seleccionar si es Costo o Gasto</label>
-                            </div>
-                            <div class="col-sm-12">
-                              <el-radio v-model="costo_gasto" label="0" border size="medium">Costo</el-radio>
-                              <el-radio v-model="costo_gasto" label="1" border size="medium">Gasto</el-radio>
-                            </div>
+                  <div class="row" style="margin-top:10px;">
+                    <div class="col-sm-5">
+                      <div class="form-group">
+                        <div class="row">
+      										<div class="col-sm-12">
+                            <label for="">@{{ text_cost }}</label>
+                            <a style="float:right;color:dodgerblue;" data-toggle="tooltip"
+                            :title="icon_title" :data-original-title="icon_title" @click="write = !write">
+                              <i :class="icon_cost"></i>
+                            </a>
+                            <el-select v-model="cost_costo_id" filterable
+                            clearable placeholder="Costos y Gastos" size="medium"
+                            v-show="!write">
+                              <el-option
+                                v-for="item in costos"
+                                :key="item.id"
+                                :label="item.nombre"
+                                :value="item.id">
+                              </el-option>
+                            </el-select>
+                            <el-input
+                              placeholder="Descripción"
+                              prefix-icon="el-icon-edit"
+                              v-model="cost_descripcion"
+                              size="medium"
+                              v-show="write">
+                            </el-input>
+      										</div>
+                          <div class="col-sm-12">
+                            <label for="">Seleccionar Moneda</label>
+                            <el-select v-model="cost_moneda_id" filterable
+                            clearable placeholder="Monedas" size="medium" value-key="id"
+                            @change="setMoneda">
+                              <el-option
+                                v-for="item in monedas"
+                                :key="item.id"
+                                :label="item.descripcion"
+                                :value="item">
+                                <span style="float: left">@{{ item.descripcion }}</span>
+                                <span style="float: right; color: #8492a6; font-size: 13px">@{{ item.moneda }} @{{ item.simbolo }}</span>
+                              </el-option>
+                            </el-select>
+                          </div>
+                          <div class="col-sm-12">
+                            <label for="">Valor @{{ moneda }}</label>
+                            <el-input
+                              placeholder="Valor"
+                              prefix-icon="el-icon-edit"
+                              v-model="cost_valor"
+                              size="medium">
+                            </el-input>
+      										</div>
+                          <div class="col-sm-12">
+                            <label for="">TRM</label>
+                            <el-input
+                              placeholder="TRM"
+                              prefix-icon="el-icon-edit"
+                              v-model="cost_trm"
+                              size="medium">
+                            </el-input>
+      										</div>
+                          <div class="col-sm-12">
+                            <label for="">Seleccionar si es Costo o Gasto</label>
+                          </div>
+                          <div class="col-sm-12">
+                            <el-radio v-model="costo_gasto" label="0" border size="medium">Costo</el-radio>
+                            <el-radio v-model="costo_gasto" label="1" border size="medium">Gasto</el-radio>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div role="tabpanel" class="tab-pane fade" id="cost_list">
+                    <div class="col-sm-7">
                       <div class="table-responsive" style="padding-top:10px;">
                         <table id="tbl-cost" class="table table-striped table-hover" style="width: 100%;">
                           <thead>

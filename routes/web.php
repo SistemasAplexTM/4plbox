@@ -371,7 +371,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('bill/delete/{id}/{logical?}', 'BillLadingController@delete')->name('BillLading.delete');
     Route::get('bill/imprimir/{id_bill}/{simple?}', 'BillLadingController@imprimir');
     Route::get('bill/restaurar/{id}', 'BillLadingController@restaurar');
-    Route::get('bill/getParties', 'BillLadingController@getParties');
+    Route::get('bill/parties/getParties', 'BillLadingController@getParties');
     Route::post('bill/createPartie', 'BillLadingController@createPartie');
     Route::put('bill/editPartie/{id}', 'BillLadingController@editPartie');
     Route::delete('bill/destroyPartie/{id}', 'BillLadingController@destroyPartie');

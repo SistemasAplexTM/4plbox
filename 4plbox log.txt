@@ -40,14 +40,22 @@
 -. Se modifico tabla de master_costos y se agregaron registros.==================================================================
 -. Se acomodod formulario de costos master y se probo funcionalidad.=============================================================
 
--. agregar en la impresion de la guia (invoice) la columna en el detalle de la pieza que corresponde ej: P1, P2
--. despues de consolidado el documento, que no deje editar.
--. crear boton de guardar en shipper y consignee dentro del documento para asegurar los datos registrados.
+2019-08-15
+-. Se corrigio registro de BL.===================================================================================================
+-. se corrigio la modal de registrar shipper y consignee del BL ya que la grilla de registros no cargaba debido a las rutas.=====
+-. se acomodaron los iconos y botones en la grilla del BL y el formulario.=======================================================
+-. se acomodo la impresion del BL porque salian dos paginas.=====================================================================
+-. se coriigio vista de la modal de agregar costos de la master. ================================================================
+-. agregar en la impresion de la guia (invoice) la columna en el detalle de la pieza que corresponde ej: P1, P2 =================
+-. despues de consolidado el documento, que no deje editar. =====================================================================
+-. cambiar los iconos por los pro. (consolidado) ================================================================================
+
 -. cerrar consolidado desde grilla.
--. cambiar los iconos por los pro.
 -. mostrar todos los recibos al buscar guias en el consolidado.
+-. crear boton de guardar en shipper y consignee dentro del documento para asegurar los datos registrados.
 -. cambiar la forma de pago del documento en un componente modal, que elija el tipo de pago y si es COD guardar
    y si es PP mostrar forma de pago y luego si guardar.
+   -. en la ayuda del logo de la agencia que diga 170px por 60px y a si debe registrar el logo.
 
 -. ***el tab recibido de cambiar status en el consolidado pasar a una vista sola, Logistica en Destino.
    (despachar transportadora, despachar en los camiones, agregar status a las cajas etc).
@@ -60,6 +68,5 @@
     Pero nos recomendaron.
 
 
--. en la ayuda del logo de la agencia que diga 170px por 60px y a si debe registrar el logo.
 -. Registrar shipper y consignee desde un componente aparte.. que se cree y se seleccione en el documento
 -. Dejar en la grilla las cajas que no están consolidadas.

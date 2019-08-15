@@ -170,7 +170,11 @@ function actionsButtons(data, type, full, meta) {
     var btn_delete = '';
     var btn_status = '';
     if (permission_update) {
+      if (parseInt(full.consolidado_status) === 0 || full.consolidado_status == null) {
         var btn_edit = '<a href="documento/' + full.id + '/edit" class="edit_btn" title="Editar" data-toggle="tooltip"><i class="fal fa-pencil fa-lg"></i></a>';
+      }else{
+        var btn_edit = '<a href="#" class="edit_btn" style="color:#b9b9b9; cursor:not-allowed" title="Editar" data-toggle="tooltip"><i class="fal fa-pencil fa-lg"></i></a>';
+      }
         var btn_status = '<a onclick=\"modalChangeStatus(' + full.id + ')\" class="status_btn" title="Status" data-toggle="tooltip" style="color:#4caf50;"><i class="fal fa-clock fa-lg"></i></a>';
     }
     if (permission_delete && (parseInt(full.consolidado_status) === 0) || full.consolidado_status == null) {

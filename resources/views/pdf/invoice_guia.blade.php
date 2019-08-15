@@ -81,7 +81,6 @@
     $total_volumen_cft = 0;
     $total_cmt = 0;
     $pa_id = '';
-
     ?>
     <body>
       {{-- <pre> --}}
@@ -137,37 +136,37 @@
           <tr>
             <td class="separador">
             <table>
-          <tr>
-            <td style="width:50%; border-bottom: 1px solid #000;"><strong>Shipper:</strong></td>
-            <td style="width:3px;">&nbsp;</td>
-            <td style="width:50%; border-bottom: 1px solid #000;"><strong>Consignee:</strong></td>
-          </tr>
-          <tr>
-            <td>{{ ((isset($documento->ship_nomfull) and $documento->ship_nomfull != '') ? $documento->ship_nomfull : '') }}</td>
-            <td>&nbsp;</td>
-            <td>{{ ((isset($documento->cons_nomfull) and $documento->cons_nomfull != '') ? $documento->cons_nomfull : '') }}</td>
-          </tr>
-          <tr>
-            <td>{{ ((isset($documento->ship_dir) and $documento->ship_dir != '') ? $documento->ship_dir : '') }}</td>
-            <td>&nbsp;</td>
-            <td>{{ ((isset($documento->cons_dir) and $documento->cons_dir != '') ? $documento->cons_dir : '') }}</td>
-          </tr>
-          <tr>
-            <td>{{ ((isset($documento->ship_ciudad) and $documento->ship_ciudad != '') ? $documento->ship_ciudad : '') }}, {{ ((isset($documento->ship_zip) and $documento->ship_zip != '') ? $documento->ship_zip : '') }}</td>
-            <td>&nbsp;</td>
-            <td>{{ ((isset($documento->cons_ciudad) and $documento->cons_ciudad != '') ? $documento->cons_ciudad : '') }}, {{ ((isset($documento->cons_zip) and $documento->cons_zip != '') ? $documento->cons_zip : '') }}</td>
-          </tr>
-          <tr>
-            <td>{{ ((isset($documento->ship_tel) and $documento->ship_tel != '') ? $documento->ship_tel : '') }}</td>
-            <td>&nbsp;</td>
-            <td>{{ ((isset($documento->cons_tel) and $documento->cons_tel != '') ? $documento->cons_tel : '') }}</td>
-          </tr>
-          <tr>
-            <td>{{ ((isset($documento->ship_email) and $documento->ship_email != '') ? $documento->ship_email : '') }}</td>
-            <td>&nbsp;</td>
-            <td>{{ ((isset($documento->cons_email) and $documento->cons_email != '') ? $documento->cons_email : '') }}</td>
-          </tr>
-        </table>
+              <tr>
+                <td style="width:50%; border-bottom: 1px solid #000;"><strong>Shipper:</strong></td>
+                <td style="width:3px;">&nbsp;</td>
+                <td style="width:50%; border-bottom: 1px solid #000;"><strong>Consignee:</strong></td>
+              </tr>
+              <tr>
+                <td>{{ ((isset($documento->ship_nomfull) and $documento->ship_nomfull != '') ? $documento->ship_nomfull : '') }}</td>
+                <td>&nbsp;</td>
+                <td>{{ ((isset($documento->cons_nomfull) and $documento->cons_nomfull != '') ? $documento->cons_nomfull : '') }}</td>
+              </tr>
+              <tr>
+                <td>{{ ((isset($documento->ship_dir) and $documento->ship_dir != '') ? $documento->ship_dir : '') }}</td>
+                <td>&nbsp;</td>
+                <td>{{ ((isset($documento->cons_dir) and $documento->cons_dir != '') ? $documento->cons_dir : '') }}</td>
+              </tr>
+              <tr>
+                <td>{{ ((isset($documento->ship_ciudad) and $documento->ship_ciudad != '') ? $documento->ship_ciudad : '') }}, {{ ((isset($documento->ship_zip) and $documento->ship_zip != '') ? $documento->ship_zip : '') }}</td>
+                <td>&nbsp;</td>
+                <td>{{ ((isset($documento->cons_ciudad) and $documento->cons_ciudad != '') ? $documento->cons_ciudad : '') }}, {{ ((isset($documento->cons_zip) and $documento->cons_zip != '') ? $documento->cons_zip : '') }}</td>
+              </tr>
+              <tr>
+                <td>{{ ((isset($documento->ship_tel) and $documento->ship_tel != '') ? $documento->ship_tel : '') }}</td>
+                <td>&nbsp;</td>
+                <td>{{ ((isset($documento->cons_tel) and $documento->cons_tel != '') ? $documento->cons_tel : '') }}</td>
+              </tr>
+              <tr>
+                <td>{{ ((isset($documento->ship_email) and $documento->ship_email != '') ? $documento->ship_email : '') }}</td>
+                <td>&nbsp;</td>
+                <td>{{ ((isset($documento->cons_email) and $documento->cons_email != '') ? $documento->cons_email : '') }}</td>
+              </tr>
+            </table>
             </td>
           </tr>
         </table>
@@ -210,9 +209,10 @@
           @if(env('APP_CLIENT') == 'worldcargo' || env('APP_CLIENT') == 'colombiana')
             <thead>
               <tr>
+                <th scope="col" width="3%">Pc.</th>
                 <th scope="col" width="3%">Qty.</th>
                 <th scope="col" width="10%">Dimensions</th>
-                <th scope="col" width="30%">Tracking</th>
+                <th scope="col" width="27%">Tracking</th>
                 <th scope="col" >Content</th>
                 <th scope="col" style="width: 10%">Weight<br>Lb / Kg</th>
                 {{-- <th scope="col" style="width: 7%">Weight<br>Kg</th> --}}
@@ -225,6 +225,7 @@
             <tbody>
               @foreach($detalle as $val)
                 <tr>
+                  <td>P{{ $val->paquete }}</td>
                   <td>{{ $val->piezas }}</td>
                   <td>{{ $val->largo . 'x'.$val->ancho. 'x'. $val->alto }}</td>
                   <td style="text-align: left;">{{ str_replace(',', ' ',$val->trackings) }}</td>
@@ -262,11 +263,11 @@
           @endif
           <tfoot>
             <tr>
-              <td colspan="{{ (env('APP_CLIENT') == 'worldcargo' || env('APP_CLIENT') == 'colombiana') ? '7' : '6' }}">&nbsp;</td>
+              <td colspan="{{ (env('APP_CLIENT') == 'worldcargo' || env('APP_CLIENT') == 'colombiana') ? '8' : '6' }}">&nbsp;</td>
             </tr>
             @if(env('APP_CLIENT') == 'worldcargo' || env('APP_CLIENT') == 'colombiana')
             <tr>
-              <td colspan="3">
+              <td colspan="4">
                 <table>
                   <tr>
                     <td>

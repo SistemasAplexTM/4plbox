@@ -2,7 +2,7 @@ $(document).ready(function() {
     $('#modalParties').on('hidden.bs.modal', function() {
         if($('#collapseOne').hasClass('in')){
             $('#open_collapse').click();
-            $('#open_collapse').html('<i class="fa fa-plus"></i> Crear nuevo');
+            $('#open_collapse').html('<i class="fal fa-plus"></i> Crear nuevo');
         }
         objVue.cancelPartie();
     });
@@ -162,11 +162,7 @@ var objVue = new Vue({
                 $('#tbl-modalParties tbody').empty();
                 $('#tbl-modalParties').dataTable().fnDestroy();
             }
-            if(this.editar){
-                var url = '../getParties';
-            }else{
-                var url = '../bill/getParties';
-            }
+            var url = '/bill/parties/getParties';
             $('#tbl-modalParties').DataTable({
                 ajax: url,
                 columns: [{
@@ -192,14 +188,14 @@ var objVue = new Vue({
                                 full.id, "'" + full.display_name + "'", "'" + full.account_number + "'", "'" + full.zip + "'", "'" + texto + "'"
                             ];
                             var btn_edit = "<a onclick=\"editPartieForm(" + params + ")\" class='edit' data-toggle='tooltip' data-placement='top' title='Editar' style='color:#FFC107;''><i class='fal fa-pencil fa-lg'></i></a> ";
-                            
+
                         // }
                         // if (permission_delete) {
-                            var btn_delete = " <a onclick=\"deletePartie(" + full.id + ")\" id='delete_"+full.id+"' class='btn btn-outline btn-danger btn-xs delete_' data-toggle='tooltip' data-placement='top' title='Confirmar eliminado'><i class='fa fa-check'></i></a> ";
-                            var btn_cancel = " <a onclick=\"cancelDeletePartie(" + full.id + ")\" id='delete_c"+full.id+"' class='btn btn-outline btn-default btn-xs delete_c' data-toggle='tooltip' data-placement='top' title='Cancelar'><i class='fa fa-times'></i></a> ";
-                            var btn_confirm_delete = " <a onclick=\"confirmDeletePartie(" + full.id + ")\" id='delete_ok"+full.id+"' class='btn btn-outline btn-danger btn-xs delete_ok' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-trash'></i></a> ";
+                            var btn_delete = " <a onclick=\"deletePartie(" + full.id + ")\" id='delete_"+full.id+"' class='btn btn-outline btn-danger btn-xs delete_' data-toggle='tooltip' data-placement='top' title='Confirmar eliminado'><i class='fal fa-check'></i></a> ";
+                            var btn_cancel = " <a onclick=\"cancelDeletePartie(" + full.id + ")\" id='delete_c"+full.id+"' class='btn btn-outline btn-default btn-xs delete_c' data-toggle='tooltip' data-placement='top' title='Cancelar'><i class='fal fa-times'></i></a> ";
+                            var btn_confirm_delete = " <a onclick=\"confirmDeletePartie(" + full.id + ")\" id='delete_ok"+full.id+"' class='delete_btn delete_ok' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fal fa-trash-alt fa-lg'></i></a> ";
                         // }
-                            var btn_selected = " <a onclick=\"seleccionarPartie('" + partie +"', " + params +")\" class='btn btn-outline btn-primary btn-xs selected' data-toggle='tooltip' data-placement='top' title='Seleccionar'><i class='fa fa-check'></i></a> ";
+                            var btn_selected = " <a onclick=\"seleccionarPartie('" + partie +"', " + params +")\" class='btn btn-outline btn-primary btn-xs selected' data-toggle='tooltip' data-placement='top' title='Seleccionar'><i class='fal fa-check'></i></a> ";
                         return btn_selected + btn_edit + btn_delete + btn_confirm_delete + btn_cancel;
                     },
                     width: 150,
@@ -333,7 +329,7 @@ var objVue = new Vue({
             }
             if($('#collapseOne').hasClass('in')){
                 $('#open_collapse').click();
-                $('#open_collapse').html('<i class="fa fa-plus"></i> Crear nuevo');
+                $('#open_collapse').html('<i class="fal fa-plus"></i> Crear nuevo');
             }
             $('#modalParties').modal('hide');
         },
@@ -349,14 +345,14 @@ var objVue = new Vue({
             if(!$('#collapseOne').hasClass('in')){
                 $('#open_collapse').click();
             }
-            $('#open_collapse').html('<i class="fa fa-edit"></i> Editar');
+            $('#open_collapse').html('<i class="fal fa-edit"></i> Editar');
         },
         addPartie(){
             let me = this;
             if(this.editar){
-                var url = '../createPartie';
+                var url = '/createPartie';
             }else{
-                var url = '../bill/createPartie';
+                var url = '/bill/createPartie';
             }
             axios.post(url, {
                 'display_name'   : this.display_name,
@@ -373,9 +369,9 @@ var objVue = new Vue({
         editPartie(){
             let me = this;
             if(this.editar){
-                var url = '../editPartie';
+                var url = '/editPartie';
             }else{
-                var url = '../bill/editPartie';
+                var url = '/bill/editPartie';
             }
             axios.put(url + '/'+ this.id_partie, {
                 'display_name'   : this.display_name,
@@ -399,9 +395,9 @@ var objVue = new Vue({
         deletePartie: function(data) {
             let me = this;
             if(this.editar){
-                var url = '../destroyPartie';
+                var url = '/destroyPartie';
             }else{
-                var url = '../bill/destroyPartie';
+                var url = '/bill/destroyPartie';
             }
             axios.delete(url + '/' + data.id).then(response => {
                 toastr.success('Registro eliminado correctamente.');

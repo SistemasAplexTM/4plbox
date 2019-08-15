@@ -15,7 +15,7 @@
 								<tr>
 									<td colspan="2" class="title">
 									2. EXPORTER (Principal or seller -licensee and address including ZIP Code )
-									<a class="btn btn-info btn-xs search" data-toggle="tooltip" title="Buscar" @click="SearchPartie('Shipper')"><i class="fa fa-search"></i></a>
+									<a class="btn btn-info search" data-toggle="tooltip" title="Buscar" @click="SearchPartie('Shipper')"><i class="fal fa-search"></i></a>
 								</td>
 								</tr>
 								<tr>
@@ -58,7 +58,7 @@
 						<td valign="top" style="width: 55%" class="b-top b-right">
 							<table width="100%" cellspacing="0" cellpadding="0" class="">
 								<tr>
-									<td colspan="2" class="title">3. CONSIGNED TO <a class="btn btn-info btn-xs search" data-toggle="tooltip" title="Buscar" @click="SearchPartie('Consignee')"><i class="fa fa-search"></i></a></td>
+									<td colspan="2" class="title">3. CONSIGNED TO <a class="btn btn-info search" data-toggle="tooltip" title="Buscar" @click="SearchPartie('Consignee')"><i class="fal fa-search"></i></a></td>
 								</tr>
 								<tr>
 									<td colspan="2" class="p-left">
@@ -212,7 +212,7 @@
 									<td class="title b-right" style="width: 40%">DESCRIPTION OF COMMODITIES <br> (20)</td>
 									<td class="title b-right">GROSS WEIGHT <br> (kilos) (21)</td>
 									<td class="title b-right">MEASUREMENT <br> (22)</td>
-									<td><a class="btn btn-xs btn-primary" v-on:click="addDetail()" data-toggle="tooltip" title="Agregar fila"><i class="fa fa-plus"></i></a></td>
+									<td><a class="btn btn-xs btn-primary" v-on:click="addDetail()" data-toggle="tooltip" title="Agregar fila"><i class="fal fa-plus"></i></a></td>
 								</tr>
 								<tr v-for="(find, index) in detail">
 									<td valign="top" class="b-top b-right">
@@ -240,8 +240,8 @@
 											<input type="number" class="form-control" name="measurement" v-model="find.measurement" v-validate="'required'">
 										</div>
 		                          	</td>
-			                        <td valign="top" class="b-top" style="padding: 5px;">
-			                            <a class="btn btn-xs btn-danger" @click="deleteRow(index)" data-toggle="tooltip" title="Eliminar"><i class="fa fa-trash"></i></a>
+			                        <td valign="top" class="b-top" style="padding: 5px;vertical-align: middle;">
+			                            <a class="delete_btn" @click="deleteRow(index)" data-toggle="tooltip" title="Eliminar"><i class="fal fa-trash-alt fa-lg"></i></a>
 			                        </td>
 		                        </tr>
 							</table>
@@ -264,7 +264,7 @@
 											</tr>
 											<tr>
 												<td style="font-size: 11px;text-align: center;" class="b-right">
-													<a class="btn btn-primary btn-xs addOther" data-toggle="tooltip" title="Agregar fila" @click="addDetailOther"><i class="fa fa-plus"></i></a>
+													<a class="btn btn-primary btn-xs addOther" data-toggle="tooltip" title="Agregar fila" @click="addDetailOther"><i class="fal fa-plus"></i></a>
 													SUBJECT TO CORRECTION
 												</td>
 												<td style="font-size: 11px;text-align: center;" class="b-top b-right">PREPAID</td>
@@ -272,8 +272,8 @@
 											</tr>
 											<tr v-for="(find2, index) in other">
 												<td valign="top"  class="b-top b-right" style="width: 60%;">
-													<div class=" col-sm-1">
-														<a class="btn btn-danger btn-xs deleteOther" data-toggle="tooltip" title="Eliminar" @click="deleteRowOther"><i class="fa fa-trash"></i></a>
+													<div class=" col-sm-1" style="padding: 10px;">
+														<a class="delete_btn" data-toggle="tooltip" title="Eliminar" @click="deleteRowOther"><i class="fal fa-trash-alt fa-lg"></i></a>
 													</div>
 													<div class="var col-sm-11" :class="{'has-error': errors.has('description') }">
 														<input type="text" class="form-control" name="description" v-model="find2.description">

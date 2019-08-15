@@ -1370,7 +1370,7 @@ class DocumentoController extends Controller
               $this->AddToLog('Impresion Guia (' . $documento->id . ')');
               if (env('APP_TYPE') === 'courier') {
                   if(env('APP_CLIENT') === 'colombiana'){
-                      $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
+                      $pdf = PDF::loadView('pdf.invoice_guia', compact('documento', 'detalle'));
                   }else{
                       $pdf = PDF::loadView('pdf.guiaPdf', compact('documento', 'detalle'));
                   }
@@ -1378,7 +1378,7 @@ class DocumentoController extends Controller
                   if(env('APP_CLIENT') === 'jexpress'){
                       $pdf = PDF::loadView('pdf.warehousePdfJexpress', compact('documento', 'detalle'));
                   }else{
-                      $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
+                      $pdf = PDF::loadView('pdf.invoice_guia', compact('documento', 'detalle'));
                   }
               }
               $nameDocument = $documento->num_warehouse;
@@ -1387,7 +1387,7 @@ class DocumentoController extends Controller
                   $this->AddToLog('Impresion warehouse (' . $documento->id . ')');
                   if (env('APP_TYPE') === 'courier') {
                       if(env('APP_CLIENT') === 'colombiana'){
-                      //     $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
+                      //     $pdf = PDF::loadView('pdf.invoice_guia', compact('documento', 'detalle'));
                       // }else{
                           $pdf = PDF::loadView('pdf.warehousePdf', compact('documento', 'detalle'));
                       }else{
@@ -1397,7 +1397,7 @@ class DocumentoController extends Controller
                       if(env('APP_CLIENT') === 'jexpress'){
                           $pdf = PDF::loadView('pdf.warehousePdfJexpress', compact('documento', 'detalle'));
                       }else{
-                          $pdf = PDF::loadView('pdf.warehousePdf_1', compact('documento', 'detalle'));
+                          $pdf = PDF::loadView('pdf.invoice_guia', compact('documento', 'detalle'));
                       }
                   }
                   $nameDocument = $documento->num_warehouse;

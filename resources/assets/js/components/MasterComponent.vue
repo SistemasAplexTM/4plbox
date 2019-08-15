@@ -23,7 +23,7 @@
         <div class="widget style1" style="background-color: rgb(26, 179, 148); color: white">
           <div class="row vertical-align">
             <div class="col-xs-3">
-                <i class="fa fa-barcode fa-3x"></i>
+                <i class="fal fa-barcode fa-3x"></i>
             </div>
             <div class="col-xs-9 text-right">
                 <h2 class="font-bold">{{ num_master }}</h2>
@@ -39,7 +39,7 @@
         <div class="widget style1" style="background-color: rgb(26, 179, 148); color: white">
           <div class="row vertical-align">
             <div class="col-xs-3">
-                <i class="fa fa-exclamation-triangle fa-3x"></i>
+                <i class="fal fa-exclamation-triangle fa-3x"></i>
             </div>
             <div class="col-xs-9 text-center" v-if="msg != null">
                 <h3 class="font-bold">{{ msg }}</h3>
@@ -49,7 +49,7 @@
       </div>
     </div>
   </transition>
-    <tab-content title="Datos de envío" icon="fa fa-user" :before-change="validar_primer_tab">
+    <tab-content title="Datos de envío" icon="fal fa-user" :before-change="validar_primer_tab">
       <div class="row">
         <div class="col-lg-4">
           <div class="panel panel-default">
@@ -83,7 +83,7 @@
                   <div class="form-group">
                     <label for="telefono">Teléfono</label>
                     <div class="input-group">
-                      <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                      <span class="input-group-addon"><i class="fal fa-phone"></i></span>
                       <input v-model="shipper.telefono" :disabled="!shipper.disabled" id="telefono" type="text" class="form-control" name="telefono" placeholder="">
                     </div>
                   </div>
@@ -94,7 +94,7 @@
                   <div class="form-group">
                     <label for="direccion">Dirección</label>
                     <div class="input-group">
-                      <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                      <span class="input-group-addon"><i class="fal fa-map-marker"></i></span>
                       <input v-model="shipper.direccion" :disabled="!shipper.disabled" id="direccion" type="text" class="form-control" name="direccion">
                     </div>
                   </div>
@@ -105,7 +105,7 @@
                   <div class="form-group">
                     <label for="ciudad">Ciudad, Estado, País -zip</label>
                     <div class="input-group">
-                      <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span>
+                      <span class="input-group-addon"><i class="fal fa-location-arrow"></i></span>
                       <input v-model="shipper.ciudad" :disabled="!shipper.disabled" id="ciudad" type="text" class="form-control" name="ciudad">
                     </div>
                   </div>
@@ -116,7 +116,7 @@
                   <div class="form-group">
                     <label for="contacto">Contacto</label>
                     <div class="input-group">
-                      <span class="input-group-addon"><i class="fa fa-address-card"></i></span>
+                      <span class="input-group-addon"><i class="fal fa-address-card"></i></span>
                       <input v-model="shipper.contacto" :disabled="!shipper.disabled" id="contacto" type="text" class="form-control" name="contacto">
                     </div>
                   </div>
@@ -163,7 +163,7 @@
                   <div class="form-group">
                     <label for="telefono">Teléfono</label>
                     <div class="input-group">
-                      <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                      <span class="input-group-addon"><i class="fal fa-phone"></i></span>
                       <input v-model="consignee.telefono" :disabled="!consignee.disabled" id="telefono" type="text" class="form-control" name="telefono" placeholder="">
                     </div>
                   </div>
@@ -174,7 +174,7 @@
                   <div class="form-group">
                     <label for="direccion">Dirección</label>
                     <div class="input-group">
-                      <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                      <span class="input-group-addon"><i class="fal fa-map-marker"></i></span>
                       <input v-model="consignee.direccion" :disabled="!consignee.disabled" id="direccion" type="text" class="form-control" name="direccion">
                     </div>
                   </div>
@@ -185,7 +185,7 @@
                   <div class="form-group">
                     <label for="ciudad">Ciudad, Estado, País -zip</label>
                     <div class="input-group">
-                      <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span>
+                      <span class="input-group-addon"><i class="fal fa-location-arrow"></i></span>
                       <input v-model="consignee.ciudad" :disabled="!consignee.disabled" id="ciudad" type="text" class="form-control" name="ciudad">
                     </div>
                   </div>
@@ -196,7 +196,7 @@
                   <div class="form-group">
                     <label for="contacto">Contacto</label>
                     <div class="input-group">
-                      <span class="input-group-addon"><i class="fa fa-address-card"></i></span>
+                      <span class="input-group-addon"><i class="fal fa-address-card"></i></span>
                       <input v-model="consignee.contacto" :disabled="!consignee.disabled" id="contacto" type="text" class="form-control" name="contacto">
                     </div>
                   </div>
@@ -243,7 +243,7 @@
                   <div class="form-group">
                     <label for="telefono">Teléfono</label>
                     <div class="input-group">
-                      <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                      <span class="input-group-addon"><i class="fal fa-phone"></i></span>
                       <input v-model="carrier.telefono" :disabled="!carrier.disabled" id="telefono" type="text" class="form-control" name="telefono" placeholder="">
                     </div>
                   </div>
@@ -254,7 +254,7 @@
                   <div class="form-group">
                     <label for="direccion">Dirección</label>
                     <div class="input-group">
-                      <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                      <span class="input-group-addon"><i class="fal fa-map-marker"></i></span>
                       <input v-model="carrier.direccion" :disabled="!carrier.disabled" id="direccion" type="text" class="form-control" name="direccion">
                     </div>
                   </div>
@@ -265,7 +265,7 @@
                   <div class="form-group">
                     <label for="ciudad">Ciudad, Estado, País -zip</label>
                     <div class="input-group">
-                      <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span>
+                      <span class="input-group-addon"><i class="fal fa-location-arrow"></i></span>
                       <input v-model="carrier.ciudad" :disabled="!carrier.disabled" id="ciudad" type="text" class="form-control" name="ciudad">
                     </div>
                   </div>
@@ -276,7 +276,7 @@
                   <div class="form-group">
                     <label for="contacto">Contacto</label>
                     <div class="input-group">
-                      <span class="input-group-addon"><i class="fa fa-address-card"></i></span>
+                      <span class="input-group-addon"><i class="fal fa-address-card"></i></span>
                       <input v-model="carrier.contacto" :disabled="!carrier.disabled" id="contacto" type="text" class="form-control" name="contacto">
                     </div>
                   </div>
@@ -297,7 +297,7 @@
         </div>
       </div>
     </tab-content>
-    <tab-content  title="Aerolinea" icon="fa fa-plane" :before-change="validar_segundo_tab">
+    <tab-content  title="Aerolinea" icon="fal fa-plane" :before-change="validar_segundo_tab">
       <div class="row">
         <div class="col-lg-12">
           <div class="panel panel-default">
@@ -465,7 +465,7 @@
         </div>
       </div>
     </tab-content>
-    <tab-content title="Detalle" icon="fa fa-check" :before-change="validar_tercer_tab">
+    <tab-content title="Detalle" icon="fal fa-check" :before-change="validar_tercer_tab">
       <div class="row">
         <div class="col-lg-12">
           <div class="panel panel-default">
@@ -487,11 +487,11 @@
                       <label for="consolidado_id">Consolidado</label>
                       <v-select name="consolidado_id" v-model="consolidado_id" label="consolidado" :filterable="false" :options="consolidados" @search="onSearchConsolidados" placeholder="# Consolidado">
                         <template slot="option" slot-scope="option">
-                            {{ option.consolidado }} | <i class="fa fa-calendar"></i> {{ option.fecha }} | <i class="fa fa-globe"></i> {{ option.pais }}
+                            {{ option.consolidado }} | <i class="fal fa-calendar"></i> {{ option.fecha }} | <i class="fal fa-globe"></i> {{ option.pais }}
                         </template>
                         <template slot="selected-option" slot-scope="option">
                           <div class="selected d-center">
-                            {{ option.consolidado }} | <i class="fa fa-calendar"></i> {{ option.fecha }} | <i class="fa fa-globe"></i> {{ option.pais }}
+                            {{ option.consolidado }} | <i class="fal fa-calendar"></i> {{ option.fecha }} | <i class="fal fa-globe"></i> {{ option.pais }}
                           </div>
                         </template>
                       </v-select>
@@ -563,8 +563,8 @@
                               <div class="input-group">
                                 <input v-validate="{ rules: { required: !this.min} }" name="tarifa" v-model="tarifa" type="number" class="form-control">
                                 <span class="input-group-addon" data-toggle='tooltip' data-placement='top' title='MIN'>
-                                  <i class="fa fa-check" @click.prevent="min = true;" v-show="!min"></i>
-                                  <i class="fa fa-times" @click.prevent="min = false;" v-show="min"></i>
+                                  <i class="fal fa-check" @click.prevent="min = true;" v-show="!min"></i>
+                                  <i class="fal fa-times" @click.prevent="min = false;" v-show="min"></i>
                                 </span>
                               </div>
                             </div>
@@ -613,7 +613,7 @@
                       <tbody>
                         <tr v-for="(find, index) in other_c">
                           <td>
-                            <div class="form-group" :class="{'has-error': errors.has('oc_description') }">
+                            <div class="" :class="{'has-error': errors.has('oc_description') }">
                               <input type="text" class="form-control" name="oc_description" v-model="find.oc_description" v-validate="'required'">
                             </div>
                           </td>
@@ -632,8 +632,8 @@
                           <td>
                             <input type="number" class="form-control" v-model="find.oc_value" v-on:keyup="setDueAgent()">
                           </td>
-                          <td>
-                            <a class="btn btn-xs btn-danger" @click="deleteRow(index)"><i class="fa fa-trash"></i></a>
+                          <td style="vertical-align: middle;">
+                            <a class="delete_btn" @click="deleteRow(index)" data-toggle="tooltip" title="Eliminar"><i class="fal fa-trash-alt fa-lg"></i></a>
                           </td>
                         </tr>
                       </tbody>

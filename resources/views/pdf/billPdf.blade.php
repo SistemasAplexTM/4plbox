@@ -148,7 +148,7 @@
 										</td>
 									</tr>
 									<tr>
-										<td class="title b-top b-right" style="width: 60%;">12. PRE-CARRIAGE BY</td>
+										<td class="title b-top b-right" style="width: 55%;">12. PRE-CARRIAGE BY</td>
 										<td class="title b-top">13. PLACE OF RECEIPT BY PRE -CARRIER</td>
 									</tr>
 									<tr>
@@ -176,7 +176,7 @@
 							<td valign="top" style="width: 55%" class="b-right">
 								<table width="100%" cellspacing="0" cellpadding="0" class="">
 									<tr>
-										<td class="title b-top b-right" style="width: 60%;">14. EXPORTING CARRIER</td>
+										<td class="title b-top b-right" style="width: 55%;">14. EXPORTING CARRIER</td>
 										<td class="title b-top">15. PORT OF LOADING /EXPORT</td>
 									</tr>
 									<tr>
@@ -206,7 +206,7 @@
 							<td valign="top" style="width: 55%" class="b-right">
 								<table width="100%" cellspacing="0" cellpadding="0" class="">
 									<tr>
-										<td class="title b-top b-right" style="width: 60%;">16. FOREIGN PORT OF UNLOADING (Vessel and air only )</td>
+										<td class="title b-top b-right" style="width: 55%;">16. FOREIGN PORT OF UNLOADING (Vessel and air only )</td>
 										<td class="title b-top">17. PLACE OF DELIVERY BY ON -CARRIER</td>
 									</tr>
 									<tr>
@@ -250,7 +250,7 @@
 									@if(count($detalle) > 0)
 										@foreach($detalle as $dt)
 											<tr>
-												<td valign="top" class="b-top b-right" style="height: 200px">
+												<td valign="top" class="b-top b-right" style="height: 180px">
 													<div class="det"><pre>{{ $dt->marks_numbers }}</pre></div>
 												</td>
 												<td valign="top" class="b-top b-right">

@@ -59,11 +59,14 @@
         }
 
         /* ESTILOS DE LOS CAMPOS FORMULARIO */
+        .btn{
+          padding: 3px 10px;
+        }
         .search{
-            font-size: 9px!important;float: right;margin-right: 5px;
+            font-size: 12px!important;float: right;margin-right: 5px;
         }
         .addOther{
-            font-size: 9px !important;float: left;margin-left: 5px;margin-bottom: 5px !important;
+            float: left;margin-bottom: 5px !important;
         }
         .delete{
             font-size: 9px!important;
@@ -120,18 +123,18 @@
                             <div class="form-group">
                                 <div class="col-sm-12 col-sm-offset-0 guardar">
                                     <button type="button" class="ladda-button btn btn-primary" @click.prevent="store()" v-if="editar==0">
-                                        <i class="fa fa-save"></i>  @lang('layouts.save')
+                                        <i class="fal fa-save"></i>  @lang('layouts.save')
                                     </button>
                                     <template v-else>
                                         <button type="button" class="ladda-button btn btn-warning" @click.prevent="update()">
-                                            <i class="fa fa-edit"></i> @lang('layouts.update')
+                                            <i class="fal fa-edit"></i> @lang('layouts.update')
                                         </button>
                                         <button type="button" class="ladda-button btn btn-info" @click.prevent="print()">
-                                            <i class="fa fa-print"></i> @lang('layouts.print')
+                                            <i class="fal fa-print"></i> @lang('layouts.print')
                                         </button>
                                     </template>
                                     <button type="button" class="btn btn-white" @click.prevent="cancel()">
-                                        <i class="fa fa-times"></i>  @lang('layouts.cancel')
+                                        <i class="fal fa-times"></i>  @lang('layouts.cancel')
                                     </button>
                                 </div>
                             </div>
@@ -145,7 +148,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-user"></i> @{{ name_partie }}</h4>
+                                <h4 class="modal-title" id="myModalLabel"><i class="fal fa-user"></i> @{{ name_partie }}</h4>
                             </div>
                             <div class="modal-body">
                                 <input type="hidden" name="id_partie" id="id_partie" v-model="id_partie" class="form-control">
@@ -154,7 +157,7 @@
                                         <div class="panel-heading" role="tab" id="headingOne">
                                           <h4 class="panel-title">
                                             <a id="open_collapse" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="color: cornflowerblue;">
-                                              <i class="fa fa-plus"></i> @lang('general.create_new')
+                                              <i class="fal fa-plus"></i> @lang('general.create_new')
                                             </a>
                                           </h4>
                                         </div>
@@ -181,8 +184,8 @@
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <label style="width: 100%;" class="control-label">&nbsp;</label>
-                                                    <a class="btn btn-primary" data-toggle="tooltip" title="Crear" @click="addPartie" v-if="!edit_p"><i class="fa fa-plus"></i> Crear</a>
-                                                    <a class="btn btn-warning" data-toggle="tooltip" title="Editar" @click="editPartie" v-else="edit_p"><i class="fa fa-edit"></i>
+                                                    <a class="btn btn-primary" data-toggle="tooltip" title="Crear" @click="addPartie" v-if="!edit_p"><i class="fal fa-plus"></i> Crear</a>
+                                                    <a class="btn btn-warning" data-toggle="tooltip" title="Editar" @click="editPartie" v-else="edit_p"><i class="fal fa-edit"></i>
                                                      @lang('general.edit')</a>
                                                 </div>
                                             </div>

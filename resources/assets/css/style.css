@@ -1672,6 +1672,15 @@ div.dt-button-info {
   padding: 6px 0;
   border-radius: 15px;
   text-align: center;
+  font-size: 13px;
+  line-height: 1.428571429;
+}
+.btn-circle-sm {
+  width: 25px;
+  height: 25px;
+  padding: 2px 0;
+  border-radius: 15px;
+  text-align: center;
   font-size: 12px;
   line-height: 1.428571429;
 }
