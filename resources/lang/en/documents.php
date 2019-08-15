@@ -115,6 +115,7 @@ return [
 
     'add_points'               => 'Add Points',
 		'points'									 =>'Points',
+		'continue'									 =>'Continue',
 
 
 

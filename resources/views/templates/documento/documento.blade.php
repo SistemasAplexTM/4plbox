@@ -136,6 +136,9 @@
     .btn-change{
       width: 100%;
     }
+    #paiment{
+      width: 25% !important;
+    }
 
 </style>
 <link href="{{ asset('css/plugins/dataTables/keyTable.dataTables.min.css') }}">
@@ -777,40 +780,22 @@
                                     </div>
                                     <div class="row pasos_guia" id="generales_guia">
                                         <div class="col-lg-4" v-if="mostrar.includes(17)">
-                                                <div class="form-group">
-                                                    <label for="" class="">@lang('documents.payment_type')</label>
-                                                    <select id="tipo_pago_id" name="tipo_pago_id" class="form-control text-write" onchange="deleteError($(this).parent());">
-                                                       @if(isset($tipoPagos) and $tipoPagos)
-                                                            @foreach($tipoPagos as $tipoPago)
-                                                                <option {{ (isset($documento->tipo_pago_id) and $documento->tipo_pago_id === $tipoPago['id']) ? 'selected' : '' }} value="{{ $tipoPago['id'] }}">{{ $tipoPago['descripcion'] }}</option>
-                                                            @endforeach
-                                                        @endif
-                                                    </select>
-                                                </div>
+                                          <input type="hidden" id="tipo_pago_id" name="tipo_pago_id" value="{{ $documento->tipo_pago_id }}">
                                         </div>
                                         <div class="col-lg-4" v-if="mostrar.includes(12)">
-                                                <div class="form-group">
-                                                    <label for="forma_pago_id" class="">@lang('documents.way_to_pay')</label>
-                                                    <select id="forma_pago_id" name="forma_pago_id" class="form-control text-write" onchange="deleteError($(this).parent());">
-                                                        @if(isset($formaPagos) and $formaPagos)
-                                                            @foreach($formaPagos as $formaPago)
-                                                                <option {{ (isset($documento->forma_pago_id) and $documento->forma_pago_id === $formaPago['id']) ? 'selected' : '' }} value="{{ $formaPago['id'] }}">{{ $formaPago['nombre'] }}</option>
-                                                            @endforeach
-                                                        @endif
-                                                    </select>
-                                                </div>
+                                          <input type="hidden" id="forma_pago_id" name="forma_pago_id" value="{{ $documento->forma_pago_id }}">
                                         </div>
                                         <div class="col-lg-4" v-if="mostrar.includes(18)">
-                                                <div class="form-group">
-                                                    <label for="grupo_id" class="">@lang('documents.group')</label>
-                                                    <select id="grupo_id" name="grupo_id" class="form-control text-write" onchange="deleteError($(this).parent());">
-                                                        @if(isset($grupos) and $grupos)
-                                                            @foreach($grupos as $grupo)
-                                                                <option {{ (isset($documento->grupo_id) and $documento->grupo_id === $grupo['id']) ? 'selected' : '' }} value="{{ $grupo['id'] }}">{{ $grupo['nombre'] }}</option>
-                                                            @endforeach
-                                                        @endif
-                                                    </select>
-                                                </div>
+                                          <div class="form-group">
+                                              <label for="grupo_id" class="">@lang('documents.group')</label>
+                                              <select id="grupo_id" name="grupo_id" class="form-control text-write" onchange="deleteError($(this).parent());">
+                                                  @if(isset($grupos) and $grupos)
+                                                      @foreach($grupos as $grupo)
+                                                          <option {{ (isset($documento->grupo_id) and $documento->grupo_id === $grupo['id']) ? 'selected' : '' }} value="{{ $grupo['id'] }}">{{ $grupo['nombre'] }}</option>
+                                                      @endforeach
+                                                  @endif
+                                              </select>
+                                          </div>
                                         </div>
                                         <div class="col-lg-12">
                                                 <div class="form-group">
@@ -846,18 +831,18 @@
                                         <div class="form-group">
                                             <div class="col-sm-12 col-sm-offset-0 guardar">
                                                 @if(env('APP_CLIENT') == 'jexpress')
-                                                    <button type="button" class="btn btn-success ladda-button" id="saveForm" data-style="expand-right" @click="saveDocument('all')"><i class="fal fa-save fa-fw"></i>@lang('documents.save_changes')</button>
+                                                    <button type="button" class="btn btn-success ladda-button" id="saveForm" data-style="expand-right" @click="beforeSaveDocument('all')"><i class="fal fa-save fa-fw"></i>@lang('documents.save_changes')</button>
                                                 @else
                                                 <div class="btn-group dropup">
-                                                    <button type="button" class="btn btn-success ladda-button" id="saveForm" data-style="expand-right" @click="saveDocument('print')"><i class="fal fa-save fa-fw"></i> @lang('documents.save_changes_print')</button>
+                                                    <button type="button" class="btn btn-success ladda-button" id="saveForm" data-style="expand-right" @click="beforeSaveDocument('print')"><i class="fal fa-save fa-fw"></i> @lang('documents.save_changes_print')</button>
                                                     <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 35px;">
                                                         <span class="caret"></span>
                                                         <span class="sr-only">Toggle Dropdown</span>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li><a @click="saveDocument()"><i class="fal fa-print"></i> @lang('documents.save_changes')</a></li>
-                                                        <li><a @click="saveDocument('email')"><i class="fal fa-envelope"></i> @lang('documents.save_changes_email')</a></li>
-                                                        <li><a @click="saveDocument('all')"><i class="fal fa-mail-bulk"></i> @lang('documents.save_changes_email_print')</a></li>
+                                                        <li><a @click="beforeSaveDocument()"><i class="fal fa-print"></i> @lang('documents.save_changes')</a></li>
+                                                        <li><a @click="beforeSaveDocument('email')"><i class="fal fa-envelope"></i> @lang('documents.save_changes_email')</a></li>
+                                                        <li><a @click="beforeSaveDocument('all')"><i class="fal fa-mail-bulk"></i> @lang('documents.save_changes_email_print')</a></li>
                                                     </ul>
                                                 </div>
                                                 @endif
@@ -874,6 +859,61 @@
                 </div>
 
 
+            </div>
+            {{-- MODAL FORMA DE PAGO --}}
+            <div class="modal fade bs-example" id="modalPaymentMethod" tabindex="" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" id="paiment">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">@lang('documents.close')</span></button>
+                            <h2 class="modal-title" id="myModalLabel"><i class="fal fa-money-check-alt"></i> @lang('documents.payment_type')</h2>
+                        </div>
+                        <div class="modal-body">
+                          <form id="formSearchTracking" name="formSearchTracking" method="POST" action="">
+                            <div class="row" id="window-load"><div id="loading"><Spinner name="circle" color="#66bf33"/></div></div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                  <h3>Seleccione el tipo de pago para este recibo.</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <div class="form-group">
+                                  <label for="" class="">@lang('documents.payment_type')</label>
+                                  <el-select v-model="tipo_pago_id" placeholder="Tipo de Pago" @change="validatePayment">
+                                    <el-option
+                                      v-for="item in paymentMethod"
+                                      :key="item.id"
+                                      :label="item.descripcion"
+                                      :value="item.id">
+                                      <span style="float: left">@{{ item.nombre }}</span>
+                                      <span style="float: right; color: #8492a6; font-size: 13px">@{{ item.descripcion }}</span>
+                                    </el-option>
+                                  </el-select>
+                                </div>
+                                <div class="form-group" v-if="showPay">
+                                  <label for="" class="">@lang('documents.way_to_pay')</label>
+                                  <el-select v-model="forma_pago_id" placeholder="Forma de Pago" @change="setPayment">
+                                    <el-option
+                                      v-for="item in payments"
+                                      :key="item.id"
+                                      :label="item.nombre"
+                                      :value="item.id">
+                                      <span style="float: left">@{{ item.nombre }}</span>
+                                      <span style="float: right; color: #8492a6; font-size: 13px">@{{ item.descripcion }}</span>
+                                    </el-option>
+                                  </el-select>
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" @click="saveDocument()"><i class="fal fa-chevron-double-right"></i> @lang('documents.continue')</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">@lang('documents.close')</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
 

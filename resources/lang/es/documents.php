@@ -112,6 +112,7 @@ return [
 
 		'add_points'               => 'Agregar Puntos',
     'points'									 =>'Puntos',
+    'continue'									 =>'Continuar',
 
 
 

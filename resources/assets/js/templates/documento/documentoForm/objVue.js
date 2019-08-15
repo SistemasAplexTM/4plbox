@@ -115,6 +115,12 @@ var objVue = new Vue({
         consignee: [],
         shipper_id: null,
         consignee_id: null,
+        saveOption: null,
+        showPay: false,
+        tipo_pago_id: null,
+        forma_pago_id: null,
+        paymentMethod: [],
+        payments: [],
     },
     methods: {
       saveChange(op){
@@ -438,8 +444,48 @@ var objVue = new Vue({
               }
           }, 500);
       },
-      saveDocument: function(option) {
+
+      /* FUNCIONES ANTES DE GUARDAR */
+      getAdminTable(op){
+        return axios.get('/administracion/'+op+'/all').then(({data}) => {
+          return data.data
+        });
+      },
+      beforeSaveDocument(option){
         let me = this;
+        me.saveOption = option;
+        me.getAdminTable(2).then(response => {
+          me.paymentMethod = response;
+          if($('#tipo_pago_id').val() != ''){
+            me.tipo_pago_id = $('#tipo_pago_id').val()
+            me.validatePayment(me.tipo_pago_id)
+          }
+        }).catch()
+        $('#modalPaymentMethod').modal('show');
+      },
+      validatePayment(val){
+        let me = this;
+        $('#tipo_pago_id').val(val);
+        if(val == 4){
+          me.showPay = true;
+          me.getAdminTable(1).then(response => {
+            me.payments = response;
+            if($('#forma_pago_id').val() != ''){
+              me.forma_pago_id = $('#forma_pago_id').val()
+            }else{
+              $('#forma_pago_id').val('');
+            }
+          }).catch()
+        }else{
+          me.showPay = false;
+        }
+      },
+      setPayment(val){
+        $('#forma_pago_id').val(val);
+      },
+      saveDocument: function() {
+        let me = this;
+        let option = me.saveOption;
           $('#date').val(this.getTime());
           const isUnique = (value) => {
               if ($('#shipper_id').val() == '' || $('#shipper_id').val() == null) {
@@ -1118,25 +1164,5 @@ var objVue = new Vue({
         //     toastr.warning('Error: -' + error);
         // });
       },
-      // onSearchCity(search, loading) {
-      //     loading(true);
-      //     this.searchCity(loading, search, this);
-      // },
-      // searchCity: _.debounce((loading, search, vm) => {
-      //     fetch(`../vueSelectGeneral/localizacion/${escape(search)}`).then(res => {
-      //         res.json().then(json => (vm.citys = json.items));
-      //         loading(false);
-      //     });
-      // }, 350),
-      // onSearchCityC(search, loading) {
-      //     loading(true);
-      //     this.searchCityC(loading, search, this);
-      // },
-      // searchCityC: _.debounce((loading, search, vm) => {
-      //     fetch(`../vueSelectGeneral/localizacion/${escape(search)}`).then(res => {
-      //         res.json().then(json => (vm.citys_c = json.items));
-      //         loading(false);
-      //     });
-      // }, 350),
     }
 });
