@@ -72,7 +72,6 @@ var objVue = new Vue({
       //
     },
     data: {
-      showComp: false,
       id_status: null,
       tableDelete: null,
       params: {},
@@ -83,74 +82,20 @@ var objVue = new Vue({
       status: [],
       id_consolidado_selected: null,
       dialogVisible: false,
-      uploadFileStatus: false,
-      // filter
-      warehouse: null,
-      options: [],
-      list: [],
-      loading: false,
-      states: ["Alabama", "Alaska", "Arizona",
-      "Arkansas", "California", "Colorado",
-      "Connecticut", "Delaware", "Florida",
-      "Georgia", "Hawaii", "Idaho", "Illinois",
-      "Indiana", "Iowa", "Kansas", "Kentucky",
-      "Louisiana", "Maine", "Maryland",
-      "Massachusetts", "Michigan", "Minnesota",
-      "Mississippi", "Missouri", "Montana",
-      "Nebraska", "Nevada", "New Hampshire",
-      "New Jersey", "New Mexico", "New York",
-      "North Carolina", "North Dakota", "Ohio",
-      "Oklahoma", "Oregon", "Pennsylvania",
-      "Rhode Island", "South Carolina",
-      "South Dakota", "Tennessee", "Texas",
-      "Utah", "Vermont", "Virginia",
-      "Washington", "West Virginia", "Wisconsin",
-      "Wyoming"],
-      client_id: [],
-      pickerOptions: {
-        shortcuts: [{
-          text: '-Ult. semana',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-            picker.$emit('pick', [start, end]);
-          }
-        }, {
-          text: '-Ult mes',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-            picker.$emit('pick', [start, end]);
-          }
-        }, {
-          text: '-Ult. 3 meses',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-            picker.$emit('pick', [start, end]);
-          }
-        }]
-      },
-      date_range: '',
-
-      fileList:[],
-      headerFile:{
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      errorUpload:[],
-      upload_s: false,
-      uploadSuccess: false,
-      textSuccess: 'Archivo listo para ser cargado',
-      title_msn: '',
-      type_msn: 'info',
+      dialogVisibleUpload: false,
       // variable para saber que pestaña mostrar de la grilla principal de documentos si courier (true) o carga (false)
       courier_carga:2,
       showFilter: true,
     },
     methods: {
+      closeModal(){
+        this.dialogVisible = false;
+        this.dialogVisibleUpload = false;
+      },
+      filter(data){
+        listDocument(1, null, null, null, true, data.filter, data.courier_carga);
+        this.dialogVisible = false;
+      },
       closeDocument: function(id) {
         let me = this;
         swal({
@@ -169,92 +114,6 @@ var objVue = new Vue({
                   toastr.success("Documento cerrado exitosamente.");
                 });
             }
-        });
-      },
-      insertStatusUploadDocument(){
-        let me = this;
-        me.upload_s = true
-        axios.get('documento/insertStatusUploadDocument').then(function (response) {
-          console.log(response.data);
-          if (response.data.code == 200) {
-            me.uploadSuccess = false
-            me.upload_s = false;
-            me.uploadSuccess = true
-            me.title_msn = 'Proceso finalizado!',
-            me.type_msn = 'success',
-            me.textSuccess = 'Los status han sido agregados correctamente'
-          }else{
-            console.log(response.data);
-            if(response.data.error.errorInfo[2]){
-              toastr.warning('Error.', response.data.error.errorInfo[2]);
-            }else{
-              toastr.warning('Error.', response.data.error);
-            }
-            toastr.options.closeButton = true;
-            me.upload_s = false;
-          };
-        }).catch(function (error) {
-            console.log(error);
-            toastr.warning('Error.', error.message);
-            toastr.options.closeButton = true;
-        });
-      },
-      handleSuccess(response, file, fileList) {
-        $('.el-upload').toggle("slow");
-        let me = this;
-        axios.get('documento/validateUploadDocs').then(function (response) {
-          me.errorUpload = response.data;
-          if(response.data.length === 0){
-            me.uploadSuccess = true
-          }
-        }).catch(function (error) {
-            console.log(error);
-            toastr.warning('Error.');
-            toastr.options.closeButton = true;
-        });
-      },
-      handleRemove(file, fileList){
-        $('.el-upload').toggle("slow");
-        this.errorUpload = []
-        this.uploadSuccess = false
-        this.title_msn = '',
-        this.type_msn = 'info',
-        this.textSuccess = 'Archivo listo para ser cargado'
-      },
-      handleExceed(files, fileList) {
-        this.$message.warning(`El límite es 1, haz seleccionado ${files.length} archivos esta vez, añade hasta ${files.length + fileList.length}`);
-      },
-      filterDocument(){
-        var filter = {
-          'warehouse' : this.warehouse,
-          'consignee_id' : this.client_id,
-          'dates' : this.date_range
-        }
-        var courier_carga = this.courier_carga;
-        listDocument(1, null, null, null, true, filter, courier_carga);
-        this.dialogVisible = false;
-      },
-      remoteMethod(query) {
-        if (query !== '') {
-          this.loading = true;
-          setTimeout(() => {
-            this.loading = false;
-            this.options = this.list.filter(item => {
-              return item.nombre_full.toLowerCase()
-                .indexOf(query.toLowerCase()) > -1;
-            });
-          }, 200);
-        } else {
-          this.options = [];
-        }
-      },
-      openFilter(){
-        var me = this;
-        axios.get('/consignee/getSelect').then(function(response) {
-            me.list = response.data.data;
-        }).catch(function(error) {
-            console.log(error);
-            toastr.warning('Error: -' + error);
         });
       },
       addStatusConsolidado: function(){

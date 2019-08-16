@@ -12,9 +12,7 @@ import Element from 'element-ui'
 import locale from 'element-ui/lib/locale/lang/en'
 import Spinner from 'vue-spinkit'
 import 'element-ui/lib/theme-chalk/index.css';
-// import VueSkeletonLoading from 'vue-skeleton-loading';
 
-// Vue.use(VueSkeletonLoading);
 // Localize takes the locale object as the second argument (optional) and merges it.
 Validator.localize('es', es);
 // Install the Plugin.
@@ -55,4 +53,5 @@ Vue.component('modal-cambiar-status-consolidado', require('./components/ModalCam
 Vue.component('status-component', require('./components/Status.vue'));
 Vue.component('search', require('./components/Search.vue'));
 Vue.component('shipper-consignee-select', require('./components/ShipperConsigneeSelect.vue'));
-Vue.component('filter-upload', require('./components/FilterUpload.vue'));
+Vue.component('document-filter', require('./components/DocumentFilter.vue'));
+Vue.component('document-upload', require('./components/DocumentUpload.vue'));

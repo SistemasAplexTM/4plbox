@@ -143,7 +143,7 @@
                                       <a class="btn btn-success btn-outline tags_document" data-toggle="modal" data-target="#modalTagDocument" style="display:none;"><i class="fal fa-arrow-square-right fa-lg" data-toggle="tooltip" title="" data-original-title="Tareas"></i></a>
                                       <a class="btn btn-danger btn-outline delete_document" title="Eliminar" data-toggle="tooltip" style="display:none;"><i class="fal fa-trash-alt fa-lg"></i></a>
                                       <a class="btn btn-info filter_document" title="Filtrar" data-toggle="tooltip" @click="dialogVisible = true;" v-if="showFilter"><i class="fal fa-filter fa-lg"></i></a>
-                                      <a class="btn btn-success upload_document" title="Subir archivo de status" data-toggle="tooltip" @click="uploadFileStatus = true" v-if="showFilter"><i class="fal fa-upload fa-lg"></i></a>
+                                      <a class="btn btn-success upload_document" title="Subir archivo de status" data-toggle="tooltip" @click="dialogVisibleUpload = true" v-if="showFilter"><i class="fal fa-upload fa-lg"></i></a>
                                     </div>
 
                                 </div>
@@ -320,114 +320,11 @@
         </div>
 
         {{-- MODAL FILTRAR DOCUMENTO --}}
-        <el-dialog
-          :visible.sync="dialogVisible"
-          width="25%" :append-to-body="true" @open="openFilter">
-          <span slot="title"><i class="fal fa-filter"></i> Buscar Documento</span>
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="form-group">
-                <el-input size="medium" clearable placeholder="# Warehouse" v-model="warehouse"></el-input>
-              </div>
-            </div>
-            <div class="col-lg-12">
-              <div class="form-group">
-                <el-select
-                  size="medium" clearable
-                  v-model="client_id"
-                  filterable
-                  remote
-                  reserve-keyword
-                  placeholder="Buscar destinatario"
-                  :remote-method="remoteMethod"
-                  :loading="loading"
-                  loading-text="Cargando..."
-                  no-data-text="No hay datos">
-                  <el-option
-                    v-for="item in options"
-                    :key="item.id"
-                    :label="item.nombre_full"
-                    :value="item.id">
-                  </el-option>
-                </el-select>
-              </div>
-            </div>
-            <div class="col-lg-12">
-              <div class="form-group">
-                <el-date-picker
-                  size="medium"
-                  v-model="date_range"
-                  type="daterange"
-                  align="right"
-                  unlink-panels
-                  range-separator="-"
-                  start-placeholder="Fecha de inicio"
-                  end-placeholder="Fecha de fin"
-                  :picker-options="pickerOptions"
-                  format="yyyy/MM/dd"
-                  value-format="yyyy-MM-dd">
-                </el-date-picker>
-              </div>
-            </div>
-          </div>
-          <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible = false">Cancelar</el-button>
-            <el-button type="primary" @click="filterDocument" icon="el-icon-search">Filtrar</el-button>
-          </span>
-        </el-dialog>
+        <document-filter :dialogvisible="dialogVisible" :courier_carga="courier_carga" @get="filter($event)" @close="closeModal()"></document-filter>
 
         {{-- MODAL SUBIR ESTATUS DOCUMENTO --}}
-        <el-dialog
-          :visible.sync="uploadFileStatus"
-          width="40%" :append-to-body="true">
-          <span slot="title"><i class="fal fa-upload"></i> Cargar archivo</span>
-          <div class="row">
-            <div class="col-lg-12" style="text-align: center;">
-              <el-upload
-                class="upload-demo"
-                drag
-                action="/documento/uploadFileStatus"
-                :headers="headerFile"
-                :on-success="handleSuccess"
-                :on-remove="handleRemove"
-                :file-list="fileList" :limit="1">
-                <i class="el-icon-upload"></i>
-                <div class="el-upload__text">Suelta tu archivo aquí o <em>haz clic para cargar</em></div>
-                <div slot="tip" class="el-upload__tip">Solo archivos xlsx con un tamaño menor de 2MB. <a href="{{ asset('/download/Status.xlsx') }}" target="_blank" class="downloadLink">Descargar archivo demo aqui <i class="fal fa-download"></i></a></div>
-              </el-upload>
-            </div>
-          </div>
-          <div class="row" style="margin-top: 30px;">
-            <div class="col-lg-12">
-              <el-alert
-                :closable="false"
-                title="Atención! Por favor verifique la información del archivo"
-                type="warning"
-                show-icon
-                v-if="errorUpload.length > 0">
-                <div style="margin-top: 13px;">
-                    <p v-for="error in errorUpload">
-                      - @{{ error.wh }}
-                      <el-tag type="info" size="mini" style="float: right;" v-if="error.documento_detalle_id === null">Warehouse <i class="fal fa-times"></i></el-tag>
-                      <el-tag type="danger" size="mini" style="float: right;" v-if="error.status_id === null">Status <i class="fal fa-times"></i></el-tag>
-                    </p>
-                </div>
-              </el-alert>
-              <el-alert
-                v-if="uploadSuccess"
-                :title="title_msn"
-                :type="type_msn"
-                show-icon
-                :closable="false">
-                <div>@{{ textSuccess }}</div>
-              </el-alert>
-            </div>
-          </div>
-          <span slot="footer" class="dialog-footer">
-            <el-button type="primary" :loading="upload_s" :disabled="errorUpload.length !== 0" @click="insertStatusUploadDocument"><i class="fal fa-upload"></i> Cargar Status</el-button>
-            <el-button @click="uploadFileStatus = false"><i class="fal fa-times"></i> Cerrar</el-button>
-          </span>
-        </el-dialog>
+        <document-upload :dialogvisibleupload="dialogVisibleUpload" @close="closeModal()"></document-upload>
+    
     </div>
 
 @endsection
