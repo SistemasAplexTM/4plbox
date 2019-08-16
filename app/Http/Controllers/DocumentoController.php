@@ -1975,17 +1975,16 @@ class DocumentoController extends Controller
         }
     }
 
-    public function buscarGuias($id, $num_guia, $num_bolsa, $pais_id)
+    public function buscarGuias($id, $num_guia, $num_bolsa, $pais_id, $range_value = false)
     {
 
         $detalle = DocumentoDetalle::join('documento as b', 'documento_detalle.documento_id', 'b.id')
-            ->select('documento_detalle.id', 'documento_detalle.agrupado', 'documento_detalle.flag', 'b.consignee_id')
+            ->select('documento_detalle.id', 'documento_detalle.agrupado', 'documento_detalle.flag', 'documento_detalle.declarado2', 'b.consignee_id')
             ->where([
                 ['documento_detalle.deleted_at', null],
             ])
             ->whereRaw('(documento_detalle.num_warehouse = "' . $num_guia . '" or documento_detalle.num_guia = "' . $num_guia . '")')
             ->first();
-
         if ($detalle) {
           // VERIFICAR SI EL NUMERO INGRESADO NO ESTE DENTRO DE UNA MINTIC
           if($detalle->id == $detalle->agrupado and $detalle->flag == 0){
@@ -2009,14 +2008,23 @@ class DocumentoController extends Controller
                     ])
                     ->first();
                 if ($cons->pais_id == $pais_id) {
+                    /* VALIDAR QUE EL DECLARADO NO ESTE EN CERO */
+                    if($detalle->declarado2 == 0 ){
+                      /* SI ESTA EN CERO SE ASIGNA UN VALOR ALEATORIO DEACUERDO AL RANGO DADO */
+                      $range = explode(',', $range_value);
+                      $r1=rand($range[0],$range[1]).'.'.rand($range[0],$range[1]);
+                      $detalle->declarado2 = $r1;
+                      $detalle->save();
+                    }
+
                     /* INSERTAR EN TABLA CONSOLIDADO DETALLE */
                     $id_detail = DB::table('consolidado_detalle')->insertGetId(
                         [
-                            'consolidado_id'       => $id,
-                            'documento_detalle_id' => $detalle->id,
-                            'agrupado'             => $detalle->id,
-                            'num_bolsa'            => $num_bolsa,
-                            'created_at'           => date('Y-m-d H:i:s'),
+                          'consolidado_id'       => $id,
+                          'documento_detalle_id' => $detalle->id,
+                          'agrupado'             => $detalle->id,
+                          'num_bolsa'            => $num_bolsa,
+                          'created_at'           => date('Y-m-d H:i:s'),
                         ]
                     );
                     /* ACTUALIZAR CAMPO consolidado EN DETALLE DOCUMENTO */

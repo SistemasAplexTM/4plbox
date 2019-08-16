@@ -305,7 +305,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('documento/restaurar/{id}/{table?}', 'DocumentoController@restaurar');
     Route::get('documento/selectInput/{tableName}', 'DocumentoController@selectInput');
     Route::get('documento/create/{document}', 'DocumentoController@create')->name('documento.create');
-    Route::get('documento/{id}/buscarGuias/{num_guia}/{num_bolsa}/{pais_id}', 'DocumentoController@buscarGuias');
+    Route::get('documento/{id}/buscarGuias/{num_guia}/{num_bolsa}/{pais_id}/{range_value?}', 'DocumentoController@buscarGuias');
     Route::get('documento/{id}/getAllGuiasDisponibles/{pais_id?}/{transporte_id?}', 'DocumentoController@getAllGuiasDisponibles');
     Route::get('documento/{id}/getAllConsolidadoDetalle/{num_bolsa?}', 'DocumentoController@getAllConsolidadoDetalle');
     Route::get('documento/{id}/restoreShipperConsignee/{id_detalle}/{table}', 'DocumentoController@restoreShipperConsignee');

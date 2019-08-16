@@ -192,8 +192,18 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="col-sm-12">
-                                          <div class="form-group" style="padding-top: 15px;margin-bottom: -15px;" v-if="msn !== ''">
-		                                        <div class="alert alert-warning alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button> <strong>Atención!</strong> {{ msn }} </div>
+                                          <div class="form-group" style="padding-top: 15px;margin-bottom: -15px;">
+																						<label class="control-label col-lg-12">Rango Declarado</label>
+																						<div class="col-lg-12">
+																					    <el-slider
+																					      v-model="range_value"
+																					      range
+																					      show-stops
+																								:step="10"
+																								:min="10"
+																					      :max="200">
+																					    </el-slider>
+																					  </div>
                                           </div>
                                         </div>
                                     </div>
@@ -616,7 +626,6 @@
 		        	disabled_transporte: false,
 		        	disabled_agencia: false,
 		        	disabled_city: false,
-		        	msn:'',
 		        	tituloModal:'',
 							show_buttons: false,
 							show_msn: false,
@@ -627,7 +636,8 @@
 							tipo_consolidado: 'COURIER',
 							num_bolsa_selected: 0,
 							bags: [],
-							cant_bags: 0
+							cant_bags: 0,
+							range_value: [30, 90]
 		        }
 		    },
 			methods: {
@@ -799,16 +809,15 @@
 		      validateForm: function() {
 		      	let me = this;
 		          if(me.central_destino_id == null){
-								this.$message('This is a message.');
-		          	me.msn = 'Es necesario seleccionar una central destino para continuarrrrrr.';
+								me.showAlert('warning', 'Es necesario seleccionar una central destino para continuar.')
 		          	return false;
 		          }
 		          if(me.localizacion_id == null){
-		          	me.msn = 'Es necesario seleccionar una ciudad para continuar.';
+								me.showAlert('warning', 'Es necesario seleccionar una ciudad para continuar.')
 		          	return false;
 		          }
 		          if(me.transporte_id == null){
-		          	me.msn = 'Es necesario seleccionar un transporte para continuar.';
+								me.showAlert('warning', 'Es necesario seleccionar un transporte para continuar.')
 		          	return false;
 		          }
 		          return true;
@@ -832,39 +841,38 @@
 							this.num_guia = num_guia;
 						}
 						let me = this;
-		                me.msn = '';
-		                if(this.num_guia == ''){
+		        if(this.num_guia == ''){
 							toastr.warning('Debe ingresar un numero de guia o warehouse para continuar.');
-		                    toastr.options.closeButton = true;
-		                }else{
-		                	if(this.validateForm()){
-								axios.get('buscarGuias/' + this.num_guia + '/'+ this.num_bolsa + '/'+ this.pais_id).then(response => {
-					                if(response.data.code === 200){
-					                	var table = $('#tbl-consolidado').DataTable();
+		          toastr.options.closeButton = true;
+		        }else{
+		          if(this.validateForm()){
+								axios.get('buscarGuias/' + this.num_guia + '/'+ this.num_bolsa + '/'+ this.pais_id+'/'+this.range_value).then(response => {
+	                if(response.data.code === 200){
+	                	var table = $('#tbl-consolidado').DataTable();
 										if (!table.data().count()) {
 											this.saveConsolidado();
 											this.disabled_city = true;
 											this.disabled_agencia = true;
 											this.disabled_transporte = true;
 										}
-					                	me.updateTableDetail();
-					                	toastr.success('Registro agregado correctamente.');
-				                    	toastr.options.closeButton = true;
-				                    	this.num_guia = '';
-					                }else{
-					                	if(response.data.code === 600){
-					                		me.msn = response.data.data;
-					                		this.num_guia = '';
-					                	}
-					                }
-					            }).catch(function(error) {
-					                console.log(error);
-					                toastr.error("Error.", {
-					                    timeOut: 50000
-					                });
-					            });
-					        }
-				        }
+	                	me.updateTableDetail();
+	                	toastr.success('Registro agregado correctamente.');
+                    	toastr.options.closeButton = true;
+                    	this.num_guia = '';
+	                }else{
+	                	if(response.data.code === 600){
+											me.showAlert('warning', response.data.data)
+	                		this.num_guia = '';
+	                	}
+	                }
+		            }).catch(function(error) {
+		                console.log(error);
+		                toastr.error("Error.", {
+		                    timeOut: 50000
+		                });
+		            });
+			        }
+		        }
 					},
 					updateTableDetail(){
 						var table = $('#tbl-consolidado').DataTable();
@@ -1202,6 +1210,13 @@
 						        }
 						    });
 						},
-				}
+					showAlert(type, message){
+						this.$message({
+							message: message,
+							type: type,
+							offset: 70,
+						});
+					}
+				},
     }
 </script>

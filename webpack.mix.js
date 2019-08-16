@@ -30,30 +30,30 @@ let mix = require('laravel-mix');
  //   	'resources/assets/js/plugins/bootstrapTagsInput/bootstrap-tagsinput.js'
  //   	], 'public/js/plantilla.js');
 
-   // mix.styles([
-   //  	/*-- Estilos de la plantilla --*/
-   //   	'resources/assets/css/bootstrap.min.css',
-   //   	'resources/assets/css/plugins/toastr/toastr.min.css',
-   //   	'resources/assets/css/animate.css',
-   //   	'resources/assets/css/style.css',
-   //   	// 'resources/assets/css/font-awesome/css/font-awesome.css',
-   //   	'resources/assets/css/plugins/dataTables/datatables.min.css',
-   //   	'resources/assets/css/plugins/iCheck/custom.css',
-   //   	'resources/assets/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css',
-   //   	'resources/assets/css/plugins/jasny/jasny-bootstrap.min.css',
-   //   	'resources/assets/css/plugins/ladda/ladda-themeless.min.css',
-   //   	'resources/assets/css/plugins/chosen/chosen.css',
-   //   	'resources/assets/css/plugins/datapicker/datepicker3.css',
-   //   	'resources/assets/css/plugins/daterangepicker/daterangepicker-bs3.css',
-   //   	'resources/assets/css/plugins/bootstrapToogle/bootstrap-toggle.min.css',
-   //  // 	// 'resources/assets/css/plugins/switchery/switchery.css',------------------------ delete
-   //   	'resources/assets/css/plugins/select2/select2.min.css',
-   //  // 	// 'resources/assets/css/plugins/dropzone/dropzone.css',------------------------ delete
-   //  // 	// 'resources/assets/css/hoverEfects/css/hover.css',------------------------ delete
-   //   	'resources/assets/css/plugins/summernote/summernote-bs3.css',
-   //   	'resources/assets/css/plugins/summernote/summernote.css',
-   //   	'resources/assets/css/plugins/bootstrapTagsInput/bootstrap-tagsinput.css',
-   //   	], 'public/css/plantilla.css');
+   mix.styles([
+    	/*-- Estilos de la plantilla --*/
+     	'resources/assets/css/bootstrap.min.css',
+     	'resources/assets/css/plugins/toastr/toastr.min.css',
+     	'resources/assets/css/animate.css',
+     	'resources/assets/css/style.css',
+     	// 'resources/assets/css/font-awesome/css/font-awesome.css',
+     	'resources/assets/css/plugins/dataTables/datatables.min.css',
+     	'resources/assets/css/plugins/iCheck/custom.css',
+     	'resources/assets/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css',
+     	'resources/assets/css/plugins/jasny/jasny-bootstrap.min.css',
+     	'resources/assets/css/plugins/ladda/ladda-themeless.min.css',
+     	'resources/assets/css/plugins/chosen/chosen.css',
+     	'resources/assets/css/plugins/datapicker/datepicker3.css',
+     	'resources/assets/css/plugins/daterangepicker/daterangepicker-bs3.css',
+     	'resources/assets/css/plugins/bootstrapToogle/bootstrap-toggle.min.css',
+    // 	// 'resources/assets/css/plugins/switchery/switchery.css',------------------------ delete
+     	'resources/assets/css/plugins/select2/select2.min.css',
+    // 	// 'resources/assets/css/plugins/dropzone/dropzone.css',------------------------ delete
+    // 	// 'resources/assets/css/hoverEfects/css/hover.css',------------------------ delete
+     	'resources/assets/css/plugins/summernote/summernote-bs3.css',
+     	'resources/assets/css/plugins/summernote/summernote.css',
+     	'resources/assets/css/plugins/bootstrapTagsInput/bootstrap-tagsinput.css',
+     	], 'public/css/plantilla.css');
 
 
 

@@ -59,6 +59,10 @@
 -. mostrar todos los recibos al buscar guias en el consolidado.==================================================================
 -. modal subir archivo de estatus y filtrar documento, mejorados=================================================================
 
+-. agregar cargos adicionales por defecto en la configuración (descripcion, valor);
+-. Agregar boton en la forma de pago que diga '+ Cargos' y al lado texto 'Desea agregar cargos a esta factura?'
+   La palabra cargos que este subrayada y que al pasar el mouse por encima, muestre los cargos que vienen de la config
+
 
 -. crear boton de guardar en shipper y consignee dentro del documento para asegurar los datos registrados.
 -. en la ayuda del logo de la agencia que diga 170px por 60px y a si debe registrar el logo.
