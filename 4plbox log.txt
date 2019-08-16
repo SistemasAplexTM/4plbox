@@ -52,10 +52,13 @@
 -. cambiar la forma de pago del documento en un componente modal, que elija el tipo de pago y si es COD guardar==================
     y si es PP mostrar forma de pago y luego si guardar.=========================================================================
 
--. cerrar consolidado desde grilla.
--. mostrar todos los recibos al buscar guias en el consolidado.
+2019-08-16
+-. cerrar consolidado desde grilla.==============================================================================================
+-. comente la linea 169 de agregar un id de estatus en la tabla pivot_wrh_guia ya que creo que no se necesita ese campo==========
+-. coloque la forma de pago null en la tabla pivot_wrh_guia======================================================================
+-. mostrar todos los recibos al buscar guias en el consolidado.==================================================================
 -. crear boton de guardar en shipper y consignee dentro del documento para asegurar los datos registrados.
-   -. en la ayuda del logo de la agencia que diga 170px por 60px y a si debe registrar el logo.
+-. en la ayuda del logo de la agencia que diga 170px por 60px y a si debe registrar el logo.
 
 -. ***el tab recibido de cambiar status en el consolidado pasar a una vista sola, Logistica en Destino.
    (despachar transportadora, despachar en los camiones, agregar status a las cajas etc).

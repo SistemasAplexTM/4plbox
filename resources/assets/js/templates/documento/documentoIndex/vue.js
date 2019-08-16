@@ -72,6 +72,7 @@ var objVue = new Vue({
       //
     },
     data: {
+      showComp: false,
       id_status: null,
       tableDelete: null,
       params: {},
@@ -150,6 +151,26 @@ var objVue = new Vue({
       showFilter: true,
     },
     methods: {
+      closeDocument: function(id) {
+        let me = this;
+        swal({
+            title: 'Seguro que desea CERRAR este documento?',
+            text: "No lo podras abrir nuevamente!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No, cancelar!'
+        }).then((result) => {
+            if (result.value) {
+                axios.get('documento/'+id+'/closeDocument').then(response => {
+                  me.close = true;
+                  toastr.success("Documento cerrado exitosamente.");
+                });
+            }
+        });
+      },
       insertStatusUploadDocument(){
         let me = this;
         me.upload_s = true

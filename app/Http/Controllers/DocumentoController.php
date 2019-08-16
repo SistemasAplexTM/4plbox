@@ -162,11 +162,11 @@ class DocumentoController extends Controller
                                     /* VALORES POR DEFECTO AL CREAR EL DOCUMENTO INICIAL */
                                     'documento_id'     => $id_documento,
                                     'servicios_id'     => 1,
-                                    'forma_pago_id'    => 1,
-                                    'tipo_pago_id'     => 4,//prepaid
+                                    'forma_pago_id'    => null,
+                                    'tipo_pago_id'     => 5,//prepaid
                                     'tipo_embarque_id' => (isset($request->tipo_embarque_id)) ? $request->tipo_embarque_id : 1,//aereo
-                                    'grupo_id'         => 3,//general
-                                    'estado_id'        => ($request->tipo_documento_id == 2) ? 27 : 28, //maestra multiple
+                                    'grupo_id'         => 9,//general
+                                    // 'estado_id'        => ($request->tipo_documento_id == 2) ? 15 : 16, //maestra multiple
                                     'created_at'       => $request->created_at,
                                 ],
                             ]);

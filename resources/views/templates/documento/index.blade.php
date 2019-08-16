@@ -88,6 +88,7 @@
 @endsection
 
 @section('content')
+
     <div class="row" id="documentoIndex" data-id_print="{{Session('print_document')['id']}}" data-doc_print="{{Session('print_document')['document']}}">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
@@ -427,10 +428,8 @@
             <el-button @click="uploadFileStatus = false"><i class="fal fa-times"></i> Cerrar</el-button>
           </span>
         </el-dialog>
-
-      </div>
-
     </div>
+
 @endsection
 
 @section('scripts')

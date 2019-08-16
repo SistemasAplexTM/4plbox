@@ -128,7 +128,6 @@ function datatableDocument(t, tipo_doc_id, filtro){
           searchable: false,
           sortable: false,
           visible: (app_client == 'jyg') ? false : true
-          // visible: (show_agency != null && show_agency != 0) ? false : true
       }, {
           sortable: false,
           className: '',
@@ -183,8 +182,10 @@ function actionsButtons(data, type, full, meta) {
     if (full.tipo_documento_id == 3) { //consolidado = 3
         btn_delete = '';
         if (permission_delete && (parseInt(full.cantidad) === 0)) {
-            btn_delete = '<a onclick=\"modalEliminar(' + full.id + ')\" class="delete_btn" title="Eliminar" data-toggle="tooltip"><i class="fal fa-trash-alt fa-lg"></i></a>';
+            var btn_delete = '<li role="separator" class="divider"></li><li style="color:#E34724;"><a onclick=\"modalEliminar(' + full.id + ')\"><i class="fal fa-trash-alt fa-lg"></i> Eliminar</a></li>';
         }
+
+        var btn_close = '<li><a onclick="closeDocument(' + full.id + ')"><i class="fal fa-lock"></i> Cerrar consolidado</a></li>';
 
         var btns = "<div class='btn-group'>"
         + "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"
@@ -196,7 +197,16 @@ function actionsButtons(data, type, full, meta) {
         + "<li><a href='impresion-documento/pdfContrato' target='_blank'> <spam class='fa fa-print'></spam> Imprimir contrato</a></li>"
         + "<li><a href='impresion-documento/pdfTsa' target='_blank'> <spam class='fa fa-print'></spam> Imprimir TSA</a></li>"
         + "</ul></div>";
-        return btn_edit + ' ' + btns + ' ' + btn_status + ' ' +  btn_delete;
+
+        var btn_actions = "<div class='btn-group'>" +
+         "<button type='button' class='btn btn-success dropdown-toggle btn-xs btn-circle-sm' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" +
+          "<i class='fal fa-ellipsis-v'></i>" +
+           "</button>" +
+           "<ul class='dropdown-menu dropdown-menu-right pull-right'>" +
+            btn_close +
+            btn_delete +
+            "</ul></div>";
+        return btn_edit + ' ' + btns + ' ' + btn_status + ' ' +  btn_actions;
     } else {
         var codigo = full.num_warehouse;
         var href_print_guia = '';
@@ -324,4 +334,8 @@ function modalChangeStatus(id) {
   objVue.id_consolidado_selected = id;
   objVue.getStatusDocument();
   $('#modalChangeStatus').modal('show');
+}
+
+function closeDocument(id) {
+  objVue.closeDocument(id);
 }

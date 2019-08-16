@@ -12,7 +12,9 @@ import Element from 'element-ui'
 import locale from 'element-ui/lib/locale/lang/en'
 import Spinner from 'vue-spinkit'
 import 'element-ui/lib/theme-chalk/index.css';
+// import VueSkeletonLoading from 'vue-skeleton-loading';
 
+// Vue.use(VueSkeletonLoading);
 // Localize takes the locale object as the second argument (optional) and merges it.
 Validator.localize('es', es);
 // Install the Plugin.

@@ -1011,7 +1011,7 @@
 																		+'&document='+ document_print + '&id_detail='+ full.documento_detalle_id + '&id_detail_consol='+ full.id +'&consolidado='+ true +'&document=guia&label=true\')"';
 			                          }
 			                          if (me.permissions.deleteDetailConsolidado && !me.close) {
-			                              var btn_delete = " <a onclick=\"eliminarConsolidado(" + full.id + ","+false+")\" class='' style='color:#E34724;'><i class='fal fa-trash'></i> Eliminar</a> ";
+			                              var btn_delete = " <a onclick=\"eliminarConsolidado(" + full.id + ","+false+")\" class='delete_btn' style='color:#E34724;'><i class='fal fa-trash-alt'></i> Eliminar</a> ";
 			                          }
 			                          var btn_group = '<div class="btn-group" data-toggle="tooltip" title="Acciones">'+
 			                                  '<button type="button" class="btn btn-success dropdown-toggle btn-circle-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
