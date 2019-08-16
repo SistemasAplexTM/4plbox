@@ -40,9 +40,6 @@ label{
   margin-top: 20px;
 }
 
-.el-message{
-  /* z-index: 9999!important; */
-}
 .el-select-dropdown, .el-picker-panel{
   z-index: 9999!important;
 }
