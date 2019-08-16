@@ -45,7 +45,7 @@
 -. se corrigio la modal de registrar shipper y consignee del BL ya que la grilla de registros no cargaba debido a las rutas.=====
 -. se acomodaron los iconos y botones en la grilla del BL y el formulario.=======================================================
 -. se acomodo la impresion del BL porque salian dos paginas.=====================================================================
--. se coriigio vista de la modal de agregar costos de la master. ================================================================
+-. se corrigio vista de la modal de agregar costos de la master. ================================================================
 -. agregar en la impresion de la guia (invoice) la columna en el detalle de la pieza que corresponde ej: P1, P2 =================
 -. despues de consolidado el documento, que no deje editar. =====================================================================
 -. cambiar los iconos por los pro. (consolidado) ================================================================================
@@ -57,6 +57,9 @@
 -. comente la linea 169 de agregar un id de estatus en la tabla pivot_wrh_guia ya que creo que no se necesita ese campo==========
 -. coloque la forma de pago null en la tabla pivot_wrh_guia======================================================================
 -. mostrar todos los recibos al buscar guias en el consolidado.==================================================================
+-. modal subir archivo de estatus y filtrar documento, mejorados=================================================================
+
+
 -. crear boton de guardar en shipper y consignee dentro del documento para asegurar los datos registrados.
 -. en la ayuda del logo de la agencia que diga 170px por 60px y a si debe registrar el logo.
 

@@ -192,9 +192,9 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="col-sm-12">
-                                            <div class="form-group" style="padding-top: 15px;margin-bottom: -15px;" v-if="msn !== ''">
+                                          <div class="form-group" style="padding-top: 15px;margin-bottom: -15px;" v-if="msn !== ''">
 		                                        <div class="alert alert-warning alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button> <strong>Atención!</strong> {{ msn }} </div>
-                                            </div>
+                                          </div>
                                         </div>
                                     </div>
 																</div>
@@ -799,7 +799,8 @@
 		      validateForm: function() {
 		      	let me = this;
 		          if(me.central_destino_id == null){
-		          	me.msn = 'Es necesario seleccionar una central destino para continuar.';
+								this.$message('This is a message.');
+		          	me.msn = 'Es necesario seleccionar una central destino para continuarrrrrr.';
 		          	return false;
 		          }
 		          if(me.localizacion_id == null){
