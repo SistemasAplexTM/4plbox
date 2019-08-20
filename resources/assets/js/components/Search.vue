@@ -1,41 +1,31 @@
 <template lang="html">
   <div class="">
-    <el-select
-        v-model="value9"
-        clearable
-        filterable
-        remote
-        reserve-keyword
-        placeholder="Tracking, Warehouse"
-        size="small"
-        :remote-method="remoteMethod"
-        :loading="loading"
-        value-key="id"
-        @focus="loadData">
-      <el-option
-        v-for="item in options4"
-        :key="item.id"
-        :label="item.name"
-        :value="item">
+    <el-autocomplete
+      class="inline-input"
+      v-model="datos.name"
+      :fetch-suggestions="querySearch"
+      :trigger-on-focus="false"
+      placeholder="Tracking, Warehouse"
+      @select="handleSelect"
+      size="small"
+    >
+      <template slot-scope="{ item }">
         <div class="content-select">
-          <span style="">
+          <div style="">
             <i class="fa fa-user icon"></i> {{ item.consignee }}
-          </span>
-          <br>
-          <span style="color: #8492a6;">
+          </div>
+          <div style="color: #8492a6;">
             <i class="fa fa-box-open icon"></i> {{ item.name }} &nbsp;&nbsp;
             <i class="fa fa-balance-scale icon"></i> {{ item.peso }} Lb &nbsp;&nbsp;
             ${{ item.peso }}
-          </span>
-          <br>
-          <span style="color: #8492a6; font-size: 13px">
-            <i class="fa fa-truck icon"></i> {{ item.tracking }}
-            <br>
-            <i class="fa fa-comment-edit icon"></i> {{ item.contenido }}
-          </span>
+          </div>
+          <div style="color: #8492a6; font-size: 13px">
+            <div><i class="fa fa-truck icon"></i> {{ item.tracking }}</div>
+            <div><i class="fa fa-comment-edit icon"></i> {{ item.contenido }}</div>
+          </div>
         </div>
-      </el-option>
-    </el-select>
+  		</template>
+    </el-autocomplete>
   </div>
 </template>
 
@@ -43,58 +33,44 @@
 export default {
   data() {
       return {
-        options4: [],
-        value9: [],
+        datos: {},
         list: [],
         loading: false,
+        options: [],
       }
     },
     mounted() {
-      // this.getData();
+      //
     },
     methods: {
-      loadData(){
-        this.getData();
-      },
-      getData(){
+      querySearch(queryString, cb) {
         var me = this;
-        axios.get('/documento/getDataSearchDocument/' + false).then(function(response) {
-            me.list = response.data.data;
+        axios.get('/documento/getDataSearchDocument/'+queryString).then(function(response) {
+            me.options = response.data.data;
+            cb(me.options);
         }).catch(function(error) {
             console.log(error);
             toastr.warning('Error: -' + error);
         });
       },
-      remoteMethod(query) {
-        if (query !== '') {
-          this.loading = true;
-          setTimeout(() => {
-            this.loading = false;
-            this.options4 = this.list.filter(item => {
-              if(item.name.toLowerCase().indexOf(query.toLowerCase()) > -1){
-                return item.name.toLowerCase().indexOf(query.toLowerCase()) > -1;
-              }else{
-                if(item.tracking !== null){
-                  return item.tracking.toLowerCase().indexOf(query.toLowerCase()) > -1;
-                }else{
-                  if(item.consignee !== null){
-                    return item.consignee.toLowerCase().indexOf(query.toLowerCase()) > -1;
-                  }
-                }
-              }
-            });
-          }, 200);
-        } else {
-          this.options4 = [];
-        }
+      handleSelect(item) {
+        // this.datos = item;
+        // this.$emit('get', item);
       }
     }
 }
 </script>
 
-<style lang="css" scoped>
-  .el-select-dropdown__item{
-    height: 70px;
+<style lang="css">
+  .content-select{
+    padding-top: 10px;
+  }
+  .el-autocomplete, .inline-input{
+    width: 100%
+  }
+  .el-autocomplete-suggestion, .el-popper{
+    width: max-content!important;
+    z-index: 9999!important;
   }
   .icon{
     font-size: 11px;
@@ -103,4 +79,7 @@ export default {
     padding-top: 7px;
     line-height: 17px;
   }
+  /* .el-select-dropdown__item{
+    height: 70px;
+  } */
 </style>

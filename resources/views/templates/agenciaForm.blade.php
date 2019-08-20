@@ -399,10 +399,10 @@
                                                                 <td>@lang('general.pre_alert')</td>
                                                                 <td><a target="_blank" href="{{ url('/').'/prealerta/' }}{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}">{{ url('/').'/prealerta/' }}{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}</a></td>
                                                             </tr>
-                                                            <tr>
+                                                            {{-- <tr>
                                                                 <td>@lang('general.locker')</td>
                                                                 <td><a target="_blank" href="{{ url('/') }}">{{ url('/') }}</a></td>
-                                                            </tr>
+                                                            </tr> --}}
                                                         </tbody>
                                                     </table>
                                                 </div>
