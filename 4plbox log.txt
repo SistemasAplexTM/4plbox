@@ -60,11 +60,13 @@
 -. modal subir archivo de estatus y filtrar documento, mejorados=================================================================
 
 2019-08-20
+-. en las url publicas no mostrar url casillero.=================================================================================
+-. Que el numero de la master se pueda escribir si no tienen inventario en el momento ===========================================
+-. Acomodar los select de la creacion de master con los select de element =======================================================
 1. En CARGA QUe en la campanita aparezcan los prealertas de las personas.
 2. En Carga Mostrar un reporte de las personas que se registran a través de la web, mes a mes
 4. En CARGA En el Consignee y Shipper, colocar un campo adicional para correos y para teléfonos.
 5. En CARGA cuando me registro, selecciono la ciudad y en el + del teléfono no se ve el código del país
--. en las url publicas no mostrar url casillero.
 -. agregar cargos adicionales por defecto en la configuración (descripcion, valor);
 -. Agregar boton en la forma de pago que diga '+ Cargos' y al lado texto 'Desea agregar cargos a esta factura?'
    La palabra cargos que este subrayada y que al pasar el mouse por encima, muestre los cargos que vienen de la config

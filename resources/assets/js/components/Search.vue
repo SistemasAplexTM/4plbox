@@ -34,8 +34,6 @@ export default {
   data() {
       return {
         datos: {},
-        list: [],
-        loading: false,
         options: [],
       }
     },

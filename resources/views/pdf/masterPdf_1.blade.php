@@ -779,7 +779,7 @@
 
 					    </td>
 					    <td width="64%" colspan="3" valign="top" class="left_line bottom_line  rigth_line " style="border-left: 1px solid {{ $color }}; border-right: 1px solid {{ $color }};border-bottom: 1px solid {{ $color }};"><div class="margin_div text_titles_tl" style="color: {{ $color }}">Other Charges</div>
-					    {{-- <table width="90%" align="center">
+					    <table width="90%" align="center" style="font-size: 10px;">
 						  <tr class="bottom_line" style="border-bottom: 1px solid {{ $color }};">
 						    <td height="15px">Description</td>
 						    <td>Amount</td>
@@ -798,7 +798,7 @@
 							    </td>
 							  </tr>
 						  @endforeach
-						</table> --}}
+						</table>
 
 					    </td>
 					  </tr>

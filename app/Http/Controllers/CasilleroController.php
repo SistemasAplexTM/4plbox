@@ -133,13 +133,13 @@ class CasilleroController extends Controller
             $replacements = $this->replacements(null, $agencia, null, null, $user, null);
             $cuerpo_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->mensaje);
             $asunto_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->subject);
+            $from_self = array(
                 'address' => $agencia->email,
                 'name'    => $agencia->descripcion,
             );
             if ($request->recibir_info) {
               $list_id = AplexConfig::where('key', 'agency_mc_' .$request->agencia_id)->first();
               if ($list_id) {
-                $from_self = array(
                 $list_id = $list_id->value;
                 $list_id = json_decode($list_id, true);
                 $list_id = $list_id['id_list'];

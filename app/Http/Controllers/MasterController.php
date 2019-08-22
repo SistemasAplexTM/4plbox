@@ -229,7 +229,7 @@ class MasterController extends Controller
             ->join('aerolineas_aeropuertos AS f', 'a.aeropuertos_id', 'f.id')
             ->join('aerolineas_aeropuertos AS g', 'a.aerolineas_id', 'g.id')
             ->join('aerolineas_aeropuertos AS h', 'a.aeropuertos_id_destino', 'h.id')
-            ->join('aerolineas_inventario AS i', 'a.aerolinea_inventario_id', 'i.id')
+            ->leftJoin('aerolineas_inventario AS i', 'a.aerolinea_inventario_id', 'i.id')
             ->leftJoin('documento AS z', 'a.id', 'z.master_id')
             ->leftJoin('localizacion', 'z.ciudad_id', '=', 'localizacion.id')
             ->leftJoin('deptos', 'localizacion.deptos_id', '=', 'deptos.id')

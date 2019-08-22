@@ -337,7 +337,11 @@
                       <label for="aerolinea_inventario">Inventory:
                         <!-- <span v-if="editing">{{ aerolinea_inventario }}</span> -->
                       </label>
-                      <el-select v-validate="'required'" v-model="aerolinea_inventario_id"
+                      <a style="float:right;color:dodgerblue;" data-toggle="tooltip"
+                      :title="icon_title" :data-original-title="icon_title" @click="write = !write">
+                        <i :class="icon_cost"></i>
+                      </a>
+                      <el-select v-show="!write" v-validate="'required'" v-model="aerolinea_inventario_id"
                       clearable placeholder="Seleccione"
                       :disabled="disableAerolinea"
                       @change="setNumMaster"
@@ -353,6 +357,13 @@
                           </div>
                         </el-option>
                       </el-select>
+                      <el-input
+                        placeholder="Ingrese el Numero de Guía"
+                        prefix-icon="el-icon-edit"
+                        v-model="num_master"
+                        size="medium"
+                        v-show="write">
+                      </el-input>
                       <small v-show="errors.has('aerolinea_inventario')" class="bg-danger">{{ errors.first('aerolinea_inventario') }}</small>
                     </div>
                   </div>
@@ -756,7 +767,10 @@
         errorMsg: null,
         msg: null,
         count: 0,
-        editing: false
+        editing: false,
+        write: false,
+        icon_cost: 'fal fa-user-edit',
+        icon_title: 'Escribir'
       }
     },
     props: ["master", "consol", "peso_consolidado", "piezas_consolidado"],
@@ -772,7 +786,18 @@
       },
       tarifa: function(){
         this.total = isInteger(this.peso_cobrado * this.tarifa);
-      }
+      },
+      write:function(value){
+       if(value){
+         this.icon_cost = 'fal fa-hand-pointer';
+         this.icon_title = 'Seleccionar';
+         this.text_cost = 'Descripción';
+       }else{
+         this.icon_cost = 'fal fa-user-edit';
+         this.icon_title = 'Escribir';
+         this.text_cost = 'Seleccionar Costo o Gasto';
+       }
+      },
     },
     created(){
       if (this.master != null) {
@@ -913,7 +938,7 @@
           'consignee': this.datos_consignee,
           'carrier_id': this.carrier.id,
           'carrier': this.datos_carrier,
-          'aerolinea_inventario_id': this.aerolinea_inventario_id.id,
+          'aerolinea_inventario_id': (!this.write) ? this.aerolinea_inventario_id.id : '',
           'aerolineas_id': this.aerolinea.id,
           'by_first_carrier': this.aerolinea_name,
           'aeropuertos_id': this.aeropuerto_salida.id,
@@ -1040,7 +1065,7 @@
             // aerolineas
             var aer = me.aerolineas.filter(({id}) => id == response.data.data.aerolineas_id);
             me.aerolinea = aer[0];
-            me.aerolinea_inventario_id = response.data.data.codigo_aerolinea + ' ' + response.data.data.aerolinea_inventario;
+            me.aerolinea_inventario_id = (response.data.data.aerolinea_inventario !== null) ? response.data.data.codigo_aerolinea + ' ' + response.data.data.aerolinea_inventario : '';
 
             // aeropuertos
             var departure = me.aeropuertos.filter(({id}) => id == response.data.data.aeropuertos_id);
@@ -1048,6 +1073,10 @@
             var arrival = me.aeropuertos.filter(({id}) => id == response.data.data.aeropuertos_id_destino);
             me.aeropuerto_destino = arrival[0];
           }, 1500)
+          console.log(response.data.data.aerolinea_inventario);
+          if (response.data.data.aerolinea_inventario === null) {
+            me.write = true;
+          }
           this.num_master = response.data.data.num_master;
           this.consolidado_id = response.data.data.consolidado_id;
           this.account_information = response.data.data.account_information;
@@ -1123,7 +1152,9 @@
           this.aerolinea_inventario_id = val;
           this.num_master = val.nombre;
         }else{
-          this.num_master = null;
+          if(!this.write){
+            this.num_master = null;
+          }
         }
       },
       onSearchConsolidados(search, loading) {
