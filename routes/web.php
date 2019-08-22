@@ -255,6 +255,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('consignee/selectInput/{tableName}', 'ConsigneeController@selectInput');
     Route::get('consignee/getDataById/{id}', 'ConsigneeController@getDataById');
     Route::get('consignee/generarCasillero/{id}', 'ConsigneeController@generarCasillero');
+    Route::get('consignee/reenviarEmailCasillero/{id}', 'ConsigneeController@reenviarEmailCasillero');
     Route::get('consignee/getSelect', 'ConsigneeController@getSelect');
 
     /*--- MODULO EMAIL TEMPLATES ---*/

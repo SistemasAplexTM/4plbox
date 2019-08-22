@@ -113,9 +113,10 @@ class AerolineasInventarioController extends Controller
 
     public function getByAerolinea($id){
         $data = DB::table('aerolineas_inventario AS a')
+        ->join('aerolineas_aeropuertos AS b', 'b.id', 'a.aerolinea_id')
         ->select(
             'a.id',
-            'a.guia AS nombre'
+            DB::raw("CONCAT(b.codigo, ' ', a.guia) AS nombre")
         )
         ->where('aerolinea_id', $id)
         ->where('usado', 0)

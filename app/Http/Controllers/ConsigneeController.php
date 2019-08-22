@@ -277,12 +277,14 @@ class ConsigneeController extends Controller
     public function generarCasillero($id)
     {
         try {
+            $error = false;
+            $code = 200;
             $data    = Consignee::findOrFail($id);
             $prefijo = DB::table('consignee as a')
                 ->join('localizacion as b', 'a.localizacion_id', 'b.id')
                 ->join('deptos as c', 'b.deptos_id', 'c.id')
                 ->join('pais as d', 'c.pais_id', 'd.id')
-                ->select('b.prefijo', 'd.iso2')
+                ->select('b.prefijo', 'd.iso2', 'a.correo', 'a.nombre_full', 'a.telefono', 'a.id')
                 ->where([
                     ['a.deleted_at', null],
                     ['a.id', $id],
@@ -304,7 +306,35 @@ class ConsigneeController extends Controller
             $po_box = $caracter . $pref . '-' . $id;
             // $answer = Consignee::where('id', $id)->update(['po_box' => $prefijo->iso2 . '' . $po_box]);
             $answer = Consignee::where('id', $id)->update(['po_box' => $po_box]);
-            return $answer;
+
+            // CREAR USUARIO PARA Casillero
+            $user = User::where('email', trim($data['correo']))->first();
+            if(!$user){
+              if($data['telefono'] != '' and $data['correo'] != ''){
+                User::create([
+                    'name' => $data['nombre_full'],
+                    'email' => $data['correo'],
+                    'password' => bcrypt($data['telefono']),
+                    'agencia_id' => Auth::user()->agencia_id,
+                    'consignee_id' => $data['id'],
+                    'actived' => 1,
+                ]);
+                // Enviar Email de casillero
+                $this->enviarEmailCasillero($data['id'], Auth::user()->agencia_id, $data['nombre_full'], $data['correo'], $data['telefono']);
+              }else{
+                $code = 500;
+                $error = 'El teléfono o el correo estan vacios, Por favor verificar.';
+              }
+            }else {
+              $code = 500;
+              $error = 'El usuario ya existe en la base de datos.';
+            }
+
+            return array(
+              'code' => $code,
+              'user' => $user,
+              'error' => $error
+            );
         } catch (Exception $e) {
             return $e;
         }
@@ -396,6 +426,22 @@ class ConsigneeController extends Controller
               'data' => $data
           );
         return \Response::json($answer);
+    }
+
+    public function reenviarEmailCasillero($id)
+    {
+      try {
+        $data    = Consignee::findOrFail($id);
+        // Enviar Email de casillero
+        $this->enviarEmailCasillero($data['id'], Auth::user()->agencia_id, $data['nombre_full'], $data['correo'], $data['telefono']);
+        return array(
+          'code' => 200,
+          'user' => $data
+        );
+      } catch (Exception $e) {
+        return $e;
+      }
+
     }
 
 }

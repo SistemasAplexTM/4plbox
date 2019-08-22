@@ -63,6 +63,7 @@
 1. En CARGA QUe en la campanita aparezcan los prealertas de las personas.
 2. En Carga Mostrar un reporte de las personas que se registran a través de la web, mes a mes
 4. En CARGA En el Consignee y Shipper, colocar un campo adicional para correos y para teléfonos.
+5. En CARGA cuando me registro, selecciono la ciudad y en el + del teléfono no se ve el código del país
 -. en las url publicas no mostrar url casillero.
 -. agregar cargos adicionales por defecto en la configuración (descripcion, valor);
 -. Agregar boton en la forma de pago que diga '+ Cargos' y al lado texto 'Desea agregar cargos a esta factura?'
