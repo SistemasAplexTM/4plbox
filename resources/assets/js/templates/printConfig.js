@@ -2,7 +2,7 @@
 //   Javascript:jsWebClientPrint.getPrinters();
 // }, 300);
 //var wcppGetPrintersDelay_ms = 0;
-const wcppGetPrintersTimeout_ms = 50000; //5 sec
+const wcppGetPrintersTimeout_ms = 100000; //5 sec
 const wcppGetPrintersTimeoutStep_ms = 500; //0.5 sec
 function wcpGetPrintersOnSuccess() {
   // Display client installed printers
