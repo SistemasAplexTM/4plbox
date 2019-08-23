@@ -230,15 +230,18 @@
         <td>
             <div class="datosAdd">
                 <div class="codebar1">
-                    <div class="peso">{{ (isset($consolidado) and $consolidado != null) ? $value->peso2 : $value->peso }} Lb</div>
+                    <div class="peso">
+                      &nbsp;
+                      {{-- {{ (isset($consolidado) and $consolidado != null) ? $value->peso2 : $value->peso }} Lb --}}
+                    </div>
                     <div class="paginacion">{{ $cont + 1 . '-' . count($detalle) }}</div>
                     <div class="warehouse">Rec: </div>
                 </div>
                 <div class="datos">
                     <div class="pkgs">Pkgs: 1 </div>
                     <div class="fob">
-                        Fob:
-                        {{ number_format(((isset($consolidado) and $consolidado != null) ? $value->declarado2 : $value->valor),2) }}
+                        {{-- Fob:
+                        {{ number_format(((isset($consolidado) and $consolidado != null) ? $value->declarado2 : $value->valor),2) }} --}}
                     </div>
                     <?php
                       $contenido = ((isset($consolidado) and $consolidado != null) ? $value->contenido2 : $value->contenido);

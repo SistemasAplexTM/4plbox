@@ -891,7 +891,7 @@
                                     </el-option>
                                   </el-select>
                                 </div>
-                                <div class="form-group" v-if="showPay">
+                                <div class="form-group">
                                   <label for="" class="">@lang('documents.way_to_pay')</label>
                                   <el-select v-model="forma_pago_id" placeholder="Forma de Pago" @change="setPayment">
                                     <el-option

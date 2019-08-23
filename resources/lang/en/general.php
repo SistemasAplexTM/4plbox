@@ -274,7 +274,8 @@ return [
 
      //resources/views/template/tracking
 
-     'track_record'=>'Track record',
+     'track_record'=>'Track Receipt',
+     'create_document'=>'Create Document',
      'registered_tracking'=>'Registered Tracking',
      'office'=>'Office',
      'number_of_tracking'=>'Number of tracking',

@@ -41,7 +41,7 @@
     	@foreach ($detalle as $value)
           @for($i = 1; $i <= $value->piezas; $i++)
               <?php $contRegistros++ ?>
-            <table border="0" cellpadding="0" cellspacing="0" height="288" width="216" style="page-break-after:{{ ($contRegistros === $piezas) ? 'avoid' : 'always' }}">
+            <table border="0" cellpadding="0" cellspacing="0" style="page-break-after:{{ ($contRegistros === $piezas) ? 'avoid' : 'always' }}">
                 <tr>
                     <td colspan="4" style="text-align:center">
                         <img src="{{ asset('storage/') }}/{{ ((isset($documento->agencia_logo) and $documento->agencia_logo != '') ? trim($documento->agencia_logo) : 'logo.png') }}"  style="height: 65px;"/>
@@ -63,8 +63,8 @@
                         <div>
                             <strong>{{ $value->ship_nomfull }}</strong>
                         </div>
-                        <div>{{ $value->ship_dir }}</div>
-                        <div>{{ $value->ship_tel }}</div>
+                        {{-- <div>{{ $value->ship_dir }}</div>
+                        <div>{{ $value->ship_tel }}</div> --}}
                     </td>
                 </tr>
                 <tr>
@@ -107,11 +107,11 @@
                 <tr>
                     <td class="border_bottom" colspan="4">
                         <div style="text-align:center">
-                           <strong>{{ ((isset($documento->agencia) and $documento->agencia != '') ? trim($documento->agencia) : '') }}</strong>
+                           <strong>{{ ((isset($documento->agencia) and $documento->agencia != '') ? trim($documento->agencia) : '') }} Su mejor opción</strong>
                         </div>
-                        <div style="text-align:center">
-                           <strong> Su mejor opción</strong>
-                        </div>
+                        {{-- <div style="text-align:center">
+                           <strong> </strong>
+                        </div> --}}
                     </td>
                 </tr>
             </table>
