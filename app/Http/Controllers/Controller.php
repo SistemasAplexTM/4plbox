@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Consignee;
-use App\Agencia;
-use App\Helpers\LogActivity as Logs;
-use App\Shipper;
 use Auth;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use JavaScript;
+use App\Agencia;
+use App\Shipper;
+use App\Consignee;
+use App\AplexConfig;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Helpers\LogActivity as Logs;
 use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\DB;
-use JavaScript;
-use App\AplexConfig;
 
 class Controller extends BaseController
 {
@@ -46,22 +47,12 @@ class Controller extends BaseController
         ]);
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function AddToLog($activity = null)
     {
         // \LogActivity::addToLog($activity);
         Logs::addToLog($activity);
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function logActivity()
     {
         // $logs = \LogActivity::logActivityLists();
@@ -79,7 +70,7 @@ class Controller extends BaseController
             ->join('pais', 'deptos.pais_id', '=', 'pais.id')
             ->join('agencia', $table . '.agencia_id', '=', 'agencia.id')
             ->leftjoin('tipo_identificacion', $table . '.tipo_identificacion_id', '=', 'tipo_identificacion.id')
-            ->select($table . '.*', 'localizacion.nombre as ciudad', 'localizacion.id as ciudad_id', 'deptos.descripcion as depto', 'deptos.id as estado_id', 'pais.descripcion as pais', 'pais.id as pais_id', 'agencia.descripcion as agencia', 'tipo_identificacion.descripcion as identificacion')
+            ->select(DB::raw("CONCAT(" . $table . ".primer_nombre,' ', " . $table . ".segundo_nombre,' ', " . $table . ".primer_apellido,' ', " . $table . ".segundo_apellido) as full_name"), $table . '.*', 'localizacion.nombre as ciudad', 'localizacion.id as ciudad_id', 'deptos.descripcion as depto', 'deptos.id as estado_id', 'pais.descripcion as pais', 'pais.id as pais_id', 'agencia.descripcion as agencia', 'tipo_identificacion.descripcion as identificacion')
             ->where([
                 [$table . '.id', '=', $id],
                 [$table . '.deleted_at', '=', null],
@@ -122,7 +113,7 @@ class Controller extends BaseController
                 'c.descripcion AS depto',
                 'd.descripcion AS pais',
             ])->where([
-            ['a.id', Auth::user()->agencia_id],
+            ['a.id', $id],
             ['a.deleted_at', '=', null],
         ])->first();
     }
@@ -511,6 +502,7 @@ class Controller extends BaseController
         }
 
     }
+
     public function replacements($id, $objAgencia, $objWarehouse = null, $objShipper = null, $objConsignee = null, $datosEnvio = null, $tracking = null)
     {
         $replacements = array(
@@ -556,6 +548,7 @@ class Controller extends BaseController
             '({ciudad_agencia})'  => ($objAgencia) ? $objAgencia->ciudad : '',
             '({estado_agencia})'  => ($objAgencia) ? $objAgencia->depto : '',
             '({pais_agencia})'    => ($objAgencia) ? $objAgencia->pais : '',
+            // '({logo_agencia})'    => ($objAgencia) ? $objAgencia->logo : '',
         );
         return $replacements;
     }
@@ -563,5 +556,41 @@ class Controller extends BaseController
     public function getConfig($key){
       $data = AplexConfig::where('key', $key)->first();
       return $data;
+    }
+
+    public function sendEmailStatus($id_agencia, $id_consignee, $id_plantila)
+    {
+      DB::beginTransaction();
+      try {
+
+          $user = $this->getDataConsigneeOrShipperById($id_consignee, 'consignee');
+          $plantilla = DB::table('plantillas_correo AS a')
+              ->select([
+                  'a.mensaje',
+                  'a.subject',
+              ])->where([
+              ['a.id', $id_plantila],
+              ['a.deleted_at', '=', null],
+          ])->first();
+          // La agencia es una consulta a la bd a partir del id que viene por url
+          $agencia = $this->getDataAgenciaById($id_agencia);
+
+          $replacements = $this->replacements(null, $agencia, null, null, $user, null);
+
+          $cuerpo_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->mensaje);
+          $asunto_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->subject);
+
+          $from_self = array(
+              'address' => $agencia->email,
+              'name'    => $agencia->descripcion,
+          );
+          Mail::to($user->correo)->send(new \App\Mail\StatusEmail($cuerpo_correo, $from_self, $asunto_correo));
+          DB::commit();
+      } catch (\Exception $e) {
+          DB::rollback();
+          $success   = false;
+          $exception = $e;
+          return $e;
+      }
     }
 }

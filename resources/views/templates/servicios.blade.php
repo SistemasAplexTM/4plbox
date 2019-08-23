@@ -184,7 +184,7 @@
                     </div>
                 </div>
             </div>
-        </form>
+
         <div class="col-lg-8">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
@@ -199,38 +199,23 @@
                         <table id="tbl-servicios" class="table table-striped table-hover table-bordered" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th><li class="fa fa-ship"></li><li class="fa fa-plane"></li> @lang('general.boarding_type')</th>
-                                    <th><li class="fa fa-cubes"></li>@lang('general.services')</th>
-                                    <th><li class="fa fa-dollar-sign"></li>@lang('general.rate')</th>
-                                    <th><li class="fa fa-dollar-sign"></li>@lang('general.minimum_fee')</th>
-                                    <th><li class="fa fa-dollar-sign"></li>@lang('general.optional_charge')</th>
-                                    <th><li class="fa fa-dollar-sign"></li>@lang('general.insurance')</th>
-                                    <th><li class="fa fa-percent"></li>@lang('general.tax')</th>
+                                    <th>@lang('general.boarding_type')</th>
+                                    <th>@lang('general.services')</th>
+                                    <th>@lang('general.rate')</th>
+                                    <th>@lang('general.minimum_fee')</th>
+                                    <th>@lang('general.optional_charge')</th>
+                                    <th>@lang('general.insurance')</th>
+                                    <th>@lang('general.tax')</th>
                                     <th>@lang('general.weight_volume')</th>
                                     <th>@lang('general.actions')</th>
                                 </tr>
                             </thead>
-                            <tbody>
-
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th><li class="fa fa-ship"></li><li class="fa fa-plane"></li> @lang('general.boarding_type')</th>
-                                    <th><li class="fa fa-cubes"></li>@lang('general.services')</th>
-                                    <th><li class="fa fa-dollar-sign"></li>@lang('general.rate')</th>
-                                    <th><li class="fa fa-dollar-sign"></li>@lang('general.minimum_fee')</th>
-                                    <th><li class="fa fa-dollar-sign"></li>@lang('general.optional_charge')</th>
-                                    <th><li class="fa fa-dollar-sign"></li>@lang('general.insurance')</th>
-                                    <th><li class="fa fa-percent"></li>@lang('general.tax')</th>
-                                    <th>@lang('general.weight_volume')</th>
-                                    <th>@lang('general.actions')</th>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
+        </form>
     </div>
 @endsection
 

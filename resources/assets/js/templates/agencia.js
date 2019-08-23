@@ -24,7 +24,17 @@ $(document).ready(function() {
             name: 'telefono'
         }, {
             data: 'logo',
-            name: 'logo'
+            name: 'logo',
+            "render": function (data, type, full, meta) {
+              var image = 'icon-no-image.svg';
+              var title = 'No image';
+              if(full.logo != '' && full.logo != 'null' && full.logo != null){
+                title = full.descripcion;
+                image = full.logo;
+              }
+              return '<img src="/storage/'+image+'" alt="Pedidos" height="50" width="100" title="'+title+'">';
+            },
+            class: 'text-center'
         }, {
             sortable: false,
             "render": function(data, type, full, meta) {
@@ -34,11 +44,11 @@ $(document).ready(function() {
                     var params = [
                         full.id, "'" + full.descripcion + "'", "'" + full.ciudad_id + "'", "'" + full.ciudad + "'", "'" + full.estado_id + "'", "'" + full.estado + "'", "'" + full.pais_id + "'", "'" + full.pais + "'",
                     ];
-                    var btn_edit = "<a onclick=\"edit(" + params + ")\" class='btn btn-outline btn-success btn-xs' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit'></i></a> ";
+                    var btn_edit = "<a onclick=\"edit(" + params + ")\" class='edit_btn' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fal fa-pencil fa-lg'></i></a> ";
                 }
                 if (permission_delete) {
                     if(full.tipo_agencia != 1){
-                        var btn_delete = " <a onclick=\"eliminar(" + full.id + "," + true + ")\" class='btn btn-outline btn-danger btn-xs' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-trash'></i></a> ";
+                        var btn_delete = " <a onclick=\"eliminar(" + full.id + "," + true + ")\" class='delete_btn' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fal fa-trash-alt fa-lg'></i></a> ";
                     }
                 }
                 return btn_edit + btn_delete;

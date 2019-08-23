@@ -43,7 +43,10 @@
 <table cellspacing="0" cellpadding="0" id="tableContainer" border="0" width="100%">
     <thead>
         <tr>
-            <th colspan="2" width="300px"><img alt="image" class="img-circle" id="logo" height="70px" style="margin-bottom: 10px;" src="{{ asset('storage/') }}/{{ ((isset($documento->agencia_logo) and $documento->agencia_logo != '') ? $documento->agencia_logo : 'logo.png') }}"/></th>
+            <th colspan="2" width="300px">
+              <img class="img-circle" id="logo" height="70px" style="margin-bottom: 10px;" src="{{ public_path() . '/storage/' }}/{{ ((isset($documento->agencia_logo) and $documento->agencia_logo != '') ? trim($documento->agencia_logo) : 'logo.png') }}" style="width: 100%"/>
+              {{-- <img alt="image" class="img-circle" id="logo" height="70px" style="margin-bottom: 10px;" src="{{ asset('storage/') }}/{{ ((isset($documento->agencia_logo) and $documento->agencia_logo != '') ? $documento->agencia_logo : 'logo.png') }}"/> --}}
+            </th>
             <th>&nbsp;</th>
             <th width="250px" style="text-align: right;">
                 <div id="nomAgencia" style="font-size: 20px;">{{ $documento->agencia }}</div>
@@ -121,7 +124,7 @@
                     }
                 ?>
                 <tr>
-                    <td id="detalle" style="width: 13%;text-align: center;">{{ $val->num_warehouse }}</td>
+                    <td id="detalle" style="width: 13%;text-align: center;">{{ $val->num_guia }}</td>
                     <td style="width: 15%">
                         <div id="detalle" >{{ ($val->shipper_json) ? $shipper_json->nombre : $val->nom_ship }}</div>
                         <div id="detalle" >{{ ($val->shipper_json) ? $shipper_json->direccion : $val->dir_ship }}</div>

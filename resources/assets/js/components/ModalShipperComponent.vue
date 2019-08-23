@@ -12,15 +12,15 @@
     <div class="modal fade bs-example-modal-lg" id="modalShipper" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	    <div class="modal-dialog modal-lg">
 	        <div class="modal-content">
-	            <!--Este input es para cuando se haga el llamado desde el consolidado.. 
+	            <!--Este input es para cuando se haga el llamado desde el consolidado..
 	            se llenara con el valor del contador del detalle o el id del campo -->
 	            <input type="hidden" id="op" value="">
 	            <div class="modal-header">
 	                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 	                <h4 class="modal-title" id="myModalLabel">
-	                    Remitentes (Shippers)-> 
-	                    <label for="buscarF" class="control-label gcore-label-top"> 
-	                        Mostrar Todos: 
+	                    Remitentes (Shippers)->
+	                    <label for="buscarF" class="control-label gcore-label-top">
+	                        Mostrar Todos:
 	                        <input type='checkbox' data-toggle="toggle" id='show-all' data-size='mini' data-on="Si" data-off="No" data-width="50" data-style="ios" data-onstyle="primary" data-offstyle="danger">
 	                    </label>
 	                </h4>
@@ -31,10 +31,10 @@
                             <thead>
                                 <tr>
                                     <th>Acción</th>
-                                    <th>Nombre</th> 
+                                    <th>Nombre</th>
                                     <th>Teléfono</th>
                                     <th>Ciudad</th>
-                                    <th>Zip</th>
+                                    <th>Correo</th>
                                     <th>Agencia</th>
                                 </tr>
                             </thead>

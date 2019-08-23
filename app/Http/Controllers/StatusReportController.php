@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\DocumentoDetalle;
+use App\Documento;
 use App\Http\Requests\StatusReportRequest;
 use App\StatusReport;
+use App\Status;
 use Auth;
 use DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class StatusReportController extends Controller
 {
@@ -22,47 +25,48 @@ class StatusReportController extends Controller
         return view('templates/statusReport');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StatusReportRequest $request)
     {
         try {
-            $obj = DocumentoDetalle::select('id')
-                ->whereRaw("documento_detalle.num_warehouse = '" . trim($request->codigo) . "' OR documento_detalle.num_guia = '" . trim($request->codigo) . "'")
-                ->where('deleted_at', null)
-                ->first();
-            if ($obj) {
-                $data                       = (new StatusReport)->fill($request->all());
-                $data->documento_detalle_id = $obj->id;
+          if ($request->codigo) {
+              foreach ($request->codigo as $key => $value) {
+                $data = new StatusReport;
+                $data->status_id            = $request->status_id;
+                $data->documento_detalle_id = $value['id'];
                 $data->usuario_id           = Auth::user()->id;
+                $data->codigo               = $value['name'];
+                $data->observacion          = $request->observacion;
+                $data->transportadora       = ($request->transportadora) ? $request->transportadora : NULL;
+                $data->num_transportadora   = ($request->num_transportadora) ? $request->num_transportadora : NULL;
                 $data->fecha_status         = date('Y-m-d H:i:s');
                 $data->created_at           = date('Y-m-d H:i:s');
-                if ($data->save()) {
-                    $this->AddToLog('Status creado id(' . $data->id . ')');
-                    $answer = array(
-                        "datos"  => $request->all(),
-                        "code"   => 200,
-                        "status" => 200,
-                    );
-                } else {
-                    $answer = array(
-                        "error"  => 'Error al intentar Eliminar el registro.',
-                        "code"   => 600,
-                        "status" => 500,
-                    );
+                $data->save();
+
+                $status = Status::select('id', 'json_data', 'email')->where('id', $request->status_id)->first();
+                if($status->json_data !== null){
+                  $datos = json_decode($status->json_data);
+                  if(isset($datos->email_template_id) and $datos->email_template_id != '' and $status->email !== 0){
+                    $detail = DocumentoDetalle::select('documento_id')->where('id', $value['id'])->first();
+                    $document = Documento::select('consignee_id', 'agencia_id')->where('id', $detail->documento_id)->first();
+                    $this->sendEmailStatus($document->agencia_id, $document->consignee_id, $datos->email_template_id);
+                  }
                 }
-            } else {
-                $answer = array(
-                    "error"  => 'No existe registro con ese numero de Guia o Warehouse que ingresó.',
-                    "code"   => 600,
-                    "status" => 500,
-                );
-            }
-            return $answer;
+
+                $this->AddToLog('Status creado id(' . $data->id . ')');
+              }
+              $answer = array(
+                  "datos"  => '',
+                  "code"   => 200,
+                  "status" => 200,
+              );
+          } else {
+              $answer = array(
+                  "error"  => 'No existen registro para insertar.',
+                  "code"   => 600,
+                  "status" => 500,
+              );
+          }
+          return $answer;
         } catch (\Exception $e) {
             $error = '';
             if (isset($e->errorInfo) and count($e->errorInfo) > 0) {
@@ -181,12 +185,28 @@ class StatusReportController extends Controller
                 'a.num_transportadora',
                 'b.id AS status_id',
                 'b.descripcion AS status_name',
+                'b.color AS status_color',
+                'b.icon AS status_icon',
                 'c.num_warehouse',
                 'c.num_guia',
                 'c.num_consolidado',
                 'c.liquidado',
                 'd.id as usuario_id',
-                'd.name'
+                'd.name',
+                DB::raw('IF (
+              	b.id = 5,
+              	(
+              		SELECT
+              			x.consecutivo
+              		FROM
+              			consolidado_detalle AS z
+              		INNER JOIN documento AS x ON z.consolidado_id = x.id
+              		WHERE
+              			z.documento_detalle_id = a.documento_detalle_id
+              		AND z.deleted_at IS NULL
+              	),
+              	NULL
+              ) AS consolidado')
             )
             ->where([
                 ['a.deleted_at', null],

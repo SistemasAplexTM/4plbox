@@ -18,15 +18,15 @@ return [
 		'city'            => 'City',
 		'obligatory_field'        => 'Obligatory field',
 		'zip'			  => 'Zip',
-		'send_email'	  => 'Send email',
-		'addressee_consignee'       => 'Addressee (Consignee)',
+		'send_email'	  => 'Send',
+		'addressee_consignee'       => 'Consignee',
 		'load_data'                 => 'Load data',
 		'weight'          => 'Weight',
 		'dimensions'      => 'Dimensions',
 		'these_data_are_required'    => 'These Data are required',
 		'content'         => 'Content',
-		'declared'        => 'Declared',
-		'pieces'          => 'Pieces',
+		'declared'        => 'FOB',
+		'pieces'          => 'Piece',
 		'packing'         => 'Packing',
 		'tariff_position' => 'Tariff position',
 		'add'             => 'Add',
@@ -35,9 +35,9 @@ return [
 		'contains'        => 'Contains',
 		'action'          => 'Action',
 		'volume'          => 'Volume',
-		'cubic_foot'      => 'Cubic foot ft',
+		'cubic_foot'      => 'Total ft³',
 		'message_register'         => 'To be able to register at least one detail is necessary',
-		'payment_type'             => 'Payment type',
+		'payment_type'             => 'Payment method',
 		'way_to_pay'               => 'Way to pay',
 		'group'                    => 'Group',
 		'comments'                 => 'Comments',
@@ -83,6 +83,7 @@ return [
 		'types_of_documents'       => 'Types of documents',
 		'date'                     => 'Date',
 		'client_consignee'         => 'Client',
+		'central_destination'      => 'Central Destination',
 		'actions'                  => 'Actions',
 		'consolidated'             => 'Consolidado',
 
@@ -114,6 +115,7 @@ return [
 
     'add_points'               => 'Add Points',
 		'points'									 =>'Points',
+		'continue'									 =>'Continue',
 
 
 

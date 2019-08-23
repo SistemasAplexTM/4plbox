@@ -54,7 +54,7 @@ function loadTable(name, bodega) {
           "render": function(data, type, full, meta) {
               var btn_delete = '';
               if (permission_delete) {
-                  var btn_delete = " <a onclick=\"eliminar(" + full.id + "," + false + ")\" class='text-danger' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-trash'></i></a> ";
+                  var btn_delete = " <a onclick=\"eliminar(" + full.id + "," + false + ")\" class='delete_btn' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fal fa-trash-alt fa-lg'></i></a> ";
               }
               return btn_delete;
           }
@@ -304,6 +304,12 @@ var objVue = new Vue({
             var res = response.data;
             if (response.data['code'] == 200) {
               $('#modalCreateReceipt').modal('hide');
+              me.shipper_id = null
+              me.peso = null
+              me.piezas = 1
+              me.largo = 0
+              me.ancho = 0
+              me.alto = 0
               // toastr.success('Registro creado correctamente.');
               me.updateTable();
             } else {

@@ -4,13 +4,13 @@
 {{-- bread crumbs --}}
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>@lang('general.tracking')</h2>
+        <h2>@lang('layouts.trackings_receipt')</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="#">@lang('general.home')</a>
             </li>
             <li class="active">
-                <strong>@lang('general.tracking')</strong>
+                <strong>@lang('layouts.trackings_receipt')</strong>
             </li>
         </ol>
     </div>
@@ -63,7 +63,7 @@
                             <div class="col-lg-12">
                                 <div class="form-group" :class="{ 'has-error': errors.has('tracking') }">
                                     <div class="col-sm-4">
-                                        <label for="tracking" class="control-label gcore-label-top">@lang('general.tracking'):</label>
+                                        <label for="tracking" class="control-label gcore-label-top">@lang('general.tracking'): <samp id="require">*</samp></label>
                                     </div>
                                     <div class="col-sm-8">
                                         <input class="form-control" name="tracking" placeholder="@lang('general.number_of_tracking')" type="text" v-model="tracking" v-validate.disable="'required|unique'" v-on:keyup.enter="searchTracking()">
@@ -164,8 +164,8 @@
                     <div class="ibox-content">
                         <!--***** contenido ******-->
                         <ul class="nav nav-tabs" role="tablist">
-                          <li role="trackings" class="active"><a href="#recibido" aria-controls="recibido" role="tab" data-toggle="tab"><i class="fa fa-barcode"></i> Recibido</a></li>
-                          <li role="trackings"><a href="#bodega" aria-controls="bodega" role="tab" data-toggle="tab"><i class="fa fa-box-open"></i> En Bodega</a></li>
+                          <li role="trackings" class="active"><a href="#recibido" aria-controls="recibido" role="tab" data-toggle="tab"><i class="fal fa-barcode"></i> Recibido</a></li>
+                          <li role="trackings"><a href="#bodega" aria-controls="bodega" role="tab" data-toggle="tab"><i class="fal fa-box-open"></i> En Bodega</a></li>
                         </ul>
                         <div class="tab-content">
                           <div role="tabpanel" class="tab-pane fade active in" id="recibido">

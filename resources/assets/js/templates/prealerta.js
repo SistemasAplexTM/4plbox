@@ -47,6 +47,7 @@ var objVue = new Vue({
         email: null,
         instruccion: null,
         tracking: null,
+        contenido: null,
         telefono: null,
         existConsignee: false,
         despachar: false,
@@ -57,6 +58,7 @@ var objVue = new Vue({
         },
         resetForm: function(){
             this.tracking = null;
+            this.contenido = null;
             this.errors.clear();
         },
         create: function(){
@@ -86,6 +88,7 @@ var objVue = new Vue({
                         'email' : this.email,
                         'instruccion' : this.instruccion,
                         'tracking' : this.tracking,
+                        'contenido' : this.contenido,
                         'despachar' : $('#despachar').prop('checked'),
                     }).then(function(response){
                         l.stop();

@@ -61,19 +61,20 @@ var objVue = new Vue({
                                     // this.datos[i].img = this.replace[i].img;
                                     this.datos[i].img = this.datos[i].icon + ' fa-5x';
                                     this.datos[i].color = this.datos[i].color;
-                                    this.datos[i].descripcion = this.replace[i].descripcion;
-                                    if(i != 0){
-                                        this.datos[i].procedencia = '';
-                                    }
-                                    if(i == 1){
-                                        this.datos[i].procedencia = this.datos[i].ciudad + ' / ' + this.datos[i].depto + ' / ' + this.datos[i].pais;
-                                    }
-                                    if(i == 2){
-                                        this.datos[i].descripcion = 'Su paquete ha llegado a '+ this.datos[i].pais +' en proceso de desconsolidación.';
-                                    }
-                                    if(i == 4){
-                                        this.fecha_entrega = this.datos[i].fecha_status;
-                                    }
+                                    // this.datos[i].descripcion = this.replace[i].descripcion;
+                                    this.datos[i].descripcion = this.datos[i].descripcion_general;
+                                    // if(i != 0){
+                                    //     this.datos[i].procedencia = '';
+                                    // }
+                                    // if(i == 1){
+                                    //     this.datos[i].procedencia = this.datos[i].ciudad + ' / ' + this.datos[i].depto + ' / ' + this.datos[i].pais;
+                                    // }
+                                    // if(i == 2){
+                                    //     this.datos[i].descripcion = 'Su paquete ha llegado a '+ this.datos[i].pais +' en proceso de desconsolidación.';
+                                    // }
+                                    // if(i == 4){
+                                    //     this.fecha_entrega = this.datos[i].fecha_status;
+                                    // }SELECT * FROM `detalle` where documento_id = 325246
                                 }
                             }
                             console.log(this.datos);

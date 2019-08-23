@@ -222,7 +222,7 @@ class CiudadController extends Controller
     }
 
 
-    public function getSelectCity(){
+    public function getSelectCity($filter){
       $data = DB::table('localizacion AS a')
           ->join('deptos', 'a.deptos_id', 'deptos.id')
           ->join('pais', 'deptos.pais_id', 'pais.id')
@@ -235,6 +235,7 @@ class CiudadController extends Controller
           'pais.id as pais_id',
           'pais.iso3 AS prefijo_pais'])
           ->where([
+              ['a.nombre', 'LIKE', '%' . $filter . '%'],
               ['a.deleted_at', null],
           ])->get();
           $answer = array(

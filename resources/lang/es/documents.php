@@ -18,7 +18,7 @@ return [
 		'city'             => 'Ciudad',
 		'obligatory_field' => 'Campo obligatorio',
 		'zip'              => 'Zip',
-		'send_email'       => 'Enviar Correo',
+		'send_email'       => 'Enviar',
 		'addressee_consignee'        => 'Destinatario',
 		'load_data'					 => 'Datos de la carga',
 		'weight'           => 'Peso',
@@ -35,7 +35,7 @@ return [
 		'contains'         => 'Contiene',
 		'action'           => 'Acción',
 		'volume'           => 'Volumen',
-		'cubic_foot'       => 'Pie cúbico Ft',
+		'cubic_foot'       => 'Total ft³',
 		'message_register' => 'Para poder registrar al menos un detalle es necesario.',
 		'payment_type'     => 'Tipo de pago',
 		'way_to_pay'       => 'Forma de Pago',
@@ -83,6 +83,7 @@ return [
 		'types_of_documents'       => 'Tipos de Documentos',
 		'date'                     => 'Date',
 		'client_consignee'         => 'Cliente',
+		'central_destination'      => 'Central Destino',
 		'actions'                  => 'Acciones',
 // // templaces/documento/viewGuiaWarehouse
 		'see'                      => 'Ver',
@@ -111,6 +112,7 @@ return [
 
 		'add_points'               => 'Agregar Puntos',
     'points'									 =>'Puntos',
+    'continue'									 =>'Continuar',
 
 
 

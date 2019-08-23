@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Consignee;
 use App\Ciudad;
 use App\User;
+use App\Agencia;
 use App\AplexConfig;
 
 class CasilleroController extends Controller
@@ -54,25 +55,38 @@ class CasilleroController extends Controller
             $nombre_full = $request->primer_nombre .' '.$request->primer_apellido;
             $data->nombre_full = $nombre_full;
             $data->casillero = 1;
-            $data->localizacion_id = $request->localizacion_id['id'];
+            $data->localizacion_id = $request->localizacion_id;
             $data->created_at = date('Y-m-d H:i:s');
             $data->save();
             // PO_BOX
             $agencia = $request->agencia_id;
-            $caracteres = strlen($agencia);
+            $pref = '';
+            $prefijo_pobox = Agencia::select('prefijo_pobox')->where('id', $request->agencia_id)->first();
+            if($prefijo_pobox->prefijo_pobox == null){
+               $pref = $request->agencia_id;
+            }else{
+                $pref = $prefijo_pobox->prefijo_pobox;
+            }
+            $caracteres      = strlen($pref);
+
+            // $caracteres = strlen($agencia);
             $sumarCaracteres =  $caracteres - $caracteres;
             $caracter = '';
-            for ($i=0; $i <= $sumarCaracteres ; $i++) {
-                $caracter = $caracter . '0';
+            if($prefijo_pobox->prefijo_pobox == null){
+              for ($i=0; $i <= $sumarCaracteres ; $i++) {
+                  $caracter = $caracter . '0';
+              }
             }
-            $po_box = $caracter . $agencia . '-' . $data->id;
+
+            $po_box = $caracter . $pref . '-' . $data->id;
             Consignee::where('id', $data->id)->update(['po_box' =>  $po_box]);
             // REGISTRAR USUARIO
-            User::create([
+            $user = User::create([
                 'name' => $nombre_full,
                 'email' => $request->correo,
                 'password' => bcrypt($request->celular),
-                'agencia_id' => $agencia
+                'agencia_id' => $agencia,
+                'consignee_id' => $data->id
             ]);
             $table = 'consignee';
             $user = DB::table($table)
@@ -103,6 +117,7 @@ class CasilleroController extends Controller
             ->select([
                 'a.id',
                 'a.descripcion as descripcion',
+                'a.logo',
                 'a.telefono',
                 'a.email',
                 'a.direccion',
@@ -116,14 +131,18 @@ class CasilleroController extends Controller
             ])->first();
 
             $replacements = $this->replacements(null, $agencia, null, null, $user, null);
+            $cuerpo_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->mensaje);
+            $asunto_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->subject);
+            $from_self = array(
+                'address' => $agencia->email,
+                'name'    => $agencia->descripcion,
+            );
             if ($request->recibir_info) {
               $list_id = AplexConfig::where('key', 'agency_mc_' .$request->agencia_id)->first();
               if ($list_id) {
                 $list_id = $list_id->value;
                 $list_id = json_decode($list_id, true);
                 $list_id = $list_id['id_list'];
-                $cuerpo_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->mensaje);
-                $asunto_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->subject);
                 $listId = $request->listId;
                 if (!\Mailchimp::check($list_id, $request->correo)) {
                   \Mailchimp::subscribe(
@@ -135,7 +154,7 @@ class CasilleroController extends Controller
                 }
               }
             }
-            // Mail::to($request->correo)->send(new \App\Mail\CasilleroEmail($cuerpo_correo));
+            Mail::to($request->correo)->send(new \App\Mail\CasilleroEmail($cuerpo_correo,$from_self,$asunto_correo));
 
             DB::commit();
         } catch (\Exception $e) {

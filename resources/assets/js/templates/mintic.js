@@ -39,23 +39,42 @@ var objVue = new Vue({
     el: '#mintic',
     data: {
       warehouse: null,
+      disabled: false,
       desc: 'Mintic 1',
-      detail: []
+      detail: [],
+      cantidad: 0
     },
     methods:{
       addWarehouse(){
         let me = this;
+        me.disabled = true
         axios.get('mintic/searchDocument/' + me.warehouse).then(({data}) => {
           if (data.code == 200) {
             var row = this.detail.filter(result => result.warehouse == me.warehouse);
             if (row.length > 0) {
               toastr.warning('EL warehouse ya se encuentra en esta mintic');
+              me.disabled = false
               this.warehouse = null
+              setTimeout(function() {
+                me.$refs.wrh.focus();
+              },200)
               return;
+            }else{
+              me.detail.push(data.data)
+              me.cantidad = this.detail.length;
             }
-            me.detail.push(data.data)
+            me.disabled = false
             this.warehouse = null
+            console.log(this.$refs.wrh);
+            setTimeout(function() {
+              me.$refs.wrh.focus();
+            },200)
           }else{
+            me.disabled = false
+            this.warehouse = null
+            setTimeout(function() {
+              me.$refs.wrh.focus();
+            },200)
             toastr.warning(data.msg);
           }
         });

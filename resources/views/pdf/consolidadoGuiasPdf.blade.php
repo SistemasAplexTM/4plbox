@@ -91,10 +91,15 @@
     }
     #spaceTable{
         /*background-color:  #8B91A0;*/
-        height: 5px;
+        height: 10px;
     }
     .agency_name{
+      padding-left: 5px;
       font-weight: bold;
+    }
+    .agency_data{
+      padding-left: 5px;
+      font-size: 10px;
     }
 </style>
 <?php
@@ -127,16 +132,18 @@ $toalRegistros = count($detalleConsolidado);
                endif;
                ?>>
                         <tr>
-                            <td class="agency_name">
-                                {{ (isset($documento->agencia)) ? $documento->agencia : '' }}
+                            <td>
+                                <div class="agency_name">{{ (isset($documento->agencia)) ? $documento->agencia : '' }}</div>
+                                <div class="agency_data">{{ (isset($documento->agencia_dir)) ? $documento->agencia_dir : '' }}</div>
+                                <div class="agency_data">{{ (isset($documento->agencia_tel)) ? $documento->agencia_tel : '' }}</div>
                             </td>
                             <td align="right">
                                 <img id="barcode" style="height: 25px;" src="data:image/png;base64, {{ DNS1D::getBarcodePNG($value->num_guia, "C128",1,29,array(1,1,1)) }}" alt="barcode" />
                             </td>
                         </tr>
                         <tr>
-                            <th> @lang('pdfs.date'): {{ $documento->created_at }}</th>
-                            <th align="right">{{ $value->num_guia }}</th>
+                            <th style="padding-left: 5px;"> @lang('pdfs.date'): {{ $documento->created_at }}</th>
+                            <th align="right" style="padding-right: 25px;">{{ $value->num_guia }}</th>
                         </tr>
                         <tr>
                             <td width="40%">
@@ -163,12 +170,10 @@ $toalRegistros = count($detalleConsolidado);
                                     </tr>
                                     <tr>
                                         <td>
-                                            <div id="shipper">{{ ($value->shipper_json != '') ? $shipper_json->ciudad : ((isset($value->ship_ciudad)) ? $value->ship_ciudad : '&nbsp;') }}</div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div id="shipper">{{ ($value->shipper_json != '') ? $shipper_json->pais : ((isset($value->ship_pais)) ? $value->ship_pais : '&nbsp;') }}</div>
+                                            <div id="shipper">
+                                              {{ ($value->shipper_json != '') ? $shipper_json->ciudad : ((isset($value->ship_ciudad)) ? $value->ship_ciudad : '&nbsp;') }} -
+                                              {{ ($value->shipper_json != '') ? $shipper_json->pais : ((isset($value->ship_pais)) ? $value->ship_pais : '&nbsp;') }}
+                                            </div>
                                         </td>
                                     </tr>
                                 </table>
@@ -197,12 +202,10 @@ $toalRegistros = count($detalleConsolidado);
                                     </tr>
                                     <tr>
                                         <td>
-                                            <div id="consignee">{{ ($value->consignee_json != '') ? $consignee_json->ciudad : ((isset($value->cons_ciudad)) ? $value->cons_ciudad : '&nbsp;') }}</div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div id="consignee">{{ ($value->consignee_json != '') ? $consignee_json->pais : ((isset($value->cons_pais)) ? $value->cons_pais : '&nbsp;') }}</div>
+                                            <div id="consignee">
+                                              {{ ($value->consignee_json != '') ? $consignee_json->ciudad : ((isset($value->cons_ciudad)) ? $value->cons_ciudad : '&nbsp;') }} -
+                                              {{ ($value->consignee_json != '') ? $consignee_json->pais : ((isset($value->cons_pais)) ? $value->cons_pais : '&nbsp;') }}
+                                            </div>
                                         </td>
                                     </tr>
                                 </table>
@@ -219,7 +222,9 @@ $toalRegistros = count($detalleConsolidado);
                                     </tr>
                                     <tr>
                                         <td>
-                                            <div id="contiene"><strong>PA:</strong>  {{-- {{ $value->pa }} --}} {{ $value->contenido2 }}
+                                            <div id="contiene">
+                                              <strong>PA:</strong>
+                                               {{ $value->pa }} {{ $value->contenido2 }}
                                                 <?php
                                                 $cant = strlen($value->contenido2);
                                                 for ($i = 1; $i + $cant <= 110; $i++) {

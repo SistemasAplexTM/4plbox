@@ -103,6 +103,7 @@
         font-size: 9px;
     }
 </style>
+
 <!--<a class="btn"  onclick="print()" id="imprimir" ><i class="icon-print"></i> Imprimir Chrome</a>-->
 <table  cellspacing="0" cellpadding="0" id="tableContainer" border="0">
     <tr>
@@ -115,11 +116,11 @@
     </tr>
     <tr>
         <td colspan="2"><div id="dirAgencia">{{ $documento->agencia_dir }}</div></td>
-        <td colspan="2"><div id="masterawb">Master AWB: {{ $documento->master_id }}</div></td>
+        <td colspan="2"><div id="masterawb">Master AWB: {{ $documento->num_master }}</div></td>
     </tr>
     <tr>
         <td colspan="2"><div id="localAgencia">{{ $documento->agencia_ciudad }}, {{ $documento->agencia_depto }}. {{ $documento->agencia_zip }}</div></td>
-        <td colspan="2"><div id="numManifiesto">N° @lang('general.manifest'): {{ $documento->id }}</div></td>
+        <td colspan="2"><div id="numManifiesto">N° @lang('general.manifest'): {{ $documento->consecutivo }}</div></td>
     </tr>
     <tr>
         <td colspan="2"><div id="paisAgencia">{{ $documento->agencia_pais }}</div></td>
@@ -142,7 +143,7 @@
             <div id="datosVuelo">@lang('general.flight_date'):</div>
         </td>
         <td>
-            <div id="datosDestino"></div>
+            <div id="datosDestino">{{ $documento->fecha_vuelo }}</div>
         </td>
     </tr>
     <tr>
@@ -166,7 +167,7 @@
             <td style="width: 5%;"><div id="detalle">#@lang('general.bag')</div></td>
             <td style="width: 20%;"><div id="detalle">@lang('general.guide')</div></td>
             <td style=""><div id="detalle">@lang('general.shipper')</div></td>
-            <td style=""><div id="detalle">@lang('general.recipients')</div></td>
+            <td style=""><div id="detalle">@lang('general.consignee')</div></td>
             <td style="width: 10%;"><div id="detalle">@lang('general.declared')</div></td>
             <td style="width: 5%;"><div id="detalle">@lang('general.pieces')</div></td>
             <td style="width: 5%;"><div id="detalle">@lang('general.weight')</div></td>
@@ -182,7 +183,7 @@
         $cont = 0;
         ?>
         @if($detalleConsolidado)
-        {{ var_dump($detalleConsolidado) }}
+        {{-- {{ var_dump($detalleConsolidado) }} --}}
             @foreach($detalleConsolidado as $val)
             <?php
                 $shipper_json = '';
@@ -209,13 +210,13 @@
 
                     </td>
                     <td>
-                        <div id="remitente">{{ ($val->shipper_json) ? $shipper_json->nombre : $val->nom_ship }}</div>
+                        <div id="remitente">{{ ($val->shipper_json) ? $shipper_json->nombre : $val->ship_nomfull }}</div>
                         <div id="remitente">{{ ($val->shipper_json) ? $shipper_json->direccion : $val->dir_ship }}</div>
                         <div id="remitente">{{ ($val->shipper_json) ? $shipper_json->telefono : $val->tel_ship }}</div>
                         <div id="remitente">{{ ($val->shipper_json) ? $shipper_json->ciudad : $val->ciu_ship }} / {{ ($val->shipper_json) ? $shipper_json->pais : $val->pais_ship }}</div>
                     </td>
                     <td>
-                        <div id="destinatario">{{ ($val->consignee_json) ? $consignee_json->nombre : $val->nom_cons }}</div>
+                        <div id="destinatario">{{ ($val->consignee_json) ? $consignee_json->nombre : $val->cons_nomfull }}</div>
                         <div id="destinatario">{{ ($val->consignee_json) ? $consignee_json->direccion : $val->dir_cons }}</div>
                         <div id="destinatario">{{ ($val->consignee_json) ? $consignee_json->telefono : $val->tel_cons }}</div>
                         <div id="destinatario">{{ ($val->consignee_json) ? $consignee_json->ciudad : $val->ciu_cons }} / {{ ($val->consignee_json) ? $consignee_json->pais : $val->pais_cons }}</div>
@@ -268,11 +269,11 @@
                         <td></td>
                         <td></td>
                         <td style="text-align: center;font-weight: bold;">{{ $totPiezas }}</td>
-                        <td colspan="2" style="text-align: center;font-weight: bold;">{{ $peso }}</td>
+                        <td colspan="2" style="text-align: center;font-weight: bold;">{{ round($peso, 2) }}</td>
                     </tr>
                     <tr>
                         <td style="text-align: center;font-weight: bold;">@lang('general.total_bag')</td>
-                        <td style="text-align: center;font-weight: bold;">@lang('total_guides')</td>
+                        <td style="text-align: center;font-weight: bold;">@lang('general.total_guides')</td>
                         <td style="text-align: center;font-weight: bold;"></td>
                         <td style="text-align: center;font-weight: bold;"></td>
                         <td style="text-align: center;font-weight: bold;"></td>

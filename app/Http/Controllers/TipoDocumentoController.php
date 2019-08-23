@@ -240,7 +240,7 @@ class TipoDocumentoController extends Controller
       $where = array(['a.deleted_at', null]);
 
       if(!Auth::user()->isRole('admin')){
-        $where[] = ['a.id', '<>', 3];
+        // $where[] = ['a.id', '<>', 3];
       }
         $data = DB::table('tipo_documento as a')
             ->leftjoin('plantillas_correo as b', 'a.email_plantilla_id', 'b.id')

@@ -4,20 +4,44 @@
 //var wcppGetPrintersDelay_ms = 0;
 const wcppGetPrintersTimeout_ms = 100000; //5 sec
 const wcppGetPrintersTimeoutStep_ms = 500; //0.5 sec
+var clientPrinters = '';
 function wcpGetPrintersOnSuccess() {
+  var l = Ladda.create(document.querySelector('.ladda-button'));
+  l.start();
+  $('.load_printer').attr('disabled');
   // Display client installed printers
   if (arguments[0].length > 0) {
-    var p = arguments[0].split("|");
-    var options = '';
-    for (var i = 0; i < p.length; i++) {
-        options += '<option value="'+p[i]+'">' + p[i] + '</option>';
+    // var p = arguments[0].split("|");
+    // var options = '';
+    // for (var i = 0; i < p.length; i++) {
+    //     options += '<option value="'+p[i]+'">' + p[i] + '</option>';
+    // }
+    // $('#installedPrinterName').html(options);
+    // $('#installedPrinterName1').html(options);
+    if (JSON) {
+        try {
+            clientPrinters = JSON.parse(arguments[0]);
+            if (clientPrinters.error) {
+                alert(clientPrinters.error)
+            } else {
+                var options = '';
+                for (var i = 0; i < clientPrinters.length; i++) {
+                    options += '<option>' + clientPrinters[i].name + '</option>';
+                }
+                // $('#lstPrinters').html(options);
+                $('#installedPrinterName').html(options);
+                $('#installedPrinterName1').html(options);
+            }
+        } catch (e) {
+            alert(e.message)
+        }
     }
-    $('#installedPrinterName').html(options);
-    $('#installedPrinterName1').html(options);
-
+    l.stop();
+    // $('.load_printer').attr('disabled', false);
     objVue.getPrint();
 
   } else {
+    l.stop();
     alert("No printers are installed in your system.");
   }
 }
@@ -37,10 +61,8 @@ function wcppDetectOnSuccess(){
     if(wcppVer.substring(0, 1) == "4"){
       // window.reload;
       // $('#msgInProgress').hide();
-      Javascript:jsWebClientPrint.getPrinters();
       $('#msgInProgress').hide();
       $('#detected').css('display', 'block');
-
     }else{
       console.log('ELSE');
       wcppDetectOnFailure();
@@ -48,7 +70,6 @@ function wcppDetectOnSuccess(){
 }
 
 function wcppDetectOnFailure() {
-  console.log('sadasdas');
     // It seems WCPP is not installed at the client side
     // ask the user to install it
     $('#msgInProgress').hide();

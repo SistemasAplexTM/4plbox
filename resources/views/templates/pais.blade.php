@@ -25,12 +25,12 @@
                     <div class="ibox-title">
                         <h5>@lang('general.country_registration')</h5>
                         <div class="ibox-tools">
-                            
+
                         </div>
                     </div>
                     <div class="ibox-content">
                         <!--***** contenido ******-->
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                 <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.descripcion}">
@@ -45,7 +45,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                 <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.prefijo}">
@@ -67,7 +67,7 @@
                     </div>
                 </div>
             </div>
-        </form>
+
         <div class="col-lg-7">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
@@ -98,10 +98,11 @@
                                 </tr>
                             </tfoot>
                         </table>
-                    </div>             
+                    </div>
                 </div>
             </div>
         </div>
+        </form>
     </div>
 @endsection
 

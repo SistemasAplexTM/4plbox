@@ -18,10 +18,10 @@ $(document).ready(function() {
                     var params = [
                         full.id, +full.agencia_id, "'" + full.nombre + "'", "'" + full.subject + "'", "'" + full.descripcion_plantilla + "'", "'" + full.otros_destinatarios + "'", full.enviar_archivo,
                     ];
-                    var btn_edit = "<a onclick=\"edit(" + params + ")\" class='btn btn-outline btn-success btn-xs' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit'></i></a> ";
+                    var btn_edit = "<a onclick=\"edit(" + params + ")\" class='edit_btn' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fal fa-pencil fa-lg'></i></a> ";
                 }
                 if (permission_delete) {
-                    var btn_delete = " <a onclick=\"eliminar(" + full.id + "," + true + ")\" class='btn btn-outline btn-danger btn-xs' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-trash'></i></a> ";
+                    var btn_delete = " <a onclick=\"eliminar(" + full.id + "," + true + ")\" class='delete_btn' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fal fa-trash-alt fa-lg'></i></a> ";
                 }
                 return btn_edit + btn_delete;
             }
@@ -63,8 +63,29 @@ var objVue = new Vue({
         editar: 0,
         formErrors: {},
         listErrors: {},
+        testingCode: '',
     },
     methods: {
+        copyTestingCode (val) {
+          this.testingCode = val;
+          setTimeout(function () {
+            let testingCodeToCopy = document.querySelector('#testing-code')
+            testingCodeToCopy.setAttribute('type', 'text')    // 不是 hidden 才能複製
+            testingCodeToCopy.select()
+
+            try {
+              var successful = document.execCommand('copy');
+              var msg = successful ? 'successful' : 'unsuccessful';
+              toastr.success('Copiado correctamente');
+            } catch (err) {
+              toastr.warning('Ops! No se copio correctamente.');
+            }
+
+            /* unselect the range */
+            testingCodeToCopy.setAttribute('type', 'hidden')
+            window.getSelection().removeAllRanges()
+          }, 100);
+        },
         resetForm: function() {
             this.id = '';
             this.agencia_id = '';

@@ -2,7 +2,7 @@ $(document).ready(function() {
     $('#modalParties').on('hidden.bs.modal', function() {
         if($('#collapseOne').hasClass('in')){
             $('#open_collapse').click();
-            $('#open_collapse').html('<i class="fa fa-plus"></i> Crear nuevo');
+            $('#open_collapse').html('<i class="fal fa-plus"></i> Crear nuevo');
         }
         objVue.cancelPartie();
     });
@@ -57,7 +57,10 @@ var objVue = new Vue({
         //
     },
     created: function() {
-        if ($('#bill_id').val() != null && $('#bill_id').val() != '') {
+        if ($('#consolidado_id').val() != 'null' && $('#consolidado_id').val() != '') {
+          this.consolidado_id = $('#consolidado_id').val();
+        }
+        if ($('#bill_id').val() != 'null' && $('#bill_id').val() != '') {
             this.bill_id = $('#bill_id').val();
             this.editar = true;
             this.edit(this.bill_id);
@@ -65,6 +68,7 @@ var objVue = new Vue({
     },
     data: {
         bill_id: null,
+        consolidado_id: null,
         zip: null,
         document_number: null,
         num_bl: null,
@@ -115,7 +119,7 @@ var objVue = new Vue({
     },
     methods: {
         print(){
-            window.open("../imprimir/" + this.bill_id + '/' + true, '_blank');
+            window.open("/bill/imprimir/" + this.bill_id + '/' + true, '_blank');
         },
         addDetail: function() {
             this.detail.push({
@@ -158,11 +162,7 @@ var objVue = new Vue({
                 $('#tbl-modalParties tbody').empty();
                 $('#tbl-modalParties').dataTable().fnDestroy();
             }
-            if(this.editar){
-                var url = '../getParties';
-            }else{
-                var url = '../bill/getParties';
-            }
+            var url = '/bill/parties/getParties';
             $('#tbl-modalParties').DataTable({
                 ajax: url,
                 columns: [{
@@ -187,14 +187,15 @@ var objVue = new Vue({
                             var params = [
                                 full.id, "'" + full.display_name + "'", "'" + full.account_number + "'", "'" + full.zip + "'", "'" + texto + "'"
                             ];
-                            var btn_edit = "<a onclick=\"editPartieForm(" + params + ")\" class='btn btn-outline btn-success btn-xs edit' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit'></i></a> ";
+                            var btn_edit = "<a onclick=\"editPartieForm(" + params + ")\" class='edit' data-toggle='tooltip' data-placement='top' title='Editar' style='color:#FFC107;''><i class='fal fa-pencil fa-lg'></i></a> ";
+
                         // }
                         // if (permission_delete) {
-                            var btn_delete = " <a onclick=\"deletePartie(" + full.id + ")\" id='delete_"+full.id+"' class='btn btn-outline btn-danger btn-xs delete_' data-toggle='tooltip' data-placement='top' title='Confirmar eliminado'><i class='fa fa-check'></i></a> ";
-                            var btn_cancel = " <a onclick=\"cancelDeletePartie(" + full.id + ")\" id='delete_c"+full.id+"' class='btn btn-outline btn-default btn-xs delete_c' data-toggle='tooltip' data-placement='top' title='Cancelar'><i class='fa fa-times'></i></a> ";
-                            var btn_confirm_delete = " <a onclick=\"confirmDeletePartie(" + full.id + ")\" id='delete_ok"+full.id+"' class='btn btn-outline btn-danger btn-xs delete_ok' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-trash'></i></a> ";
+                            var btn_delete = " <a onclick=\"deletePartie(" + full.id + ")\" id='delete_"+full.id+"' class='btn btn-outline btn-danger btn-xs delete_' data-toggle='tooltip' data-placement='top' title='Confirmar eliminado'><i class='fal fa-check'></i></a> ";
+                            var btn_cancel = " <a onclick=\"cancelDeletePartie(" + full.id + ")\" id='delete_c"+full.id+"' class='btn btn-outline btn-default btn-xs delete_c' data-toggle='tooltip' data-placement='top' title='Cancelar'><i class='fal fa-times'></i></a> ";
+                            var btn_confirm_delete = " <a onclick=\"confirmDeletePartie(" + full.id + ")\" id='delete_ok"+full.id+"' class='delete_btn delete_ok' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fal fa-trash-alt fa-lg'></i></a> ";
                         // }
-                            var btn_selected = " <a onclick=\"seleccionarPartie('" + partie +"', " + params +")\" class='btn btn-outline btn-primary btn-xs selected' data-toggle='tooltip' data-placement='top' title='Seleccionar'><i class='fa fa-check'></i></a> ";
+                            var btn_selected = " <a onclick=\"seleccionarPartie('" + partie +"', " + params +")\" class='btn btn-outline btn-primary btn-xs selected' data-toggle='tooltip' data-placement='top' title='Seleccionar'><i class='fal fa-check'></i></a> ";
                         return btn_selected + btn_edit + btn_delete + btn_confirm_delete + btn_cancel;
                     },
                     width: 150,
@@ -202,7 +203,8 @@ var objVue = new Vue({
             });
         },
         store: function() {
-            axios.post('../bill', {
+            axios.post('/bill', {
+                'consolidado_id'    : this.consolidado_id,
                 'document_number'   : this.document_number,
                 'num_bl'            : this.num_bl,
                 'zip'               : this.zip,
@@ -233,11 +235,12 @@ var objVue = new Vue({
             }).then(response => {
                 toastr.success('Registro exitoso.');
                 location.reload(true);
-                window.open("imprimir/" + response.data.id_bill + '/' + true,'_blank');
+                window.open("/bill/imprimir/" + response.data.id_bill + '/' + true,'_blank');
             });
         },
         update: function(){
-            axios.put('../' + this.bill_id, {
+            axios.put('/bill/' + this.bill_id, {
+                'consolidado_id'    : this.consolidado_id,
                 'document_number'   : this.document_number,
                 'num_bl'            : this.num_bl,
                 'zip'               : this.zip,
@@ -306,9 +309,9 @@ var objVue = new Vue({
         },
         cancel: function() {
             if(this.editar){
-                window.location.href = '../';
+                window.location.href = '/bill';
             }else{
-                window.location.href = '../bill';
+                window.location.href = '/bill';
             }
         },
         seleccionarPartie(partie, data){
@@ -326,7 +329,7 @@ var objVue = new Vue({
             }
             if($('#collapseOne').hasClass('in')){
                 $('#open_collapse').click();
-                $('#open_collapse').html('<i class="fa fa-plus"></i> Crear nuevo');
+                $('#open_collapse').html('<i class="fal fa-plus"></i> Crear nuevo');
             }
             $('#modalParties').modal('hide');
         },
@@ -342,14 +345,14 @@ var objVue = new Vue({
             if(!$('#collapseOne').hasClass('in')){
                 $('#open_collapse').click();
             }
-            $('#open_collapse').html('<i class="fa fa-edit"></i> Editar');
+            $('#open_collapse').html('<i class="fal fa-edit"></i> Editar');
         },
         addPartie(){
             let me = this;
             if(this.editar){
-                var url = '../createPartie';
+                var url = '/createPartie';
             }else{
-                var url = '../bill/createPartie';
+                var url = '/bill/createPartie';
             }
             axios.post(url, {
                 'display_name'   : this.display_name,
@@ -366,9 +369,9 @@ var objVue = new Vue({
         editPartie(){
             let me = this;
             if(this.editar){
-                var url = '../editPartie';
+                var url = '/editPartie';
             }else{
-                var url = '../bill/editPartie';
+                var url = '/bill/editPartie';
             }
             axios.put(url + '/'+ this.id_partie, {
                 'display_name'   : this.display_name,
@@ -392,9 +395,9 @@ var objVue = new Vue({
         deletePartie: function(data) {
             let me = this;
             if(this.editar){
-                var url = '../destroyPartie';
+                var url = '/destroyPartie';
             }else{
-                var url = '../bill/destroyPartie';
+                var url = '/bill/destroyPartie';
             }
             axios.delete(url + '/' + data.id).then(response => {
                 toastr.success('Registro eliminado correctamente.');

@@ -51,7 +51,8 @@ class AgenciaController extends Controller
         //obtenemos el campo file definido en el formulario
         if ($request->file('logo')) {
             //obtenemos el nombre del archivo
-            $data->logo = trim($request->file('logo')->getClientOriginalName());
+            $extension = trim($request->file('logo')->getClientOriginalExtension());
+            $data->logo = base64_encode(trim($request->file('logo')->getClientOriginalName()) . date('Y-m-d hh:mm:ss')) . '.'.$extension;
             //indicamos que queremos guardar un nuevo archivo en el disco local
             \Storage::disk('public')->put('storage/'.$data->logo, \File::get($request->file('logo'))); //se guardara en 'public/storage'
         }
@@ -92,13 +93,13 @@ class AgenciaController extends Controller
     public function update(AgenciaRequest $request, $id)
     {
 
-      $configMC = $this->getAplexConfig('agency_mc');
-      $value = array(
-        'list' => [array(
-          'id_agency' => $id,
-          'id_list' => $request->all()['listId']
-        )]
-      );
+      // $configMC = $this->getAplexConfig('agency_mc_'.$id);
+      // $value = array(
+      //   'list' => [array(
+      //     'id_agency' => $id,
+      //     'id_list' => $request->all()['listId']
+      //   )]
+      // );
       // $this->createAplexConfig('agency_mc', $value, $configMC);
       //
       // echo '<pre>';
@@ -123,7 +124,8 @@ class AgenciaController extends Controller
         //obtenemos el campo file definido en el formulario
         if ($request->file('logo')) {
             //obtenemos el nombre del archivo
-            $requestData['logo'] = trim($request->file('logo')->getClientOriginalName());
+            $extension = trim($request->file('logo')->getClientOriginalExtension());
+            $requestData['logo'] = base64_encode(trim($request->file('logo')->getClientOriginalName()) . date('Y-m-d hh:mm:ss')) . '.'.$extension;
             //indicamos que queremos guardar un nuevo archivo en el disco local
             \Storage::disk('public')->put('storage/'.$requestData['logo'], \File::get($request->file('logo'))); //se guardara en 'public/storage'
         }
@@ -133,7 +135,8 @@ class AgenciaController extends Controller
         /* REGISTRAR EL DETALLE */
         $agencia_id = $data->id;
 
-        for ($i = 0; $i < count($request->input('servicios_id')); $i++) {
+        if ($request->input('servicios_id') != '') {
+          for ($i = 0; $i < count($request->input('servicios_id')); $i++) {
             $detalle                   = new AgenciaDetalle;
             $detalle->agencia_id       = $agencia_id;
             $detalle->servicios_id     = $request->input('servicios_id')[$i];
@@ -141,6 +144,7 @@ class AgenciaController extends Controller
             $detalle->tarifa_agencia   = $request->input('tarifa_agencia')[$i];
             $detalle->seguro           = $request->input('seguro')[$i];
             $detalle->save();
+          }
         }
 
         return redirect()->route('agencia.index');
@@ -169,25 +173,12 @@ class AgenciaController extends Controller
         return AplexConfig::where('key', $key)->first();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $data = Agencia::findOrFail($id);
         $data->delete();
     }
 
-    /**
-     * Actualiza el campo deleted_at del registro seleccionado.
-     *
-     * @param  int  $id
-     * @param  boolean  $deleteLogical
-     * @return \Illuminate\Http\Response
-     */
     public function delete($id, $logical, $table = null)
     {
 
@@ -217,12 +208,6 @@ class AgenciaController extends Controller
         }
     }
 
-    /**
-     * Restaura registro eliminado
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function restaurar($id)
     {
         $data             = Agencia::findOrFail($id);
@@ -230,11 +215,6 @@ class AgenciaController extends Controller
         $data->save();
     }
 
-    /**
-     * Obtener todos los registros de la tabla para el datatable
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function getAll()
     {
         $sql = DB::table('agencia')
@@ -286,13 +266,6 @@ class AgenciaController extends Controller
         return \Response::json($answer);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function updateDetail(Request $request, $id)
     {
         try {
@@ -319,8 +292,13 @@ class AgenciaController extends Controller
         }
     }
 
-     public function getAllUrls($id_agencia)
+    public function getAllUrls($id_agencia)
     {
         return \DataTables::of(DB::table('agencia_urls_publicas')->where([['deleted_at', NULL], ['agencia_id', $id_agencia]])->get())->make(true);
+    }
+
+    public function getSelectBranch()
+    {
+      return DB::table('transportador')->select('id', 'nombre as name')->where([['deleted_at', null], ['consignee', 1]])->get();
     }
 }

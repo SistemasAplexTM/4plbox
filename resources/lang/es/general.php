@@ -1,13 +1,14 @@
 <?php
 
 return [
+    'freight' => 'Flete',
     //resources/views/templates/aplexConfig
     'general' => 'General',
     'configuration' => 'Configuración',
 
     //resources/views/templates/bill/create
 
-    'register_of_bill_of_lading'=>'Registro de conocimiento de embarque',
+    'register_of_bill_of_lading'=>'Registro de Bill of Lading',
     'create_new'=>'Crear nuevo',
     'display_name'=>'Nombre para mostrar',
     'account_number'=>'Número de cuenta',
@@ -69,6 +70,7 @@ return [
     'use_zopim '=>'Usar Zopim ',
     'description'=>'Descripción',
     'view_client'=>'Alerta para Cliente',
+    'transportadora'=>'Transportadora',
     'tracking'=>'Tracking',
     'locker_registration'=>'Registro casillero ',
     'pre_alert'=>'Pre alert',
@@ -356,7 +358,7 @@ return [
 
      //billPdf
 
-     'bill_of_lading'=>'Guía de carga',
+     'bill_of_lading'=>'Bill of Lading',
 
       //considadoGuiasPdf
 
@@ -383,7 +385,7 @@ return [
      'customs'=>'Aduanas',
      'there_is_no_data'=>'No hay datos',
      'total_bag'=>'Total bolsas',
-     'total_guides'=>'Total guidas',
+     'total_guides'=>'Total guias',
      'total_pieces'=>'Total piezas',
      'total_weight'=>'Total peso',
 

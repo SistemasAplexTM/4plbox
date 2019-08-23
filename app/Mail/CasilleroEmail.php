@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class CasilleroEmail extends Mailable
+class CasilleroEmail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -35,6 +35,6 @@ class CasilleroEmail extends Mailable
     {
         return $this->from($this->from_self)
         ->subject($this->subject_msn)
-        ->view('prueba');
+        ->view('emailTemplate');
     }
 }

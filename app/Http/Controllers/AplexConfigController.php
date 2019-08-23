@@ -27,22 +27,31 @@ class AplexConfigController extends Controller
         array('icon' => 'road', 'route' => 'transport/aeropuertos', 'url' => true, 'desc' => 'layouts.airports', 'perm' => 'transport.index'),
         array('icon' => 'share-alt', 'route' => 'servicios.index', 'url' => false, 'desc' => 'layouts.services', 'perm' => 'servicios.index'),
         array('icon' => 'reply-all', 'route' => 'administracion/5', 'url' => true, 'desc' => 'layouts.type_boardings', 'perm' => 'administracion.index'),
-        array('icon' => 'shopping-bag', 'route' => 'administracion/6', 'url' => true, 'desc' => 'layouts.type_packagings', 'perm' => 'administracion.index')
+        array('icon' => 'shopping-bag', 'route' => 'administracion/6', 'url' => true, 'desc' => 'layouts.type_packagings', 'perm' => 'administracion.index'),
+        array('icon' => 'dollar-sign', 'route' => 'administracion/12', 'url' => true, 'desc' => 'layouts.cost', 'perm' => 'administracion.index')
       );
 
       $menu2 = array(
         array('icon' => 'cog', 'route' => 'settings', 'url' => false, 'desc' => 'general.general', 'perm' => 'administracion.index'),
         array('icon' => 'store', 'route' => 'agencia.index', 'url' => false, 'desc' => 'layouts.agencies', 'perm' => 'agencia.index'),
+        array('icon' => 'users-class', 'route' => 'empleado.index', 'url' => false, 'desc' => 'layouts.employees', 'perm' => 'agencia.index'),
         array('icon' => 'money-bill', 'route' => 'arancel.index', 'url' => false, 'desc' => 'layouts.tariffs', 'perm' => 'arancel.index'),
         array('icon' => 'box-check', 'route' => 'status.index', 'url' => false, 'desc' => 'layouts.status', 'perm' => 'status.index'),
         array('icon' => 'truck', 'route' => 'transportador.index', 'url' => false, 'desc' => 'layouts.transporters', 'perm' => 'transportador.index'),
-        array('icon' => 'street-view', 'route' => 'ciudad.index', 'url' => false, 'desc' => 'layouts.cities', 'perm' => 'ciudad.index'),
-        array('icon' => 'globe', 'route' => 'departamento.index', 'url' => false, 'desc' => 'layouts.dptos_states', 'perm' => 'departamento.index'),
+        array('icon' => 'truck-container', 'route' => 'transportadoras_locales', 'url' => true, 'desc' => 'layouts.local_transporters', 'perm' => 'transportador.index'),
         array('icon' => 'map-marker', 'route' => 'pais.index', 'url' => false, 'desc' => 'layouts.countrieses', 'perm' => 'pais.index'),
+        array('icon' => 'map-marked', 'route' => 'departamento.index', 'url' => false, 'desc' => 'layouts.dptos_states', 'perm' => 'departamento.index'),
+        array('icon' => 'street-view', 'route' => 'ciudad.index', 'url' => false, 'desc' => 'layouts.cities', 'perm' => 'ciudad.index'),
         array('icon' => 'file', 'route' => 'tipoDocumento.index', 'url' => false, 'desc' => 'layouts.document_types', 'perm' => 'tipoDocumento.index'),
+      );
+
+      $menu3 = array(
+        array('icon' => 'users', 'route' => 'user.index', 'url' => false, 'desc' => 'layouts.users', 'perm' => 'user.index'),
+        array('icon' => 'sitemap', 'route' => 'rol.index', 'url' => false, 'desc' => 'layouts.roles', 'perm' => 'rol.index'),
+        array('icon' => 'address-book', 'route' => 'accessControl.index', 'url' => false, 'desc' => 'layouts.access_controls', 'perm' => 'rol.index'),
         array('icon' => 'history', 'route' => 'logActivity.index', 'url' => false, 'desc' => 'layouts.logs', 'perm' => 'logActivity.index'),
       );
-      return view('templates.aplexConfig.config', compact('menu','menu2'));
+      return view('templates.aplexConfig.config', compact('menu','menu2', 'menu3'));
     }
 
     public function get($key){

@@ -42,6 +42,17 @@
       0 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
     ),
   ),
+  'htmlmin/htmlmin' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'HTMLMin\\HTMLMin\\HTMLMinServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'HTMLMin' => 'HTMLMin\\HTMLMin\\Facades\\HTMLMin',
+    ),
+  ),
   'laracasts/utilities' => 
   array (
     'providers' => 
@@ -94,6 +105,13 @@
     'aliases' => 
     array (
       'Mailchimp' => 'NZTim\\Mailchimp\\MailchimpFacade',
+    ),
+  ),
+  'rap2hpoutre/fast-excel' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Rap2hpoutre\\FastExcel\\Providers\\FastExcelServiceProvider',
     ),
   ),
   'spatie/laravel-backup' => 

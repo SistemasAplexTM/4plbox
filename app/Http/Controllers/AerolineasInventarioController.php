@@ -89,7 +89,7 @@ class AerolineasInventarioController extends Controller
         DB::table('aerolineas_inventario')->where('id', $id)->delete();
     }
 
-    public function getAll(){
+    public function getAll(Request $request){
         $data = DB::table('aerolineas_inventario AS a')
         ->join('aerolineas_aeropuertos AS b', 'b.id', 'a.aerolinea_id')
         ->select(
@@ -98,17 +98,25 @@ class AerolineasInventarioController extends Controller
             'a.aerolinea_id',
             'a.guia',
             'a.usado',
-            'b.nombre AS aerolinea'
+            'b.nombre AS aerolinea',
+            'b.codigo'
         )
+        ->when($request->used, function ($query, $data) {
+          return $query->where('a.usado', $data);
+        }, function ($query, $data)
+        {
+          return $query->where('a.usado', 0);
+        })
         ->get();
         return DataTables::of($data)->make(true);
     }
 
     public function getByAerolinea($id){
         $data = DB::table('aerolineas_inventario AS a')
+        ->join('aerolineas_aeropuertos AS b', 'b.id', 'a.aerolinea_id')
         ->select(
             'a.id',
-            'a.guia AS nombre'
+            DB::raw("CONCAT(b.codigo, ' ', a.guia) AS nombre")
         )
         ->where('aerolinea_id', $id)
         ->where('usado', 0)

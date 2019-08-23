@@ -21,7 +21,7 @@ class WarehouseEmail extends Mailable
      *
      * @return void
      */
-    public function __construct($param, $pdf, $from_self = array('address' => 'sac@4plbox.com', 'name' => '4plbox'), $subject_msn = 'Mensaje 4plbox')
+    public function __construct($param, $from_self = array('address' => 'sac@4plbox.com', 'name' => '4plbox'), $subject_msn = 'Mensaje 4plbox', $pdf = false)
     {
         $this->param = $param;
         $this->from_self = $from_self;
@@ -42,14 +42,14 @@ class WarehouseEmail extends Mailable
         if($this->pdf){
             return $this->from($this->from_self['address'])
             ->subject($this->subject_msn)
-            ->view('prueba')
+            ->view('emailTemplate')
             ->attachData(base64_decode($this->pdf), $this->pdf_name.'.pdf', [
                     'mime' => 'application/pdf',
             ]);
         }else{
             return $this->from($this->from_self)
             ->subject($this->subject_msn)
-            ->view('prueba');
+            ->view('emailTemplate');
         }
 
     }

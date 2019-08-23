@@ -1,0 +1,90 @@
+﻿2019-07-24
+1. Limpiar el formulario modal cuando se crear un warehouse desde la pantalla recibo de tracking.===============================
+2. Revisar por qué la consulta global de tracking muestra 3 tracking cuando busco uno.==========================================
+3. En la pantalla de prealertas permitir que el cliente ingrese el contenido también. ==========================================
+4. Colocar un archivo Excel de ejemplo de como debe ser el archivo para actualizarstatus masivamente.===========================
+
+2019-08-05
+5. El logo cuando guarde que cambie el nombre ==================================================================================
+1. Revisar en los status que si se habilita un envio de email ==================================================================
+
+2019-08-06
+1. Revision del boton de impresion de la grilla de consolidados ya que estaba diferente del boton de Impresion
+  de la grilla de documentos. Se acomodo y se ajustaron los botones de las grillas a la izquierda para mejor visualizacion.======
+2. Revisar el badget de los pendientes que me muestra una info al iniciar y otra al seleccionarlo o mostrarlos todos=============
+2. La ayuda del inventario de la master =========================================================================================
+
+2019-08-09
+-. los cards de la configuracion que valla centrada y meter la seguridad alli.===================================================
+-. Organizar mejor los cards, colocar el titulo visible y con icono.=============================================================
+-. los iconos de todas las grillas que sean iguales.=============================================================================
+
+
+2019-8-12
+1. En CONSOLIDADO los botones y el mensaje no aparecen hasta que el comsolidado tenga un registro. ==============================
+2. En CONSOLIDADO el mensaje de error debe salir arriba
+3. Enm CONSOLIDADO la validación que se realizó es solo si el destino es para el país COLOMBIA.==================================
+5. En BL y AWB si los consolidados se están mostrando de accuerdo al medio de envío. ============================================
+6. En CONSOLIDADO Los botones de descargar Excel salen solamente si el destino es COLOMBIA. =====================================
+
+2019-08-13
+-. colocar el icono del estatus en el listado de estatus del documento (cajita).=================================================
+-. Organizar busqueda por cliente en la grilla de master. =======================================================================
+-. En la pestaña de courier al aplicar el estatus, que ya este seleccionado y bloqueado el campo de seleccionar warehouse.=======
+-. en el modal de cambiar estatus del consolidado, intercambiar las pociciones de los tabs.======================================
+-. colocar iconos al select de los estatus del consolidado en la grilla principal.===============================================
+4. En CONFIGURACIÓN Hay un error al ir a las impresoras.=========================================================================
+
+2019-08-14
+-. Se modifico tabla monedas de la BD y se agregaron registros. =================================================================
+-. Se modifico tabla de master_costos y se agregaron registros.==================================================================
+-. Se acomodod formulario de costos master y se probo funcionalidad.=============================================================
+
+2019-08-15
+-. Se corrigio registro de BL.===================================================================================================
+-. se corrigio la modal de registrar shipper y consignee del BL ya que la grilla de registros no cargaba debido a las rutas.=====
+-. se acomodaron los iconos y botones en la grilla del BL y el formulario.=======================================================
+-. se acomodo la impresion del BL porque salian dos paginas.=====================================================================
+-. se corrigio vista de la modal de agregar costos de la master. ================================================================
+-. agregar en la impresion de la guia (invoice) la columna en el detalle de la pieza que corresponde ej: P1, P2 =================
+-. despues de consolidado el documento, que no deje editar. =====================================================================
+-. cambiar los iconos por los pro. (consolidado) ================================================================================
+-. cambiar la forma de pago del documento en un componente modal, que elija el tipo de pago y si es COD guardar==================
+    y si es PP mostrar forma de pago y luego si guardar.=========================================================================
+
+2019-08-16
+-. cerrar consolidado desde grilla.==============================================================================================
+-. comente la linea 169 de agregar un id de estatus en la tabla pivot_wrh_guia ya que creo que no se necesita ese campo==========
+-. coloque la forma de pago null en la tabla pivot_wrh_guia======================================================================
+-. mostrar todos los recibos al buscar guias en el consolidado.==================================================================
+-. modal subir archivo de estatus y filtrar documento, mejorados=================================================================
+
+2019-08-20
+-. en las url publicas no mostrar url casillero.=================================================================================
+-. Que el numero de la master se pueda escribir si no tienen inventario en el momento ===========================================
+-. Acomodar los select de la creacion de master con los select de element =======================================================
+1. En CARGA QUe en la campanita aparezcan los prealertas de las personas.
+2. En Carga Mostrar un reporte de las personas que se registran a través de la web, mes a mes
+4. En CARGA En el Consignee y Shipper, colocar un campo adicional para correos y para teléfonos.
+5. En CARGA cuando me registro, selecciono la ciudad y en el + del teléfono no se ve el código del país
+-. agregar cargos adicionales por defecto en la configuración (descripcion, valor);
+-. Agregar boton en la forma de pago que diga '+ Cargos' y al lado texto 'Desea agregar cargos a esta factura?'
+   La palabra cargos que este subrayada y que al pasar el mouse por encima, muestre los cargos que vienen de la config
+
+
+-. crear boton de guardar en shipper y consignee dentro del documento para asegurar los datos registrados.
+-. en la ayuda del logo de la agencia que diga 170px por 60px y a si debe registrar el logo.
+
+-. ***el tab recibido de cambiar status en el consolidado pasar a una vista sola, Logistica en Destino.
+   (despachar transportadora, despachar en los camiones, agregar status a las cajas etc).
+
+8. En RECIBOS DE CARGA, que se puedan imprimir en formatos de Guías MASTER y BL si es Marítimo.
+7. En EMAIL TEMPLATE, el logo debe ser variable, cada agencia envía email.
+10. Crear facturas para QuickBook.
+11. Exportar archivo para QuickBook.
+    Esto último lo está pidiendo un cliente nuevo que no conozco.
+    Pero nos recomendaron.
+
+
+-. Registrar shipper y consignee desde un componente aparte.. que se cree y se seleccione en el documento
+-. Dejar en la grilla las cajas que no están consolidadas.

@@ -165,16 +165,16 @@ function removeRowServices(index, idDetail) {
 }
 
 function editRowServices(index, idDetail) {
-    if ($('#btn_edit' + idDetail).attr('class') === 'btn btn-xs btn_edit btn-warning') {
+    if ($('#btn_edit' + idDetail).attr('class') === 'btn_edit edit_btn') {
         $('#tariA' + idDetail).removeAttr('readonly');
         $('#segu' + idDetail).removeAttr('readonly');
-        $('#btn_edit' + idDetail).removeClass('btn-warning');
-        $('#btn_edit' + idDetail).addClass('btn-primary');
-        $('#btn_edit' + idDetail).children().removeClass('fa-edit');
+        $('#btn_edit' + idDetail).removeClass('edit_btn');
+        $('#btn_edit' + idDetail).addClass('create_btn');
+        $('#btn_edit' + idDetail).children().removeClass('fa-pencil');
         $('#btn_edit' + idDetail).children().addClass('fa-check');
         $('#tariA' + idDetail).focus();
     } else {
-        if ($('#btn_edit' + idDetail).attr('class') === 'btn btn-xs btn_edit btn-primary') {
+        if ($('#btn_edit' + idDetail).attr('class') === 'btn_edit create_btn') {
             var id = idDetail;
             var tariA = $('#tariA' + idDetail).val();
             var segu = $('#segu' + idDetail).val();
@@ -189,10 +189,10 @@ function editRowServices(index, idDetail) {
             $('#tariA' + id).attr('readonly', 'readonly');
             $('#segu' + id).removeAttr('style');
             $('#segu' + id).attr('readonly', 'readonly');
-            $('#btn_edit' + id).removeClass('btn-primary');
-            $('#btn_edit' + id).addClass('btn-warning');
+            $('#btn_edit' + id).removeClass('create_btn');
+            $('#btn_edit' + id).addClass('edit_btn');
             $('#btn_edit' + id).children().removeClass('fa-check');
-            $('#btn_edit' + id).children().addClass('fa-edit');
+            $('#btn_edit' + id).children().addClass('fa-pencil');
         }
     }
 }

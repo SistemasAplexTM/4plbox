@@ -15,9 +15,9 @@
 	            <div class="modal-header">
 	                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 	                <h4 class="modal-title" id="myModalLabel">
-	                    Destinatario (Consignee) -> 
-	                    <label for="buscarF" class="control-label gcore-label-top"> 
-	                        Mostrar Todos: 
+	                    Destinatario (Consignee) ->
+	                    <label for="buscarF" class="control-label gcore-label-top">
+	                        Mostrar Todos:
 	                        <input type='checkbox' data-toggle="toggle" id='show-all-c' data-size='mini' data-on="Si" data-off="No" data-width="50" data-style="ios" data-onstyle="primary" data-offstyle="danger">
 	                    </label>
 	                </h4>
@@ -28,15 +28,15 @@
                             <thead>
                                 <tr>
                                     <th>Acción</th>
-                                    <th>Nombre</th> 
+                                    <th>Nombre</th>
                                     <th>Teléfono</th>
                                     <th>Ciudad</th>
-                                    <th>Zip</th>
+                                    <th>Correo</th>
                                     <th>Agencia</th>
                                 </tr>
                             </thead>
                         </table>
-                    </div> 
+                    </div>
 	            </div>
 	            <div class="modal-footer">
 	                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

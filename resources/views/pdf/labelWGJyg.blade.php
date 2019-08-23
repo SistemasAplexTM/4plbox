@@ -172,17 +172,18 @@
 ?>
 @foreach ($detalle as $value)
 <?php $contRegistros++ ?>
-<table border="0" cellpadding="0" cellspacing="0" id="reciboWarehouse" style="page-break-after:{{ ($contRegistros === $toalRegistros) ? 'avoid' : 'always' }}" width="100%">
+<table border="0" cellpadding="0" cellspacing="0" class="reciboWarehouse" id="reciboWarehouse" style="page-break-after:{{ ($contRegistros === $toalRegistros) ? 'avoid' : 'always' }}" width="100%">
     <tr>
         <td>
             <div class="fecha">
-                {{ $value->created_at->toFormattedDateString() }}
+                {{ substr($value->created_at, 0, -9) }}
             </div>
             <div class="agencia">
                 {{ $value->agencia }}
             </div>
         </td>
     </tr>
+
     <tr>
         <td>
             @if(env('APP_CLIENT') != 'worldcargo')
@@ -224,6 +225,7 @@
             </div>
         </td>
     </tr>
+
     <tr>
         <td>
             <div class="datosAdd">

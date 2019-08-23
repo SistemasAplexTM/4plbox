@@ -216,7 +216,8 @@ class ShipperController extends Controller
                     'localizacion.id AS localizacion_id',
                     'localizacion.nombre AS ciudad',
                     'agencia.descripcion AS agencia',
-                    'shipper.zip'
+                    'shipper.zip',
+                    'shipper.correo'
                 )
                 ->where($where)
                 ->orderBy('shipper.nombre_full');

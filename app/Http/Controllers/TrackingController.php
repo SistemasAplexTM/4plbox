@@ -7,9 +7,11 @@ use App\Tracking;
 use App\Prealerta;
 use Auth;
 use DataTables;
+use App\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Traits\sendEmailAlerts;
+use Illuminate\Support\Facades\Mail;
 
 class TrackingController extends Controller
 {
@@ -41,7 +43,6 @@ class TrackingController extends Controller
      */
     public function store(TrackingRequest $request)
     {
-
         try {
             $data             = (new Tracking)->fill($request->all());
             $data->agencia_id = Auth::user()->agencia_id;
@@ -61,8 +62,18 @@ class TrackingController extends Controller
                   "status" => 200,
               );
               if($request->consignee_id != null){
-                // $config = $this->getConfig('ingreso_tracking');
-                // $this->verifySendEmail($config->value, 4, $request->consignee_id, $request->codigo);
+                $config = $this->getConfig('ingreso_tracking');
+                $status = Status::where('id', 9)->first();// 9 es alerta de tracking
+                if($status){
+                  if($status->email === 1){
+                    if ($status->json_data != null) {
+                      $json_data = json_decode($status->json_data);
+                      if(isset($json_data->email_template_id)){
+                        $this->verifySendEmail($config->value, $json_data->email_template_id, $request->consignee_id, $request->codigo);
+                      }
+                    }
+                  }
+                }
               }
             } else {
                 $answer = array(
@@ -161,7 +172,6 @@ class TrackingController extends Controller
            $where[] = ['tracking.documento_detalle_id', null];
          }
        }
-
 
         $data = Tracking::leftJoin('consignee AS b', 'tracking.consignee_id', 'b.id')
             ->leftJoin('documento_detalle AS c', 'tracking.documento_detalle_id', 'c.id')

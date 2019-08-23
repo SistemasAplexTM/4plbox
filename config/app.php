@@ -65,7 +65,7 @@ return [
     |
      */
 
-    'timezone'        => 'UTC',
+    'timezone'        => 'America/Bogota',
 
     /*
     |--------------------------------------------------------------------------
@@ -183,7 +183,7 @@ return [
         Milon\Barcode\BarcodeServiceProvider::class,
         Caffeinated\Shinobi\ShinobiServiceProvider::class,
         Spatie\Backup\BackupServiceProvider::class,
-        BC\Laravel\DropboxDriver\ServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],
 
@@ -240,7 +240,8 @@ return [
         'DNS1D'        => Milon\Barcode\Facades\DNS1DFacade::class,
         'DNS2D'        => Milon\Barcode\Facades\DNS2DFacade::class,
         'LogActivity'  => App\Helpers\LogActivity::class,
-
+        'HTMLMin'      => HTMLMin\HTMLMin\Facades\HTMLMin::class,
+        'Excel'        => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
 ];

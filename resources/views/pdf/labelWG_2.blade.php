@@ -71,12 +71,13 @@
                 }
         </style>
     <body>
-        <?php 
+        <?php
             $cont = 0;
             $toalRegistros = count($detalle);
             $toalRegistros = 0;
             $contRegistros = 0;
             $piezas = 0;
+          
         ?>
         @foreach ($detalle as $value)
             <?php $piezas += $value->piezas ?>
@@ -185,8 +186,8 @@
                         <table border="1" cellpadding="0" cellspacing="0" class="tb_datos_carga" width="100%">
                             <tr>
                                 {{-- <td style="width: 25%;" rowspan="2">
-                                    
-                                    
+
+
                                 </td> --}}
                                 <td style="height: 150px;">
                                     <div class="des">

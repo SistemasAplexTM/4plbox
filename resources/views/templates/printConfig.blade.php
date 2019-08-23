@@ -26,7 +26,7 @@
         </div>
         <div class="ibox-content">
           <p>
-            En este módulo, usted podrá configurar lasimpresoras para Labels y para documentos, por favis siga las instrucciones.
+            En este módulo, usted podrá configurar las impresoras para Labels y para documentos, por favor siga las instrucciones.
           </p>
           <div id="msgInProgress">
             <div id="mySpinner" style="width:32px;height:32px"></div>
@@ -52,6 +52,13 @@
             </div>
           </div>
             <div id="detected" style="display:none;">
+              <div class="row">
+                  <div class="col-lg-12">
+                    <div class="col-md-3">
+                        <button type="button" onclick="javascript:jsWebClientPrint.getPrintersInfo();" class="ladda-button btn btn-success load_printer" data-style="expand-right">Cargar impresoras...</button>
+                    </div>
+                  </div>
+              </div>
               <div class="row" >
                 <div class="col-lg-12" style="margin-top: 10px;">
                   <div class="col-lg-6">

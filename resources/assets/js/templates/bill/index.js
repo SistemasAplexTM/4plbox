@@ -15,19 +15,19 @@ $(document).ready(function () {
                     var btn_edit = '';
                     var btn_delete = '';
                     // if (permission_update) {
-                        var btn_edit = '<a href="bill/create/' + full.id + '" class="edit" title="Editar" data-toggle="tooltip" style="color:#FFC107;"><i class="material-icons">&#xE254;</i></a>';
+                        var btn_edit = '<a href="bill/create/' + full.id + '" class="edit_btn" title="Editar" data-toggle="tooltip"><i class="fal fa-pencil fa-lg"></i></a>';
                     // }
                     // if (permission_delete) {
-                        var btn_delete = '<a onclick=\"eliminar(' + full.id + ',' + true + ')\" class="delete" title="Eliminar" data-toggle="tooltip" style="color:#E34724;"><i class="material-icons">&#xE872;</i></a>';
+                        var btn_delete = '<a onclick=\"eliminar(' + full.id + ',' + true + ')\" class="delete_btn" title="Eliminar" data-toggle="tooltip"><i class="fal fa-trash-alt fa-lg"></i></a>';
                     // }
                     // var btns = "<div class='btn-group'>" +
                     //  "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" +
                     //   "<i class='material-icons' style='vertical-align:  middle;'>print</i> <span class='caret'></span>" +
-                    //    "</button>" + 
+                    //    "</button>" +
                     //    "<ul class='dropdown-menu dropdown-menu-right pull-right'><li><a href='bill/imprimir/" +full.id + '/'+true +
                     //     "' target='_blank'> <spam class='fa fa-print'></spam> Bill of lading</a></li>" +
                     //      "</ul></div>";
-                        var btn_print = '<a href="bill/imprimir/' + full.id + '/'+true + '" target="_blank" class="edit" title="Imprimir" data-toggle="tooltip" style="color:#676a6c;"><i class="material-icons">print</i></a>';
+                        var btn_print = '<a href="bill/imprimir/' + full.id + '/'+true + '" target="_blank" class="edit" title="Imprimir" data-toggle="tooltip" style="color:#676a6c;"><i class="fal fa-print fa-lg"></i></a>';
                     return btn_edit + btn_print + btn_delete;
                 }
             }
@@ -39,8 +39,14 @@ $(document).ready(function () {
 /* objetos VUE index */
 var objVue = new Vue({
     el: '#bill',
+    mounted(){
+      this.getData();
+    },
     data: {
-        //
+      options: [],
+      consolidado_id: null,
+      list: [],
+      loading: false,
     },
     methods: {
         delete: function(data) {
@@ -57,5 +63,21 @@ var objVue = new Vue({
                 refreshTable('tbl-bill');
             });
         },
+        getData(){
+          var me = this;
+          axios.post('master/getDataConsolidados/1').then(function(response) {
+              me.options = response.data;
+          }).catch(function(error) {
+              console.log(error);
+              toastr.warning('Error: -' + error);
+          });
+        },
+        createBill(){
+          var consolidado_id = null;
+          if(this.consolidado_id != null){
+            consolidado_id = this.consolidado_id.id;
+          }
+          location.href = "bill/create/" + null + '/' + consolidado_id;
+        }
     }
 })

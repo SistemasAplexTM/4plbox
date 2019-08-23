@@ -6,6 +6,9 @@ use App\Http\Requests\StatusRequest;
 use App\Status;
 use DataTables;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\DocumentoDetalle;
+use Auth;
 
 class StatusController extends Controller
 {
@@ -17,23 +20,13 @@ class StatusController extends Controller
         $this->middleware('permission:status.destroy')->only('destroy');
         $this->middleware('permission:status.delete')->only('delete');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $this->assignPermissionsJavascript('status');
         return view('templates/status');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StatusRequest $request)
     {
         try {
@@ -70,17 +63,13 @@ class StatusController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(StatusRequest $request, $id)
     {
         try {
             $data = Status::findOrFail($id);
+            if($request->email_plantilla_id != null){
+              $data->json_data = json_encode(['email_template_id' => $request->email_plantilla_id]);
+            }
             $data->update($request->all());
             $answer = array(
                 "datos"  => $request->all(),
@@ -202,8 +191,54 @@ class StatusController extends Controller
 
     public function getDataSelectModalTagGuia()
     {
-        $data = Status::select('descripcion as name', 'id')
+        $data = Status::select('descripcion as name', 'id', 'transportadora')
             ->where('deleted_at', null)->get();
         return \DataTables::of($data)->make(true);
+    }
+
+    public function getDataSelectTransportadoras($id)
+    {
+      $pais_id = DB::table('documento AS a')
+      ->join('consignee AS b', 'a.consignee_id', 'b.id')
+      ->join('localizacion AS c', 'b.localizacion_id', 'c.id')
+      ->join('deptos AS d', 'c.deptos_id', 'd.id')
+      ->select('d.pais_id')
+      ->where([['a.id', $id]])
+      ->first();
+
+        $data = DB::table('transportadoras_locales AS a')
+        ->select('a.nombre as name', 'a.id', 'b.descripcion AS pais', 'b.iso3 AS prefijo')
+        ->join('pais AS b', 'a.pais_id', 'b.id')
+            ->where([['a.deleted_at', null], ['a.pais_id', $pais_id->pais_id]])->get();
+        return array(
+            "code" => 200,
+            "data" => $data,
+        );
+    }
+
+    public function cambiarStatusConsolidado(Request $request, $document_id)
+    {
+     $answer = ['code' => 600];
+     $data = DocumentoDetalle::where('num_warehouse', $request->warehouse)->first();
+     if ($data) {
+       //VALIDAR SI EXISTE ESE WHR EN EL CONSOLIDADO
+      // $consolidado_detalle = DB::table('consolidado_detalle')
+      // ->select('id')->where([
+      //  ['documento_detalle_id', $data->id],
+      //  ['consolidado_id', $document_id]
+      //  ])->first();
+      // if ($consolidado_detalle) {
+       DB::table('status_detalle')
+       ->insert([
+        'status_id' => $request->estatus_id,
+        'usuario_id' => Auth::id(),
+        'documento_detalle_id' => $data->id,
+        'codigo' => $request->warehouse,
+        'observacion' => $request->observacion
+       ]);
+       $answer = ['code' => 200];
+      // }
+     }
+     return $answer;
     }
 }

@@ -2,59 +2,60 @@
 <html lang="{{ app()->getLocale() }}">
     <head>
         <meta charset="utf-8">
-            <meta content="IE=edge" http-equiv="X-UA-Compatible">
-                <meta content="width=device-width, initial-scale=1" name="viewport">
-                    <link href="{{ asset('img/favicon.ico') }}" rel="icon" type="image/x-icon">
-                        <!-- CSRF Token -->
-                        <meta content="{{ csrf_token() }}" name="csrf-token">
-                            <title>
-                                @yield('title') | 4plbox
-                            </title>
-                            <!-- Styles -->
-                            <link href="{{ asset('css/plantilla.css') }}" rel="stylesheet">
-                            {{-- <link href="{{ asset('css/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet"> --}}
-                            <link href="{{ asset('css/main.css') }}" rel="stylesheet">
-                            <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-theme@0.1.0-beta.10/dist/select2-bootstrap.min.css" rel="stylesheet">
-                            <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
-                            <!-- Latest compiled and minified CSS -->
-                            <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css" rel="stylesheet">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible">
+        <meta content="width=device-width, initial-scale=1" name="viewport">
+        <link href="{{ asset('img/favicon.ico') }}" rel="icon" type="image/x-icon">
+            <!-- CSRF Token -->
+        <meta content="{{ csrf_token() }}" name="csrf-token">
+        <title>
+            @yield('title') | 4plbox
+        </title>
+        <!-- Styles -->
+        <link href="{{ asset('css/plantilla.css') }}" rel="stylesheet">
+        {{-- <link href="{{ asset('css/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet"> --}}
+        <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-theme@0.1.0-beta.10/dist/select2-bootstrap.min.css" rel="stylesheet">
+        <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+        <!-- Latest compiled and minified CSS -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css" rel="stylesheet">
 
-                            <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-6jHF7Z3XI3fF4XZixAuSu0gGKrXwoX/w3uFPxC56OtjChio7wtTGJWRW53Nhx6Ev" crossorigin="anonymous">
-                            @yield('scripts_head')
-                        </meta>
-                    </link>
-                </meta>
-            </meta>
-        </meta>
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-6jHF7Z3XI3fF4XZixAuSu0gGKrXwoX/w3uFPxC56OtjChio7wtTGJWRW53Nhx6Ev" crossorigin="anonymous">
+        @yield('scripts_head')
+
     </head>
     <body class="fixed-sidebar fixed-nav fixed-nav-basic">
         <div id="wrapper">
             {{-- Sidebar --}}
-        @include('layouts.sidebar')
+            @include('layouts.sidebar')
             <div class="gray-bg" id="page-wrapper">
                 {{-- Navbar --}}
-            @include('layouts.navbar')
-            @yield('breadcrumb')
-            {{-- contenido --}}
+                @include('layouts.navbar')
+                @yield('breadcrumb')
+                {{-- contenido --}}
                 <div class="wrapper wrapper-content animated fadeInRight" id="app">
                     @yield('content')
                 </div>
             </div>
+            @include('layouts.sidebarRight')
         </div>
         <!-- Scripts -->
-        <script src="{{ asset('js/app.js') }}">
-        </script>
-        <script src="{{ asset('js/plantilla.js') }}">
-        </script>
-        <script src="{{ asset('js/main.js') }}">
-        </script>
+        <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/plantilla.js') }}"></script>
+        <script src="{{ asset('js/main.js') }}"></script>
+        <script src="{{ asset('js/plugins/silentPrint/silentPrint.min.js') }}"></script>
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js">
         </script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js">
         </script>
         <script type="text/javascript">
-            document.body.style.zoom="90%";
+          var objVue = new Vue({
+            el: '#right-sidebar',
+          })
+          var objVueNav = new Vue({
+            el: '#navbar_index',
+          })
+            // document.body.style.zoom="90%";
             $(document).ready(function(){
                 $('#in_documento').on('click', function(){
                     window.location.href = '{{ route('documento.index') }}';
@@ -83,6 +84,30 @@
                         toastr.success('Backup generado.');
                     });
                 });
+
+                //SILENT PRINT
+                // var sp = new SilentPrint();
+                // sp.init(initSuccess, initFail);
+                // function initSuccess() {
+                //   console.log('silentPrint OK!');
+                //   sp.getMachineId(getMachineIdSuccess);
+                //   sp.getPrinterList(getPrinterListSuccess);
+                // }
+                // function initFail() {
+                //   console.log('silentPrint ERROR!');
+                // }
+                //
+                // function getMachineIdSuccess(machineId) {
+                //   console.log('ID: '+ machineId);
+                // }
+                //
+                // function getPrinterListSuccess(list) {
+                //  console.log(list);
+                //  var pathname = window.location.pathname;
+                //  var url = pathname.split('/');
+                //  console.log(url.pop());
+                // }
+
             });
         </script>
     </body>

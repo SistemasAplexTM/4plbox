@@ -73,7 +73,6 @@
     $total_volumen = 0;
     $total_volumen_cft = 0;
     $total_volumen_cmt = 0;
-    
     ?>
     @if(count($detalle) > 0)
         <?php $total_piezas = count($detalle); ?>
@@ -210,7 +209,7 @@
                                 </tr>
                                 <tr>
                                     <td valign="top" style="height: 50px;"><b>@lang('general.observations'):</b></td>
-                                    <td height="15" colspan="5" valign="top"><span style="padding:4px 0 0 0"> {{ ((isset($documento->observaciones) and $documento->observaciones != '') ? $documento->observaciones : '') }} </span></td>
+                                    <td height="15" colspan="5" valign="top"><span style="padding:4px 0 0 0"> PA: {{ ((isset($detalle[0]->nom_pa) and $detalle[0]->nom_pa != '') ? $detalle[0]->nom_pa : '') }} {{ ((isset($documento->observaciones) and $documento->observaciones != '') ? $documento->observaciones : '') }} </span></td>
                                 </tr>
                             </table>
                         </div>
@@ -256,13 +255,13 @@
                                         </td>
                                         <?php $leng = strlen($val->contenido); ?>
                                         <td id="cont_detalle" style="height: 50px;">
-                                            {{ (($leng > 215) ? str_replace(',', '-', substr($val->contenido, 0, 215)) : str_replace(',', ', ', $val->contenido)) }} **- trackings ({{ str_replace(',', ', ', $val->tracking) }})
+                                            {{ (($leng > 215) ? str_replace(',', '-', substr($val->contenido, 0, 215)) : str_replace(',', ', ', $val->contenido)) }} <br>**- trackings ({{ str_replace(',', ', ', $val->trackings) }})
                                         </td>
                                         <td align='center' id="cont_detalle">{{ $val->largo }}</td>
                                         <td align='center' id="cont_detalle">{{ $val->ancho }}</td>
                                         <td align='center' id="cont_detalle">{{ $val->alto }}</td>
                                         <?php $arr = preg_split("/ /", $val->dimensiones); ?>
-                                        <td align='center' id="cont_detalle">{{ $arr[0] }}</td>
+                                        <td align='center' id="cont_detalle">{{ $val->peso }}</td>
                                         <td align='center' id="cont_detalle">{{ $val->volumen }}</td>
                                         <td align='center' id="cont_detalle">{{ number_format(($val->volumen / 2.204622), 2) }}</td>
                                         <td align='center' id="cont_detalle">{{ $pie = number_format(($val->largo * $val->ancho * $val->alto) / 1728, 2) }}</td>

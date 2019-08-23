@@ -15,7 +15,7 @@
     	text-align: center;
     }
 </style>
-<?php 
+<?php
 	$cont = 0;
     $toalRegistros = count($detalle);
     $contRegistros = 0;

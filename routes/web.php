@@ -1,5 +1,8 @@
 <?php
-
+use Illuminate\Http\Request;
+use App\Shipper;
+use App\Consignee;
+use Illuminate\Support\Facades\DB;
 Route::get('/', function () {
     return view('auth/login');
 });
@@ -12,7 +15,7 @@ Route::get('lang/{lang}', function($lang) {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'DocumentoController@index')->name('home');
 
 Route::get('master/buscar/{dato}/{type?}', 'MasterController@getSoC');
 Route::group(['middleware' => 'auth'], function () {
@@ -54,6 +57,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('puntos', 'PivotPuntosDetalleController@store');
     Route::delete('puntos/{id}', 'PivotPuntosDetalleController@destroy');
     Route::get('puntos/{id}', 'PivotPuntosDetalleController@getByIdDetail')->name('getData');
+    Route::get('puntos/getProductsClient/{id}', 'PivotPuntosDetalleController@getProductsClient');
 
     /*--- MODULO USER ---*/
     Route::resource('user', 'UserController', ['except' => ['show', 'create', 'edit']]);
@@ -86,7 +90,7 @@ Route::group(['middleware' => 'auth'], function () {
     /*--- MASTER ---*/
     Route::resource('master', 'MasterController');
     // Reg al final, por que genera conficto el hecho de que el show se llama con "nombre/variable"
-    Route::get('master/create/{master}', 'MasterController@create');
+    Route::get('master/create/{master}/{consolidado_id?}', 'MasterController@create');
     Route::get('master/all/reg', 'MasterController@getAll');
     Route::get('master/delete/{id}/{logical?}', 'MasterController@delete')->name('modulo.delete');
     Route::get('master/restaurar/{id}', 'MasterController@restaurar');
@@ -94,6 +98,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('master/getOtherCharges/{id}', 'MasterController@getOtherCharges');
     Route::get('master/imprimirLabel/{id_master}', 'MasterController@imprimirLabel');
     Route::get('master/imprimirGuias/{consolidado_id}/{option?}', 'MasterController@imprimirGuias');
+    Route::post('master/getDataConsolidados/{type}', 'MasterController@getDataConsolidados');
+    Route::get('master/hawb/{id}', 'MasterController@createHawb');
+    Route::get('master/{id}/getDataPrintBagsConsolidate/{type?}', 'DocumentoController@getDataPrintBagsConsolidate');
+    Route::get('master/{id}/impuestosMaster', 'MasterController@impuestosMaster');
+    Route::post('master/saveTaxMaster', 'MasterController@saveTaxMaster');
+    Route::post('master/saveCostMaster', 'MasterController@saveCostMaster');
+    Route::get('master/getCosts/{master_id}', 'MasterController@getCosts');
+    Route::delete('master/deleteCost/{id}', 'MasterController@deleteCost');
+    Route::get('master/generateXml/{id}', 'MasterController@generateXml');
 
     /*--- MODULO TRACKINGS ---*/
     Route::resource('tracking', 'TrackingController', ['except' => ['show', 'create', 'edit', 'update']]);
@@ -118,6 +131,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('receipt/getDocument/{id}', 'ReceiptController@getDocument');
     Route::post('receipt/checkReceipt', 'ReceiptController@checkReceipt');
     Route::get('receipt/printReceipt/{id}', 'ReceiptController@printReceipt');
+    Route::get('receipt/changeStatus/{id}', 'ReceiptController@changeStatus');
     // Route::post('receipt/validar_tracking', 'ReceiptController@validar_tracking');
 
     /*--- MODULO MODULOS ---*/
@@ -125,6 +139,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('modulo/all', 'ModuloController@getAll')->name('datatable/all');
     Route::get('modulo/delete/{id}/{logical?}', 'ModuloController@delete')->name('modulo.delete');
     Route::get('modulo/restaurar/{id}', 'ModuloController@restaurar');
+
+    /*--- MODULO MONEDA ---*/
+    Route::resource('moneda', 'MonedaController', ['except' => ['show', 'create', 'edit']]);
+    Route::get('moneda/all', 'MonedaController@getAll')->name('datatable/all');
+    Route::get('moneda/delete/{id}/{logical?}', 'MonedaController@delete')->name('moneda.delete');
+    Route::get('moneda/restaurar/{id}', 'MonedaController@restaurar');
 
     /*---- Rutas para la tabla MaestraMultiple ----*/
     Route::get('administracion/{type}/all', 'MaestraMultipleController@getAll');
@@ -135,6 +155,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('administracion/{type}/{id}', 'MaestraMultipleController@update')->name('administracion.update');
     Route::delete('administracion/{type}/{id}', 'MaestraMultipleController@destroy')->name('administracion.destroy');
     Route::get('administracion/{type}/selectInput/{tableName?}', 'MaestraMultipleController@selectInput');
+    Route::get('administracion/{type}/getSelect', 'MaestraMultipleController@getSelect');
 
     /*--- MODULO PAIS ---*/
     Route::resource('pais', 'PaisController', ['except' => ['show', 'create', 'edit']]);
@@ -180,6 +201,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('transportador/all', 'TransportadorController@getAll')->name('datatable/all');
     Route::get('transportador/delete/{id}/{logical?}', 'TransportadorController@delete')->name('transportador.delete');
     Route::get('transportador/restaurar/{id}', 'TransportadorController@restaurar');
+    Route::get('transportador/getLogo/{id}', 'TransportadorController@getLogo');
+    Route::post('transportador/uploadImage', 'TransportadorController@uploadImage');
 
     /*--- MODULO STATUS ---*/
     Route::resource('status', 'StatusController', ['except' => ['show', 'create', 'edit']]);
@@ -188,6 +211,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('status/restaurar/{id}', 'StatusController@restaurar');
     Route::get('status/getDataSelect', 'StatusController@getDataSelect');
     Route::get('status/getDataSelectModalTagGuia', 'StatusController@getDataSelectModalTagGuia');
+    Route::get('status/getDataSelectTransportadoras/{id}', 'StatusController@getDataSelectTransportadoras');
 
     /*--- MODULO STATUS-REPORT ---*/
     Route::resource('statusReport', 'StatusReportController', ['except' => ['show', 'create', 'edit']]);
@@ -213,6 +237,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('agencia/delete/{id}/{logical?}/{table?}', 'AgenciaController@delete')->name('agencia.delete')->middleware('permission:agencia.delete');
     Route::get('agencia/restaurar/{id}', 'AgenciaController@restaurar');
     Route::get('agencia/selectInput/{tableName}', 'AgenciaController@selectInput');
+    Route::get('agencia/getSelectBranch', 'AgenciaController@getSelectBranch');
 
     /*--- MODULO REMITENTES ---*/
     Route::resource('shipper', 'ShipperController', ['except' => ['show', 'create', 'edit']]);
@@ -230,6 +255,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('consignee/selectInput/{tableName}', 'ConsigneeController@selectInput');
     Route::get('consignee/getDataById/{id}', 'ConsigneeController@getDataById');
     Route::get('consignee/generarCasillero/{id}', 'ConsigneeController@generarCasillero');
+    Route::get('consignee/reenviarEmailCasillero/{id}', 'ConsigneeController@reenviarEmailCasillero');
+    Route::get('consignee/getSelect', 'ConsigneeController@getSelect');
 
     /*--- MODULO EMAIL TEMPLATES ---*/
     Route::resource('emailTemplate', 'EmailTemplateController', ['except' => ['show', 'create', 'edit']]);
@@ -251,7 +278,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('tipoDocumento/getPlantillasEmail', 'TipoDocumentoController@getPlantillasEmail');
 
     /*--- MODULO DOCUMENTO ---*/
-    Route::resource('documento', 'DocumentoController', ['except' => ['create']]);
+    Route::resource('documento', 'DocumentoController', ['except' => ['create', 'show']]);
 
     Route::post('documento/insertDetail', 'DocumentoController@insertDetail')->name('documento.insertDetail');
     Route::post('documento/editDetail', 'DocumentoController@editDetail')->name('documento.editDetail');
@@ -261,6 +288,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('documento/ajaxCreateNota/{id}', 'DocumentoController@ajaxCreateNota')->name('documento.ajaxCreateNota');
     Route::post('documento/{id}/createContactsConsolidadoDetalle', 'DocumentoController@createContactsConsolidadoDetalle');
     Route::post('documento/{id}/addStatusToGuias', 'DocumentoController@addStatusToGuias')->name('documento.addStatusToGuias');
+    Route::post('documento/{id}/getStatusDocument', 'DocumentoController@getStatusDocument')->name('documento.getStatusDocument');
     Route::post('documento/{id}/agruparGuiasConsolidadoCreate', 'DocumentoController@agruparGuiasConsolidadoCreate');
     Route::get('documento/{id}/removerGuiaAgrupada/{id_detalle}/{id_guia_detalle}/{document?}', 'DocumentoController@removerGuiaAgrupada')->name('documento.removerGuiaAgrupada');
     Route::get('documento/sendEmailDocument/{id}', 'DocumentoController@sendEmailDocument');
@@ -278,7 +306,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('documento/restaurar/{id}/{table?}', 'DocumentoController@restaurar');
     Route::get('documento/selectInput/{tableName}', 'DocumentoController@selectInput');
     Route::get('documento/create/{document}', 'DocumentoController@create')->name('documento.create');
-    Route::get('documento/{id}/buscarGuias/{num_guia}/{num_bolsa}/{pais_id}', 'DocumentoController@buscarGuias');
+    Route::get('documento/{id}/buscarGuias/{num_guia}/{num_bolsa}/{pais_id}/{range_value?}', 'DocumentoController@buscarGuias');
     Route::get('documento/{id}/getAllGuiasDisponibles/{pais_id?}/{transporte_id?}', 'DocumentoController@getAllGuiasDisponibles');
     Route::get('documento/{id}/getAllConsolidadoDetalle/{num_bolsa?}', 'DocumentoController@getAllConsolidadoDetalle');
     Route::get('documento/{id}/restoreShipperConsignee/{id_detalle}/{table}', 'DocumentoController@restoreShipperConsignee');
@@ -296,12 +324,21 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('documento/{id}/closeDocument', 'DocumentoController@closeDocument');
     Route::get('documento/getDataByDocument/{id}', 'DocumentoController@getDataByDocument');
     Route::get('documento/{id}/getDataPrintBagsConsolidate', 'DocumentoController@getDataPrintBagsConsolidate');
+    Route::get('documento/getDataDocument/{data}', 'DocumentoController@getDataPrintBagsConsolidate');
+    Route::get('documento/getDataSearchDocument/{data?}', 'DocumentoController@getDataSearchDocument');
+    Route::get('documento/updateShipperConsignee/{id}/{data_id}/{op}', 'DocumentoController@updateShipperConsignee');
+    Route::post('documento/uploadFileStatus', 'DocumentoController@uploadFileStatus');
+    Route::get('documento/validateUploadDocs', 'DocumentoController@validateUploadDocs');
+    Route::get('documento/insertStatusUploadDocument', 'DocumentoController@insertStatusUploadDocument');
+    Route::get('documento/getDataShipperConsignee/{table}/{data}', 'DocumentoController@getDataShipperConsignee');
+    Route::get('documento/getDataShipperConsigneeById/{table}/{id}', 'DocumentoController@getDataShipperConsigneeById');
 
     /*  REPORTES - IMPRESIONES EN PDF */
     Route::get('impresion-documento/{id}/{document}/{id_detalle?}', 'DocumentoController@pdf')->name('documento.pdf');
     Route::get('impresion-documento-label/{id}/{document}/{id_detalle?}/{consolidado?}', 'DocumentoController@pdfLabel')->name('documento.pdfLabel');
     Route::get('impresion-documento/pdfContrato', 'DocumentoController@pdfContrato')->name('documento.pdfContrato');
     Route::get('impresion-documento/pdfTsa', 'DocumentoController@pdfTsa')->name('documento.pdfTsa');
+    Route::get('impresion-group/pdfConsolidadoGroup/{id}/{document}/{num_bolsa}', 'DocumentoController@pdfConsolidadoGroup')->name('documento.pdfConsolidadoGroup');
 
     /* PREALERTA */
     Route::get('prealerta', 'PrealertaController@prealertaList')->name('prealerta.list')->middleware('permission:prealerta.list');
@@ -311,24 +348,31 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('aerolinea_inventario/{id}', 'AerolineasInventarioController@update')->name('aerolinea_inventario.update');
     Route::post('aerolinea_inventario', 'AerolineasInventarioController@store')->name('aerolinea_inventario.store');
     Route::get('aerolinea_inventario/get/{aerolinea}', 'AerolineasInventarioController@getByAerolinea');
-    Route::get('aerolinea_inventario/all', 'AerolineasInventarioController@getAll');
+    Route::get('aerolinea_inventario/all/{used?}', 'AerolineasInventarioController@getAll');
     Route::get('aerolinea_inventario', 'AerolineasInventarioController@index')->name('aerolinea_inventario.index');
 
     /*--- MODULO CLIENTES ---*/
     Route::resource('clientes', 'ClienteController', ['except' => ['show', 'create', 'edit']]);
     Route::get('clientes/all', 'ClienteController@getAll')->name('datatable/all');
-    Route::get('clientes/delete/{id}/{logical?}', 'ClienteController@delete')->name('arancel.delete');
+    Route::get('clientes/delete/{id}/{logical?}', 'ClienteController@delete');
     Route::get('clientes/restaurar/{id}', 'ClienteController@restaurar');
     Route::get('clientes/selectInput/{tableName}', 'ClienteController@selectInput');
 
+    /*--- MODULO TRANSPORTADORAS LOCALES ---*/
+    Route::resource('transportadoras_locales', 'LocalTransportersController', ['except' => ['show', 'create', 'edit']]);
+    Route::get('transportadoras_locales/all', 'LocalTransportersController@getAll')->name('datatable/all');
+    Route::get('transportadoras_locales/getPaises', 'LocalTransportersController@getAllPais');
+    Route::get('transportadoras_locales/delete/{id}/{logical?}', 'LocalTransportersController@delete');
+    Route::get('transportadoras_locales/restaurar/{id}', 'LocalTransportersController@restaurar');
+
     /*--- MODULO BL ---*/
     Route::resource('bill', 'BillLadingController', ['except' => ['show', 'create']]);
-    Route::get('bill/create/{bill?}', 'BillLadingController@create');
+    Route::get('bill/create/{bill?}/{consolidado_id?}', 'BillLadingController@create');
     Route::get('bill/all', 'BillLadingController@getAll')->name('datatable/all');
     Route::get('bill/delete/{id}/{logical?}', 'BillLadingController@delete')->name('BillLading.delete');
     Route::get('bill/imprimir/{id_bill}/{simple?}', 'BillLadingController@imprimir');
     Route::get('bill/restaurar/{id}', 'BillLadingController@restaurar');
-    Route::get('bill/getParties', 'BillLadingController@getParties');
+    Route::get('bill/parties/getParties', 'BillLadingController@getParties');
     Route::post('bill/createPartie', 'BillLadingController@createPartie');
     Route::put('bill/editPartie/{id}', 'BillLadingController@editPartie');
     Route::delete('bill/destroyPartie/{id}', 'BillLadingController@destroyPartie');
@@ -350,6 +394,35 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('mintic/all', 'MinticController@all');
     Route::get('mintic/searchDocument/{document}', 'MinticController@searchDocument');
     Route::post('mintic/createDetail', 'MinticController@createDetail');
+
+    /* MODULO INVOICE */
+    Route::get('invoice', 'InvoiceController@index')->name('invoce.index');
+    Route::get('invoice/getAll', 'InvoiceController@getAll');
+    Route::get('invoice/pdfLabels/{invoice_id?}', 'InvoiceController@pdfLabels');
+    /* CAMBIAR STATUS CONSOLIDADO */
+    Route::post('cambiarStatusConsolidado/{document_id}', 'StatusController@cambiarStatusConsolidado');
+
+
+    /*--- MODULO EMPLEADOS ---*/
+    Route::resource('empleado', 'EmpleadoController', ['except' => ['show', 'create', 'edit']]);
+    Route::get('empleado/all', 'EmpleadoController@getAll')->name('datatable/all');
+    Route::get('empleado/delete/{id}/{logical?}', 'EmpleadoController@delete')->name('empleado.delete');
+    Route::get('empleado/restaurar/{id}', 'EmpleadoController@restaurar');
+
+    /*--- MODULO RADICADO CLIENTES ---*/
+    Route::resource('radicado_clientes', 'RadicadoClienteController', ['except' => ['show', 'create', 'edit']]);
+    Route::get('radicado_clientes/all', 'RadicadoClienteController@getAll')->name('datatable/all');
+    Route::get('radicado_clientes/delete/{id}/{logical?}', 'RadicadoClienteController@delete')->name('radicado_clientes.delete');
+    Route::get('radicado_clientes/restaurar/{id}', 'RadicadoClienteController@restaurar');
+
+    /*--- MODULO RADICADO ---*/
+    Route::resource('radicado', 'RadicadoController', ['except' => ['show', 'create', 'edit']]);
+    Route::get('radicado/all', 'RadicadoController@getAll')->name('datatable/all');
+    Route::get('radicado/delete/{id}/{logical?}', 'RadicadoController@delete')->name('radicado.delete');
+    Route::get('radicado/restaurar/{id}', 'RadicadoController@restaurar');
+    Route::get('radicado/getClientes', 'RadicadoController@getClientes');
+    Route::get('radicado/getEmpleados', 'RadicadoController@getEmpleados');
+    Route::get('radicado/imprimir/{id}', 'RadicadoController@imprimir');
 });
 Route::get('aplexConfig/config/{key}', 'AplexConfigController@get')->name('config.config');
 Route::get('aplexConfig/getDataAgencyById/{id}', 'AplexConfigController@getDataAgencyById')->name('aplexConfig.getDataAgencyById');
@@ -378,11 +451,11 @@ Route::post('shipper/existEmail', 'ShipperController@existEmail');
 /* VALIDAR USERNAME */
 Route::get('validarUsername/{element}', 'UserController@validarUsername');
 
-/*--- CASILLERO ---*/
-Route::post('casillero/validar/validar_email', 'CasilleroController@validar_email');
-Route::get('casillero/vueSelectCiudad/{term}', 'CasilleroController@buscar_ciudad');
-Route::post('casillero', 'CasilleroController@store');
-Route::get('casillero/{id}', 'CasilleroController@index');
+/*--- REGISTRO CASILLERO ---*/
+Route::post('registro/validar/validar_email', 'CasilleroController@validar_email');
+Route::get('registro/vueSelectCiudad/{term}', 'CasilleroController@buscar_ciudad');
+Route::post('registro', 'CasilleroController@store');
+Route::get('registro/{id}', 'CasilleroController@index');
 
 Route::get('obtener_contactos/{id}/{table}', 'ShipperController@getContactos');
 Route::post('agregar_contactos/{id}/{table}', 'ShipperController@storeContacto');
@@ -403,4 +476,35 @@ Route::get('DocumentoController', 'DocumentoController@printFile');
 
 Route::get('formatNumber', 'AplexConfigController@formatNumber');
 
-Route::get('ciudad/getSelectCity', 'CiudadController@getSelectCity');
+Route::get('ciudad/getSelectCity/{filter}', 'CiudadController@getSelectCity');
+
+Route::get('selfService/{id?}', 'PuntosController@index');
+
+
+
+Route::get('/shipperSearch/{doc}/{type?}', function (Shipper $shipper, $doc, $type = null) {
+return DB::table($type)->select('*')->where('documento', $doc)->get();
+});
+
+Route::post('/shipperSave/{type}/{shipper_id?}', 'PuntosController@saveShipperConsignee');
+
+Route::get('/getConsigneesByShipper/{shipper_id}', function (Shipper $shipper, $shipper_id) {
+return DB::table('consignee AS a')
+->join('shipper_consignee AS b', 'b.consignee_id', 'a.id')
+->select('a.*')
+->where('b.shipper_id', $shipper_id)
+->get();
+});
+
+Route::get('/getProductsPoint', function () {
+  return DB::table('puntos_cuba_productos AS a')
+  ->join('maestra_multiple AS b', 'a.unidad_medida_id', 'b.id')
+  ->select('a.*', 'b.descripcion')
+  ->get();
+});
+
+Route::get('/getConsigneesById/{id}', function (Consignee $consignee, $id) {
+  return $consignee->find($id);
+});
+Route::post('documento/ajaxCreatePublic/{document}', 'DocumentoController@ajaxCreate');
+Route::post('saveProductDetail', 'PuntosController@saveProductDetail');

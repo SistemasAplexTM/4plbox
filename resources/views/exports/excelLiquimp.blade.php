@@ -2,7 +2,7 @@
 <html>
 	<head>
 	<meta charset="utf-8">
-	<title>Documento sin título</title>
+	<title>Liquimp</title>
 	<style type="text/css">
 		.content{
 			border-collapse: collapse;
@@ -42,26 +42,26 @@
 			<tbody>
 				@foreach ($data as $key => $value)
 					<tr>
-						<td>{{ $value->num_warehouse }}</td>
-						<td>{{ $value->num_warehouse }}</td>
-						<td>{{ $value->num_warehouse }}</td>
-						<td>{{ $value->num_warehouse }}</td>
-						<td>{{ $value->num_warehouse }}</td>
-						<td>{{ $value->num_warehouse }}</td>
-						<td>{{ $value->num_warehouse }}</td>
-						<td>{{ $value->num_warehouse }}</td>
-						<td>{{ $value->num_warehouse }}</td>
-						<td>{{ $value->num_warehouse }}</td>
-						<td>{{ $value->num_warehouse }}</td>
-						<td>{{ $value->num_warehouse }}</td>
-						<td>{{ $value->num_warehouse }}</td>
-						<td>{{ $value->num_warehouse }}</td>
-						<td>{{ $value->num_warehouse }}</td>
-						<td>{{ $value->num_warehouse }}</td>
-						<td>{{ $value->num_warehouse }}</td>
-						<td>{{ $value->num_warehouse }}</td>
-						<td>{{ $value->num_warehouse }}</td>
-						<td>{{ $value->num_warehouse }}</td>
+						<td>{{ $value->num_guia }}</td>
+						<td>{{ $value->pa }}</td>
+						<td>{{ $value->iva }} - {{ $value->arancel }}</td>
+						<td>{{ $value->contenido }}</td>
+						<td>{{ $value->declarado }}</td>
+						<td>{{ $value->peso_lb }}</td>
+						<td>{{ number_format($value->peso_lb * 0.453592, 2) }}</td>
+						<td>{{ $value->piezas }}</td>
+						<td>{{ $value->ship }}</td>
+						<td>{{ $value->ship_dir }}</td>
+						<td>{{ $value->ship_ciu }}</td>
+						<td>{{ $value->ship_depto }}</td>
+						<td>{{ $value->ship_zip }}</td>
+						<td>{{ $value->ship_tel }}</td>
+						<td>{{ $value->cons }}</td>
+						<td>{{ $value->cons_dir }}</td>
+						<td>{{ $value->cons_ciu }}</td>
+						<td>{{ $value->cons_depto }}</td>
+						<td>{{ $value->cons_tel }}</td>
+						<td>{{ $value->cons_zip }}</td>
 					</tr>
 				@endforeach
 			</tbody>

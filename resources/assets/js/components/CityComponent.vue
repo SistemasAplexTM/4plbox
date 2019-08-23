@@ -1,76 +1,61 @@
 <template>
   <div class="">
-    <el-select
-      size="medium"
-      clearable
-      v-model="city_id"
-      filterable
-      remote
-      reserve-keyword
-      placeholder="Buscar Ciudad"
-      :remote-method="remoteMethod"
-      :loading="loading"
+    <el-autocomplete
+      class="inline-input"
+      v-model="city.name"
+      :fetch-suggestions="querySearch"
+      :trigger-on-focus="false"
       :disabled="disabled"
-      loading-text="Cargando..."
-      no-data-text="No hay datos"
-      @change="handleSelect"
-      value-key="id">
-      <el-option
-        v-for="item in options"
-        :key="item.id"
-        :label="item.name"
-        :value="item">
-        <span style="float: left">{{ item.name }}</span>
-        <span style="float: right; color: #8492a6; font-size: 13px">{{ item.prefijo_pais }}</span>
-      </el-option>
-    </el-select>
+      placeholder="Buscar Ciudad"
+      @select="handleSelect"
+      size="medium"
+    >
+      <template slot-scope="{ item }">
+  			<div>
+  				<label class="value_item"><i class="fa fa-map-marker"></i> {{ item.name }}</label>
+          <div>
+          <small>
+            {{ item.deptos }} / {{ item.pais }}
+          </small>
+  			   </div>
+  			</div>
+  		</template>
+    </el-autocomplete>
   </div>
 </template>
 
 <script>
 export default {
-  props:["disabled", "selected"],
+  props:["data", "disabled", "selected"],
   data(){
     return {
       options: [],
-      city_id: [],
+      city: {},
       list: [],
       loading: false,
     }
   },
   watch:{
     selected:function(value) {
-      this.city_id = value
+      this.city = {name: value}
+    },
+    data:function(value) {
+      this.list = value;
     }
   },
-  mounted(){
-    this.getData();
-  },
   methods:{
-    getData(){
+    querySearch(queryString, cb) {
       var me = this;
-      axios.get('/ciudad/getSelectCity').then(function(response) {
-          me.list = response.data.data;
+      axios.get('/ciudad/getSelectCity/'+queryString).then(function(response) {
+          me.options = response.data.data;
+          cb(me.options);
       }).catch(function(error) {
           console.log(error);
           toastr.warning('Error: -' + error);
       });
     },
-    remoteMethod(query) {
-      if (query !== '') {
-        this.loading = true;
-        setTimeout(() => {
-          this.loading = false;
-          this.options = this.list.filter(item => {
-            return item.name.toLowerCase()
-              .indexOf(query.toLowerCase()) > -1;
-          });
-        }, 200);
-      } else {
-        this.options = [];
-      }
-    },
     handleSelect(item) {
+      this.city = item;
       this.$emit('get', item);
     }
   }
@@ -78,7 +63,11 @@ export default {
 </script>
 
 <style lang="css" scoped>
-  .el-select{
-    width: 100%;
+  .value_item{
+    margin: 0;
+    height: 15px;
+  }
+  .el-autocomplete{
+    width: 100%!important;
   }
 </style>

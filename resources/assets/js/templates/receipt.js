@@ -51,10 +51,12 @@ $(document).ready(function () {
                   full.documento_detalle_id
               ];
               var btn_view = "<a onclick=\"view(" + params + ")\" data-toggle='tooltip' data-placement='top' title='Ver'><i class='fa fa-eye'></i></a> ";
+              var btn_delivered = "<a onclick=\"statusDelivered(" + full.id + ")\" data-toggle='tooltip' data-placement='top' title='Entregar' style='color:#009612'><i class='fal fa-handshake-alt'></i></a> ";
               var btn_print = "<a href='receipt/printReceipt/" + full.id + "' target='_blank' class='btn btn-default btn-xs' data-toggle='tooltip' data-placement='top' title='Imprimir'><i class='fa fa-print'></i></a> ";
 
-              return btn_view + btn_print;
-          }
+              return btn_delivered + btn_view + btn_print;
+          },
+          "width": 90
       }]
   });
 
@@ -100,6 +102,11 @@ $(document).ready(function () {
     });
 
 });
+
+function statusDelivered(id) {
+  objVue.changeStatus(id);
+}
+
 function view(id, consignee, id_doc_detail){
   // $('#consignee_id').select2({'disabled': true});
   $('#consignee_id').append('<option value="' + id + '" selected="selected">' + consignee + '</option>').val(id).trigger('chosen:updated');
@@ -132,6 +139,29 @@ var objVue = new Vue({
         this.getConsignees();
     },
     methods:{
+      changeStatus(id){
+        swal({
+            title: "<div>Se agregara el estatus de entregado a las cajas que contenga este recibo</div>",
+            text: "¿Desea Continuar?.",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: "Si",
+            cancelButtonText: "No, Cancelar!",
+        }).then((result) => {
+            if (result.value) {
+              axios.get('receipt/changeStatus/' + id).then(response => {
+                toastr.success('Estatus agregado correctamente.');
+              }).catch(function(error) {
+                  console.log(error);
+                  toastr.error("Error.", {
+                      timeOut: 50000
+                  });
+              });
+            }
+        })
+      },
       getConsignees(){
         let me = this;
         // axios.get('receipt/getConsignee/').then(({data}) => {

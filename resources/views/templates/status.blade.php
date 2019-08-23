@@ -18,6 +18,11 @@
 @endsection
 
 @section('content')
+  <style>
+    .help-block{
+      color: #ed5565;
+    }
+  </style>
     <div class="row" id="status">
         <form id="formstatuss" enctype="multipart/form-data" class="form-horizontal" role="form" action="" method="post">
             <div class="col-lg-5">
@@ -31,17 +36,34 @@
                     <div class="ibox-content">
                         <!--***** contenido ******-->
                         <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="form-group" :class="{'has-error': listErrors.descripcion}">
-                                        <div class="col-sm-5">
-                                            <label for="descripcion" class="control-label gcore-label-top">@lang('general.description'):</label>
-                                        </div>
-                                        <div class="col-sm-7">
-                                            <input v-model="descripcion" name="descripcion" id="descripcion" value="" placeholder="@lang('general.description')" class="form-control" type="text" style="" @click="deleteError('descripcion')" @focus="deleteError('descripcion')"/>
-                                            <small id="msn1" class="help-block result-descripcion" v-show="listErrors.descripcion">@lang('general.obligatory_field')</small>
-                                        </div>
+                            <div class="col-lg-12">
+                                <div class="form-group" :class="{'has-error': listErrors.descripcion}">
+                                    <div class="col-sm-5">
+                                        <label for="descripcion" class="control-label gcore-label-top">@lang('general.name'):</label>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <input v-model="descripcion" name="descripcion" id="descripcion" v-validate.disable="'required'" placeholder="@lang('general.name')" class="form-control" type="text"/>
+                                        <small class="help-block error" v-show="errors.has('descripcion')">
+                                            @{{ errors.first('descripcion') }}
+                                        </small>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group" :class="{'has-error': listErrors.descripcion}">
+                                    <div class="col-sm-5">
+                                        <label for="descripcion_general" class="control-label gcore-label-top">@lang('general.description'):</label>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <input v-model="descripcion_general" name="descripcion_general" id="descripcion_general" v-validate.disable="'required'" placeholder="@lang('general.description')" class="form-control" type="text" />
+                                        <small class="help-block error" v-show="errors.has('descripcion_general')">
+                                            @{{ errors.first('descripcion_general') }}
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                                 <div class="col-lg-12">
@@ -81,13 +103,15 @@
                                             <label for="email_plantilla_id" class="control-label gcore-label-top">@lang('general.mail_template'):</label>
                                         </div>
                                         <div class="col-sm-7">
-                                            <v-select :options="plantillas" name="email_plantilla_id" v-model="email_plantilla_id" label="name" placeholder="@lang('general.mail_template')">
-                                                <template slot="option" slot-scope="option">
-                                                    <span class="fa fa-envelope"></span>
-                                                    <label style="font-size: 15px;"> @{{ option.name }}</label>
-                                                    <div>@{{ option.descripcion_plantilla }}</div>
-                                                </template>
-                                            </v-select>
+                                            <el-select v-model="email_plantilla_id" name="email_plantilla_id" filterable placeholder="@lang('general.mail_template')" size="medium">
+                                              <el-option
+                                                v-for="item in plantillas"
+                                                :key="item.id"
+                                                :label="item.name"
+                                                :value="item.id">
+                                                <div style=""><i class="fal fa-envelope"></i> @{{ item.name }}</div>
+                                              </el-option>
+                                            </el-select>
                                             <small id="msn1" class="help-block result-email" v-show="listErrors.email_plantilla_id">@lang('general.obligatory_field')</small>
                                         </div>
                                     </div>
@@ -164,20 +188,13 @@
                         <table id="tbl-status" class="table table-striped table-hover table-bordered" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th>@lang('general.description')</th>
+                                    <th>@lang('general.name')</th>
                                     <th>Color</th>
                                     <th>@lang('general.send_email')</th>
+                                    <th>@lang('general.view_client')</th>
                                     <th>@lang('general.actions')</th>
                                 </tr>
                             </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>@lang('general.description')</th>
-                                    <th>Color</th>
-                                    <th>@lang('general.send_email')</th>
-                                    <th>@lang('general.actions')</th>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
                 </div>

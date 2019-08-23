@@ -46,41 +46,47 @@
     <?php
 //     echo count($data);
 // echo '<pre>';
-// print_r($data[0]);
+// print_r($data[0]->num_bolsa);
 // echo '</pre>';
 // exit();
     $contRegistros = 0;
-    $toalRegistros = count($data);
+    $totalRegistros = count($data);
     ?>
     <body>
         <?php if (count($data) > 0): ?>
-            <?php for ($i = 0; $i <= (count($data) -1); $i++): ?>
+            <?php
+              if ($data[0]->master === 'master'){
+                $totalRegistros = $data[0]->num_bolsa;
+              }
+            ?>
+            <?php for ($i = 0; $i <= ($totalRegistros - 1); $i++): ?>
                 <?php $contRegistros++; ?>
-                <table width="100%;" border="1" cellspacing="0" cellpadding="0" id="tableContainer" style="page-break-after:<?php if ($contRegistros === (1 * count($data))): ?>avoid;<?php else: ?>always<?php endif; ?>">
+                <table width="100%;" border="1" cellspacing="0" cellpadding="0" id="tableContainer" style="page-break-after:<?php if ($contRegistros === (1 * $totalRegistros)): ?>avoid;<?php else: ?>always<?php endif; ?>">
                     <tr>
                         <td style="width: 70%;">
-                            <img class="" id="" style="height: 300px; width: 550px;" src="{{ asset('storage/') }}/{{ ((isset($data[$i]->logo) and $data[$i]->logo != '') ? $data[$i]->logo : 'logo.png') }}" />
+                            <img class="" id="" style="height: 300px; width: 550px;" src="{{ public_path() . '/storage/' }}/{{ ((isset($data[0]->logo) and $data[0]->logo != '') ? $data[0]->logo : 'logo.png') }}" />
+                            {{-- <img class="" id="" style="height: 300px; width: 550px;" src="{{ asset('storage/') }}/{{ ((isset($data[0]->logo) and $data[0]->logo != '') ? $data[0]->logo : 'logo.png') }}" /> --}}
                         </td>
                         <td align="CENTER">
-                            <span id="tipoCarga">Pieza <div>{{ $i + 1 . ' / ' . count($data) }}</div></span>
+                            <span id="tipoCarga">Pieza <div>{{ $i + 1 . ' / ' . $totalRegistros }}</div></span>
                         </td>
                     </tr>
                     <tr>
                         <td align="CENTER" colspan="2">
-                            <span id="master">{{ ($data[$i]->num_master != '') ? $data[$i]->num_master : '&nbsp;'  }}</span>
+                            <span id="master">{{ ($data[0]->num_master != '') ? $data[0]->num_master : '&nbsp;'  }}</span>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <span id="bolsas"><span id="pieza">{{ $data[$i]->tipo_consolidado }}</span></span>
+                            <span id="bolsas"><span id="pieza">{{ (isset($data[0]->tipo_consolidado)) ? $data[0]->tipo_consolidado : '' }}</span></span>
                         </td>
                         <td align="CENTER">
-                            <div id="ciudadDestino">{{ $data[$i]->ciudad . ' ' . $data[$i]->pais }}</div>
+                            <div id="ciudadDestino">{{ $data[0]->ciudad . ' ' . $data[0]->pais }}</div>
                         </td>
                     </tr>
                     <tr>
                         <td align="CENTER" colspan="2">
-                            <span id="agencia">{{ $data[$i]->agencia }}</span>
+                            <span id="agencia">{{ $data[0]->agencia }}</span>
                         </td>
                     </tr>
                 </table>

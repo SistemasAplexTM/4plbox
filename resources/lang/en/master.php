@@ -43,7 +43,7 @@ return [
 'insurance'=>'INSURANCE: If Carrier offers insurance and such insurance is requested in accordance with the conditions
               that, indicate amount to be insured in figures is box marked *Amount of Insurance*',
 'handling_information'=>'Handling Information',
-'message_technology'=>'*These commodities technology or software were exported from the United States 
+'message_technology'=>'*These commodities technology or software were exported from the United States
                         In accordance with the export Administration Regulation. Ultimate destination.',
 'diversion_contrary'=>'Diversion contrary to U.S. law prohibited.',
 'n°_of_pieces_rcp'=>'N° of pieces RCP',
@@ -88,8 +88,9 @@ return [
 'destination'=>'Destination',
 'manifest'=>'Manifest',
 'actions'=>'Actions',
-'new'=>'New' 
-           
+'new'=>'New',
+'create'=>'Create'
+
 
 
 

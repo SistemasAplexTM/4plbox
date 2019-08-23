@@ -29,11 +29,13 @@
     import MailChimp from './MailChimp.vue'
     import PayPal from './PayPal.vue'
     import Zopim from './Zopim.vue'
+    import Publicity from './Publicity.vue'
     export default {
       components: {
         MailChimp,
         PayPal,
-        Zopim
+        Zopim,
+        Publicity
       },
       data(){
         return{
@@ -41,7 +43,8 @@
           list: [
             { component: 'MailChimp', desc: 'MailChimp', icon: 'fab fa-mailchimp' },
             { component: 'PayPal', desc: 'PayPal', icon: 'fab fa-paypal' },
-            { component: 'Zopim', desc: 'Zopim', icon: 'fa fa-comments' }
+            { component: 'Zopim', desc: 'Zopim', icon: 'fa fa-comments' },
+            { component: 'Publicity', desc: 'Publicidad', icon: 'fa fa-shopping-cart' }
           ]
         }
       },

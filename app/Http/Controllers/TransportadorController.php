@@ -86,7 +86,7 @@ class TransportadorController extends Controller
                 "code" => 200,
             );
             return $answer;
-            
+
         } catch (\Exception $e) {
             $error = '';
             foreach ($e->errorInfo as $key => $value) {
@@ -122,7 +122,7 @@ class TransportadorController extends Controller
      */
     public function delete($id,$logical)
     {
-        
+
         if(isset($logical) and $logical == 'true'){
             $data = Transportador::findOrFail($id);
             $now = new \DateTime();
@@ -131,14 +131,14 @@ class TransportadorController extends Controller
                     $answer=array(
                         "datos" => 'Eliminación exitosa.',
                         "code" => 200
-                    ); 
+                    );
                }  else{
                     $answer=array(
                         "error" => 'Error al intentar Eliminar el registro.',
                         "code" => 600
                     );
-               }          
-                
+               }
+
                 return $answer;
         }else{
             $this->destroy($id);
@@ -167,5 +167,25 @@ class TransportadorController extends Controller
     public function getAll()
     {
         return \DataTables::of(Transportador::query()->where('deleted_at', '=', NULL))->make(true);
+    }
+
+    public function uploadImage(Request $request)
+    {
+      if ($request->file('file')) {
+          $data = Transportador::findOrFail($request->id);
+          //obtenemos el nombre del archivo
+          $data->logo = trim($request->file('file')->getClientOriginalName());
+          $data->logo_url = trim('storage/'.$data->logo);
+          $data->save();
+          //indicamos que queremos guardar un nuevo archivo en el disco local
+          \Storage::disk('public')->put('storage/'.$data->logo, \File::get($request->file('file'))); //se guardara en 'public/storage'
+      }
+      return $request->all();
+    }
+
+    public function getLogo($id)
+    {
+      $data = Transportador::findOrFail($id);
+      return ['name' => $data->logo, 'url' => $data->logo_url];
     }
 }

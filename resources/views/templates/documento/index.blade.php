@@ -56,6 +56,21 @@
     .ui-group-buttons .btn{width: 48%}
 
     #crearDoc, #btns_group{display: none;}
+    table.dataTable tbody tr.selected{
+      background-color: #d4e4fb;
+    }
+    .btn_actions > .btn, .btn_actions > .btn-group > .btn {
+      font-size:12px!important;
+    }
+    .el-upload-list{
+      height: 0;
+    }
+    .el-alert__content{
+      width: 100%;
+    }
+    .downloadLink{
+      font-weight: bold;
+    }
 </style>
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
@@ -73,6 +88,7 @@
 @endsection
 
 @section('content')
+
     <div class="row" id="documentoIndex" data-id_print="{{Session('print_document')['id']}}" data-doc_print="{{Session('print_document')['document']}}">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
@@ -93,14 +109,18 @@
                                 </div>
                             </div>
                             <div class="col-lg-2" style="text-align: left;" id="ajaxCreate">
-                                {{-- <div class=""> --}}
-                                  <div class="ui-group-buttons" id="btns_group">
-                                      <button type="button" class="btn btn-primary" id="crearDoc2"><i class="fa fa-box-open"></i> Courier</button>
-                                      <div class="or"></div>
-                                      <button type="button" class="button btn btn-warning" id="crearDoc3"><i class="fa fa-truck-moving"></i> Carga</button>
+                                @if(env('APP_CLIENT') === 'jyg')
+                                  <div class="" id="btns_group" style="width:100%;">
+                                    <button type="button" class="btn btn-primary" id="crearDoc2" style="width:100%;padding: 9px;"><i class="fal fa-box-open"></i> @lang('documents.create_document')</button>
                                   </div>
-                                    <button type="button"  style="" class="btn btn-primary btn-lg btn-block" id="crearDoc" onclick="createNewDocument_(1)"><i class="fa fa-plus"></i> @lang('documents.create_document')</button>
-                                {{-- </div> --}}
+                                @else
+                                  <div class="ui-group-buttons" id="btns_group">
+                                      <button type="button" class="btn btn-primary" id="crearDoc2"><i class="fal fa-box-open"></i> Courier</button>
+                                      <div class="or"></div>
+                                      <button type="button" class="button btn btn-warning" id="crearDoc3"><i class="fal fa-truck-moving"></i> Carga</button>
+                                  </div>
+                                @endif
+                                <button type="button"  style="" class="btn btn-primary btn-lg btn-block" id="crearDoc" onclick="createNewDocument_(1)"><i class="fal fa-plus"></i> @lang('documents.create_document')</button>
                             </div>
                             <div class="col-lg-10">
                                 <div class="col-lg-12" style="font-size: 30px; font-weight:800;border-bottom: 1px solid #CDCDCD;">
@@ -108,6 +128,24 @@
                                     <div style="display:inline;" id="nombre_doc">
                                        @lang('documents.warehouse')
                                     </div>
+                                    <div class="btn_actions" style="display:inline;float:right;">
+                                      <div class="btn-group print_document" style="display:none;">
+                                          <button data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle" aria-expanded="false" style="padding-top: 3px;padding-bottom: 3px;"><i class='fal fa-print fa-lg'></i> <span class="caret"></span></button>
+                                          <ul class="dropdown-menu dropdown-menu-right pull-right">
+                                              <li><a href="#">Action</a></li>
+                                              <li><a href="#">Another action</a></li>
+                                              <li><a href="#">Something else here</a></li>
+                                              <li class="divider"></li>
+                                              <li><a href="#">Separated link</a></li>
+                                          </ul>
+                                      </div>
+                                      <a class="btn btn-warning btn-outline edit_document" title="Editar" data-toggle="tooltip" style="display:none;"><i class="fal fa-pencil fa-lg"></i></a>
+                                      <a class="btn btn-success btn-outline tags_document" data-toggle="modal" data-target="#modalTagDocument" style="display:none;"><i class="fal fa-arrow-square-right fa-lg" data-toggle="tooltip" title="" data-original-title="Tareas"></i></a>
+                                      <a class="btn btn-danger btn-outline delete_document" title="Eliminar" data-toggle="tooltip" style="display:none;"><i class="fal fa-trash-alt fa-lg"></i></a>
+                                      <a class="btn btn-info filter_document" title="Filtrar" data-toggle="tooltip" @click="dialogVisible = true;" v-if="showFilter"><i class="fal fa-filter fa-lg"></i></a>
+                                      <a class="btn btn-success upload_document" title="Subir archivo de status" data-toggle="tooltip" @click="dialogVisibleUpload = true" v-if="showFilter"><i class="fal fa-upload fa-lg"></i></a>
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -132,15 +170,15 @@
                                         <table id="tbl-documento" class="table table-striped table-hover table-bordered" style="width: 100%;">
                                             <thead>
                                                 <tr>
-                                                    <th><i class="fa fa-file" aria-hidden="true" id="icono-doc-table"></i> #@lang('documents.documents')</th>
-                                                    <th><i class="fa fa-calendar" aria-hidden="true"></i> @lang('documents.date')</th>
-                                                    <th><i class="fa fa-user" aria-hidden="true"></i> @lang('documents.client_consignee')</th>
-                                                    <th><i class="fas fa-map-marked-alt" aria-hidden="true"></i> @lang('documents.city')</th>
-                                                    <th><i class="fa fa-dollar-sign" aria-hidden="true"></i> @lang('general.rate')</th>
-                                                    <th><i class="fa fa-balance-scale" aria-hidden="true"></i> @lang('documents.weight')</th>
-                                                    <th><i class="fa fa-cubes" aria-hidden="true"></i> @lang('documents.volume')</th>
-                                                    <th><i class="fa fa-building" aria-hidden="true"></i> @lang('documents.agency')</th>
-                                                    <th><i class="fa fa-bolt" aria-hidden="true"></i> @lang('documents.actions')</th>
+                                                    <th><i class="fal fa-file" aria-hidden="true" id="icono-doc-table"></i> #@lang('documents.documents')</th>
+                                                    <th><i class="fal fa-calendar" aria-hidden="true"></i> @lang('documents.date')</th>
+                                                    <th><i class="fal fa-user" aria-hidden="true"></i> @lang('documents.consignee')</th>
+                                                    <th><i class="fal fa-map-marked-alt" aria-hidden="true"></i> @lang('documents.city')</th>
+                                                    <th><i class="fal fa-dollar-sign" aria-hidden="true"></i> @lang('general.rate')</th>
+                                                    <th><i class="fal fa-balance-scale" aria-hidden="true"></i> @lang('documents.weight')</th>
+                                                    <th><i class="fal fa-cubes" aria-hidden="true"></i> @lang('documents.volume')</th>
+                                                    <th><i class="fal fa-building" aria-hidden="true"></i> @lang('documents.agency')</th>
+                                                    <th><i class="fal fa-bolt" aria-hidden="true"></i> @lang('documents.actions')</th>
                                                 </tr>
                                             </thead>
                                         </table>
@@ -148,45 +186,50 @@
                                 </div>
                                 <div class="col-lg-12" id="tbl2" style="display:none">
                                     <ul class="nav nav-tabs" role="tablist">
-                    							    <li role="warehouses" class="active" @click="pendign"><a href="#courier" aria-controls="courier" role="tab" data-toggle="tab"><i class="fa fa-box-open"></i> COURIER</a></li>
-                                      <li role="warehouses" @click="pendign"><a href="#load" aria-controls="load" role="tab" data-toggle="tab"><i class="fa fa-truck-moving"></i> CARGA</a></li>
-                                      <li role="pending" id="li-pending" @click="pendign"><a href="#pending" aria-controls="pending" role="tab" data-toggle="tab"><i class="fa fa-box"></i> PENDIENTES <span class="pending badge badge-primary ligth">0</span></a></li>
+                    							    <li role="warehouses" id="default" :class="{ active: courier_carga }" @click="pendign">
+                                        <a href="#courier" aria-controls="courier" role="tab" data-toggle="tab"><i class="fal fa-box-open"></i> COURIER
+                                        </a>
+                                      </li>
+                                      <li role="load" :class="{ active: !courier_carga }" id="li-load" @click="pendign">
+                                        <a href="#load" aria-controls="load" role="tab" data-toggle="tab"><i class="fal fa-truck-moving"></i> CARGA
+                                        </a></li>
+                                      <li role="pending" id="li-pending" @click="pendign"><a href="#pending" aria-controls="pending" role="tab" data-toggle="tab"><i class="fal fa-box"></i> PENDIENTES <span class="pending badge badge-primary ligth">{{ $pendientes->cantidad }}</span></a></li>
                     							  </ul>
                                     <div class="tab-content">
-                                      <div role="tabpanel" class="tab-pane fade active in" id="courier">
+                                      <div role="tabpanel" class="tab-pane fade" :class="{ active: courier_carga, in: courier_carga  }" id="courier">
                                         <div class="table-responsive" style="padding-top:10px;">
                                           <table id="tbl-documento2" class="table table-striped table-hover table-bordered" style="width: 100%;">
                                               <thead>
                                                   <tr>
-                                                      <th><i class="fa fa-file" aria-hidden="true" id="icono-doc-table"></i> #@lang('documents.documents')</th>
-                                                      <th><i class="fa fa-calendar" aria-hidden="true"></i> @lang('documents.date')</th>
-                                                      <th><i class="fa fa-user" aria-hidden="true"></i> @lang('documents.client_consignee')</th>
-                                                      <th><i class="fas fa-map-marked-alt" aria-hidden="true"></i> @lang('documents.city')</th>
-                                                      <th><i class="fa fa-dollar-sign" aria-hidden="true"></i> @lang('general.rate')</th>
-                                                      <th><i class="fa fa-balance-scale" aria-hidden="true"></i> @lang('documents.weight')</th>
-                                                      <th><i class="fa fa-cubes" aria-hidden="true"></i> @lang('documents.volume')</th>
-                                                      <th><i class="fa fa-building" aria-hidden="true"></i> @lang('documents.agency')</th>
-                                                      <th><i class="fa fa-bolt" aria-hidden="true"></i> @lang('documents.actions')</th>
+                                                      <th><i class="fal fa-file" aria-hidden="true" id="icono-doc-table"></i> #@lang('documents.documents')</th>
+                                                      <th><i class="fal fa-calendar" aria-hidden="true"></i> @lang('documents.date')</th>
+                                                      <th><i class="fal fa-user" aria-hidden="true"></i> @lang('documents.consignee')</th>
+                                                      <th><i class="fal fa-map-marked-alt" aria-hidden="true"></i> @lang('documents.city')</th>
+                                                      <th><i class="fal fa-dollar-sign" aria-hidden="true"></i> @lang('general.rate')</th>
+                                                      <th><i class="fal fa-balance-scale" aria-hidden="true"></i> @lang('documents.weight')</th>
+                                                      <th><i class="fal fa-cubes" aria-hidden="true"></i> @lang('documents.volume')</th>
+                                                      <th><i class="fal fa-building" aria-hidden="true"></i> @lang('documents.agency')</th>
+                                                      <th><i class="fal fa-bolt" aria-hidden="true"></i> @lang('documents.actions')</th>
                                                   </tr>
                                               </thead>
                                           </table>
                                         </div>
                                       </div>
 
-                                      <div role="tabpanel" class="tab-pane fade active" id="load">
+                                      <div role="tabpanel" class="tab-pane fade" :class="{ active: !courier_carga, in: !courier_carga }" id="load">
                                         <div class="table-responsive" style="padding-top:10px;">
                                           <table id="tbl-documento3" class="table table-striped table-hover table-bordered" style="width: 100%;">
                                               <thead>
                                                   <tr>
-                                                      <th><i class="fa fa-file" aria-hidden="true" id="icono-doc-table"></i> #@lang('documents.documents')</th>
-                                                      <th><i class="fa fa-calendar" aria-hidden="true"></i> @lang('documents.date')</th>
-                                                      <th><i class="fa fa-user" aria-hidden="true"></i> @lang('documents.client_consignee')</th>
-                                                      <th><i class="fas fa-map-marked-alt" aria-hidden="true"></i> @lang('documents.city')</th>
-                                                      <th><i class="fa fa-dollar-sign" aria-hidden="true"></i> @lang('general.rate')</th>
-                                                      <th><i class="fa fa-balance-scale" aria-hidden="true"></i> @lang('documents.weight')</th>
-                                                      <th><i class="fa fa-cubes" aria-hidden="true"></i> @lang('documents.volume')</th>
-                                                      <th><i class="fa fa-building" aria-hidden="true"></i> @lang('documents.agency')</th>
-                                                      <th><i class="fa fa-bolt" aria-hidden="true"></i> @lang('documents.actions')</th>
+                                                      <th><i class="fal fa-file" aria-hidden="true" id="icono-doc-table"></i> #@lang('documents.documents')</th>
+                                                      <th><i class="fal fa-calendar" aria-hidden="true"></i> @lang('documents.date')</th>
+                                                      <th><i class="fal fa-user" aria-hidden="true"></i> @lang('documents.consignee')</th>
+                                                      <th><i class="fal fa-map-marked-alt" aria-hidden="true"></i> @lang('documents.city')</th>
+                                                      <th><i class="fal fa-dollar-sign" aria-hidden="true"></i> @lang('general.rate')</th>
+                                                      <th><i class="fal fa-balance-scale" aria-hidden="true"></i> @lang('documents.weight')</th>
+                                                      <th><i class="fal fa-cubes" aria-hidden="true"></i> @lang('documents.volume')</th>
+                                                      <th><i class="fal fa-building" aria-hidden="true"></i> @lang('documents.agency')</th>
+                                                      <th><i class="fal fa-bolt" aria-hidden="true"></i> @lang('documents.actions')</th>
                                                   </tr>
                                               </thead>
                                           </table>
@@ -198,15 +241,15 @@
                                           <table id="tbl-documento4" class="table table-striped table-hover table-bordered" style="width: 100%;">
                                               <thead>
                                                   <tr>
-                                                      <th><i class="fa fa-file" aria-hidden="true" id="icono-doc-table"></i> #@lang('documents.documents')</th>
-                                                      <th><i class="fa fa-calendar" aria-hidden="true"></i> @lang('documents.date')</th>
-                                                      <th><i class="fa fa-user" aria-hidden="true"></i> @lang('documents.client_consignee')</th>
-                                                      <th><i class="fas fa-map-marked-alt" aria-hidden="true"></i> @lang('documents.city')</th>
-                                                      <th><i class="fa fa-dollar-sign" aria-hidden="true"></i> @lang('general.rate')</th>
-                                                      <th><i class="fa fa-balance-scale" aria-hidden="true"></i> @lang('documents.weight')</th>
-                                                      <th><i class="fa fa-cubes" aria-hidden="true"></i> @lang('documents.volume')</th>
-                                                      <th><i class="fa fa-building" aria-hidden="true"></i> @lang('documents.agency')</th>
-                                                      <th><i class="fa fa-bolt" aria-hidden="true"></i> @lang('documents.actions')</th>
+                                                      <th><i class="fal fa-file" aria-hidden="true" id="icono-doc-table"></i> #@lang('documents.documents')</th>
+                                                      <th><i class="fal fa-calendar" aria-hidden="true"></i> @lang('documents.date')</th>
+                                                      <th><i class="fal fa-user" aria-hidden="true"></i> @lang('documents.consignee')</th>
+                                                      <th><i class="fal fa-map-marked-alt" aria-hidden="true"></i> @lang('documents.city')</th>
+                                                      <th><i class="fal fa-dollar-sign" aria-hidden="true"></i> @lang('general.rate')</th>
+                                                      <th><i class="fal fa-balance-scale" aria-hidden="true"></i> @lang('documents.weight')</th>
+                                                      <th><i class="fal fa-cubes" aria-hidden="true"></i> @lang('documents.volume')</th>
+                                                      <th><i class="fal fa-building" aria-hidden="true"></i> @lang('documents.agency')</th>
+                                                      <th><i class="fal fa-bolt" aria-hidden="true"></i> @lang('documents.actions')</th>
                                                   </tr>
                                               </thead>
                                           </table>
@@ -229,7 +272,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <h4 class="modal-title" id="myModalLabel">
-                            <i class="fa fa-cubes"></i> Documentos disponibles para agrupar
+                            <i class="fal fa-cubes"></i> Documentos disponibles para agrupar
                         </h4>
                     </div>
                     <div class="modal-body">
@@ -267,23 +310,7 @@
                         </h4>
                     </div>
                     <div class="modal-body">
-                        <form id="formGuiasAgrupar">
-                            <p>Selecione el estatus que desea aplicar a este consolidado y sus documentos internos.</p>
-                            <div class="row">
-                                <div class="col-sm-8">
-                                    <div class="form-group">
-                                        <label for="status_id">Estatus actual</label>
-                                        <v-select name="status_id" v-model="status_id" label="descripcion" :filterable="false" :options="status"></v-select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="status_id" style="width: 100%;">&nbsp;</label>
-                                        <button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Agregar estatus a guias" @click="addStatusConsolidado()"><i class="fa fa-save"></i> Cambiar estatus</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+                      <modal-cambiar-status-consolidado :document_id="id_consolidado_selected" :status="{{ json_encode($status_list) }}"/>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -291,11 +318,18 @@
                 </div>
             </div>
         </div>
+
+        {{-- MODAL FILTRAR DOCUMENTO --}}
+        <document-filter :dialogvisible="dialogVisible" :courier_carga="courier_carga" @get="filter($event)" @close="closeModal()"></document-filter>
+
+        {{-- MODAL SUBIR ESTATUS DOCUMENTO --}}
+        <document-upload :dialogvisibleupload="dialogVisibleUpload" @close="closeModal()"></document-upload>
+    
     </div>
+
 @endsection
 
 @section('scripts')
-  {!! $wcpScript; !!}
 <script src="{{ asset('js/templates/documento/documentoIndex/main.js') }}"></script>
 <script src="{{ asset('js/templates/documento/documentoIndex/vue.js') }}"></script>
 <script src="{{ asset('js/templates/documento/documentoIndex/index.js') }}"></script>
