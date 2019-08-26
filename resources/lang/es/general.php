@@ -283,6 +283,7 @@ return [
     //resources/views/template/tracking
 
     'track_record'=>'Registro de tracking',
+    'create_document'=>'Crear documento',
     'registered_tracking'=>'Tracking registrado',
     'office'=>'Despacho',
     'number_of_tracking'=>'Número de tracking',

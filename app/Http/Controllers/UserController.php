@@ -193,6 +193,7 @@ class UserController extends Controller
             ->leftJoin('role_user as b', 'users.id', 'b.user_id')
             ->leftJoin('roles as c', 'c.id', 'b.role_id')
             ->select('users.id', 'users.name', 'users.email', 'users.agencia_id', 'users.actived', 'a.descripcion as name_agencia', 'c.id AS rol_id', 'c.name as rol_name')
+            //->groupBy('users.id', 'users.name', 'users.email', 'users.agencia_id', 'users.actived', 'a.descripcion', 'c.id', 'c.name')
             ->where($where)->get();
         return \DataTables::of($data)->make(true);
     }

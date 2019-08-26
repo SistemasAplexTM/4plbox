@@ -133,7 +133,7 @@
 
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Crear documento</h5>
+                        <h5>@lang('general.create_document')</h5>
                         <div class="ibox-tools"></div>
                     </div>
                     <div class="ibox-content">
