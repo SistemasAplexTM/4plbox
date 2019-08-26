@@ -34,10 +34,11 @@ $(document).ready(function() {
                     var btn_delete = "<li><a onclick=\"eliminar(" + full.id + "," + true + ")\" style='color:red'><i class='fal fa-trash-alt'></i> Eliminar</a></li>";
                 }
                 var btn = '<div class="btn-group">' +
-                        '<button type="button" class="btn btn-outline btn-success btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
+                        '<button type="button" class="btn btn-success dropdown-toggle btn-xs btn-circle-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
                           '<i class="far fa-ellipsis-v"></i>'+
                         '</button>'+
                         '<ul class="dropdown-menu dropdown-menu-right pull-right">'+
+                          "<li><a onclick=\"reenviarEmailCasillero(" + full.id + ")\"><i class='fal fa-mail-bulk'></i> Reenviar Email Casillero</a></li>"+
                           "<li><a onclick=\"generarCasillero(" + full.id + ")\"><i class='fal fa-address-card'></i> Generar Casillero</a></li>"+
                           "<li><a onclick=\"pasar_id(" + full.id + ")\" data-toggle='modal' data-target='#mdl-contactos'><i class='fal fa-user-plus'></i> Agregar Contactos</a></li>"+
                           btn_delete
@@ -52,6 +53,9 @@ $(window).load(function() {
     $('#agencia_id').empty().append('<option value="' + data_agencia['id'] + '" selected="selected">' + data_agencia['descripcion'] + '</option>').val([data_agencia['id']]).trigger('change');
 });
 
+function reenviarEmailCasillero(id) {
+    objVue.reenviarEmailCasillero(id);
+}
 function generarCasillero(id) {
     objVue.generarCasillero(id);
 }
@@ -169,10 +173,29 @@ var objVue = new Vue({
         ident: false //recordar descomentar las variables tipo_identificacion_id y documento
     },
     methods: {
+      reenviarEmailCasillero: function(id) {
+          axios.get('consignee/reenviarEmailCasillero/' + id).then(response => {
+            if (response.data.code === 200) {
+              toastr.success('Email en proceso de envio....');
+              this.updateTable();
+            }else{
+              toastr.error(response.data.error);
+            }
+          }).catch(function(error) {
+              console.log(error);
+              toastr.error("Error.", {
+                  timeOut: 50000
+              });
+          });
+      },
         generarCasillero: function(id) {
             axios.get('consignee/generarCasillero/' + id).then(response => {
+              if (response.data.code === 200) {
                 toastr.success('Registro exitoso.');
                 this.updateTable();
+              }else{
+                toastr.error(response.data.error);
+              }
             }).catch(function(error) {
                 console.log(error);
                 toastr.error("Error.", {

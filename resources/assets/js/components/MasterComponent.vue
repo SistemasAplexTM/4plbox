@@ -309,38 +309,61 @@
                 <div class="row">
                   <div class="col-lg-6">
                     <div class="form-group">
-                      <label for="aerolinea">Issued by: <span v-if="editing">{{ aerolinea }}</span></label>
-                      <v-select
-                        name="aerolinea"
-                        id="aerolinea"
-                        label="nombre"
-                        :options="aerolineas"
-                        :disabled="disableAerolinea"
-                        :onChange="getAerolineasInventario"
-                        :class="{'has-error': errors.has('aerolinea') }"
-                        >
-                          <template slot="no-options">
-                            No hay datos
-                          </template>
-                      </v-select>
+                      <label for="aerolinea">Issued by:
+                        <!-- <span v-if="editing">{{ aerolinea }}</span> -->
+                      </label>
+                      <el-select v-model="aerolinea"
+                      clearable placeholder="Seleccione"
+                      :disabled="disableAerolinea"
+                      @change="getAerolineasInventario"
+                      :class="{'has-error': errors.has('aerolinea') }"
+                      value-key="id" size="medium">
+                        <el-option
+                          v-for="item in aerolineas"
+                          name="aerolinea"
+                          :key="item.id"
+                          :label="item.name"
+                          :value="item">
+                          <div>
+                            <i class="fal fa-plane-alt" style="text-align: center;width: 25px;"></i> {{ item.name }}
+                          </div>
+                        </el-option>
+                      </el-select>
                       <small v-show="errors.has('aerolinea')" class="bg-danger">{{ errors.first('aerolinea') }}</small>
                     </div>
                   </div>
                   <div class="col-lg-6">
                     <div class="form-group" :class="{'has-error': errors.has('aerolinea_inventario') }">
-                      <label for="aerolinea_inventario">Inventory: <span v-if="editing">{{ aerolinea_inventario }}</span></label>
-                      <v-select
-                        v-validate="'required'"
-                        name="aerolinea_inventario"
-                        id="aerolinea_inventario"
-                        label="nombre"
-                        :disabled="disableAerolinea"
-                        :options="aerolineas_inventario"
-                        :on-change="setNumMaster">
-                          <template slot="no-options">
-                            No hay datos
-                          </template>
-                      </v-select>
+                      <label for="aerolinea_inventario">Inventory:
+                        <!-- <span v-if="editing">{{ aerolinea_inventario }}</span> -->
+                      </label>
+                      <a style="float:right;color:dodgerblue;" data-toggle="tooltip"
+                      :title="icon_title" :data-original-title="icon_title" @click="write = !write">
+                        <i :class="icon_cost"></i>
+                      </a>
+                      <el-select v-show="!write" v-validate="'required'" v-model="aerolinea_inventario_id"
+                      clearable placeholder="Seleccione"
+                      :disabled="disableAerolinea"
+                      @change="setNumMaster"
+                      value-key="id" size="medium">
+                        <el-option
+                          v-for="item in aerolineas_inventario"
+                          name="aerolinea"
+                          :key="item.id"
+                          :label="item.nombre"
+                          :value="item">
+                          <div>
+                            <i class="fal fa-barcode-alt" style="text-align: center;width: 25px;"></i> {{ item.nombre }}
+                          </div>
+                        </el-option>
+                      </el-select>
+                      <el-input
+                        placeholder="Ingrese el Numero de Guía"
+                        prefix-icon="el-icon-edit"
+                        v-model="num_master"
+                        size="medium"
+                        v-show="write">
+                      </el-input>
                       <small v-show="errors.has('aerolinea_inventario')" class="bg-danger">{{ errors.first('aerolinea_inventario') }}</small>
                     </div>
                   </div>
@@ -363,18 +386,21 @@
                   <div class="col-lg-12">
                     <div class="form-group">
                       <label for="aeropuerto_salida">Airport of Departure(Address of first  Carrier) and  requested Routing</label>
-                      <v-select
-                      v-validate="'required'"
-                      name="aeropuerto_salida"
-                      id="aeropuerto_salida"
-                      v-model="aeropuerto_salida"
-                      label="name" :options="aeropuertos"
+                      <el-select v-validate="'required'" v-model="aeropuerto_salida"
+                      clearable placeholder="Seleccione"
                       :class="{'has-error': errors.has('aeropuerto_salida') }"
-                      >
-                          <template slot="no-options">
-                            No hay datos
-                          </template>
-                      </v-select>
+                      value-key="id" size="medium">
+                        <el-option
+                          v-for="item in aeropuertos"
+                          name="aerolinea"
+                          :key="item.id"
+                          :label="item.name"
+                          :value="item">
+                          <div>
+                            <i class="fal fa-plane-departure" style="text-align: center;width: 25px;"></i> {{ item.name }}
+                          </div>
+                        </el-option>
+                      </el-select>
                       <small v-show="errors.has('aeropuerto_salida')" class="bg-danger">{{ errors.first('aeropuerto_salida') }}</small>
                     </div>
                   </div>
@@ -383,11 +409,22 @@
                   <div class="col-lg-12">
                     <div class="form-group" :class="{'has-error': errors.has('aeropuerto_destino') }">
                       <label for="aeropuerto_destino">Airport of Destination(Address of first  Carrier) and  requested Routing</label>
-                      <v-select v-validate="'required'" v-model="aeropuerto_destino" name="aeropuerto_destino" id="aeropuerto_destino" label="name" :options="aeropuertos" :class="{'has-error': errors.has('aeropuerto_destino') }">
-                          <template slot="no-options">
-                            No hay datos
-                          </template>
-                      </v-select>
+
+                      <el-select v-validate="'required'" v-model="aeropuerto_destino"
+                      clearable placeholder="Seleccione"
+                      :class="{'has-error': errors.has('aeropuerto_destino') }"
+                      value-key="id" size="medium">
+                        <el-option
+                          v-for="item in aeropuertos"
+                          name="aerolinea"
+                          :key="item.id"
+                          :label="item.name"
+                          :value="item">
+                          <div>
+                            <i class="fal fa-plane-arrival" style="text-align: center;width: 25px;"></i> {{ item.name }}
+                          </div>
+                        </el-option>
+                      </el-select>
                       <small v-show="errors.has('aeropuerto_destino')" class="bg-danger">{{ errors.first('aeropuerto_destino') }}</small>
                     </div>
                   </div>
@@ -398,7 +435,7 @@
                   <div class="col-lg-12">
                     <div class="form-group" :class="{'has-error': errors.has('account_information') }">
                       <label for="account_information">Account information</label>
-                      <textarea v-validate="'required'" v-model="account_information" class="form-control" name="account_information" id="account_information" cols="30" rows="6">
+                      <textarea v-validate="'required'" v-model="account_information" class="form-control" name="account_information" id="account_information" cols="30" rows="5">
                         -PREPAID
                       </textarea>
                       <small v-show="errors.has('account_information')" class="bg-danger">{{ errors.first('account_information') }}</small>
@@ -482,21 +519,6 @@
                       <small v-show="errors.has('handing_information')" class="bg-danger">{{ errors.first('handing_information') }}</small>
                     </div>
                   </div>
-                  <!-- <div class="col-lg-4">
-                    <div class="form-group">
-                      <label for="consolidado_id">Consolidado</label>
-                      <v-select name="consolidado_id" v-model="consolidado_id" label="consolidado" :filterable="false" :options="consolidados" @search="onSearchConsolidados" placeholder="# Consolidado">
-                        <template slot="option" slot-scope="option">
-                            {{ option.consolidado }} | <i class="fal fa-calendar"></i> {{ option.fecha }} | <i class="fal fa-globe"></i> {{ option.pais }}
-                        </template>
-                        <template slot="selected-option" slot-scope="option">
-                          <div class="selected d-center">
-                            {{ option.consolidado }} | <i class="fal fa-calendar"></i> {{ option.fecha }} | <i class="fal fa-globe"></i> {{ option.pais }}
-                          </div>
-                        </template>
-                      </v-select>
-                    </div>
-                  </div> -->
                 </div>
                 <div class="row">
                   <div class="col-lg-12">
@@ -745,7 +767,10 @@
         errorMsg: null,
         msg: null,
         count: 0,
-        editing: false
+        editing: false,
+        write: false,
+        icon_cost: 'fal fa-user-edit',
+        icon_title: 'Escribir'
       }
     },
     props: ["master", "consol", "peso_consolidado", "piezas_consolidado"],
@@ -761,7 +786,18 @@
       },
       tarifa: function(){
         this.total = isInteger(this.peso_cobrado * this.tarifa);
-      }
+      },
+      write:function(value){
+       if(value){
+         this.icon_cost = 'fal fa-hand-pointer';
+         this.icon_title = 'Seleccionar';
+         this.text_cost = 'Descripción';
+       }else{
+         this.icon_cost = 'fal fa-user-edit';
+         this.icon_title = 'Escribir';
+         this.text_cost = 'Seleccionar Costo o Gasto';
+       }
+      },
     },
     created(){
       if (this.master != null) {
@@ -902,8 +938,8 @@
           'consignee': this.datos_consignee,
           'carrier_id': this.carrier.id,
           'carrier': this.datos_carrier,
-          'aerolinea_inventario_id': this.aerolinea_inventario_id,
-          'aerolineas_id': this.aerolinea,
+          'aerolinea_inventario_id': (!this.write) ? this.aerolinea_inventario_id.id : '',
+          'aerolineas_id': this.aerolinea.id,
           'by_first_carrier': this.aerolinea_name,
           'aeropuertos_id': this.aeropuerto_salida.id,
           'aeropuertos_id_destino': this.aeropuerto_destino.id,
@@ -1026,12 +1062,21 @@
             me.datos_shipper = response.data.data.shipper;
             me.datos_consignee = response.data.data.consignee;
             me.datos_carrier = response.data.data.carrier;
-          }, 2000)
+            // aerolineas
+            var aer = me.aerolineas.filter(({id}) => id == response.data.data.aerolineas_id);
+            me.aerolinea = aer[0];
+            me.aerolinea_inventario_id = (response.data.data.aerolinea_inventario !== null) ? response.data.data.codigo_aerolinea + ' ' + response.data.data.aerolinea_inventario : '';
 
-          this.aeropuerto_salida = {id: response.data.data.aeropuertos_id, name: response.data.data.nombre_aeropuerto};
-          this.aeropuerto_destino = {id: response.data.data.aeropuertos_id_destino, name: response.data.data.aeropuerto_destino};
-          this.aerolinea = response.data.data.nombre_aerolinea;
-          this.aerolinea_inventario = response.data.data.aerolinea_inventario;
+            // aeropuertos
+            var departure = me.aeropuertos.filter(({id}) => id == response.data.data.aeropuertos_id);
+            me.aeropuerto_salida = departure[0];
+            var arrival = me.aeropuertos.filter(({id}) => id == response.data.data.aeropuertos_id_destino);
+            me.aeropuerto_destino = arrival[0];
+          }, 1500)
+          console.log(response.data.data.aerolinea_inventario);
+          if (response.data.data.aerolinea_inventario === null) {
+            me.write = true;
+          }
           this.num_master = response.data.data.num_master;
           this.consolidado_id = response.data.data.consolidado_id;
           this.account_information = response.data.data.account_information;
@@ -1085,7 +1130,7 @@
         let me = this;
         if (val != null) {
           this.codigo = val.codigo;
-          this.aerolinea = val.id;
+          this.aerolinea = val;
           this.aerolinea_name = val.nombre;
           let url = '/aerolinea_inventario/get/' + val.id;
           if (this.editing) {
@@ -1104,10 +1149,12 @@
       setNumMaster: function(val){
         if (val != null) {
           this.msg = null;
-          this.aerolinea_inventario_id = val.id;
-          this.num_master = this.codigo + ' ' +  val.nombre;
+          this.aerolinea_inventario_id = val;
+          this.num_master = val.nombre;
         }else{
-          this.num_master = null;
+          if(!this.write){
+            this.num_master = null;
+          }
         }
       },
       onSearchConsolidados(search, loading) {

@@ -3222,7 +3222,7 @@ class DocumentoController extends Controller
                 ['c.deleted_at', null]
             ])
             ->when($data, function ($query, $data) {
-                return $query->whereRaw("(c.num_guia LIKE '%" . $data . "' OR c.num_warehouse LIKE '%" . $data . "' OR t.codigo LIKE '" . $data . "%')");
+                return $query->whereRaw("(c.num_guia LIKE '%" . $data . "' OR c.num_warehouse LIKE '%" . $data . "' OR t.codigo LIKE '%" . $data . "')");
             })
             ->groupBy(
               'c.id',

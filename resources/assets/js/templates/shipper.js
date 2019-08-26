@@ -33,7 +33,7 @@ $(document).ready(function() {
                     var btn_delete = "<li><a onclick=\"eliminar(" + full.id + "," + true + ")\" style='color:red'><i class='fal fa-trash'></i> Eliminar</a></li>";
                 }
                 var btn = '<div class="btn-group">' +
-                        '<button type="button" class="btn btn-outline btn-success btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
+                        '<button type="button" class="btn btn-success dropdown-toggle btn-xs btn-circle-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
                           '<i class="far fa-ellipsis-v"></i>'+
                         '</button>'+
                         '<ul class="dropdown-menu dropdown-menu-right pull-right">'+

@@ -78,7 +78,7 @@ $(document).ready(function () {
                          "<li><a href='impresion-documento/pdfTsa' target='_blank'> <spam class='fal fa-print'></spam> TSA</a></li>" +
                          btn_consolidado +
                          "</ul></div>";
-                    return btns + ' ' + btns_print;
+                    return  btns_print + ' ' +  btns;
                 }
             }
         ]

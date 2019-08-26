@@ -911,7 +911,6 @@
                 "Guzzle-Factory",
                 "http"
             ],
-            "time": "2019-06-30T12:48:08+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -1367,6 +1366,7 @@
         },
         {
             "name": "laravel/framework",
+<<<<<<< HEAD
             "version": "v5.5.47",
             "source": {
                 "type": "git",
@@ -1377,6 +1377,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/framework/zipball/0f538802144a41664f545fd92bbb556000cba115",
                 "reference": "0f538802144a41664f545fd92bbb556000cba115",
+=======
+            "version": "v5.5.48",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/framework.git",
+                "reference": "e3e8d585dcfab5abe6261b060f4df0d48f9924bf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/e3e8d585dcfab5abe6261b060f4df0d48f9924bf",
+                "reference": "e3e8d585dcfab5abe6261b060f4df0d48f9924bf",
+>>>>>>> a401867f89a34d1d342a7ee53c7df65769e13418
                 "shasum": ""
             },
             "require": {
@@ -1497,7 +1509,11 @@
                 "framework",
                 "laravel"
             ],
+<<<<<<< HEAD
             "time": "2019-08-13T14:13:01+00:00"
+=======
+            "time": "2019-08-20T15:46:40+00:00"
+>>>>>>> a401867f89a34d1d342a7ee53c7df65769e13418
         },
         {
             "name": "laravel/passport",

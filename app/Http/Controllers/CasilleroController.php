@@ -117,6 +117,7 @@ class CasilleroController extends Controller
             ->select([
                 'a.id',
                 'a.descripcion as descripcion',
+                'a.logo',
                 'a.telefono',
                 'a.email',
                 'a.direccion',
@@ -130,14 +131,18 @@ class CasilleroController extends Controller
             ])->first();
 
             $replacements = $this->replacements(null, $agencia, null, null, $user, null);
+            $cuerpo_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->mensaje);
+            $asunto_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->subject);
+            $from_self = array(
+                'address' => $agencia->email,
+                'name'    => $agencia->descripcion,
+            );
             if ($request->recibir_info) {
               $list_id = AplexConfig::where('key', 'agency_mc_' .$request->agencia_id)->first();
               if ($list_id) {
                 $list_id = $list_id->value;
                 $list_id = json_decode($list_id, true);
                 $list_id = $list_id['id_list'];
-                $cuerpo_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->mensaje);
-                $asunto_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->subject);
                 $listId = $request->listId;
                 if (!\Mailchimp::check($list_id, $request->correo)) {
                   \Mailchimp::subscribe(
@@ -149,7 +154,7 @@ class CasilleroController extends Controller
                 }
               }
             }
-            Mail::to($request->correo)->send(new \App\Mail\CasilleroEmail($cuerpo_correo));
+            Mail::to($request->correo)->send(new \App\Mail\CasilleroEmail($cuerpo_correo,$from_self,$asunto_correo));
 
             DB::commit();
         } catch (\Exception $e) {

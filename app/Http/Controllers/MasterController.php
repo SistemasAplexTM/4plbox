@@ -229,7 +229,7 @@ class MasterController extends Controller
             ->join('aerolineas_aeropuertos AS f', 'a.aeropuertos_id', 'f.id')
             ->join('aerolineas_aeropuertos AS g', 'a.aerolineas_id', 'g.id')
             ->join('aerolineas_aeropuertos AS h', 'a.aeropuertos_id_destino', 'h.id')
-            ->join('aerolineas_inventario AS i', 'a.aerolinea_inventario_id', 'i.id')
+            ->leftJoin('aerolineas_inventario AS i', 'a.aerolinea_inventario_id', 'i.id')
             ->leftJoin('documento AS z', 'a.id', 'z.master_id')
             ->leftJoin('localizacion', 'z.ciudad_id', '=', 'localizacion.id')
             ->leftJoin('deptos', 'localizacion.deptos_id', '=', 'deptos.id')
@@ -265,6 +265,7 @@ class MasterController extends Controller
                 'a.consignee',
                 'a.carrier_id',
                 'a.carrier',
+                'a.aerolineas_id',
                 'b.descripcion',
                 'b.direccion',
                 'b.responsable',
@@ -300,11 +301,13 @@ class MasterController extends Controller
                 'j.contacto AS contacto_carrier',
 
                 'f.nombre AS nombre_aeropuerto',
+                'f.id AS aeropuertos_id',
                 'g.nombre AS nombre_aerolinea',
                 'g.direccion AS dir_aerolinea',
                 'g.zip AS zip_aerolinea',
                 'g.codigo AS codigo_aerolinea',
                 'h.nombre AS aeropuerto_destino',
+                'h.id AS aeropuertos_id_destino',
                 'h.codigo AS aeropuerto_codigo',
                 'i.guia AS aerolinea_inventario',
                 'z.id AS consolidado_id',

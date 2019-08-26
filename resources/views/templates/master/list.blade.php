@@ -26,36 +26,36 @@
 <div class="row" id="master_list">
 	<div class="col-lg-12">
     <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h5>
-                    @lang('master.registered_guides')
-                </h5>
-                <div class="ibox-tools">
-                    <a class="btn btn-primary" data-toggle="tooltip" title="Crear nueva master"><span data-toggle="modal" data-target="#modalCreateMaster">@lang('master.new') <i class="fal fa-plus" style="font-size: small;"></i></span></a>
-                </div>
-            </div>
-            <div class="ibox-content">
-                <!--***** contenido ******-->
-                <div class="table-responsive">
-                    <table id="tbl-master" class="table table-striped table-hover table-bordered" style="width: 100%;">
-                        <thead>
-                            <tr>
-                                <th>Master AWB</th>
-                                <th>@lang('master.airline')</th>
-                                <th>@lang('master.date')</th>
-                                <th>@lang('master.rate')</th>
-                                <th>@lang('master.weight') Lb</th>
-                                <th>@lang('master.weight') Kl</th>
-                                <th>@lang('master.consignee')</th>
-                                <th>@lang('master.destination')</th>
-                                <th>@lang('master.manifest')</th>
-                                <th>@lang('master.actions')</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
+        <div class="ibox-title">
+            <h5>
+                @lang('master.registered_guides')
+            </h5>
+            <div class="ibox-tools">
+                <a class="btn btn-primary" data-toggle="tooltip" title="Crear nueva master"><span data-toggle="modal" data-target="#modalCreateMaster">@lang('master.new') <i class="fal fa-plus" style="font-size: small;"></i></span></a>
             </div>
         </div>
+        <div class="ibox-content">
+            <!--***** contenido ******-->
+            <div class="table-responsive">
+                <table id="tbl-master" class="table table-striped table-hover table-bordered" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Master AWB</th>
+                            <th>@lang('master.airline')</th>
+                            <th>@lang('master.date')</th>
+                            <th>@lang('master.rate')</th>
+                            <th>@lang('master.weight') Lb</th>
+                            <th>@lang('master.weight') Kl</th>
+                            <th>@lang('master.consignee')</th>
+                            <th>@lang('master.destination')</th>
+                            <th>@lang('master.manifest')</th>
+                            <th>@lang('master.actions')</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
   </div>
 
     <!-- MODAL ASOCIAR CONSOLIDADO -->
