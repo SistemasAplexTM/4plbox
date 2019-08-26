@@ -233,7 +233,7 @@ class UserController extends Controller
     {
         try {
             $dataUser = DB::table('users')->select('name')->where('name', $request->email)->first();
-            if (count($dataUser) > 0) {
+            if ($dataUser) {
                 $answer = array(
                     "valid"   => false,
                     "message" => "El nombre de usuario ya existe en la base de datos.",
