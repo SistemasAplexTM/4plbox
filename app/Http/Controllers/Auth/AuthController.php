@@ -70,7 +70,7 @@ class AuthController extends Controller
           $token->expires_at = Carbon::now()->addWeeks(1);
       $token->save();
       $user = Consignee::find($user->consignee_id);
-      $agencia = Agencia::find($user->agencia_id);
+      $agencia = Agencia::find($user['agencia_id']);
       return response()->json([
           'user' => json_encode($user),
           'agencia' => json_encode($agencia),
