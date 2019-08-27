@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Consignee;
+use App\Tracking;
 use App\DocumentoDetalle;
 
 trait sendEmailAlerts
@@ -25,7 +26,13 @@ trait sendEmailAlerts
       if (isset($condignee->correo) and $condignee->correo != '') {
           if (filter_var(trim($condignee->correo), FILTER_VALIDATE_EMAIL)) {
               /* ENVIO DE EMAIL REPLACEMENT($id_documento, $objAgencia, $objDocumento, $objShipper, $condignee, $datosEnvio, $trakcings)*/
-              $replacements = $this->replacements(0, $objAgencia, null, null, $condignee, null, $tracking);
+              $t = explode(',', $tracking);
+              $datosEnvio = '';
+              foreach ($t as $key => $value) {
+                $tr = Tracking::where('codigo', $value)->first();
+                $datosEnvio .= '- ' . $tr->contenido . '<br> Tracking: ' . $value . '<br>';
+              }
+              $replacements = $this->replacements(0, $objAgencia, null, null, $condignee, $datosEnvio, $tracking);
 
               $cuerpo_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->mensaje);
               $asunto_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->subject);

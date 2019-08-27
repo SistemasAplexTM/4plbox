@@ -24,23 +24,13 @@ class TrackingController extends Controller
         $this->middleware('permission:tracking.update')->only('update');
         $this->middleware('permission:tracking.delete')->only('delete');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
       $this->assignPermissionsJavascript('tracking');
       return view('templates/tracking');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(TrackingRequest $request)
     {
         try {
@@ -98,25 +88,12 @@ class TrackingController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $data = Tracking::findOrFail($id);
         $data->delete();
     }
 
-    /**
-     * Actualiza el campo deleted_at del registro seleccionado.
-     *
-     * @param  int  $id
-     * @param  boolean  $deleteLogical
-     * @return \Illuminate\Http\Response
-     */
     public function delete($id, $logical)
     {
 
@@ -142,11 +119,6 @@ class TrackingController extends Controller
         }
     }
 
-    /**
-     * Obtener todos los registros de la tabla para el datatable
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function getAll($grid = false, $add = null, $id = false, $req_consignee = false, $bodega = false)
     {
         $where = [['tracking.deleted_at', null], ['tracking.agencia_id', Auth::user()->agencia_id]];
@@ -318,6 +290,7 @@ class TrackingController extends Controller
 
     public function getTrackingByCreateReceipt()
     {
+      // DB::connection()->enableQueryLog();
       $data = Tracking::join('consignee AS b', 'tracking.consignee_id', 'b.id')
           ->select(
               'tracking.consignee_id',
@@ -331,7 +304,27 @@ class TrackingController extends Controller
                 t.deleted_at IS NULL AND
                 t.documento_detalle_id IS NULL AND
                 t.consignee_id = tracking.consignee_id
-              ) AS cantidad")
+              ) AS cantidad"),
+              DB::raw("(
+                SELECT
+                GROUP_CONCAT(t.codigo)
+                FROM
+                tracking AS t
+                WHERE
+                t.deleted_at IS NULL AND
+                t.documento_detalle_id IS NULL AND
+                t.consignee_id = tracking.consignee_id
+              ) AS trackings"),
+              DB::raw("(
+              	SELECT
+              		DATE_FORMAT(max(t.created_at),'%Y-%m-%d')
+              	FROM
+              		tracking AS t
+              	WHERE
+              		t.deleted_at IS NULL
+              		AND t.documento_detalle_id IS NULL
+              		AND t.consignee_id = tracking.consignee_id
+              ) AS last_date")
           )
           ->where([
             ['tracking.deleted_at', NULL],
@@ -341,9 +334,12 @@ class TrackingController extends Controller
           ->groupBy(
             'b.nombre_full',
             'tracking.consignee_id',
-            'cantidad'
+            'cantidad',
+            'trackings'
             )
+          ->orderBy('last_date', 'DESC')
           ->get();
+          // return DB::getQueryLog();
       return \DataTables::of($data)->make(true);
     }
 
@@ -399,5 +395,38 @@ class TrackingController extends Controller
             );
             return $answer;
         }
+    }
+
+    public function trackingRecibido($id, $track)
+    {
+      try {
+        $code = 200;
+        $error = '';
+        $config = $this->getConfig('ingreso_tracking');
+        $status = Status::where('id', 9)->first();// 9 es alerta de tracking
+        if($status){
+          if($status->email === 1){
+            if ($status->json_data != null) {
+              $json_data = json_decode($status->json_data);
+              if(isset($json_data->email_template_id)){
+                $this->verifySendEmail($config->value, $json_data->email_template_id, $id, $track);
+              }
+            }else{
+              $code = 500;
+              $error = 'No hay plantilla de email para el estatus de Alerta Tracking';
+            }
+          }else{
+            $code = 500;
+            $error = 'No esta habilitada la opción de envio de email para el estatus de Alerta Tracking';
+          }
+        }
+        return array(
+          'code' => $code,
+          'error' => $error,
+        );
+      } catch (Exception $e) {
+        return $e;
+      }
+
     }
 }

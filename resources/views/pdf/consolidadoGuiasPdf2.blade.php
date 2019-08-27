@@ -171,7 +171,7 @@ $toalRegistros = count($detalleConsolidado);
                                                                 <div style="color: #1d1d1e;">{{ '$ '.number_format($value->declarado2, 2) }}</div>
                                                                 <div style="margin-top: 10px;">Master: <span style="color: #1d1d1e;">{{ $documento->num_master }}</span></div>
                                                             </td>
-                                                            <td width="30%" style="color: #1d1d1e;text-align: center;">{{ 1 }}</td>
+                                                            <td width="30%" style="color: #1d1d1e;text-align: center;">{{ $value->piezas }}</td>
                                                             <td width="35%" style="text-align: center;">
                                                                 <div style="color: #1d1d1e;">{{ $value->peso2 }} Lbs</div>
                                                                 <div style="margin-top: 10px;color: #1d1d1e;">{{ number_format(($value->peso2 * 0.453592), 2) }} Kls</div>

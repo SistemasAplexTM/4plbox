@@ -375,9 +375,16 @@ class ConsigneeController extends Controller
                 'address' => $agencia->email,
                 'name'    => $agencia->descripcion,
             );
-
-            Mail::to($correo)->send(new \App\Mail\CasilleroEmail($cuerpo_correo, $from_self, $asunto_correo));
-            $this->AddToLog('Email casillero enviado id consignee (' . $id_consignee . ')');
+            if($correo){
+              if($plantilla){
+                Mail::to($correo)->send(new \App\Mail\CasilleroEmail($cuerpo_correo, $from_self, $asunto_correo));
+                $this->AddToLog('Email casillero enviado id consignee (' . $id_consignee . ')');
+              }else{
+                return 'No existe plantilla.';
+              }
+            }else {
+              return 'No existe el correo.';
+            }
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();

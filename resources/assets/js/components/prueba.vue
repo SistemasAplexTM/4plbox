@@ -1,7 +1,7 @@
-<template>
+<!-- <template>
   <form-wizard @on-complete="onComplete" @on-validate="handleValidation" color="#1ab394" error-color="#ff4949" title="" subtitle="" back-button-text="Anterior" next-button-text="Suguiente" finish-button-text="Terminar">
     <tab-content title="Datos de envío" icon="fa fa-user" :before-change="validateFirstTabS">
-      <div class="row">                          
+      <div class="row">
         <div class="col-lg-5 col-lg-offset-1">
           <div class="panel panel-default">
             <div class="panel-heading">
@@ -46,7 +46,7 @@
 
       <vue-form-generator :model="model" :schema="secondTabSchema" :options="formOptions" ref="secondTabForm">
       </vue-form-generator>
-      
+
     </tab-content>
     <tab-content title="Detalle" icon="fa fa-check">
       <h4>Your json is ready!</h4>
@@ -259,7 +259,7 @@
           },
          ]
        }
-         
+
         }
        },
        methods: {
@@ -301,6 +301,6 @@
                   }
               }
         }
-       
+
   }
-</script>
+</script> -->
