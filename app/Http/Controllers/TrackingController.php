@@ -206,6 +206,7 @@ class TrackingController extends Controller
                 ['a.deleted_at', null],
                 ['a.agencia_id', Auth::user()->agencia_id],
             ])
+            ->orderBy('name', 'ASC')
             ->get();
         return \DataTables::of($data)->make(true);
     }

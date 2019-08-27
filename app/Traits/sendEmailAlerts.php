@@ -28,10 +28,14 @@ trait sendEmailAlerts
               /* ENVIO DE EMAIL REPLACEMENT($id_documento, $objAgencia, $objDocumento, $objShipper, $condignee, $datosEnvio, $trakcings)*/
               $t = explode(',', $tracking);
               $datosEnvio = '';
+              $thead = '<table width="100%" border="1" bordercolor="#CCCCCC" cellspacing="0" cellpadding="0" style="border-collapse:collapse"><thead><tr><th style="width:40%;"><div style="font-size: 15px;">TRACKING</div></th><th><div style="font-size: 15px;">CONTENIDO</div></th></tr></thead>';
+              $tbody = '<tbody>';
+              $datosEnvio .= $thead . ' ' . $tbody;
               foreach ($t as $key => $value) {
                 $tr = Tracking::where('codigo', $value)->first();
-                $datosEnvio .= '- ' . $tr->contenido . '<br> Tracking: ' . $value . '<br>';
+                $datosEnvio .= '<tr><td style="text-align: left;font-size: 14px;"><div style="margin-left: 3px;">' . $value . '</div></td><td style="text-align: left;font-size: 14px;"><div style="margin-left: 3px;">' . $tr->contenido . '</div></td></tr>';
               }
+              $datosEnvio .= '</tbody></table>';
               $replacements = $this->replacements(0, $objAgencia, null, null, $condignee, $datosEnvio, $tracking);
 
               $cuerpo_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->mensaje);

@@ -58,6 +58,9 @@
 
                         </div>
                     </div>
+
+                    
+
                     <div class="ibox-content">
                         <!--***** contenido ******-->
                         <div class="row">
@@ -176,6 +179,7 @@
                                         <tr>
                                             <th>@lang('general.date')</th>
                                             <th>@lang('general.client')</th>
+
                                             {{-- <th>@lang('general.email')</th> --}}
                                             <th>@lang('general.tracking')</th>
                                             <th>Warehouse</th>
