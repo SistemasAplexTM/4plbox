@@ -846,13 +846,13 @@
             "authors": [
                 {
                     "name": "Neuman Vong",
-                    "email": "neuman+pear@twilio.com",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "neuman+pear@twilio.com"
                 },
                 {
                     "name": "Anant Narayanan",
-                    "email": "anant@php.net",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "anant@php.net"
                 }
             ],
             "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
@@ -861,16 +861,16 @@
         },
         {
             "name": "graham-campbell/guzzle-factory",
-            "version": "v3.0.2",
+            "version": "v3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/GrahamCampbell/Guzzle-Factory.git",
-                "reference": "6ccf9d73c4c2a55b9576f3a6edcf42af44c99fbb"
+                "reference": "5953039c541533647110f8c8f48cbc428d51beb1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GrahamCampbell/Guzzle-Factory/zipball/6ccf9d73c4c2a55b9576f3a6edcf42af44c99fbb",
-                "reference": "6ccf9d73c4c2a55b9576f3a6edcf42af44c99fbb",
+                "url": "https://api.github.com/repos/GrahamCampbell/Guzzle-Factory/zipball/5953039c541533647110f8c8f48cbc428d51beb1",
+                "reference": "5953039c541533647110f8c8f48cbc428d51beb1",
                 "shasum": ""
             },
             "require": {
@@ -911,7 +911,6 @@
                 "Guzzle-Factory",
                 "http"
             ],
-            "time": "2019-08-23T13:19:30+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -1367,6 +1366,18 @@
         },
         {
             "name": "laravel/framework",
+<<<<<<< HEAD
+            "version": "v5.5.47",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/framework.git",
+                "reference": "0f538802144a41664f545fd92bbb556000cba115"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/0f538802144a41664f545fd92bbb556000cba115",
+                "reference": "0f538802144a41664f545fd92bbb556000cba115",
+=======
             "version": "v5.5.48",
             "source": {
                 "type": "git",
@@ -1377,6 +1388,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/framework/zipball/e3e8d585dcfab5abe6261b060f4df0d48f9924bf",
                 "reference": "e3e8d585dcfab5abe6261b060f4df0d48f9924bf",
+>>>>>>> a401867f89a34d1d342a7ee53c7df65769e13418
                 "shasum": ""
             },
             "require": {
@@ -1497,7 +1509,11 @@
                 "framework",
                 "laravel"
             ],
+<<<<<<< HEAD
+            "time": "2019-08-13T14:13:01+00:00"
+=======
             "time": "2019-08-20T15:46:40+00:00"
+>>>>>>> a401867f89a34d1d342a7ee53c7df65769e13418
         },
         {
             "name": "laravel/passport",
@@ -1864,9 +1880,9 @@
             "authors": [
                 {
                     "name": "Alex Bilbie",
+                    "role": "Developer",
                     "email": "hello@alexbilbie.com",
-                    "homepage": "http://www.alexbilbie.com",
-                    "role": "Developer"
+                    "homepage": "http://www.alexbilbie.com"
                 }
             ],
             "description": "A lightweight and powerful OAuth 2.0 authorization and resource server library with support for all the core specification grants. This library will allow you to secure your API with OAuth and allow your applications users to approve apps that want to access their data from your API.",
@@ -3448,9 +3464,9 @@
             "authors": [
                 {
                     "name": "Freek Van der Herten",
+                    "role": "Developer",
                     "email": "freek@spatie.be",
-                    "homepage": "https://spatie.be",
-                    "role": "Developer"
+                    "homepage": "https://spatie.be"
                 }
             ],
             "description": "Dump databases",
@@ -5038,8 +5054,8 @@
             "authors": [
                 {
                     "name": "Tijs Verkoyen",
-                    "email": "css_to_inline_styles@verkoyen.eu",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "css_to_inline_styles@verkoyen.eu"
                 }
             ],
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
@@ -5598,18 +5614,18 @@
             "authors": [
                 {
                     "name": "Arne Blankerts",
-                    "email": "arne@blankerts.de",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "arne@blankerts.de"
                 },
                 {
                     "name": "Sebastian Heuer",
-                    "email": "sebastian@phpeople.de",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "sebastian@phpeople.de"
                 },
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Component for reading phar.io manifest information from a PHP Archive (PHAR)",
@@ -5645,18 +5661,18 @@
             "authors": [
                 {
                     "name": "Arne Blankerts",
-                    "email": "arne@blankerts.de",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "arne@blankerts.de"
                 },
                 {
                     "name": "Sebastian Heuer",
-                    "email": "sebastian@phpeople.de",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "sebastian@phpeople.de"
                 },
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Library for handling version information and constraints",
@@ -5927,8 +5943,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Library that provides collection, processing, and rendering functionality for PHP code coverage information.",
@@ -5975,8 +5991,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sb@sebastian-bergmann.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sb@sebastian-bergmann.de"
                 }
             ],
             "description": "FilterIterator implementation that filters files based on a list of suffixes.",
@@ -6017,8 +6033,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Simple template engine.",
@@ -6066,8 +6082,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sb@sebastian-bergmann.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sb@sebastian-bergmann.de"
                 }
             ],
             "description": "Utility class for timing",
@@ -6197,8 +6213,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "The PHP Unit Testing framework.",
@@ -6821,8 +6837,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",

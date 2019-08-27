@@ -424,7 +424,8 @@ class ConsigneeController extends Controller
         return $answer;
     }
 
-    public function getSelect(){
+    public function getSelect()
+    {
       $data = Consignee::where([
               ['deleted_at', null],
           ])->get();
