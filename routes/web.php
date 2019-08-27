@@ -119,6 +119,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('tracking/searchTracking/{tracking}', 'TrackingController@searchTracking');
     Route::post('tracking/updateTrackingReceipt', 'TrackingController@updateTrackingReceipt');
     Route::post('tracking/validar_tracking', 'TrackingController@validar_tracking');
+    Route::get('tracking/reenviarEmail/trackingRecibido/{id}/{track}', 'TrackingController@trackingRecibido');
 
     /*--- MODULO RECIBO DE ENTREGA ---*/
     Route::resource('receipt', 'ReceiptController', ['except' => ['show', 'create', 'edit', 'update']]);

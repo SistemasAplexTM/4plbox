@@ -64,7 +64,14 @@
 -. Que el numero de la master se pueda escribir si no tienen inventario en el momento ===========================================
 -. Acomodar los select de la creacion de master con los select de element =======================================================
 
+1. En CARGA Cambiar el combo del Consignee en el recibo del tracking y cambiar la palabra cliente por Consignee.
+2. En CARGA Ordenar los nuevos tracking recibidos arriba en el datatable.
+3. En CARGA En el mensaje de recibido casillero colocar el contenido del tracking
+4. En CARGA En Shipper, Consignee y agencias colocar la opción de WhatsApp, también colocar la opción de CC para agregar correos, y que ese CC permita correos múltiple.
+5. En CARGA en el consolidado mostrar la cantidad que se van a imprimir en los documentos.
 
+-. EN RECIBO DE TRACKING: los casilleros que tengan ingreo el dia de hoy queda el badged en verde con en inventario de trackings.
+-. Cambiar formulario de usuarios por el de element y colocar campo de contraseña con el de element (tiene el ojito para ver la contraseña)
 -. Tener las formas de pago en las dos (COD y PP) al guardar el documento.
 -. Colocar dos botones en las formas de pago (COD y PP)
 -. No salga las libras en el label ni el FOB

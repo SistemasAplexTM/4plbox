@@ -4,12 +4,12 @@
             <li class="nav-header">
                 <div class="dropdown profile-element">
                     <span>
-                      <el-image id="imgProfile" src="{{ asset('storage/') }}/{{ Session::get('logo') }}" style="width: 170px;height: 60px;background-color: #fff">
+                      {{-- <el-image id="imgProfile" src="{{ asset('storage/') }}/{{ Session::get('logo') }}" style="width: 170px;height: 60px;background-color: #fff">
                         <div slot="error" class="image-slot text-center" style="width: 170px;height: 60px;background-color: #fff; opacity: 0.6">
                           <i class="fal fa-image fa-4x"></i>
                         </div>
-                      </el-image>
-                        {{-- <img alt="image" class="" id="imgProfile" src="{{ asset('storage/') }}/{{ Session::get('logo') }}" style="width: 170px;height: 60px;background-color: #fff"/> --}}
+                      </el-image> --}}
+                        <img alt="image" class="" id="imgProfile" src="{{ asset('storage/') }}/{{ Session::get('logo') }}" style="width: 170px;height: 60px;background-color: #fff"/>
                     </span>
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <span class="clear">

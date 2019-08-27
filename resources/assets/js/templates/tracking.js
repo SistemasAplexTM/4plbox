@@ -21,10 +21,12 @@ function loadTable(name, bodega) {
       }, {
           data: "cliente",
           name: 'cliente'
-      }, {
-          data: "cliente_email",
-          name: 'cliente_email'
-      },{
+      },
+      // {
+      //     data: "cliente_email",
+      //     name: 'cliente_email'
+      // },
+      {
           data: "codigo",
           name: 'codigo'
       }, {
@@ -56,6 +58,7 @@ function loadTable(name, bodega) {
               if (permission_delete) {
                   var btn_delete = " <a onclick=\"eliminar(" + full.id + "," + false + ")\" class='delete_btn' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fal fa-trash-alt fa-lg'></i></a> ";
               }
+              var btn_recall_email = " <a onclick=\"reenviarEmail(" + full.consignee_id + ",'" + full.codigo + "')\" class='reply_btn' data-toggle='tooltip' data-placement='top' title='Reenviar Email'><i class='fal fa-reply-all'></i></a> ";
               return btn_delete;
           }
       }],
@@ -79,26 +82,52 @@ function loadTable(name, bodega) {
   });
 }
 
+function reenviarEmail(consignee_id, tracking) {
+  objVue.reenviarEmail(consignee_id, tracking);
+}
+
 function loadTableCreateReceipt() {
   var table = $('#tbl-tracking-group').DataTable({
       processing: true,
       serverSide: true,
       responsive: true,
+      order: [[2, "desc"]],
       ajax: 'tracking/getTrackingByCreateReceipt/',
       columns: [{
           data: "cliente",
-          name: 'cliente'
+          name: 'cliente',
+          "render": function(data, type, full, meta) {
+            return '<label>'+full.cliente+'</label>'
+          }
       }, {
           sortable: false,
           class: 'text-center',
           "render": function(data, type, full, meta) {
-              return '<label class="badge badge-success" style="font-size: 15px;">'+full.cantidad+'</label>';
+            var color = 'success';
+            var dateObj = new Date();
+            var month = (dateObj.getMonth() + 1).toString(); //months from 1-12
+            var day = dateObj.getDate().toString();
+            var year = dateObj.getUTCFullYear();
+
+            var mmChars = month.split('');
+            var ddChars = day.split('');
+
+            month = (mmChars[1]?month:"0"+mmChars[0]);
+            day = (ddChars[1]?day:"0"+ddChars[0]);
+
+            var today = year + "-" + month + "-" + day;
+            if (today === full.last_date) {
+              color = 'primary';
+            }
+            return '<label class="badge badge-'+color+'" style="font-size: 15px;">' + full.cantidad +'</label> ';
           }
       },
       {
           sortable: false,
           "render": function(data, type, full, meta) {
-              return " <a onclick=\"showDataToCreateReceipt(" + full.consignee_id + ", '" + full.cliente + "')\" class='btn btn-outline btn-success btn-xs'><i class='far fa-file-signature'></i> Crear recibo</a> ";
+            var btn_recall_email = " <a onclick=\"reenviarEmail(" + full.consignee_id + ",'" + full.trackings + "')\" class='reply_btn' data-toggle='tooltip' data-placement='top' title='Reenviar Email'><i class='fal fa-reply-all'></i></a> ";
+            var btn_create = " <a onclick=\"showDataToCreateReceipt(" + full.consignee_id + ", '" + full.cliente + "')\" class='btn btn-outline btn-primary btn-xs' data-toggle='tooltip' title='Crear recibo'><i class='far fa-file-signature'></i> </a> ";
+            return btn_create + ' ' + btn_recall_email;
           }
       }],
   });
@@ -192,252 +221,267 @@ var objVue = new Vue({
         contenido_detail: null,
     },
     methods: {
-        resetForm: function() {
-            this.consignee_id = null;
-            this.tracking = null;
-            this.contenido = null;
-            this.email = null;
-            this.instruccion = false;
-            this.confirmedSend = false;
-            this.editar = 0;
-        },
-        validation: function(data) {
-          if(data.contenido != ''){
-            if(data.peso != '' && parseFloat(data.peso) > 0){
-              if(data.shipper != null){
-                return true;
-              }else{
-                toastr.options = {"positionClass": "toast-top-center"}
-                toastr.error('Selecciona un shippper para continuar.');
-                return false;
-              }
+      reenviarEmail: function(id, track) {
+          axios.get('tracking/reenviarEmail/trackingRecibido/' + id + '/' + track).then(response => {
+            if (response.data.code === 200) {
+              toastr.success('Email en proceso de envio....');
+              this.updateTable();
+            }else{
+              toastr.error(response.data.error);
+            }
+          }).catch(function(error) {
+              console.log(error);
+              toastr.error("Error.", {
+                  timeOut: 50000
+              });
+          });
+      },
+      resetForm: function() {
+          this.consignee_id = null;
+          this.tracking = null;
+          this.contenido = null;
+          this.email = null;
+          this.instruccion = false;
+          this.confirmedSend = false;
+          this.editar = 0;
+      },
+      validation: function(data) {
+        if(data.contenido != ''){
+          if(data.peso != '' && parseFloat(data.peso) > 0){
+            if(data.shipper != null){
+              return true;
             }else{
               toastr.options = {"positionClass": "toast-top-center"}
-              toastr.error('Ingresa el peso del paquete.');
+              toastr.error('Selecciona un shippper para continuar.');
               return false;
             }
           }else{
             toastr.options = {"positionClass": "toast-top-center"}
-            toastr.error('Ingresa el contenido en alguno de los registros de tracking seleccionados.');
+            toastr.error('Ingresa el peso del paquete.');
             return false;
           }
-        },
-        createDocument: function(){
-          var l = $("#saveDoc").ladda();
-          l.ladda( 'start' );
+        }else{
+          toastr.options = {"positionClass": "toast-top-center"}
+          toastr.error('Ingresa el contenido en alguno de los registros de tracking seleccionados.');
+          return false;
+        }
+      },
+      createDocument: function(){
+        var l = $("#saveDoc").ladda();
+        l.ladda( 'start' );
+        let me = this;
+        var datos = $("#formTrackingClient").serializeArray();
+        me.ids_tracking = [];
+        me.contenido_tracking = [];
+        $.each(datos, function(i, field) {
+            if (field.name === 'chk[]') {
+              if($('#chk' + field.value).val() != ''){
+                me.ids_tracking.push($('#chk' + field.value).val());
+                me.contenido_tracking.push($('#chk' + field.value).data('contenido'));
+              }
+            }
+        });
+        if(me.contenido_tracking.length > 0){
+          var myStr = me.contenido_tracking.toString();
+          me.contenido_detail = myStr.replace(/,/g, ', ');
+        }
+        var datosForm = {
+          'contenido': me.contenido_detail,
+          'peso': me.peso,
+          'shipper': me.shipper_id
+        }
+        if(me.validation(datosForm)){
+          axios.post('documento/ajaxCreate/' + 1, {
+              'tipo_documento_id': 1,
+              'type_id': 1, //COURIER
+              'created_at': this.getTime(),
+              'shipper_id': (me.shipper_id.id) ? me.shipper_id.id : false,
+              'consignee_id': me.consignee_id_doc,
+          }).then(function(response) {
+              var res = response.data;
+              if (response.data['code'] == 200) {
+                  toastr.success('Registro creado correctamente. Recibo N°: ' + res.datos['num_warehouse']);
+                  me.createDocumentDetail(res.datos['id']);
+              } else {
+                  toastr.warning(response.data['error']);
+              }
+              l.ladda('stop');
+          }).catch(function(error) {
+              console.log(error);
+              if (error.response.status === 422) {
+                  me.formErrors = error.response.data; //guardo los errores
+                  me.listErrors = me.formErrors.errors; //genero lista de errores
+              }
+              $.each(me.formErrors.errors, function(key, value) {
+                  $('.result-' + key).html(value);
+              });
+              toastr.error("Porfavor completa los campos obligatorios.", {
+                  timeOut: 50000
+              });
+              l.ladda('stop');
+          });
+        }
+        l.ladda('stop');
+      },
+      createDocumentDetail: function(id_document) {
+        let me = this;
+        axios.post('documento/insertDetail', {
+          'documento_id': id_document,
+          'contador': 1,
+          'dimensiones': me.peso + ' Vol='+me.largo+'x'+me.ancho+'x'+me.alto,
+          'peso': me.peso,
+          'peso2': me.peso,
+          'contenido': me.contenido_detail,
+          'contenido2': me.contenido_detail,
+          'largo': me.largo,
+          'ancho': me.ancho,
+          'alto': me.alto,
+          'volumen': (me.largo * me.ancho * me.alto / 166).toFixed(2),
+          'tipo_empaque_id': 3,
+          'posicion_arancelaria_id': 234,
+          'arancel_id2': 234,
+          'created_at': this.getTime(),
+          'ids_tracking': this.ids_tracking,
+          'shipper_id': (me.shipper_id.id) ? me.shipper_id.id : null,
+          'consignee_id': me.consignee_id_doc,
+        }).then(function(response) {
+          var res = response.data;
+          if (response.data['code'] == 200) {
+            $('#modalCreateReceipt').modal('hide');
+            me.shipper_id = null
+            me.peso = null
+            me.piezas = 1
+            me.largo = 0
+            me.ancho = 0
+            me.alto = 0
+            // toastr.success('Registro creado correctamente.');
+            me.updateTable();
+          } else {
+            toastr.warning(response.data['error']);
+          }
+        }).catch(function(error) {
+          console.log(error);
+          toastr.error("Error.", {
+            timeOut: 50000
+          });
+        });
+      },
+      searchTracking: function() {
           let me = this;
-          var datos = $("#formTrackingClient").serializeArray();
-          me.ids_tracking = [];
-          me.contenido_tracking = [];
-          $.each(datos, function(i, field) {
-              if (field.name === 'chk[]') {
-                if($('#chk' + field.value).val() != ''){
-                  me.ids_tracking.push($('#chk' + field.value).val());
-                  me.contenido_tracking.push($('#chk' + field.value).data('contenido'));
-                }
+          axios.get('tracking/searchTracking/' + me.tracking).then(response => {
+              var datos = response.data;
+              if (datos.data != null) {
+                  if (datos.data['consignee_id']) {
+                      me.consignee_id = {
+                          id: datos.data['consignee_id'],
+                          name: datos.data['nombre_full']
+                      };
+                  } else {
+                      me.consignee_id = null;
+                  }
+                  me.contenido = datos.data['contenido'];
+                  me.instruccion = datos.data['instruccion'];
+                  me.email = datos.data['correo'];
+                  me.confirmedSend = (datos.data['despachar'] == 1) ? true : false;
+                  if(me.instruccion !== null || me.confirmedSend){
+                    $('.alert-dismissible').removeClass('alert-info').addClass('alert-danger');
+                  }else{
+                    $('.alert-dismissible').removeClass('alert-danger').addClass('alert-info');
+                  }
+              } else {
+                  me.create();
               }
           });
-          if(me.contenido_tracking.length > 0){
-            var myStr = me.contenido_tracking.toString();
-            me.contenido_detail = myStr.replace(/,/g, ', ');
-          }
-          var datosForm = {
-            'contenido': me.contenido_detail,
-            'peso': me.peso,
-            'shipper': me.shipper_id
-          }
-          if(me.validation(datosForm)){
-            axios.post('documento/ajaxCreate/' + 1, {
-                'tipo_documento_id': 1,
-                'type_id': 1, //COURIER
-                'created_at': this.getTime(),
-                'shipper_id': (me.shipper_id.id) ? me.shipper_id.id : false,
-                'consignee_id': me.consignee_id_doc,
-            }).then(function(response) {
-                var res = response.data;
-                if (response.data['code'] == 200) {
-                    toastr.success('Registro creado correctamente. Recibo N°: ' + res.datos['num_warehouse']);
-                    me.createDocumentDetail(res.datos['id']);
-                } else {
-                    toastr.warning(response.data['error']);
-                }
-                l.ladda('stop');
-            }).catch(function(error) {
-                console.log(error);
-                if (error.response.status === 422) {
-                    me.formErrors = error.response.data; //guardo los errores
-                    me.listErrors = me.formErrors.errors; //genero lista de errores
-                }
-                $.each(me.formErrors.errors, function(key, value) {
-                    $('.result-' + key).html(value);
-                });
-                toastr.error("Porfavor completa los campos obligatorios.", {
-                    timeOut: 50000
-                });
-                l.ladda('stop');
-            });
-          }
-          l.ladda('stop');
-        },
-        createDocumentDetail: function(id_document) {
+      },
+      getConsignee: function() {
           let me = this;
-          axios.post('documento/insertDetail', {
-            'documento_id': id_document,
-            'contador': 1,
-            'dimensiones': me.peso + ' Vol='+me.largo+'x'+me.ancho+'x'+me.alto,
-            'peso': me.peso,
-            'peso2': me.peso,
-            'contenido': me.contenido_detail,
-            'contenido2': me.contenido_detail,
-            'largo': me.largo,
-            'ancho': me.ancho,
-            'alto': me.alto,
-            'volumen': (me.largo * me.ancho * me.alto / 166).toFixed(2),
-            'tipo_empaque_id': 3,
-            'posicion_arancelaria_id': 234,
-            'arancel_id2': 234,
-            'created_at': this.getTime(),
-            'ids_tracking': this.ids_tracking,
-            'shipper_id': (me.shipper_id.id) ? me.shipper_id.id : null,
-            'consignee_id': me.consignee_id_doc,
-          }).then(function(response) {
-            var res = response.data;
-            if (response.data['code'] == 200) {
-              $('#modalCreateReceipt').modal('hide');
-              me.shipper_id = null
-              me.peso = null
-              me.piezas = 1
-              me.largo = 0
-              me.ancho = 0
-              me.alto = 0
-              // toastr.success('Registro creado correctamente.');
-              me.updateTable();
-            } else {
-              toastr.warning(response.data['error']);
-            }
-          }).catch(function(error) {
-            console.log(error);
-            toastr.error("Error.", {
-              timeOut: 50000
-            });
+          axios.get('tracking/getAllShipperConsignee/consignee').then(response => {
+              me.consignees = response.data.data;
           });
-        },
-        searchTracking: function() {
-            let me = this;
-            axios.get('tracking/searchTracking/' + me.tracking).then(response => {
-                var datos = response.data;
-                if (datos.data != null) {
-                    if (datos.data['consignee_id']) {
-                        me.consignee_id = {
-                            id: datos.data['consignee_id'],
-                            name: datos.data['nombre_full']
-                        };
-                    } else {
-                        me.consignee_id = null;
-                    }
-                    me.contenido = datos.data['contenido'];
-                    me.instruccion = datos.data['instruccion'];
-                    me.email = datos.data['correo'];
-                    me.confirmedSend = (datos.data['despachar'] == 1) ? true : false;
-                    if(me.instruccion !== null || me.confirmedSend){
-                      $('.alert-dismissible').removeClass('alert-info').addClass('alert-danger');
-                    }else{
-                      $('.alert-dismissible').removeClass('alert-danger').addClass('alert-info');
-                    }
-                } else {
-                    me.create();
-                }
-            });
-        },
-        getConsignee: function() {
-            let me = this;
-            axios.get('tracking/getAllShipperConsignee/consignee').then(response => {
-                me.consignees = response.data.data;
-            });
-        },
-        getShipper: function() {
-            let me = this;
-            axios.get('tracking/getAllShipperConsignee/shipper').then(response => {
-                me.shippers = response.data.data;
-            });
-        },
-        updateTable: function() {
-            refreshTable('tbl-tracking');
-            refreshTable('tbl-tracking-bodega');
-            refreshTable('tbl-tracking-group');
-        },
-        delete: function(data) {
-            swal({
-                title: 'Seguro que desea eliminar este registro?',
-                text: "No lo podras recuperar despues!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Si',
-                cancelButtonText: 'No, cancelar!'
-            }).then((result) => {
-                if (result.value) {
-                    axios.delete('tracking/' + data.id).then(response => {
-                        this.updateTable();
-                        toastr.success('Registro eliminado correctamente.');
-                        toastr.options.closeButton = true;
-                    });
-                }
-            });
-        },
-        create: function() {
-            const isUnique = (value) => {
-                return axios.post('tracking/validar_tracking', {
-                    'element': value
-                }).then((response) => {
-                    return {
-                        valid: response.data.valid,
-                        data: {
-                            message: response.data.message
-                        }
-                    };
-                });
-            };
-            // The messages getter may also accept a third parameter that includes the data we returned earlier.
-            this.$validator.extend('unique', {
-                validate: isUnique,
-                getMessage: (field, params, data) => {
-                    return data.message;
-                }
-            });
-            let me = this;
-            this.$validator.validateAll().then((result) => {
-                if (result) {
-                    axios.post('tracking', {
-                        'consignee_id': (this.consignee_id != null) ? this.consignee_id.id : null,
-                        'codigo': this.tracking,
-                        'contenido': this.contenido,
-                        'confirmed_send': this.confirmedSend,
-                    }).then(function(response) {
-                        if (response.data['code'] == 200) {
-                            toastr.success('Registro creado correctamente.');
-                            toastr.options.closeButton = true;
-                        } else {
-                            toastr.warning(response.data['error']);
-                            toastr.options.closeButton = true;
-                        }
-                        me.resetForm();
-                        me.updateTable();
-                    }).catch(function(error) {
-                        console.log(error);
-                        toastr.warning("Error: porfavor veifica la informacion ingresada.", {
-                            timeOut: 50000
-                        });
-                    });
-                }
-            }).catch(function(error) {
-                toastr.warning('Error: ' + error);
-            });
-        },
-        cancel: function() {
-            var me = this;
-            me.resetForm();
-        },
+      },
+      getShipper: function() {
+          let me = this;
+          axios.get('tracking/getAllShipperConsignee/shipper').then(response => {
+              me.shippers = response.data.data;
+          });
+      },
+      updateTable: function() {
+          refreshTable('tbl-tracking');
+          refreshTable('tbl-tracking-bodega');
+          refreshTable('tbl-tracking-group');
+      },
+      delete: function(data) {
+          swal({
+              title: 'Seguro que desea eliminar este registro?',
+              text: "No lo podras recuperar despues!",
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Si',
+              cancelButtonText: 'No, cancelar!'
+          }).then((result) => {
+              if (result.value) {
+                  axios.delete('tracking/' + data.id).then(response => {
+                      this.updateTable();
+                      toastr.success('Registro eliminado correctamente.');
+                      toastr.options.closeButton = true;
+                  });
+              }
+          });
+      },
+      create: function() {
+          const isUnique = (value) => {
+              return axios.post('tracking/validar_tracking', {
+                  'element': value
+              }).then((response) => {
+                  return {
+                      valid: response.data.valid,
+                      data: {
+                          message: response.data.message
+                      }
+                  };
+              });
+          };
+          // The messages getter may also accept a third parameter that includes the data we returned earlier.
+          this.$validator.extend('unique', {
+              validate: isUnique,
+              getMessage: (field, params, data) => {
+                  return data.message;
+              }
+          });
+          let me = this;
+          this.$validator.validateAll().then((result) => {
+              if (result) {
+                  axios.post('tracking', {
+                      'consignee_id': (this.consignee_id != null) ? this.consignee_id.id : null,
+                      'codigo': this.tracking,
+                      'contenido': this.contenido,
+                      'confirmed_send': this.confirmedSend,
+                  }).then(function(response) {
+                      if (response.data['code'] == 200) {
+                          toastr.success('Registro creado correctamente.');
+                          toastr.options.closeButton = true;
+                      } else {
+                          toastr.warning(response.data['error']);
+                          toastr.options.closeButton = true;
+                      }
+                      me.resetForm();
+                      me.updateTable();
+                  }).catch(function(error) {
+                      console.log(error);
+                      toastr.warning("Error: porfavor veifica la informacion ingresada.", {
+                          timeOut: 50000
+                      });
+                  });
+              }
+          }).catch(function(error) {
+              toastr.warning('Error: ' + error);
+          });
+      },
+      cancel: function() {
+        var me = this;
+        me.resetForm();
+      },
     },
 });
