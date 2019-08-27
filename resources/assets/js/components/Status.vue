@@ -7,6 +7,7 @@
      :value="item">
      <div>
        <i :class="item.icon" style="text-align: center;width: 25px;" :style="'color:'+ item.color"></i> {{ item.descripcion }}
+       <i v-if="item.view_client === '1'" class="fal fa-bell" style="float: right;margin-top: 10px; color: #dbdee0;"></i>
      </div>
    </el-option>
  </el-select>

@@ -15,6 +15,7 @@
         </ol>
     </div>
 </div>
+
 @endsection
 
 @section('content')
@@ -59,7 +60,7 @@
                     </div>
                     <div class="ibox-content">
                         <!--***** contenido ******-->
-                        {{-- <form-trackingreceipt></form-trackingreceipt> --}}
+                        <form-trackingreceipt></form-trackingreceipt>
                     </div>
                 </div>
 

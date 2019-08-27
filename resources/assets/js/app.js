@@ -8,7 +8,7 @@ import vSelect from 'vue-select'
 import es from 'vee-validate/dist/locale/es';
 import VeeValidate, { Validator } from 'vee-validate';
 const config = {
-  fieldsBagName: 'fieldsV'
+  fieldsBagName: 'fieldBags'
 }
 
 import Element from 'element-ui'
@@ -59,4 +59,4 @@ Vue.component('shipper-consignee-select', require('./components/ShipperConsignee
 Vue.component('document-filter', require('./components/DocumentFilter.vue'));
 Vue.component('document-upload', require('./components/DocumentUpload.vue'));
 //
-Vue.component('form-trackingreceipt', require('./components/FormTrackingReceipt.vue'));
+// Vue.component('form-trackingreceipt', require('./components/FormTrackingReceipt.vue'));
