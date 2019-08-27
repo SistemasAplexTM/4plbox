@@ -12,6 +12,8 @@ use DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use App\Notifications\ChangeState;
+use App\User;
 
 class StatusReportController extends Controller
 {
@@ -42,7 +44,12 @@ class StatusReportController extends Controller
                 $data->created_at           = date('Y-m-d H:i:s');
                 $data->save();
 
-                $status = Status::select('id', 'json_data', 'email')->where('id', $request->status_id)->first();
+                // $status = Status::select('id', 'json_data', 'email')->where('id', $request->status_id)->first();
+                $status = Status::where('id', $request->status_id)->first();
+                if ($status->view_client) {
+                  $user = User::where('consignee_id', 801)->first();
+                  $user->notify(new ChangeState($status));
+                }
                 if($status->json_data !== null){
                   $datos = json_decode($status->json_data);
                   if(isset($datos->email_template_id) and $datos->email_template_id != '' and $status->email !== 0){
