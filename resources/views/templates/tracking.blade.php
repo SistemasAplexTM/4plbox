@@ -15,6 +15,7 @@
         </ol>
     </div>
 </div>
+
 @endsection
 
 @section('content')
@@ -175,7 +176,7 @@
                                         <tr>
                                             <th>@lang('general.date')</th>
                                             <th>@lang('general.client')</th>
-                                            <th>@lang('general.email')</th>
+                                            {{-- <th>@lang('general.email')</th> --}}
                                             <th>@lang('general.tracking')</th>
                                             <th>Warehouse</th>
                                             <th>@lang('general.content')</th>
@@ -186,7 +187,7 @@
                                         <tr>
                                             <th>@lang('general.date')</th>
                                             <th>@lang('general.client')</th>
-                                            <th>@lang('general.email')</th>
+                                            {{-- <th>@lang('general.email')</th> --}}
                                             <th>@lang('general.tracking')</th>
                                             <th>Warehouse</th>
                                             <th>@lang('general.content')</th>
@@ -203,7 +204,7 @@
                                       <tr>
                                           <th>@lang('general.date')</th>
                                           <th>@lang('general.client')</th>
-                                          <th>@lang('general.email')</th>
+                                          {{-- <th>@lang('general.email')</th> --}}
                                           <th>@lang('general.tracking')</th>
                                           <th>Warehouse</th>
                                           <th>@lang('general.content')</th>
@@ -215,7 +216,7 @@
                                       <tr>
                                           <th>@lang('general.date')</th>
                                           <th>@lang('general.client')</th>
-                                          <th>@lang('general.email')</th>
+                                          {{-- <th>@lang('general.email')</th> --}}
                                           <th>@lang('general.tracking')</th>
                                           <th>Warehouse</th>
                                           <th>@lang('general.content')</th>

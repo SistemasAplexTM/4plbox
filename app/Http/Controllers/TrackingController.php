@@ -51,6 +51,16 @@ class TrackingController extends Controller
                   "code"   => 200,
                   "status" => 200,
               );
+              /* INSERTAR EN STATUS_DETALLE*/
+              DB::table('status_detalle')->insert([
+                  [
+                      'status_id'            => 2,
+                      'usuario_id'           => Auth::user()->id,
+                      'codigo'               => $request->codigo,
+                      'fecha_status'         => date('Y-m-d H:i:s'),
+                      'created_at'           => date('Y-m-d H:i:s'),
+                  ],
+              ]);
               if($request->consignee_id != null){
                 $config = $this->getConfig('ingreso_tracking');
                 $status = Status::where('id', 9)->first();// 9 es alerta de tracking

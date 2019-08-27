@@ -255,6 +255,7 @@
       data () {
 	        return {
 	        	id_document: null,
+	        	consignee_id: null,
 	        	cliente_cons: null,
 	        	cliente_email: null,
 	        	num_track: null,
@@ -285,6 +286,7 @@
             this.disabled_w = false;
   	    		this.id_document = val.id;
   	    		this.cliente_cons = val.cliente;
+  	    		this.consignee_id = val.consignee_id;
   	    		this.cliente_email = val.correo;
   	    		this.num_track = val.codigo;
   	    		this.cantidad = (val.cantidad == 'undefined') ? '' : val.cantidad;
@@ -422,6 +424,7 @@
   	            this.$validator.validateAll(['estatus', 'warehouse', 'transportadora', 'guia_transportadora']).then((result) => {
   	            	if (result) {
   			            axios.post('statusReport', {
+  			                'consignee_id': this.consignee_id,
   			                'status_id': this.estatus_id.id,
   			                'codigo': this.warehouse_codigo,
   			                'observacion': this.observacion,
