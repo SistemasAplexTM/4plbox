@@ -350,7 +350,7 @@
           });
   			},
   			resetForm: function() {
-          this.estatus_id= null,
+          // this.estatus_id= null,
           // this.warehouse_codigo= [],
         	this.nota= null,
         	this.observacion= null,
