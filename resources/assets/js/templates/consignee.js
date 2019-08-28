@@ -150,6 +150,7 @@ var objVue = new Vue({
         //
     },
     data: {
+        agency_data: data_agencia,
         parametro: null,
         tipo_identificacion_id: '',
         agencia_id: '',

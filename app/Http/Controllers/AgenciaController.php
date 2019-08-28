@@ -301,4 +301,9 @@ class AgenciaController extends Controller
     {
       return DB::table('transportador')->select('id', 'nombre as name')->where([['deleted_at', null], ['consignee', 1]])->get();
     }
+
+    public function getAgencies()
+    {
+      return Agencia::where('deleted_at', null)->get();
+    }
 }

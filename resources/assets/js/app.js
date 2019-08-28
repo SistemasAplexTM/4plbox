@@ -63,4 +63,4 @@ Vue.component('shipper-consignee-select', require('./components/ShipperConsignee
 Vue.component('document-filter', require('./components/DocumentFilter.vue'));
 Vue.component('document-upload', require('./components/DocumentUpload.vue'));
 //
-// Vue.component('form-trackingreceipt', require('./components/FormTrackingReceipt.vue'));
+Vue.component('form-consignee', require('./components/FormConsignee.vue'));
