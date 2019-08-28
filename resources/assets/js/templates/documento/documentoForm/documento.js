@@ -29,7 +29,7 @@ $(document).ready(function() {
     // }, 1000);
     $('#tracking').tagsinput();
     //toggle `popup` / `inline` mode
-    $.fn.editable.defaults.mode = 'inline';
+    $.fn.editable.defaults.mode = 'popup';
     $.fn.editable.defaults.params = function(params) {
         params._token = $('meta[name="csrf-token"]').attr('content');
         return params;
@@ -183,7 +183,7 @@ function datatableDetail(){
             }
         }, {
             "render": function (data, type, full, meta) {
-                return '<a data-name="contenido" data-pk="'+full.id+'" data-value="'+full.contenido+'" class="td_edit" data-type="text" data-placement="right" data-title="Contenido">'+full.contenido+'</a>';
+                return '<a data-name="contenido" data-pk="'+full.id+'" data-value="'+full.contenido+'" class="td_edit" data-type="textarea" data-placement="right" data-title="Contenido">'+full.contenido+'</a>';
             },
             width: 200
         }, {

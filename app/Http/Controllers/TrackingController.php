@@ -375,7 +375,11 @@ class TrackingController extends Controller
     {
         try {
             $data = Tracking::findOrFail($request->pk);
-            $data->contenido = $request->value;
+            if($request->name === 'codigo'){
+              $data->codigo = $request->value;
+            }else{
+              $data->contenido = $request->value;
+            }
 
             if ($data->save()) {
                 $this->AddToLog('Tracking contenido editado (' . $data->id . ')');

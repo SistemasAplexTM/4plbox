@@ -59,7 +59,7 @@
                         </div>
                     </div>
 
-                    
+
 
                     <div class="ibox-content">
                         <!--***** contenido ******-->
@@ -100,11 +100,30 @@
                             <div class="col-lg-12">
                                 <div class="form-group" :class="{ 'has-error': errors.has('consignee_id') }">
                                     <div class="col-sm-4">
-                                        <label for="consignee_id" class="control-label gcore-label-top">@lang('general.client'):</label>
+                                        <label for="consignee_id" class="control-label gcore-label-top">@lang('general.consignee'):</label>
                                     </div>
                                     <div class="col-sm-8">
-                                        <v-select name="consignee_id" :options="consignees" placeholder="@lang('general.client')" label="name" v-model="consignee_id">
-                                        </v-select>
+                                        {{-- <v-select name="consignee_id" :options="consignees" placeholder="@lang('general.client')" label="name" v-model="consignee_id"> --}}
+                                        {{-- </v-select> --}}
+                                        <el-autocomplete
+                                          clearable
+                                          class="inline-input"
+                                          v-model="consignee_name"
+                                          :fetch-suggestions="querySearchConsignee"
+                                          :trigger-on-focus="false"
+                                          placeholder="@lang('general.consignee')"
+                                          size="small"
+                                          @clear="deleteSelected"
+                                          @select="handleSelect"
+                                        >
+                                          <template slot-scope="{ item }">
+                                            <div class="content-select">
+                                              <div style="">
+                                                <i class="fa fa-user icon"></i> @{{ item.name }}
+                                              </div>
+                                            </div>
+                                      		</template>
+                                        </el-autocomplete>
                                          <small class="help-block error" v-show="errors.has('consignee_id')">
                                             @{{ errors.first('consignee_id') }}
                                         </small>

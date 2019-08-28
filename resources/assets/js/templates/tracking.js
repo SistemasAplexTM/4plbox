@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  $.fn.editable.defaults.mode = 'inline';
+  $.fn.editable.defaults.mode = 'popup';
   $.fn.editable.defaults.params = function(params) {
       params._token = $('meta[name="csrf-token"]').attr('content');
       return params;
@@ -28,7 +28,10 @@ function loadTable(name, bodega) {
       // },
       {
           data: "codigo",
-          name: 'codigo'
+          name: 'codigo',
+          "render": function(data, type, full, meta) {
+            return '<a data-name="codigo" data-pk="'+full.id+'" class="td_edit" data-type="text" data-placement="top" data-title="Tracking">'+ full.codigo  +'</a>';
+          }
       }, {
         "render": function(data, type, full, meta) {
           return '<div>'+ ((full.num_warehouse === null) ? '' : full.num_warehouse) +'</div><small style="color:#2196F3">'+ ((full.estatus === null) ? '' : full.estatus) +'</small>'
@@ -36,7 +39,7 @@ function loadTable(name, bodega) {
         "visible": bodega
       }, {
           "render": function(data, type, full, meta) {
-            return '<a data-name="contenido" data-pk="'+full.id+'" class="td_edit" data-type="text" data-placement="right" data-title="Contenido">'+ ((full.contenido !== null) ? full.contenido : 'No hay datos') +'</a>';
+            return '<a data-name="contenido" data-pk="'+full.id+'" class="td_edit" data-type="textarea" data-placement="left" data-title="Contenido">'+ ((full.contenido !== null) ? full.contenido : 'No hay datos') +'</a>';
           }
       },
       // {
@@ -184,7 +187,7 @@ function showDataToCreateReceipt(consignee_id, client) {
 var objVue = new Vue({
     el: '#tracking',
     created: function() {
-        this.getConsignee();
+        // this.getConsignee();
         this.getShipper();
         /* CUSTOM MESSAGES VE-VALIDATOR*/
         const dict = {
@@ -202,6 +205,7 @@ var objVue = new Vue({
     data: {
         consignee_id_doc: null,
         consignee_id: null,
+        consignee_name: null,
         shipper_id: null,
         contenido: null,
         tracking: null,
@@ -221,6 +225,24 @@ var objVue = new Vue({
         contenido_detail: null,
     },
     methods: {
+      querySearchConsignee(queryString, cb) {
+        var me = this;
+        axios.get('/consignee/vueSelect/'+queryString).then(function(response) {
+          console.log(response.data.items);
+            me.consignees = response.data.items;
+            cb(me.consignees);
+        }).catch(function(error) {
+            console.log(error);
+            toastr.warning('Error: -' + error);
+        });
+      },
+      handleSelect(item) {
+        this.consignee_id = item;
+        this.consignee_name = item.name;
+      },
+      deleteSelected(){
+        this.consignee_id = null;
+      },
       reenviarEmail: function(id, track) {
           axios.get('tracking/reenviarEmail/trackingRecibido/' + id + '/' + track).then(response => {
             if (response.data.code === 200) {
@@ -376,6 +398,7 @@ var objVue = new Vue({
                           id: datos.data['consignee_id'],
                           name: datos.data['nombre_full']
                       };
+                      me.consignee_name = datos.data['nombre_full'];
                   } else {
                       me.consignee_id = null;
                   }

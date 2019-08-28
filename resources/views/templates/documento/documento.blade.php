@@ -303,7 +303,7 @@
                                         <div class="col-sm-10">
                                             <input type="hidden" value="" id="urlBuscarConsignee">
                                             <div class="input-group" style="margin-bottom: 5px;" :class="{ 'has-error': errors.has('nombreD') }">
-                                                <input type="search" data-id="nomBuscarConsignee" class="form-control" id="nombreD" name="nombreD" placeholder="@lang('documents.type_to_search')" onkeyup="deleteError($(this).parent());" v-model="nombreD" v-validate="'required'">
+                                                <input type="search" autocomplete="off" data-id="nomBuscarConsignee" class="form-control" id="nombreD" name="nombreD" placeholder="@lang('documents.type_to_search')" onkeyup="deleteError($(this).parent());" v-model="nombreD" v-validate="'required'">
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-primary" @click="modalConsignee(true)" id="btnBuscarConsignee" type="button" data-toggle='tooltip' title="Buscar"><span class="fal fa-search"></span>&nbsp;</button>
                                                     <button id="btnEditConsignee" @click="editFormsShipperConsignee(1)" class="btn btn-success" type="button" data-toggle='tooltip' title="Editar"><span class="fal fa-edit"></span>&nbsp;</button>
@@ -319,7 +319,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-sm-2">@lang('documents.address'): <samp id="require">*</samp></label>
                                         <div class="col-sm-10" :class="{ 'has-error': errors.has('direccionD') }">
-                                            <input type="text" placeholder="@lang('documents.address')" id="direccionD" name="direccionD" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());" v-model="direccionD" v-validate="'required'">
+                                            <input type="text" autocomplete="off" placeholder="@lang('documents.address')" id="direccionD" name="direccionD" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());" v-model="direccionD" v-validate="'required'">
                                             <small class="help-block has-error">@{{ errors.first('direccionD') }}</small>
                                         </div>
                                     </div>
@@ -328,12 +328,12 @@
                                 <!-- /Grupo Doble 1 -->
                                     <label class="control-label col-sm-2">@lang('documents.email'): </label>
                                     <div class="col-sm-5" :class="{ 'has-error': errors.has('emailD') }">
-                                        <input type="email" placeholder="Example@example.com" id="emailD" name="emailD" class="form-control" v-validate.disable="'unique_c'" v-model="emailD">
+                                        <input type="email" autocomplete="off" placeholder="Example@example.com" id="emailD" name="emailD" class="form-control" v-validate.disable="'unique_c'" v-model="emailD">
                                         <small class="help-block has-error" :class="{ 'small': errors.has('emailD') }">@{{ errors.first('emailD') }}</small>
                                     </div>
                                     <label class="control-label col-sm-1">@lang('documents.phone'):</label>
                                     <div class="col-sm-4">
-                                        <input type="tel" data-mask="(999) 999-9999" id="telD" name="telD" placeholder="@lang('documents.phone')" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());">
+                                        <input type="tel" autocomplete="off" data-mask="(999) 999-9999" id="telD" name="telD" placeholder="@lang('documents.phone')" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());">
                                         <small class="help-block has-error">@{{ errors.first('telD') }}</small>
                                     </div>
                                 <!-- /Fin Grupo Doble 1 -->
@@ -350,7 +350,7 @@
                                         <label class="control-label col-sm-1">C.P:<samp id="require">*</samp></label>
                                         <div class="col-sm-4">
                                             <div class="input-group">
-                                                <input type="text" placeholder="@lang('general.postal_code')" id="zipD" name="zipD" class="form-control" onkeyup="deleteError($(this).parent());">
+                                                <input type="text" autocomplete="off" placeholder="@lang('general.postal_code')" id="zipD" name="zipD" class="form-control" onkeyup="deleteError($(this).parent());">
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-primary" id="buttonPostalCode" data-toggle="tooltip" data-placement="top" title="Generar" type="button"><span class="fal fa-map-marker"></span></button>
                                                 </span>
@@ -879,8 +879,12 @@
                             <div class="row">
                               <div class="col-lg-12">
                                 <div class="form-group">
-                                  <label for="" class="">@lang('documents.payment_type')</label>
-                                  <el-select v-model="tipo_pago_id" placeholder="Tipo de Pago" @change="validatePayment">
+                                  {{-- <label for="" class="">@lang('documents.payment_type')</label> --}}
+
+                                  <el-radio v-model="tipo_pago_id" label="4" border @change="validatePayment">Collect</el-radio>
+                                  <el-radio v-model="tipo_pago_id" label="5" border @change="validatePayment">Prepaid</el-radio>
+
+                                  {{-- <el-select v-model="tipo_pago_id" placeholder="Tipo de Pago" @change="validatePayment">
                                     <el-option
                                       v-for="item in paymentMethod"
                                       :key="item.id"
@@ -889,9 +893,9 @@
                                       <span style="float: left">@{{ item.nombre }}</span>
                                       <span style="float: right; color: #8492a6; font-size: 13px">@{{ item.descripcion }}</span>
                                     </el-option>
-                                  </el-select>
+                                  </el-select> --}}
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" v-show="showPay">
                                   <label for="" class="">@lang('documents.way_to_pay')</label>
                                   <el-select v-model="forma_pago_id" placeholder="Forma de Pago" @change="setPayment">
                                     <el-option

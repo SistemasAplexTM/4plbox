@@ -454,6 +454,7 @@ var objVue = new Vue({
       beforeSaveDocument(option){
         let me = this;
         me.saveOption = option;
+        //obtener los metodos de pago
         me.getAdminTable(2).then(response => {
           me.paymentMethod = response;
           if($('#tipo_pago_id').val() != ''){
@@ -464,20 +465,21 @@ var objVue = new Vue({
         $('#modalPaymentMethod').modal('show');
       },
       validatePayment(val){
+        console.log('em');
         let me = this;
         $('#tipo_pago_id').val(val);
+        me.getAdminTable(1).then(response => {
+          me.payments = response;
+          if($('#forma_pago_id').val() != ''){
+            me.forma_pago_id = $('#forma_pago_id').val()
+          }else{
+            $('#forma_pago_id').val('');
+          }
+        }).catch()
         if(val == 4){
-          me.showPay = true;
-          me.getAdminTable(1).then(response => {
-            me.payments = response;
-            if($('#forma_pago_id').val() != ''){
-              me.forma_pago_id = $('#forma_pago_id').val()
-            }else{
-              $('#forma_pago_id').val('');
-            }
-          }).catch()
-        }else{
           me.showPay = false;
+        }else{
+          me.showPay = true;
         }
       },
       setPayment(val){

@@ -177,41 +177,41 @@ class Controller extends BaseController
                 if (count($firstNames) != 0) {
                     if (count($firstNames) != 1) {
                         if ($firstNames[1] != '') {
-                            $dataShip['primer_nombre']  = strtoupper($firstNames[0]);
-                            $dataShip['segundo_nombre'] = strtoupper($firstNames[1]);
-                            $firstNamesFull .= $firstNames[0] . ' ' . $firstNames[1];
+                            $dataShip['primer_nombre']  = strtoupper(trim($firstNames[0]));
+                            $dataShip['segundo_nombre'] = strtoupper(trim($firstNames[1]));
+                            $firstNamesFull .= trim($firstNames[0]) . ' ' . trim($firstNames[1]);
                         } else {
-                            $dataShip['primer_nombre']  = strtoupper($firstNames[0]);
+                            $dataShip['primer_nombre']  = strtoupper(trim($firstNames[0]));
                             $dataShip['segundo_nombre'] = '';
-                            $firstNamesFull .= $firstNames[0];
+                            $firstNamesFull .= trim($firstNames[0]);
                         }
                     } else {
-                        $dataShip['primer_nombre']  = $firstNames[0];
+                        $dataShip['primer_nombre']  = trim($firstNames[0]);
                         $dataShip['segundo_nombre'] = '';
-                        $firstNamesFull .= $firstNames[0];
+                        $firstNamesFull .= trim($firstNames[0]);
                     }
                 }
                 /*verifico si existen dos apellidos o solo uno para registrar*/
                 if (count($lastName) != 0) {
                     if (count($lastName) != 1) {
                         if ($lastName[0] != '') {
-                            $dataShip['primer_apellido']  = strtoupper($lastName[0]);
-                            $dataShip['segundo_apellido'] = strtoupper($lastName[1]);
-                            $lastNamesFull .= $lastName[0] . ' ' . $lastName[1];
+                            $dataShip['primer_apellido']  = strtoupper(trim($lastName[0]));
+                            $dataShip['segundo_apellido'] = strtoupper(trim($lastName[1]));
+                            $lastNamesFull .= trim($lastName[0]) . ' ' . trim($lastName[1]);
                         } else {
-                            $dataShip['primer_apellido']  = strtoupper($lastName[1]);
+                            $dataShip['primer_apellido']  = strtoupper(trim($lastName[1]));
                             $dataShip['segundo_apellido'] = '';
-                            $lastNamesFull .= $lastName[0];
+                            $lastNamesFull .= trim($lastName[0]);
                         }
                     } else {
-                        $dataShip['primer_apellido']  = strtoupper($lastName[0]);
+                        $dataShip['primer_apellido']  = strtoupper(trim($lastName[0]));
                         $dataShip['segundo_apellido'] = '';
-                        $lastNamesFull .= $lastName[0];
+                        $lastNamesFull .= trim($lastName[0]);
                     }
                 }
 
-                $dataShip['nombre_full'] = strtoupper($firstNamesFull . ' ' . $lastNamesFull);
-                $dataShip['nombre_old']  = strtoupper($firstNamesFull . ' ' . $lastNamesFull);
+                $dataShip['nombre_full'] = strtoupper(trim($firstNamesFull) . ' ' . trim($lastNamesFull));
+                $dataShip['nombre_old']  = strtoupper(trim($firstNamesFull) . ' ' . trim($lastNamesFull));
 
                 $dataS             = (new Shipper)->fill($dataShip);
                 $dataS->created_at = date('Y-m-d H:i:s');
@@ -243,41 +243,41 @@ class Controller extends BaseController
                 if (count($firstNames) != 0) {
                     if (count($firstNames) != 1) {
                         if ($firstNames[1] != '') {
-                            $dataU->primer_nombre  = strtoupper($firstNames[0]);
-                            $dataU->segundo_nombre = strtoupper($firstNames[1]);
-                            $firstNamesFull .= $firstNames[0] . ' ' . $firstNames[1];
+                            $dataU->primer_nombre  = strtoupper(trim($firstNames[0]));
+                            $dataU->segundo_nombre = strtoupper(trim($firstNames[1]));
+                            $firstNamesFull .= trim($firstNames[0]) . ' ' . trim($firstNames[1]);
                         } else {
-                            $dataU->primer_nombre  = strtoupper($firstNames[0]);
+                            $dataU->primer_nombre  = strtoupper(trim($firstNames[0]));
                             $dataU->segundo_nombre = '';
-                            $firstNamesFull .= $firstNames[0];
+                            $firstNamesFull .= trim($firstNames[0]);
                         }
                     } else {
-                        $dataU->primer_nombre  = strtoupper($firstNames[0]);
+                        $dataU->primer_nombre  = strtoupper(trim($firstNames[0]));
                         $dataU->segundo_nombre = '';
-                        $firstNamesFull .= $firstNames[0];
+                        $firstNamesFull .= trim($firstNames[0]);
                     }
                 }
                 /*verifico si existen dos apellidos o solo uno para registrar*/
                 if (count($lastName) != 0) {
                     if (count($lastName) != 1) {
                         if ($lastName[0] != '') {
-                            $dataU->primer_apellido  = strtoupper($lastName[0]);
-                            $dataU->segundo_apellido = strtoupper($lastName[1]);
-                            $lastNamesFull .= $lastName[0] . ' ' . $lastName[1];
+                            $dataU->primer_apellido  = strtoupper(trim($lastName[0]));
+                            $dataU->segundo_apellido = strtoupper(trim($lastName[1]));
+                            $lastNamesFull .= trim($lastName[0]) . ' ' . trim($lastName[1]);
                         } else {
-                            $dataU->primer_apellido  = strtoupper($lastName[1]);
+                            $dataU->primer_apellido  = strtoupper(trim($lastName[1]));
                             $dataU->segundo_apellido = '';
-                            $lastNamesFull .= $lastName[0];
+                            $lastNamesFull .= trim($lastName[0]);
                         }
                     } else {
-                        $dataU->primer_apellido  = strtoupper($lastName[0]);
+                        $dataU->primer_apellido  = strtoupper(trim($lastName[0]));
                         $dataU->segundo_apellido = '';
-                        $lastNamesFull .= $lastName[0];
+                        $lastNamesFull .= trim($lastName[0]);
                     }
                 }
 
-                $dataU->nombre_full = strtoupper($firstNamesFull . ' ' . $lastNamesFull);
-                $dataU->nombre_old  = strtoupper($firstNamesFull . ' ' . $lastNamesFull);
+                $dataU->nombre_full = strtoupper(trim($firstNamesFull) . ' ' . trim($lastNamesFull));
+                $dataU->nombre_old  = strtoupper(trim($firstNamesFull) . ' ' . trim($lastNamesFull));
 
                 $dataU->save();
             }
@@ -304,41 +304,41 @@ class Controller extends BaseController
                 if (count($firstNames) != 0) {
                     if (count($firstNames) != 1) {
                         if ($firstNames[1] != '') {
-                            $dataCons['primer_nombre']  = strtoupper($firstNames[0]);
-                            $dataCons['segundo_nombre'] = strtoupper($firstNames[1]);
-                            $firstNamesFull .= $firstNames[0] . ' ' . $firstNames[1];
+                            $dataCons['primer_nombre']  = strtoupper(trim($firstNames[0]));
+                            $dataCons['segundo_nombre'] = strtoupper(trim($firstNames[1]));
+                            $firstNamesFull .= trim($firstNames[0]) . ' ' . trim($firstNames[1]);
                         } else {
-                            $dataCons['primer_nombre']  = strtoupper($firstNames[0]);
+                            $dataCons['primer_nombre']  = strtoupper(trim($firstNames[0]));
                             $dataCons['segundo_nombre'] = '';
-                            $firstNamesFull .= $firstNames[0];
+                            $firstNamesFull .= trim($firstNames[0]);
                         }
                     } else {
-                        $dataCons['primer_nombre']  = strtoupper($firstNames[0]);
+                        $dataCons['primer_nombre']  = strtoupper(trim($firstNames[0]));
                         $dataCons['segundo_nombre'] = '';
-                        $firstNamesFull .= $firstNames[0];
+                        $firstNamesFull .= trim($firstNames[0]);
                     }
                 }
                 /*verifico si existen dos apellidos o solo uno para registrar*/
                 if (count($lastName) != 0) {
                     if (count($lastName) != 1) {
                         if ($lastName[0] != '') {
-                            $dataCons['primer_apellido']  = strtoupper($lastName[0]);
-                            $dataCons['segundo_apellido'] = strtoupper($lastName[1]);
-                            $lastNamesFull .= $lastName[0] . ' ' . $lastName[1];
+                            $dataCons['primer_apellido']  = strtoupper(trim($lastName[0]));
+                            $dataCons['segundo_apellido'] = strtoupper(trim($lastName[1]));
+                            $lastNamesFull .= trim($lastName[0]) . ' ' . trim($lastName[1]);
                         } else {
-                            $dataCons['primer_apellido']  = strtoupper($lastName[1]);
+                            $dataCons['primer_apellido']  = strtoupper(trim($lastName[1]));
                             $dataCons['segundo_apellido'] = '';
-                            $lastNamesFull .= $lastName[0];
+                            $lastNamesFull .= trim($lastName[0]);
                         }
                     } else {
-                        $dataCons['primer_apellido']  = strtoupper($lastName[0]);
+                        $dataCons['primer_apellido']  = strtoupper(trim($lastName[0]));
                         $dataCons['segundo_apellido'] = '';
-                        $lastNamesFull .= $lastName[0];
+                        $lastNamesFull .= trim($lastName[0]);
                     }
                 }
 
-                $dataCons['nombre_full'] = strtoupper($firstNamesFull . ' ' . $lastNamesFull);
-                $dataCons['nombre_old']  = strtoupper($firstNamesFull . ' ' . $lastNamesFull);
+                $dataCons['nombre_full'] = strtoupper(trim($firstNamesFull) . ' ' . trim($lastNamesFull));
+                $dataCons['nombre_old']  = strtoupper(trim($firstNamesFull) . ' ' . trim($lastNamesFull));
 
 
                 $dataC             = (new Consignee)->fill($dataCons);
@@ -400,40 +400,40 @@ class Controller extends BaseController
                 if (count($firstNames) != 0) {
                     if (count($firstNames) != 1) {
                         if ($firstNames[1] != '') {
-                            $dataU->primer_nombre  = strtoupper($firstNames[0]);
-                            $dataU->segundo_nombre = strtoupper($firstNames[1]);
-                            $firstNamesFull .= $firstNames[0] . ' ' . $firstNames[1];
+                            $dataU->primer_nombre  = strtoupper(trim($firstNames[0]));
+                            $dataU->segundo_nombre = strtoupper(trim($firstNames[1]));
+                            $firstNamesFull .= trim($firstNames[0]) . ' ' . trim($firstNames[1]);
                         } else {
-                            $dataU->primer_nombre  = strtoupper($firstNames[0]);
+                            $dataU->primer_nombre  = strtoupper(trim($firstNames[0]));
                             $dataU->segundo_nombre = '';
-                            $firstNamesFull .= $firstNames[0];
+                            $firstNamesFull .= trim($firstNames[0]);
                         }
                     } else {
-                        $dataU->primer_nombre  = strtoupper($firstNames[0]);
+                        $dataU->primer_nombre  = strtoupper(trim($firstNames[0]));
                         $dataU->segundo_nombre = '';
-                        $firstNamesFull .= $firstNames[0];
+                        $firstNamesFull .= trim($firstNames[0]);
                     }
                 }
                 /*verifico si existen dos apellidos o solo uno para registrar*/
                 if (count($lastName) != 0) {
                     if (count($lastName) != 1) {
                         if ($lastName[0] != '') {
-                            $dataU->primer_apellido  = strtoupper($lastName[0]);
-                            $dataU->segundo_apellido = strtoupper($lastName[1]);
-                            $lastNamesFull .= $lastName[0] . ' ' . $lastName[1];
+                            $dataU->primer_apellido  = strtoupper(trim($lastName[0]));
+                            $dataU->segundo_apellido = strtoupper(trim($lastName[1]));
+                            $lastNamesFull .= trim($lastName[0]) . ' ' . trim($lastName[1]);
                         } else {
-                            $dataU->primer_apellido  = strtoupper($lastName[1]);
+                            $dataU->primer_apellido  = strtoupper(trim($lastName[1]));
                             $dataU->segundo_apellido = '';
-                            $lastNamesFull .= $lastName[0];
+                            $lastNamesFull .= trim($lastName[0]);
                         }
                     } else {
-                        $dataU->primer_apellido  = strtoupper($lastName[0]);
+                        $dataU->primer_apellido  = strtoupper(trim($lastName[0]));
                         $dataU->segundo_apellido = '';
-                        $lastNamesFull .= $lastName[0];
+                        $lastNamesFull .= trim($lastName[0]);
                     }
                 }
 
-                $dataU->nombre_full = strtoupper($firstNamesFull . ' ' . $lastNamesFull);
+                $dataU->nombre_full = strtoupper(trim($firstNamesFull) . ' ' . trim($lastNamesFull));
 
                 $dataU->save();
             }
