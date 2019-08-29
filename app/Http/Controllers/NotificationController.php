@@ -12,4 +12,14 @@ class NotificationController extends Controller
     $user = User::find(1);
     return response()->json($user->unreadNotifications);
   }
+
+  public function viewedAll()
+  {
+    $user = User::find(1);
+    foreach ($user->unreadNotifications as $notification) {
+      $notification->markAsRead();
+    }
+    return response()->json($user->notifications);
+  }
+
 }

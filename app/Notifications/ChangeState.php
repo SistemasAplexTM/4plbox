@@ -59,7 +59,8 @@ class ChangeState extends Notification
           'icon' => $this->data->icon,
           'title' => $this->data->descripcion,
           'desc' => $this->data->descripcion_general,
-          'color' => $this->data->color
+          'color' => $this->data->color,
+          'tracking' => $this->data->tracking,
       ];
     }
 }

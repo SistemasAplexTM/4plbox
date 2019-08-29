@@ -34,6 +34,7 @@ Route::group(['prefix' => 'user'], function() {
 
 Route::group(['middleware' => 'auth:api'], function(){
   Route::get('getNotification', 'NotificationController@get');
+  Route::get('viewedAllNotification', 'NotificationController@viewedAll');
   Route::get('rastreo/getStatusReport/{data}/{idStatus?}/{user_id?}', 'RastreoController@getStatusReport');
   Route::get('getConfig/{key}', 'Controller@getConfig');
   Route::get('getAllWarehouse/{user_id?}/{idStatus?}', 'CasilleroApiController@getAllWarehouse');

@@ -180,6 +180,10 @@ class CasilleroApiController extends Controller
 
     public function setPrealert(Request $request)
     {
+      $data = Prealerta::where('tracking', $request->tracking)->first();
+      if ($data) {
+        return ['message' => 'El número de tracking ya existe en nuestra base de datos.'];
+      }
       Prealerta::insert($request->all());
       return $request->all();
     }

@@ -47,7 +47,7 @@ class StatusReportController extends Controller
                 // $status = Status::select('id', 'json_data', 'email')->where('id', $request->status_id)->first();
                 $status = Status::where('id', $request->status_id)->first();
                 if ($status->view_client) {
-                  $user = User::where('consignee_id', 801)->first();
+                  $user = User::where('consignee_id', $request->consignee_id)->first();
                   $user->notify(new ChangeState($status));
                 }
                 if($status->json_data !== null){
