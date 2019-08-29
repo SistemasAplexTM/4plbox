@@ -35,7 +35,7 @@ class ConsigneeController extends Controller
     {
         try {
             $data              = (new Consignee)->fill($request->all());
-            $data->nombre_full = trim($request->primer_nombre) . ' ' . trim($request->segundo_nombre) . ' ' . trim($request->primer_apellido) . ' ' . trim($request->segundo_apellido);
+            $data->nombre_full = trim($request->primer_nombre) . '' . trim($request->segundo_nombre) . '' . trim($request->primer_apellido) . '' . trim($request->segundo_apellido);
             $data->created_at  = date('Y-m-d H:i:s');
             if ($data->save()) {
                 $this->AddToLog('Consignee creado id (' . $data->id . ')');
