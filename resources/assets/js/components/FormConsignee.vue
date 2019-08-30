@@ -7,7 +7,7 @@
             <label for="agencia_id" class="control-label gcore-label-top">Agencia:<samp id="require">*</samp></label>
           </div>
           <div class="col-sm-8">
-            <el-select v-model="agencia_id" size="medium" filterable placeholder="Seleccione" value-key="id"
+            <el-select v-model="form.agencia_id" size="medium" filterable placeholder="Seleccione" value-key="id"
             :class="{ 'error_field': errors_data.agencia_id }"
             @blur="validateFields('agencia_id')">
               <el-option
@@ -29,9 +29,9 @@
             <label for="" class="control-label gcore-label-top">&nbsp;</label>
           </div>
           <div class="col-sm-8">
-            <el-tooltip :content="(company) ? 'Persona' : 'Compañia'" placement="top">
+            <el-tooltip :content="(form.corporativo) ? 'Persona' : 'Compañia'" placement="top">
               <el-switch
-                v-model="company"
+                v-model="form.corporativo"
                 active-text="Compañia"
                 inactive-text="Persona natural"
                 active-icon-class="el-icon-office-building"
@@ -49,7 +49,7 @@
             <label for="tipo_identificacion_id" class="control-label gcore-label-top">Tipo identificación:<samp id="require">*</samp></label>
           </div>
           <div class="col-sm-8">
-            <el-select v-model="tipo_identificacion_id" size="medium" filterable placeholder="Select">
+            <el-select v-model="form.tipo_identificacion_id" size="medium" filterable placeholder="Select">
               <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -66,11 +66,11 @@
       <div class="col-lg-12">
         <div class="form-group" >
           <div class="col-sm-4">
-            <label for="documento" class="control-label gcore-label-top" v-if="!company">Documento:</label>
-            <label for="documento" class="control-label gcore-label-top" v-if="company">Nit:</label>
+            <label for="documento" class="control-label gcore-label-top" v-if="!form.corporativo">Documento:</label>
+            <label for="documento" class="control-label gcore-label-top" v-if="form.corporativo">Nit:</label>
           </div>
           <div class="col-sm-8">
-            <el-input  :placeholder="(company) ? 'Nit' : 'Documento'" v-model="documento" size="medium" clearable></el-input>
+            <el-input  :placeholder="(form.corporativo) ? 'Nit' : 'Documento'" v-model="form.documento" size="medium" clearable></el-input>
           </div>
         </div>
       </div>
@@ -79,12 +79,12 @@
       <div class="col-lg-12">
         <div class="form-group">
           <div class="col-sm-4">
-            <label for="primer_nombre" class="control-label gcore-label-top" v-if="!company">Primer Nombre:<samp id="require">*</samp></label>
-            <label for="primer_nombre" class="control-label gcore-label-top" v-if="company">Razon social:<samp id="require">*</samp></label>
+            <label for="primer_nombre" class="control-label gcore-label-top" v-if="!form.corporativo">Primer Nombre:<samp id="require">*</samp></label>
+            <label for="primer_nombre" class="control-label gcore-label-top" v-if="form.corporativo">Razon social:<samp id="require">*</samp></label>
           </div>
           <div class="col-sm-8">
-            <el-input  :placeholder="(company) ? 'Razon social' : 'Primer Nombre'"
-            v-model="primer_nombre" size="medium"
+            <el-input  :placeholder="(form.corporativo) ? 'Razon social' : 'Primer Nombre'"
+            v-model="form.primer_nombre" size="medium" clearable
             @blur="validateFields('primer_nombre')"
             :class="{ 'error_field': errors_data.primer_nombre }"></el-input>
             <small class="help-block" v-show="errors_data.primer_nombre">Campo obligatorio</small>
@@ -93,28 +93,28 @@
       </div>
     </div>
     <transition name="fade">
-      <div class="row" v-show="!company">
+      <div class="row" v-show="!form.corporativo">
         <div class="col-lg-12">
           <div class="form-group">
             <div class="col-sm-4">
               <label for="segundo_nombre" class="control-label gcore-label-top">Segundo Nombre:</label>
             </div>
             <div class="col-sm-8">
-              <el-input  placeholder="Segundo Nombre" v-model="segundo_nombre" size="medium" clearable></el-input>
+              <el-input  placeholder="Segundo Nombre" v-model="form.segundo_nombre" size="medium" clearable></el-input>
             </div>
           </div>
         </div>
       </div>
     </transition>
     <transition name="fade">
-      <div class="row" v-show="!company">
+      <div class="row" v-show="!form.corporativo">
         <div class="col-lg-12">
           <div class="form-group">
             <div class="col-sm-4">
               <label for="primer_apellido" class="control-label gcore-label-top">Primer Apellido:<samp id="require">*</samp></label>
             </div>
             <div class="col-sm-8">
-              <el-input  placeholder="Primer Apellido" v-model="primer_apellido" size="medium" clearable
+              <el-input  placeholder="Primer Apellido" v-model="form.primer_apellido" size="medium" clearable
               @blur="validateFields('primer_apellido')"
               :class="{ 'error_field': errors_data.primer_apellido }"></el-input>
               <small class="help-block" v-show="errors_data.primer_apellido">Campo obligatorio</small>
@@ -124,14 +124,14 @@
       </div>
     </transition>
     <transition name="fade">
-      <div class="row" v-show="!company">
+      <div class="row" v-show="!form.corporativo">
         <div class="col-lg-12">
           <div class="form-group">
             <div class="col-sm-4">
               <label for="segundo_apellido" class="control-label gcore-label-top">Segundo Apellido:</label>
             </div>
             <div class="col-sm-8">
-              <el-input  placeholder="Segundo Apellido" v-model="segundo_apellido" size="medium" clearable></el-input>
+              <el-input  placeholder="Segundo Apellido" v-model="form.segundo_apellido" size="medium" clearable></el-input>
             </div>
           </div>
         </div>
@@ -145,7 +145,7 @@
             <label for="direccion" class="control-label gcore-label-top">Dirección:<samp id="require">*</samp></label>
           </div>
           <div class="col-sm-8">
-            <el-input  placeholder="Dirección" v-model="direccion" size="medium" clearable
+            <el-input  placeholder="Dirección" v-model="form.direccion" size="medium" clearable
             @blur="validateFields('direccion')"
             :class="{ 'error_field': errors_data.direccion }"></el-input>
             <small class="help-block" v-show="errors_data.direccion">Campo obligatorio</small>
@@ -160,7 +160,7 @@
             <label for="telefono" class="control-label gcore-label-top">Teléfono:</label>
           </div>
           <div class="col-sm-8">
-            <el-input  placeholder="Teléfono" v-model="telefono" size="medium" clearable></el-input>
+            <el-input  placeholder="Teléfono" v-model="form.telefono" size="medium" clearable></el-input>
           </div>
         </div>
       </div>
@@ -172,7 +172,7 @@
             <label for="correo" class="control-label gcore-label-top">Email:</label>
           </div>
           <div class="col-sm-8">
-            <el-input  placeholder="Email" v-model="email" size="medium" clearable></el-input>
+            <el-input  placeholder="Email" v-model="form.correo" size="medium" clearable></el-input>
           </div>
         </div>
       </div>
@@ -199,19 +199,19 @@
               <label for="zip" class="control-label gcore-label-top">Zip Code:</label>
           </div>
           <div class="col-sm-8">
-            <el-input  placeholder="Zip Code" v-model="zip" size="medium" clearable></el-input>
+            <el-input  placeholder="Zip Code" v-model="form.zip" size="medium" clearable></el-input>
           </div>
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row" v-if="this.table === 'consignee'">
       <div class="col-lg-12">
         <div class="form-group">
           <div class="col-sm-4">
             <label for="cliente_id" class="control-label gcore-label-top">Cliente:</label>
           </div>
           <div class="col-sm-8">
-            <el-select v-model="cliente_id" size="medium" filterable clearable placeholder="Selecione" value-key="id">
+            <el-select v-model="form.cliente_id" size="medium" filterable clearable placeholder="Selecione" value-key="id">
               <el-option
                 v-for="item in clientes"
                 :key="item.id"
@@ -223,26 +223,26 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row" v-if="this.table === 'consignee'">
       <div class="col-lg-12">
         <div class="form-group">
           <div class="col-sm-4">
             <label for="tarifa" class="control-label gcore-label-top">Tarifa:</label>
           </div>
           <div class="col-sm-4">
-            <el-input-number size="medium" v-model="tarifa" :min="0" :precision="2" :step="0.1" placeholder="Tarifa 0.00"></el-input-number>
+            <el-input-number size="medium" v-model="form.tarifa" :min="0" :precision="2" :step="0.1" placeholder="Tarifa 0.00"></el-input-number>
           </div>
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row" v-if="this.table === 'consignee'">
       <div class="col-lg-12">
         <div class="form-group">
           <div class="col-sm-4">
             <label for="emailsend" class="control-label gcore-label-top">&nbsp;</label>
           </div>
           <div class="col-sm-8">
-            <el-checkbox v-model="emailsend"><i class="fal fa-envelope"></i> Enviar email con datos de su casillero.</el-checkbox>
+            <el-checkbox v-model="form.emailsend"><i class="fal fa-envelope"></i> Enviar email con datos de su casillero.</el-checkbox>
           </div>
         </div>
       </div>
@@ -264,7 +264,7 @@
 
 <script>
 export default {
-  props:["agency", "consignee_id"],
+  props:["table", "agency", "field_id"],
   data() {
     return {
       loading: false,
@@ -277,51 +277,37 @@ export default {
         direccion: false,
         localizacion_id: false,
       },
-      company: false,
-      agencia_id: null,
-      tipo_identificacion_id: null,
-      documento: null,
-      primer_nombre: null,
-      segundo_nombre: null,
-      primer_apellido: null,
-      segundo_apellido: null,
-      direccion: null,
-      telefono: null,
-      email: null,
-      localizacion_id: null,
+      form: {
+        corporativo: false,
+        agencia_id: null,
+        tipo_identificacion_id: null,
+        documento: null,
+        primer_nombre: null,
+        segundo_nombre: null,
+        primer_apellido: null,
+        segundo_apellido: null,
+        direccion: null,
+        telefono: null,
+        correo: null,
+        localizacion_id: null,
+        zip: null,
+        cliente_id: null,
+        tarifa: 0,
+        emailsend: false,
+      },
       branchs: [],
-      zip: null,
-      cliente_id: null,
       clientes: null,
-      emailsend: false,
-      tarifa: 0,
       city_selected_s: '',
     };
   },
   watch:{
-    consignee_id:function(val){
-      axios.get('consignee/getDataById/' + val).then(response => {
-        console.log(response.data);
-        let dat = response.data;
-        if (dat != null) {
-          this.company = false;
-          this.tipo_identificacion_id = dat.tipo_identificacion_id;
-          this.documento = dat.documento;
-          this.primer_nombre = dat.primer_nombre;
-          this.segundo_nombre = dat.segundo_nombre;
-          this.primer_apellido = dat.primer_apellido;
-          this.segundo_apellido = dat.segundo_apellido;
-          this.direccion = dat.direccion;
-          this.telefono = dat.telefono;
-          this.email = dat.correo;
-          this.localizacion_id = dat.localizacion_id;
-          this.zip = dat.zip;
-          this.cliente_id = dat.cliente_id;
-          this.tarifa = dat.tarifa;
-          this.city_selected_s = dat.ciudad;
-          this.edit=true;
-        }
-      });
+    field_id:function(val){
+      let me = this;
+      if (val != null) {
+        setTimeout(function () {
+          me.getConsigneeById(val);
+        }, 1000);
+      }
     }
   },
   mounted() {
@@ -329,17 +315,61 @@ export default {
     this.getSelectClient();
   },
   methods: {
-    beforeSend(){
+    beforeSend(edit){
       this.loading = true;
       if (this.validateFields(false)) {
-        this.store();
+        if (edit) {
+          this.update();
+        }else{
+          this.store();
+        }
       }else{
         this.loading = false;
       }
     },
+    store(){
+      let me = this;
+      axios.post(this.table, this.form).then(function(response) {
+        if (response.data['code'] == 200) {
+          toastr.success('Registro creado correctamente.');
+          me.loading = false;
+          me.resetForm();
+          me.$emit('updatetable');
+        } else {
+          me.loading = false;
+          toastr.warning(response.data['error']);
+        }
+      }).catch(function(error) {
+        console.log(error);
+        me.loading = false;
+        toastr.error("Error." + error, {
+            timeOut: 50000
+        });
+      });
+    },
+    update(){
+      let me = this;
+      axios.put(this.table + '/' + this.field_id, this.form).then(function(response) {
+        if (response.data['code'] == 200) {
+          toastr.success('Registro Actualizado correctamente.');
+          me.loading = false;
+          me.resetForm();
+          me.$emit('updatetable');
+        } else {
+          me.loading = false;
+          toastr.warning(response.data['error']);
+        }
+      }).catch(function(error) {
+        console.log(error);
+        me.loading = false;
+        toastr.error("Error." + error, {
+            timeOut: 50000
+        });
+      });
+    },
     validateFields(field){
       let save = true;
-      if(this.agencia_id === null || this.agencia_id === ''){
+      if(this.form.agencia_id === null || this.form.agencia_id === ''){
         if(!field || field === 'agencia_id'){
           this.errors_data.agencia_id = true;
           save = false;
@@ -347,7 +377,7 @@ export default {
       }else {
         this.errors_data.agencia_id = false;
       }
-      if(this.primer_nombre === null || this.primer_nombre === ''){
+      if(this.form.primer_nombre === null || this.form.primer_nombre === ''){
         if(!field || field === 'primer_nombre'){
           this.errors_data.primer_nombre = true;
           save = false;
@@ -355,7 +385,7 @@ export default {
       }else{
         this.errors_data.primer_nombre = false;
       }
-      if(this.direccion === null || this.direccion === ''){
+      if(this.form.direccion === null || this.form.direccion === ''){
         if(!field || field === 'direccion'){
           this.errors_data.direccion = true;
           save = false;
@@ -363,7 +393,7 @@ export default {
       }else{
         this.errors_data.direccion = false;
       }
-      if(this.localizacion_id === null || this.localizacion_id === ''){
+      if(this.form.localizacion_id === null || this.form.localizacion_id === ''){
         if(!field || field === 'localizacion_id'){
           this.errors_data.localizacion_id = true;
           save = false;
@@ -371,8 +401,8 @@ export default {
       }else{
         this.errors_data.localizacion_id = false;
       }
-      if(!this.company){
-        if(this.primer_apellido === null || this.primer_apellido === ''){
+      if(!this.form.corporativo){
+        if(this.form.primer_apellido === null || this.form.primer_apellido === ''){
           if(!field || field === 'primer_apellido'){
             this.errors_data.primer_apellido = true;
             save = false;
@@ -385,42 +415,6 @@ export default {
       }
       return save;
     },
-    store(){
-      let me = this;
-      axios.post('consignee', {
-          'agencia_id': this.agencia_id,
-          'localizacion_id': this.localizacion_id,
-          'documento': this.documento,
-          'primer_nombre': this.primer_nombre,
-          'segundo_nombre': this.segundo_nombre,
-          'primer_apellido': this.primer_apellido,
-          'segundo_apellido': this.segundo_apellido,
-          'direccion': this.direccion,
-          'telefono': this.telefono,
-          'correo': this.email,
-          'zip': this.zip,
-          'tarifa': this.tarifa,
-          'emailsend': this.emailsend,
-          'cliente_id': this.cliente_id,
-      }).then(function(response) {
-          if (response.data['code'] == 200) {
-              toastr.success('Registro creado correctamente.');
-              me.loading = false;
-              me.resetForm();
-              // me.updateTable();
-          } else {
-            me.loading = false;
-              toastr.warning(response.data['error']);
-          }
-      }).catch(function(error) {
-          /*console.log(error);*/
-          me.loading = false;
-          console.log(error);
-          toastr.error("Error." + error, {
-              timeOut: 50000
-          });
-      });
-    },
     resetForm(){
       this.errors_data = {
         agencia_id: false,
@@ -429,28 +423,28 @@ export default {
         direccion: false,
         localizacion_id: false,
       };
-      this.company = false;
-      this.tipo_identificacion_id = null;
-      this.documento = null;
-      this.primer_nombre = null;
-      this.segundo_nombre = null;
-      this.primer_apellido = null;
-      this.segundo_apellido = null;
-      this.direccion = null;
-      this.telefono = null;
-      this.email = null;
-      this.localizacion_id = null;
-      this.zip = null;
-      this.cliente_id = null;
-      this.emailsend = false;
-      this.tarifa = 0;
+      this.form.corporativo = false;
+      this.form.tipo_identificacion_id = null;
+      this.form.documento = null;
+      this.form.primer_nombre = null;
+      this.form.segundo_nombre = null;
+      this.form.primer_apellido = null;
+      this.form.segundo_apellido = null;
+      this.form.direccion = null;
+      this.form.telefono = null;
+      this.form.correo = null;
+      this.form.localizacion_id = null;
+      this.form.zip = null;
+      this.form.cliente_id = null;
+      this.form.tarifa = 0;
+      this.form.emailsend = false;
       this.city_selected_s = null;
       this.edit=false;
     },
     getSelectBranch: function(){
       axios.get('/agencia/getAgencies').then(response => {
         this.branchs = response.data;
-        this.agencia_id = this.agency.id
+        this.form.agencia_id = this.agency.id
       });
     },
     getSelectClient: function(){
@@ -459,7 +453,21 @@ export default {
       });
     },
     setCity(data){
-      this.localizacion_id = data.id;
+      this.form.localizacion_id = data.id;
+    },
+    getConsigneeById(id){
+      let me = this;
+      axios.get(this.table + '/getDataById/' + id).then(response => {
+        me.form = response.data;
+        me.form.cliente_id = me.form.cliente_id + '';
+        if (me.form.corporativo == 1) {
+          me.form.corporativo = true;
+        }else{
+          me.form.corporativo = false;
+        }
+        me.city_selected_s = response.data.ciudad;
+        me.edit=true;
+      });
     },
   }
 }

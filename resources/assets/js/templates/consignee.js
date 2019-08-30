@@ -234,7 +234,8 @@ var objVue = new Vue({
           });
       },
       updateTable: function() {
-          refreshTable('tbl-consignee');
+        this.consignee_id = null;
+        refreshTable('tbl-consignee');
       },
       delete: function(data) {
           this.formErrors = {};

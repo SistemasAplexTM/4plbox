@@ -30,7 +30,8 @@
                     </div>
                     <div class="ibox-content">
                         <!--***** contenido ******-->
-                        <div class="row">
+                        <form-consignee :table="'shipper'" :agency="agency_data" :field_id="shipper_id" @updatetable="updateTable"></form-consignee>
+                        {{-- <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.agencia_id}">
                                         <div class="col-sm-4">
@@ -164,10 +165,10 @@
                                         </div>
                                     </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="row">
                             <contactos-component :table="'shipper'" :parametro="parametro"></contactos-component>
-                            @include('layouts.buttons')
+                            {{-- @include('layouts.buttons') --}}
                         </div>
                     </div>
                 </div>

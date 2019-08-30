@@ -31,7 +31,7 @@
                     </div>
                     <div class="ibox-content">
                         <!--***** contenido ******-->
-                        <form-consignee :agency="agency_data" :consignee_id="consignee_id"></form-consignee>
+                        <form-consignee :table="'consignee'" :agency="agency_data" :field_id="consignee_id" @updatetable="updateTable"></form-consignee>
                         {{-- <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.agencia_id}">

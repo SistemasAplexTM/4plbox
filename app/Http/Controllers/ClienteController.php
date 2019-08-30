@@ -176,17 +176,15 @@ class ClienteController extends Controller
         $sql = Cliente::join('localizacion AS b', 'clientes.localizacion_id', 'b.id')
         ->select(
         	'clientes.id',
-			'clientes.localizacion_id',
-			'clientes.nombre',
-			'clientes.direccion',
-			'clientes.telefono',
-			'clientes.email',
-			'clientes.zona',
-			'clientes.updated_at',
-			'b.nombre AS ciudad'
-        )
-        ->get();
-
+    			'clientes.localizacion_id',
+    			'clientes.nombre',
+    			'clientes.direccion',
+    			'clientes.telefono',
+    			'clientes.email',
+    			'clientes.zona',
+    			'clientes.updated_at',
+    			'b.nombre AS ciudad'
+        )->get();
         return \DataTables::of($sql)->make(true);
     }
 
@@ -230,7 +228,7 @@ class ClienteController extends Controller
             $dataUser = Cliente::select('id')->where([
                 ['email', $request->email]
             ])->first();
-            
+
             if (count($dataUser) > 0) {
                 $answer = array(
                     "valid"   => false,
