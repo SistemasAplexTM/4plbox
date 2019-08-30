@@ -59,7 +59,7 @@ var objVue = new Vue({
                 "buttons": [
                     {
                         extend: 'excel',
-                        text: '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
+                        text: '<i class="fal fa-file-excel-o" aria-hidden="true"></i>',
                         titleAttr: 'Excel',
                         filename: 'Informe bodega',
                         extension: '.xlsx',
@@ -67,14 +67,14 @@ var objVue = new Vue({
                     },
                     // {
                     //     extend: 'pdfHtml5',
-                    //     text: '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>',
+                    //     text: '<i class="fal fa-file-pdf-o" aria-hidden="true"></i>',
                     //     titleAttr: 'PDF',
                     //     filename: 'Informe bodega',
                     //     extension: '.pdf',
                     //     messageTop: 'Informe bodega',
                     // },
                     {
-                        text: '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>',
+                        text: '<i class="fal fa-file-pdf-o" aria-hidden="true"></i>',
                         titleAttr: 'PDF',
                         action: function (e, dt, node, config) {
                             var url = "consulta/pdf?" + $.param($('#tbl-consulta').DataTable().ajax.params());

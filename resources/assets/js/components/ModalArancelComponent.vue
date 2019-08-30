@@ -22,8 +22,8 @@
                                 <tr>
                                     <th>Codigo P.A</th>
                                     <th>Descripcion</th>
-                                    <th><i class="fa fa-percent"></i>Iva</th>
-                                    <th><i class="fa fa-percent"></i>Arancel</th>
+                                    <th><i class="fal fa-percent"></i>Iva</th>
+                                    <th><i class="fal fa-percent"></i>Arancel</th>
                                 </tr>
                             </thead>
                         </table>

@@ -36,6 +36,7 @@ class Consignee extends Model
         'acepta_condiciones',
         'recibir_info',
         'cliente_id',
+        'corporativo',
     ];
 
     public function city()

@@ -67,7 +67,7 @@
                                         </div>
                                         <div class="col-sm-7">
                                         	<div class="input-group">
-                                                <span class="input-group-addon" id="basic-addon1"><li class="fa fa-dollar-sign"></li></span>
+                                                <span class="input-group-addon" id="basic-addon1"><li class="fal fa-dollar-sign"></li></span>
 		                                            <input v-model="tarifa" name="tarifa" id="tarifa" value="" placeholder="@lang('general.enter_the_rate')" class="form-control" type="text" @click="deleteError('tarifa')" />
                                             </div>
 		                                    <small id="msn1" class="help-block result-tarifa" v-show="listErrors.tarifa"></small>
@@ -83,7 +83,7 @@
                                         </div>
                                         <div class="col-sm-7">
                                             <div class="input-group">
-                                                <span class="input-group-addon" id="basic-addon1"><li class="fa fa-dollar-sign"></li></span>
+                                                <span class="input-group-addon" id="basic-addon1"><li class="fal fa-dollar-sign"></li></span>
                                                     <input v-model="peso_minimo" name="peso_minimo" id="peso_minimo" value="" placeholder="@lang('general.minimum_value_of_the_rate')" class="form-control" type="text" @click="deleteError('peso_minimo')" />
                                             </div>
                                             <small id="msn1" class="help-block result-peso_minimo" v-show="listErrors.peso_minimo"></small>
@@ -99,7 +99,7 @@
                                         </div>
                                         <div class="col-sm-7">
                                         	<div class="input-group">
-                                                <span class="input-group-addon" id="basic-addon1"><li class="fa fa-dollar-sign"></li></span>
+                                                <span class="input-group-addon" id="basic-addon1"><li class="fal fa-dollar-sign"></li></span>
 		                                            <input v-model="cobro_opcional" name="cobro_opcional" id="cobro_opcional" value="" placeholder="@lang('general.enter_the_optional_charge')" class="form-control" type="text" @click="deleteError('cobro_opcional')" />
                                             </div>
 		                                    <small id="msn1" class="help-block result-cobro_opcional" v-show="listErrors.cobro_opcional"></small>
@@ -115,7 +115,7 @@
                                         </div>
                                         <div class="col-sm-7">
                                         	<div class="input-group">
-                                                <span class="input-group-addon" id="basic-addon1"><li class="fa fa-dollar-sign"></li></span>
+                                                <span class="input-group-addon" id="basic-addon1"><li class="fal fa-dollar-sign"></li></span>
 		                                            <input v-model="seguro" name="seguro" id="seguro" value="" placeholder="@lang('general.enter_the_insurance_percentage')" class="form-control" type="text" @click="deleteError('seguro')" />
                                             </div>
 		                                    <small id="msn1" class="help-block result-seguro" v-show="listErrors.seguro"></small>
@@ -131,7 +131,7 @@
                                         </div>
                                         <div class="col-sm-7">
                                         	<div class="input-group">
-                                                <span class="input-group-addon" id="basic-addon1"><li class="fa fa-percent"></li></span>
+                                                <span class="input-group-addon" id="basic-addon1"><li class="fal fa-percent"></li></span>
 		                                            <input v-model="impuesto" name="impuesto" id="impuesto" value="" placeholder="@lang('general.enter_the_tax_percentage')" class="form-control" type="text" @click="deleteError('impuesto')" />
                                             </div>
 		                                    <small id="msn1" class="help-block result-impuesto" v-show="listErrors.impuesto"></small>
@@ -146,7 +146,7 @@
                                             <label for="cobro_peso_volumen" class="control-label gcore-label-top">
                                                 <div class="col-sm-12" data-trigger="hover"  data-container="body" data-toggle="popover" data-placement="top" data-content="Active el volumen para cobrar los envios con volumen adicional." style="padding-left: 0px; padding-right: 0px;">
                                                     @lang('general.collection_weight_volume'):
-                                                    <i class="fa fa-question-circle" style="cursor: pointer; color: coral;"></i>
+                                                    <i class="fal fa-question-circle" style="cursor: pointer; color: coral;"></i>
                                                 </div>
                                         </label>
                                         </div>
@@ -166,7 +166,7 @@
                                     <div class="col-sm-7">
                                         <div class="input-group">
                                             <span class="input-group-btn" onclick="deleteError($(this).parent());">
-                                                <button class="btn btn-primary" id="btnBuscarPA" type="button" @click="modalArancel()" style="height: 33px;"><small><span class="fa fa-search"></span></small></button>
+                                                <button class="btn btn-primary" id="btnBuscarPA" type="button" @click="modalArancel()" style="height: 33px;"><small><span class="fal fa-search"></span></small></button>
                                             </span>
                                             <input type="text" placeholder="@lang('general.select')" class="form-control" readonly="" value="" id="pa" name="pa" onkeyup="deleteError($(this).parent());">
                                         </div><!-- /input-group -->

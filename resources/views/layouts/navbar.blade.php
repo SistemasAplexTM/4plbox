@@ -46,7 +46,7 @@
                             </div>
                             <div class="col-lg-2 text-center">
                                 <button class="btn btn-success dim btn-outline btn-inicio" type="button" id="in_shipper" style="margin:auto;">
-                                    <i class="far fa-user-circle">
+                                    <i class="fal fa-user-circle">
                                     </i>
                                 </button>
                                 <div style="font-size: 12px; font-weight:bold;">
@@ -55,7 +55,7 @@
                             </div>
                             <div class="col-lg-2 text-center">
                                 <button class="btn btn-info dim btn-outline btn-inicio" type="button" id="in_consignee" style="margin:auto;">
-                                    <i class="fas fa-user-circle">
+                                    <i class="fal fa-user-circle">
                                     </i>
                                 </button>
                                 <div style="font-size: 12px; font-weight:bold;">
@@ -125,7 +125,7 @@
             </li>
             <li>
                 <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                    <i class="fas fa-sign-out-alt"></i> @lang('layouts.log_out')
+                    <i class="fal fa-sign-out-alt"></i> @lang('layouts.log_out')
                 </a>
                 {{-- <li>
                     <a class="right-sidebar-toggle" id="sidebar-rigth">

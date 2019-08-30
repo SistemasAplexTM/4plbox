@@ -34,7 +34,7 @@
                     @lang('general.bill_of_lading')
                 </h5>
                 <div class="ibox-tools">
-                    {{-- <a href="{{ url('bill/create') }}" data-toggle="tooltip" title="Crear bill of lading" class="btn btn-primary" >Nuevo <i class="fa fa-plus" style="font-size: small;"></i></a> --}}
+                    {{-- <a href="{{ url('bill/create') }}" data-toggle="tooltip" title="Crear bill of lading" class="btn btn-primary" >Nuevo <i class="fal fa-plus" style="font-size: small;"></i></a> --}}
                     <a class="btn btn-primary" data-toggle="tooltip" title="Crear nuevo BL"><span data-toggle="modal" data-target="#modalCreateBL">@lang('master.new') <i class="fal fa-plus" style="font-size: small;"></i></span></a>
                 </div>
             </div>

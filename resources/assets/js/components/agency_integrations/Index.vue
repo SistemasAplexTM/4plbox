@@ -43,8 +43,8 @@
           list: [
             { component: 'MailChimp', desc: 'MailChimp', icon: 'fab fa-mailchimp' },
             { component: 'PayPal', desc: 'PayPal', icon: 'fab fa-paypal' },
-            { component: 'Zopim', desc: 'Zopim', icon: 'fa fa-comments' },
-            { component: 'Publicity', desc: 'Publicidad', icon: 'fa fa-shopping-cart' }
+            { component: 'Zopim', desc: 'Zopim', icon: 'fal fa-comments' },
+            { component: 'Publicity', desc: 'Publicidad', icon: 'fal fa-shopping-cart' }
           ]
         }
       },

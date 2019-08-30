@@ -83,7 +83,7 @@
                 <div class="col-lg-12">
                   <div class="col-lg-6">
                     <a class="ladda-button btn btn-primary" @click="savePrint()">
-                      <i class="fa fa-save"></i> @lang('general.save')
+                      <i class="fal fa-save"></i> @lang('general.save')
                     </a>
                   </div>
                 </div>

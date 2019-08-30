@@ -46,7 +46,7 @@
 	                                <div class="form-group">
 	                                    <label for="" class="">&nbsp;</label>
 	                                    <div class="input-group">
-	                                        <button class="btn btn-primary btn-sm" type="button" id="btn_Cargoadd" value="" @click="addAdditionalCharges()"><i class="fa fa-plus"></i></button>
+	                                        <button class="btn btn-primary btn-sm" type="button" id="btn_Cargoadd" value="" @click="addAdditionalCharges()"><i class="fal fa-plus"></i></button>
 	                                    </div>
 	                                </div>
 	                            </div>
@@ -75,7 +75,7 @@
 	                                        		<td>{{ chargue.precio }}</td>
 	                                        		<td class="td_total">{{ chargue.cantidad * chargue.precio }}</td>
 	                                        		<td>
-	                                        			<a type="button" id="btn_remove" @click="deleteAdditionalCharges(chargue.id)" data-toggle="tooltip" title="" class="btn btn-danger btn-xs" data-original-title="Eliminar"><i class="fa fa-times"></i></a>
+	                                        			<a type="button" id="btn_remove" @click="deleteAdditionalCharges(chargue.id)" data-toggle="tooltip" title="" class="btn btn-danger btn-xs" data-original-title="Eliminar"><i class="fal fa-times"></i></a>
 	                                        		</td>
 	                                        	</tr>
 	                                        </tbody>

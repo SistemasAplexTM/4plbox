@@ -134,7 +134,7 @@
                                                     D
                                                 </th>
                                                 <th class="text-center">
-                                                    <i class="fa fa-flash">
+                                                    <i class="fal fa-flash">
                                                     </i>
                                                 </th>
                                             </tr>
@@ -178,7 +178,7 @@
                                                 </td>
                                                 <td>
                                                     <a @click="specialAction(permisionsRole.module)" v-bind:id="'btn_' + permisionsRole.module" class="btn btn-outline btn-default btn-xs" data-toggle="tooltip" title="Permisos adicionales">
-                                                        <i class="fa fa-indent">
+                                                        <i class="fal fa-indent">
                                                         </i>
                                                         @{{ permisionsRole.special }}
                                                     </a>
@@ -189,7 +189,7 @@
                                             <tr>
                                                 <td colspan="6">
                                                     <button @click="savePermissions()" class="ladda-button btn btn-success pull-right" data-style="expand-right" type="button" v-if="role_id != null">
-                                                        <i class="fa fa-save">
+                                                        <i class="fal fa-save">
                                                         </i>
                                                       @lang('general.save')  
                                                     </button>
@@ -232,7 +232,7 @@
                                     <tr>
                                         <td colspan="2">
                                             <button @click="saveSpecialPermissions()" class="ladda-button btn btn-primary pull-right" data-style="expand-right" type="button" v-if="role_id != null">
-                                                <i class="fa fa-save">
+                                                <i class="fal fa-save">
                                                 </i>
                                                  @lang('general.save')  
                                             </button>

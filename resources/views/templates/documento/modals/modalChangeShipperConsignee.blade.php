@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">@lang('documents.close')</span></button>
-                <h2 class="modal-title" id="myModalLabel"><i class="fa fa-users"></i> Shipper - Consignee</h2>
+                <h2 class="modal-title" id="myModalLabel"><i class="fal fa-users"></i> Shipper - Consignee</h2>
             </div>
             <div class="modal-body">
               <form id="formChangeSC" action="">
@@ -26,12 +26,12 @@
                             <shipper-consignee-select :shipper_id="shipper_id" :option="'shipper'" @get="setDataShipperConsignee($event, true)"></shipper-consignee-select>
                           </div>
                           <div class="col-lg-3">
-                            <el-button type="success" class="btn-change" size="medium" :loading="loading_save_ship" @click="saveChange('shipper')"><i v-if="!loading_save_ship" class="fa fa-exchange"></i></el-button>
+                            <el-button type="success" class="btn-change" size="medium" :loading="loading_save_ship" @click="saveChange('shipper')"><i v-if="!loading_save_ship" class="fal fa-exchange"></i></el-button>
                           </div>
                           <div class="col-lg-12" style="margin-top: 15px;">
-                            <p><i class="fa fa-user"></i> @{{ shipper.nombre_full }}</p>
-                            <p><i class="fa fa-phone"></i> @{{ shipper.telefono }}</p>
-                            <p><i class="fa fa-map-marker-alt"></i> @{{ shipper.direccion }} / @{{ shipper.ciudad }}</p>
+                            <p><i class="fal fa-user"></i> @{{ shipper.nombre_full }}</p>
+                            <p><i class="fal fa-phone"></i> @{{ shipper.telefono }}</p>
+                            <p><i class="fal fa-map-marker-alt"></i> @{{ shipper.direccion }} / @{{ shipper.ciudad }}</p>
                             <p>@{{ shipper.zip }}</p>
                           </div>
                       </div>
@@ -46,12 +46,12 @@
                             <shipper-consignee-select :consignee_id="consignee_id" :option="'consignee'" @get="setDataShipperConsignee($event, false)"></shipper-consignee-select>
                           </div>
                           <div class="col-lg-3">
-                            <el-button type="success" class="btn-change" size="medium" :loading="loading_save_cons" @click="saveChange('consignee')"><i v-if="!loading_save_cons" class="fa fa-exchange"></i></el-button>
+                            <el-button type="success" class="btn-change" size="medium" :loading="loading_save_cons" @click="saveChange('consignee')"><i v-if="!loading_save_cons" class="fal fa-exchange"></i></el-button>
                           </div>
                           <div class="col-lg-12" style="margin-top: 15px;">
-                            <p><i class="fa fa-user"></i> @{{ consignee.nombre_full }}</p>
-                            <p><i class="fa fa-phone"></i> @{{ consignee.telefono }}</p>
-                            <p><i class="fa fa-map-marker-alt"></i> @{{ consignee.direccion }} / @{{ shipper.ciudad }}</p>
+                            <p><i class="fal fa-user"></i> @{{ consignee.nombre_full }}</p>
+                            <p><i class="fal fa-phone"></i> @{{ consignee.telefono }}</p>
+                            <p><i class="fal fa-map-marker-alt"></i> @{{ consignee.direccion }} / @{{ shipper.ciudad }}</p>
                             <p>@{{ consignee.zip }}</p>
                           </div>
                       </div>

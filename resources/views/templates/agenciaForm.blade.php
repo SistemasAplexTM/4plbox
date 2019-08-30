@@ -193,7 +193,7 @@
                                                     <label for="prefijo_pobox" class="control-label">
                                                         <div class="col-sm-12" data-trigger="hover"  data-container="body" data-toggle="popover" data-placement="rigth" data-content="Si no se ingresa ningun dato aqui, el PO_BOX de los clientes se creara automaticamente." style="padding-left: 0px; padding-right: 0px;">
                                                             Prefijo PO_BOX
-                                                            <i class="fa fa-question-circle" style="cursor: pointer; color: coral;"></i>
+                                                            <i class="fal fa-question-circle" style="cursor: pointer; color: coral;"></i>
                                                         </div>
                                                     </label>
                                                 </div>
@@ -228,7 +228,7 @@
                                                     <label for="logo" class="control-label">
                                                         <div class="col-sm-12" data-trigger="hover"  data-container="body" data-toggle="popover" data-placement="rigth" data-content="Verifique que la imagen sea de un peso igual o menor a 1 Mb" style="padding-left: 0px; padding-right: 0px;">
                                                             Logo:
-                                                            <i class="fa fa-question-circle" style="cursor: pointer; color: coral;"></i>
+                                                            <i class="fal fa-question-circle" style="cursor: pointer; color: coral;"></i>
                                                         </div>
                                                     </label>
                                                 </div>
@@ -305,7 +305,7 @@
                                                     <label for="" class="">&nbsp;</label>
                                                 </div>
                                                 <div class="col-lg-12">
-                                                    <a class="btn btn-primary btn-sm" type="button" id="btn_add_row" onclick="addRow()" value="1" data-toggle="tooltip" title="Agregar"><i class="fa fa-plus"></i></a>
+                                                    <a class="btn btn-primary btn-sm" type="button" id="btn_add_row" onclick="addRow()" value="1" data-toggle="tooltip" title="Agregar"><i class="fal fa-plus"></i></a>
                                                 </div>
                                             </div>
                                     </div>
@@ -418,16 +418,16 @@
                                         <div class="form-group">
                                             <div class="col-sm-12 col-sm-offset-0 guardar">
                                                 <a class="btn btn-white" href="{{ route('agencia.index') }}"  style="display: {{ (isset($agencia) and $agencia) ? 'none' : 'inline-block' }}">
-                                                    <i class="fa fa-mail-reply"></i> @lang('general.return')
+                                                    <i class="fal fa-mail-reply"></i> @lang('general.return')
                                                 </a>
                                                 <a class="btn btn-white" href="{{ route('agencia.index') }}"  style="display: {{ (isset($agencia) and $agencia) ? 'inline-block' : 'none' }}">
-                                                    <i class="fa fa-times"></i> @lang('general.cancel')
+                                                    <i class="fal fa-times"></i> @lang('general.cancel')
                                                 </a>
                                                 <a class="ladda-button btn btn-primary" id="saveForm" style="display: {{ (isset($agencia) and $agencia) ? 'none' : 'inline-block' }}">
-                                                    <i class="fa fa-save"></i> @lang('general.save')
+                                                    <i class="fal fa-save"></i> @lang('general.save')
                                                 </a>
                                                 <button class="ladda-button btn btn-warning" id="updateForm" style="display: {{ (isset($agencia) and $agencia) ? 'inline-block' : 'none' }}">
-                                                    <i class="fa fa-edit"></i> @lang('general.update')
+                                                    <i class="fal fa-edit"></i> @lang('general.update')
                                                 </button>
                                             </div>
                                         </div>

@@ -42,7 +42,7 @@ var objVue = new Vue({
                     "'" + full.nombre_full + "'",
                     full.id
                   ]
-                    var btn_selet = "<button onclick=\"selectShipperConsignee(" + full.id + ", 'shipper')\" class='btn-primary btn-xs' data-toggle='tooltip' title='Seleccionar'>Seleccionar <i class='fa fa-check'></i></button> ";
+                    var btn_selet = "<button onclick=\"selectShipperConsignee(" + full.id + ", 'shipper')\" class='btn-primary btn-xs' data-toggle='tooltip' title='Seleccionar'>Seleccionar <i class='fal fa-check'></i></button> ";
                     return btn_selet;
                 }
             }, {
@@ -91,7 +91,7 @@ var objVue = new Vue({
               columns: [{
                   sortable: false,
                   "render": function(data, type, full, meta) {
-                      var btn_selet = "<button onclick=\"selectShipperConsignee(" + full.id + ", 'consignee')\" class='btn-primary btn-xs' data-toggle='tooltip' title='Seleccionar'>Seleccionar <i class='fa fa-check'></i></button> ";
+                      var btn_selet = "<button onclick=\"selectShipperConsignee(" + full.id + ", 'consignee')\" class='btn-primary btn-xs' data-toggle='tooltip' title='Seleccionar'>Seleccionar <i class='fal fa-check'></i></button> ";
                       return btn_selet;
                   }
               }, {

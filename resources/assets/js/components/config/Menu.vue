@@ -6,7 +6,7 @@
                     <div class="row m-b-lg">
                         <div class="col-lg-4 text-center">
                             <div class="m-b-sm">
-                                <i class="fa fa-cogs fa-5x">
+                                <i class="fal fa-cogs fa-5x">
                                 </i>
                             </div>
                         </div>

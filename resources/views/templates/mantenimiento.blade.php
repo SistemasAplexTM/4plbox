@@ -36,17 +36,17 @@
                         <div class="file-manager">
                             <div class="space-25"></div>
                             <ul class="folder-list m-b-md" style="padding: 0">
-                                <li><a href="#tab-1" data-toggle="tab"> <i class="fa fa-envelope "></i> Plantillas email</a></li>
-                                <li><a href="#tab-2" data-toggle="tab"> <i class="fa fa-paypal "></i> Forma de pago</a></li>
-                                <li><a href="#tab-3" data-toggle="tab"> <i class="fa fa-credit-card "></i> Tipo de pago</a></li>
-                                <li><a href="#tab-4" data-toggle="tab"> <i class="fa fa-sitemap "></i> Grupos</a></li>
-                                <li><a href="#tab-5" data-toggle="tab"> <i class="fa fa-sitemap "></i> Cargos</a></li>
-                                <li><a href="#tab-6" data-toggle="tab"> <i class="fa fa-plane "></i> Aerolineas</a></li>
-                                <li><a href="#tab-7" data-toggle="tab"> <i class="fa fa-plane "></i> Inventario erolineas</a></li>
-                                <li><a href="#tab-8" data-toggle="tab"> <i class="fa fa-road "></i> Aeropuertos</a></li>
-                                <li><a href="#tab-9" data-toggle="tab"> <i class="fa fa-share-alt "></i> Servicios</a></li>
-                                <li><a href="#tab-10" data-toggle="tab"> <i class="fa fa-mail-reply-all "></i> Tipo embarque</a></li>
-                                <li><a href="#tab-11" data-toggle="tab"> <i class="fa fa-shopping-bag "></i> Tipo empaque</a></li>
+                                <li><a href="#tab-1" data-toggle="tab"> <i class="fal fa-envelope "></i> Plantillas email</a></li>
+                                <li><a href="#tab-2" data-toggle="tab"> <i class="fal fa-paypal "></i> Forma de pago</a></li>
+                                <li><a href="#tab-3" data-toggle="tab"> <i class="fal fa-credit-card "></i> Tipo de pago</a></li>
+                                <li><a href="#tab-4" data-toggle="tab"> <i class="fal fa-sitemap "></i> Grupos</a></li>
+                                <li><a href="#tab-5" data-toggle="tab"> <i class="fal fa-sitemap "></i> Cargos</a></li>
+                                <li><a href="#tab-6" data-toggle="tab"> <i class="fal fa-plane "></i> Aerolineas</a></li>
+                                <li><a href="#tab-7" data-toggle="tab"> <i class="fal fa-plane "></i> Inventario erolineas</a></li>
+                                <li><a href="#tab-8" data-toggle="tab"> <i class="fal fa-road "></i> Aeropuertos</a></li>
+                                <li><a href="#tab-9" data-toggle="tab"> <i class="fal fa-share-alt "></i> Servicios</a></li>
+                                <li><a href="#tab-10" data-toggle="tab"> <i class="fal fa-mail-reply-all "></i> Tipo embarque</a></li>
+                                <li><a href="#tab-11" data-toggle="tab"> <i class="fal fa-shopping-bag "></i> Tipo empaque</a></li>
                             </ul>
                         </div>
                     </div>

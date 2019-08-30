@@ -26,7 +26,7 @@
                     <div class="ibox-tools">
                         <a href="{{ route('agencia.create') }}">
                         <button type="button" class="btn btn-primary btn-sm">
-                            <span class="fa fa-plus" aria-hidden="true"></span> @lang('general.new')
+                            <span class="fal fa-plus" aria-hidden="true"></span> @lang('general.new')
                         </button>
                     </a>
                     </div>

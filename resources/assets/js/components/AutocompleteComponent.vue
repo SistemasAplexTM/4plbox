@@ -2,17 +2,17 @@
     <!-- <v-select v-model="selectedj" label="name" :filterable="false" :options="findDatas" @search="onSearchData" placeholder="Buscar">
     	<template slot="option" slot-scope="option">
     		<div v-if="type == 'navbar'">
-		        <span class="fa fa-barcode"></span>
+		        <span class="fal fa-barcode"></span>
 		        <span>{{ option.name }}</span>
-		        <div><i class="fa fa-cube"></i> {{ option.num_warehouse }} | {{ option.contenido }}</div>
-		        <div><i class="fa fa-user"></i> S: {{ option.ship_nomfull }} <i class="fa fa-user-o"></i> C: {{ option.cons_nomfull }}</div>
+		        <div><i class="fal fa-cube"></i> {{ option.num_warehouse }} | {{ option.contenido }}</div>
+		        <div><i class="fal fa-user"></i> S: {{ option.ship_nomfull }} <i class="fal fa-user-o"></i> C: {{ option.cons_nomfull }}</div>
     		</div>
     		<div v-else>
 		        <span>{{ option.name }}</span>
     		</div>
 	    </template>
 	    <template slot="selected-option" slot-scope="option">
-	        <span v-if="type == 'navbar'" class="fa fa-barcode"></span>
+	        <span v-if="type == 'navbar'" class="fal fa-barcode"></span>
 	        <span>{{ option.name }}</span>
 	    </template>
     </v-select> -->
@@ -27,7 +27,7 @@
       @select="handleSelect">
       <template slot-scope="{ item }">
         <div class="content-select">
-          <i class="fa fa-user icon"></i> {{ item.name }}
+          <i class="fal fa-user icon"></i> {{ item.name }}
         </div>
   		</template>
     </el-autocomplete>

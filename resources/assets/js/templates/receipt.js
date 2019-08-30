@@ -50,9 +50,9 @@ $(document).ready(function () {
                   "'" + full.consignee + "'",
                   full.documento_detalle_id
               ];
-              var btn_view = "<a onclick=\"view(" + params + ")\" data-toggle='tooltip' data-placement='top' title='Ver'><i class='fa fa-eye'></i></a> ";
+              var btn_view = "<a onclick=\"view(" + params + ")\" data-toggle='tooltip' data-placement='top' title='Ver'><i class='fal fa-eye'></i></a> ";
               var btn_delivered = "<a onclick=\"statusDelivered(" + full.id + ")\" data-toggle='tooltip' data-placement='top' title='Entregar' style='color:#009612'><i class='fal fa-handshake-alt'></i></a> ";
-              var btn_print = "<a href='receipt/printReceipt/" + full.id + "' target='_blank' class='btn btn-default btn-xs' data-toggle='tooltip' data-placement='top' title='Imprimir'><i class='fa fa-print'></i></a> ";
+              var btn_print = "<a href='receipt/printReceipt/" + full.id + "' target='_blank' class='btn btn-default btn-xs' data-toggle='tooltip' data-placement='top' title='Imprimir'><i class='fal fa-print'></i></a> ";
 
               return btn_delivered + btn_view + btn_print;
           },

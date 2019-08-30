@@ -7,7 +7,7 @@
               <h2>
                 Configuración de Zopim
               </h2>
-                <i class="fa fa-comments fa-7x"></i>
+                <i class="fal fa-comments fa-7x"></i>
             </div>
             <div class="col-lg-8">
                 <div class="checkbox checkbox-success checkbox-inline" @click="">

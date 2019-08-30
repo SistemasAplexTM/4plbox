@@ -1,6 +1,6 @@
 <!-- <template>
   <form-wizard @on-complete="onComplete" @on-validate="handleValidation" color="#1ab394" error-color="#ff4949" title="" subtitle="" back-button-text="Anterior" next-button-text="Suguiente" finish-button-text="Terminar">
-    <tab-content title="Datos de envío" icon="fa fa-user" :before-change="validateFirstTabS">
+    <tab-content title="Datos de envío" icon="fal fa-user" :before-change="validateFirstTabS">
       <div class="row">
         <div class="col-lg-5 col-lg-offset-1">
           <div class="panel panel-default">
@@ -42,13 +42,13 @@
         </div>
       </div>
     </tab-content>
-    <tab-content title="Aerolinea" icon="fa fa-plane" :before-change="validateSecondTab">
+    <tab-content title="Aerolinea" icon="fal fa-plane" :before-change="validateSecondTab">
 
       <vue-form-generator :model="model" :schema="secondTabSchema" :options="formOptions" ref="secondTabForm">
       </vue-form-generator>
 
     </tab-content>
-    <tab-content title="Detalle" icon="fa fa-check">
+    <tab-content title="Detalle" icon="fal fa-check">
       <h4>Your json is ready!</h4>
       <div class="panel-body">
         <pre v-if="model" v-html="prettyJSON(model)"></pre>

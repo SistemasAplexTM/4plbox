@@ -172,7 +172,7 @@
                   <div class="modal-content">
                       <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">@lang('documents.close')</span></button>
-                          <h2 class="modal-title" id="myModalLabel"><i class="far fa-file-signature"></i> Crear documento</h2>
+                          <h2 class="modal-title" id="myModalLabel"><i class="fal fa-file-signature"></i> Crear documento</h2>
                       </div>
                       <div class="modal-body">
                         <form id="formTrackingClient" name="formSearchTracking" method="POST" action="">
@@ -241,8 +241,8 @@
                         </form>
                       </div>
                       <div class="modal-footer">
-                          <button type="button" class="btn btn-primary" id="saveDoc" @click="createDocument()"><i class="far fa-file-signature"></i> @lang('documents.create')</button>
-                          <button type="button" class="btn btn-default" data-dismiss="modal"><i class="far fa-times"></i> @lang('documents.close')</button>
+                          <button type="button" class="btn btn-primary" id="saveDoc" @click="createDocument()"><i class="fal fa-file-signature"></i> @lang('documents.create')</button>
+                          <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fal fa-times"></i> @lang('documents.close')</button>
                       </div>
                   </div>
               </div>

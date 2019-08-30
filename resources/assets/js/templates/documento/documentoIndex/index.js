@@ -191,11 +191,11 @@ function actionsButtons(data, type, full, meta) {
         + "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"
         + "<i class='fal fa-print fa-lg'></i> <span class='caret'></span>" + "</button>"
         + "<ul class='dropdown-menu dropdown-menu-right pull-right'>"
-        + "<li><a href='impresion-documento/" + full.id + "/consolidado' target='_blank'> <spam class='fa fa-print'></spam> Imprimir manifiesto</a></li>"
-        + "<li><a href='impresion-documento/" + full.id + "/consolidado_guias' target='_blank'> <spam class='fa fa-print'></spam> Imprimir Guias</a></li>"
+        + "<li><a href='impresion-documento/" + full.id + "/consolidado' target='_blank'> <spam class='fal fa-print'></spam> Imprimir manifiesto</a></li>"
+        + "<li><a href='impresion-documento/" + full.id + "/consolidado_guias' target='_blank'> <spam class='fal fa-print'></spam> Imprimir Guias</a></li>"
         + "<li role='separator' class='divider'></li>"
-        + "<li><a href='impresion-documento/pdfContrato' target='_blank'> <spam class='fa fa-print'></spam> Imprimir contrato</a></li>"
-        + "<li><a href='impresion-documento/pdfTsa' target='_blank'> <spam class='fa fa-print'></spam> Imprimir TSA</a></li>"
+        + "<li><a href='impresion-documento/pdfContrato' target='_blank'> <spam class='fal fa-print'></spam> Imprimir contrato</a></li>"
+        + "<li><a href='impresion-documento/pdfTsa' target='_blank'> <spam class='fal fa-print'></spam> Imprimir TSA</a></li>"
         + "</ul></div>";
 
         var btn_actions = "<div class='btn-group'>" +
@@ -238,7 +238,7 @@ function actionsButtons(data, type, full, meta) {
         + href_print_label_guia + " "
         + proforma + " "
         + '<li role="separator" class="divider"></li>'
-        + "<li><a href='#' onclick=\"sendMail(" + full.id + ")\"> <spam class='fa fa-envelope'></spam> Enviar Mail</a></li>" + "</ul></div>";
+        + "<li><a href='#' onclick=\"sendMail(" + full.id + ")\"> <spam class='fal fa-envelope'></spam> Enviar Mail</a></li>" + "</ul></div>";
 
         return btn_edit + btns + ' ' + btn_tags + btn_delete;
     }
@@ -295,7 +295,7 @@ function numDocument(data, type, full, meta) {
           if(groupG.length > 0){
             for (var i = 0; i < groupG.length; i++) {
               var dat = groupG[i].split("@");
-              groupGuias += "<label>- " + dat[0] + " (" + dat[1] + " lb) ($ " + dat[2] + ")</label><a style='float:right;cursor:pointer;color:red' title='Quitar' data-toggle='tooltip' onclick='removerDocumentoAgrupado(" + dat[3] + ")'><i class='fa fa-times' style='font-size: 15px;'></i></a><br>";
+              groupGuias += "<label>- " + dat[0] + " (" + dat[1] + " lb) ($ " + dat[2] + ")</label><a style='float:right;cursor:pointer;color:red' title='Quitar' data-toggle='tooltip' onclick='removerDocumentoAgrupado(" + dat[3] + ")'><i class='fal fa-times' style='font-size: 15px;'></i></a><br>";
             }
           }
       }
@@ -314,7 +314,7 @@ function numDocument(data, type, full, meta) {
           mintic = '<div><small style="color: #23c6c8;padding-left:15px">' + str + '</small></div>';
         }
       }
-      return '<span class="" data-toggle="tooltip" title="'+st+'"><i class="fa fa-'+ ((full.estatus == null) ? 'box' : ((full.agrupadas > 0) ? 'boxes' : ((full.flag == 1) ? 'minus' : 'box-open')))+' fa-xs" style="color:'+ ((full.flag == 1) ? '#E34724' : full.estatus_color) +'"></i> ' + ((codigo == null) ? full.warehouse : codigo )+ '</span><a style="float: right;cursor:pointer;" class="badge badge-'+ classText +' pop" role="button" data-html="true" data-toggle="popover" data-trigger="hover" title="<b>Documentos agrupadas</b>" data-content="'+((groupGuias == null) ? '' : groupGuias )+'" ' + group + '>'+ ((full.agrupadas == null) ? '' : full.agrupadas)+'</a> ' + mintic;
+      return '<span class="" data-toggle="tooltip" title="'+st+'"><i class="fal fa-'+ ((full.estatus == null) ? 'box' : ((full.agrupadas > 0) ? 'boxes' : ((full.flag == 1) ? 'minus' : 'box-open')))+' fa-xs" style="color:'+ ((full.flag == 1) ? '#E34724' : full.estatus_color) +'"></i> ' + ((codigo == null) ? full.warehouse : codigo )+ '</span><a style="float: right;cursor:pointer;" class="badge badge-'+ classText +' pop" role="button" data-html="true" data-toggle="popover" data-trigger="hover" title="<b>Documentos agrupadas</b>" data-content="'+((groupGuias == null) ? '' : groupGuias )+'" ' + group + '>'+ ((full.agrupadas == null) ? '' : full.agrupadas)+'</a> ' + mintic;
     }else{
       icon = 'fal fa-boxes';
       if(full.transporte_id == 1){
@@ -324,7 +324,7 @@ function numDocument(data, type, full, meta) {
         icon = 'fal fa-ship';
       }
       if (full.num_warehouse === null) {
-        icon = 'fa fa-box';
+        icon = 'fal fa-box';
       }
 
       return '<i class="'+ icon +'"></i> <strong>' + ((codigo == null) ? '' : codigo) + '<strong> <span style="float: right;" class="badge badge-' + color_badget + '" data-toggle="tooltip" data-placement="top" title="" data-original-title="Total piezas">' + ((cant === null) ? 0 : cant) + '</span>';

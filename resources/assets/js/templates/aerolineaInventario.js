@@ -54,7 +54,7 @@ function datatableCreate(table, used) {
               page: 'current'
           }).data().each(function(group, i) {
               if (last !== group) {
-                  // var btn_delete = " <a onclick=\"eliminar(" + i + ")\" class='btn btn-outline btn-danger btn-xs' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-trash'></i></a> ";
+                  // var btn_delete = " <a onclick=\"eliminar(" + i + ")\" class='btn btn-outline btn-danger btn-xs' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fal fa-trash'></i></a> ";
                   $(rows).eq(i).before('<tr class="group"><td colspan="3"><h3>' + group + '</h3></td></tr>');
                   last = group;
               }

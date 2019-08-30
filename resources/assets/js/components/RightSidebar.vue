@@ -44,8 +44,8 @@
                                 <img alt="image" class="img-circle message-avatar" src="img/a1.jpg">
 
                                 <div class="m-t-xs">
-                                    <i class="fa fa-star text-warning"></i>
-                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="fal fa-star text-warning"></i>
+                                    <i class="fal fa-star text-warning"></i>
                                 </div>
                             </div>
                             <div class="media-body">
@@ -59,8 +59,8 @@
             </div>
             <div id="tab-2" class="tab-pane fade">
                 <div class="sidebar-title">
-                    <h3> <i class="fa fa-cube"></i> Latest projects</h3>
-                    <small><i class="fa fa-tim"></i> You have 14 projects. 10 not completed.</small>
+                    <h3> <i class="fal fa-cube"></i> Latest projects</h3>
+                    <small><i class="fal fa-tim"></i> You have 14 projects. 10 not completed.</small>
                 </div>
 
                 <ul class="sidebar-list">

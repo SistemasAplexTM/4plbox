@@ -194,7 +194,7 @@
                                             <div class="input-group">
                                                 <input v-model="zip" name="zip" id="zip" value="" placeholder="@lang('general.code_zip')" class="form-control" type="text" style="" @click="deleteError('zip')" />
                                                 <span class="input-group-btn">
-                                                    <button class="btn btn-primary" @clicK="getZipCode()" data-toggle="tooltip" data-placement="top" title="Generar" type="button"><span class="fa fa-map-marker"></span></button>
+                                                    <button class="btn btn-primary" @clicK="getZipCode()" data-toggle="tooltip" data-placement="top" title="Generar" type="button"><span class="fal fa-map-marker"></span></button>
                                                 </span>
                                             </div><!-- /input-group -->
                                             <small id="msn1" class="help-block result-zip" v-show="listErrors.zip"></small>
@@ -223,7 +223,7 @@
                                         <div class="col-sm-8">
                                             <div class="checkbox checkbox-success checkbox-inline">
                                                 <input v-model="emailsend" type="checkbox" id="emailsend" name="emailsend">
-                                                <label for="emailsend"><i class="fa fa-envelope"></i>@lang('general.send_email_with_data') </label>
+                                                <label for="emailsend"><i class="fal fa-envelope"></i>@lang('general.send_email_with_data') </label>
                                             </div>
                                         </div>
                                     </div>

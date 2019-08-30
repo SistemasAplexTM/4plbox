@@ -51,7 +51,7 @@ function loadTable(name, bodega) {
       //             color = '#4caf50';
       //             label = 'Despachar';
       //         }
-      //         return '<div style="color:' + color + '" class="text-center" data-toggle="tooltip" title="' + label + '"><i class="fa fa-flag"></i></div>';
+      //         return '<div style="color:' + color + '" class="text-center" data-toggle="tooltip" title="' + label + '"><i class="fal fa-flag"></i></div>';
       //     }
       // },
       {
@@ -129,7 +129,7 @@ function loadTableCreateReceipt() {
           sortable: false,
           "render": function(data, type, full, meta) {
             var btn_recall_email = " <a onclick=\"reenviarEmail(" + full.consignee_id + ",'" + full.trackings + "')\" class='reply_btn' data-toggle='tooltip' data-placement='top' title='Reenviar Email'><i class='fal fa-reply-all'></i></a> ";
-            var btn_create = " <a onclick=\"showDataToCreateReceipt(" + full.consignee_id + ", '" + full.cliente + "')\" class='btn btn-outline btn-primary btn-xs' data-toggle='tooltip' title='Crear recibo'><i class='far fa-file-signature'></i> </a> ";
+            var btn_create = " <a onclick=\"showDataToCreateReceipt(" + full.consignee_id + ", '" + full.cliente + "')\" class='btn btn-outline btn-primary btn-xs' data-toggle='tooltip' title='Crear recibo'><i class='fal fa-file-signature'></i> </a> ";
             return btn_create + ' ' + btn_recall_email;
           }
       }],

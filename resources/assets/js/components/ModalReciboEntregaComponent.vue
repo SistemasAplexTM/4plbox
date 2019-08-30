@@ -5,14 +5,14 @@
             <form id="generarReciboWare" method="POST" action="">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="mymodalEntrega"><i class="fa fa-barcode"></i> Recibo de Entrega WRH</h4>
+                    <h4 class="modal-title" id="mymodalEntrega"><i class="fal fa-barcode"></i> Recibo de Entrega WRH</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="" class="control-label">Nombre del cliente</label>
-                                <a id="input_name" class=" pull-right" data-toggle="tooltip" data-placement="top" title="Manual"><i class="fa fa-pencil" style="color: #f7a54a"></i></a>
+                                <a id="input_name" class=" pull-right" data-toggle="tooltip" data-placement="top" title="Manual"><i class="fal fa-pencil" style="color: #f7a54a"></i></a>
                                 <div class="input-group" style="width: 100%;">
                                     <select id="" name="" class="form-control chosen-select" style="width:350px;" tabindex="2">
                                         <option value="">Seleccione</option>
@@ -91,11 +91,11 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="crearRecibo" class="ladda-button btn btn-primary pull-left" data-style="expand-right"><i class="fa fa-save"></i> Generar Recibo</button>
-                    <button type="button" id="nuevo" class="ladda-button btn btn-success pull-left" data-style="expand-right"><i class="fa fa-refresh"></i> Nuevo Recibo</button>
+                    <button type="button" id="crearRecibo" class="ladda-button btn btn-primary pull-left" data-style="expand-right"><i class="fal fa-save"></i> Generar Recibo</button>
+                    <button type="button" id="nuevo" class="ladda-button btn btn-success pull-left" data-style="expand-right"><i class="fal fa-refresh"></i> Nuevo Recibo</button>
 
-                    <a href="#" target="_blank" id="btn-imprimirR" type="button" class="ladda-button btn btn-warning" style="display: none" data-style="expand-right"><i class="fa fa-print"></i> Imprimir</a>
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
+                    <a href="#" target="_blank" id="btn-imprimirR" type="button" class="ladda-button btn btn-warning" style="display: none" data-style="expand-right"><i class="fal fa-print"></i> Imprimir</a>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fal fa-times"></i> Cerrar</button>
                 </div>
             </form>
         </div>

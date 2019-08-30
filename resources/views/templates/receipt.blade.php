@@ -34,7 +34,7 @@
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label for="consignee_id" class="control-label">Nombre del cliente</label>
-                                    <a id="input_name" class=" pull-right" data-toggle="tooltip" data-placement="top" title="Manual"><i class="fa fa-pencil" style="color: #f7a54a"></i></a>
+                                    <a id="input_name" class=" pull-right" data-toggle="tooltip" data-placement="top" title="Manual"><i class="fal fa-pencil" style="color: #f7a54a"></i></a>
                                     <div id="group-consignee" class="input-group" style="width: 100%;">
                                         <select id="consignee_id" name="consignee_id" class="form-control chosen-select" style="width:100%;" tabindex="2">
                                             <option value="">Seleccione</option>
@@ -137,14 +137,14 @@
                               <div class="form-group">
                                   <div class="col-sm-12 col-sm-offset-0 guardar">
                                       <button type="button" class="ladda-button btn btn-primary" data-style="expand-right" @click.prevent="saveDetail()" v-if="editar==0">
-                                          <i class="fa fa-save"></i>  @lang('layouts.save')
+                                          <i class="fal fa-save"></i>  @lang('layouts.save')
                                       </button>
                                       <template v-else>
                                           {{-- <button type="button" class="ladda-button btn btn-warning" data-style="expand-right" @click.prevent="update()">
-                                              <i class="fa fa-edit"></i> @lang('layouts.update')
+                                              <i class="fal fa-edit"></i> @lang('layouts.update')
                                           </button> --}}
                                           <button type="button" class="btn btn-white" @click.prevent="cancel()">
-                                              <i class="fa fa-times"></i>  @lang('layouts.cancel')
+                                              <i class="fal fa-times"></i>  @lang('layouts.cancel')
                                           </button>
                                       </template>
                                   </div>

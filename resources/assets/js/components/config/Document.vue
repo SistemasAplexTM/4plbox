@@ -24,7 +24,7 @@
                         <input type="search" data-id="nomBuscarShipper" id="nombreR" name="nombreR"  class="form-control" v-model="nombreR" v-validate="'required'">
                         <span class="input-group-btn">
                           <button id="btnBuscarShipper" class="btn btn-primary" type="button" data-toggle='tooltip' title="Buscar Shipper">
-                            <span class="fa fa-search"></span>
+                            <span class="fal fa-search"></span>
                           </button>
                         </span>
                       </div>
@@ -37,7 +37,7 @@
                         <input type="search" data-id="nomBuscarConsignee" id="nombreD" name="nombreD" class="form-control" v-model="nombreD" v-validate="'required'">
                         <span class="input-group-btn">
                           <button id="btnBuscarConsignee"class="btn btn-primary" type="button" data-toggle='tooltip' title="Buscar Consignee">
-                            <span class="fa fa-search"></span>
+                            <span class="fal fa-search"></span>
                           </button>
                         </span>
                       </div>
@@ -52,7 +52,7 @@
                     <div class="form-group">
                       <textarea name="name" rows="4" cols="20" class="form-control" v-model="observDefault"></textarea>
                     </div>
-                    <button @click="saveDefaultObserv" class="btn btn-primary" type="button" data-toggle='tooltip' title="Guardar"><span class="fa fa-save"></span></button>
+                    <button @click="saveDefaultObserv" class="btn btn-primary" type="button" data-toggle='tooltip' title="Guardar"><span class="fal fa-save"></span></button>
                   </div>
                 </div>
               </div>

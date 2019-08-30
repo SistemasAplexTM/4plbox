@@ -84,7 +84,7 @@
           </div>
           <div class="col-sm-8">
             <el-input  :placeholder="(company) ? 'Razon social' : 'Primer Nombre'"
-            v-model="primer_nombre" size="medium" clearable
+            v-model="primer_nombre" size="medium"
             @blur="validateFields('primer_nombre')"
             :class="{ 'error_field': errors_data.primer_nombre }"></el-input>
             <small class="help-block" v-show="errors_data.primer_nombre">Campo obligatorio</small>

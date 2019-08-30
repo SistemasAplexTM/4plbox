@@ -224,7 +224,7 @@ function datatableDetail(){
                 }
                 var btn_group = '<div class="btn-group" data-toggle="tooltip" title="Acciones">'+
                         '<button type="button" class="btn btn-default btn-outline dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
-                          '<i class="fa fa-ellipsis-v"></i>'+
+                          '<i class="fal fa-ellipsis-v"></i>'+
                         '</button>'+
                         '<ul class="dropdown-menu dropdown-menu-right pull-right" style="font-size: 15px!important;">'+
                           '<li><a data-target="#modalAddPoints" data-toggle="modal"><i class="fal fa-map-pin"></i> Agregar Puntos</a></li>'+
@@ -573,7 +573,7 @@ function formatRepoPoints(repo) {
     if (repo.loading) {
         return repo.text;
     }
-    var markup = "<div class='select2-result-repository clearfix'>" + "<div class='select2-result-repository__meta'>" + "<div class='select2-result-repository__title'><strong><i class='fa fa-map-marker'></i> " + repo.text + "</strong></div>";
+    var markup = "<div class='select2-result-repository clearfix'>" + "<div class='select2-result-repository__meta'>" + "<div class='select2-result-repository__title'><strong><i class='fal fa-map-marker'></i> " + repo.text + "</strong></div>";
     return markup;
 }
 

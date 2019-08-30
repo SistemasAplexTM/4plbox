@@ -25,7 +25,7 @@ $(document).ready(function () {
                     //   "<i class='material-icons' style='vertical-align:  middle;'>print</i> <span class='caret'></span>" +
                     //    "</button>" +
                     //    "<ul class='dropdown-menu dropdown-menu-right pull-right'><li><a href='bill/imprimir/" +full.id + '/'+true +
-                    //     "' target='_blank'> <spam class='fa fa-print'></spam> Bill of lading</a></li>" +
+                    //     "' target='_blank'> <spam class='fal fa-print'></spam> Bill of lading</a></li>" +
                     //      "</ul></div>";
                         var btn_print = '<a href="bill/imprimir/' + full.id + '/'+true + '" target="_blank" class="edit" title="Imprimir" data-toggle="tooltip" style="color:#676a6c;"><i class="fal fa-print fa-lg"></i></a>';
                     return btn_edit + btn_print + btn_delete;
@@ -52,7 +52,7 @@ var objVue = new Vue({
         delete: function(data) {
             axios.get('bill/delete/' + data.id + '/' + data.logical).then(response => {
                 refreshTable('tbl-bill');
-                toastr.success("<div><p>Registro eliminado exitosamente.</p><button type='button' onclick='deshacerEliminar(" + data.id + ")' id='okBtn' class='btn btn-xs btn-danger pull-right'><i class='fa fa-reply'></i> Restaurar</button></div>");
+                toastr.success("<div><p>Registro eliminado exitosamente.</p><button type='button' onclick='deshacerEliminar(" + data.id + ")' id='okBtn' class='btn btn-xs btn-danger pull-right'><i class='fal fa-reply'></i> Restaurar</button></div>");
                 toastr.options.closeButton = true;
             });
         },

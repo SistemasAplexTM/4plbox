@@ -32,7 +32,7 @@ $(document).ready(function() {
                 }
                 var btn = '<div class="btn-group">' +
                         '<button type="button" class="btn btn-success dropdown-toggle btn-xs btn-circle-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
-                          '<i class="far fa-ellipsis-v"></i>'+
+                          '<i class="fal fa-ellipsis-v"></i>'+
                         '</button>'+
                         '<ul class="dropdown-menu dropdown-menu-right pull-right">'+
                           "<li><a onclick=\"reenviarEmailCasillero(" + full.id + ")\"><i class='fal fa-mail-bulk'></i> Reenviar Email Casillero</a></li>"+
@@ -110,7 +110,7 @@ function formatRepo(repo) {
     if (repo.loading) {
         return repo.text;
     }
-    var markup = "<div class='select2-result-repository clearfix'>" + "<div class='select2-result-repository__meta'>" + "<div class='select2-result-repository__title'><strong><i class='fa fa-map-marker'></i> " + repo.text + " / " + repo.deptos + " / " + repo.pais + "</strong></div>";
+    var markup = "<div class='select2-result-repository clearfix'>" + "<div class='select2-result-repository__meta'>" + "<div class='select2-result-repository__title'><strong><i class='fal fa-map-marker'></i> " + repo.text + " / " + repo.deptos + " / " + repo.pais + "</strong></div>";
     return markup;
 }
 
@@ -242,7 +242,7 @@ var objVue = new Vue({
           if (data.logical === true) {
               axios.get('consignee/delete/' + data.id + '/' + data.logical).then(response => {
                   this.updateTable();
-                  toastr.success("<div><p>Registro eliminado exitosamente.</p><button type='button' onclick='deshacerEliminar(" + data.id + ")' id='okBtn' class='btn btn-xs btn-danger pull-right'><i class='fa fa-reply'></i> Restaurar</button></div>");
+                  toastr.success("<div><p>Registro eliminado exitosamente.</p><button type='button' onclick='deshacerEliminar(" + data.id + ")' id='okBtn' class='btn btn-xs btn-danger pull-right'><i class='fal fa-reply'></i> Restaurar</button></div>");
                   toastr.options.closeButton = true;
               });
           } else {

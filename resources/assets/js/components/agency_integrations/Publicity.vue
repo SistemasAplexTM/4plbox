@@ -2,18 +2,18 @@
   <div style="margin-top: 20px">
    <el-row>
     <el-col :span="24">
-     <el-button  @click="add" type="success"><i class="fa fa-plus"></i> Agregar Item</el-button>
-     <el-button  @click="save" type="primary" class="fr"><i class="fa fa-save"></i> Guardar</el-button>
+     <el-button  @click="add" type="success"><i class="fal fa-plus"></i> Agregar Item</el-button>
+     <el-button  @click="save" type="primary" class="fr"><i class="fal fa-save"></i> Guardar</el-button>
     </el-col>
    </el-row>
    <el-row class="row" :gutter="14">
     <el-col v-for="(column, indexColumn) in publicity" :key="column.id" :lg="column.width" :xs="24" class="column">
      <div :class="'bg-'+column.color" class="text-center mt-30">
       <button class="btn btn-danger btn-small fr"  data-toggle="modal" @click="remove(indexColumn)" type="button">
-       <i class="fa fa-trash"></i>
+       <i class="fal fa-trash"></i>
       </button>
       <button class="btn btn-success btn-small fr"  data-toggle="modal" @click="edit(indexColumn)" type="button">
-       <i class="fa fa-edit"></i>
+       <i class="fal fa-edit"></i>
       </button>
 						<h1 v-html="column.text" style="max-width: 100%"></h1>
      </div>

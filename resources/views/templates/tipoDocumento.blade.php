@@ -135,7 +135,7 @@
                                     <div class="col-sm-8">
                                         <v-select :options="plantillas" name="email_plantilla_id" v-model="email_plantilla_id" label="name" placeholder="@lang('general.mail_template')">
                                             <template slot="option" slot-scope="option">
-                                                <span class="fa fa-envelope"></span>
+                                                <span class="fal fa-envelope"></span>
                                                 <label style="font-size: 15px;"> @{{ option.name }}</label>
                                                 <div>@{{ option.descripcion_plantilla }}</div>
                                             </template>
@@ -181,7 +181,7 @@
                             </div>
                         </div>
                         <div class="col-lg-12" style="padding-bottom: 20px;">
-                            <div style="text-align: center;margin-bottom: 40px;" class="label label-danger"><i class="fa fa-lock"></i> @lang('general.security_settings')</div>
+                            <div style="text-align: center;margin-bottom: 40px;" class="label label-danger"><i class="fal fa-lock"></i> @lang('general.security_settings')</div>
                         </div>
                         <div class="row">
                             <div class="col-lg-12">
@@ -198,7 +198,7 @@
                             </div>
                         </div>
                         <div class="col-lg-12" style="padding-bottom: 20px;padding-top: 20px;">
-                            <div style="text-align: center;margin-bottom: 20px;margin-top: 20px" class="label label-success"><i class="fa fa-share-alt"></i> Funcionalidades</div>
+                            <div style="text-align: center;margin-bottom: 20px;margin-top: 20px" class="label label-success"><i class="fal fa-share-alt"></i> Funcionalidades</div>
                         </div>
                         <div class="row">
                             <div class="col-lg-12">

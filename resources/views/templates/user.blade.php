@@ -105,7 +105,7 @@
                                         <label for="" class="control-label gcore-label-top">&nbsp;</label>
                                     </div>
                                     <div class="col-sm-7">
-                                        <a @click="changePassword()"><i class="fa fa-key"></i> @lang('general.change_password')</a>
+                                        <a @click="changePassword()"><i class="fal fa-key"></i> @lang('general.change_password')</a>
                                     </div>
                                 </div>
                             </div>

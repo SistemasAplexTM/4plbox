@@ -17,7 +17,7 @@
 	                    Consulta tracking
 	                </a></li>
 	            <li :class="{'active' : showDataTab}" @click="showDataTab=true" style="width: 45%;font-size:20px;" id="tab-2"><a data-toggle="tab" href="#tab-3">
-	                    <i class="fa fa-commenting"></i>
+	                    <i class="fal fa-commenting"></i>
 	                </a></li>
 	        </ul>
 	        <div class="tab-content" style="font-size:18px">
@@ -25,18 +25,18 @@
 	            <div id="tab-1" class="tab-pane" :class="{'active' : !showDataTab}">
 	                <div class="sidebar-title">
 	                	<template v-if="Object.keys(datos).length !== 0">
-		                    <h3><i class="fa fa-barcode"></i> {{ datos.name }}</h3>
-		                    <div><a href="#" @click="showData('warehouse')"><i class="fa fa-cube"></i> <strong>{{ datos.num_warehouse }}</strong></a></div>
-		                    <div><i class="fa fa-tag"></i> {{ datos.contenido }}</div>
-		                    <div style="font-size:16px"><i class="fa fa-user-o"></i> {{ datos.ship_nomfull }}</div>
-		                    <div><a href="#" @click="showData('consignee')"><i class="fa fa-user"></i> <strong>{{ datos.cons_nomfull }}</strong></a></div>
+		                    <h3><i class="fal fa-barcode"></i> {{ datos.name }}</h3>
+		                    <div><a href="#" @click="showData('warehouse')"><i class="fal fa-cube"></i> <strong>{{ datos.num_warehouse }}</strong></a></div>
+		                    <div><i class="fal fa-tag"></i> {{ datos.contenido }}</div>
+		                    <div style="font-size:16px"><i class="fal fa-user-o"></i> {{ datos.ship_nomfull }}</div>
+		                    <div><a href="#" @click="showData('consignee')"><i class="fal fa-user"></i> <strong>{{ datos.cons_nomfull }}</strong></a></div>
 	                	</template>
 	                </div>
 	                <div style="font-size:20px;">
 	                    <div class="sidebar-message"  v-for="statusData in statusDatas">
 	                        <a href="#">
 	                            <div class="pull-left text-center" v-bind:style="{ color: statusData.status_color }">
-	                                <i class="fa fa-clock-o fa-2x"></i>
+	                                <i class="fal fa-clock-o fa-2x"></i>
 	                            </div>
 	                            <div class="media-body" style="font-size: 16px;">
 	                            	<div class="m-t-xs">
@@ -61,8 +61,8 @@
 	                        <a href="#">
 	                            <div class="small pull-right m-t-xs">{{ consigneeData.created_at }}</div>
 	                            <h4>{{ consigneeData.num_warehouse }} <small>Peso: {{ consigneeData.peso }} Lbs</small></h4>
-	                            <div><i class="fa fa-user"></i> Shipper: {{ consigneeData.ship_nomfull }}</div>
-	                            <div><i class="fa fa-barcode"></i> Trackings: {{ consigneeData.tracking }}</div>
+	                            <div><i class="fal fa-user"></i> Shipper: {{ consigneeData.ship_nomfull }}</div>
+	                            <div><i class="fal fa-barcode"></i> Trackings: {{ consigneeData.tracking }}</div>
 								Contenido: {{ consigneeData.contenido }}
 	                        </a>
 	                    </li>

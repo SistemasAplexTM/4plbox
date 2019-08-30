@@ -55,8 +55,8 @@
                                   <input type="hidden" class="" id="shipper_id" name="shipper_id" value="{{ isset($documento->shipper_id) ? $documento->shipper_id : '' }}">
                                   <input type="search" data-id="nomBuscarShipper" id="nombreR" name="nombreR" placeholder="@lang('documents.type_to_search')" class="form-control" onkeyup="deleteError($(this).parent());" v-model="nombreR" v-validate="'required'">
                                   <span class="input-group-btn">
-                                    <button id="btnBuscarShipper" @click="modalShipper(true)" class="btn btn-primary" type="button" data-toggle='tooltip' title="Buscar Shipper"><span class="fa fa-search"></span> @lang('documents.search')</button>
-                                    {{-- <button id="btnResetShipper" @click="resetFormsShipperConsignee(0)" class="btn btn-default" type="button" data-toggle='tooltip' title="Reset Shipper"><span class="fa fa-sync"></span>&nbsp;</button> --}}
+                                    <button id="btnBuscarShipper" @click="modalShipper(true)" class="btn btn-primary" type="button" data-toggle='tooltip' title="Buscar Shipper"><span class="fal fa-search"></span> @lang('documents.search')</button>
+                                    {{-- <button id="btnResetShipper" @click="resetFormsShipperConsignee(0)" class="btn btn-default" type="button" data-toggle='tooltip' title="Reset Shipper"><span class="fal fa-sync"></span>&nbsp;</button> --}}
                                   </span>
                                 </div>
                                 <small class="help-block has-error">@{{ errors.first('nombreR') }}</small>
@@ -78,8 +78,8 @@
                                 <div class="input-group"  style="margin-bottom: 5px;" :class="{ 'has-error': errors.has('nombreD') }">
                                   <input type="search" data-id="nomBuscarConsignee" id="nombreD" name="nombreD" placeholder="@lang('documents.type_to_search')" class="form-control" onkeyup="deleteError($(this).parent());" v-model="nombreD" v-validate="'required'">
                                   <span class="input-group-btn">
-                                    <button id="btnBuscarConsignee" @click="modalConsignee(true)" class="btn btn-primary" type="button" data-toggle='tooltip' title="Buscar Consignee"><span class="fa fa-search"></span> @lang('documents.search')</button>
-                                    {{-- <button id="btnResetSConsignee" @click="resetFormsShipperConsignee(0)" class="btn btn-default" type="button" data-toggle='tooltip' title="Reset Consignee"><span class="fa fa-sync"></span>&nbsp;</button> --}}
+                                    <button id="btnBuscarConsignee" @click="modalConsignee(true)" class="btn btn-primary" type="button" data-toggle='tooltip' title="Buscar Consignee"><span class="fal fa-search"></span> @lang('documents.search')</button>
+                                    {{-- <button id="btnResetSConsignee" @click="resetFormsShipperConsignee(0)" class="btn btn-default" type="button" data-toggle='tooltip' title="Reset Consignee"><span class="fal fa-sync"></span>&nbsp;</button> --}}
                                   </span>
                                 </div>
                                 <small class="help-block has-error">@{{ errors.first('nombreR') }}</small>
@@ -104,7 +104,7 @@
                               <div class="form-group">
                                 <textarea name="name" rows="4" cols="20" class="form-control" v-model="observDefault"></textarea>
                               </div>
-                              <button @click="saveDefaultObserv" class="btn btn-primary" type="button" data-toggle='tooltip' title="Guardar"><span class="fa fa-save"></span></button>
+                              <button @click="saveDefaultObserv" class="btn btn-primary" type="button" data-toggle='tooltip' title="Guardar"><span class="fal fa-save"></span></button>
                             </div>
                           </div>
                       </div>

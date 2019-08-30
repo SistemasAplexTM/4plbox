@@ -19,7 +19,7 @@
           <div class="modal-content">
               <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
-                  <h2 class="modal-title" id="myModalLabel"><i class="far fa-map-pin"></i> Productos ingresados por el cliente</h2>
+                  <h2 class="modal-title" id="myModalLabel"><i class="fal fa-map-pin"></i> Productos ingresados por el cliente</h2>
               </div>
               <div class="modal-body">
                 <form id="formAddPoints" action="">

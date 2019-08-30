@@ -314,7 +314,7 @@ var objVue = new Vue({
                       sortable: false,
                       "render": function(data, type, full, meta) {
                           var btn_delete = '';
-                          btn_delete = '<a class="btn btn-danger btn-xs" type="button" id="btn_remove_t'+full.id+'" onclick="addTrackingToDocument(\''+full.codigo+'\', \'delete\')" data-toggle="tooltip" title="Retirar"><i class="fa fa-times"></i></a> ';
+                          btn_delete = '<a class="btn btn-danger btn-xs" type="button" id="btn_remove_t'+full.id+'" onclick="addTrackingToDocument(\''+full.codigo+'\', \'delete\')" data-toggle="tooltip" title="Retirar"><i class="fal fa-times"></i></a> ';
                           return btn_delete;
                       }
                   }],
@@ -750,7 +750,7 @@ var objVue = new Vue({
           // console.log(data);
           if (data.logical === true) {
               axios.get('../delete/' + data.id + '/' + data.logical + '/documento_detalle').then(response => {
-                  toastr.success("<div><p>Registro eliminado exitosamente.</p><button type='button' onclick='deshacerEliminar(" + data.id + ")' id='okBtn' class='btn btn-xs btn-danger pull-right'><i class='fa fa-reply'></i> Restaurar</button></div>", '', {
+                  toastr.success("<div><p>Registro eliminado exitosamente.</p><button type='button' onclick='deshacerEliminar(" + data.id + ")' id='okBtn' class='btn btn-xs btn-danger pull-right'><i class='fal fa-reply'></i> Restaurar</button></div>", '', {
                       timeOut: 15000
                   });
                   toastr.options.closeButton = true;
