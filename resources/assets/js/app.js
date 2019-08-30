@@ -16,10 +16,6 @@ import locale from 'element-ui/lib/locale/lang/en'
 import Spinner from 'vue-spinkit'
 import 'element-ui/lib/theme-chalk/index.css';
 
-// DESABILITAR AUTOCOMPLETE EN VUE
-import DisableAutocomplete from 'vue-disable-autocomplete';
-Vue.use(DisableAutocomplete);
-
 // Localize takes the locale object as the second argument (optional) and merges it.
 Validator.localize('es', es);
 // Install the Plugin.
