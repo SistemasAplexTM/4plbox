@@ -19,7 +19,13 @@ class NotificationController extends Controller
     foreach ($user->unreadNotifications as $notification) {
       $notification->markAsRead();
     }
-    return response()->json($user->notifications);
+    return response()->json($user->unreadNotifications);
+  }
+
+  public function cant()
+  {
+    $user = User::find(1);
+    return response()->json(count($user->unreadNotifications));
   }
 
 }
