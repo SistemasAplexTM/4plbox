@@ -118,7 +118,7 @@
                                                     v-model="zip"
                                                     v-validate="'required'"
                                                     type="number" placeholder="Zip" id="zip" name="zip" class="form-control" value="">
-                                                    <span class="input-group-addon" @click="setZip" style="cursor: pointer;"><i class="fa fa-map-marker"></i> @lang('general.calculate')</span>
+                                                    <span class="input-group-addon" @click="setZip" style="cursor: pointer;"><i class="fal fa-map-marker"></i> @lang('general.calculate')</span>
                                                 </div>
                                                 <label v-show="errors.has('zip')" class="error">@{{ errors.first('zip') }}</label>
                                             </div>
@@ -195,7 +195,7 @@
                                         <div class="col-lg-12 text-center">
                                             <div class="form-group">
                                                 <button @click.prevent="create" type="button" class="ladda-button btn btn-primary hvr-float-shadow" data-style="expand-right" title="">
-                                                    <span class="ladda-label"><i class="fa fa-user" aria-hidden="true"></i>@lang('general.create_locker')</span>
+                                                    <span class="ladda-label"><i class="fal fa-user" aria-hidden="true"></i>@lang('general.create_locker')</span>
                                                     <span class="ladda-spinner"></span>
                                                 </button>
                                             </div>

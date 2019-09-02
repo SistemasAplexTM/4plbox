@@ -24,6 +24,7 @@ class Consignee extends Model
         'direccion',
         'telefono',
         'celular',
+        'whatsapp',
         'correo',
         'zip',
         'tarifa',
@@ -36,6 +37,8 @@ class Consignee extends Model
         'acepta_condiciones',
         'recibir_info',
         'cliente_id',
+        'corporativo',
+        'email_cc',
     ];
 
     public function city()

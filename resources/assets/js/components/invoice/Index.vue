@@ -66,7 +66,7 @@ export default {
                       var btn_delete = ' <a class="delete" title="Eliminar" data-toggle="tooltip" style="color:#E34724;"><i class="fal fa-trash-alt fa-lg"></i></a>';
                       var btn_group = '<div class="btn-group" data-toggle="tooltip" title="Acciones">'+
                               '<button type="button" class="btn btn-default btn-outline dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
-                                '<i class="fa fa-ellipsis-v"></i>'+
+                                '<i class="fal fa-ellipsis-v"></i>'+
                               '</button>'+
                               '<ul class="dropdown-menu dropdown-menu-right pull-right" style="font-size: 15px!important;">'+
                                 '<li>'+btn_print+'</li>'+

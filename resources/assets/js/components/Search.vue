@@ -12,16 +12,16 @@
       <template slot-scope="{ item }">
         <div class="content-select">
           <div style="">
-            <i class="fa fa-user icon"></i> {{ item.consignee }}
+            <i class="fal fa-user icon"></i> {{ item.consignee }}
           </div>
           <div style="color: #8492a6;">
-            <i class="fa fa-box-open icon"></i> {{ item.name }} &nbsp;&nbsp;
-            <i class="fa fa-balance-scale icon"></i> {{ item.peso }} Lb &nbsp;&nbsp;
+            <i class="fal fa-box-open icon"></i> {{ item.name }} &nbsp;&nbsp;
+            <i class="fal fa-balance-scale icon"></i> {{ item.peso }} Lb &nbsp;&nbsp;
             ${{ item.peso }}
           </div>
           <div style="color: #8492a6; font-size: 13px">
-            <div><i class="fa fa-truck icon"></i> {{ item.tracking }}</div>
-            <div><i class="fa fa-comment-edit icon"></i> {{ item.contenido }}</div>
+            <div><i class="fal fa-truck icon"></i> {{ item.tracking }}</div>
+            <div><i class="fal fa-comment-edit icon"></i> {{ item.contenido }}</div>
           </div>
         </div>
   		</template>

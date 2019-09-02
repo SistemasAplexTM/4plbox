@@ -35,7 +35,7 @@
                                 <div class="form-group">
                                     <label for="consignee_id" class="control-label gcore-label-top">@lang('general.since_until'):</label>
                                     <div class="input-group">
-	                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+	                                    <span class="input-group-addon"><i class="fal fa-calendar"></i></span>
 	                                    <input class="form-control rango_fecha" type="text" id="fechas" name="fechas" value="" placeholder="mm/dd/aaaa - mm/dd/aaaa" autocomplete="off" />
 	                                </div>
                                 </div>
@@ -61,7 +61,7 @@
                             <div class="col-lg-1">
                                 <div class="form-group">
                                     <label class="control-label gcore-label-top">&nbsp;</label>
-                                    <a class="btn btn-primary" @click="search()"><i class="fa fa-search"></i>@lang('general.search')</a>
+                                    <a class="btn btn-primary" @click="search()"><i class="fal fa-search"></i>@lang('general.search')</a>
                                 </div>
                             </div>
                         </div>

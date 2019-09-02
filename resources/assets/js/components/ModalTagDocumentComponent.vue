@@ -362,7 +362,7 @@
             $('#tbl-' + table).dataTable()._fnAjaxUpdate();
         },
         getSelectStatus: function(){
-  			     axios.get('status/getDataSelectModalTagGuia').then(response => {
+  			  axios.get('status/getDataSelectModalTagGuia').then(response => {
   					this.status = response.data.data;
   	      });
   			},

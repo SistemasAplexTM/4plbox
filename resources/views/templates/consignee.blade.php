@@ -18,7 +18,7 @@
 @endsection
 
 @section('content')
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQTpXj82d8UpCi97wzo_nKXL7nYrd4G70"></script>
+{{-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQTpXj82d8UpCi97wzo_nKXL7nYrd4G70"></script> --}}
     <div class="row" id="consignee">
         <form id="formconsignee" enctype="multipart/form-data" class="form-horizontal" role="form" action="" method="post">
             <div class="col-lg-4">
@@ -26,12 +26,13 @@
                     <div class="ibox-title">
                         <h5>@lang('general.record_of_consignee')</h5>
                         <div class="ibox-tools">
-                            
+
                         </div>
                     </div>
                     <div class="ibox-content">
                         <!--***** contenido ******-->
-                        <div class="row">                            
+                        <form-consignee :table="'consignee'" :agency="agency_data" :field_id="consignee_id" @updatetable="updateTable"></form-consignee>
+                        {{-- <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.agencia_id}">
                                         <div class="col-sm-4">
@@ -46,7 +47,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row" v-if="ident">                            
+                        <div class="row" v-if="ident">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.tipo_identificacion_id}">
                                         <div class="col-sm-4">
@@ -61,7 +62,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row" v-if="ident">                            
+                        <div class="row" v-if="ident">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.documento}">
                                         <div class="col-sm-4">
@@ -74,7 +75,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.primer_nombre}">
                                         <div class="col-sm-4">
@@ -87,7 +88,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row" style="display: none">                            
+                        <div class="row" style="display: none">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.segundo_nombre}">
                                         <div class="col-sm-4">
@@ -100,7 +101,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.primer_apellido}">
                                         <div class="col-sm-4">
@@ -113,7 +114,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row" style="display: none">                            
+                        <div class="row" style="display: none">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.segundo_apellido}">
                                         <div class="col-sm-4">
@@ -126,7 +127,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.direccion}">
                                         <div class="col-sm-4">
@@ -139,7 +140,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.telefono}">
                                         <div class="col-sm-4">
@@ -152,7 +153,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.correo}">
                                         <div class="col-sm-4">
@@ -166,7 +167,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.localizacion_id}">
                                         <div class="col-sm-4">
@@ -183,7 +184,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.zip}">
                                         <div class="col-sm-4">
@@ -193,7 +194,7 @@
                                             <div class="input-group">
                                                 <input v-model="zip" name="zip" id="zip" value="" placeholder="@lang('general.code_zip')" class="form-control" type="text" style="" @click="deleteError('zip')" />
                                                 <span class="input-group-btn">
-                                                    <button class="btn btn-primary" @clicK="getZipCode()" data-toggle="tooltip" data-placement="top" title="Generar" type="button"><span class="fa fa-map-marker"></span></button>
+                                                    <button class="btn btn-primary" @clicK="getZipCode()" data-toggle="tooltip" data-placement="top" title="Generar" type="button"><span class="fal fa-map-marker"></span></button>
                                                 </span>
                                             </div><!-- /input-group -->
                                             <small id="msn1" class="help-block result-zip" v-show="listErrors.zip"></small>
@@ -201,7 +202,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="col-sm-4">
@@ -213,7 +214,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                        
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="col-sm-4">
@@ -222,13 +223,13 @@
                                         <div class="col-sm-8">
                                             <div class="checkbox checkbox-success checkbox-inline">
                                                 <input v-model="emailsend" type="checkbox" id="emailsend" name="emailsend">
-                                                <label for="emailsend"><i class="fa fa-envelope"></i>@lang('general.send_email_with_data') </label>
+                                                <label for="emailsend"><i class="fal fa-envelope"></i>@lang('general.send_email_with_data') </label>
                                             </div>
                                         </div>
                                     </div>
                             </div>
                         </div>
-                        <div class="row" style="display: none">                            
+                        <div class="row" style="display: none">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.tarifa}">
                                         <div class="col-sm-4">
@@ -240,11 +241,11 @@
                                         </div>
                                     </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="row">
                             <contactos-component :table="'consignee'" :parametro="parametro"></contactos-component>
-                            @include('layouts.buttons')
+                            {{-- @include('layouts.buttons') --}}
                         </div>
                     </div>
                 </div>
@@ -264,7 +265,7 @@
                                 <thead>
                                     <tr>
                                         <th>PO BOX</th>
-                                        <th>@lang('general.name')</th> 
+                                        <th>@lang('general.name')</th>
                                         <th>@lang('general.phone')</th>
                                         <th>@lang('general.city')</th>
                                         <th>@lang('general.agency')</th>
@@ -274,7 +275,7 @@
                                 <tfoot>
                                     <tr>
                                         <th>PO BOX</th>
-                                        <th>@lang('general.name')</th> 
+                                        <th>@lang('general.name')</th>
                                         <th>@lang('general.phone')</th>
                                         <th>@lang('general.city')</th>
                                         <th>@lang('general.agency')</th>
@@ -282,7 +283,7 @@
                                     </tr>
                                 </tfoot>
                             </table>
-                        </div>             
+                        </div>
                     </div>
                 </div>
             </div>
@@ -292,5 +293,5 @@
 
 @section('scripts')
 <script src="{{ asset('js/templates/consignee.js') }}"></script>
-<script src="{{ asset('js/templates/documento/postalCode.js') }}"></script>
+{{-- <script src="{{ asset('js/templates/documento/postalCode.js') }}"></script> --}}
 @endsection

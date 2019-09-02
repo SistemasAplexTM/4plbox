@@ -13,7 +13,7 @@ $(document).ready(function() {
             name: 'color',
             "render": function(data, type, full, meta) {
                 var color = full.color;
-                return '<spam style="background-color:' + color + '; padding-right:50px; border-radius: 10px; color: #ffffff;">&nbsp;</spam> <li class="fa fa-arrow-right"></li> ' + color;
+                return '<spam style="background-color:' + color + '; padding-right:50px; border-radius: 10px; color: #ffffff;">&nbsp;</spam> <li class="fal fa-arrow-right"></li> ' + color;
             }
         }, {
             data: 'email',
@@ -204,7 +204,7 @@ var objVue = new Vue({
             if (data.logical === true) {
                 axios.get('status/delete/' + data.id + '/' + data.logical).then(response => {
                     this.updateTable();
-                    toastr.success("<div><p>Registro eliminado exitosamente.</p><button type='button' onclick='deshacerEliminar(" + data.id + ")' id='okBtn' class='btn btn-xs btn-danger pull-right'><i class='fa fa-reply'></i> Restaurar</button></div>");
+                    toastr.success("<div><p>Registro eliminado exitosamente.</p><button type='button' onclick='deshacerEliminar(" + data.id + ")' id='okBtn' class='btn btn-xs btn-danger pull-right'><i class='fal fa-reply'></i> Restaurar</button></div>");
                     toastr.options.closeButton = true;
                 });
             } else {

@@ -22,7 +22,7 @@
           <div class="modal-content">
               <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
-                  <h2 class="modal-title" id="myModalLabel"><i class="far fa-map-pin"></i> Agregar Puntos</h2>
+                  <h2 class="modal-title" id="myModalLabel"><i class="fal fa-map-pin"></i> Agregar Puntos</h2>
               </div>
               <div class="modal-body">
                 <form id="formAddPoints" action="">
@@ -63,7 +63,7 @@
                       </div>
                       <div class="col-lg-3">
                           <div class="form-group">
-                            <el-button type="success" :loading="loading_save" @click="save"><i class="fa fa-save"></i> Guardar</el-button>
+                            <el-button type="success" :loading="loading_save" @click="save"><i class="fal fa-save"></i> Guardar</el-button>
                         </div>
                       </div>
                   </div>
@@ -98,7 +98,7 @@
                                     <el-button data-toggle="tooltip" title="Eliminar" data-placement="left"
                                       size="mini"
                                       type="danger"
-                                      @click="handleDelete(scope.$index, scope.row)"><i class="far fa-times"></i>
+                                      @click="handleDelete(scope.$index, scope.row)"><i class="fal fa-times"></i>
                                     </el-button>
                                 </template>
                               </el-table-column>

@@ -329,8 +329,9 @@ class ShipperController extends Controller
     {
         $term = $data;
 
-        $tags = Shipper::select(['id', 'nombre_full as name'])->where([
-            ['nombre_full', 'like', '%' . $term . '%'],
+        $tags = Shipper::select(['id', 'nombre_full as name'])
+        ->whereRaw("TRIM(REPLACE(nombre_full,'  ',' ')) like '%$term%'")
+        ->where([
             ['deleted_at', null]
         ])->get();
         $answer = array(

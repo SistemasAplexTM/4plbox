@@ -35,7 +35,7 @@ class ConsigneeController extends Controller
     {
         try {
             $data              = (new Consignee)->fill($request->all());
-            $data->nombre_full = $request->primer_nombre . ' ' . $request->segundo_nombre . ' ' . $request->primer_apellido . ' ' . $request->segundo_apellido;
+            $data->nombre_full = trim($request->primer_nombre) . ' ' . trim($request->segundo_nombre) . ' ' . trim($request->primer_apellido) . ' ' . trim($request->segundo_apellido);
             $data->created_at  = date('Y-m-d H:i:s');
             if ($data->save()) {
                 $this->AddToLog('Consignee creado id (' . $data->id . ')');
@@ -75,7 +75,7 @@ class ConsigneeController extends Controller
         try {
             $data = Consignee::findOrFail($id);
             $data->update($request->all());
-            $data->nombre_full = $request->primer_nombre . ' ' . $request->segundo_nombre . ' ' . $request->primer_apellido . ' ' . $request->segundo_apellido;
+            $data->nombre_full = trim($request->primer_nombre) . ' ' . trim($request->segundo_nombre) . ' ' . trim($request->primer_apellido) . ' ' . trim($request->segundo_apellido);
             $data->save();
             if($request->emailsend){
                 $this->enviarEmailCasillero($id, $data->agencia_id, $data->nombre_full, $data->correo, $data->celular);
@@ -88,13 +88,9 @@ class ConsigneeController extends Controller
             );
             return $answer;
 
-        } catch (\Exception $e) {
-            $error = '';
-            foreach ($e->errorInfo as $key => $value) {
-                $error .= $key . ' - ' . $value . ' <br> ';
-            }
+        } catch (Exception $e) {
             $answer = array(
-                "error"  => $error,
+                "error"  => $e,
                 "code"   => 600,
                 "status" => 500,
             );
@@ -239,7 +235,29 @@ class ConsigneeController extends Controller
             ->join('pais', 'deptos.pais_id', '=', 'pais.id')
             ->join('agencia', $table . '.agencia_id', '=', 'agencia.id')
             ->leftjoin('tipo_identificacion', $table . '.tipo_identificacion_id', '=', 'tipo_identificacion.id')
-            ->select(DB::raw("CONCAT(" . $table . ".primer_nombre,' ', " . $table . ".segundo_nombre,' ', " . $table . ".primer_apellido,' ', " . $table . ".segundo_apellido) as full_name"), $table . '.*', 'localizacion.nombre as ciudad', 'localizacion.id as ciudad_id', 'deptos.descripcion as estado', 'deptos.id as estado_id', 'pais.descripcion as pais', 'pais.id as pais_id', 'agencia.descripcion as agencia', 'tipo_identificacion.descripcion as identificacion')
+            ->select(DB::raw("CONCAT(" . $table . ".primer_nombre,' ', " . $table . ".segundo_nombre,' ', " . $table . ".primer_apellido,' ', " . $table . ".segundo_apellido) as full_name"),
+            $table . '.id',
+            $table . '.documento',
+            $table . '.agencia_id',
+            $table . '.tipo_identificacion_id',
+            $table . '.primer_nombre',
+            $table . '.segundo_nombre',
+            $table . '.primer_apellido',
+            $table . '.segundo_apellido',
+            $table . '.direccion',
+            $table . '.telefono',
+            $table . '.correo',
+            $table . '.localizacion_id',
+            $table . '.zip',
+            $table . '.cliente_id',
+            $table . '.tarifa',
+            $table . '.corporativo',
+            'localizacion.nombre as ciudad',
+            'localizacion.id as ciudad_id',
+            'deptos.descripcion as estado',
+            'deptos.id as estado_id', 'pais.descripcion as pais',
+            'pais.id as pais_id', 'agencia.descripcion as agencia',
+            'tipo_identificacion.descripcion as identificacion')
             ->where([
                 [$table . '.id', '=', $id],
                 [$table . '.deleted_at', '=', null],
@@ -412,9 +430,9 @@ class ConsigneeController extends Controller
     public function vueSelect($data)
     {
         $term = $data;
-
-        $tags = Consignee::select(['id', 'nombre_full as name'])->where([
-            ['nombre_full', 'like', '%' . $term . '%'],
+        $tags = Consignee::select(['id', 'nombre_full as name'])
+        ->whereRaw("TRIM(REPLACE(nombre_full,'  ',' ')) like '%$term%'")
+        ->where([
             ['deleted_at', null]
         ])->get();
         $answer = array(

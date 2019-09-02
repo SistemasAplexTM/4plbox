@@ -3,7 +3,7 @@
         <div class="view_content">
             <span class="text-muted small pull-right">
                 Last modification:
-                <i class="fa fa-clock-o">
+                <i class="fal fa-clock-o">
                 </i>
                 2:10 pm - 12.06.2014
             </span>
@@ -17,7 +17,7 @@
                 <input class="input form-control" placeholder="Search client " type="text">
                     <span class="input-group-btn">
                         <button class="btn btn btn-primary" type="button">
-                            <i class="fa fa-search">
+                            <i class="fal fa-search">
                             </i>
                             Search
                         </button>
@@ -31,14 +31,14 @@
                     </span>
                     <li class="active">
                         <a data-toggle="tab" href="#tab-1">
-                            <i class="fa fa-user">
+                            <i class="fal fa-user">
                             </i>
                             Contacts
                         </a>
                     </li>
                     <li class="">
                         <a data-toggle="tab" href="#tab-2">
-                            <i class="fa fa-briefcase">
+                            <i class="fal fa-briefcase">
                             </i>
                             Companies
                         </a>

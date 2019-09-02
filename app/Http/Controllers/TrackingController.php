@@ -212,6 +212,7 @@ class TrackingController extends Controller
                 ['a.deleted_at', null],
                 ['a.agencia_id', Auth::user()->agencia_id],
             ])
+            ->orderBy('name', 'ASC')
             ->get();
         return \DataTables::of($data)->make(true);
     }
@@ -380,7 +381,11 @@ class TrackingController extends Controller
     {
         try {
             $data = Tracking::findOrFail($request->pk);
-            $data->contenido = $request->value;
+            if($request->name === 'codigo'){
+              $data->codigo = $request->value;
+            }else{
+              $data->contenido = $request->value;
+            }
 
             if ($data->save()) {
                 $this->AddToLog('Tracking contenido editado (' . $data->id . ')');

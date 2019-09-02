@@ -90,9 +90,9 @@
                                     <div class="col-sm-4">
                                         <div class="col-sm-12">
                                             <label class="control-label col-lg-12">&nbsp;</label>
-                                            <a v-if="app_type == 'courier'" hfer="#" target="blank_" class="btn btn-info btn-sm printDocument" data-toggle="tooltip" data-placement="top" title="Imprimir manifiesto"><i class="fa fa-print"></i> Manifiesto</a>
-                                            <a v-if="app_type == 'courier'" hfer="#" target="blank_" class="btn btn-info btn-sm printDocumentGuias" data-toggle="tooltip" data-placement="top" title="Imprimir guias hijas"><i class="fa fa-print"></i> Guias hijas</a>
-                                            <a hfer="#" target="blank_" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Imprimir instrucciones"><i class="fa fa-print"></i> Instrucciones</a>
+                                            <a v-if="app_type == 'courier'" hfer="#" target="blank_" class="btn btn-info btn-sm printDocument" data-toggle="tooltip" data-placement="top" title="Imprimir manifiesto"><i class="fal fa-print"></i> Manifiesto</a>
+                                            <a v-if="app_type == 'courier'" hfer="#" target="blank_" class="btn btn-info btn-sm printDocumentGuias" data-toggle="tooltip" data-placement="top" title="Imprimir guias hijas"><i class="fal fa-print"></i> Guias hijas</a>
+                                            <a hfer="#" target="blank_" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Imprimir instrucciones"><i class="fal fa-print"></i> Instrucciones</a>
                                         </div>
                                     </div>
 
@@ -114,7 +114,7 @@
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label for="status_id" style="width: 100%;">&nbsp;</label>
-                                                <button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Agregar estatus a guias" @click="addStatusConsolidado()"><i class="fa fa-save"></i> Aplicar</button>
+                                                <button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Agregar estatus a guias" @click="addStatusConsolidado()"><i class="fal fa-save"></i> Aplicar</button>
                                             </div>
                                         </div>
                                     </div>
@@ -130,7 +130,7 @@
 			                                                <label for="num_bolsa" class="">N° Bolsa</label>
 															    <div class="input-group">
 																    <span class="input-group-btn">
-																        <button @click="increaseBoxes()" class="btn btn-info" type="button" data-toggle="tooltip" title="Agregar bolsa" style="padding: 8px 12px;"><li class="fa fa-cubes"></li></button>
+																        <button @click="increaseBoxes()" class="btn btn-info" type="button" data-toggle="tooltip" title="Agregar bolsa" style="padding: 8px 12px;"><li class="fal fa-cubes"></li></button>
 																    </span>
 																    <input type="number" min="1" class="form-control" style="" v-model="num_bolsa" name="num_bolsa" id="num_bolsa"  value="1">
 															    </div>
@@ -184,7 +184,7 @@
 			                                                <div class="input-group">
 					                                        		<input type="text" class="form-control" v-model="num_guia" @keyup.enter="addGuiasToConsolidado()" name="num_guia">
 																    <span class="input-group-btn">
-																        <button class="btn btn-info" @click="addGuiasToConsolidado()" type="button" id="agregarBolsa" data-toggle="tooltip" title="Agregar guia" style="padding: 8px 12px;"><li class="fa fa-plus"></li></button>
+																        <button class="btn btn-info" @click="addGuiasToConsolidado()" type="button" id="agregarBolsa" data-toggle="tooltip" title="Agregar guia" style="padding: 8px 12px;"><li class="fal fa-plus"></li></button>
 																    </span>
 															    </div>
 			                                            </div>
@@ -194,12 +194,12 @@
 			                                        <div class="col-sm-12">
 			                                            <div class="form-group">
 			                                                <label class="control-label col-lg-12">&nbsp;</label>
-					                                        <button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" data-placement="top" title="Guias Disponobles" id="btn_buscarGuias" @click="getModalGuias()"><i class="fa fa-search-plus"></i> Buscar guias</button>
+					                                        <button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" data-placement="top" title="Guias Disponobles" id="btn_buscarGuias" @click="getModalGuias()"><i class="fal fa-search-plus"></i> Buscar guias</button>
 			                                            </div>
 			                                        </div>
 			                                    </div>
 		                                    </div>
-				                            <span class="small pull-right" style="color: orangered;" v-if="msn !== ''"><strong><i class="fa fa-exclamation-triangle"></i> Atención!</strong> {{ msn }}</span>
+				                            <span class="small pull-right" style="color: orangered;" v-if="msn !== ''"><strong><i class="fal fa-exclamation-triangle"></i> Atención!</strong> {{ msn }}</span>
 				                            <h2># Bolsa {{ n_bolsa }}</h2>
 		                                    	<table id="tbl-consolidado" class="table table-striped table-hover table-bordered dataTable" style="width: 100%;margin-top: 30px;">
 		                                    		<thead>
@@ -217,18 +217,18 @@
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-sm-12 col-sm-offset-0 guardar">
-                                            <button type="button" id="saveForm" class="ladda-button btn btn-success" data-style="expand-right" @click="saveConsolidado()"><i class="fa fa-save fa-fw"></i> Guardar Cambios</button>
+                                            <button type="button" id="saveForm" class="ladda-button btn btn-success" data-style="expand-right" @click="saveConsolidado()"><i class="fal fa-save fa-fw"></i> Guardar Cambios</button>
 
                                         	<div class="btn-group dropup">
 	                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                                <i class="fa fa-print"></i>  Imprmir <span class="caret"></span>
+	                                                <i class="fal fa-print"></i>  Imprmir <span class="caret"></span>
 	                                            </button>
 	                                            <ul class="dropdown-menu">
-		                                            <li><a href="" id="printDocument" class="printDocument" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> Imprimir Manifiesto</a></li>
-		                                            <li><a href="" id="printDocumentGuias" class="printDocumentGuias" data-style="expand-right" target="blank_"><i class="fa fa-print fa-fw"></i> Imprimir Guias</a></li>
+		                                            <li><a href="" id="printDocument" class="printDocument" data-style="expand-right" target="blank_"><i class="fal fa-print fa-fw"></i> Imprimir Manifiesto</a></li>
+		                                            <li><a href="" id="printDocumentGuias" class="printDocumentGuias" data-style="expand-right" target="blank_"><i class="fal fa-print fa-fw"></i> Imprimir Guias</a></li>
 	                                            </ul>
 	                                        </div>
-		                                     <a @click="cancelDocument()" type="button" class="btn btn-white"><i class="fa fa-times fa-fw"></i> Cancelar </a>
+		                                     <a @click="cancelDocument()" type="button" class="btn btn-white"><i class="fal fa-times fa-fw"></i> Cancelar </a>
                                         </div>
                                     </div>                                            
                                 </div>
@@ -282,7 +282,7 @@
     	            <div class="modal-header">
     	                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
     	                <h4 class="modal-title" id="myModalLabel">
-    	                    <i class="fa fa-user-circle"></i> {{ tituloModal }}
+    	                    <i class="fal fa-user-circle"></i> {{ tituloModal }}
     	                </h4>
     	            </div>
     	            <div class="modal-body">
@@ -300,7 +300,7 @@
                                 <tbody>
                                 	<tr v-if="contactos_fields != null" v-for="contacto in contactos_fields">
                                 		<td v-if="contacto.nombre != null" style="width: 150px;">
-                                			<button @click="selectedShipperConsignee(contacto)" class='btn-primary btn-xs' data-toggle='tooltip' title='Seleccionar'>Seleccionar <i class='fa fa-check'></i></button>
+                                			<button @click="selectedShipperConsignee(contacto)" class='btn-primary btn-xs' data-toggle='tooltip' title='Seleccionar'>Seleccionar <i class='fal fa-check'></i></button>
                                 		</td>
                                 		<td v-if="contacto.nombre != null">{{ contacto.nombre }}</td>
                                 		<td v-if="contacto.nombre != null">{{ contacto.telefono }}</td>
@@ -327,7 +327,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <h4 class="modal-title" id="myModalLabel">
-                            <i class="fa fa-cubes"></i> Guias disponibles para agrupar
+                            <i class="fal fa-cubes"></i> Guias disponibles para agrupar
                         </h4>
                     </div>
                     <div class="modal-body">
@@ -360,7 +360,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <h4 class="modal-title" id="myModalLabel">
-                            <i class="fa fa-exchange"></i> Trasladar bolsa
+                            <i class="fal fa-exchange"></i> Trasladar bolsa
                         </h4>
                     </div>
                     <div class="modal-body">
@@ -371,11 +371,11 @@
 			                      <label for="consolidado_id">Consolidado</label>
 			                      <v-select name="consolidado_id" v-model="consolidado_id" label="consolidado" :filterable="false" :options="consolidados" @search="onSearchConsolidados" placeholder="# Consolidado">
 			                        <template slot="option" slot-scope="option">
-			                            {{ option.consolidado }} | <i class="fa fa-calendar"></i> {{ option.fecha }} | <i class="fa fa-globe"></i> {{ option.pais }}
+			                            {{ option.consolidado }} | <i class="fal fa-calendar"></i> {{ option.fecha }} | <i class="fal fa-globe"></i> {{ option.pais }}
 			                        </template>
 			                        <template slot="selected-option" slot-scope="option">
 			                          <div class="selected d-center">
-			                            {{ option.consolidado }} | <i class="fa fa-calendar"></i> {{ option.fecha }} | <i class="fa fa-globe"></i> {{ option.pais }}
+			                            {{ option.consolidado }} | <i class="fal fa-calendar"></i> {{ option.fecha }} | <i class="fal fa-globe"></i> {{ option.pais }}
 			                          </div>
 			                        </template>
 			                      </v-select>
@@ -924,16 +924,16 @@
                                     }
                                 }
 
-                                var btn_invoice =  "<a href='../../impresion-documento/" + full.documento_id + "/invoice/"+full.documento_detalle_id+"' target='blank_' class=''><i class='fa fa-file' style='padding: 3px 2px;'></i> Imprimir invoice</a> ";
+                                var btn_invoice =  "<a href='../../impresion-documento/" + full.documento_id + "/invoice/"+full.documento_detalle_id+"' target='blank_' class=''><i class='fal fa-file' style='padding: 3px 2px;'></i> Imprimir invoice</a> ";
                                 if (me.permissions.pdfLabel) {
-                                    var btn_label =  "<a href='"+href_print_label+"' target='blank_' class=''><i class='fa fa-barcode' style='padding: 3px 2px;'></i> Imprimir label</a> ";
+                                    var btn_label =  "<a href='"+href_print_label+"' target='blank_' class=''><i class='fal fa-barcode' style='padding: 3px 2px;'></i> Imprimir label</a> ";
                                 }
                                 if (me.permissions.deleteDetailConsolidado) {
-                                    var btn_delete = " <a onclick=\"eliminarConsolidado(" + full.id + ","+false+")\" class='' style='color:#E34724;'><i class='fa fa-trash' style='padding: 3px 2px;'></i> Eliminar</a> ";
+                                    var btn_delete = " <a onclick=\"eliminarConsolidado(" + full.id + ","+false+")\" class='' style='color:#E34724;'><i class='fal fa-trash' style='padding: 3px 2px;'></i> Eliminar</a> ";
                                 }
                                 var btn_group = '<div class="btn-group" data-toggle="tooltip" title="Acciones">'+
                                         '<button type="button" class="btn btn-default btn-outline dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
-                                          '<i class="fa fa-cog"></i>'+
+                                          '<i class="fal fa-cog"></i>'+
                                         '</button>'+
                                         '<ul class="dropdown-menu dropdown-menu-right pull-right">'+
                                           '<li>'+btn_invoice+'</li>'+

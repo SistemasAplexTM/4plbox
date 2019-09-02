@@ -43,7 +43,7 @@
                                     </a>
                                     <div class="btn-group-vertical" id="listaDocumentos" style="width: 100%;">
                                         <button type="button" id="btn1" onclick="" class="btn btn-default btn-block" style="text-align:left;">
-                                          <i class="fa fa-cubes"></i> Carga
+                                          <i class="fal fa-cubes"></i> Carga
                                         </button>
                                     </div>
                                 </div>
@@ -54,11 +54,11 @@
                                         <table id="tbl-report" class="table table-striped table-hover table-bordered" style="width: 100%;">
                                             <thead>
                                                 <tr>
-                                                    <th><i class="fa fa-calendar"></i> @lang('documents.date')</th>
-                                                    <th><i class="fa fa-file"></i> #@lang('documents.documents')</th>
-                                                    <th><i class="fa fa-user"></i> @lang('documents.client_consignee')</th>
-                                                    <th><i class="fa fa-cubes"></i> @lang('documents.consolidated')</th>
-                                                    <th><i class="fa fa-plane"></i> @lang('master.master_guide')</th>
+                                                    <th><i class="fal fa-calendar"></i> @lang('documents.date')</th>
+                                                    <th><i class="fal fa-file"></i> #@lang('documents.documents')</th>
+                                                    <th><i class="fal fa-user"></i> @lang('documents.client_consignee')</th>
+                                                    <th><i class="fal fa-cubes"></i> @lang('documents.consolidated')</th>
+                                                    <th><i class="fal fa-plane"></i> @lang('master.master_guide')</th>
                                                 </tr>
                                             </thead>
                                         </table>

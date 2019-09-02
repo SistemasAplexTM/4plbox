@@ -4,6 +4,12 @@
 body{
     font-family: "Roboto Condensed";
 }
+input{
+  background-color: white!important;
+}
+.el-input__inner{
+  background-color: white!important;
+}
 .edit_btn{
   color:#FFC107;
 }

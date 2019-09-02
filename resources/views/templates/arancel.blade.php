@@ -114,8 +114,8 @@
                                 <tr>
                                     <th>@lang('general.code_pa')</th>
                                     <th>@lang('general.description')</th>
-                                    <th><i class="fa fa-percent"></i>Iva</th>
-                                    <th><i class="fa fa-percent"></i>@lang('general.tariff')</th>
+                                    <th><i class="fal fa-percent"></i>Iva</th>
+                                    <th><i class="fal fa-percent"></i>@lang('general.tariff')</th>
                                     <th>@lang('general.actions')</th>
                                 </tr>
                             </thead>
@@ -126,8 +126,8 @@
                                 <tr>
                                     <th>@lang('general.code_pa')</th>
                                     <th>@lang('general.description')</th>
-                                    <th><i class="fa fa-percent"></i>Iva</th>
-                                    <th><i class="fa fa-percent"></i>@lang('general.tariff')</th>
+                                    <th><i class="fal fa-percent"></i>Iva</th>
+                                    <th><i class="fal fa-percent"></i>@lang('general.tariff')</th>
                                     <th>@lang('general.actions')</th>
                                 </tr>
                             </tfoot>

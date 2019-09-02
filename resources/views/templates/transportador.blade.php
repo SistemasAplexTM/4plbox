@@ -164,15 +164,15 @@
                                   <div class="form-group"  :class="{'has-error': listErrors.zip}">
                                       <div class="checkbox checkbox-success checkbox-inline">
                                           <input type="checkbox" id="shipper" name="shipper" v-model="shipper">
-                                          <label for="shipper"><i class="fa fa-user"></i> @lang('general.shipper')</label>
+                                          <label for="shipper"><i class="fal fa-user"></i> @lang('general.shipper')</label>
                                       </div>
                                      <div class="checkbox checkbox-success checkbox-inline">
                                           <input type="checkbox" id="consignee" name="consignee" v-model="consignee">
-                                          <label for="consignee"><i class="far fa-user"></i> @lang('general.consignee')</label>
+                                          <label for="consignee"><i class="fal fa-user"></i> @lang('general.consignee')</label>
                                       </div>
                                      <div class="checkbox checkbox-success checkbox-inline">
                                           <input type="checkbox" id="carrier" name="carrier" v-model="carrier">
-                                          <label for="carrier"><i class="fa fa-plane"></i>  @lang('general.carrier') </label>
+                                          <label for="carrier"><i class="fal fa-plane"></i>  @lang('general.carrier') </label>
                                       </div>
                                   </div>
                               </div>

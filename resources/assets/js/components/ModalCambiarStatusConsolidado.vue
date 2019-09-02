@@ -9,8 +9,8 @@
 <div class="row">
     <div class="col-lg-12">
         <ul class="nav nav-tabs" role="tablist">
-          <li role="trackings" class="active"><a href="#bodega" aria-controls="bodega" role="tab" data-toggle="tab"><i class="fa fa-clock"></i> Estados</a></li>
-          <li role="trackings"><a href="#recibido" aria-controls="recibido" role="tab" data-toggle="tab"><i class="fa fa-barcode"></i> Recibido</a></li>
+          <li role="trackings" class="active"><a href="#bodega" aria-controls="bodega" role="tab" data-toggle="tab"><i class="fal fa-clock"></i> Estados</a></li>
+          <li role="trackings"><a href="#recibido" aria-controls="recibido" role="tab" data-toggle="tab"><i class="fal fa-barcode"></i> Recibido</a></li>
         </ul>
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane fade" id="recibido">
@@ -44,7 +44,7 @@
                      <input type="text" class="form-control" v-model="form.observacion" placeholder="Observación">
                  </div>
                  <div class="col-lg-2">
-                     <button class="btn btn-primary" data-toggle="tooltip" title="Agregar" @click="setData"><i class="fa fa-plus"></i></button>
+                     <button class="btn btn-primary" data-toggle="tooltip" title="Agregar" @click="setData"><i class="fal fa-plus"></i></button>
                  </div>
              </div>
           </div>
@@ -61,7 +61,7 @@
                    <div class="col-sm-4">
                        <div class="form-group">
                            <label for="status_id" style="width: 100%;">&nbsp;</label>
-                           <button class="ladda-button btn btn-primary btn-sm" data-style="expand-right" type="button" data-toggle="tooltip" title="Agregar estatus a guias" @click="addStatusConsolidado()"><i class="fa fa-save"></i> Cambiar</button>
+                           <button class="ladda-button btn btn-primary btn-sm" data-style="expand-right" type="button" data-toggle="tooltip" title="Agregar estatus a guias" @click="addStatusConsolidado()"><i class="fal fa-save"></i> Cambiar</button>
                        </div>
                    </div>
                </div>

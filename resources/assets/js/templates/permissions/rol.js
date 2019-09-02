@@ -113,7 +113,7 @@ var objVue = new Vue({
             if (data.logical === true) {
                 axios.get('rol/delete/' + data.id + '/' + data.logical).then(response => {
                     this.updateTable();
-                    toastr.success("<div><p>Registro eliminado exitosamente.</p><button type='button' onclick='deshacerEliminar(" + data.id + ")' id='okBtn' class='btn btn-xs btn-danger pull-right'><i class='fa fa-reply'></i> Restaurar</button></div>");
+                    toastr.success("<div><p>Registro eliminado exitosamente.</p><button type='button' onclick='deshacerEliminar(" + data.id + ")' id='okBtn' class='btn btn-xs btn-danger pull-right'><i class='fal fa-reply'></i> Restaurar</button></div>");
                     toastr.options.closeButton = true;
                 });
             } else {

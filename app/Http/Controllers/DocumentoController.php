@@ -163,7 +163,7 @@ class DocumentoController extends Controller
                                     'documento_id'     => $id_documento,
                                     'servicios_id'     => 1,
                                     'forma_pago_id'    => null,
-                                    'tipo_pago_id'     => 5,//prepaid
+                                    'tipo_pago_id'     => 4,//collect
                                     'tipo_embarque_id' => (isset($request->tipo_embarque_id)) ? $request->tipo_embarque_id : 1,//aereo
                                     'grupo_id'         => 9,//general
                                     // 'estado_id'        => ($request->tipo_documento_id == 2) ? 15 : 16, //maestra multiple

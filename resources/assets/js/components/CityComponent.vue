@@ -12,7 +12,7 @@
     >
       <template slot-scope="{ item }">
   			<div>
-  				<label class="value_item"><i class="fa fa-map-marker"></i> {{ item.name }}</label>
+  				<label class="value_item"><i class="fal fa-map-marker"></i> {{ item.name }}</label>
           <div>
           <small>
             {{ item.deptos }} / {{ item.pais }}

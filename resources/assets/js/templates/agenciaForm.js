@@ -41,7 +41,7 @@ function addRow() {
     var td3 = '<td><input type="text" id="segup" name="seguro_principal[]" value="' + segup + '" class="form-control" readonly></td>';
     var td4 = '<td><input type="text" id="tariA" name="tarifa_agencia[]" value="' + tariA + '" class="form-control" readonly></td>';
     var td5 = '<td><input type="text" id="segu" name="seguro[]" value="' + segu + '" class="form-control" readonly></td>';
-    var td6 = '<td><button class="btn btn-danger btn-xs btn_remove" type="button" onclick="removeRowServices(' + cont + ')"><i class="fa fa-times" data-toggle="tooltip" data-placement="top" title="Eliminar"></i></button></td>';
+    var td6 = '<td><button class="btn btn-danger btn-xs btn_remove" type="button" onclick="removeRowServices(' + cont + ')"><i class="fal fa-times" data-toggle="tooltip" data-placement="top" title="Eliminar"></i></button></td>';
     fila += td1 + td2 + td7 + td3 + td4 + td5 + td6 + '</tr>';
     $('#noEnviar').css('display', 'none');
     $('#detalleAgencia').append(fila);
@@ -130,7 +130,7 @@ function formatRepo(repo) {
     if (repo.loading) {
         return repo.text;
     }
-    var markup = "<div class='select2-result-repository clearfix'>" + "<div class='select2-result-repository__meta'>" + "<div class='select2-result-repository__title'><strong><i class='fa fa-map-marker'></i> " + repo.text + " / " + repo.deptos + " / " + repo.pais + "</strong></div>";
+    var markup = "<div class='select2-result-repository clearfix'>" + "<div class='select2-result-repository__meta'>" + "<div class='select2-result-repository__title'><strong><i class='fal fa-map-marker'></i> " + repo.text + " / " + repo.deptos + " / " + repo.pais + "</strong></div>";
     return markup;
 }
 

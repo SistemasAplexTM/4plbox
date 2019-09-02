@@ -40,7 +40,7 @@
                 <div class="col-lg-6">
                     <div class="col-lg-3 text-center">
                         <button class="btn btn-warning dim btn-large-dim btn-outline btn-inicio" type="button" id="documento">
-                            <i class="fa fa-box-open">
+                            <i class="fal fa-box-open">
                             </i>
                         </button>
                         <div style="font-size: 20px;">
@@ -49,7 +49,7 @@
                     </div>
                     <div class="col-lg-3 text-center">
                         <button class="btn btn-primary dim btn-large-dim btn-outline btn-inicio" type="button" id="master">
-                            <i class="fa fa-paste">
+                            <i class="fal fa-paste">
                             </i>
                         </button>
                         <div style="font-size: 20px;">
@@ -58,7 +58,7 @@
                     </div>
                     <div class="col-lg-3 text-center">
                         <button class="btn btn-default dim btn-large-dim btn-outline btn-inicio" type="button" id="tracking">
-                            <i class="fa fa-cubes">
+                            <i class="fal fa-cubes">
                             </i>
                         </button>
                         <div style="font-size: 20px;">
@@ -69,7 +69,7 @@
                 <div class="col-lg-6">
                     <div class="col-lg-3 text-center">
                         <button class="btn btn-success dim btn-large-dim btn-outline btn-inicio" type="button" id="shipper">
-                            <i class="far fa-user-circle">
+                            <i class="fal fa-user-circle">
                             </i>
                         </button>
                         <div style="font-size: 20px;">
@@ -78,7 +78,7 @@
                     </div>
                     <div class="col-lg-3 text-center">
                         <button class="btn btn-info dim btn-large-dim btn-outline btn-inicio" type="button" id="consignee">
-                            <i class="fas fa-user-circle">
+                            <i class="fal fa-user-circle">
                             </i>
                         </button>
                         <div style="font-size: 20px;">
@@ -88,7 +88,7 @@
 
                     <div class="col-lg-3 text-center">
                         <button class="btn btn-primary dim btn-large-dim btn-outline btn-inicio" type="button" id="backup">
-                            <i class="fa fa-cloud-download-alt">
+                            <i class="fal fa-cloud-download-alt">
                             </i>
                         </button>
                         <div style="font-size: 20px;">
@@ -115,7 +115,7 @@
                 <div class="col-lg-6">
                     <div class="col-lg-3 text-center">
                         <button class="btn btn-default dim btn-large-dim btn-outline btn-inicio" type="button" id="mantenimiento">
-                            <i class="fa fa-wrench">
+                            <i class="fal fa-wrench">
                             </i>
                         </button>
                         <div style="font-size: 20px;">
@@ -124,7 +124,7 @@
                     </div>
                     <div class="col-lg-3 text-center">
                         <button class="btn btn-danger dim btn-large-dim btn-outline btn-inicio" type="button" id="administracion">
-                            <i class="fa fa-cogs">
+                            <i class="fal fa-cogs">
                             </i>
                         </button>
                         <div style="font-size: 20px;">

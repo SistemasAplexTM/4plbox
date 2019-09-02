@@ -64,6 +64,29 @@
 -. Que el numero de la master se pueda escribir si no tienen inventario en el momento ===========================================
 -. Acomodar los select de la creacion de master con los select de element =======================================================
 
+
+2019-08-28
+-. revisar modal cuando es COD no es oblogatorio la forma de pago.===============================================================
+3. En la forma del PAGO no se ha actualizado que el PP muestre la lista de formas de pago sigue con COD y los recibos se les
+   está colocando forma de pago errada, lo que no va a permitir cobrarlos========================================================
+-. la imagen variable para la agencia en los templates.==========================================================================
+
+-. Campo CC en formulario shipper y consignee, campo WhatsApp.
+-. Revisar porque al crear consignee no tomo el prefijo de la agencia si no que tomo el prefijo de la principal.
+-. colocar fecha en el email de tracking recibido.
+-. colocar edicion al tracking en linea.
+
+===Revisión con Colombiana===
+1. Cuando se crea un recibo para courier y este tiene una agencia diferente a la principal, el prefijo del casillero no cambia, sigue usando el de la principal.
+2. Se ingresó un consignee desde el recibo de colombiana, se separó el nombre y apellidos con líneas y el sistema no ingresó bien el nombre, y lo creó doble.
+4. En las tarifas de las agencias se debe colcoar la mínima de las agencias.
+**** 5. CRÍTICO: El logo variable en las plantillas de correo 
+6. CRÍTICO: El CC del correo en Shipper y Consignee
+7. CRÍTICO: El WhatsApp en el Consignee y la agencia
+8. CRÍTICO: Es enredado crear consignee y shipper desde el recibo, mejor usemos una modal.
+9. CRÍTICO: Los controles a los menú por parte de los usuarios.
+10. Coloquemos un status de envío de email en los tracking que se anuncia el envío de email, y adicional se debe colcoar un JSON que permita guardar el historial de envío de correo.
+
 1. En CARGA Cambiar el combo del Consignee en el recibo del tracking y cambiar la palabra cliente por Consignee.
 2. En CARGA Ordenar los nuevos tracking recibidos arriba en el datatable.
 3. En CARGA En el mensaje de recibido casillero colocar el contenido del tracking
@@ -89,7 +112,8 @@
 1. En CARGA En el control de acceso meter la administración, el BL y Clientes.
 2. En CARGA que funcione el control de acceso.
 3. En CARGA Arriba en donde se buscan tracking si no está el tracking en un recibo no muestra nada
-4. En CARGA en recibo de tracking cambiar el combo de cliente por el de ELEMENT y colocar en vez de la palabra cliente, Destinatario y que se pueda enviar un email consolidado al cliente y no uno por uno.
+4. En CARGA en recibo de tracking cambiar el combo de cliente por el de ELEMENT y colocar en vez de la palabra cliente,
+   Destinatario y que se pueda enviar un email consolidado al cliente y no uno por uno.
 5. En CARGA A los contactos permitir colocar más email y más correos y la segunda línea de dirección.
 6. En CARGA En las variables de las plantillas, mostrar el contenido del tracking y la fecha de recibo del tracking.
 7. En CARGA La pregunta de agregar un cargo adicional.

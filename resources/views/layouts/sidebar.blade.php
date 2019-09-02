@@ -61,7 +61,7 @@
                          @lang('layouts.load')
                     </span>
                     <span class="arrow">
-                        <i class="fas fa-angle-down"></i>
+                        <i class="fal fa-angle-down"></i>
                     </span>
                 </a>
                 <ul class="nav nav-second-level">
@@ -113,7 +113,7 @@
                                 @lang('layouts.account')
                             </span>
                     <span class="arrow">
-                        <i class="fas fa-angle-down"></i>
+                        <i class="fal fa-angle-down"></i>
                     </span>
                 </a>
                 <ul class="nav nav-second-level">
@@ -155,7 +155,7 @@
                              @lang('layouts.lockens')
                         </span>
                         <span class="arrow">
-                            <i class="fas fa-angle-down"></i>
+                            <i class="fal fa-angle-down"></i>
                         </span>
                     </a>
                     <ul class="nav nav-second-level">
@@ -187,7 +187,7 @@
                                   @lang('layouts.reports')
                               </span>
                       <span class="arrow">
-                          <i class="fas fa-angle-down"></i>
+                          <i class="fal fa-angle-down"></i>
                       </span>
                   </a>
                   <ul class="nav nav-second-level">
@@ -211,7 +211,7 @@
                          @lang('layouts.distribution_warehouse')
                     </span>
                     <span class="arrow">
-                        <i class="fas fa-angle-down"></i>
+                        <i class="fal fa-angle-down"></i>
                     </span>
                 </a>
                 <ul class="nav nav-second-level">
@@ -248,7 +248,7 @@
                          @lang('layouts.accounting')
                     </span>
                     <span class="arrow">
-                        <i class="fas fa-angle-down"></i>
+                        <i class="fal fa-angle-down"></i>
                     </span>
                 </a>
                 <ul class="nav nav-second-level">
@@ -278,7 +278,7 @@
                                @lang('layouts.administration')
                       </span>
                       <span class="arrow">
-                          <i class="fas fa-angle-down"></i>
+                          <i class="fal fa-angle-down"></i>
                       </span>
                   </a>
                   <ul class="nav nav-second-level collapse">

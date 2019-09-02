@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">@lang('documents.close')</span></button>
-                <h2 class="modal-title" id="myModalLabel"><i class="fa fa-truck"></i> @lang('documents.add_points')</h2>
+                <h2 class="modal-title" id="myModalLabel"><i class="fal fa-truck"></i> @lang('documents.add_points')</h2>
             </div>
             <div class="modal-body">
               <form id="formAddPoints" action="">

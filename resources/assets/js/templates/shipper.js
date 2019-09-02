@@ -24,17 +24,14 @@ $(document).ready(function() {
                 var btn_edit = '';
                 var btn_delete = '';
                 if (permission_update) {
-                    var params = [
-                        full.id, +full.agencia_id, +full.localizacion_id, "'" + full.primer_nombre + "'", "'" + full.segundo_nombre + "'", "'" + full.primer_apellido + "'", "'" + full.segundo_apellido + "'", "'" + full.direccion + "'", "'" + full.telefono + "'", "'" + full.correo + "'", "'" + full.zip + "'", "'" + full.ciudad + "'", "'" + full.agencia + "'"
-                    ];
-                    var btn_edit = "<a onclick=\"edit(" + params + ")\" class='edit_btn'  data-toggle='tooltip' data-placement='top' title='Editar'><i class='fal fa-pencil fa-lg'></i></a> ";
+                    var btn_edit = "<a onclick=\"edit(" + full.id + ")\" class='edit_btn'  data-toggle='tooltip' data-placement='top' title='Editar'><i class='fal fa-pencil fa-lg'></i></a> ";
                 }
                 if (permission_delete) {
                     var btn_delete = "<li><a onclick=\"eliminar(" + full.id + "," + true + ")\" style='color:red'><i class='fal fa-trash'></i> Eliminar</a></li>";
                 }
                 var btn = '<div class="btn-group">' +
                         '<button type="button" class="btn btn-success dropdown-toggle btn-xs btn-circle-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
-                          '<i class="far fa-ellipsis-v"></i>'+
+                          '<i class="fal fa-ellipsis-v"></i>'+
                         '</button>'+
                         '<ul class="dropdown-menu dropdown-menu-right pull-right">'+
                           "<li><a onclick=\"pasar_id(" + full.id + ")\" data-toggle='modal' data-target='#mdl-contactos'><i class='fal fa-user-plus'></i> Agregar Contactos</a></li>"+
@@ -54,23 +51,8 @@ function pasar_id(id) {
     objVue.parametro = id;
 }
 
-function edit(id, agencia_id, localizacion_id, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, direccion, telefono, correo, zip, ciudad, agencia) {
-    var data = {
-        id: id,
-        agencia_id: agencia_id,
-        localizacion_id: localizacion_id,
-        primer_nombre: primer_nombre,
-        segundo_nombre: segundo_nombre,
-        primer_apellido: primer_apellido,
-        segundo_apellido: segundo_apellido,
-        direccion: direccion,
-        telefono: telefono,
-        correo: correo,
-        zip: zip,
-        ciudad: ciudad,
-        agencia: agencia
-    };
-    objVue.edit(data);
+function edit(id) {
+    objVue.edit(id);
 }
 /*-- Función para llenar select PERSONALIZADO --*/
 function llenarSelectP(module, tableName, idSelect, length) {
@@ -118,7 +100,7 @@ function formatRepo(repo) {
     if (repo.loading) {
         return repo.text;
     }
-    var markup = "<div class='select2-result-repository clearfix'>" + "<div class='select2-result-repository__meta'>" + "<div class='select2-result-repository__title'><strong><i class='fa fa-map-marker'></i> " + repo.text + " / " + repo.deptos + " / " + repo.pais + "</strong></div>";
+    var markup = "<div class='select2-result-repository clearfix'>" + "<div class='select2-result-repository__meta'>" + "<div class='select2-result-repository__title'><strong><i class='fal fa-map-marker'></i> " + repo.text + " / " + repo.deptos + " / " + repo.pais + "</strong></div>";
     return markup;
 }
 
@@ -132,6 +114,7 @@ var objVue = new Vue({
         //
     },
     data: {
+        agency_data: data_agencia,
         parametro: null,
         primer_nombre: '',
         segundo_nombre: '',
@@ -147,6 +130,7 @@ var objVue = new Vue({
         formErrors: {},
         listErrors: {},
         existShipper: false,
+        shipper_id: null
     },
     methods: {
         resetForm: function() {
@@ -189,7 +173,8 @@ var objVue = new Vue({
             });
         },
         updateTable: function() {
-            refreshTable('tbl-shipper');
+          this.shipper_id = null;
+          refreshTable('tbl-shipper');
         },
         delete: function(data) {
             this.formErrors = {};
@@ -197,7 +182,7 @@ var objVue = new Vue({
             if (data.logical === true) {
                 axios.get('shipper/delete/' + data.id + '/' + data.logical).then(response => {
                     this.updateTable();
-                    toastr.success("<div><p>Registro eliminado exitosamente.</p><button type='button' onclick='deshacerEliminar(" + data.id + ")' id='okBtn' class='btn btn-xs btn-danger pull-right'><i class='fa fa-reply'></i> Restaurar</button></div>");
+                    toastr.success("<div><p>Registro eliminado exitosamente.</p><button type='button' onclick='deshacerEliminar(" + data.id + ")' id='okBtn' class='btn btn-xs btn-danger pull-right'><i class='fal fa-reply'></i> Restaurar</button></div>");
                     toastr.options.closeButton = true;
                 });
             } else {
@@ -313,34 +298,35 @@ var objVue = new Vue({
                 });
             });
         },
-        edit: function(data) {
+        edit: function(id) {
             var me = this;
-            me.resetForm();
+            this.shipper_id = id;
+            // me.resetForm();
             /*console.log(data);*/
-            this.id = data['id'];
-            $('#localizacion_id_input').val(data['localizacion_id']);
-            $('#agencia_id_input').val(data['agencia_id']);
-            /* ASIGNACION DE VALORES A LOS SELECTS */
-            $('#localizacion_id').empty().append('<option value="' + data['localizacion_id'] + '" selected="selected">' + data['ciudad'] + '</option>').val([data['localizacion_id']]).trigger('change');
-            $('#agencia_id').empty().append('<option value="' + data['agencia_id'] + '" selected="selected">' + data['agencia'] + '</option>').val([data['agencia_id']]).trigger('change');
-            this.primer_nombre = data['primer_nombre'];
-            if (data['segundo_nombre'] != 'null' && data['segundo_nombre'] != '' && data['segundo_nombre'] != null) {
-                this.segundo_nombre = data['segundo_nombre'];
-            }
-            this.primer_apellido = data['primer_apellido'];
-            if (data['segundo_apellido'] != 'null' && data['segundo_apellido'] != '' && data['segundo_apellido'] != null) {
-                this.segundo_apellido = data['segundo_apellido'];
-            }
-            this.direccion = data['direccion'];
-            if (data['telefono'] != 'null' && data['telefono'] != '' && data['telefono'] != null) {
-                this.telefono = data['telefono'];
-            }
-            if (data['correo'] != 'null' && data['correo'] != '' && data['correo'] != null) {
-                this.correo = data['correo'];
-            }
-            if (data['zip'] != 'null' && data['zip'] != '' && data['zip'] != null) {
-                this.zip = data['zip'];
-            }
+            // this.id = data['id'];
+            // $('#localizacion_id_input').val(data['localizacion_id']);
+            // $('#agencia_id_input').val(data['agencia_id']);
+            // /* ASIGNACION DE VALORES A LOS SELECTS */
+            // $('#localizacion_id').empty().append('<option value="' + data['localizacion_id'] + '" selected="selected">' + data['ciudad'] + '</option>').val([data['localizacion_id']]).trigger('change');
+            // $('#agencia_id').empty().append('<option value="' + data['agencia_id'] + '" selected="selected">' + data['agencia'] + '</option>').val([data['agencia_id']]).trigger('change');
+            // this.primer_nombre = data['primer_nombre'];
+            // if (data['segundo_nombre'] != 'null' && data['segundo_nombre'] != '' && data['segundo_nombre'] != null) {
+            //     this.segundo_nombre = data['segundo_nombre'];
+            // }
+            // this.primer_apellido = data['primer_apellido'];
+            // if (data['segundo_apellido'] != 'null' && data['segundo_apellido'] != '' && data['segundo_apellido'] != null) {
+            //     this.segundo_apellido = data['segundo_apellido'];
+            // }
+            // this.direccion = data['direccion'];
+            // if (data['telefono'] != 'null' && data['telefono'] != '' && data['telefono'] != null) {
+            //     this.telefono = data['telefono'];
+            // }
+            // if (data['correo'] != 'null' && data['correo'] != '' && data['correo'] != null) {
+            //     this.correo = data['correo'];
+            // }
+            // if (data['zip'] != 'null' && data['zip'] != '' && data['zip'] != null) {
+            //     this.zip = data['zip'];
+            // }
             this.editar = 1;
             this.existShipper = true;
             this.formErrors = {};

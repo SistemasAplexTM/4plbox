@@ -87,7 +87,7 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                              <button @click.prevent="create" type="button" class="ladda-button btn btn-primary hvr-float-shadow" data-style="expand-right" title=""><span class="ladda-label"> Prealertar <i class="fa fa-paper-plane" aria-hidden="true"></i></span><span class="ladda-spinner"></span></button>
+                                              <button @click.prevent="create" type="button" class="ladda-button btn btn-primary hvr-float-shadow" data-style="expand-right" title=""><span class="ladda-label"> Prealertar <i class="fal fa-paper-plane" aria-hidden="true"></i></span><span class="ladda-spinner"></span></button>
                                             </div>
                                         </div>
                                     </div>

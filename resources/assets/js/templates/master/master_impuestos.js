@@ -42,13 +42,13 @@ $(document).ready(function () {
     //                 var btn_cost = '<li><a onclick="createCost('+ full.id +', \''+ full.num_master +'\', \''+ full.peso +'\', \''+ full.peso_kl +'\', \''+ full.tarifa +'\', \''+ full.trm +'\', \''+ full.fecha_liquidacion +'\')"><i class="fal fa-file-invoice-dollar fa-lg"></i> Crear Costos</a></li>';
     //                 if(full.consolidado_id != null){
     //                   btn_consolidado = "<li class='divider'></li>" +
-    //                      "<li><a href='impresion-documento/" +full.consolidado_id +"/consolidado' target='_blank'> <spam class='fa fa-print'></spam> Consolidado</a></li>" +
-    //                      "<li><a href='impresion-documento/" +full.consolidado_id +"/consolidado_guias' target='_blank'> <spam class='fa fa-print'></spam> Guias hijas</a></li>" +
-    //                      "<li><a href='master/imprimirGuias/" +full.consolidado_id +"/labels' target='_blank'> <spam class='fa fa-print'></spam> Labels guias hijas</a></li>";
+    //                      "<li><a href='impresion-documento/" +full.consolidado_id +"/consolidado' target='_blank'> <spam class='fal fa-print'></spam> Consolidado</a></li>" +
+    //                      "<li><a href='impresion-documento/" +full.consolidado_id +"/consolidado_guias' target='_blank'> <spam class='fal fa-print'></spam> Guias hijas</a></li>" +
+    //                      "<li><a href='master/imprimirGuias/" +full.consolidado_id +"/labels' target='_blank'> <spam class='fal fa-print'></spam> Labels guias hijas</a></li>";
     //                 }
     //                 var btns = "<div class='btn-group'>" +
     //                  "<button type='button' class='btn btn-success dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" +
-    //                   "<i class='fa fa-ellipsis-v'></i>" +
+    //                   "<i class='fal fa-ellipsis-v'></i>" +
     //                    "</button>" +
     //                    "<ul class='dropdown-menu dropdown-menu-right pull-right'>" +
     //                     btn_edit +
@@ -63,12 +63,12 @@ $(document).ready(function () {
     //                   "<i class='fal fa-print fa-lg'></i>  <span class='caret'></span>" +
     //                    "</button>" +
     //                    "<ul class='dropdown-menu dropdown-menu-right pull-right'><li><a href='master/imprimir/" +full.id + '/'+true +
-    //                     "' target='_blank'> <spam class='fa fa-print'></spam> Master</a></li>" +
-    //                      "<li><a href='master/imprimir/" +full.id +"' target='_blank'> <spam class='fa fa-print'></spam> Master simple</a></li>" +
-    //                      "<li><a onclick=\"createLabel("+ full.id +", '"+ full.num_master + "')\"> <spam class='fa fa-print'></spam> Labels</a></li>" +
-    //                      // "<li><a href='master/imprimirLabel/" +full.id +"' target='_blank'> <spam class='fa fa-print'></spam> Labels 2</a></li>" +
-    //                      "<li><a href='impresion-documento/pdfContrato' target='_blank'> <spam class='fa fa-print'></spam> Contrato</a></li>" +
-    //                      "<li><a href='impresion-documento/pdfTsa' target='_blank'> <spam class='fa fa-print'></spam> TSA</a></li>" +
+    //                     "' target='_blank'> <spam class='fal fa-print'></spam> Master</a></li>" +
+    //                      "<li><a href='master/imprimir/" +full.id +"' target='_blank'> <spam class='fal fa-print'></spam> Master simple</a></li>" +
+    //                      "<li><a onclick=\"createLabel("+ full.id +", '"+ full.num_master + "')\"> <spam class='fal fa-print'></spam> Labels</a></li>" +
+    //                      // "<li><a href='master/imprimirLabel/" +full.id +"' target='_blank'> <spam class='fal fa-print'></spam> Labels 2</a></li>" +
+    //                      "<li><a href='impresion-documento/pdfContrato' target='_blank'> <spam class='fal fa-print'></spam> Contrato</a></li>" +
+    //                      "<li><a href='impresion-documento/pdfTsa' target='_blank'> <spam class='fal fa-print'></spam> TSA</a></li>" +
     //                      btn_consolidado +
     //                      "</ul></div>";
     //                 return btns + ' ' + btns_print;

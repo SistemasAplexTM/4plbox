@@ -58,6 +58,9 @@
 
                         </div>
                     </div>
+
+
+
                     <div class="ibox-content">
                         <!--***** contenido ******-->
                         <div class="row">
@@ -97,11 +100,30 @@
                             <div class="col-lg-12">
                                 <div class="form-group" :class="{ 'has-error': errors.has('consignee_id') }">
                                     <div class="col-sm-4">
-                                        <label for="consignee_id" class="control-label gcore-label-top">@lang('general.client'):</label>
+                                        <label for="consignee_id" class="control-label gcore-label-top">@lang('general.consignee'):</label>
                                     </div>
                                     <div class="col-sm-8">
-                                        <v-select name="consignee_id" :options="consignees" placeholder="@lang('general.client')" label="name" v-model="consignee_id">
-                                        </v-select>
+                                        {{-- <v-select name="consignee_id" :options="consignees" placeholder="@lang('general.client')" label="name" v-model="consignee_id"> --}}
+                                        {{-- </v-select> --}}
+                                        <el-autocomplete
+                                          clearable
+                                          class="inline-input"
+                                          v-model="consignee_name"
+                                          :fetch-suggestions="querySearchConsignee"
+                                          :trigger-on-focus="false"
+                                          placeholder="@lang('general.consignee')"
+                                          size="small"
+                                          @clear="deleteSelected"
+                                          @select="handleSelect"
+                                        >
+                                          <template slot-scope="{ item }">
+                                            <div class="content-select">
+                                              <div style="">
+                                                <i class="fal fa-user icon"></i> @{{ item.name }}
+                                              </div>
+                                            </div>
+                                      		</template>
+                                        </el-autocomplete>
                                          <small class="help-block error" v-show="errors.has('consignee_id')">
                                             @{{ errors.first('consignee_id') }}
                                         </small>
@@ -176,6 +198,7 @@
                                         <tr>
                                             <th>@lang('general.date')</th>
                                             <th>@lang('general.client')</th>
+
                                             {{-- <th>@lang('general.email')</th> --}}
                                             <th>@lang('general.tracking')</th>
                                             <th>Warehouse</th>
@@ -239,7 +262,7 @@
                   <div class="modal-content">
                       <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">@lang('documents.close')</span></button>
-                          <h2 class="modal-title" id="myModalLabel"><i class="far fa-file-signature"></i> Crear documento</h2>
+                          <h2 class="modal-title" id="myModalLabel"><i class="fal fa-file-signature"></i> Crear documento</h2>
                       </div>
                       <div class="modal-body">
                         <form id="formTrackingClient" name="formSearchTracking" method="POST" action="">
@@ -308,8 +331,8 @@
                         </form>
                       </div>
                       <div class="modal-footer">
-                          <button type="button" class="btn btn-primary" id="saveDoc" @click="createDocument()"><i class="far fa-file-signature"></i> @lang('documents.create')</button>
-                          <button type="button" class="btn btn-default" data-dismiss="modal"><i class="far fa-times"></i> @lang('documents.close')</button>
+                          <button type="button" class="btn btn-primary" id="saveDoc" @click="createDocument()"><i class="fal fa-file-signature"></i> @lang('documents.create')</button>
+                          <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fal fa-times"></i> @lang('documents.close')</button>
                       </div>
                   </div>
               </div>

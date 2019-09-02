@@ -15,6 +15,7 @@ class Shipper extends Model
     protected $fillable = [
         'agencia_id',
         'localizacion_id',
+        'documento',
         'primer_nombre',
         'segundo_nombre',
         'primer_apellido',
@@ -24,6 +25,7 @@ class Shipper extends Model
         'correo',
         'zip',
         'nombre_full',
-        'nombre_old'
+        'nombre_old',
+        'corporativo',
     ];
 }
