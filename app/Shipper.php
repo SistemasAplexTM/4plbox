@@ -22,6 +22,8 @@ class Shipper extends Model
         'segundo_apellido',
         'direccion',
         'telefono',
+        'whatsapp',
+        'email_cc',
         'correo',
         'zip',
         'nombre_full',

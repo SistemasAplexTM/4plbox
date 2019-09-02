@@ -27,6 +27,9 @@ import VueGoodWizard from 'vue-good-wizard';
 
 Vue.use(VueGoodWizard)
 
+import ElInputTag from 'el-input-tag'
+Vue.use(ElInputTag)
+
 Vue.component('Spinner', Spinner)
 Vue.component('v-select', vSelect)
 Vue.component('autocomplete-component', require('./components/AutocompleteComponent.vue'));

@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "ajv": "^6.5.3",
+    "el-input-tag": "^1.1.0",
     "element-ui": "^2.11.1",
     "imagemin": "^5.3.1",
     "sweetalert2": "^7.26.26",

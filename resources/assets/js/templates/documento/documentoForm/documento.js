@@ -74,10 +74,6 @@ $(document).ready(function() {
         $(this).removeClass('label-info').css('color', '#555');
         $(this).children('span').remove();
     });
-    // llenarSelectPersonalizado('documento', 'localizacion', 'localizacion_id', 2); // module, tableName, id_campo
-    // llenarSelectPersonalizado('documento', 'localizacion', 'localizacion_id_c', 2); // module, tableName, id_campo
-    // llenarSelectPersonalizado('documento', 'localizacion', 'points_id', 2); // module, tableName, id_campo
-
 });
 $(function() {
     //aparecer botones de accion en las bolsas del consolidado

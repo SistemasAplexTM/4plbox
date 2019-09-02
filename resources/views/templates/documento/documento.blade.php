@@ -33,7 +33,7 @@
     }
   }
   .text-write{
-    background-color: #ffffd1;
+    background-color: #ffffd1!important;
   }
     .help-block{
         color: #ed5565;
@@ -472,6 +472,18 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-6">
+                                            <label class="control-label" for="flete"><div class="col-sm-12"  data-container="body" data-trigger="hover"  data-toggle="popover" data-placement="right" data-content="Si el calculo es sobre el volumen (Vol), se evaluara quien es mayor (Peso o Volumen), si es mayor el volumen, se multiplicara por la tarifa. Si es mayor el peso, la diferencia (Peso-Volumen) sera multiplicada por la tarifa." style="padding-left: 0px; padding-right: 0px;"><i class="fal fa-question-circle" style="cursor: pointer; color: coral;"></i> @lang('documents.freight'): (<span id="cobrarPor"></span>)</div></label>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="input-group m-b">
+                                                <span class="input-group-addon">$</span>
+                                                <input type="text" placeholder="0" value="{{ isset($documento->flete) ? $documento->flete : '' }}" class="form-control" readonly="" id="flete" name="flete">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
                                             <label class="control-label" for="impuesto"><div class="col-sm-12" data-trigger="hover"  data-container="body" data-toggle="popover" data-placement="right" data-content="Valor por el cual se calculara el impuesto sobre el valor declarado. (Por defecto 28%)" style="padding-left: 0px; padding-right: 0px;"><i class="fal fa-question-circle" style="cursor: pointer; color: coral;"></i> % @lang('documents.tax'): </div></label>
                                         </div>
                                         <div class="col-sm-6">
@@ -503,18 +515,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-6">
-                                            <label class="control-label" for="flete"><div class="col-sm-12"  data-container="body" data-trigger="hover"  data-toggle="popover" data-placement="right" data-content="Si el calculo es sobre el volumen (Vol), se evaluara quien es mayor (Peso o Volumen), si es mayor el volumen, se multiplicara por la tarifa. Si es mayor el peso, la diferencia (Peso-Volumen) sera multiplicada por la tarifa." style="padding-left: 0px; padding-right: 0px;"><i class="fal fa-question-circle" style="cursor: pointer; color: coral;"></i> @lang('documents.freight'): (<span id="cobrarPor"></span>)</div></label>
-                                        </div>
 
-                                        <div class="col-sm-6">
-                                            <div class="input-group m-b">
-                                                <span class="input-group-addon">$</span>
-                                                <input type="text" placeholder="0" value="{{ isset($documento->flete) ? $documento->flete : '' }}" class="form-control" readonly="" id="flete" name="flete">
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="form-group">
                                         <div class="col-sm-6">
                                             <label class="control-label" for="seguro_valor">@lang('documents.insured_value') $US: </label>
