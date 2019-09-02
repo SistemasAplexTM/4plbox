@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Traits\sendEmailAlerts;
 use Illuminate\Support\Facades\Mail;
+use App\Notifications\ChangeState;
+use App\User;
 
 class TrackingController extends Controller
 {
@@ -69,7 +71,11 @@ class TrackingController extends Controller
                     if ($status->json_data != null) {
                       $json_data = json_decode($status->json_data);
                       if(isset($json_data->email_template_id)){
-                        $this->verifySendEmail($config->value, $json_data->email_template_id, $request->consignee_id, $request->codigo);
+                        if ($status->view_client) {
+                          $user = User::where('consignee_id', $request->consignee_id)->first();
+                          $user->notify(new ChangeState($status));
+                        }
+                        // $this->verifySendEmail($config->value, $json_data->email_template_id, $request->consignee_id, $request->codigo);
                       }
                     }
                   }

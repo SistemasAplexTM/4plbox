@@ -17,13 +17,13 @@ Route::namespace('Auth')->group(function () {
   Route::group(['prefix' => 'auth'], function () {
     Route::post('login', 'AuthController@login');
     Route::post('signup', 'AuthController@signup');
-
     Route::group(['middleware' => 'auth:api'], function() {
       Route::get('logout', 'AuthController@logout');
       Route::get('user', 'AuthController@user');
     });
   });
 });
+
 Route::get('getLogo/{agency_id}', 'CasilleroApiController@getLogo');
 Route::group(['prefix' => 'user'], function() {
     Route::get('/', function() {
@@ -31,7 +31,11 @@ Route::group(['prefix' => 'user'], function() {
      return request()->user()->id();
     })->middleware('auth:api');
 });
+
 Route::group(['middleware' => 'auth:api'], function(){
+  Route::get('cantNotification', 'NotificationController@cant');
+  Route::get('getNotification', 'NotificationController@get');
+  Route::get('viewedAllNotification', 'NotificationController@viewedAll');
   Route::get('rastreo/getStatusReport/{data}/{idStatus?}/{user_id?}', 'RastreoController@getStatusReport');
   Route::get('getConfig/{key}', 'Controller@getConfig');
   Route::get('getAllWarehouse/{user_id?}/{idStatus?}', 'CasilleroApiController@getAllWarehouse');
