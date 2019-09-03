@@ -1,3 +1,3 @@
 <div id="right-sidebar">
-    {{-- <right-sidebar></right-sidebar> --}}
+    <rigth-menu></rigth-menu>
 </div>

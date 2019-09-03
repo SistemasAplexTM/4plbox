@@ -1,6 +1,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+
 window.swal = require('sweetalert2');
 
 import vSelect from 'vue-select'
@@ -8,13 +9,13 @@ import vSelect from 'vue-select'
 import es from 'vee-validate/dist/locale/es';
 import VeeValidate, { Validator } from 'vee-validate';
 const config = {
-  fieldsBagName: 'fieldBags' 
+  fieldsBagName: 'fieldBags'
 }
-
 import Element from 'element-ui'
 import locale from 'element-ui/lib/locale/lang/en'
 import Spinner from 'vue-spinkit'
 import 'element-ui/lib/theme-chalk/index.css';
+// import store from './store'
 
 // Localize takes the locale object as the second argument (optional) and merges it.
 Validator.localize('es', es);
@@ -26,6 +27,9 @@ Vue.use(Element, {locale})
 import VueGoodWizard from 'vue-good-wizard';
 
 Vue.use(VueGoodWizard)
+
+import ElInputTag from 'el-input-tag'
+Vue.use(ElInputTag)
 
 Vue.component('Spinner', Spinner)
 Vue.component('v-select', vSelect)

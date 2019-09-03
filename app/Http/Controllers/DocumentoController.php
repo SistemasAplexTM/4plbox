@@ -378,6 +378,7 @@ class DocumentoController extends Controller
             'shipper_data'  => json_decode(json_encode($shipper)),
             'consignee_data'  => json_decode(json_encode($consignee)),
             'citys_data'  => json_decode(json_encode($citys)),
+            'data_agencia' => $this->getNameAgencia(),
         ]);
         $this->AddToLog('Documento ver (' . $id . ') consecutivo (' . $documento->consecutivo . ')');
         return view('templates/documento/documento', compact(

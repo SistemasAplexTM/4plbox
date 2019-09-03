@@ -25,7 +25,7 @@ class ConsigneeRequest extends FormRequest
     {
         return [
             // 'tipo_identificacion_id' => 'required|integer',
-            'agencia_id' => 'required|integer',
+            // 'agencia_id' => 'required|integer',
             'localizacion_id' => 'required|integer',
             // 'documento' => 'required',
             'primer_nombre' => 'required',
@@ -38,8 +38,8 @@ class ConsigneeRequest extends FormRequest
     {
         return [
             'tipo_identificacion_id.required' => 'El :attribute es obligatorio.',
-            'agencia_id.required' => 'La :attribute es obligatoria.',
-            'agencia_id.integer' => 'Debe seleccionar una :attribute de la lista.',
+            // 'agencia_id.required' => 'La :attribute es obligatoria.',
+            // 'agencia_id.integer' => 'Debe seleccionar una :attribute de la lista.',
             'localizacion_id.required' => 'La :attribute es obligatoria.',
             'localizacion_id.integer' => 'Debe seleccionar una :attribute de la lista.',
             'documento.required' => 'El :attribute es obligatorio.',
@@ -56,7 +56,7 @@ class ConsigneeRequest extends FormRequest
         return [
             'tipo_identificacion_id' => 'Tipo de identificación',
             'localizacion_id' => 'Ciudad',
-            'agencia_id' => 'Agencia',
+            // 'agencia_id' => 'Agencia',
             'documento' => 'Documento',
             'primer_nombre' => 'Primer Nombre',
             // 'primer_apellido' => 'Primer Apellido',

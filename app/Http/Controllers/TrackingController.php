@@ -73,7 +73,7 @@ class TrackingController extends Controller
                       if(isset($json_data->email_template_id)){
                         if ($status->view_client) {
                           $user = User::where('consignee_id', $request->consignee_id)->first();
-                          $user->notify(new ChangeState($status));
+                          // $user->notify(new ChangeState($status));
                         }
                         // $this->verifySendEmail($config->value, $json_data->email_template_id, $request->consignee_id, $request->codigo);
                       }

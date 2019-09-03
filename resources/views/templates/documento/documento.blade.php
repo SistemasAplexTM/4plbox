@@ -33,7 +33,7 @@
     }
   }
   .text-write{
-    background-color: #ffffd1;
+    background-color: #ffffd1!important;
   }
     .help-block{
         color: #ed5565;
@@ -145,7 +145,6 @@
 @endsection
 
 @section('content')
-
     {{-- DEFAULT VALUES --}}
     <?php $id_pa = ((env('APP_CLIENT') != 'worldcargo') ? 234 : 1) ?> {{-- id de la posicion por defecto --}}
     <div class="row" id="documento">
@@ -216,7 +215,7 @@
                                         <label class="control-label col-sm-2">@lang('documents.name'): <samp id="require">*</samp></label>
                                         <div class="col-sm-10">
                                             <div class="input-group"  style="margin-bottom: 5px;" :class="{ 'has-error': errors.has('nombreR') }">
-                                                <input type="search" autocomplete="off" data-id="nomBuscarShipper" id="nombreR" name="nombreR" placeholder="@lang('documents.type_to_search')" class="form-control" onkeyup="deleteError($(this).parent());" v-model="nombreR" v-validate="'required'">
+                                                <input type="search" autocomplete="aplextmautocomplete" data-id="nomBuscarShipper" id="nombreR" name="nombreR" placeholder="@lang('documents.type_to_search')" class="form-control" onkeyup="deleteError($(this).parent());" v-model="nombreR" v-validate="'required'">
                                                 <span class="input-group-btn">
                                                     <button id="btnBuscarShipper" @click="modalShipper(true)" class="btn btn-primary" type="button" data-toggle='tooltip' title="Buscar"><span class="fal fa-search"></span>&nbsp;</button>
                                                     <button id="btnEditShipper" @click="editFormsShipperConsignee(0)" class="btn btn-success" type="button" data-toggle='tooltip' title="Editar"><span class="fal fa-edit"></span>&nbsp;</button>
@@ -231,60 +230,59 @@
                             <div class="row">
                                 <label class="control-label col-sm-2">@lang('documents.address'): <samp id="require">*</samp></label>
                                 <div class="col-sm-10" :class="{ 'has-error': errors.has('direccionR') }">
-                                    <input type="text" autocomplete="off" id="direccionR" name="direccionR" placeholder="@lang('documents.address')" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());" v-model="direccionR" v-validate="'required'">
-                                    <small class="help-block has-error">@{{ errors.first('direccionR') }}</small>
+                                    {{-- <input type="text" autocomplete="off" id="direccionR" name="direccionR" placeholder="@lang('documents.address')" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());" v-model="direccionR" v-validate="'required'">
+                                    <small class="help-block has-error">@{{ errors.first('direccionR') }}</small> --}}
                                 </div>
                             </div>
 
-                                <!-- /Grupo Doble 1 -->
-                                 <div class="row">
-                                    <label class="control-label col-sm-2">@lang('documents.email'):</label>
-                                    <div class="col-sm-5" :class="{ 'has-error': errors.has('emailR') }">
-                                        <input type="email" autocomplete="off" placeholder="Example@example.com" id="emailR" name="emailR" class="form-control" v-validate.disable="'unique_s'">
-                                        <small class="help-block has-error">@{{ errors.first('emailR') }}</small>
-                                    </div>
-                                    <label class="control-label col-sm-1">@lang('documents.phone'): </label>
-                                    <div class="col-sm-4">
-                                        <input type="tel" autocomplete="off" data-mask="(999) 999-9999" placeholder="@lang('documents.phone')" id="telR" name="telR" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());">
-                                        <small class="help-block has-error">@{{ errors.first('telR') }}</small>
-                                    </div>
-                                    <small class="help-block" style="display: none;"></small>
+                            <!-- /Grupo Doble 1 -->
+                             <div class="row">
+                                <label class="control-label col-sm-2">@lang('documents.email'):</label>
+                                <div class="col-sm-5" :class="{ 'has-error': errors.has('emailR') }">
+                                    {{-- <input type="email" autocomplete="off" placeholder="Example@example.com" id="emailR" name="emailR" class="form-control" v-validate.disable="'unique_s'">
+                                    <small class="help-block has-error">@{{ errors.first('emailR') }}</small> --}}
                                 </div>
-                                <!-- /Fin Grupo Doble 1 -->
+                                <label class="control-label col-sm-1">@lang('documents.phone'): </label>
+                                <div class="col-sm-4">
+                                    {{-- <input type="tel" autocomplete="off" data-mask="(999) 999-9999" placeholder="@lang('documents.phone')" id="telR" name="telR" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());">
+                                    <small class="help-block has-error">@{{ errors.first('telR') }}</small> --}}
+                                </div>
+                                <small class="help-block" style="display: none;"></small>
+                            </div>
+                            <!-- /Fin Grupo Doble 1 -->
 
-                                <!-- /Grupo Doble 2 -->
-                                 <div class="row">
-                                    <label class="control-label col-sm-2">@lang('documents.city'): <samp id="require">*</samp></label>
-                                    <div class="col-sm-5" onclick ="deleteError($(this));">
-                                        <input type="hidden" id="localizacion_id" name="localizacion_id" value="">
-                                        <city-component @get="setCity($event, true)" :data="citys" :disabled="disabled_s" :selected="city_selected_s" autocomplete="off"></city-component>
-                                        <small class="help-block has-error" id="msn_l1" style="display: none;">@lang('documents.obligatory_field')</small>
-                                    </div>
-                                    <label class="control-label col-sm-1">@lang('documents.zip'): </label>
-                                    <div class="col-sm-4">
-                                        <input type="text" autocomplete="off" placeholder="Zip" id="zipR" name="zipR" class="form-control" onkeyup="deleteError($(this).parent());">
-                                    </div>
-                                    <small class="help-block" style="display: none;"></small>
+                            <!-- /Grupo Doble 2 -->
+                             <div class="row">
+                                <label class="control-label col-sm-2">@lang('documents.city'): <samp id="require">*</samp></label>
+                                <div class="col-sm-5" onclick ="deleteError($(this));">
+                                    {{-- <input type="hidden" id="localizacion_id" name="localizacion_id" value="">
+                                    <city-component @get="setCity($event, true)" :data="citys" :disabled="disabled_s" :selected="city_selected_s" autocomplete="off"></city-component>
+                                    <small class="help-block has-error" id="msn_l1" style="display: none;">@lang('documents.obligatory_field')</small> --}}
                                 </div>
-                                <!-- /Fin Grupo Doble 2 -->
-                                <div class="row">
-                                    <input type="checkbox" id="opEditarShip" name="opEditarShip" style="display: none;">
-
-                                    <input type="hidden" class="" id="shipper_id" name="shipper_id" value="{{ isset($documento->shipper_id) ? $documento->shipper_id : '' }}">
+                                <label class="control-label col-sm-1">@lang('documents.zip'): </label>
+                                <div class="col-sm-4">
+                                    {{-- <input type="text" autocomplete="off" placeholder="Zip" id="zipR" name="zipR" class="form-control" onkeyup="deleteError($(this).parent());"> --}}
                                 </div>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="form-group">
-                                            <div class="checkbox checkbox-success checkbox-inline">
-                                                <input type="checkbox" id="enviarEmailRemitente" name="enviarEmailRemitente" value="t" style="margin-left: -50px;">
-                                                <label for="enviarEmailRemitente"> @lang('documents.send_email') <i class="fal fa-envelope-open"></i></label>
-                                            </div>
+                                {{-- <small class="help-block" style="display: none;"></small> --}}
+                            </div>
+                            <!-- /Fin Grupo Doble 2 -->
+                            <div class="row">
+                                <input type="checkbox" id="opEditarShip" name="opEditarShip" style="display: none;">
+                                <input type="hidden" class="" id="shipper_id" name="shipper_id" value="{{ isset($documento->shipper_id) ? $documento->shipper_id : '' }}">
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="checkbox checkbox-success checkbox-inline">
+                                            <input type="checkbox" id="enviarEmailRemitente" name="enviarEmailRemitente" value="t" style="margin-left: -50px;">
+                                            <label for="enviarEmailRemitente"> @lang('documents.send_email') <i class="fal fa-envelope-open"></i></label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
                 <div class="col-lg-6" style="margin-bottom: 20px;" v-if="mostrar.includes(26)">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
@@ -472,6 +470,18 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-6">
+                                            <label class="control-label" for="flete"><div class="col-sm-12"  data-container="body" data-trigger="hover"  data-toggle="popover" data-placement="right" data-content="Si el calculo es sobre el volumen (Vol), se evaluara quien es mayor (Peso o Volumen), si es mayor el volumen, se multiplicara por la tarifa. Si es mayor el peso, la diferencia (Peso-Volumen) sera multiplicada por la tarifa." style="padding-left: 0px; padding-right: 0px;"><i class="fal fa-question-circle" style="cursor: pointer; color: coral;"></i> @lang('documents.freight'): (<span id="cobrarPor"></span>)</div></label>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="input-group m-b">
+                                                <span class="input-group-addon">$</span>
+                                                <input type="text" placeholder="0" value="{{ isset($documento->flete) ? $documento->flete : '' }}" class="form-control" readonly="" id="flete" name="flete">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
                                             <label class="control-label" for="impuesto"><div class="col-sm-12" data-trigger="hover"  data-container="body" data-toggle="popover" data-placement="right" data-content="Valor por el cual se calculara el impuesto sobre el valor declarado. (Por defecto 28%)" style="padding-left: 0px; padding-right: 0px;"><i class="fal fa-question-circle" style="cursor: pointer; color: coral;"></i> % @lang('documents.tax'): </div></label>
                                         </div>
                                         <div class="col-sm-6">
@@ -503,18 +513,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-6">
-                                            <label class="control-label" for="flete"><div class="col-sm-12"  data-container="body" data-trigger="hover"  data-toggle="popover" data-placement="right" data-content="Si el calculo es sobre el volumen (Vol), se evaluara quien es mayor (Peso o Volumen), si es mayor el volumen, se multiplicara por la tarifa. Si es mayor el peso, la diferencia (Peso-Volumen) sera multiplicada por la tarifa." style="padding-left: 0px; padding-right: 0px;"><i class="fal fa-question-circle" style="cursor: pointer; color: coral;"></i> @lang('documents.freight'): (<span id="cobrarPor"></span>)</div></label>
-                                        </div>
 
-                                        <div class="col-sm-6">
-                                            <div class="input-group m-b">
-                                                <span class="input-group-addon">$</span>
-                                                <input type="text" placeholder="0" value="{{ isset($documento->flete) ? $documento->flete : '' }}" class="form-control" readonly="" id="flete" name="flete">
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="form-group">
                                         <div class="col-sm-6">
                                             <label class="control-label" for="seguro_valor">@lang('documents.insured_value') $US: </label>

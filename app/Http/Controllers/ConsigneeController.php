@@ -37,6 +37,7 @@ class ConsigneeController extends Controller
             $data              = (new Consignee)->fill($request->all());
             $data->nombre_full = trim($request->primer_nombre) . ' ' . trim($request->segundo_nombre) . ' ' . trim($request->primer_apellido) . ' ' . trim($request->segundo_apellido);
             $data->created_at  = date('Y-m-d H:i:s');
+            $data->agencia_id = Auth::user()->agencia_id;
             if ($data->save()) {
                 $this->AddToLog('Consignee creado id (' . $data->id . ')');
                 $this->generarCasillero($data->id);
@@ -73,29 +74,34 @@ class ConsigneeController extends Controller
     public function update(ConsigneeRequest $request, $id)
     {
         try {
-            $data = Consignee::findOrFail($id);
-            $data->update($request->all());
-            $data->nombre_full = trim($request->primer_nombre) . ' ' . trim($request->segundo_nombre) . ' ' . trim($request->primer_apellido) . ' ' . trim($request->segundo_apellido);
-            $data->save();
-            if($request->emailsend){
-                $this->enviarEmailCasillero($id, $data->agencia_id, $data->nombre_full, $data->correo, $data->celular);
-            }
-            $this->AddToLog('Consignee editado id (' . $data->id . ')');
-            $answer = array(
-                "datos"  => $request->all(),
-                "code"   => 200,
-                "status" => 500,
-            );
-            return $answer;
+          $email_cc = null;
+          if ($request->emails_cc) {
+            $email_cc = implode(",", $request->emails_cc);
+          }
+          $data = Consignee::findOrFail($id);
+          $data->update($request->all());
+          $data->nombre_full = trim($request->primer_nombre) . ' ' . trim($request->segundo_nombre) . ' ' . trim($request->primer_apellido) . ' ' . trim($request->segundo_apellido);
+          $data->email_cc = $email_cc;
+          $data->save();
+          if($request->emailsend){
+              $this->enviarEmailCasillero($id, $data->agencia_id, $data->nombre_full, $data->correo, $data->celular);
+          }
+          $this->AddToLog('Consignee editado id (' . $data->id . ')');
+          $answer = array(
+              "datos"  => $request->all(),
+              "code"   => 200,
+              "status" => 500,
+          );
+          return $answer;
 
-        } catch (Exception $e) {
-            $answer = array(
-                "error"  => $e,
-                "code"   => 600,
-                "status" => 500,
-            );
-            return $answer;
-        }
+      } catch (Exception $e) {
+          $answer = array(
+              "error"  => $e,
+              "code"   => 600,
+              "status" => 500,
+          );
+          return $answer;
+      }
     }
 
     public function destroy($id)
@@ -146,9 +152,9 @@ class ConsigneeController extends Controller
         $table = 'consignee';
         if ($id_shipper == null || $id_shipper == 'null') {
             $where = [[$table . '.deleted_at', null]];
-            if(!Auth::user()->isRole('admin')){
+            // if(!Auth::user()->isRole('admin')){
                 $where[] = [$table . '.agencia_id', $id_agencia];
-            }
+            // }
             $sql = DB::table($table)
                 ->join('localizacion', $table . '.localizacion_id', 'localizacion.id')
                 ->join('deptos', 'localizacion.deptos_id', 'deptos.id')
@@ -246,7 +252,9 @@ class ConsigneeController extends Controller
             $table . '.segundo_apellido',
             $table . '.direccion',
             $table . '.telefono',
+            $table . '.whatsapp',
             $table . '.correo',
+            $table . '.email_cc',
             $table . '.localizacion_id',
             $table . '.zip',
             $table . '.cliente_id',

@@ -70,17 +70,23 @@
 3. En la forma del PAGO no se ha actualizado que el PP muestre la lista de formas de pago sigue con COD y los recibos se les
    está colocando forma de pago errada, lo que no va a permitir cobrarlos========================================================
 -. la imagen variable para la agencia en los templates.==========================================================================
+-. Campo CC en formulario shipper y consignee, campo WhatsApp. ==================================================================
+-. quitar la agencia de las tablas shipper, consignee y que los registros solo filtren los datos de cada agencias================
 
--. Campo CC en formulario shipper y consignee, campo WhatsApp.
 -. Revisar porque al crear consignee no tomo el prefijo de la agencia si no que tomo el prefijo de la principal.
 -. colocar fecha en el email de tracking recibido.
 -. colocar edicion al tracking en linea.
+-. mostrar al buscar shipper y consignee en la modal de documento solo sus shippers y consignees de cada uno
+-. los documentos de la grilla principal solo muestre los documentos de la agencia logueada.
+-. los emails templates que solo filtre por la agencia logueada
+-. Revisar si en clientes, se muestra solo los datos de los clientes de la agencia que se logueó.
+-. colocar el cliente en la columna agencia de la grilla de consignees.
 
 ===Revisión con Colombiana===
 1. Cuando se crea un recibo para courier y este tiene una agencia diferente a la principal, el prefijo del casillero no cambia, sigue usando el de la principal.
 2. Se ingresó un consignee desde el recibo de colombiana, se separó el nombre y apellidos con líneas y el sistema no ingresó bien el nombre, y lo creó doble.
 4. En las tarifas de las agencias se debe colcoar la mínima de las agencias.
-**** 5. CRÍTICO: El logo variable en las plantillas de correo 
+**** 5. CRÍTICO: El logo variable en las plantillas de correo
 6. CRÍTICO: El CC del correo en Shipper y Consignee
 7. CRÍTICO: El WhatsApp en el Consignee y la agencia
 8. CRÍTICO: Es enredado crear consignee y shipper desde el recibo, mejor usemos una modal.
@@ -135,3 +141,5 @@
 
 -. Registrar shipper y consignee desde un componente aparte.. que se cree y se seleccione en el documento
 -. Dejar en la grilla las cajas que no están consolidadas.
+
+autocomplete="aplextmautocomplete"

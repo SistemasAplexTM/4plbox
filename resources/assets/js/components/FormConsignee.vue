@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="">
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-lg-12">
         <div class="form-group">
           <div class="col-sm-4">
@@ -21,7 +21,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="row">
       <div class="col-lg-12">
         <div class="form-group">
@@ -169,10 +169,34 @@
       <div class="col-lg-12">
         <div class="form-group">
           <div class="col-sm-4">
+            <label for="whatsapp" class="control-label gcore-label-top">Whatsapp:</label>
+          </div>
+          <div class="col-sm-8">
+            <el-input  placeholder="Whatsapp" v-model="form.whatsapp" size="medium" clearable></el-input>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="form-group">
+          <div class="col-sm-4">
             <label for="correo" class="control-label gcore-label-top">Email:</label>
           </div>
           <div class="col-sm-8">
-            <el-input  placeholder="Email" v-model="form.correo" size="medium" clearable></el-input>
+            <el-input type="email"  placeholder="Email" v-model="form.correo" size="medium" clearable></el-input>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="form-group">
+          <div class="col-sm-4">
+            <label for="emails_cc" class="control-label gcore-label-top">Emails CC:</label>
+          </div>
+          <div class="col-sm-8">
+            <el-input-tag placeholder="Ingrese correos" v-model="form.emails_cc" size="medium"></el-input-tag>
           </div>
         </div>
       </div>
@@ -279,7 +303,7 @@ export default {
       },
       form: {
         corporativo: false,
-        agencia_id: null,
+        // agencia_id: null,
         tipo_identificacion_id: null,
         documento: null,
         primer_nombre: null,
@@ -288,14 +312,16 @@ export default {
         segundo_apellido: null,
         direccion: null,
         telefono: null,
+        whatsapp: null,
         correo: null,
+        emails_cc: [],
         localizacion_id: null,
         zip: null,
         cliente_id: null,
         tarifa: 0,
         emailsend: false,
       },
-      branchs: [],
+      // branchs: [],
       clientes: null,
       city_selected_s: '',
     };
@@ -311,7 +337,7 @@ export default {
     }
   },
   mounted() {
-    this.getSelectBranch();
+    // this.getSelectBranch();
     this.getSelectClient();
   },
   methods: {
@@ -369,14 +395,14 @@ export default {
     },
     validateFields(field){
       let save = true;
-      if(this.form.agencia_id === null || this.form.agencia_id === ''){
-        if(!field || field === 'agencia_id'){
-          this.errors_data.agencia_id = true;
-          save = false;
-        }
-      }else {
-        this.errors_data.agencia_id = false;
-      }
+      // if(this.form.agencia_id === null || this.form.agencia_id === ''){
+      //   if(!field || field === 'agencia_id'){
+      //     this.errors_data.agencia_id = true;
+      //     save = false;
+      //   }
+      // }else {
+      //   this.errors_data.agencia_id = false;
+      // }
       if(this.form.primer_nombre === null || this.form.primer_nombre === ''){
         if(!field || field === 'primer_nombre'){
           this.errors_data.primer_nombre = true;
@@ -413,6 +439,7 @@ export default {
       }else{
         this.errors_data.primer_apellido = false;
       }
+
       return save;
     },
     resetForm(){
@@ -432,13 +459,15 @@ export default {
       this.form.segundo_apellido = null;
       this.form.direccion = null;
       this.form.telefono = null;
+      this.form.whatsapp = null;
       this.form.correo = null;
+      this.form.emails_cc = [];
       this.form.localizacion_id = null;
       this.form.zip = null;
       this.form.cliente_id = null;
       this.form.tarifa = 0;
       this.form.emailsend = false;
-      this.city_selected_s = null;
+      this.city_selected_s = (this.city_selected_s === null) ? '' : null;
       this.edit=false;
     },
     getSelectBranch: function(){
@@ -464,6 +493,10 @@ export default {
           me.form.corporativo = true;
         }else{
           me.form.corporativo = false;
+        }
+        if (me.form.email_cc !== null) {
+          let emails = me.form.email_cc;
+          me.form.emails_cc = emails.split(",");
         }
         me.city_selected_s = response.data.ciudad;
         me.edit=true;

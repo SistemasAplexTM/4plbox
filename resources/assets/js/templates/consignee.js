@@ -1,6 +1,6 @@
 $(document).ready(function() {
-    llenarSelectP('consignee', 'localizacion', 'localizacion_id', 2); // module, tableName, id_campo
-    llenarSelect('consignee', 'agencia', 'agencia_id', 0); // module, tableName, id_campo
+    // llenarSelectP('consignee', 'localizacion', 'localizacion_id', 2); // module, tableName, id_campo
+    // llenarSelect('consignee', 'agencia', 'agencia_id', 0); // module, tableName, id_campo
     // llenarSelect('consignee', 'tipo_identificacion', 'tipo_identificacion_id', 0); // module, tableName, id_campo
     $('#tbl-consignee').DataTable({
         ajax: 'consignee/all',
@@ -17,8 +17,8 @@ $(document).ready(function() {
             data: 'ciudad',
             name: 'localizacion.nombre'
         }, {
-            data: 'agencia',
-            name: 'agencia.descripcion'
+            data: 'cliente',
+            name: 'clientes.nombre'
         }, {
             sortable: false,
             "render": function(data, type, full, meta) {

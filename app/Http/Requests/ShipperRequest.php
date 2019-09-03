@@ -24,7 +24,7 @@ class ShipperRequest extends FormRequest
     public function rules()
     {
         return [
-            'agencia_id' => 'required|integer',
+            // 'agencia_id' => 'required|integer',
             'localizacion_id' => 'required|integer',
             'primer_nombre' => 'required',
             // 'primer_apellido' => 'required',
@@ -35,8 +35,8 @@ class ShipperRequest extends FormRequest
     public function messages()
     {
         return [
-            'agencia_id.required' => 'La :attribute es obligatoria.',
-            'agencia_id.integer' => 'Debe seleccionar una :attribute de la lista.',
+            // 'agencia_id.required' => 'La :attribute es obligatoria.',
+            // 'agencia_id.integer' => 'Debe seleccionar una :attribute de la lista.',
             'localizacion_id.required' => 'La :attribute es obligatoria.',
             'localizacion_id.integer' => 'Debe seleccionar una :attribute de la lista.',
             'primer_nombre.required' => 'El :attribute es obligatorio.',
@@ -51,7 +51,7 @@ class ShipperRequest extends FormRequest
     {
         return [
             'localizacion_id' => 'Ciudad',
-            'agencia_id' => 'Agencia',
+            // 'agencia_id' => 'Agencia',
             'primer_nombre' => 'Primer Nombre',
             // 'primer_apellido' => 'Primer Apellido',
             'correo' => 'Correo',

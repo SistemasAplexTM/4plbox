@@ -26,7 +26,7 @@ class AplexConfigController extends Controller
         array('icon' => 'plane-alt', 'route' => 'transport/aerolineas', 'url' => true, 'desc' => 'layouts.airlines', 'perm' => 'transport.index'),
         array('icon' => 'road', 'route' => 'transport/aeropuertos', 'url' => true, 'desc' => 'layouts.airports', 'perm' => 'transport.index'),
         array('icon' => 'share-alt', 'route' => 'servicios.index', 'url' => false, 'desc' => 'layouts.services', 'perm' => 'servicios.index'),
-        array('icon' => 'reply-all', 'route' => 'administracion/5', 'url' => true, 'desc' => 'layouts.type_boardings', 'perm' => 'administracion.index'),
+        array('icon' => 'dolly-flatbed-alt', 'route' => 'administracion/5', 'url' => true, 'desc' => 'layouts.type_boardings', 'perm' => 'administracion.index'),
         array('icon' => 'shopping-bag', 'route' => 'administracion/6', 'url' => true, 'desc' => 'layouts.type_packagings', 'perm' => 'administracion.index'),
         array('icon' => 'dollar-sign', 'route' => 'administracion/12', 'url' => true, 'desc' => 'layouts.cost', 'perm' => 'administracion.index')
       );
@@ -34,7 +34,7 @@ class AplexConfigController extends Controller
       $menu2 = array(
         array('icon' => 'cog', 'route' => 'settings', 'url' => false, 'desc' => 'general.general', 'perm' => 'administracion.index'),
         array('icon' => 'store', 'route' => 'agencia.index', 'url' => false, 'desc' => 'layouts.agencies', 'perm' => 'agencia.index'),
-        array('icon' => 'users-class', 'route' => 'empleado.index', 'url' => false, 'desc' => 'layouts.employees', 'perm' => 'agencia.index'),
+        // array('icon' => 'users-class', 'route' => 'empleado.index', 'url' => false, 'desc' => 'layouts.employees', 'perm' => 'agencia.index'),
         array('icon' => 'money-bill', 'route' => 'arancel.index', 'url' => false, 'desc' => 'layouts.tariffs', 'perm' => 'arancel.index'),
         array('icon' => 'box-check', 'route' => 'status.index', 'url' => false, 'desc' => 'layouts.status', 'perm' => 'status.index'),
         array('icon' => 'truck', 'route' => 'transportador.index', 'url' => false, 'desc' => 'layouts.transporters', 'perm' => 'transportador.index'),
