@@ -63,3 +63,4 @@ Vue.component('document-filter', require('./components/DocumentFilter.vue'));
 Vue.component('document-upload', require('./components/DocumentUpload.vue'));
 //
 Vue.component('form-consignee', require('./components/FormConsignee.vue'));
+Vue.component('rigth-menu', require('./components/RigthMenu/RigthMenu.vue'));

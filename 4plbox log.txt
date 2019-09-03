@@ -141,3 +141,5 @@
 
 -. Registrar shipper y consignee desde un componente aparte.. que se cree y se seleccione en el documento
 -. Dejar en la grilla las cajas que no están consolidadas.
+
+autocomplete="aplextmautocomplete"

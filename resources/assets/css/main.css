@@ -7,6 +7,9 @@ body{
 input{
   background-color: white!important;
 }
+.el-dialog__wrapper{
+  z-index: 9999!important;
+}
 .el-input__inner{
   background-color: white!important;
 }

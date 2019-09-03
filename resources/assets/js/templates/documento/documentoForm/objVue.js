@@ -67,6 +67,7 @@ var objVue = new Vue({
         this.$validator.localize('es', dict);
     },
     data: {
+        agency_data: data_agencia,
         citys: [],
         citys_c: [],
         mostrar: {},
