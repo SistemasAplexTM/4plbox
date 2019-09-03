@@ -384,6 +384,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('settings', 'AplexConfigController@settings')->name('settings');
     Route::get('configs', 'AplexConfigController@config')->name('config.index');
     Route::get('aplexConfig/document', 'AplexConfigController@document')->name('config.document');
+    Route::get('menu', 'MenuController@index')->name('menu.index');
+    Route::post('menu', 'MenuController@store');
+    Route::get('getMenu/{front}', 'MenuController@getMenu');
 
     Route::get('getConfig/{key}', 'Controller@getConfig');
     Route::post('config/{key}/{type}/{simple?}', 'AplexConfigController@save');

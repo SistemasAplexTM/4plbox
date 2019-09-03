@@ -1,5 +1,6 @@
 {
     "/js/app.js": "/js/app.js",
+    "/js/plantilla.js": "/js/plantilla.js",
     "/js/main.js": "/js/main.js",
     "/css/main.css": "/css/main.css"
 }

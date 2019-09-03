@@ -73,7 +73,6 @@ return [
     'report'  =>'Informe',
     'employees'  =>'Empleados',
     'cost'  =>'Costos',
-
-
+    'menu'  =>'Menú'
 
 ];

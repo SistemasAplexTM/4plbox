@@ -39,8 +39,8 @@
             @include('layouts.sidebarRight')
         </div>
         <!-- Scripts -->
-        <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/plantilla.js') }}"></script>
+        <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/main.js') }}"></script>
         <script src="{{ asset('js/plugins/silentPrint/silentPrint.min.js') }}"></script>
         <!-- Latest compiled and minified JavaScript -->
