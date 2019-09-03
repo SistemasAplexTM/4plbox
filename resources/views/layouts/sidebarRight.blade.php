@@ -1,3 +1,3 @@
 <div id="right-sidebar">
-    <rigth-menu></rigth-menu>
+    <right-menu></right-menu>
 </div>

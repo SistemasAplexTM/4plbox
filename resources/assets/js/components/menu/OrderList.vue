@@ -3,9 +3,13 @@
     <ol class="dd-list">
       <li v-for="item in menu" class="dd-item dd3-item" :data-id="item.item">
         <div class="dd-handle dd3-handle"> </div><div class="dd3-content">
-          <i class="fal fa-edit"></i>
-          <i :class="formatMeta(item.meta, 'icon')"></i>
-          {{ item.name }}
+          <!-- <i class="fal fa-ellipsis-v-alt fr actions-menu"> </i> -->
+          <i class="fal fa-trash fr text-danger actions-menu-item"> </i>
+          <i class="fal fa-edit fr text-success actions-menu-item"> </i>
+          <i class="" :class="formatMeta(item.meta, 'icon')"></i>
+          <span class="text-menu">
+            {{ item.name }}
+          </span>
         </div>
       </li>
     </ol>
@@ -18,7 +22,6 @@ $(function() {
   $('.dd').on('change', function() {
     var data = $('.dd').nestable('serialize');
   });
-
 });
 export default {
   data() {
@@ -29,6 +32,7 @@ export default {
   },
   created(){
     this.getMenu()
+
   },
   methods: {
     getMenu(){
@@ -47,6 +51,20 @@ export default {
 </script>
 
 <style lang="css" >
+.text-menu {
+  margin-left: 5px;
+}
+
+.actions-menu-item {
+  margin-left: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.actions-menu-item:hover {
+  opacity: 0.60;
+}
+
 /**
  * Nestable
  */

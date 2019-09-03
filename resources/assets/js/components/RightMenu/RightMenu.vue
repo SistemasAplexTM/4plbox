@@ -2,12 +2,13 @@
   <el-drawer
     :visible.sync="drawer"
     :direction="direction"
+    size="25%"
     :show-close="false">
     <span slot="title" class="mb-5">
-      <i class="fr fa-4x o-010" :class="'fal fa-user'"></i>
-      <el-page-header @back="" title="" style="color: white !important;margin-top: 12px;">
+      <i class="fr fa-4x o-010" :class="data.icon"></i>
+      <el-page-header @back="drawer=false" title="" style="color: white !important;margin-top: 12px;">
       <span slot="content" class="w-100">
-      <h3><i :class="'fal fa-user'"></i> Consignee</h3>
+      <h3><i :class="data.icon"></i> {{ data.title }}</h3>
       </span>
       </el-page-header>
     </span>
@@ -17,14 +18,27 @@
   </el-drawer>
 </template>
 <script>
+import { mapGetters } from 'vuex'
   export default {
     props:["table", "agency_data", "field_id"],
     data() {
       return {
-        component_active: 'form-consignee',
+        component_active: 'menu-component',
         direction: 'rtl',
-        drawer: false
+        drawer: false,
+        data: {
+          icon: '',
+          title: ''
+        }
       };
+    },
+    created(){
+      let me = this
+      bus.$on('open', function (payload) {
+        me.data = payload
+        me.component_active = payload.component
+        me.drawer = true
+      })
     },
     methods: {
       handleClose(done) {

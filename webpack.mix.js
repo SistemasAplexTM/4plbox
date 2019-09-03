@@ -1,36 +1,36 @@
 let mix = require('laravel-mix');
- mix.scripts([
-  	/*-- Scripts de la plantilla --*/
-   	'resources/assets/js/jquery/jquery-2.1.1.js',
-  	'resources/assets/js/bootstrap/bootstrap.min.js',
-  	'resources/assets/js/plugins/metisMenu/jquery.metisMenu.js',
-  	'resources/assets/js/plugins/slimscroll/jquery.slimscroll.min.js',
-  	'resources/assets/js/inspinia.js',
-  	'resources/assets/js/plugins/pace/pace.min.js',
-    	// 'resources/assets/js/plugins/fontAwesome5/all.min.js',
-
-    'resources/assets/js/plugins/toastr/toastr.min.js',
-    'resources/assets/js/plugins/iCheck/icheck.min.js',
-  	'resources/assets/js/plugins/dataTables/datatables.min.js',
-   	'resources/assets/js/plugins/ladda/spin.min.js',
-   	'resources/assets/js/plugins/ladda/ladda.min.js',
-   	'resources/assets/js/plugins/ladda/ladda.jquery.min.js',
-   	'resources/assets/js/plugins/chosen/chosen.jquery.js',
-   	'resources/assets/js/plugins/fullcalendar/moment.min.js',
-   	'resources/assets/js/plugins/datapicker/bootstrap-datepicker.js',
-   	'resources/assets/js/plugins/daterangepicker/daterangepicker.js',
-   	'resources/assets/js/plugins/select2/select2.full.min.js',
-    'resources/assets/js/plugins/dropzone/dropzone.js',
-   	'resources/assets/js/plugins/bootstrapToogle/bootstrap-toggle.min.js',
-  // 	// 'resources/assets/js/plugins/switchery/switchery.js',------------------------ delete
-  // 	// 'resources/assets/js/plugins/formatCurrency/jquery.formatCurrency-1.4.0.min.js',------------------------ delete
-  // 	// 'resources/assets/js/plugins/jqueryFiler/jquery.filer.min.js',------------------------ delete
-  // 	// 'resources/assets/js/plugins/jqueryFiler/custom.js',------------------------ delete
-   	'resources/assets/js/plugins/summernote/summernote.min.js',
-   	'resources/assets/js/plugins/bootstrapTagsInput/bootstrap-tagsinput.js',
-   	'resources/assets/js/plugins/nestable/jquery.nestable.js'
-   	], 'public/js/plantilla.js');
+ // mix.scripts([
+ //  	/*-- Scripts de la plantilla --*/
+ //   	'resources/assets/js/jquery/jquery-2.1.1.js',
+ //  	'resources/assets/js/bootstrap/bootstrap.min.js',
+ //  	'resources/assets/js/plugins/metisMenu/jquery.metisMenu.js',
+ //  	'resources/assets/js/plugins/slimscroll/jquery.slimscroll.min.js',
+ //  	'resources/assets/js/inspinia.js',
+ //  	'resources/assets/js/plugins/pace/pace.min.js',
+ //    	// 'resources/assets/js/plugins/fontAwesome5/all.min.js',
  //
+ //    'resources/assets/js/plugins/toastr/toastr.min.js',
+ //    'resources/assets/js/plugins/iCheck/icheck.min.js',
+ //  	'resources/assets/js/plugins/dataTables/datatables.min.js',
+ //   	'resources/assets/js/plugins/ladda/spin.min.js',
+ //   	'resources/assets/js/plugins/ladda/ladda.min.js',
+ //   	'resources/assets/js/plugins/ladda/ladda.jquery.min.js',
+ //   	'resources/assets/js/plugins/chosen/chosen.jquery.js',
+ //   	'resources/assets/js/plugins/fullcalendar/moment.min.js',
+ //   	'resources/assets/js/plugins/datapicker/bootstrap-datepicker.js',
+ //   	'resources/assets/js/plugins/daterangepicker/daterangepicker.js',
+ //   	'resources/assets/js/plugins/select2/select2.full.min.js',
+ //    'resources/assets/js/plugins/dropzone/dropzone.js',
+ //   	'resources/assets/js/plugins/bootstrapToogle/bootstrap-toggle.min.js',
+ //  // 	// 'resources/assets/js/plugins/switchery/switchery.js',------------------------ delete
+ //  // 	// 'resources/assets/js/plugins/formatCurrency/jquery.formatCurrency-1.4.0.min.js',------------------------ delete
+ //  // 	// 'resources/assets/js/plugins/jqueryFiler/jquery.filer.min.js',------------------------ delete
+ //  // 	// 'resources/assets/js/plugins/jqueryFiler/custom.js',------------------------ delete
+ //   	'resources/assets/js/plugins/summernote/summernote.min.js',
+ //   	'resources/assets/js/plugins/bootstrapTagsInput/bootstrap-tagsinput.js',
+ //   	'resources/assets/js/plugins/nestable/jquery.nestable.js'
+ //   	], 'public/js/plantilla.js');
+ // //
    // mix.styles([
    //  	/*-- Estilos de la plantilla --*/
    //   	'resources/assets/css/bootstrap.min.css',
@@ -69,7 +69,6 @@ mix.styles(['resources/assets/css/main.css'] , 'public/css/main.css');
 
 
  //
- mix.copyDirectory('resources/assets/js/store', 'public/js/store');
  // mix.copyDirectory('resources/assets/js/plugins', 'public/js/plugins');
  // mix.copyDirectory('resources/assets/css/plugins', 'public/css/plugins');
  // mix.copyDirectory('resources/assets/img', 'public/img');
