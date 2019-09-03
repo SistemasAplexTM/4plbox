@@ -148,7 +148,6 @@
     {{-- DEFAULT VALUES --}}
     <?php $id_pa = ((env('APP_CLIENT') != 'worldcargo') ? 234 : 1) ?> {{-- id de la posicion por defecto --}}
     <div class="row" id="documento">
-        <rigth-menu :table="consignee" :agency_data="agency_data" :field_id="consignee_id"></rigth-menu>
         <modalshipper-component v-if="!mostrar.includes(24)"></modalshipper-component>
         <modalconsignee-component v-if="!mostrar.includes(24)"></modalconsignee-component>
         <modalarancel-component></modalarancel-component>

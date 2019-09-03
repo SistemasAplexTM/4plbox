@@ -1,6 +1,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+
 window.swal = require('sweetalert2');
 
 import vSelect from 'vue-select'
@@ -10,11 +11,11 @@ import VeeValidate, { Validator } from 'vee-validate';
 const config = {
   fieldsBagName: 'fieldBags'
 }
-
 import Element from 'element-ui'
 import locale from 'element-ui/lib/locale/lang/en'
 import Spinner from 'vue-spinkit'
 import 'element-ui/lib/theme-chalk/index.css';
+// import store from './store'
 
 // Localize takes the locale object as the second argument (optional) and merges it.
 Validator.localize('es', es);

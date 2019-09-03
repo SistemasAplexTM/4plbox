@@ -7,6 +7,18 @@ body{
 input{
   background-color: white!important;
 }
+.fr{
+  float: right!important;
+}
+.o-010{
+  opacity: 0.10;
+}
+.mb-5{
+  margin-bottom: 5px;
+}
+.w-100{
+  width: 100%;
+}
 .el-dialog__wrapper{
   z-index: 9999!important;
 }

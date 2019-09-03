@@ -1,10 +1,19 @@
 <template>
   <el-drawer
-    title="I am the title"
     :visible.sync="drawer"
-    :direction="direction">
-    <span>Hi, there!</span>
-    <form-consignee :table="table" :agency="agency_data" :field_id="field_id"></form-consignee>
+    :direction="direction"
+    :show-close="false">
+    <span slot="title" class="mb-5">
+      <i class="fr fa-4x o-010" :class="'fal fa-user'"></i>
+      <el-page-header @back="" title="" style="color: white !important;margin-top: 12px;">
+      <span slot="content" class="w-100">
+      <h3><i :class="'fal fa-user'"></i> Consignee</h3>
+      </span>
+      </el-page-header>
+    </span>
+    <transition name="fade">
+      <component :is="component_active"></component>
+    </transition>
   </el-drawer>
 </template>
 <script>
@@ -12,6 +21,7 @@
     props:["table", "agency_data", "field_id"],
     data() {
       return {
+        component_active: 'form-consignee',
         direction: 'rtl',
         drawer: false
       };
@@ -27,3 +37,21 @@
     }
   };
 </script>
+<style lang="css">
+  .el-drawer__body{
+    padding: 20px;
+  }
+  .el-drawer {
+    overflow: auto !important;
+  }
+  .el-drawer__header {
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    background-color: #5f8fdf !important;
+    color: white;
+    margin-bottom: 0px;
+  }
+  .el-page-header__content{
+    color: white !important;
+  }
+</style>
