@@ -73,11 +73,13 @@
 -. Campo CC en formulario shipper y consignee, campo WhatsApp. ==================================================================
 -. quitar la agencia de las tablas shipper, consignee y que los registros solo filtren los datos de cada agencias================
 
+2019-09-03
+-. colocar edicion al tracking en linea.=========================================================================================
+-. mostrar al buscar shipper y consignee en la modal de documento solo sus shippers y consignees de cada uno ====================
+-. los documentos de la grilla principal solo muestre los documentos de la agencia logueada.====================================
+
 -. Revisar porque al crear consignee no tomo el prefijo de la agencia si no que tomo el prefijo de la principal.
 -. colocar fecha en el email de tracking recibido.
--. colocar edicion al tracking en linea.
--. mostrar al buscar shipper y consignee en la modal de documento solo sus shippers y consignees de cada uno
--. los documentos de la grilla principal solo muestre los documentos de la agencia logueada.
 -. los emails templates que solo filtre por la agencia logueada
 -. Revisar si en clientes, se muestra solo los datos de los clientes de la agencia que se logueó.
 -. colocar el cliente en la columna agencia de la grilla de consignees.

@@ -7,6 +7,9 @@ body{
 input{
   background-color: white!important;
 }
+.nav > li > a{
+  font-family: "Roboto Condensed";
+}
 .fr{
   float: right!important;
 }
@@ -162,7 +165,7 @@ table.table td a.view i {
     font-size: 15px !important;
 }
 .ibox-content {
-    background-color: mintcream;
+    background-color: mintcream!important;
 }
 .note-editable, .chosen-container-single {
     background-color: #fff;

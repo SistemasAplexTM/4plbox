@@ -230,8 +230,8 @@
                             <div class="row">
                                 <label class="control-label col-sm-2">@lang('documents.address'): <samp id="require">*</samp></label>
                                 <div class="col-sm-10" :class="{ 'has-error': errors.has('direccionR') }">
-                                    {{-- <input type="text" autocomplete="off" id="direccionR" name="direccionR" placeholder="@lang('documents.address')" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());" v-model="direccionR" v-validate="'required'">
-                                    <small class="help-block has-error">@{{ errors.first('direccionR') }}</small> --}}
+                                    <input type="text" autocomplete="off" id="direccionR" name="direccionR" placeholder="@lang('documents.address')" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());" v-model="direccionR" v-validate="'required'">
+                                    <small class="help-block has-error">@{{ errors.first('direccionR') }}</small>
                                 </div>
                             </div>
 
@@ -239,13 +239,13 @@
                              <div class="row">
                                 <label class="control-label col-sm-2">@lang('documents.email'):</label>
                                 <div class="col-sm-5" :class="{ 'has-error': errors.has('emailR') }">
-                                    {{-- <input type="email" autocomplete="off" placeholder="Example@example.com" id="emailR" name="emailR" class="form-control" v-validate.disable="'unique_s'">
-                                    <small class="help-block has-error">@{{ errors.first('emailR') }}</small> --}}
+                                    <input type="email" autocomplete="off" placeholder="Example@example.com" id="emailR" name="emailR" class="form-control" v-validate.disable="'unique_s'">
+                                    <small class="help-block has-error">@{{ errors.first('emailR') }}</small>
                                 </div>
                                 <label class="control-label col-sm-1">@lang('documents.phone'): </label>
                                 <div class="col-sm-4">
-                                    {{-- <input type="tel" autocomplete="off" data-mask="(999) 999-9999" placeholder="@lang('documents.phone')" id="telR" name="telR" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());">
-                                    <small class="help-block has-error">@{{ errors.first('telR') }}</small> --}}
+                                    <input type="tel" autocomplete="off" data-mask="(999) 999-9999" placeholder="@lang('documents.phone')" id="telR" name="telR" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());">
+                                    <small class="help-block has-error">@{{ errors.first('telR') }}</small>
                                 </div>
                                 <small class="help-block" style="display: none;"></small>
                             </div>
@@ -255,15 +255,15 @@
                              <div class="row">
                                 <label class="control-label col-sm-2">@lang('documents.city'): <samp id="require">*</samp></label>
                                 <div class="col-sm-5" onclick ="deleteError($(this));">
-                                    {{-- <input type="hidden" id="localizacion_id" name="localizacion_id" value="">
+                                    <input type="hidden" id="localizacion_id" name="localizacion_id" value="">
                                     <city-component @get="setCity($event, true)" :data="citys" :disabled="disabled_s" :selected="city_selected_s" autocomplete="off"></city-component>
-                                    <small class="help-block has-error" id="msn_l1" style="display: none;">@lang('documents.obligatory_field')</small> --}}
+                                    <small class="help-block has-error" id="msn_l1" style="display: none;">@lang('documents.obligatory_field')</small>
                                 </div>
                                 <label class="control-label col-sm-1">@lang('documents.zip'): </label>
                                 <div class="col-sm-4">
-                                    {{-- <input type="text" autocomplete="off" placeholder="Zip" id="zipR" name="zipR" class="form-control" onkeyup="deleteError($(this).parent());"> --}}
+                                    <input type="text" autocomplete="off" placeholder="Zip" id="zipR" name="zipR" class="form-control" onkeyup="deleteError($(this).parent());">
                                 </div>
-                                {{-- <small class="help-block" style="display: none;"></small> --}}
+                                <small class="help-block" style="display: none;"></small>
                             </div>
                             <!-- /Fin Grupo Doble 2 -->
                             <div class="row">

@@ -24,7 +24,7 @@ return [
 		'weight'          => 'Weight',
 		'dimensions'      => 'Dimensions',
 		'these_data_are_required'    => 'These Data are required',
-		'content'         => 'Content',
+		'content'         => 'Description',
 		'declared'        => 'FOB',
 		'pieces'          => 'Piece',
 		'packing'         => 'Packing',

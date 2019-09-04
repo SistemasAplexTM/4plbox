@@ -31,6 +31,9 @@
     background-color: #ed5666;
     color: white;
   }
+  h4{
+    font-weight: 100!important;
+  }
 </style>
 @endsection
 
@@ -55,7 +58,7 @@
                   {!! '<i class="fal fa-' . $value['icon'] . ' fa-4x"></i>' !!}
                   <br>
                   <br>
-                  <h4 class="font-bold no-margins">
+                  <h4 class="no-margins">
                     @lang($value['desc'])
                   </h4>
                 </div>
@@ -87,7 +90,7 @@
                     {!! '<i class="fal fa-' . $value['icon'] . ' fa-4x"></i>' !!}
                     <br>
                     <br>
-                    <h4 class="font-bold no-margins">
+                    <h4 class="no-margins">
                       @lang($value['desc'])
                     </h4>
                   </div>
@@ -119,7 +122,7 @@
                     {!! '<i class="fal fa-' . $value['icon'] . ' fa-4x"></i>' !!}
                     <br>
                     <br>
-                    <h4 class="font-bold no-margins">
+                    <h4 class="no-margins">
                       @lang($value['desc'])
                     </h4>
                   </div>

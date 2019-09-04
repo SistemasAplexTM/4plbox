@@ -166,6 +166,7 @@
                               <table id="tbl-tracking-group" class="table table-hover" style="width: 100%;">
                                   <thead>
                                       <tr>
+                                          <th>item</th>
                                           <th>@lang('general.client')</th>
                                           <th>Inventario</th>
                                           <th>@lang('general.actions')</th>

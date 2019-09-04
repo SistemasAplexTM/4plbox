@@ -75,7 +75,7 @@ class TrackingController extends Controller
                           $user = User::where('consignee_id', $request->consignee_id)->first();
                           // $user->notify(new ChangeState($status));
                         }
-                        // $this->verifySendEmail($config->value, $json_data->email_template_id, $request->consignee_id, $request->codigo);
+                        $this->verifySendEmail($config->value, $json_data->email_template_id, $request->consignee_id, $request->codigo);
                       }
                     }
                   }
@@ -341,7 +341,26 @@ class TrackingController extends Controller
               		t.deleted_at IS NULL
               		AND t.documento_detalle_id IS NULL
               		AND t.consignee_id = tracking.consignee_id
-              ) AS last_date")
+              ) AS last_date"),
+              DB::raw("(
+                SELECT
+              	(
+              	SELECT
+              		Count( t.id )
+              	FROM
+              		tracking AS t
+              	WHERE
+              		t.deleted_at IS NULL
+              		AND t.documento_detalle_id IS NULL
+              		AND t.consignee_id = tracking.consignee_id
+              	) - sum( t.confirmed_send )
+              FROM
+              	tracking AS t
+              WHERE
+              	t.deleted_at IS NULL
+              	AND t.documento_detalle_id IS NULL
+              	AND t.consignee_id = tracking.consignee_id
+              ) AS confirmed_send")
           )
           ->where([
             ['tracking.deleted_at', NULL],
@@ -430,6 +449,7 @@ class TrackingController extends Controller
             if ($status->json_data != null) {
               $json_data = json_decode($status->json_data);
               if(isset($json_data->email_template_id)){
+                Tracking::where('consignee_id', $id)->update(['confirmed_send' => 1]);
                 $this->verifySendEmail($config->value, $json_data->email_template_id, $id, $track);
               }
             }else{

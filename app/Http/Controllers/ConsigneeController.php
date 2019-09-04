@@ -260,6 +260,7 @@ class ConsigneeController extends Controller
             $table . '.cliente_id',
             $table . '.tarifa',
             $table . '.corporativo',
+            $table . '.nombre_full',
             'localizacion.nombre as ciudad',
             'localizacion.id as ciudad_id',
             'deptos.descripcion as estado',
