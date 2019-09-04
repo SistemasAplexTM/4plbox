@@ -43,6 +43,7 @@ class AplexConfigController extends Controller
         array('icon' => 'map-marker', 'route' => 'pais.index', 'url' => false, 'desc' => 'layouts.countrieses', 'perm' => 'pais.index'),
         array('icon' => 'map-marked', 'route' => 'departamento.index', 'url' => false, 'desc' => 'layouts.dptos_states', 'perm' => 'departamento.index'),
         array('icon' => 'street-view', 'route' => 'ciudad.index', 'url' => false, 'desc' => 'layouts.cities', 'perm' => 'ciudad.index'),
+        array('icon' => 'list', 'route' => 'menu.index', 'url' => false, 'desc' => 'layouts.menu', 'perm' => 'tipoDocumento.index'),
       );
 
       $menu3 = array(

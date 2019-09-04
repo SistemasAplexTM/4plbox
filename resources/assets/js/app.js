@@ -15,7 +15,6 @@ import Element from 'element-ui'
 import locale from 'element-ui/lib/locale/lang/en'
 import Spinner from 'vue-spinkit'
 import 'element-ui/lib/theme-chalk/index.css';
-// import store from './store'
 
 // Localize takes the locale object as the second argument (optional) and merges it.
 Validator.localize('es', es);
@@ -64,4 +63,5 @@ Vue.component('document-filter', require('./components/DocumentFilter.vue'));
 Vue.component('document-upload', require('./components/DocumentUpload.vue'));
 //
 Vue.component('form-consignee', require('./components/FormConsignee.vue'));
-Vue.component('rigth-menu', require('./components/RigthMenu/RigthMenu.vue'));
+Vue.component('menu-component', require('./components/menu/Index.vue'));
+Vue.component('right-menu', require('./components/RightMenu/RightMenu.vue'));
