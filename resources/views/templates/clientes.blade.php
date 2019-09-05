@@ -25,12 +25,15 @@
                     <div class="ibox-title">
                         <h5>@lang('general.customer_registration')</h5>
                         <div class="ibox-tools">
-                            
+
                         </div>
                     </div>
                     <div class="ibox-content">
                         <!--***** contenido ******-->
-                        <div class="row">                            
+
+                        <form-csc :table="'clientes'" :agency="agency_data" :field_id="cliente_id" @updatetable="updateTable" @cancel="cliente_id = null"></form-csc>
+
+                        {{-- <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.nombre}">
                                         <div class="col-sm-4">
@@ -43,7 +46,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.direccion}">
                                         <div class="col-sm-4">
@@ -56,7 +59,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.telefono}">
                                         <div class="col-sm-4">
@@ -69,7 +72,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.correo}">
                                         <div class="col-sm-4">
@@ -83,7 +86,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.localizacion_id}">
                                         <div class="col-sm-4">
@@ -100,7 +103,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.zona}">
                                         <div class="col-sm-4">
@@ -115,7 +118,7 @@
                         </div>
                         <div class="row">
                             @include('layouts.buttons')
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -133,7 +136,7 @@
                             <table id="tbl-clientes" class="table table-striped table-hover table-bordered" style="width: 100%;">
                                 <thead>
                                     <tr>
-                                        <th>@lang('general.name')</th> 
+                                        <th>@lang('general.name')</th>
                                         <th>@lang('general.phone')</th>
                                         <th>@lang('general.address')</th>
                                         <th>@lang('general.city')</th>
@@ -142,7 +145,7 @@
                                     </tr>
                                 </thead>
                             </table>
-                        </div>             
+                        </div>
                     </div>
                 </div>
             </div>

@@ -255,6 +255,7 @@ class ConsigneeController extends Controller
             $table . '.whatsapp',
             $table . '.correo',
             $table . '.email_cc',
+            $table . '.notify_client',
             $table . '.localizacion_id',
             $table . '.zip',
             $table . '.cliente_id',

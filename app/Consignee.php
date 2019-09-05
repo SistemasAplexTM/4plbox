@@ -39,6 +39,7 @@ class Consignee extends Model
         'cliente_id',
         'corporativo',
         'email_cc',
+        'notify_client',
     ];
 
     public function city()

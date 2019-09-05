@@ -42,6 +42,7 @@ class ClienteController extends Controller
     {
         try {
             $data              = (new Cliente)->fill($request->all());
+            $data->agencia_id  = Auth::user()->agencia_id;
             $data->created_at  = date('Y-m-d H:i:s');
             if ($data->save()) {
                 $this->AddToLog('Cliente creado id (' . $data->id . ')');
@@ -176,6 +177,7 @@ class ClienteController extends Controller
         $sql = Cliente::join('localizacion AS b', 'clientes.localizacion_id', 'b.id')
         ->select(
         	'clientes.id',
+    			'clientes.agencia_id',
     			'clientes.localizacion_id',
     			'clientes.nombre',
     			'clientes.direccion',
@@ -184,7 +186,11 @@ class ClienteController extends Controller
     			'clientes.zona',
     			'clientes.updated_at',
     			'b.nombre AS ciudad'
-        )->get();
+        )->where([
+          ['clientes.agencia_id', Auth::user()->agencia_id],
+          ['clientes.deleted_at', null]
+        ])
+        ->get();
         return \DataTables::of($sql)->make(true);
     }
 
@@ -246,6 +252,26 @@ class ClienteController extends Controller
         } catch (Exception $e) {
             return $e;
         }
+    }
+
+    public function getDataById($id)
+    {
+      $data = Cliente::join('localizacion AS b', 'clientes.localizacion_id', 'b.id')
+      ->select(
+        'clientes.id',
+        'clientes.agencia_id',
+        'clientes.localizacion_id',
+        'clientes.nombre AS primer_nombre',
+        'clientes.direccion',
+        'clientes.telefono',
+        'clientes.email AS correo',
+        'clientes.zona',
+        'b.nombre AS ciudad'
+      )->where([
+          ['clientes.id', '=', $id],
+          ['clientes.deleted_at', '=', null],
+      ])->first();
+      return \Response::json($data);
     }
 
 }

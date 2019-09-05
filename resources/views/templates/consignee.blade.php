@@ -31,7 +31,7 @@
                     </div>
                     <div class="ibox-content">
                         <!--***** contenido ******-->
-                        <form-consignee :table="'consignee'" :agency="agency_data" :field_id="consignee_id" @updatetable="updateTable"></form-consignee>
+                        <form-csc :table="'consignee'" :agency="agency_data" :field_id="consignee_id" @updatetable="updateTable" @cancel="consignee_id = null"></form-csc>
                         <div class="row">
                             <contactos-component :table="'consignee'" :parametro="parametro"></contactos-component>
                         </div>
