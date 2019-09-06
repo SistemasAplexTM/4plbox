@@ -1,40 +1,64 @@
 <template lang="html">
   <div class="dd" id="nestable3">
     <ol class="dd-list">
-      <li v-for="item in menu" class="dd-item dd3-item" :data-id="item.item">
-        <div class="dd-handle dd3-handle"> </div><div class="dd3-content">
-          <!-- <i class="fal fa-ellipsis-v-alt fr actions-menu"> </i> -->
-          <i class="fal fa-trash fr text-danger actions-menu-item"> </i>
-          <i class="fal fa-edit fr text-success actions-menu-item"> </i>
-          <i class="" :class="formatMeta(item.meta, 'icon')"></i>
-          <span class="text-menu">
-            {{ item.name }}
-          </span>
-        </div>
-      </li>
+      <template v-for="(item, index) in menu" >
+        <order-list-item v-if="item.children.length == 0" :item="item" :key="item.id"/>
+        <order-list-item v-else :item="item">
+          <ol class="dd-list">
+            <order-list-item v-for="itemChildren in item.children" :item="itemChildren"  :key="itemChildren.id"/>
+          </ol>
+        </order-list-item>
+      </template>
     </ol>
   </div>
 </template>
 
 <script>
-$(function() {
-  $('#nestable3').nestable();
-  $('.dd').on('change', function() {
-    var data = $('.dd').nestable('serialize');
-  });
-});
+import OrderListItem from './OrderListItem'
 export default {
+  components: {OrderListItem},
   data() {
     return {
       menu: [],
+      visible: [],
       loading: false
     }
   },
   created(){
-    this.getMenu()
-
+    let me = this
+    me.getMenu()
+    $(function() {
+      $('#nestable3').nestable({maxDepth: 2});
+      $('.dd').on('change', function() {
+        var data = $('.dd').nestable('serialize');
+        me.updateOrder(data)
+      });
+    });
+    bus.$on('refreshList', function (payload) {
+      me.getMenu()
+    })
   },
   methods: {
+    updateOrder(data){
+      axios.put('menu/updateOrder', data).then(response => {
+        console.log(response.data);
+      });
+    },
+    destroy(item){
+      this.$confirm('Deseas eliminar este menú?')
+       .then(_ => {
+         // axios.put('menu/' + this.form.id, this.form).then(response => {
+         //   if (response.data.code == 200) {
+         //     this.$message({type: 'success', message: 'Eliminado con éxito.'})
+         //   }
+         //   this.loading = false
+         // }).catch(error => {
+         //   console.log(error);
+         // });
+         this.getMenu()
+       })
+       .catch(_ => {});
+    },
     getMenu(){
       axios.get('getMenu/' + false).then(({data}) => {
         this.menu = data;

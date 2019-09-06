@@ -14,6 +14,7 @@ function loadTable(name, bodega) {
       processing: true,
       serverSide: true,
       responsive: true,
+      lengthChange: false,
       ajax: 'tracking/all/'+ true + '/' + false + '/'+ false + '/'+ false + '/' + bodega,
       columns: [{
           data: "fecha",

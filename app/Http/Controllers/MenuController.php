@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Menu;
-use App\MenuDetalle;
+use App\MenuRol;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class MenuController extends Controller
 {
@@ -33,21 +34,26 @@ class MenuController extends Controller
             'route' => 'required'
           ],
           [
-             'name.required' => 'El nombre es requerido',
-             'route.required' => 'la ruta es requerida'
+            'name.required' => 'El nombre es requerido',
+            'route.required' => 'la ruta es requerida'
          ]);
-          Menu::insert([
-            'name' => $request->name,
-            'route' => $request->route,
-            'meta'=> json_encode(['icon' => $request->icon])
-          ]);
+          $menu = new Menu;
+          $menu->name = $request->name;
+          $menu->route = $request->route;
+          $menu->meta = json_encode(['icon' => $request->icon, 'color' => $request->color]);
+          $menu->save();
+          if ($request->roles_selected) {
+            foreach ($request->roles_selected as $key => $value) {
+              MenuRol::create(['menu_id' => $menu->id, 'rol_id' => $value]);
+            }
+          }
           return ['code' => 200];
         } catch (\Exception $e) {
             $answer = array(
                 "error" => $e,
                 "code"  => 600,
             );
-            return $answer;
+            return $e;
         }
     }
 
@@ -61,9 +67,25 @@ class MenuController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $data = Menu::findOrFail($id);
-            $data->update($request->all());
-            $this->AddToLog('Menu editado (id :' . $data->id . ')');
+            $request->validate([
+              'name' => 'required|max:255',
+              'route' => 'required'
+            ],
+            [
+              'name.required' => 'El nombre es requerido',
+              'route.required' => 'la ruta es requerida'
+           ]);
+            $menu = Menu::findOrFail($id);
+            $menu->name = $request->name;
+            $menu->route = $request->route;
+            $menu->meta = json_encode(['icon' => $request->icon, 'color' => $request->color]);
+            $menu->save();
+            MenuRol::where('menu_id', $menu->id)->delete();
+            if ($request->roles_selected) {
+              foreach ($request->roles_selected as $key => $value) {
+                MenuRol::create(['menu_id' => $menu->id, 'rol_id' => $value]);
+              }
+            }
             $answer = array(
                 "datos" => $request->all(),
                 "code"  => 200,
@@ -75,7 +97,7 @@ class MenuController extends Controller
                 "error" => $e,
                 "code"  => 600,
             );
-            return $answer;
+            return $e;
         }
     }
 
@@ -110,32 +132,6 @@ class MenuController extends Controller
         }
     }
 
-    /**
-     * Restaura registro eliminado
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function restaurar($id, $table = false)
-    {
-        if ($table == 'detail') {
-            $data             = MenuDetalle::withTrashed()->findOrFail($id);
-            $data->deleted_at = null;
-            $data->save();
-            $answer = array(
-                'code' => 200,
-            );
-        } else {
-            $data             = Menu::withTrashed()->findOrFail($id);
-            $data->deleted_at = null;
-            $data->save();
-            $answer = array(
-                'code' => 200,
-            );
-        }
-        return $answer;
-    }
-
   public static function getHijos($padres, $line)
    {
        $children = [];
@@ -149,13 +145,13 @@ class MenuController extends Controller
 
    public static function getPadres($front)
    {
-       if ($front) {
-           // return $this->whereHas('roles', function ($query) {
-           //     $query->where('rol_id', session()->get('rol_id'))->orderby('menu_id');
-           // })->orderby('menu_id')
-           //     ->orderby('orden')
-           //     ->get()
-           //     ->toArray();
+       if ($front && $front != 'false' && $front != false) {
+           return Menu::whereHas('roles', function ($query) {
+               $query->where('rol_id', 1)->orderby('parent');
+           })->orderby('parent')
+               ->orderby('order_item')
+               ->get()
+               ->toArray();
        } else {
            return Menu::orderby('parent')
                ->orderby('order_item')
@@ -164,9 +160,9 @@ class MenuController extends Controller
        }
    }
 
-   public static function getMenu($front = false)
+   public static function getMenu($front)
    {
-       $padres = Self::getPadres(false);
+       $padres = Self::getPadres($front);
        $menuAll = [];
        foreach ($padres as $line) {
            if ($line['parent'] != 0)
@@ -175,6 +171,62 @@ class MenuController extends Controller
            $menuAll = array_merge($menuAll, $item);
        }
        return $menuAll;
+   }
+
+   public static function getById($id)
+   {
+       $menu = Menu::where('id', $id)->with('roles')->first();
+       return $menu;
+   }
+
+   public function updateOrder(Request $request)
+   {
+       try {
+           return $this->saveOrder($request->all());
+           // return response()->json(['respuesta' => 'ok']);
+       } catch (\Exception $e) {
+           $answer = array(
+               "error" => $e,
+               "code"  => 600,
+           );
+           return $answer;
+       }
+   }
+
+   public static function saveOrder($menu)
+   {
+      $menus = $menu;
+      foreach ($menus as $var => $value) {
+          Menu::where('id', $value['id'])->update(['parent' => 0, 'order_item' => $var + 1]);
+          if (!empty($value['children'])) {
+              foreach ($value['children'] as $key => $vchild) {
+                  $update_id = $vchild['id'];
+                  $parent_id = $value['id'];
+                  Menu::where('id', $update_id)->update(['parent' => $parent_id, 'order_item' => $key + 1]);
+                  if (!empty($vchild['children'])) {
+                      foreach ($vchild['children'] as $key => $vchild1) {
+                          $update_id = $vchild1['id'];
+                          $parent_id = $vchild['id'];
+                          Menu::where('id', $update_id)->update(['parent' => $parent_id, 'order_item' => $key + 1]);
+                          if (!empty($vchild1['children'])) {
+                              foreach ($vchild1['children'] as $key => $vchild2) {
+                                  $update_id = $vchild2['id'];
+                                  $parent_id = $vchild1['id'];
+                                  Menu::where('id', $update_id)->update(['parent' => $parent_id, 'order_item' => $key + 1]);
+                                  if (!empty($vchild2['children'])) {
+                                      foreach ($vchild2['children'] as $key => $vchild3) {
+                                          $update_id = $vchild3['id'];
+                                          $parent_id = $vchild2['id'];
+                                          Menu::where('id', $update_id)->update(['parent' => $parent_id, 'order_item' => $key + 1]);
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      }
    }
 
 }
