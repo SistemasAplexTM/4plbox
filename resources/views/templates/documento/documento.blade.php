@@ -218,7 +218,7 @@
                                                 <input type="search" autocomplete="aplextmautocomplete" data-id="nomBuscarShipper" id="nombreR" name="nombreR" placeholder="@lang('documents.type_to_search')" class="form-control" onkeyup="deleteError($(this).parent());" v-model="nombreR" v-validate="'required'">
                                                 <span class="input-group-btn">
                                                     <button id="btnBuscarShipper" @click="modalShipper(true)" class="btn btn-primary" type="button" data-toggle='tooltip' title="Buscar"><span class="fal fa-search"></span>&nbsp;</button>
-                                                    <button id="btnEditShipper" @click="editFormsShipperConsignee(0)" class="btn btn-success" type="button" data-toggle='tooltip' title="Editar"><span class="fal fa-edit"></span>&nbsp;</button>
+                                                    <button id="btnEditShipper" @click="open()" class="btn btn-success" type="button" data-toggle='tooltip' title="Editar"><span class="fal fa-edit"></span>&nbsp;</button>
                                                     <button id="btnResetShipper" @click="resetFormsShipperConsignee(0)" class="btn btn-default" type="button" data-toggle='tooltip' title="Reset"><span class="fal fa-sync"></span>&nbsp;</button>
                                                 </span>
                                             </div>

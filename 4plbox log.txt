@@ -79,6 +79,8 @@
 -. los documentos de la grilla principal solo muestre los documentos de la agencia logueada.====================================
 -. colocar fecha en el email de tracking recibido.==============================================================================
 -. Revisar si en clientes, se muestra solo los datos de los clientes de la agencia que se logueó.===============================
+
+2019-09-05
 -. colocar el cliente en la columna agencia de la grilla de consignees.=========================================================
 ===Revisión con Colombiana===
 2. Se ingresó un consignee desde el recibo de colombiana, se separó el nombre y apellidos con líneas y el sistema no ingresó bien el nombre, y lo creó doble.===

@@ -64,6 +64,13 @@ trait sendEmailAlerts
                 ->cc($moreUsers)
                 ->bcc($evenMoreUsers)
                 ->send(new \App\Mail\BodegaRecibido($cuerpo_correo, $from_self, $asunto_correo));
+                //
+                // return Mail::send('emailTemplate', ['param' => $cuerpo_correo], function($message) use ($consignee)
+                // {
+                //     $message->from('duvierm24@gmail.com', 'Colombiana de Carga');
+                //     $message->to(trim($consignee->correo));
+                // });
+
               }elseif($consignee->notify_client == 1){
                 return Mail::to(trim($consignee->correo))
                 ->cc($moreUsers)

@@ -124,6 +124,10 @@ var objVue = new Vue({
         payments: [],
     },
     methods: {
+      open(){
+        var data = {component: 'form-csc', title: 'Consignee', icon: 'fal fa-user', field_id: $('#shipper_id').val(), table: 'shipper'}
+        bus.$emit('open', data)
+      },
       saveChange(op){
         if (op === 'shipper') {
           this.loading_save_ship = true;

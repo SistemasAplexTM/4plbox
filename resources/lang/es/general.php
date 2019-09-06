@@ -301,7 +301,7 @@ return [
     'registration_of_transported'=>'Registro de transportado',
     'contact'=>'Contacto',
     'state_dpto'=>'Estado / Dpto',
-    'carrier'=>'Portador',
+    'carrier'=>'Agente',
     'transporters'=>'Transportadores',
     'name_of_the_transporter'=>'Ingrese el nombre del transportador',
     'transporter_address'=>'Dirección del transportador',

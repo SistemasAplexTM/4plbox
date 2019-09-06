@@ -33,8 +33,9 @@ class BodegaRecibido extends Mailable implements ShouldQueue
      */
     public function build()
     {
-      return $this->from($this->from_self)
-      ->subject($this->subject_msn)
-      ->view('emailTemplate');
+      return $this->view('emailTemplate');
+      // return $this->from($this->from_self)
+      // ->subject($this->subject_msn)
+      // ->view('emailTemplate');
     }
 }

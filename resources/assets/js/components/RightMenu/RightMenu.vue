@@ -13,7 +13,7 @@
       </el-page-header>
     </span>
     <transition name="fade">
-      <component :is="component_active"></component>
+      <component :is="component_active" :payload="data"></component>
     </transition>
   </el-drawer>
 </template>

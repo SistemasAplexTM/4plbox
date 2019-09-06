@@ -393,7 +393,7 @@
                                                             </tr>
                                                             <tr>
                                                                 <td>@lang('general.locker_registration')</td>
-                                                                <td><a target="_blank" href="{{ url('/').'/casillero/' }}{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}">{{ url('/').'/casillero/' }}{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}</a></td>
+                                                                <td><a target="_blank" href="{{ url('/').'/registro/' }}{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}">{{ url('/').'/registro/' }}{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}</a></td>
                                                             </tr>
                                                             <tr>
                                                                 <td>@lang('general.pre_alert')</td>

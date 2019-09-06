@@ -243,7 +243,7 @@
         </div>
       </div>
     </div>
-    <div class="row" v-if="this.table === 'consignee'">
+    <div class="row" v-if="table === 'consignee'">
       <div class="col-lg-12">
         <div class="form-group">
           <div class="col-sm-4">
@@ -283,7 +283,7 @@
       </div>
     </div>
     </transition>
-    <div class="row" v-if="this.table === 'consignee'">
+    <div class="row" v-if="table === 'consignee'">
       <div class="col-lg-12">
         <div class="form-group">
           <div class="col-sm-4">
@@ -295,7 +295,7 @@
         </div>
       </div>
     </div>
-    <div class="row" v-if="this.table === 'consignee'">
+    <div class="row" v-if="table === 'consignee'">
       <div class="col-lg-12">
         <div class="form-group">
           <div class="col-sm-4">
@@ -324,7 +324,7 @@
 
 <script>
 export default {
-  props:["table", "agency", "field_id"],
+  props:["table", "agency", "field_id", "payload"],
   data() {
     return {
       loading: false,
@@ -373,10 +373,14 @@ export default {
           me.getDataById(val);
         }, 100);
       }
-    }
+    },
   },
   mounted() {
     // this.getSelectBranch();
+    console.log(this.payload);
+    if (this.payload) {
+      this.getDataById(this.payload.field_id);
+    }
     this.getSelectClient();
     if (this.table === 'clientes') {
       let me = this;
@@ -422,7 +426,7 @@ export default {
     },
     update(){
       let me = this;
-      axios.put(this.table + '/' + this.field_id, this.form).then(function(response) {
+      axios.put('/' + this.payload.table + '/' + this.payload.field_id, this.form).then(function(response) {
         if (response.data['code'] == 200) {
           toastr.success('Registro Actualizado correctamente.');
           me.loading = false;
@@ -536,7 +540,7 @@ export default {
     },
     getDataById(id){
       let me = this;
-      axios.get(this.table + '/getDataById/' + id).then(response => {
+      axios.get('/' + this.payload.table + '/getDataById/' + id).then(response => {
         me.form = response.data;
         me.form.cliente_id = me.form.cliente_id + '';
         if (me.table !== 'clientes') {
