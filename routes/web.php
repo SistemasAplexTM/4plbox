@@ -359,6 +359,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('clientes/delete/{id}/{logical?}', 'ClienteController@delete');
     Route::get('clientes/restaurar/{id}', 'ClienteController@restaurar');
     Route::get('clientes/selectInput/{tableName}', 'ClienteController@selectInput');
+    Route::get('clientes/getDataById/{id}', 'ClienteController@getDataById');
 
     /*--- MODULO TRANSPORTADORAS LOCALES ---*/
     Route::resource('transportadoras_locales', 'LocalTransportersController', ['except' => ['show', 'create', 'edit']]);

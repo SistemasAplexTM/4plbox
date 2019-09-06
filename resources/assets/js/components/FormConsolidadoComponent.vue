@@ -983,17 +983,17 @@
 			                  },
 			                  {
 			                      "render": function (data, type, full, meta) {
-			                          return '<a data-name="contenido2" data-pk="'+full.documento_detalle_id+'" class="td_edit" data-type="text" data-placement="right" data-title="Contenido">'+full.contenido2+'</a>';
+			                          return '<a data-name="contenido2" data-pk="'+full.documento_detalle_id+'" class="td_edit" data-placement="left" data-type="textarea" data-title="Contenido">'+full.contenido2+'</a>';
 			                      }
 			                  },
 			                  {
 			                      "render": function (data, type, full, meta) {
-			                          return '<a data-name="declarado2" data-pk="'+full.documento_detalle_id+'" class="td_edit '+ ((full.flag_declarado != null && full.flag_declarado != 0 || parseFloat(full.declarado2) === 0) ? ((me.pais_id == pais_id_config) ? 'text-danger' : '') : '') +'" data-type="text" data-placement="right" data-title="Declarado">'+full.declarado2+ '</a>';
+			                          return '<a data-name="declarado2" data-pk="'+full.documento_detalle_id+'" class="td_edit '+ ((full.flag_declarado != null && full.flag_declarado != 0 || parseFloat(full.declarado2) === 0) ? ((me.pais_id == pais_id_config) ? 'text-danger' : '') : '') +'" data-type="text" data-placement="left" data-title="Declarado">'+full.declarado2+ '</a>';
 			                      }
 			                  },
 			                  {
 			                      "render": function (data, type, full, meta) {
-			                          return '<a id="peso'+ full.consignee_id +'" data-name="peso2" data-pk="'+full.documento_detalle_id+'" class="td_edit '+ ((full.flag_peso != null && full.flag_peso != 0 || parseFloat(full.peso2) === 0) ? 'text-danger' : '') +'" data-type="text" data-placement="right" data-title="Peso">'+full.peso2+'</a>';
+			                          return '<a id="peso'+ full.consignee_id +'" data-name="peso2" data-pk="'+full.documento_detalle_id+'" class="td_edit '+ ((full.flag_peso != null && full.flag_peso != 0 || parseFloat(full.peso2) === 0) ? 'text-danger' : '') +'" data-type="text" data-placement="left" data-title="Peso">'+full.peso2+'</a>';
 			                      }
 			                  },
 			                  {data: 'peso', name: 'peso'},

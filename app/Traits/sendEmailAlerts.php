@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Consignee;
 use App\Tracking;
+use App\Cliente;
 use App\DocumentoDetalle;
 
 trait sendEmailAlerts
@@ -21,11 +22,11 @@ trait sendEmailAlerts
       /* DATOS DE LA PLANTILLA */
       $plantilla = $this->getDataEmailPlantillaById($id_plantilla);
       // DATOS DEL Consignee
-      $condignee = Consignee::findOrFail($consignee_id);
+      $consignee = Consignee::findOrFail($consignee_id);
 
-      if (isset($condignee->correo) and $condignee->correo != '') {
-          if (filter_var(trim($condignee->correo), FILTER_VALIDATE_EMAIL)) {
-              /* ENVIO DE EMAIL REPLACEMENT($id_documento, $objAgencia, $objDocumento, $objShipper, $condignee, $datosEnvio, $trakcings)*/
+      if (isset($consignee->correo) and $consignee->correo != '') {
+          if (filter_var(trim($consignee->correo), FILTER_VALIDATE_EMAIL)) {
+              /* ENVIO DE EMAIL REPLACEMENT($id_documento, $objAgencia, $objDocumento, $objShipper, $consignee, $datosEnvio, $trakcings)*/
               $t = explode(',', $tracking);
               $datosEnvio = '';
               $thead = '<table width="100%" border="1" bordercolor="#CCCCCC" cellspacing="0" cellpadding="0" style="border-collapse:collapse"><thead><tr><th style="width:40%;"><div style="font-size: 15px;">TRACKING</div></th><th><div style="font-size: 15px;">CONTENIDO</div></th></tr></thead>';
@@ -33,10 +34,10 @@ trait sendEmailAlerts
               $datosEnvio .= $thead . ' ' . $tbody;
               foreach ($t as $key => $value) {
                 $tr = Tracking::where('codigo', $value)->first();
-                $datosEnvio .= '<tr><td style="text-align: left;font-size: 14px;"><div style="margin-left: 3px;">' . $value . '</div></td><td style="text-align: left;font-size: 14px;"><div style="margin-left: 3px;">' . $tr->contenido . '</div></td></tr>';
+                $datosEnvio .= '<tr><td style="text-align: left;font-size: 14px;"><div style="margin-left: 3px;">' . $value . '<br><small>Recibido: ' . $tr->created_at . '</small></div></td><td style="text-align: left;font-size: 14px;"><div style="margin-left: 3px;">' . $tr->contenido . '</div></td></tr>';
               }
               $datosEnvio .= '</tbody></table>';
-              $replacements = $this->replacements(0, $objAgencia, null, null, $condignee, $datosEnvio, $tracking);
+              $replacements = $this->replacements(0, $objAgencia, null, null, $consignee, $datosEnvio, $tracking);
 
               $cuerpo_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->mensaje);
               $asunto_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->subject);
@@ -46,15 +47,35 @@ trait sendEmailAlerts
                   'name'    => $objAgencia->descripcion,
               );
 
-              // $moreUsers     = $condignee->correo;
-              // $evenMoreUsers = $condignee->correo;
-
+              $moreUsers = explode(',', $consignee->email_cc);
+              // VERIFICAR SI SE ENVIA CORREO AL CLIENTE ASOCIADO AL CONSIGNEE
+              if ($consignee->notify_client == 1) {
+                $evenMoreUsers = null;
+                $cliente = Cliente::findOrFail($consignee->cliente_id);
+                if($cliente->email != ''){
+                  $evenMoreUsers = trim($cliente->email);
+                }
+              }
 
               $this->AddToLog('Email enviado verifySendEmail()');
-              return Mail::to(trim($condignee->correo))
-              // ->cc($moreUsers)
-              // ->bcc($evenMoreUsers)
-                  ->send(new \App\Mail\BodegaRecibido($cuerpo_correo, $from_self, $asunto_correo));
+
+              if($consignee->email_cc != '' && $consignee->notify_client == 1){
+                return Mail::to(trim($consignee->correo))
+                ->cc($moreUsers)
+                ->bcc($evenMoreUsers)
+                ->send(new \App\Mail\BodegaRecibido($cuerpo_correo, $from_self, $asunto_correo));
+              }elseif($consignee->notify_client == 1){
+                return Mail::to(trim($consignee->correo))
+                ->cc($moreUsers)
+                ->send(new \App\Mail\BodegaRecibido($cuerpo_correo, $from_self, $asunto_correo));
+              }elseif ($consignee->email_cc != '') {
+                return Mail::to(trim($consignee->correo))
+                ->bcc($evenMoreUsers)
+                ->send(new \App\Mail\BodegaRecibido($cuerpo_correo, $from_self, $asunto_correo));
+              }else {
+                return Mail::to(trim($consignee->correo))
+                ->send(new \App\Mail\BodegaRecibido($cuerpo_correo, $from_self, $asunto_correo));
+              }
           }
       }
     }

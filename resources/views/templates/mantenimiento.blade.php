@@ -103,7 +103,7 @@
         mounted: function() {
         },
         data: {
-           
+
         },
         methods: {
 

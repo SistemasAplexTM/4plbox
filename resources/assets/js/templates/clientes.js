@@ -23,10 +23,7 @@ $(document).ready(function() {
                 var btn_edit = '';
                 var btn_delete = '';
                 if (permission_update) {
-                    var params = [
-                        full.id, +full.localizacion_id, "'" + full.nombre + "'", "'" + full.direccion + "'", "'" + full.telefono + "'", "'" + full.email + "'", "'" + full.zona + "'", "'" + full.ciudad + "'"
-                    ];
-                    var btn_edit = "<a onclick=\"edit(" + params + ")\" class='edit_btn' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fal fa-pencil fa-lg'></i></a> ";
+                    var btn_edit = "<a onclick=\"edit(" + full.id + ")\" class='edit_btn' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fal fa-pencil fa-lg'></i></a> ";
                 }
                 if (permission_delete) {
                     var btn_delete = " <a onclick=\"eliminar(" + full.id + "," + true + ")\" class='delete_btn' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fal fa-trash-alt fa-lg'></i></a> ";
@@ -38,18 +35,8 @@ $(document).ready(function() {
 });
 
 
-function edit(id, localizacion_id, nombre, direccion, telefono, correo, zona, ciudad) {
-    var data = {
-        id: id,
-        localizacion_id: localizacion_id,
-        nombre: nombre,
-        direccion: direccion,
-        telefono: telefono,
-        correo: correo,
-        zona: zona,
-        ciudad: ciudad
-    };
-    objVue.edit(data);
+function edit(id) {
+    objVue.edit(id);
 }
 /*-- Función para llenar select PERSONALIZADO --*/
 function llenarSelectP(module, tableName, idSelect, length) {
@@ -113,6 +100,8 @@ var objVue = new Vue({
         //
     },
     data: {
+        agency_data: data_agencia,
+        cliente_id: null,
         localizacion_id: '',
         nombre: '',
         direccion: '',
@@ -157,6 +146,7 @@ var objVue = new Vue({
             });
         },
         updateTable: function() {
+          this.cliente_id = null;
             refreshTable('tbl-clientes');
         },
         delete: function(data) {
@@ -270,33 +260,34 @@ var objVue = new Vue({
                 });
             });
         },
-        edit: function(data) {
-            var me = this;
-            me.resetForm();
-            this.id = data['id'];
+        edit: function(id) {
+          var me = this;
+          this.cliente_id = id;
+            // me.resetForm();
+            // this.id = data['id'];
 
             // $('#localizacion_id_input').val(data['localizacion_id']);
 
             /* ASIGNACION DE VALORES A LOS SELECTS */
-            setTimeout(function(){
-                $('#localizacion_id').empty()
-                .append('<option value="' + data['localizacion_id'] + '" selected="selected">' + data['ciudad'] + '</option>')
-                .val([data['localizacion_id']])
-                .trigger('change');
-            },200);
-
-
-            this.nombre = data['nombre'];
-            this.direccion = data['direccion'];
-            if (data['telefono'] != 'null' && data['telefono'] != '' && data['telefono'] != null) {
-                this.telefono = data['telefono'];
-            }
-            if (data['correo'] != 'null' && data['correo'] != '' && data['correo'] != null) {
-                this.correo = data['correo'];
-            }
-            if (data['zona'] != 'null' && data['zona'] != '' && data['zona'] != null) {
-                this.zona = data['zona'];
-            }
+            // setTimeout(function(){
+            //     $('#localizacion_id').empty()
+            //     .append('<option value="' + data['localizacion_id'] + '" selected="selected">' + data['ciudad'] + '</option>')
+            //     .val([data['localizacion_id']])
+            //     .trigger('change');
+            // },200);
+            //
+            //
+            // this.nombre = data['nombre'];
+            // this.direccion = data['direccion'];
+            // if (data['telefono'] != 'null' && data['telefono'] != '' && data['telefono'] != null) {
+            //     this.telefono = data['telefono'];
+            // }
+            // if (data['correo'] != 'null' && data['correo'] != '' && data['correo'] != null) {
+            //     this.correo = data['correo'];
+            // }
+            // if (data['zona'] != 'null' && data['zona'] != '' && data['zona'] != null) {
+            //     this.zona = data['zona'];
+            // }
             this.editar = 1;
             this.formErrors = {};
             this.listErrors = {};

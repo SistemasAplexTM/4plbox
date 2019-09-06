@@ -35,12 +35,15 @@ $(document).ready(function() {
             processing: true,
             serverSide: true,
             searching: true,
+            LengthChange: false
         });
     } else {
         $.extend(true, $.fn.dataTable.defaults, {
             processing: true,
             serverSide: true,
             searching: true,
+            LengthChange: false
+            
         });
     }
     /* ESTILO CHOSEN SELECT2 A UN SELECT */

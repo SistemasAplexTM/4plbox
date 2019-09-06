@@ -30,7 +30,7 @@ let mix = require('laravel-mix');
  //   	'resources/assets/js/plugins/bootstrapTagsInput/bootstrap-tagsinput.js',
  //   	'resources/assets/js/plugins/nestable/jquery.nestable.js'
  //   	], 'public/js/plantilla.js');
- // //
+
    // mix.styles([
    //  	/*-- Estilos de la plantilla --*/
    //   	'resources/assets/css/bootstrap.min.css',
@@ -64,7 +64,7 @@ mix.js('resources/assets/js/app.js' , 'public/js');
 // mix.js('resources/assets/js/appCuba.js' , 'public/js');
 mix.scripts(['resources/assets/js/main.js'] , 'public/js/main.js');
 mix.styles(['resources/assets/css/main.css'] , 'public/css/main.css');
-// mix.copyDirectory('resources/assets/js/templates', 'public/js/templates');
+mix.copyDirectory('resources/assets/js/templates', 'public/js/templates');
 // mix.copyDirectory('resources/assets/js/reports', 'public/js/reports');
 
 

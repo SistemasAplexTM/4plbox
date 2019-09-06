@@ -22,7 +22,7 @@
         </div>
       </div>
     </div> -->
-    <div class="row">
+    <div class="row" v-if="hidde">
       <div class="col-lg-12">
         <div class="form-group">
           <div class="col-sm-4">
@@ -62,7 +62,7 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row" v-if="hidde">
       <div class="col-lg-12">
         <div class="form-group" >
           <div class="col-sm-4">
@@ -80,10 +80,11 @@
         <div class="form-group">
           <div class="col-sm-4">
             <label for="primer_nombre" class="control-label gcore-label-top" v-if="!form.corporativo">Primer Nombre:<samp id="require">*</samp></label>
-            <label for="primer_nombre" class="control-label gcore-label-top" v-if="form.corporativo">Razon social:<samp id="require">*</samp></label>
+            <label for="primer_nombre" class="control-label gcore-label-top" v-if="form.corporativo && hidde">Razon social:<samp id="require">*</samp></label>
+            <label for="primer_nombre" class="control-label gcore-label-top" v-if="form.corporativo && !hidde">Nombre:<samp id="require">*</samp></label>
           </div>
           <div class="col-sm-8">
-            <el-input  :placeholder="(form.corporativo) ? 'Razon social' : 'Primer Nombre'"
+            <el-input  :placeholder="(form.corporativo) ? ((hidde) ? 'Razon social' : 'Nombre') : 'Primer Nombre'"
             v-model="form.primer_nombre" size="medium" clearable
             @blur="validateFields('primer_nombre')"
             :class="{ 'error_field': errors_data.primer_nombre }"></el-input>
@@ -92,51 +93,53 @@
         </div>
       </div>
     </div>
-    <transition name="fade">
-      <div class="row" v-show="!form.corporativo">
-        <div class="col-lg-12">
-          <div class="form-group">
-            <div class="col-sm-4">
-              <label for="segundo_nombre" class="control-label gcore-label-top">Segundo Nombre:</label>
-            </div>
-            <div class="col-sm-8">
-              <el-input  placeholder="Segundo Nombre" v-model="form.segundo_nombre" size="medium" clearable></el-input>
-            </div>
-          </div>
-        </div>
-      </div>
-    </transition>
-    <transition name="fade">
-      <div class="row" v-show="!form.corporativo">
-        <div class="col-lg-12">
-          <div class="form-group">
-            <div class="col-sm-4">
-              <label for="primer_apellido" class="control-label gcore-label-top">Primer Apellido:<samp id="require">*</samp></label>
-            </div>
-            <div class="col-sm-8">
-              <el-input  placeholder="Primer Apellido" v-model="form.primer_apellido" size="medium" clearable
-              @blur="validateFields('primer_apellido')"
-              :class="{ 'error_field': errors_data.primer_apellido }"></el-input>
-              <small class="help-block" v-show="errors_data.primer_apellido">Campo obligatorio</small>
+    <div v-if="hidde">
+      <transition name="fade">
+        <div class="row" v-show="!form.corporativo">
+          <div class="col-lg-12">
+            <div class="form-group">
+              <div class="col-sm-4">
+                <label for="segundo_nombre" class="control-label gcore-label-top">Segundo Nombre:</label>
+              </div>
+              <div class="col-sm-8">
+                <el-input  placeholder="Segundo Nombre" v-model="form.segundo_nombre" size="medium" clearable></el-input>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </transition>
-    <transition name="fade">
-      <div class="row" v-show="!form.corporativo">
-        <div class="col-lg-12">
-          <div class="form-group">
-            <div class="col-sm-4">
-              <label for="segundo_apellido" class="control-label gcore-label-top">Segundo Apellido:</label>
-            </div>
-            <div class="col-sm-8">
-              <el-input  placeholder="Segundo Apellido" v-model="form.segundo_apellido" size="medium" clearable></el-input>
+      </transition>
+      <transition name="fade">
+        <div class="row" v-show="!form.corporativo">
+          <div class="col-lg-12">
+            <div class="form-group">
+              <div class="col-sm-4">
+                <label for="primer_apellido" class="control-label gcore-label-top">Primer Apellido:<samp id="require">*</samp></label>
+              </div>
+              <div class="col-sm-8">
+                <el-input  placeholder="Primer Apellido" v-model="form.primer_apellido" size="medium" clearable
+                @blur="validateFields('primer_apellido')"
+                :class="{ 'error_field': errors_data.primer_apellido }"></el-input>
+                <small class="help-block" v-show="errors_data.primer_apellido">Campo obligatorio</small>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </transition>
+      </transition>
+      <transition name="fade">
+        <div class="row" v-show="!form.corporativo">
+          <div class="col-lg-12">
+            <div class="form-group">
+              <div class="col-sm-4">
+                <label for="segundo_apellido" class="control-label gcore-label-top">Segundo Apellido:</label>
+              </div>
+              <div class="col-sm-8">
+                <el-input  placeholder="Segundo Apellido" v-model="form.segundo_apellido" size="medium" clearable></el-input>
+              </div>
+            </div>
+          </div>
+        </div>
+      </transition>
+    </div>
 
     <div class="row">
       <div class="col-lg-12">
@@ -165,7 +168,7 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row" v-if="hidde">
       <div class="col-lg-12">
         <div class="form-group">
           <div class="col-sm-4">
@@ -189,7 +192,7 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row" v-if="hidde">
       <div class="col-lg-12">
         <div class="form-group">
           <div class="col-sm-4">
@@ -216,7 +219,19 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row" v-if="!hidde">
+      <div class="col-lg-12">
+        <div class="form-group">
+          <div class="col-sm-4">
+              <label for="zona" class="control-label gcore-label-top">Zona:</label>
+          </div>
+          <div class="col-sm-8">
+            <el-input  placeholder="Zona" v-model="form.zona" size="medium" clearable></el-input>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" v-if="hidde">
       <div class="col-lg-12">
         <div class="form-group">
           <div class="col-sm-4">
@@ -247,6 +262,27 @@
         </div>
       </div>
     </div>
+    <transition name="fade">
+      <div class="row" v-if="form.cliente_id !== null && form.cliente_id !== ''">
+      <div class="col-lg-12">
+        <div class="form-group">
+          <div class="col-sm-4">
+            <label for="notify_client" class="control-label gcore-label-top">&nbsp;</label>
+          </div>
+          <div class="col-sm-8">
+            <el-popover
+              placement="top-start"
+              title="Notificar al Cliente"
+              width="200"
+              trigger="hover"
+              content="Se le enviara email de la carga recibida al cliente asociado de este consignee.">
+              <el-checkbox slot="reference" v-model="form.notify_client"><i class="fal fa-envelope"></i> Notificar al cliente.</el-checkbox>
+            </el-popover>
+          </div>
+        </div>
+      </div>
+    </div>
+    </transition>
     <div class="row" v-if="this.table === 'consignee'">
       <div class="col-lg-12">
         <div class="form-group">
@@ -293,6 +329,7 @@ export default {
     return {
       loading: false,
       edit: false,
+      hidde: true,
       showId: false,
       errors_data: {
         agencia_id: false,
@@ -320,6 +357,8 @@ export default {
         cliente_id: null,
         tarifa: 0,
         emailsend: false,
+        notify_client: false,
+        zona: null,
       },
       // branchs: [],
       clientes: null,
@@ -329,21 +368,29 @@ export default {
   watch:{
     field_id:function(val){
       let me = this;
-      if (val != null) {
+      if (val !== null && val !== '') {
         setTimeout(function () {
-          me.getConsigneeById(val);
-        }, 1000);
+          me.getDataById(val);
+        }, 100);
       }
     }
   },
   mounted() {
     // this.getSelectBranch();
     this.getSelectClient();
+    if (this.table === 'clientes') {
+      let me = this;
+        me.hidde = false
+        me.form.corporativo = true
+    }
   },
   methods: {
     beforeSend(edit){
       this.loading = true;
       if (this.validateFields(false)) {
+        // VALIDA SI ES EL FORMULARIO PARA CLIENTE Y ASIGNA LAS VARIABLES
+        // CORRESPONDIENTES
+        this.setFormToClient()
         if (edit) {
           this.update();
         }else{
@@ -467,8 +514,11 @@ export default {
       this.form.cliente_id = null;
       this.form.tarifa = 0;
       this.form.emailsend = false;
+      this.form.notify_client = false;
+      this.form.zona = null;
       this.city_selected_s = (this.city_selected_s === null) ? '' : null;
       this.edit=false;
+      this.$emit('cancel');
     },
     getSelectBranch: function(){
       axios.get('/agencia/getAgencies').then(response => {
@@ -484,23 +534,45 @@ export default {
     setCity(data){
       this.form.localizacion_id = data.id;
     },
-    getConsigneeById(id){
+    getDataById(id){
       let me = this;
       axios.get(this.table + '/getDataById/' + id).then(response => {
         me.form = response.data;
         me.form.cliente_id = me.form.cliente_id + '';
-        if (me.form.corporativo == 1) {
-          me.form.corporativo = true;
-        }else{
-          me.form.corporativo = false;
-        }
-        if (me.form.email_cc !== null) {
-          let emails = me.form.email_cc;
-          me.form.emails_cc = emails.split(",");
+        if (me.table !== 'clientes') {
+          if (response.data.cliente_id == 'null' || response.data.cliente_id == '') {
+            me.form.cliente_id = null;
+          }
+          if (me.form.corporativo == 1) {
+            me.form.corporativo = true;
+          }else{
+            me.form.corporativo = false;
+          }
+          if (me.form.notify_client == 1) {
+            me.form.notify_client = true;
+          }else{
+            me.form.notify_client = false;
+          }
+          if (me.form.email_cc !== null) {
+            let emails = me.form.email_cc;
+            me.form.emails_cc = emails.split(",");
+          }
         }
         me.city_selected_s = response.data.ciudad;
         me.edit=true;
       });
+    },
+    setFormToClient(){
+      if (this.table === 'clientes') {
+        this.form = {
+          'localizacion_id': this.form.localizacion_id,
+          'nombre': this.form.primer_nombre,
+          'direccion': this.form.direccion,
+          'telefono': this.form.telefono,
+          'email': this.form.correo,
+          'zona': this.form.zona
+        }
+      }
     },
   }
 }

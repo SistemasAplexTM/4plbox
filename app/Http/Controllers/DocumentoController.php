@@ -770,9 +770,9 @@ class DocumentoController extends Controller
       $where = [['b.deleted_at', null],
         ['e.deleted_at', null],
         ['b.tipo_documento_id', $request->id_tipo_doc]];
-        if(!Auth::user()->isRole('admin')){
+        // if(!Auth::user()->isRole('admin')){
             $where[] = ['b.agencia_id', Auth::user()->agencia_id];
-        }
+        // }
         /* GRILLA */
         if ($request->id_tipo_doc == 3) {
             $sql = $this->getAllConsolidated($where);
@@ -786,9 +786,9 @@ class DocumentoController extends Controller
             }else{
               $where = [['a.deleted_at', null],
               ['b.deleted_at', null], ['b.tipo_documento_id', $request->id_tipo_doc]];
-              if(!Auth::user()->isRole('admin')){
+              // if(!Auth::user()->isRole('admin')){
                 $where[] = ['b.agencia_id', Auth::user()->agencia_id];
-              }
+              // }
               if($request->type == 2){
                 $where[] = ['a.num_warehouse', '<>', NULL ];
                 if($request->filter){
@@ -2290,9 +2290,9 @@ class DocumentoController extends Controller
                 ['f.tipo_embarque_id', $transporte_id],
                 ['e.pais_id', $pais_id],
             ];
-        if(!Auth::user()->isRole('admin')){
+        // if(!Auth::user()->isRole('admin')){
             $filter[] = ['b.agencia_id', Auth::user()->agencia_id];
-        }
+        // }
         if(env('APP_CLIENT') == 'jyg'){
           $filter[] = ['a.liquidado', 1];
         }
@@ -2900,9 +2900,9 @@ class DocumentoController extends Controller
     public function getBoxesConsolidado($id)
     {
         $where = [['a.consolidado_id', $id], ['a.deleted_at', null]];
-        if(!Auth::user()->isRole('admin')){
+        // if(!Auth::user()->isRole('admin')){
             $where[] = ['c.agencia_id', Auth::user()->agencia_id];
-        }
+        // }
 
         $data = DB::table('consolidado_detalle as a')
             ->leftJoin('documento_detalle as b', 'a.documento_detalle_id', 'b.id')

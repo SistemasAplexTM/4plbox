@@ -19,7 +19,7 @@ class BodegaRecibido extends Mailable implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($param, $from_self = array('address' => 'sac@4plbox.com', 'name' => '4plbox'), $subject_msn = 'Mensaje 4plbox')
+    public function __construct($param, $from_self = array('address' => 'sac@4plbox.com', 'name' => '4plbox'), $subject_msn = 'Nuevo mensaje')
     {
         $this->param = $param;
         $this->from_self = $from_self;

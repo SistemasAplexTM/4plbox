@@ -62,7 +62,7 @@ Vue.component('shipper-consignee-select', require('./components/ShipperConsignee
 Vue.component('document-filter', require('./components/DocumentFilter.vue'));
 Vue.component('document-upload', require('./components/DocumentUpload.vue'));
 //
-Vue.component('form-consignee', require('./components/FormConsignee.vue'));
+Vue.component('form-csc', require('./components/FormConsigneeShipperClient.vue'));
 Vue.component('menu-component', require('./components/menu/Index.vue'));
 Vue.component('sidebar-component', require('./components/menu/Sidebar.vue'));
 Vue.component('right-menu', require('./components/RightMenu/RightMenu.vue'));

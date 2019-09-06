@@ -95,9 +95,16 @@ function loadTableCreateReceipt() {
       processing: true,
       serverSide: true,
       responsive: true,
-      order: [[2, "desc"]],
+      order: [[0, "DESC"]],
       ajax: 'tracking/getTrackingByCreateReceipt/',
       columns: [{
+        data: "confirmed_send",
+        name: 'confirmed_send',
+          "render": function(data, type, full, meta) {
+            return parseInt(full.confirmed_send);
+          },
+          visible: false
+      },{
           data: "cliente",
           name: 'cliente',
           "render": function(data, type, full, meta) {
@@ -108,19 +115,19 @@ function loadTableCreateReceipt() {
           class: 'text-center',
           "render": function(data, type, full, meta) {
             var color = 'success';
-            var dateObj = new Date();
-            var month = (dateObj.getMonth() + 1).toString(); //months from 1-12
-            var day = dateObj.getDate().toString();
-            var year = dateObj.getUTCFullYear();
-
-            var mmChars = month.split('');
-            var ddChars = day.split('');
-
-            month = (mmChars[1]?month:"0"+mmChars[0]);
-            day = (ddChars[1]?day:"0"+ddChars[0]);
-
-            var today = year + "-" + month + "-" + day;
-            if (today === full.last_date) {
+            // var dateObj = new Date();
+            // var month = (dateObj.getMonth() + 1).toString(); //months from 1-12
+            // var day = dateObj.getDate().toString();
+            // var year = dateObj.getUTCFullYear();
+            //
+            // var mmChars = month.split('');
+            // var ddChars = day.split('');
+            //
+            // month = (mmChars[1]?month:"0"+mmChars[0]);
+            // day = (ddChars[1]?day:"0"+ddChars[0]);
+            //
+            // var today = year + "-" + month + "-" + day;
+            if (parseInt(full.confirmed_send) !== 0) {
               color = 'primary';
             }
             return '<label class="badge badge-'+color+'" style="font-size: 15px;">' + full.cantidad +'</label> ';
@@ -261,6 +268,7 @@ var objVue = new Vue({
       },
       resetForm: function() {
           this.consignee_id = null;
+          this.consignee_name = null;
           this.tracking = null;
           this.contenido = null;
           this.email = null;

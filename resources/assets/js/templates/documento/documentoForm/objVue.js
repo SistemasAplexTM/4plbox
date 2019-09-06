@@ -1047,10 +1047,10 @@ var objVue = new Vue({
         }else{
           $('#peso').css({"transition": "ripple .4s ease-in"});
           toastr.warning('Ingresa el PESO para continuar.');
-  //         transition-property: text-decoration;
-  // transition-duration: 0.8s;
-  // transition-timing-function: linear;
-  // transition-delay: 0.2s;
+          //         transition-property: text-decoration;
+          // transition-duration: 0.8s;
+          // transition-timing-function: linear;
+          // transition-delay: 0.2s;
           return false;
         }
       },

@@ -73,35 +73,42 @@
 -. Campo CC en formulario shipper y consignee, campo WhatsApp. ==================================================================
 -. quitar la agencia de las tablas shipper, consignee y que los registros solo filtren los datos de cada agencias================
 
--. Revisar porque al crear consignee no tomo el prefijo de la agencia si no que tomo el prefijo de la principal.
--. colocar fecha en el email de tracking recibido.
--. colocar edicion al tracking en linea.
--. mostrar al buscar shipper y consignee en la modal de documento solo sus shippers y consignees de cada uno
--. los documentos de la grilla principal solo muestre los documentos de la agencia logueada.
--. los emails templates que solo filtre por la agencia logueada
--. Revisar si en clientes, se muestra solo los datos de los clientes de la agencia que se logueó.
--. colocar el cliente en la columna agencia de la grilla de consignees.
-
+2019-09-03
+-. colocar edicion al tracking en linea.=========================================================================================
+-. mostrar al buscar shipper y consignee en la modal de documento solo sus shippers y consignees de cada uno ====================
+-. los documentos de la grilla principal solo muestre los documentos de la agencia logueada.====================================
+-. colocar fecha en el email de tracking recibido.==============================================================================
+-. Revisar si en clientes, se muestra solo los datos de los clientes de la agencia que se logueó.===============================
+-. colocar el cliente en la columna agencia de la grilla de consignees.=========================================================
 ===Revisión con Colombiana===
+2. Se ingresó un consignee desde el recibo de colombiana, se separó el nombre y apellidos con líneas y el sistema no ingresó bien el nombre, y lo creó doble.===
+6. CRÍTICO: El CC del correo en Shipper y Consignee=============================================================================
+7. CRÍTICO: El WhatsApp en el Consignee y la agencia============================================================================
+2. En CARGA Ordenar los nuevos tracking recibidos arriba en el datatable.==========================================================
+1. En CARGA Cambiar el combo del Consignee en el recibo del tracking y cambiar la palabra cliente por Consignee.======================
+3. En CARGA En el mensaje de recibido casillero colocar el contenido del tracking =====================================================
+-. EN RECIBO DE TRACKING: los casilleros que tengan ingreo el dia de hoy queda el badged en verde con en inventario de trackings.========================
+4. En CARGA En Shipper, Consignee y agencias colocar la opción de WhatsApp, también colocar la opción de CC para agregar correos, y que ese CC permita correos múltiple. =======================
+-. Tener las formas de pago en las dos (COD y PP) al guardar el documento.============================================================
+4. En CARGA En el Consignee y Shipper, colocar un campo adicional para correos y para teléfonos.===================================================
+4. En CARGA en recibo de tracking cambiar el combo de cliente por el de ELEMENT y colocar en vez de la palabra cliente,==================================
+Destinatario y que se pueda enviar un email consolidado al cliente y no uno por uno.================================================================
+6. En CARGA En las variables de las plantillas, mostrar el contenido del tracking y la fecha de recibo del tracking.=======================================
+-. Registrar shipper y consignee desde un componente aparte.. que se cree y se seleccione en el documento================================
+
+-. Revisar porque al crear consignee no tomo el prefijo de la agencia si no que tomo el prefijo de la principal.
+-. los emails templates que solo filtre por la agencia logueada
+
 1. Cuando se crea un recibo para courier y este tiene una agencia diferente a la principal, el prefijo del casillero no cambia, sigue usando el de la principal.
-2. Se ingresó un consignee desde el recibo de colombiana, se separó el nombre y apellidos con líneas y el sistema no ingresó bien el nombre, y lo creó doble.
 4. En las tarifas de las agencias se debe colcoar la mínima de las agencias.
 **** 5. CRÍTICO: El logo variable en las plantillas de correo
-6. CRÍTICO: El CC del correo en Shipper y Consignee
-7. CRÍTICO: El WhatsApp en el Consignee y la agencia
 8. CRÍTICO: Es enredado crear consignee y shipper desde el recibo, mejor usemos una modal.
 9. CRÍTICO: Los controles a los menú por parte de los usuarios.
 10. Coloquemos un status de envío de email en los tracking que se anuncia el envío de email, y adicional se debe colcoar un JSON que permita guardar el historial de envío de correo.
 
-1. En CARGA Cambiar el combo del Consignee en el recibo del tracking y cambiar la palabra cliente por Consignee.
-2. En CARGA Ordenar los nuevos tracking recibidos arriba en el datatable.
-3. En CARGA En el mensaje de recibido casillero colocar el contenido del tracking
-4. En CARGA En Shipper, Consignee y agencias colocar la opción de WhatsApp, también colocar la opción de CC para agregar correos, y que ese CC permita correos múltiple.
 5. En CARGA en el consolidado mostrar la cantidad que se van a imprimir en los documentos.
 
--. EN RECIBO DE TRACKING: los casilleros que tengan ingreo el dia de hoy queda el badged en verde con en inventario de trackings.
 -. Cambiar formulario de usuarios por el de element y colocar campo de contraseña con el de element (tiene el ojito para ver la contraseña)
--. Tener las formas de pago en las dos (COD y PP) al guardar el documento.
 -. Colocar dos botones en las formas de pago (COD y PP)
 -. No salga las libras en el label ni el FOB
 -. Crear campo tarifa minima para la agencia porque hay 2
@@ -109,7 +116,6 @@
 -. la factura proforma (invoice) en toda una hoja
 1. En CARGA QUe en la campanita aparezcan los prealertas de las personas.
 2. En Carga Mostrar un reporte de las personas que se registran a través de la web, mes a mes
-4. En CARGA En el Consignee y Shipper, colocar un campo adicional para correos y para teléfonos.
 5. En CARGA cuando me registro, selecciono la ciudad y en el + del teléfono no se ve el código del país
 -. agregar cargos adicionales por defecto en la configuración (descripcion, valor);
 -. Agregar boton en la forma de pago que diga '+ Cargos' y al lado texto 'Desea agregar cargos a esta factura?'
@@ -118,10 +124,7 @@
 1. En CARGA En el control de acceso meter la administración, el BL y Clientes.
 2. En CARGA que funcione el control de acceso.
 3. En CARGA Arriba en donde se buscan tracking si no está el tracking en un recibo no muestra nada
-4. En CARGA en recibo de tracking cambiar el combo de cliente por el de ELEMENT y colocar en vez de la palabra cliente,
-   Destinatario y que se pueda enviar un email consolidado al cliente y no uno por uno.
 5. En CARGA A los contactos permitir colocar más email y más correos y la segunda línea de dirección.
-6. En CARGA En las variables de las plantillas, mostrar el contenido del tracking y la fecha de recibo del tracking.
 7. En CARGA La pregunta de agregar un cargo adicional.
 
 
@@ -139,7 +142,6 @@
     Pero nos recomendaron.
 
 
--. Registrar shipper y consignee desde un componente aparte.. que se cree y se seleccione en el documento
 -. Dejar en la grilla las cajas que no están consolidadas.
 
 autocomplete="aplextmautocomplete"

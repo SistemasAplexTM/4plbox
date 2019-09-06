@@ -208,7 +208,7 @@ return [
     //resources/views/template/prealertalist
 
     'pack_off'=>'Pack off',
-    'content'=>'Content',
+    'content'=>'Description',
 
     //resources/views/template/rastreo
 

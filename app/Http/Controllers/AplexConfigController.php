@@ -17,32 +17,32 @@ class AplexConfigController extends Controller
     public function config()
     {
       $menu = array(
+        array('icon' => 'cog', 'route' => 'settings', 'url' => false, 'desc' => 'general.general', 'perm' => 'administracion.index'),
+        array('icon' => 'store', 'route' => 'agencia.index', 'url' => false, 'desc' => 'layouts.agencies', 'perm' => 'agencia.index'),
+        array('icon' => 'box-check', 'route' => 'status.index', 'url' => false, 'desc' => 'layouts.status', 'perm' => 'status.index'),
+        array('icon' => 'truck', 'route' => 'transportador.index', 'url' => false, 'desc' => 'layouts.transporters', 'perm' => 'transportador.index'),
+        array('icon' => 'file', 'route' => 'tipoDocumento.index', 'url' => false, 'desc' => 'layouts.document_types', 'perm' => 'tipoDocumento.index'),
         array('icon' => 'envelope', 'route' => 'emailTemplate.index', 'url' => false, 'desc' => 'layouts.email_templates', 'perm' => 'emailTemplate.index'),
         array('icon' => 'print', 'route' => 'printConfig', 'url' => false, 'desc' => 'layouts.print_config', 'perm' => 'emailTemplate.index'),
-        array('icon' => 'hand-holding-usd', 'route' => 'administracion/1', 'url' => true, 'desc' => 'layouts.payment_methods', 'perm' => 'administracion.index'),
-        array('icon' => 'credit-card', 'route' => 'administracion/2', 'url' => true, 'desc' => 'layouts.payment_types', 'perm' => 'emailTemplate.index'),
         array('icon' => 'sitemap', 'route' => 'administracion/3', 'url' => true, 'desc' => 'layouts.groups_of_receipts', 'perm' => 'emailTemplate.index'),
         array('icon' => 'folder-open', 'route' => 'aerolinea_inventario', 'url' => true, 'desc' => 'layouts.inventory_airlines', 'perm' => 'aerolinea_inventario.index'),
-        array('icon' => 'plane-alt', 'route' => 'transport/aerolineas', 'url' => true, 'desc' => 'layouts.airlines', 'perm' => 'transport.index'),
-        array('icon' => 'road', 'route' => 'transport/aeropuertos', 'url' => true, 'desc' => 'layouts.airports', 'perm' => 'transport.index'),
         array('icon' => 'share-alt', 'route' => 'servicios.index', 'url' => false, 'desc' => 'layouts.services', 'perm' => 'servicios.index'),
-        array('icon' => 'dolly-flatbed-alt', 'route' => 'administracion/5', 'url' => true, 'desc' => 'layouts.type_boardings', 'perm' => 'administracion.index'),
-        array('icon' => 'shopping-bag', 'route' => 'administracion/6', 'url' => true, 'desc' => 'layouts.type_packagings', 'perm' => 'administracion.index'),
         array('icon' => 'dollar-sign', 'route' => 'administracion/12', 'url' => true, 'desc' => 'layouts.cost', 'perm' => 'administracion.index')
       );
 
       $menu2 = array(
-        array('icon' => 'cog', 'route' => 'settings', 'url' => false, 'desc' => 'general.general', 'perm' => 'administracion.index'),
-        array('icon' => 'store', 'route' => 'agencia.index', 'url' => false, 'desc' => 'layouts.agencies', 'perm' => 'agencia.index'),
         // array('icon' => 'users-class', 'route' => 'empleado.index', 'url' => false, 'desc' => 'layouts.employees', 'perm' => 'agencia.index'),
+        array('icon' => 'hand-holding-usd', 'route' => 'administracion/1', 'url' => true, 'desc' => 'layouts.payment_methods', 'perm' => 'administracion.index'),
+        array('icon' => 'credit-card', 'route' => 'administracion/2', 'url' => true, 'desc' => 'layouts.payment_types', 'perm' => 'emailTemplate.index'),
+        array('icon' => 'plane-alt', 'route' => 'transport/aerolineas', 'url' => true, 'desc' => 'layouts.airlines', 'perm' => 'transport.index'),
+        array('icon' => 'road', 'route' => 'transport/aeropuertos', 'url' => true, 'desc' => 'layouts.airports', 'perm' => 'transport.index'),
+        array('icon' => 'dolly-flatbed-alt', 'route' => 'administracion/5', 'url' => true, 'desc' => 'layouts.type_boardings', 'perm' => 'administracion.index'),
+        array('icon' => 'shopping-bag', 'route' => 'administracion/6', 'url' => true, 'desc' => 'layouts.type_packagings', 'perm' => 'administracion.index'),
         array('icon' => 'money-bill', 'route' => 'arancel.index', 'url' => false, 'desc' => 'layouts.tariffs', 'perm' => 'arancel.index'),
-        array('icon' => 'box-check', 'route' => 'status.index', 'url' => false, 'desc' => 'layouts.status', 'perm' => 'status.index'),
-        array('icon' => 'truck', 'route' => 'transportador.index', 'url' => false, 'desc' => 'layouts.transporters', 'perm' => 'transportador.index'),
         array('icon' => 'truck-container', 'route' => 'transportadoras_locales', 'url' => true, 'desc' => 'layouts.local_transporters', 'perm' => 'transportador.index'),
         array('icon' => 'map-marker', 'route' => 'pais.index', 'url' => false, 'desc' => 'layouts.countrieses', 'perm' => 'pais.index'),
         array('icon' => 'map-marked', 'route' => 'departamento.index', 'url' => false, 'desc' => 'layouts.dptos_states', 'perm' => 'departamento.index'),
         array('icon' => 'street-view', 'route' => 'ciudad.index', 'url' => false, 'desc' => 'layouts.cities', 'perm' => 'ciudad.index'),
-        array('icon' => 'file', 'route' => 'tipoDocumento.index', 'url' => false, 'desc' => 'layouts.document_types', 'perm' => 'tipoDocumento.index'),
         array('icon' => 'list', 'route' => 'menu.index', 'url' => false, 'desc' => 'layouts.menu', 'perm' => 'tipoDocumento.index'),
       );
 

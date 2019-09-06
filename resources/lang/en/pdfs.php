@@ -2,12 +2,12 @@
 
 return [
 
-//      Consolidado_Guias_pdf   
+//      Consolidado_Guias_pdf
 
 			'date'    	  => 'Date',
 			'sender'  	  => 'Sender',
 			'addressee'   => 'Addressee',
-			'content'     => 'Content',
+			'content'     => 'Description',
 			'pieces'      => 'Pieces',
 			'declared'    => 'Declared',
 			'weight'      => 'Weight',
