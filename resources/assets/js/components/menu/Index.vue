@@ -1,16 +1,21 @@
 <template lang="html">
   <div class="">
-    <i class="fal fa-list fa-3x fr"></i>
-    <p> <strong>Gestione</strong> el menú de su aplicación para que se adecúe a sus necesidades</p>
-    <el-divider/>
-    <el-tabs @tab-click="handleClick">
-      <el-tab-pane label="Registrar">
-        <form-menu/>
-      </el-tab-pane>
-      <el-tab-pane label="Ordenar">
-        <order-list ref="list"/>
-      </el-tab-pane>
-    </el-tabs>
+    <el-row>
+        <el-col :span="14" :offset="5">
+          <p>
+            <!-- <i class="fal fa-list fa-3x fr"></i> -->
+            <strong>Gestione</strong> el menú de su aplicación para que se adecúe a sus necesidades</p>
+          <el-divider/>
+          <el-row :gutter="24">
+            <el-col :span="10">
+              <form-menu/>
+            </el-col>
+            <el-col :span="14">
+              <order-list ref="list"/>
+            </el-col>
+          </el-row>
+        </el-col>
+    </el-row>
   </div>
 </template>
 

@@ -387,6 +387,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('menu', 'MenuController@index')->name('menu.index');
     Route::post('menu', 'MenuController@store');
     Route::get('getMenu/{front}', 'MenuController@getMenu');
+    Route::get('menu/id/{id}', 'MenuController@getById');
+    Route::put('menu/updateOrder', 'MenuController@updateOrder');
+    Route::put('menu/{id}', 'MenuController@update');
 
     Route::get('getConfig/{key}', 'Controller@getConfig');
     Route::post('config/{key}/{type}/{simple?}', 'AplexConfigController@save');

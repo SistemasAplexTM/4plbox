@@ -64,4 +64,5 @@ Vue.component('document-upload', require('./components/DocumentUpload.vue'));
 //
 Vue.component('form-consignee', require('./components/FormConsignee.vue'));
 Vue.component('menu-component', require('./components/menu/Index.vue'));
+Vue.component('sidebar-component', require('./components/menu/Sidebar.vue'));
 Vue.component('right-menu', require('./components/RightMenu/RightMenu.vue'));

@@ -53,6 +53,9 @@
           var objVue = new Vue({
             el: '#right-sidebar'
           })
+          var objVue = new Vue({
+            el: '#sidebar'
+          })
           var objVueNav = new Vue({
             el: '#navbar_index',
           })

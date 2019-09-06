@@ -7,10 +7,13 @@
         <el-input placeholder="Ruta" v-model="form.route" size="medium" clearable></el-input>
       </el-col>
       <el-col :span="24">
-        <el-input placeholder="Icono" v-model="form.icon" size="medium" clearable></el-input>
+        <el-input placeholder="Icono" v-model="icon" size="medium" clearable></el-input>
       </el-col>
       <el-col :span="24">
-        <el-select v-model="form.rol_id" clearable multiple collapse-tags placeholder="Selecione roles">
+        <el-color-picker v-model="form.color"></el-color-picker>
+      </el-col>
+      <el-col :span="24">
+        <el-select v-model="roles_selected" clearable collapse-tags multiple placeholder="Selecione roles">
           <el-option
             v-for="item in roles"
             :key="item.id"
@@ -20,23 +23,22 @@
         </el-select>
       </el-col>
       <el-col :span="24">
-        <el-button type="success" @click="open()">Abrir</el-button>
-        <el-button type="success" :loading="loading" @click="submit()" v-if="!edit"><i class="fal fa-save"></i> Guardar</el-button>
-        <el-button type="primary" :loading="loading" @click="beforeSend(true)" v-if="edit"><i class="fal fa-edit"></i> Actualizar</el-button>
-        <el-button @click="resetForm()" v-if="edit"><i class="fal fa-times"></i> Cancelar</el-button>
-      </el-col>
-      <el-col :span="24">
         <el-alert
-         v-if="error"
-         title="Error"
-         type="error"
-         description=""
-         @close="error = false"
-         show-icon>
-         <ul>
-           <li v-for="error in listErrors">{{ error }}</li>
-         </ul>
-       </el-alert>
+        v-if="error"
+        title="Error"
+        type="error"
+        description=""
+        @close="error = false"
+        show-icon>
+        <ul>
+          <li v-for="error in listErrors">{{ error }}</li>
+        </ul>
+      </el-alert>
+    </el-col>
+      <el-col :span="24">
+        <el-button type="success" :loading="loading" @click="submit()" v-if="!edit"><i class="fal fa-save"></i> Guardar</el-button>
+        <el-button type="primary" :loading="loading" @click="update(true)" v-if="edit"><i class="fal fa-edit"></i> Actualizar</el-button>
+        <el-button @click="resetForm()" v-if="edit"><i class="fal fa-times"></i> Cancelar</el-button>
       </el-col>
   </el-row>
 
@@ -51,9 +53,11 @@ export default {
       form: {
         name: null,
         route: null,
-        icon: null,
-        rol_id: null
+        color: null,
+        roles_selected: null
       },
+      icon: null,
+      roles_selected: null,
       roles: [],
       edit: false,
       error: false,
@@ -62,15 +66,57 @@ export default {
     }
   },
   created(){
-    this.getRoles()
+    let me = this
+    me.getRoles()
+    bus.$on('edit_menu', function (payload) {
+      me.edit= true
+      me.getById(payload)
+    })
   },
   methods: {
+    getById(id){
+      let me = this
+      axios.get('menu/id/' + id).then(({data}) => {
+        me.form = data;
+        me.roles_selected = []
+        for (var i = 0; i < data.roles.length; i++) {
+          me.roles_selected.push(data.roles[i].id)
+        }
+        var meta = JSON.parse(data.meta)
+        me.icon = meta.icon
+        me.form.color = meta.color
+      });
+    },
+    update() {
+      this.loading = true
+      this.form.roles_selected = this.roles_selected
+      this.form.icon = this.icon
+      axios.put('menu/' + this.form.id, this.form).then(response => {
+        if (response.data.code == 200) {
+          this.$message({type: 'success', message: 'Actualizado con éxito.'})
+          bus.$emit('refreshList', true)
+          this.resetForm()
+        }
+        if (response.data.error) {
+          this.error = true
+          this.listErrors = response.data.error.validator.customMessages
+        }else{
+            this.error = false
+        }
+        this.loading = false
+      }).catch(error => {
+        this.listErrors = error
+        this.loading = false
+      });
+    },
     submit() {
       this.loading = true
+      this.form.roles_selected = this.roles_selected
+      this.form.icon = this.icon
       axios.post('menu', this.form).then(response => {
         if (response.data.code == 200) {
-          this.$refs.list.getMenu()
           this.$message({type: 'success', message: 'Registrado con éxito.'})
+          bus.$emit('refreshList', true)
           this.resetForm()
         }
         if (response.data.error) {
@@ -90,8 +136,11 @@ export default {
         name: null,
         route: null,
         icon: null,
-        rol_id: null
+        roles_selected: null
       }
+      this.roles_selected = null
+      this.icon = null
+      this.edit = false
       this.error = false
       this.listErrors = []
     },
