@@ -217,9 +217,10 @@
                                             <div class="input-group"  style="margin-bottom: 5px;" :class="{ 'has-error': errors.has('nombreR') }">
                                                 <input type="search" autocomplete="aplextmautocomplete" data-id="nomBuscarShipper" id="nombreR" name="nombreR" placeholder="@lang('documents.type_to_search')" class="form-control" onkeyup="deleteError($(this).parent());" v-model="nombreR" v-validate="'required'">
                                                 <span class="input-group-btn">
-                                                    <button id="btnBuscarShipper" @click="modalShipper(true)" class="btn btn-primary" type="button" data-toggle='tooltip' title="Buscar"><span class="fal fa-search"></span>&nbsp;</button>
-                                                    <button id="btnEditShipper" @click="open()" class="btn btn-success" type="button" data-toggle='tooltip' title="Editar"><span class="fal fa-edit"></span>&nbsp;</button>
-                                                    <button id="btnResetShipper" @click="resetFormsShipperConsignee(0)" class="btn btn-default" type="button" data-toggle='tooltip' title="Reset"><span class="fal fa-sync"></span>&nbsp;</button>
+                                                    <button id="btnBuscarShipper" @click="modalShipper(true)" class="btn btn-default" type="button" data-toggle='tooltip' title="Buscar"><span class="fal fa-search"></span>&nbsp;</button>
+                                                    <button id="btnCreateConsignee" @click="open('shipper', true)" class="btn btn-primary" type="button" data-toggle='tooltip' title="Crear"><span class="fal fa-plus"></span>&nbsp;</button>
+                                                    <button id="btnEditShipper" @click="open('shipper')" class="btn btn-success" type="button" data-toggle='tooltip' title="Editar"><span class="fal fa-edit"></span>&nbsp;</button>
+                                                    {{-- <button id="btnResetShipper" @click="resetFormsShipperConsignee(0)" class="btn btn-default" type="button" data-toggle='tooltip' title="Reset"><span class="fal fa-sync"></span>&nbsp;</button> --}}
                                                 </span>
                                             </div>
                                             <small class="help-block has-error">@{{ errors.first('nombreR') }}</small>
@@ -227,16 +228,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            {{-- <div class="row">
                                 <label class="control-label col-sm-2">@lang('documents.address'): <samp id="require">*</samp></label>
                                 <div class="col-sm-10" :class="{ 'has-error': errors.has('direccionR') }">
                                     <input type="text" autocomplete="off" id="direccionR" name="direccionR" placeholder="@lang('documents.address')" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());" v-model="direccionR" v-validate="'required'">
                                     <small class="help-block has-error">@{{ errors.first('direccionR') }}</small>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <!-- /Grupo Doble 1 -->
-                             <div class="row">
+                             {{-- <div class="row">
                                 <label class="control-label col-sm-2">@lang('documents.email'):</label>
                                 <div class="col-sm-5" :class="{ 'has-error': errors.has('emailR') }">
                                     <input type="email" autocomplete="off" placeholder="Example@example.com" id="emailR" name="emailR" class="form-control" v-validate.disable="'unique_s'">
@@ -248,11 +249,11 @@
                                     <small class="help-block has-error">@{{ errors.first('telR') }}</small>
                                 </div>
                                 <small class="help-block" style="display: none;"></small>
-                            </div>
+                            </div> --}}
                             <!-- /Fin Grupo Doble 1 -->
 
                             <!-- /Grupo Doble 2 -->
-                             <div class="row">
+                             {{-- <div class="row">
                                 <label class="control-label col-sm-2">@lang('documents.city'): <samp id="require">*</samp></label>
                                 <div class="col-sm-5" onclick ="deleteError($(this));">
                                     <input type="hidden" id="localizacion_id" name="localizacion_id" value="">
@@ -264,7 +265,7 @@
                                     <input type="text" autocomplete="off" placeholder="Zip" id="zipR" name="zipR" class="form-control" onkeyup="deleteError($(this).parent());">
                                 </div>
                                 <small class="help-block" style="display: none;"></small>
-                            </div>
+                            </div> --}}
                             <!-- /Fin Grupo Doble 2 -->
                             <div class="row">
                                 <input type="checkbox" id="opEditarShip" name="opEditarShip" style="display: none;">
@@ -304,7 +305,8 @@
                                                 <input type="search" autocomplete="off" data-id="nomBuscarConsignee" class="form-control" id="nombreD" name="nombreD" placeholder="@lang('documents.type_to_search')" onkeyup="deleteError($(this).parent());" v-model="nombreD" v-validate="'required'">
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-primary" @click="modalConsignee(true)" id="btnBuscarConsignee" type="button" data-toggle='tooltip' title="Buscar"><span class="fal fa-search"></span>&nbsp;</button>
-                                                    <button id="btnEditConsignee" @click="editFormsShipperConsignee(1)" class="btn btn-success" type="button" data-toggle='tooltip' title="Editar"><span class="fal fa-edit"></span>&nbsp;</button>
+                                                    <button id="btnCreateConsignee" @click="open('consignee', true)" class="btn btn-primary" type="button" data-toggle='tooltip' title="Crear"><span class="fal fa-plus"></span>&nbsp;</button>
+                                                    <button id="btnEditConsignee" @click="open('consignee')" class="btn btn-success" type="button" data-toggle='tooltip' title="Editar"><span class="fal fa-edit"></span>&nbsp;</button>
                                                     <button id="btnResetConsignee" @click="resetFormsShipperConsignee(1)" class="btn btn-default" type="button" data-toggle='tooltip' title="Reset"><span class="fal fa-sync"></span>&nbsp;</button>
                                                     </span>
                                             </div><!-- /input-group -->
@@ -313,7 +315,7 @@
                                     </div>
                                 </div>
                             </div>
-                                <div class="row">
+                                {{-- <div class="row">
                                     <div class="form-group">
                                         <label class="control-label col-sm-2">@lang('documents.address'): <samp id="require">*</samp></label>
                                         <div class="col-sm-10" :class="{ 'has-error': errors.has('direccionD') }">
@@ -321,8 +323,8 @@
                                             <small class="help-block has-error">@{{ errors.first('direccionD') }}</small>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
+                                </div> --}}
+                                {{-- <div class="row">
                                 <!-- /Grupo Doble 1 -->
                                     <label class="control-label col-sm-2">@lang('documents.email'): </label>
                                     <div class="col-sm-5" :class="{ 'has-error': errors.has('emailD') }">
@@ -335,8 +337,8 @@
                                         <small class="help-block has-error">@{{ errors.first('telD') }}</small>
                                     </div>
                                 <!-- /Fin Grupo Doble 1 -->
-                                </div>
-                                <div class="row">
+                                </div> --}}
+                                {{-- <div class="row">
                                 <!-- /Grupo Doble 2 -->
                                     <div class="form-group">
                                         <label class="control-label col-sm-2">@lang('documents.city'): <samp id="require">*</samp></label>
@@ -356,7 +358,7 @@
                                         </div>
                                         <small class="help-block" style="display: none;"></small>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="row">
                                     <!-- /Fin Grupo Doble 2 -->
                                     <input type="checkbox" id="opEditarCons" name="opEditarCons" style="display: none;">

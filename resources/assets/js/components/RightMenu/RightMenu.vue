@@ -3,7 +3,8 @@
     :visible.sync="drawer"
     :direction="direction"
     size="25%"
-    :show-close="false">
+    :show-close="false"
+    :destroy-on-close="true">
     <span slot="title" class="mb-5">
       <i class="fr fa-4x o-010" :class="data.icon"></i>
       <el-page-header @back="drawer=false" title="" style="color: white !important;margin-top: 12px;">

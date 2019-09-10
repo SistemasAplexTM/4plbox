@@ -64,8 +64,4 @@ Vue.component('document-upload', require('./components/DocumentUpload.vue'));
 //
 Vue.component('form-csc', require('./components/FormConsigneeShipperClient.vue'));
 Vue.component('menu-component', require('./components/menu/Index.vue'));
-<<<<<<< HEAD
-=======
-Vue.component('sidebar-component', require('./components/menu/Sidebar.vue'));
->>>>>>> 9836b5103614f5ed34ead36cef89dd15e5ac3c52
 Vue.component('right-menu', require('./components/RightMenu/RightMenu.vue'));
