@@ -20,7 +20,7 @@
 @section('content')
     <div class="row" id="maestraMultiple">
         <form id="formmaestraMultiples" enctype="multipart/form-data" class="form-horizontal" role="form" action="" method="post">
-        	<input v-model="modulo_id" type="text" id="modulo_id" name="modulo_id[]" value="{{ $type }}" hidden="">
+        	<input v-model="modulo" type="text" id="modulo" value="{{ $type }}" hidden="">
             <div class="col-lg-5">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
@@ -51,7 +51,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.descripcion}">
                                         <div class="col-sm-4">
-                                            <label for="descripcion" class="control-label gcore-label-top">{{ ($type != '1' and $type != '2') ? 'Descripción:' : 'Abreviatura:' }}</label>
+                                            <label for="descripcion" class="control-label gcore-label-top">{{ ($type != 'Forma_de_Pago' and $type != 'Tipos_de_Pago') ? 'Descripción:' : 'Abreviatura:' }}</label>
                                         </div>
                                         <div class="col-sm-8">
                                             <input v-model="descripcion" name="descripcion[]" id="descripcion" value="" placeholder="@lang('general.description')" class="form-control" type="text" @click="deleteError('descripcion')" />
@@ -83,7 +83,7 @@
                                 <thead>
                                     <tr>
                                         <th>@lang('general.name')</th>
-                                        <th>{{ ($type != '1' and $type != '2') ? 'Descripción' : 'Abreviatura' }}</th>
+                                        <th>{{ ($type != 'Forma_de_Pago' and $type != 'Tipos_de_Pago') ? 'Descripción' : 'Abreviatura' }}</th>
                                         <th>@lang('general.actions')</th>
                                     </tr>
                                 </thead>

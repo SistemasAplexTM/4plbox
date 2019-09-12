@@ -139,7 +139,9 @@
     #paiment{
       width: 25% !important;
     }
-
+    .data_content{
+      width: 30px;
+    }
 </style>
 <link href="{{ asset('css/plugins/dataTables/keyTable.dataTables.min.css') }}">
 @endsection
@@ -223,50 +225,32 @@
                                                     {{-- <button id="btnResetShipper" @click="resetFormsShipperConsignee(0)" class="btn btn-default" type="button" data-toggle='tooltip' title="Reset"><span class="fal fa-sync"></span>&nbsp;</button> --}}
                                                 </span>
                                             </div>
-                                            <small class="help-block has-error">@{{ errors.first('nombreR') }}</small>
+                                            <small class="help-block has-error">@{{ errors.first('nombreR') }} </small>
+
+                                            <el-row :gutter="24">
+                                              <el-col :span="12">
+                                                <div><label class="data_content"><i class="fal fa-map-marked-alt"></i></label> @{{ shipper_data.direccion }}</div>
+                                              </el-col>
+                                              <el-col :span="12">
+                                                <div><label class="data_content"><i class="fal fa-envelope-open-text"></i></label> @{{ shipper_data.correo }}</div>
+                                              </el-col>
+                                            </el-row>
+                                            <el-row :gutter="24">
+                                              <el-col :span="12">
+                                                <div><label class="data_content"><i class="fal fa-phone"></i></label> @{{ shipper_data.telefono }}</div>
+                                              </el-col>
+                                              <el-col :span="12">
+                                                <div><label class="data_content"><i class="fal fa-city"></i></label> @{{ shipper_data.ciudad }} - @{{ shipper_data.zip }}</div>
+                                              </el-col>
+                                            </el-row>
+                                        </div>
+                                        <div class="col-sm-10">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="row">
-                                <label class="control-label col-sm-2">@lang('documents.address'): <samp id="require">*</samp></label>
-                                <div class="col-sm-10" :class="{ 'has-error': errors.has('direccionR') }">
-                                    <input type="text" autocomplete="off" id="direccionR" name="direccionR" placeholder="@lang('documents.address')" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());" v-model="direccionR" v-validate="'required'">
-                                    <small class="help-block has-error">@{{ errors.first('direccionR') }}</small>
-                                </div>
-                            </div> --}}
 
-                            <!-- /Grupo Doble 1 -->
-                             {{-- <div class="row">
-                                <label class="control-label col-sm-2">@lang('documents.email'):</label>
-                                <div class="col-sm-5" :class="{ 'has-error': errors.has('emailR') }">
-                                    <input type="email" autocomplete="off" placeholder="Example@example.com" id="emailR" name="emailR" class="form-control" v-validate.disable="'unique_s'">
-                                    <small class="help-block has-error">@{{ errors.first('emailR') }}</small>
-                                </div>
-                                <label class="control-label col-sm-1">@lang('documents.phone'): </label>
-                                <div class="col-sm-4">
-                                    <input type="tel" autocomplete="off" data-mask="(999) 999-9999" placeholder="@lang('documents.phone')" id="telR" name="telR" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());">
-                                    <small class="help-block has-error">@{{ errors.first('telR') }}</small>
-                                </div>
-                                <small class="help-block" style="display: none;"></small>
-                            </div> --}}
-                            <!-- /Fin Grupo Doble 1 -->
 
-                            <!-- /Grupo Doble 2 -->
-                             {{-- <div class="row">
-                                <label class="control-label col-sm-2">@lang('documents.city'): <samp id="require">*</samp></label>
-                                <div class="col-sm-5" onclick ="deleteError($(this));">
-                                    <input type="hidden" id="localizacion_id" name="localizacion_id" value="">
-                                    <city-component @get="setCity($event, true)" :data="citys" :disabled="disabled_s" :selected="city_selected_s" autocomplete="off"></city-component>
-                                    <small class="help-block has-error" id="msn_l1" style="display: none;">@lang('documents.obligatory_field')</small>
-                                </div>
-                                <label class="control-label col-sm-1">@lang('documents.zip'): </label>
-                                <div class="col-sm-4">
-                                    <input type="text" autocomplete="off" placeholder="Zip" id="zipR" name="zipR" class="form-control" onkeyup="deleteError($(this).parent());">
-                                </div>
-                                <small class="help-block" style="display: none;"></small>
-                            </div> --}}
-                            <!-- /Fin Grupo Doble 2 -->
                             <div class="row">
                                 <input type="checkbox" id="opEditarShip" name="opEditarShip" style="display: none;">
                                 <input type="hidden" class="" id="shipper_id" name="shipper_id" value="{{ isset($documento->shipper_id) ? $documento->shipper_id : '' }}">
@@ -287,11 +271,11 @@
                 <div class="col-lg-6" style="margin-bottom: 20px;" v-if="mostrar.includes(26)">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>
+                            <h5 style="width: 100%;">
                                 <span class="fal fa-plane-arrival"> </span> @lang('documents.addressee_consignee')
                                 <span style="color: coral; display: none;" id="msnEditarCons">@lang('documents.prepared_for_editing')</span>
-                                <label class="po">PO#</label>
-                                <input type="text" id="poBoxD" name="poBoxD" class="" value="{{ isset($documento->po_box) ? $documento->po_box : '' }}" style="border-color: transparent;color: blue;" readonly="">
+                                <label class="po">PO# <span style="border-color: transparent;color: blue;">@{{ consignee_data.po_box }}</span></label>
+                                <label style="float:right;" v-if="consignee_data.cliente"><a style="border-color: transparent;color: blue;" title="Cliente" data-toggle="tooltip"><i class="fal fa-user"></i> @{{ consignee_data.cliente }}</a></label>
                             </h5>
                         </div>
                         <div class="ibox-content col-lg-12" :class="[mostrar.includes(22) ? 'wrh' : 'guia' ]">
@@ -304,61 +288,34 @@
                                             <div class="input-group" style="margin-bottom: 5px;" :class="{ 'has-error': errors.has('nombreD') }">
                                                 <input type="search" autocomplete="off" data-id="nomBuscarConsignee" class="form-control" id="nombreD" name="nombreD" placeholder="@lang('documents.type_to_search')" onkeyup="deleteError($(this).parent());" v-model="nombreD" v-validate="'required'">
                                                 <span class="input-group-btn">
-                                                    <button class="btn btn-primary" @click="modalConsignee(true)" id="btnBuscarConsignee" type="button" data-toggle='tooltip' title="Buscar"><span class="fal fa-search"></span>&nbsp;</button>
+                                                    <button class="btn btn-default" @click="modalConsignee(true)" id="btnBuscarConsignee" type="button" data-toggle='tooltip' title="Buscar"><span class="fal fa-search"></span>&nbsp;</button>
                                                     <button id="btnCreateConsignee" @click="open('consignee', true)" class="btn btn-primary" type="button" data-toggle='tooltip' title="Crear"><span class="fal fa-plus"></span>&nbsp;</button>
                                                     <button id="btnEditConsignee" @click="open('consignee')" class="btn btn-success" type="button" data-toggle='tooltip' title="Editar"><span class="fal fa-edit"></span>&nbsp;</button>
-                                                    <button id="btnResetConsignee" @click="resetFormsShipperConsignee(1)" class="btn btn-default" type="button" data-toggle='tooltip' title="Reset"><span class="fal fa-sync"></span>&nbsp;</button>
+                                                    {{-- <button id="btnResetConsignee" @click="resetFormsShipperConsignee(1)" class="btn btn-default" type="button" data-toggle='tooltip' title="Reset"><span class="fal fa-sync"></span>&nbsp;</button> --}}
                                                     </span>
                                             </div><!-- /input-group -->
                                             <small class="help-block has-error">@{{ errors.first('nombreD') }}</small>
+
+                                            <el-row :gutter="24">
+                                              <el-col :span="12">
+                                                <div><label class="data_content"><i class="fal fa-map-marked-alt"></i></label> @{{ consignee_data.direccion }}</div>
+                                              </el-col>
+                                              <el-col :span="12">
+                                                <div><label class="data_content"><i class="fal fa-envelope-open-text"></i></label> @{{ consignee_data.correo }}</div>
+                                              </el-col>
+                                            </el-row>
+                                            <el-row :gutter="24">
+                                              <el-col :span="12">
+                                                <div><label class="data_content"><i class="fal fa-phone"></i></label> @{{ consignee_data.telefono }}</div>
+                                              </el-col>
+                                              <el-col :span="12">
+                                                <div><label class="data_content"><i class="fal fa-city"></i></label> @{{ consignee_data.ciudad }} - @{{ consignee_data.zip }}</div>
+                                              </el-col>
+                                            </el-row>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                                {{-- <div class="row">
-                                    <div class="form-group">
-                                        <label class="control-label col-sm-2">@lang('documents.address'): <samp id="require">*</samp></label>
-                                        <div class="col-sm-10" :class="{ 'has-error': errors.has('direccionD') }">
-                                            <input type="text" autocomplete="off" placeholder="@lang('documents.address')" id="direccionD" name="direccionD" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());" v-model="direccionD" v-validate="'required'">
-                                            <small class="help-block has-error">@{{ errors.first('direccionD') }}</small>
-                                        </div>
-                                    </div>
-                                </div> --}}
-                                {{-- <div class="row">
-                                <!-- /Grupo Doble 1 -->
-                                    <label class="control-label col-sm-2">@lang('documents.email'): </label>
-                                    <div class="col-sm-5" :class="{ 'has-error': errors.has('emailD') }">
-                                        <input type="email" autocomplete="off" placeholder="Example@example.com" id="emailD" name="emailD" class="form-control" v-validate.disable="'unique_c'" v-model="emailD">
-                                        <small class="help-block has-error" :class="{ 'small': errors.has('emailD') }">@{{ errors.first('emailD') }}</small>
-                                    </div>
-                                    <label class="control-label col-sm-1">@lang('documents.phone'):</label>
-                                    <div class="col-sm-4">
-                                        <input type="tel" autocomplete="off" data-mask="(999) 999-9999" id="telD" name="telD" placeholder="@lang('documents.phone')" class="form-control" style="margin-bottom: 5px;" onkeyup="deleteError($(this).parent());">
-                                        <small class="help-block has-error">@{{ errors.first('telD') }}</small>
-                                    </div>
-                                <!-- /Fin Grupo Doble 1 -->
-                                </div> --}}
-                                {{-- <div class="row">
-                                <!-- /Grupo Doble 2 -->
-                                    <div class="form-group">
-                                        <label class="control-label col-sm-2">@lang('documents.city'): <samp id="require">*</samp></label>
-                                        <div class="col-sm-5" onclick ="deleteError($(this));">
-                                          <input type="hidden" id="localizacion_id_c" name="localizacion_id_c" value="">
-                                            <city-component @get="setCity($event, false)" :data="citys" :disabled="disabled_c" :selected="city_selected_c"></city-component>
-                                            <small class="help-block has-error" id="msn_l2" style="display: none;">@lang('documents.obligatory_field')</small>
-                                        </div>
-                                        <label class="control-label col-sm-1">C.P:<samp id="require">*</samp></label>
-                                        <div class="col-sm-4">
-                                            <div class="input-group">
-                                                <input type="text" autocomplete="off" placeholder="@lang('general.postal_code')" id="zipD" name="zipD" class="form-control" onkeyup="deleteError($(this).parent());">
-                                                <span class="input-group-btn">
-                                                    <button class="btn btn-primary" id="buttonPostalCode" data-toggle="tooltip" data-placement="top" title="Generar" type="button"><span class="fal fa-map-marker"></span></button>
-                                                </span>
-                                            </div><!-- /input-group -->
-                                        </div>
-                                        <small class="help-block" style="display: none;"></small>
-                                    </div>
-                                </div> --}}
                                 <div class="row">
                                     <!-- /Fin Grupo Doble 2 -->
                                     <input type="checkbox" id="opEditarCons" name="opEditarCons" style="display: none;">
@@ -928,12 +885,12 @@
         @include('templates/documento/modals/modalChangeShipperConsignee')
 
         {{-- MODAL AGREGAR PUNTOS --}}
-        <points-component v-if="mostrar.includes(66)" :id_detail="points_id_detail"></points-component>
+        {{-- <points-component v-if="mostrar.includes(66)" :id_detail="points_id_detail"></points-component> --}}
     </div>
 @endsection
 
 @section('scripts')
-<script src="{{ asset('js/templates/documento/documentoForm/objVue.js') }}"></script>
+<script src="{{ asset('js/templates/documento/documentoForm/objVue2.js') }}"></script>
 <script src="{{ asset('js/templates/documento/documentoForm/documento.js') }}"></script>
 <script src="{{ asset('js/templates/documento/documentoForm/totalizar.js') }}"></script>
 <script src="{{ asset('js/templates/documento/documentoForm/postalCode.js') }}"></script>

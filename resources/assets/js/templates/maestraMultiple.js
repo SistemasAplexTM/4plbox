@@ -1,4 +1,4 @@
-var type = $('#modulo_id').val();
+var type = $('#modulo').val();
 $(document).ready(function() {
     $('#tbl-maestraMultiple').DataTable({
         ajax: type + '/all',
@@ -15,7 +15,7 @@ $(document).ready(function() {
                 var btn_delete = '';
                 if (permission_update) {
                     var params = [
-                        full.id, "'" + full.nombre + "'", "'" + full.descripcion + "'", "'" + full.modulo_id + "'"
+                        full.id, "'" + full.nombre + "'", "'" + full.descripcion + "'", "'" + full.modulo + "'"
                     ];
                     var btn_edit = "<a onclick=\"edit(" + params + ")\" class='edit_btn' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fal fa-pencil fa-lg'></i></a> ";
                 }
@@ -28,12 +28,12 @@ $(document).ready(function() {
     });
 });
 
-function edit(id, nombre, descripcion, modulo_id) {
+function edit(id, nombre, descripcion, modulo) {
     var data = {
         id: id,
         nombre: nombre,
         descripcion: descripcion,
-        modulo_id: modulo_id,
+        modulo: modulo,
     };
     objVue.edit(data);
 }
@@ -45,7 +45,7 @@ var objVue = new Vue({
     data: {
         nombre: '',
         descripcion: '',
-        modulo_id: type,
+        modulo: type,
         editar: 0,
         formErrors: {},
         listErrors: {},
@@ -107,7 +107,7 @@ var objVue = new Vue({
                 'created_at': new Date(),
                 'nombre': this.nombre,
                 'descripcion': this.descripcion,
-                'modulo_id': this.modulo_id,
+                'modulo': this.modulo,
             }).then(function(response) {
                 if (response.data['code'] == 200) {
                     toastr.success('Registro creado correctamente.');
@@ -136,7 +136,7 @@ var objVue = new Vue({
             axios.put(type + '/' + this.id, {
                 'nombre': this.nombre,
                 'descripcion': this.descripcion,
-                'modulo_id': this.modulo_id,
+                'modulo': this.modulo,
             }).then(function(response) {
                 if (response.data['code'] == 200) {
                     toastr.success('Registro Actualizado correctamente');
@@ -168,7 +168,7 @@ var objVue = new Vue({
             if (data['descripcion'] != 'null' && data['descripcion'] != '' && data['descripcion'] != null) {
                 this.descripcion = data['descripcion'];
             }
-            this.modulo_id = data['modulo_id'];
+            this.modulo = data['modulo'];
             this.editar = 1;
             this.formErrors = {};
             this.listErrors = {};

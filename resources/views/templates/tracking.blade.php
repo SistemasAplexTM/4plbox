@@ -47,6 +47,13 @@
     .dropdown-toggle>input[type="search"]:focus:valid {
         width: 100% !important;
     }
+    .help-block{
+      color: #f56c6c;
+      font-size: 11;
+      position: absolute;
+      margin-top: 0px;
+      margin-bottom: 0px;
+    }
 </style>
     <div class="row" id="tracking">
         <form id="formtracking" enctype="multipart/form-data" class="form-horizontal" role="form" action="" method="post">
@@ -334,6 +341,48 @@
                       <div class="modal-footer">
                           <button type="button" class="btn btn-primary" id="saveDoc" @click="createDocument()"><i class="fal fa-file-signature"></i> @lang('documents.create')</button>
                           <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fal fa-times"></i> @lang('documents.close')</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          {{-- MODAL CAMBIAR CONSIGNEE --}}
+          <div class="modal fade bs-example" id="modalEditConsignee" tabindex="" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog" style="width: 20%;">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">@lang('documents.close')</span></button>
+                          <h2 class="modal-title" id="myModalLabel"><i class="fal fa-user"></i> @lang('general.consignee')</h2>
+                      </div>
+                      <div class="modal-body">
+                        <div class="row">
+                          <div class="col-sm-12">
+                              <el-autocomplete
+                                clearable
+                                class="inline-input"
+                                v-model="consignee_name_change"
+                                :fetch-suggestions="querySearchConsignee"
+                                :trigger-on-focus="false"
+                                placeholder="@lang('general.consignee')"
+                                size="small"
+                                @clear="deleteSelected"
+                                @select="handleSelectChange"
+                              >
+                                <template slot-scope="{ item }">
+                                  <div class="content-select">
+                                    <div style="">
+                                      <i class="fal fa-user icon"></i> @{{ item.name }}
+                                    </div>
+                                  </div>
+                                </template>
+                              </el-autocomplete>
+                              <small class="help-block" v-show="errors_data">Campo obligatorio</small>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <el-button type="primary" :loading="loading" @click="editConsignee"><i class="fal fa-edit"></i> @lang('documents.edit')</el-button>
+                        <el-button data-dismiss="modal"><i class="fal fa-times"></i> @lang('documents.close')</el-button>
                       </div>
                   </div>
               </div>

@@ -14,14 +14,14 @@
       </el-page-header>
     </span>
     <transition name="fade">
-      <component :is="component_active" :payload="data"></component>
+      <component :is="component_active" :payload="data" @getData="getData"></component>
     </transition>
   </el-drawer>
 </template>
 <script>
 import { mapGetters } from 'vuex'
   export default {
-    props:["table", "agency_data", "field_id"],
+    // props:["table", "agency_data", "field_id"],
     data() {
       return {
         component_active: 'menu-component',
@@ -42,6 +42,9 @@ import { mapGetters } from 'vuex'
       })
     },
     methods: {
+      getData(data){
+        bus.$emit('getData', data);
+      },
       handleClose(done) {
         this.$confirm('Are you sure you want to close this?')
           .then(_ => {

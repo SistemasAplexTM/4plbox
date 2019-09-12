@@ -268,17 +268,16 @@ export default {
     };
   },
   watch:{
-    // field_id:function(val){
-    //   let me = this;
-    //   if (val !== null && val !== '') {
-    //     setTimeout(function () {
-    //       me.getDataById(val);
-    //     }, 100);
-    //   }
-    // },
+    'payload.field_id': {
+      handler(newVal, oldVal) {
+        if (newVal !== 'null' && newVal !== null && newVal !== '') {
+          this.getDataById(newVal);
+        }
+      },
+      deep: true
+    }
   },
   mounted() {
-    console.log(this.payload);
     if (this.payload) {
       if (this.payload.field_id != null && this.payload.field_id != 'null' && this.payload.field_id != '') {
         this.getDataById(this.payload.field_id);
@@ -309,12 +308,13 @@ export default {
     },
     store(){
       let me = this;
-      axios.post(this.payload.table, this.form).then(function(response) {
+      axios.post('/' + this.payload.table, this.form).then(function(response) {
         if (response.data['code'] == 200) {
           toastr.success('Registro creado correctamente.');
           me.loading = false;
           me.resetForm();
           me.$emit('updatetable');
+          me.$emit('getData', response.data['datos']);
         } else {
           me.loading = false;
           toastr.warning(response.data['error']);
@@ -335,6 +335,7 @@ export default {
           me.loading = false;
           me.resetForm();
           me.$emit('updatetable');
+          me.$emit('getData', response.data['datos']);
         } else {
           me.loading = false;
           toastr.warning(response.data['error']);
@@ -440,7 +441,6 @@ export default {
         me.form = response.data;
         me.form.cliente_id = me.form.cliente_id + '';
         if (this.payload.table !== 'clientes') {
-          console.log(this.payload.table);
           if (response.data.cliente_id == 'null' || response.data.cliente_id == '' || response.data.cliente_id == 'undefined') {
             me.form.cliente_id = null;
           }

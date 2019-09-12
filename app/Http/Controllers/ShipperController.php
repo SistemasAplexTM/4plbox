@@ -47,7 +47,7 @@ class ShipperController extends Controller
             $data->agencia_id = Auth::user()->agencia_id;
             if ($data->save()) {
                 $answer = array(
-                    "datos"  => $request->all(),
+                    "datos"  => $this->getDataById($data->id)->original,
                     "code"   => 200,
                     "status" => 200,
                 );
@@ -93,7 +93,7 @@ class ShipperController extends Controller
             $data->email_cc = $email_cc;
             $data->save();
             $answer = array(
-                "datos"  => $request->all(),
+                "datos"  => $this->getDataById($id)->original,
                 "code"   => 200,
                 "status" => 500,
             );

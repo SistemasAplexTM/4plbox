@@ -7,6 +7,14 @@ $(document).ready(function() {
   loadTable('tbl-tracking', false);
   loadTable('tbl-tracking-bodega', true);
   loadTableCreateReceipt();
+
+  jQuery('#tbl-tracking').
+  on('mouseover', 'tr', function() {
+      jQuery(this).find('.edit').css('opacity','1');
+  }).
+  on('mouseout', 'tr', function() {
+      jQuery(this).find('.edit').css('opacity','0');
+  });
 });
 
 function loadTable(name, bodega) {
@@ -21,7 +29,10 @@ function loadTable(name, bodega) {
           name: 'fecha'
       }, {
           data: "cliente",
-          name: 'cliente'
+          name: 'cliente',
+          "render": function(data, type, full, meta) {
+            return '<div style="width:80%;float: left;">' + full.cliente + '</div> <div style="width:20%;float: right;"><a  data-toggle="tooltip" title="Cambiar" class="edit" style="color:#FFC107;" onclick="editConsignee(' + full.id + ')"><i class="fal fa-pencil"></i></a></div>'
+          }
       },
       // {
       //     data: "cliente_email",
@@ -67,6 +78,7 @@ function loadTable(name, bodega) {
           }
       }],
       "drawCallback": function () {
+        $('.edit').css('opacity','0');
         $(".td_edit").editable({
             ajaxOptions: {
                 type: 'post',
@@ -84,6 +96,11 @@ function loadTable(name, bodega) {
         });
       },
   });
+}
+
+function editConsignee(id){
+  objVue.tracking_id = id;
+  $('#modalEditConsignee').modal('show');
 }
 
 function reenviarEmail(consignee_id, tracking) {
@@ -211,6 +228,7 @@ var objVue = new Vue({
         this.$validator.localize('es', dict);
     },
     data: {
+      loading: false,
         consignee_id_doc: null,
         consignee_id: null,
         consignee_name: null,
@@ -231,12 +249,46 @@ var objVue = new Vue({
         ids_tracking: [],
         contenido_tracking: [],
         contenido_detail: null,
+        consignee_name_change: null,
+        errors_data: false,
+        tracking_id: null,
     },
     methods: {
+      editConsignee(){
+        this.loading = true;
+        this.errors_data = false;
+        if (this.consignee_id !== null) {
+          let me = this;
+          axios.post('tracking/updateTrackingReceipt', {
+              'pk': me.tracking_id,
+              'value': me.consignee_id.id,
+              'name': 'consignee_id'
+          }).then(function(response) {
+              var res = response.data;
+              if (response.data['code'] == 200) {
+                $('#modalEditConsignee').modal('hide');
+                toastr.success('Actualización Exitosa');
+                me.updateTable()
+              } else {
+                  toastr.warning(response.data['error']);
+              }
+              me.loading = false;
+          }).catch(function(error) {
+            me.loading = false;
+              console.log(error);
+              toastr.error("Error." + error, {
+                  timeOut: 5000
+              });
+          });
+        }else{
+          this.errors_data = true;
+          this.loading = false;
+          toastr.warning('Seleccione un Destinatario');
+        }
+      },
       querySearchConsignee(queryString, cb) {
         var me = this;
         axios.get('/consignee/vueSelect/'+queryString).then(function(response) {
-          console.log(response.data.items);
             me.consignees = response.data.items;
             cb(me.consignees);
         }).catch(function(error) {
@@ -247,6 +299,11 @@ var objVue = new Vue({
       handleSelect(item) {
         this.consignee_id = item;
         this.consignee_name = item.name;
+      },
+      handleSelectChange(item) {
+        this.consignee_id = item;
+        this.consignee_name_change = item.name;
+        this.errors_data = false;
       },
       deleteSelected(){
         this.consignee_id = null;

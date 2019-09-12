@@ -15,6 +15,6 @@ class MaestraMultiple extends Model
     protected $fillable = [
         'nombre',
         'descripcion',
-        'modulo_id',
+        'modulo',
     ];
 }

@@ -45,7 +45,7 @@ class ConsigneeController extends Controller
                     $this->enviarEmailCasillero($data->id, $data->agencia_id, $data->nombre_full, $data->correo, $data->celular);
                 }
                 $answer = array(
-                    "datos"  => $request->all(),
+                    "datos"  => $this->getDataById($data->id)->original,
                     "code"   => 200,
                     "status" => 200,
                 );
@@ -88,7 +88,7 @@ class ConsigneeController extends Controller
           }
           $this->AddToLog('Consignee editado id (' . $data->id . ')');
           $answer = array(
-              "datos"  => $request->all(),
+              "datos"  => $this->getDataById($data->id)->original,
               "code"   => 200,
               "status" => 500,
           );
@@ -237,6 +237,7 @@ class ConsigneeController extends Controller
         $table = 'consignee';
         $data  = DB::table($table)
             ->join('localizacion', $table . '.localizacion_id', '=', 'localizacion.id')
+            ->leftjoin('clientes', 'consignee.cliente_id', '=', 'clientes.id')
             ->join('deptos', 'localizacion.deptos_id', '=', 'deptos.id')
             ->join('pais', 'deptos.pais_id', '=', 'pais.id')
             ->join('agencia', $table . '.agencia_id', '=', 'agencia.id')
@@ -262,6 +263,8 @@ class ConsigneeController extends Controller
             $table . '.tarifa',
             $table . '.corporativo',
             $table . '.nombre_full',
+            $table . '.po_box',
+            'clientes.nombre as cliente',
             'localizacion.nombre as ciudad',
             'localizacion.id as ciudad_id',
             'deptos.descripcion as estado',

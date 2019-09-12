@@ -148,7 +148,8 @@ var objVue = new Vue({
         formErrors: {},
         listErrors: {},
         ident: false, //recordar descomentar las variables tipo_identificacion_id y documento
-        consignee_id: null
+        consignee_id: null,
+        payload: {field_id: this.consignee_id, table: 'consignee', agency: data_agencia }
     },
     methods: {
       reenviarEmailCasillero: function(id) {
@@ -184,7 +185,6 @@ var objVue = new Vue({
       getZipCode: function() {
           var address = this.direccion + ', ' + $('#localizacion_id').text() + ', ' + $('#depto').val() + ', ' + $('#pais').val();
           var inputZip = 'zip';
-          console.log(address);
           setDataGeocode(address, inputZip);
       },
       resetForm: function() {
@@ -210,10 +210,6 @@ var objVue = new Vue({
           $('#localizacion_id_input').val('');
           this.cliente_id = null;
           this.clientes = [];
-          // $('#tipo_identificacion_id').select2("val", "");
-          // $('#tipo_identificacion_id_input').val('');
-          // $('#agencia_id').select2("val", "");
-          // $('#agencia_id_input').val('');
       },
       /* metodo para eliminar el error de los campos del formulario cuando dan clic sobre el */
       deleteError: function(element) {
@@ -235,6 +231,7 @@ var objVue = new Vue({
       },
       updateTable: function() {
         this.consignee_id = null;
+        this.payload.field_id = null;
         refreshTable('tbl-consignee');
       },
       delete: function(data) {
@@ -299,6 +296,7 @@ var objVue = new Vue({
       },
       edit: function(id) {
         this.consignee_id = id;
+        this.payload.field_id = id;
         this.editar = 1;
         this.formErrors = {};
         this.listErrors = {};

@@ -403,7 +403,11 @@ class TrackingController extends Controller
             if($request->name === 'codigo'){
               $data->codigo = $request->value;
             }else{
-              $data->contenido = $request->value;
+              if($request->name === 'consignee_id'){
+                $data->consignee_id = $request->value;
+              }else{
+                $data->contenido = $request->value;
+              }
             }
 
             if ($data->save()) {
