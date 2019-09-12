@@ -110,7 +110,8 @@ var objVue = new Vue({
         zona: '',
         editar: 0,
         formErrors: {},
-        listErrors: {}
+        listErrors: {},
+        payload: {field_id: this.cliente_id, table: 'cliente', agency: data_agencia }
     },
     methods: {
         resetForm: function() {
@@ -146,6 +147,7 @@ var objVue = new Vue({
             });
         },
         updateTable: function() {
+          this.payload.field_id = null;
           this.cliente_id = null;
             refreshTable('tbl-clientes');
         },
@@ -262,6 +264,7 @@ var objVue = new Vue({
         },
         edit: function(id) {
           var me = this;
+          this.payload.field_id = id;
           this.cliente_id = id;
             // me.resetForm();
             // this.id = data['id'];

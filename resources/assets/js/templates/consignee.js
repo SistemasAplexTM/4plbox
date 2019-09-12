@@ -123,7 +123,6 @@ function formatRepoSelection(repo) {
 var objVue = new Vue({
     el: '#consignee',
     mounted: function() {
-        //
     },
     data: {
         agency_data: data_agencia,
