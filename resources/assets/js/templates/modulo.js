@@ -3,12 +3,14 @@ $(document).ready(function () {
         ajax: 'modulo/all',
         columns: [
             {data: 'nombre', name: 'nombre'},
+            {data: 'route', name: 'route'},
             {
                 sortable: false,
                 "render": function (data, type, full, meta) {
                     var params = [
-                        full.id, 
-                        "'" + full.nombre + "'"
+                        full.id,
+                        "'" + full.nombre + "'",
+                        "'" + full.route + "'"
                     ];
                     var btn_edit =  "<a onclick=\"edit(" + params + ")\" class='btn btn-outline btn-success btn-xs' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fal fa-edit'></i></a> ";
                     var btn_delete = " <a onclick=\"eliminar(" + full.id + ","+true+")\" class='btn btn-outline btn-danger btn-xs' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fal fa-trash'></i></a> ";
@@ -19,10 +21,11 @@ $(document).ready(function () {
     });
 });
 
-function edit(id,nombre){
+function edit(id,nombre, route){
     var data ={
         id:id,
         nombre: nombre,
+        roue: roue
     };
     objVue.edit(data);
 }
@@ -33,6 +36,7 @@ var objVue = new Vue({
         //
     },
     data:{
+        route: '',
         nombre: '',
         editar: 0,
         formErrors: {},
@@ -41,6 +45,7 @@ var objVue = new Vue({
     methods:{
         resetForm: function(){
             this.id = '';
+            this.route = '';
             this.nombre = '';
             this.editar = 0;
             this.formErrors = {};
@@ -51,9 +56,9 @@ var objVue = new Vue({
             let me = this;
             $.each(me.listErrors, function (key, value) {
                 if(key !== element){
-                   me.listErrors[key] = value; 
+                   me.listErrors[key] = value;
                }else{
-                me.listErrors[key] = false; 
+                me.listErrors[key] = false;
                }
             });
         },
@@ -89,6 +94,7 @@ var objVue = new Vue({
             axios.post('modulo',{
                 'created_at' : new Date(),
                 'nombre' : this.nombre,
+                'route' : this.route,
             }).then(function(response){
                 if(response.data['code'] == 200){
                     toastr.success('Registro creado correctamente.');
@@ -115,6 +121,7 @@ var objVue = new Vue({
             var me = this;
             axios.put('modulo/' + this.id,{
                 'nombre' : this.nombre,
+                'route' : this.route,
             }).then(function (response) {
                 if (response.data['code'] == 200) {
                     toastr.success('Registro Actualizado correctamente');
@@ -140,6 +147,7 @@ var objVue = new Vue({
         },
         edit: function(data){
             this.id = data['id'];
+            this.route = data['route'];
             this.nombre = data['nombre'];
             this.editar = 1;
             this.formErrors = {};

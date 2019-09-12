@@ -10,6 +10,7 @@ class PuntosController extends Controller
 {
     public function index($id)
     {
+      $id = base64_decode($id);
       $agency = DB::table('agencia')
       ->select('logo')
       ->where('id', $id)

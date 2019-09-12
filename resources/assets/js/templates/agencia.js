@@ -98,7 +98,7 @@ var objVue = new Vue({
             }
         },
         edit: function(data) {
-            $(location).attr('href', 'agencia/' + data.id + '/edit');
+            $(location).attr('href', 'agencia/' + btoa(data.id) + '/edit');
         }
     },
 });

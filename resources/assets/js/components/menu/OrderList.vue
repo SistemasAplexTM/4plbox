@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="dd" id="nestable3">
     <ol class="dd-list">
-      <template v-for="(item, index) in menu" >
+      <template v-for="(item, index) in menuAll" >
         <order-list-item v-if="item.children.length == 0" :item="item" :key="item.id"/>
         <order-list-item v-else :item="item">
           <ol class="dd-list">
@@ -17,16 +17,17 @@
 import OrderListItem from './OrderListItem'
 export default {
   components: {OrderListItem},
+  props: ['menu'],
   data() {
     return {
-      menu: [],
+      menuAll: [],
       visible: [],
       loading: false
     }
   },
   created(){
     let me = this
-    me.getMenu()
+    me.getMenu(me.menu)
     $(function() {
       $('#nestable3').nestable({maxDepth: 2});
       $('.dd').on('change', function() {
@@ -35,13 +36,20 @@ export default {
       });
     });
     bus.$on('refreshList', function (payload) {
-      me.getMenu()
+      me.getMenu(me.menu)
+    })
+    bus.$on('changeMenu', function (payload) {
+      me.getMenu(payload)
     })
   },
   methods: {
     updateOrder(data){
       axios.put('menu/updateOrder', data).then(response => {
-        console.log(response.data);
+        // console.log(response.data);
+        setTimeout(function () {
+          bus.$emit('refreshList', true)
+
+        }, 300);
       });
     },
     destroy(item){
@@ -59,9 +67,9 @@ export default {
        })
        .catch(_ => {});
     },
-    getMenu(){
-      axios.get('getMenu/' + false).then(({data}) => {
-        this.menu = data;
+    getMenu(menu_id){
+      axios.get('getMenu/' + false + '/' + menu_id).then(({data}) => {
+        this.menuAll = data;
       });
     },
     formatMeta (meta, param) {

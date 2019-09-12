@@ -1,3 +1,13 @@
 - EN DOCUMENTO.BLADE LINEA 147 Y 878 HAY UN IF A ESE COMPONENTE EL CUAL SE MUESTRA
-SI EXISTE EN INCLUDES EL ID 66 QUE CREE PARA CUANDO SEA CUBA, ESTO PARA 
+SI EXISTE EN INCLUDES EL ID 66 QUE CREE PARA CUANDO SEA CUBA, ESTO PARA
 EVITAR QUE RECARGE EL DETALLE DEL DOCUMENTO
+
+
+
+
+QUEDA EPNDIENTE PARA TERMINAR: (11 - 09 - 2019)
+1. Manejo de permisos desde la vista del menú
+2. Permiso especial para un usuario al ver el menú y en el control de acceso
+3. Manejo del menú en memoria caché o localStorage para no hacer demasiados llamados ajax
+4. Módulo de configuración desde el menú
+5. Listar iconos enselect (CREAR COMPONENTE)

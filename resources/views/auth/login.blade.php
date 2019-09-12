@@ -89,7 +89,7 @@
                             </div>
                             <div class="checkbox checkbox-success">
                                 <input type="checkbox" name="remember" id="remember" aria-label="Single checkbox One" {{ old('remember') ? 'checked' : '' }}>
-                                       <label for="remember">@lang('auth.not_sign_out')</label>
+                                 <label for="remember">@lang('auth.not_sign_out')</label>
                             </div>
                             <div class="form-group" style="margin-top: 10px;">
                                 <button type="submit" class="btn btn-primary block full-width m-b">
@@ -105,10 +105,9 @@
 
                             <small style="float: left;"><a href="rastreo" target="_blank" data-toggle="tooltip" title="Rastrear mercancia"><i class="fal fa-map-marker"></i> @lang('auth.tracking')</a></small>
 
-                            <small style=""><a href="registro/1" target="_blank" data-toggle="tooltip" title="Registro Casillero"><i class="fal fa-address-book"></i> @lang('auth.registry')</a></small>
-                            <small style=""><a href="prealerta/1" target="_blank" data-toggle="tooltip" title="Prealertar mercancia"><i class="fal fa-bell"></i> @lang('auth.pre-alert')</a></small>
-
-                            <small style="float: right;"><a href="selfService/1" target="_blank" data-toggle="tooltip" title="Prealertar mercancia"><i class="fal fa-calculator-alt"></i> Self Service</a></small>
+                            <small style=""><a href="registro/{{ base64_encode(1) }}" target="_blank" data-toggle="tooltip" title="Registro Casillero"><i class="fal fa-address-book"></i> @lang('auth.registry')</a></small>
+                            <small style=""><a href="prealerta/{{ base64_encode(1) }}" target="_blank" data-toggle="tooltip" title="Prealertar mercancia"><i class="fal fa-bell"></i> @lang('auth.pre-alert')</a></small>
+                            <small style="float: right;"><a href="selfService/{{ base64_encode(1) }}" target="_blank" data-toggle="tooltip" title="Prealertar mercancia"><i class="fal fa-calculator-alt"></i> Self Service</a></small>
 
                         </div>
                     </form>

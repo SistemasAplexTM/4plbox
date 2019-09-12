@@ -47,7 +47,8 @@ Route::group(['middleware' => 'auth:api'], function(){
   Route::get('user/contacts/{id}', 'CasilleroApiController@getContacts');
   Route::post('user/setContacts/{id}', 'CasilleroApiController@setContacts');
   Route::put('user/update', 'CasilleroApiController@updateUser');
-  Route::get('getSelectCity', 'CiudadController@getSelectCity');
+  Route::get('getSelectCity/{filter}', 'CiudadController@getSelectCity');
+
   Route::get('getUrlZopim/{agency_id}', 'CasilleroApiController@getUrlZopim');
   Route::get('getPaypal/{agency_id}', 'CasilleroApiController@getPaypal');
 });

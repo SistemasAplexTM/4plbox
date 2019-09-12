@@ -243,7 +243,10 @@ class CasilleroApiController extends Controller
     public function getUrlZopim($agency_id)
     {
       $data = AplexConfig::where('key', 'zopim_script_'.$agency_id)->first();
-      return ['code' => 200, 'url' => $data->value];
+      if ($data) {
+        return ['code' => 200, 'url' => $data->value];
+      }
+      return ['code' => 200];
     }
 
     public function getPaypal($agency_id)

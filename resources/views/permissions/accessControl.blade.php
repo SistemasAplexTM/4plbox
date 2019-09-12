@@ -191,7 +191,7 @@
                                                     <button @click="savePermissions()" class="ladda-button btn btn-success pull-right" data-style="expand-right" type="button" v-if="role_id != null">
                                                         <i class="fal fa-save">
                                                         </i>
-                                                      @lang('general.save')  
+                                                      @lang('general.save')
                                                     </button>
                                                 </td>
                                             </tr>
@@ -234,7 +234,7 @@
                                             <button @click="saveSpecialPermissions()" class="ladda-button btn btn-primary pull-right" data-style="expand-right" type="button" v-if="role_id != null">
                                                 <i class="fal fa-save">
                                                 </i>
-                                                 @lang('general.save')  
+                                                 @lang('general.save')
                                             </button>
                                         </td>
                                     </tr>

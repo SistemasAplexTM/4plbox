@@ -81,7 +81,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('accessControl/all', 'AccessControlController@getAll')->name('datatable/all');
     Route::get('accessControl/allPermissions', 'AccessControlController@getAllPermissions')->name('datatable.allPermissions');
     Route::get('accessControl/delete/{id}/{logical?}', 'AccessControlController@delete')->name('accessControl.delete');
-    Route::get('accessControl/getPermisionsRole/{role_id}', 'AccessControlController@getPermisionsRole');
+    Route::get('accessControl/getPermisionsRole/{role_id}/{module_id?}', 'AccessControlController@getPermisionsRole');
     Route::get('accessControl/getSpecialPermisions/{module}/{role_id}', 'AccessControlController@getSpecialPermisions');
     Route::post('accessControl/saveSpecialPermissions', 'AccessControlController@saveSpecialPermissions');
 
@@ -138,6 +138,7 @@ Route::group(['middleware' => 'auth'], function () {
     /*--- MODULO MODULOS ---*/
     Route::resource('modulo', 'ModuloController', ['except' => ['show', 'create', 'edit']]);
     Route::get('modulo/all', 'ModuloController@getAll')->name('datatable/all');
+    Route::get('getForSelect/modulo', 'ModuloController@getForSelect');
     Route::get('modulo/delete/{id}/{logical?}', 'ModuloController@delete')->name('modulo.delete');
     Route::get('modulo/restaurar/{id}', 'ModuloController@restaurar');
 
@@ -240,6 +241,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('agencia/selectInput/{tableName}', 'AgenciaController@selectInput');
     Route::get('agencia/getSelectBranch', 'AgenciaController@getSelectBranch');
     Route::get('agencia/getAgencies', 'AgenciaController@getAgencies');
+    Route::post('agencia/saveURL/{id}', 'AgenciaController@saveURL');
 
     /*--- MODULO REMITENTES ---*/
     Route::resource('shipper', 'ShipperController', ['except' => ['show', 'create', 'edit']]);
@@ -387,7 +389,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('aplexConfig/document', 'AplexConfigController@document')->name('config.document');
     Route::get('menu', 'MenuController@index')->name('menu.index');
     Route::post('menu', 'MenuController@store');
-    Route::get('getMenu/{front}', 'MenuController@getMenu');
+    Route::get('getMenu/{front}/{type}', 'MenuController@getMenu');
     Route::get('menu/id/{id}', 'MenuController@getById');
     Route::put('menu/updateOrder', 'MenuController@updateOrder');
     Route::put('menu/{id}', 'MenuController@update');

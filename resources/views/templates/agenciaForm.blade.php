@@ -78,6 +78,7 @@
                             <li role="agencia" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">@lang('general.registration_data')</a></li>
                             <li role="agencia"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">@lang('general.integrations')</a></li>
                             <li role="agencia"><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">@lang('general.url_public')</a></li>
+                            <li role="agencia"><a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab">URL</a></li>
                         </ul>
 
                         <!-- Tab panes -->
@@ -409,6 +410,14 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+
+                                <div role="tabpanel" class="tab-pane fade" id="tab4">
+                                  <div class="row">
+                                    <div class="col-lg-12" style="margin-top: 10px;">
+                                      <agency-url-component :agency_id="{{ (isset($agencia) and $agencia) ? $agencia->id : null }}"/>
+                                    </div>
+                                  </div>
                                 </div>
                             </div>
 

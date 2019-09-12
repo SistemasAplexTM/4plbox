@@ -220,8 +220,8 @@ class MaestraMultipleController extends Controller
       $data = MaestraMultiple::select(['id', 'nombre', 'descripcion', 'modulo_id'])
       ->where([
               ['deleted_at', '=', NULL],
-              ['modulo_id', '=', $type]
+              ['modulo', '=', $type]
           ])->get();
-        return $data;
+      return $data;
     }
 }

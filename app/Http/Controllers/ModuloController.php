@@ -79,7 +79,7 @@ class ModuloController extends Controller
                 "status" => 500,
             );
             return $answer;
-            
+
         } catch (\Exception $e) {
             $error = '';
             foreach ($e->errorInfo as $key => $value) {
@@ -115,7 +115,7 @@ class ModuloController extends Controller
      */
     public function delete($id,$logical)
     {
-        
+
         if(isset($logical) and $logical == 'true'){
             $data = Modulo::findOrFail($id);
             $now = new \DateTime();
@@ -124,14 +124,14 @@ class ModuloController extends Controller
                     $answer=array(
                         "datos" => 'Eliminación exitosa.',
                         "code" => 200
-                    ); 
+                    );
                }  else{
                     $answer=array(
                         "error" => 'Error al intentar Eliminar el registro.',
                         "code" => 600
                     );
-               }          
-                
+               }
+
                 return $answer;
         }else{
             $this->destroy($id);
@@ -160,5 +160,10 @@ class ModuloController extends Controller
     public function getAll()
     {
         return \DataTables::of(Modulo::query()->where('deleted_at', '=', NULL))->make(true);
+    }
+
+    public function getForSelect()
+    {
+        return Modulo::where('deleted_at', '=', NULL)->get();
     }
 }

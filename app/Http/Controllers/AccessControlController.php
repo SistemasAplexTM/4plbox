@@ -141,29 +141,38 @@ class AccessControlController extends Controller
         }
     }
 
-    public function getPermisionsRole($role_id)
+    public function getPermisionsRole($role_id, $module_id = null)
     {
         // OBTENER LOS PERMISOS DE UN ROL EN ESPECIFICO MEDIANTE SU id
-        $data = DB::table('permissions AS a')
-            ->select('a.module',
+        $special_permissions = null;
+        $qb = DB::table('permissions AS a')
+            ->leftJoin('modulo AS b', 'a.module_id', 'b.id')
+            ->select('a.module', 'b.nombre',
                 DB::raw("sum(if(a.crud = 'c', a.id,0)) AS c"),
                 DB::raw("sum(if(a.crud = 'r', a.id,0)) AS r"),
                 DB::raw("sum(if(a.crud = 'u', a.id,0)) AS u"),
                 DB::raw("sum(if(a.crud = 'd', a.id,0)) AS d"),
                 DB::raw("COUNT(if(a.crud = '0', a.id,0)) -4 AS special")
             )
-            ->groupBy('a.module')
-            ->havingRaw("(COUNT(if(a.crud = '0', a.id,0)) -4) > 0")
-            ->get();
+            ->groupBy('a.module', 'b.nombre')
+            ->havingRaw("(COUNT(if(a.crud = '0', a.id,0)) -4) > 0");
+
+            if ($module_id) {
+              $qb->where('a.module_id', $module_id);
+              $special_permissions = $this->getSpecialPermisions($module_id, $role_id);
+            }
+        $data = $qb->get();
 
         $permissions = DB::table('permission_role AS a')
             ->select('a.permission_id AS id')
             ->where('a.role_id', $role_id)
             ->get();
 
+
         $answer = array(
             "data"        => $data,
             "permissions" => $permissions,
+            "special_permissions" => $special_permissions,
             "code"        => 200,
         );
         return $answer;
@@ -171,7 +180,7 @@ class AccessControlController extends Controller
 
     public function getSpecialPermisions($module, $role_id)
     {
-        // OBTENER PERMISOS ESPECIOALES DE CADA MODULO Y DE UN ROL ESPECIFICO 
+        // OBTENER PERMISOS ESPECIOALES DE CADA MODULO Y DE UN ROL ESPECIFICO
         $data = DB::table('permissions AS a')
             ->select(
                 'a.id',
@@ -182,7 +191,8 @@ class AccessControlController extends Controller
             )
             ->where([
                 ['a.crud', '0'],
-                ['a.module', $module],
+                ['a.module_id', $module],
+                // ['a.module', $module],
             ])
             ->get();
         $permissions = DB::table('permission_role AS a')

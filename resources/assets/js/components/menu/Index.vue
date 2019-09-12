@@ -1,20 +1,35 @@
 <template lang="html">
   <div class="">
-    <el-row>
-        <el-col :span="14" :offset="5">
-          <p>
-            <!-- <i class="fal fa-list fa-3x fr"></i> -->
-            <strong>Gestione</strong> el menú de su aplicación para que se adecúe a sus necesidades</p>
-          <el-divider/>
-          <el-row :gutter="24">
-            <el-col :span="10">
-              <form-menu/>
+    <el-row :gutter="24">
+      <el-col :span="14" :offset="5">
+        <el-card class="box-card" >
+          <div slot="header" class="clearfix">
+            <el-col :span="8">
+              <p>Selecione menú</p>
+              <el-select v-model="menu" clearable @change="changeMenu" placeholder="Seleccione menú" value-key="id">
+                <el-option
+                  v-for="item in menus"
+                  :key="item.id"
+                  :label="item.nombre"
+                  :value="item">
+                </el-option>
+              </el-select>
             </el-col>
-            <el-col :span="14">
-              <order-list ref="list"/>
+            <el-col :span="16">
+                <h2 class="fr">{{ menu.nombre }}</h2>
             </el-col>
-          </el-row>
-        </el-col>
+          </div>
+          <el-col :span="10">
+            <form-menu :menu="menu.id"/>
+          </el-col>
+          <el-col :span="14">
+            <order-list :menu="menu.id"/>
+          </el-col>
+          <!-- <el-col :span="8">
+            <assign-role/>
+          </el-col> -->
+        </el-card>
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -22,26 +37,34 @@
 <script>
 import OrderList from './OrderList'
 import FormMenu from './FormMenu'
+import AssignRole from './AssignRole'
 export default {
-  components: { OrderList, FormMenu },
+  components: { OrderList, FormMenu, AssignRole },
   data() {
     return {
-      loading: false,
-      activeName: 'first'
+      menu: {id: 17, nombre: 'Menú principal'},
+      menus: []
     }
   },
   created(){
+    this.getMenu()
   },
   methods: {
-    open(){
-      bus.$emit('open', true)
+    changeMenu(){
+      let me = this
+      bus.$emit('changeMenu', me.menu.id)
     },
-    handleClick(tab, event) {
-   }
+    getMenu(){
+      axios.get('administracion/menu/getSelect').then(({data}) => {
+        this.menus = data
+      }).catch(error => error)
+    }
   }
 }
 </script>
 
-<style lang="css" >
-
+<style lang="css" scope>
+.box-card{
+  padding-bottom: 30px;
+}
 </style>

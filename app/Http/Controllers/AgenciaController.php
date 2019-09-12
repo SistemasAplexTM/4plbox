@@ -76,6 +76,7 @@ class AgenciaController extends Controller
 
     public function edit($id)
     {
+        $id = base64_decode($id);
         $agencia = Agencia::join('localizacion', 'agencia.localizacion_id', '=', 'localizacion.id')
             ->select('agencia.*', 'localizacion.nombre as ciudad', 'localizacion.id as ciudad_id')
             ->where([['agencia.id', '=', $id], ['agencia.deleted_at', '=', null]])
@@ -305,5 +306,14 @@ class AgenciaController extends Controller
     public function getAgencies()
     {
       return Agencia::where('deleted_at', null)->get();
+    }
+
+    public function saveURL(Request $request, $id)
+    {
+      Agencia::where('id', $id)->update([
+        'url' => $request->main,
+        'url_terms' => $request->term
+      ]);
+      return ['code' => 200];
     }
 }

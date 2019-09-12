@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use JavaScript;
 
 class LoginController extends Controller
 {
@@ -38,7 +39,7 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-    
+
     public function redirectPath()
     {
         /* AGENCIA */
@@ -68,6 +69,11 @@ class LoginController extends Controller
             \Session::put('logo', 'logo.png');
         }
         \Session::put('agencia', $objAgencia->descripcion);
+
+        JavaScript::put([
+            'user' => Auth::user(),
+            'agency' => $objAgencia
+        ]);
 
         return 'documento';
     }

@@ -40,6 +40,8 @@ class MenuController extends Controller
           $menu = new Menu;
           $menu->name = $request->name;
           $menu->route = $request->route;
+          $menu->module_id = $request->module_id;
+          $menu->type = $request->menu;
           $menu->meta = json_encode(['icon' => $request->icon, 'color' => $request->color]);
           $menu->save();
           if ($request->roles_selected) {
@@ -78,6 +80,7 @@ class MenuController extends Controller
             $menu = Menu::findOrFail($id);
             $menu->name = $request->name;
             $menu->route = $request->route;
+            $menu->module_id = $request->module_id;
             $menu->meta = json_encode(['icon' => $request->icon, 'color' => $request->color]);
             $menu->save();
             MenuRol::where('menu_id', $menu->id)->delete();
@@ -143,26 +146,32 @@ class MenuController extends Controller
        return $children;
    }
 
-   public static function getPadres($front)
+   public static function getPadres($front, $type)
    {
        if ($front && $front != 'false' && $front != false) {
            return Menu::whereHas('roles', function ($query) {
-               $query->where('rol_id', 1)->orderby('parent');
-           })->orderby('parent')
+             $roles = Auth::user()->roles;
+             foreach ($roles as $key => $value) {
+               $rolesIn[] = $value->id;
+             }
+             $query->whereIn('rol_id', $rolesIn)->orderby('parent');
+           })
+           ->where('type', $type)
+           ->orderby('parent')
                ->orderby('order_item')
                ->get()
                ->toArray();
        } else {
-           return Menu::orderby('parent')
+           return Menu::where('type', $type)->orderby('parent')
                ->orderby('order_item')
                ->get()
                ->toArray();
        }
    }
 
-   public static function getMenu($front)
+   public static function getMenu($front, $type)
    {
-       $padres = Self::getPadres($front);
+       $padres = Self::getPadres($front, $type);
        $menuAll = [];
        foreach ($padres as $line) {
            if ($line['parent'] != 0)
@@ -175,7 +184,7 @@ class MenuController extends Controller
 
    public static function getById($id)
    {
-       $menu = Menu::where('id', $id)->with('roles')->first();
+       $menu = Menu::where('id', $id)->with('roles', 'modules')->first();
        return $menu;
    }
 

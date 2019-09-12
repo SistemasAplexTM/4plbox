@@ -25,12 +25,12 @@
                     <div class="ibox-title">
                         <h5>@lang('general.register_of_modules')</h5>
                         <div class="ibox-tools">
-                            
+
                         </div>
                     </div>
                     <div class="ibox-content">
                         <!--***** contenido ******-->
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-lg-12">
                                 <div class="col-lg-12">
                                     <div class="form-group" :class="{'has-error': listErrors.nombre}">
@@ -40,6 +40,20 @@
                                         <div class="col-sm-8">
                                             <input v-model="nombre" name="nombre[]" id="nombre" value="" placeholder="@lang('general.name')" class="form-control" type="text" @click="deleteError('nombre')" />
                                             <small id="msn1" class="help-block result-nombre" v-show="listErrors.nombre">@lang('general.obligatory_field')</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="col-sm-4">
+                                            <label for="route" class="control-label gcore-label-top">Ruta:</label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <input v-model="route" name="route" id="route" placeholder="Ruta" class="form-control" type="text"/>
                                         </div>
                                     </div>
                                 </div>
@@ -67,8 +81,9 @@
                         <table id="tbl-modulo" class="table table-striped table-hover table-bordered" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th>@lang('general.name')<</th>
-                                    <th>@lang('general.actions')<</th>
+                                    <th>@lang('general.name')</th>
+                                    <th>Ruta</th>
+                                    <th>@lang('general.actions')</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -76,12 +91,13 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>@lang('general.name')<</th>
-                                    <th>@lang('general.actions')<</th>
+                                    <th>@lang('general.name')</th>
+                                    <th>Ruta</th>
+                                    <th>@lang('general.actions')</th>
                                 </tr>
                             </tfoot>
                         </table>
-                    </div>             
+                    </div>
                 </div>
             </div>
         </div>
