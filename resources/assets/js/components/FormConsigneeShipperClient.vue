@@ -215,6 +215,15 @@
     </el-row>
     <el-row :gutter="24">
       <el-col :span="24">
+        <el-checkbox-group v-model="checkList">
+          <el-checkbox label="Shipper"></el-checkbox>
+          <el-checkbox label="Consignee"></el-checkbox>
+          <el-checkbox label="Cliente"></el-checkbox>
+        </el-checkbox-group>
+      </el-col>
+    </el-row>
+    <el-row :gutter="24">
+      <el-col :span="24">
         <el-button type="success" :loading="loading" @click="beforeSend()" v-if="!edit"><i class="fal fa-save"></i> Guardar</el-button>
         <el-button type="primary" :loading="loading" @click="beforeSend(true)" v-if="edit"><i class="fal fa-edit"></i> Actualizar</el-button>
         <el-button @click="resetForm()" v-if="edit"><i class="fal fa-times"></i> Cancelar</el-button>
@@ -262,6 +271,7 @@ export default {
         notify_client: false,
         zona: null,
       },
+      checkList: ['Seleccionado y deshabilitado','Opción A'],
       // branchs: [],
       clientes: null,
       city_selected_s: '',
