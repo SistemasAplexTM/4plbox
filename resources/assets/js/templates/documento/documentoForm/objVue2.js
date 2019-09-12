@@ -37,34 +37,28 @@ var objVue = new Vue({
        }
     },
     mounted: function() {
+      let me = this;
         $('#date').val(this.getTime());
         if (!this.mostrar.includes(24)) {
           this.searchShipperConsignee($('#shipper_id').val(), 'shipper');
           this.searchShipperConsignee($('#consignee_id').val(), 'consignee');
         }
         this.getSelectCity();
+        bus.$on('getData', function (payload) {
+          if (me.table_edit == 'shipper') {
+            me.shipper_data = payload
+            $('#shipper_id').val(payload.id);
+            me.nombreR = payload.nombre_full;
+          }else{
+            me.consignee_data = payload
+            $('#consignee_id').val(payload.id)
+            me.nombreD = payload.nombre_full;
+          }
+        })
     },
     created: function() {
-        this.liquidado = $('#document_type').data('liquidado');
-        this.showHiddeFields();
-        /* CUSTOM MESSAGES VE-VALIDATOR*/
-        const dict = {
-            custom: {
-                nombreR: {
-                    required: 'El nombre es obligatorio.'
-                },
-                direccionR: {
-                    required: 'La direccion es obligatorio.'
-                },
-                nombreD: {
-                    required: 'El nombre es obligatorio.'
-                },
-                direccionD: {
-                    required: 'La direccion es obligatorio.'
-                },
-            }
-        };
-        this.$validator.localize('es', dict);
+      this.liquidado = $('#document_type').data('liquidado');
+      this.showHiddeFields();
     },
     data: {
         agency_data: data_agencia,
@@ -73,11 +67,8 @@ var objVue = new Vue({
         mostrar: {},
         document_type: '',
         liquidado: null,
-        emailD: null,
         nombreR: null,
         nombreD: null,
-        direccionR: null,
-        direccionD: null,
         showmodalAdd: false,
         showFieldsTotals: false,
         enviarEmailDestinatario: false,
@@ -87,8 +78,6 @@ var objVue = new Vue({
         city_selected_c: null,
         disabled_s: false,
         disabled_c: false,
-        // localizacion_id: null,
-        // localizacion_id_c: null,
         contactos: {}, //es para poder elegir los contactos de shippero o consignee en la modal de consolidado
         restoreShipperConsignee: {}, //es para poder restaurar los contactos de shippero o consignee en el detalle del consolidado
         datosAgrupar: {}, //es para poder agrupar guias en el consolidado
@@ -122,52 +111,32 @@ var objVue = new Vue({
         forma_pago_id: null,
         paymentMethod: [],
         payments: [],
+        shipper_data: {
+          direccion : null,
+          zip : null,
+          correo : null,
+          telefono : null,
+          ciudad : null,
+        },
+        consignee_data: {
+          direccion : null,
+          zip : null,
+          correo : null,
+          telefono : null,
+          ciudad : null,
+          po_box : null,
+        },
+        table_edit: null
     },
     methods: {
       open(op, create){
+        this.table_edit = op;
         if (op === 'shipper') {
           var data = {component: 'form-csc', title: 'Shipper', icon: 'fal fa-user', field_id: (create) ? null : $('#shipper_id').val(), table: 'shipper'}
         }else {
           var data = {component: 'form-csc', title: 'Consignee', icon: 'fal fa-user', field_id: (create) ? null :  $('#consignee_id').val(), table: 'consignee'}
         }
         bus.$emit('open', data)
-      },
-      saveChange(op){
-        if (op === 'shipper') {
-          this.loading_save_ship = true;
-          axios.get('/documento/updateShipperConsignee/' + this.detail_edit_id + '/' + this.shipper_id + '/shipper').then(response => {
-            if (response.data['code'] == 200) {
-                toastr.success('Actualizacion exitosa');
-                toastr.options.closeButton = true;
-            } else {
-                toastr.warning(response.data['error']);
-                toastr.options.closeButton = true;
-            }
-            this.loading_save_ship = false;
-          });
-        }else{
-          this.loading_save_cons = true;
-          axios.get('/documento/updateShipperConsignee/' + this.detail_edit_id + '/' + this.consignee_id + '/consignee').then(response => {
-            if (response.data['code'] == 200) {
-                toastr.success('Actualizacion exitosa');
-                toastr.options.closeButton = true;
-            } else {
-                toastr.warning(response.data['error']);
-                toastr.options.closeButton = true;
-            }
-            this.loading_save_cons = false;
-          });
-        }
-      },
-      setDataShipperConsignee(data, op){
-        if(op){
-          this.shipper = data;
-          this.shipper_id = data.id;
-        }else{
-          this.consignee = data;
-          this.consignee_id = data.id;
-        }
-        console.log('data: ',data);
       },
       changueShipperConsigneeDetail(id, shipper_id, consignee_id){
         this.detail_edit_id = id;
@@ -184,50 +153,22 @@ var objVue = new Vue({
           // });
         }
       },
-      getProductsCuba(data){
-        let me = this;
-        me.data_points = data;
-        me.total_points = 0;
-        var cont = '';
-        for (var i = 0; i < data.length; i++) {
-          me.total_points += data[i].total_puntos;
-          if(i === 0){
-            cont = data[i].articulo;
-          }else{
-            cont = cont + ', ' + data[i].articulo;
-          }
-        }
-        $('#contiene').val(cont);
-      },
-      modalSearchProducts(){
-        $('#modalAddPointsToDetail').modal('show');
-      },
-      setCity(data, option){
-          if(option){
-            this.city_s = data;
-            $('#localizacion_id').val(data.id);
-          }else{
-            this.city_c = data;
-            $('#localizacion_id_c').val(data.id);
-            refreshTable('whgTable');
-          }
-        },
       addTrackingsToDocument: function(){
         let me = this;
         var datos = $("#formSearchTracking").serializeArray();
         me.ids_tracking = [];
         me.contenido_tracking = [];
-            $.each(datos, function(i, field) {
-                if (field.name === 'chk[]') {
-                  if($('#chk' + field.value).val() != ''){
-                    me.ids_tracking.push($('#chk' + field.value).val());
-                    me.contenido_tracking.push($('#chk' + field.value).data('contenido'));
-                  }
-                }
-            });
-            if(me.contenido_tracking.length > 0){
-              $('#contiene').val(me.contenido_tracking.toString());
+        $.each(datos, function(i, field) {
+          if (field.name === 'chk[]') {
+            if($('#chk' + field.value).val() != ''){
+              me.ids_tracking.push($('#chk' + field.value).val());
+              me.contenido_tracking.push($('#chk' + field.value).data('contenido'));
             }
+          }
+        });
+        if(me.contenido_tracking.length > 0){
+          $('#contiene').val(me.contenido_tracking.toString());
+        }
       },
       modalSearchTracking: function() {
         let me = this;
@@ -254,11 +195,9 @@ var objVue = new Vue({
             }],
             "drawCallback": function () {
               if(me.ids_tracking.length > 0){
-                // setTimeout(function(){
-                  $.each(me.ids_tracking, function(i, field) {
-                    $('#chk' + field).attr('checked', true);
-                  });
-                // }, 2000);
+                $.each(me.ids_tracking, function(i, field) {
+                  $('#chk' + field).attr('checked', true);
+                });
               }
             }
         });
@@ -294,45 +233,37 @@ var objVue = new Vue({
           },500);
       },
       showTotals(value) {
-          this.showFieldsTotals = value;
-          // if(value){
-          //   if(!this.mostrar.includes(16)){
-          //     this.mostrar.push(16);
-          //   }
-          // }else{
-          //   this.mostrar.pop();
-          // }
-          // this.refreshTableDetail();
+        this.showFieldsTotals = value;
       },
       addTrackings(id) {
-          this.id_detalle = id;
-              /* TBL-TRACKING-USED */
-              if ($.fn.DataTable.isDataTable('#tbl-trackings-used')) {
-                  $('#tbl-trackings-used' + ' tbody').empty();
-                  $('#tbl-trackings-used').dataTable().fnDestroy();
-              }
-              var table = $('#tbl-trackings-used').DataTable({
-                  ajax: '../../tracking/all/' + false + '/' + null + '/' + id + '/' + true,
-                  columns: [{
-                      data: "codigo",
-                      name: 'codigo'
-                  }, {
-                      data: "contenido",
-                      name: 'contenido'
-                  }, {
-                      sortable: false,
-                      "render": function(data, type, full, meta) {
-                          var btn_delete = '';
-                          btn_delete = '<a class="btn btn-danger btn-xs" type="button" id="btn_remove_t'+full.id+'" onclick="addTrackingToDocument(\''+full.codigo+'\', \'delete\')" data-toggle="tooltip" title="Retirar"><i class="fal fa-times"></i></a> ';
-                          return btn_delete;
-                      }
-                  }],
-                  'columnDefs': [{
-                      className: "text-center",
-                      "targets": [0],
-                  }]
-              });
-              $('#modalTrackingsAdd2').modal('show');
+        this.id_detalle = id;
+        /* TBL-TRACKING-USED */
+        if ($.fn.DataTable.isDataTable('#tbl-trackings-used')) {
+            $('#tbl-trackings-used' + ' tbody').empty();
+            $('#tbl-trackings-used').dataTable().fnDestroy();
+        }
+        var table = $('#tbl-trackings-used').DataTable({
+            ajax: '../../tracking/all/' + false + '/' + null + '/' + id + '/' + true,
+            columns: [{
+                data: "codigo",
+                name: 'codigo'
+            }, {
+                data: "contenido",
+                name: 'contenido'
+            }, {
+                sortable: false,
+                "render": function(data, type, full, meta) {
+                    var btn_delete = '';
+                    btn_delete = '<a class="btn btn-danger btn-xs" type="button" id="btn_remove_t'+full.id+'" onclick="addTrackingToDocument(\''+full.codigo+'\', \'delete\')" data-toggle="tooltip" title="Retirar"><i class="fal fa-times"></i></a> ';
+                    return btn_delete;
+                }
+            }],
+            'columnDefs': [{
+                className: "text-center",
+                "targets": [0],
+            }]
+        });
+        $('#modalTrackingsAdd2').modal('show');
       },
       addTrackingToDocument(option, codigo) {
           let me = this;
@@ -422,14 +353,12 @@ var objVue = new Vue({
           });
           this.mostrar = arreglo;
           /* DEFINO QUE DOCUMENTO SE VA A IMPRIMIR */
-          // if (arreglo.includes(22)) {
           if (this.liquidado == 0) {
               $('#printDocument').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/warehouse');
               $('#printLabel').attr('href', '../../impresion-documento-label/' + $('#id_documento').val() + '/warehouse');
               $('#invoice').hide();
               this.document_type = 'guia';
           }
-          // if (arreglo.includes(23)) {
           if (this.liquidado == 1) {
               $('#invoice').show();
               $('#printDocument').attr('href', '../../impresion-documento/' + $('#id_documento').val() + '/guia');
@@ -448,7 +377,6 @@ var objVue = new Vue({
               datatableDetail();
               permissions_f();
               if ($('#show-totales').prop('checked') === true) {
-                  // me.getPositionById($('#pa_id').val());
                   llenarSelectServicio($('#tipo_embarque_id').val());
               }
           }, 500);
@@ -464,7 +392,7 @@ var objVue = new Vue({
         let me = this;
         me.saveOption = option;
         //obtener los metodos de pago
-        me.getAdminTable(2).then(response => {
+        me.getAdminTable('Tipos_de_Pago').then(response => {
           me.paymentMethod = response;
           if($('#tipo_pago_id').val() != ''){
             me.tipo_pago_id = $('#tipo_pago_id').val()
@@ -477,7 +405,7 @@ var objVue = new Vue({
         console.log('em');
         let me = this;
         $('#tipo_pago_id').val(val);
-        me.getAdminTable(1).then(response => {
+        me.getAdminTable('Forma_de_Pago').then(response => {
           me.payments = response;
           if($('#forma_pago_id').val() != ''){
             me.forma_pago_id = $('#forma_pago_id').val()
@@ -558,16 +486,16 @@ var objVue = new Vue({
           });
           this.$validator.validateAll().then((result) => {
               var msn = '';
-              if (Object.keys(me.city_s).length === 0) {
-                  $('#msn_l1').css('display', 'inline-block');
-                  result = false;
-                  msn = ' - Ciudad shipper';
-              }
-              if (Object.keys(me.city_c).length === 0) {
-                  $('#msn_l2').css('display', 'inline-block');
-                  result = false;
-                  msn = ' - Ciudad consignee';
-              }
+              // if (Object.keys(me.city_s).length === 0) {
+              //     $('#msn_l1').css('display', 'inline-block');
+              //     result = false;
+              //     msn = ' - Ciudad shipper';
+              // }
+              // if (Object.keys(me.city_c).length === 0) {
+              //     $('#msn_l2').css('display', 'inline-block');
+              //     result = false;
+              //     msn = ' - Ciudad consignee';
+              // }
               if ($('#show-totales').prop('checked') == true) {
                   if ($('#tipo_embarque_id').val() == null || $('#tipo_embarque_id').val() == '') {
                       $('#tipo_embarque_id').parent().addClass('has-error');
@@ -604,86 +532,29 @@ var objVue = new Vue({
         let me = this;
           if (op == 1) {
               if ($('#opEditarCons').is(':checked')) {
-                  $('#opEditarCons').prop('checked', false);
                   $('#msnEditarCons').css('display', 'none');
-                  $('#nombreD').attr('readonly', true);
-                  $('#direccionD').attr('readonly', true);
-                  $('#emailD').attr('readonly', true);
-                  $('#telD').attr('readonly', true);
-                   me.disabled_c = true;
-                  $('#zipD').attr('readonly', true);
-                  $('#btnBuscarConsignee').attr('readonly', false);
               } else {
                   $('#opEditarCons').prop('checked', true);
                   $('#msnEditarCons').css('display', 'inline-block');
-                  $('#nombreD').attr('readonly', false);
-                  $('#direccionD').attr('readonly', false);
-                  $('#emailD').attr('readonly', false);
-                  $('#telD').attr('readonly', false);
-                  me.disabled_c = false;
-                  $('#zipD').attr('readonly', false);
-                  $('#btnBuscarConsignee').attr('readonly', true);
               }
           } else {
               if ($('#opEditarShip').is(':checked')) {
-                  $('#opEditarShip').prop('checked', false);
                   $('#msnEditarShip').css('display', 'none');
-                  $('#nombreR').attr('readonly', true);
-                  $('#direccionR').attr('readonly', true);
-                  $('#emailR').attr('readonly', true);
-                  $('#telR').attr('readonly', true);
-                  me.disabled_s = true;
-                  $('#zipR').attr('readonly', true);
-                  $('#btnBuscarShipper').attr('readonly', false);
               } else {
                   $('#opEditarShip').prop('checked', true);
                   $('#msnEditarShip').css('display', 'inline-block');
-                  $('#nombreR').attr('readonly', false);
-                  $('#direccionR').attr('readonly', false);
-                  $('#emailR').attr('readonly', false);
-                  $('#telR').attr('readonly', false);
-                  me.disabled_s = false;
-                  $('#zipR').attr('readonly', false);
-                  $('#btnBuscarShipper').attr('readonly', true);
               }
           }
       },
       placeShipperConsignee: function(data, table) {
         let me = this;
         if (table === 'shipper') {
+          me.shipper_data = data
           me.nombreR = data['nombre_full'];
-          me.direccionR = data['direccion'];
-          $('#nombreR').attr('readonly', true);
-          $('#direccionR').attr('readonly', true);
-          $('#emailR').val(data['correo']).attr('readonly', true);
-          $('#telR').val(data['telefono']).attr('readonly', true);
-          $('#localizacion_id').val(data['ciudad_id']);
-          me.city_selected_s = data['ciudad'];
-          me.city_s = {
-            'id': data['ciudad_id'],
-            'name': data['ciudad'],
-            'pais_id': data['pais_id'],
-          }
-          me.disabled_s = true;
-          $('#zipR').val(data['zip']).attr('readonly', true);
         } else {
+          console.log(data);
+          me.consignee_data = data
           me.nombreD = data['nombre_full'];
-          me.direccionD = data['direccion'];
-          $('#nombreD').attr('readonly', true);
-          $('#direccionD').attr('readonly', true);
-          $('#emailD').val(data['correo']).attr('readonly', true);
-          me.emailD = data['correo'];
-          $('#telD').val(data['telefono']).attr('readonly', true);
-          $('#localizacion_id_c').val(data['ciudad_id']);
-          me.city_selected_c = data['ciudad'];
-          me.city_c = {
-            'id': data['ciudad_id'],
-            'name': data['ciudad'],
-            'pais_id': data['pais_id'],
-          }
-          me.disabled_c = true;
-          $('#zipD').val(data['zip']).attr('readonly', true);
-          $('#pais_id_D').val(data['pais_id']);
         }
       },
       searchShipperConsignee: function(id, table, selected) {
@@ -693,7 +564,8 @@ var objVue = new Vue({
                 if(selected){
                   axios.get('../../' + table + '/getDataById/' + id).then(response => {
                       data = response.data;
-                      me.placeShipperConsignee(data, table);
+                      me.shipper_data = data
+                      me.nombreR = data['nombre_full'];
                       $('#shipper_id').val(id);
                       $('#modalShipper').modal('hide');
                   });
@@ -704,7 +576,8 @@ var objVue = new Vue({
                 if(selected){
                   axios.get('../../' + table + '/getDataById/' + id).then(response => {
                       data = response.data;
-                      me.placeShipperConsignee(data, table);
+                      me.consignee_data = data
+                      me.nombreD = data['nombre_full'];
                       $('#consignee_id').val(id);
                       $('#modalConsignee').modal('hide');
                   });
@@ -718,33 +591,10 @@ var objVue = new Vue({
         let me = this;
           if (op == 1) {
               $('#consignee_id').val('');
-              $('#poBoxD').val('');
               this.nombreD = null;
-              this.direccionD = null;
-              $('#nombreD').attr('readonly', false);
-              $('#direccionD').attr('readonly', false);
-              $('#direccionD').attr('readonly', false);
-              $('#emailD').val('').attr('readonly', false);
-              this.emailD = null;
-              $('#telD').val('').attr('readonly', false);
-              me.disabled_c = false;
-               me.city_selected_c = null;
-               $('#localizacion_id_c').val('');
-              $('#zipD').val('').attr('readonly', false);
-              $('#btnBuscarConsignee').attr('readonly', false);
           } else {
               $('#shipper_id').val('');
               this.nombreR = null;
-              this.direccionR = null;
-              $('#nombreR').attr('readonly', false);
-              $('#direccionR').attr('readonly', false);
-              $('#emailR').val('').attr('readonly', false);
-              $('#telR').val('').attr('readonly', false);
-              me.disabled_s = false;
-              me.city_selected_s = null;
-              $('#localizacion_id').val('');
-              $('#zipR').val('').attr('readonly', false);
-              $('#btnBuscarShipper').attr('readonly', false);
           }
       },
       rollBackDelete: function(data) {
@@ -927,11 +777,10 @@ var objVue = new Vue({
           });
       },
       modalAdditionalCharges: function() {
-          // this.showmodalAdd = false;
-          if (!this.showmodalAdd) {
-              this.showmodalAdd = true;
-          }
-          $('#modalCargosAdd').modal('show');
+        if (!this.showmodalAdd) {
+            this.showmodalAdd = true;
+        }
+        $('#modalCargosAdd').modal('show');
       },
       addDetail: function(tipo) {
           this.disabled_client = true;
@@ -1030,7 +879,6 @@ var objVue = new Vue({
       },
       validationDetail: function(datos) {
         let me = this;
-        console.log(datos, me.showFieldsTotals);
         if (datos.peso !== '') {
           if(datos.tipoEmpaque !== ''){
             if(datos.contiene !== ''){
@@ -1061,71 +909,6 @@ var objVue = new Vue({
           // transition-delay: 0.2s;
           return false;
         }
-      },
-      editTableDetail: function(data) {
-          $('#pesoD' + data.id).attr('readonly', false);
-          $('#contiene' + data.id).attr('readonly', false);
-          $('#btn_edit' + data.id).css('display', 'none');
-          $('#btn_confirm' + data.id).css('display', 'inline-block');
-          $('#valorDeclarado' + data.id).attr('readonly', false);
-          /* quitar readonly al campo tracking */
-          $(".table #fila" + data.id + " .bootstrap-tagsinput .tag").each(function() {
-              $(this).addClass('label-primary').css('color', 'white');
-              $(this).append('<span data-role="remove"></span>');
-          });
-          $(".table #fila" + data.id + " .bootstrap-tagsinput").children('input').attr('readonly', false);
-      },
-      saveTableDetail: function(data) {
-          /* edicion del detalle */
-          var me = this;
-          axios.post('../editDetail', {
-              'id': data.id,
-              'shipper_id': $('#shipper_id').val(),
-              'consignee_id': $('#consignee_id').val(),
-              'posicion_arancelaria_id': $('#pa' + data.id).val(),
-              'arancel_id2': $('#id_pa' + data.id).val(),
-              'dimensiones': $('#dimensiones' + data.id).val(),
-              'contenido': $('#contiene' + data.id).val(),
-              'contenido2': $('#contiene' + data.id).val(),
-              'tracking': $('#tracking' + data.id).val(),
-              'valor': parseFloat($('#valorDeclarado' + data.id).val()),
-              'declarado2': parseFloat($('#valorDeclarado' + data.id).val()),
-              'peso': $('#pesoD' + data.id).val(),
-              'peso2': $('#pesoD' + data.id).val(),
-              'type_document': $('#document_type').val(),
-          }).then(function(response) {
-              if (response.data['code'] == 200) {
-                  toastr.success('Registro editado correctamente.');
-                  toastr.options.closeButton = true;
-              } else {
-                  toastr.warning(response.data['error']);
-                  toastr.options.closeButton = true;
-              }
-              // me.resetFieldsDetail();
-          }).catch(function(error) {
-              console.log(error);
-              if (error.response.status === 422) {
-                  me.formErrors = error.response.data; //guardo los errores
-                  me.listErrors = me.formErrors.errors; //genero lista de errores
-              }
-              $.each(me.formErrors.errors, function(key, value) {
-                  $('.result-' + key).html(value);
-              });
-              toastr.error("Porfavor completa los campos obligatorios.", {
-                  timeOut: 50000
-              });
-          });
-          $('#pesoD' + data.id).attr('readonly', true);
-          $('#contiene' + data.id).attr('readonly', true);
-          $('#btn_edit' + data.id).css('display', 'inline-block');
-          $('#btn_confirm' + data.id).css('display', 'none');
-          $('#valorDeclarado' + data.id).attr('readonly', true);
-          /* poner readonly al campo tracking */
-          $(".table .bootstrap-tagsinput .tag").each(function() {
-              $(this).removeClass('label-primary').css('color', '#555');
-              $(this).children('span').remove();
-          });
-          $('.table .bootstrap-tagsinput').children('input').attr('readonly', true);
       },
       updateDataDetailConsolidado: function(rowData) {
           var me = this;

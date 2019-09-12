@@ -701,7 +701,7 @@
 					},
 					getTransportes: function(){
 						let me = this;
-				        axios.get('../../administracion/5/getSelect').then(function (response) {
+				        axios.get('../../administracion/Tipo_Embarque/getSelect').then(function (response) {
 				            me.transportes = response.data;
 				        }).catch(function (error) {
 				        	console.log(error);

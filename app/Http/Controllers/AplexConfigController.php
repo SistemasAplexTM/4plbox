@@ -24,20 +24,20 @@ class AplexConfigController extends Controller
         array('icon' => 'file', 'route' => 'tipoDocumento.index', 'url' => false, 'desc' => 'layouts.document_types', 'perm' => 'tipoDocumento.index'),
         array('icon' => 'envelope', 'route' => 'emailTemplate.index', 'url' => false, 'desc' => 'layouts.email_templates', 'perm' => 'emailTemplate.index'),
         array('icon' => 'print', 'route' => 'printConfig', 'url' => false, 'desc' => 'layouts.print_config', 'perm' => 'emailTemplate.index'),
-        array('icon' => 'sitemap', 'route' => 'administracion/3', 'url' => true, 'desc' => 'layouts.groups_of_receipts', 'perm' => 'emailTemplate.index'),
+        array('icon' => 'sitemap', 'route' => 'administracion/Grupos', 'url' => true, 'desc' => 'layouts.groups_of_receipts', 'perm' => 'emailTemplate.index'),
         array('icon' => 'folder-open', 'route' => 'aerolinea_inventario', 'url' => true, 'desc' => 'layouts.inventory_airlines', 'perm' => 'aerolinea_inventario.index'),
         array('icon' => 'share-alt', 'route' => 'servicios.index', 'url' => false, 'desc' => 'layouts.services', 'perm' => 'servicios.index'),
-        array('icon' => 'dollar-sign', 'route' => 'administracion/12', 'url' => true, 'desc' => 'layouts.cost', 'perm' => 'administracion.index')
+        array('icon' => 'dollar-sign', 'route' => 'administracion/Gasto-Costo', 'url' => true, 'desc' => 'layouts.cost', 'perm' => 'administracion.index')
       );
 
       $menu2 = array(
         // array('icon' => 'users-class', 'route' => 'empleado.index', 'url' => false, 'desc' => 'layouts.employees', 'perm' => 'agencia.index'),
-        array('icon' => 'hand-holding-usd', 'route' => 'administracion/1', 'url' => true, 'desc' => 'layouts.payment_methods', 'perm' => 'administracion.index'),
-        array('icon' => 'credit-card', 'route' => 'administracion/2', 'url' => true, 'desc' => 'layouts.payment_types', 'perm' => 'emailTemplate.index'),
+        array('icon' => 'hand-holding-usd', 'route' => 'administracion/Forma_de_Pago', 'url' => true, 'desc' => 'layouts.payment_methods', 'perm' => 'administracion.index'),
+        array('icon' => 'credit-card', 'route' => 'administracion/Tipos_de_Pago', 'url' => true, 'desc' => 'layouts.payment_types', 'perm' => 'emailTemplate.index'),
         array('icon' => 'plane-alt', 'route' => 'transport/aerolineas', 'url' => true, 'desc' => 'layouts.airlines', 'perm' => 'transport.index'),
         array('icon' => 'road', 'route' => 'transport/aeropuertos', 'url' => true, 'desc' => 'layouts.airports', 'perm' => 'transport.index'),
-        array('icon' => 'dolly-flatbed-alt', 'route' => 'administracion/5', 'url' => true, 'desc' => 'layouts.type_boardings', 'perm' => 'administracion.index'),
-        array('icon' => 'shopping-bag', 'route' => 'administracion/6', 'url' => true, 'desc' => 'layouts.type_packagings', 'perm' => 'administracion.index'),
+        array('icon' => 'dolly-flatbed-alt', 'route' => 'administracion/Tipo_Embarque', 'url' => true, 'desc' => 'layouts.type_boardings', 'perm' => 'administracion.index'),
+        array('icon' => 'shopping-bag', 'route' => 'administracion/Tipo_Empaque', 'url' => true, 'desc' => 'layouts.type_packagings', 'perm' => 'administracion.index'),
         array('icon' => 'money-bill', 'route' => 'arancel.index', 'url' => false, 'desc' => 'layouts.tariffs', 'perm' => 'arancel.index'),
         array('icon' => 'truck-container', 'route' => 'transportadoras_locales', 'url' => true, 'desc' => 'layouts.local_transporters', 'perm' => 'transportador.index'),
         array('icon' => 'map-marker', 'route' => 'pais.index', 'url' => false, 'desc' => 'layouts.countrieses', 'perm' => 'pais.index'),

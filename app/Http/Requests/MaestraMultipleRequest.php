@@ -25,14 +25,14 @@ class MaestraMultipleRequest extends FormRequest
     {
         return [
             'nombre' => 'required',
-            'modulo_id' => 'required',
+            'modulo' => 'required',
         ];
     }
     public function messages()
     {
         return [
             'nombre.required' => 'El :attribute es obligatorio.',
-            'modulo_id.required' => 'El :attribute es obligatorio.'
+            'modulo.required' => 'El :attribute es obligatorio.'
         ];
     }
 
@@ -40,7 +40,7 @@ class MaestraMultipleRequest extends FormRequest
     {
         return [
             'nombre' => 'Nombre',
-            'modulo_id' => 'Modulo'
+            'modulo' => 'Modulo'
         ];
     }
 }

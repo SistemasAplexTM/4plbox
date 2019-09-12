@@ -130,7 +130,8 @@ var objVue = new Vue({
         formErrors: {},
         listErrors: {},
         existShipper: false,
-        shipper_id: null
+        shipper_id: null,
+        payload: {field_id: this.shipper_id, table: 'shipper', agency: data_agencia }
     },
     methods: {
         resetForm: function() {
@@ -151,8 +152,6 @@ var objVue = new Vue({
             this.listErrors = {};
             $('#localizacion_id').select2("val", "");
             $('#localizacion_id_input').val('');
-            // $('#agencia_id').select2("val", "");
-            // $('#agencia_id_input').val('');
         },
         /* metodo para eliminar el error de los campos del formulario cuando dan clic sobre el */
         deleteError: function(element) {
@@ -174,6 +173,7 @@ var objVue = new Vue({
         },
         updateTable: function() {
           this.shipper_id = null;
+          this.payload.field_id = null;
           refreshTable('tbl-shipper');
         },
         delete: function(data) {
@@ -301,32 +301,7 @@ var objVue = new Vue({
         edit: function(id) {
             var me = this;
             this.shipper_id = id;
-            // me.resetForm();
-            /*console.log(data);*/
-            // this.id = data['id'];
-            // $('#localizacion_id_input').val(data['localizacion_id']);
-            // $('#agencia_id_input').val(data['agencia_id']);
-            // /* ASIGNACION DE VALORES A LOS SELECTS */
-            // $('#localizacion_id').empty().append('<option value="' + data['localizacion_id'] + '" selected="selected">' + data['ciudad'] + '</option>').val([data['localizacion_id']]).trigger('change');
-            // $('#agencia_id').empty().append('<option value="' + data['agencia_id'] + '" selected="selected">' + data['agencia'] + '</option>').val([data['agencia_id']]).trigger('change');
-            // this.primer_nombre = data['primer_nombre'];
-            // if (data['segundo_nombre'] != 'null' && data['segundo_nombre'] != '' && data['segundo_nombre'] != null) {
-            //     this.segundo_nombre = data['segundo_nombre'];
-            // }
-            // this.primer_apellido = data['primer_apellido'];
-            // if (data['segundo_apellido'] != 'null' && data['segundo_apellido'] != '' && data['segundo_apellido'] != null) {
-            //     this.segundo_apellido = data['segundo_apellido'];
-            // }
-            // this.direccion = data['direccion'];
-            // if (data['telefono'] != 'null' && data['telefono'] != '' && data['telefono'] != null) {
-            //     this.telefono = data['telefono'];
-            // }
-            // if (data['correo'] != 'null' && data['correo'] != '' && data['correo'] != null) {
-            //     this.correo = data['correo'];
-            // }
-            // if (data['zip'] != 'null' && data['zip'] != '' && data['zip'] != null) {
-            //     this.zip = data['zip'];
-            // }
+            this.payload.field_id = id;
             this.editar = 1;
             this.existShipper = true;
             this.formErrors = {};

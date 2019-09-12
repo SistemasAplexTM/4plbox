@@ -3,7 +3,8 @@
     :visible.sync="drawer"
     :direction="direction"
     size="25%"
-    :show-close="false">
+    :show-close="false"
+    :destroy-on-close="true">
     <span slot="title" class="mb-5">
       <i class="fr fa-4x o-010" :class="data.icon"></i>
       <el-page-header @back="drawer=false" title="" style="color: white !important;margin-top: 12px;">
@@ -13,14 +14,14 @@
       </el-page-header>
     </span>
     <transition name="fade">
-      <component :is="component_active" :payload="data"></component>
+      <component :is="component_active" :payload="data" @getData="getData"></component>
     </transition>
   </el-drawer>
 </template>
 <script>
 import { mapGetters } from 'vuex'
   export default {
-    props:["table", "agency_data", "field_id"],
+    // props:["table", "agency_data", "field_id"],
     data() {
       return {
         component_active: 'menu-component',
@@ -41,6 +42,9 @@ import { mapGetters } from 'vuex'
       })
     },
     methods: {
+      getData(data){
+        bus.$emit('getData', data);
+      },
       handleClose(done) {
         this.$confirm('Are you sure you want to close this?')
           .then(_ => {

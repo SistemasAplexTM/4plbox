@@ -91,19 +91,19 @@ class DocumentoController extends Controller
         $agencias  = Agencia::all();
         $servicios = Servicios::all();
         $embarques = MaestraMultiple::select('id', 'nombre')
-            ->where([['modulo_id', 5], ['deleted_at', null]])
+            ->where([['modulo', 'Tipo_Embarque'], ['deleted_at', null]])
             ->get();
         $empaques = MaestraMultiple::select('id', 'nombre')
-            ->where([['modulo_id', 6], ['deleted_at', null]])
+            ->where([['modulo', 'Tipo_Empaque'], ['deleted_at', null]])
             ->get();
         $tipoPagos = MaestraMultiple::select('id', 'descripcion')
-            ->where([['modulo_id', 2], ['deleted_at', null]])
+            ->where([['modulo', 'Tipos_de_Pago'], ['deleted_at', null]])
             ->get();
         $formaPagos = MaestraMultiple::select('id', 'nombre')
-            ->where([['modulo_id', 1], ['deleted_at', null]])
+            ->where([['modulo', 'Forma_de_Pago'], ['deleted_at', null]])
             ->get();
         $grupos = MaestraMultiple::select('id', 'nombre')
-            ->where([['modulo_id', 3], ['deleted_at', null]])
+            ->where([['modulo', 'Grupos'], ['deleted_at', null]])
             ->get();
         $this->AddToLog('Crear documento');
         return view('templates/documento/documento', compact(
@@ -264,19 +264,19 @@ class DocumentoController extends Controller
             ->where([['deleted_at', null]])
             ->get();
         $embarques = MaestraMultiple::select('id', 'nombre')
-            ->where([['modulo_id', 5], ['deleted_at', null]])
+            ->where([['modulo', 'Tipo_Embarque'], ['deleted_at', null]])
             ->get();
         $empaques = MaestraMultiple::select('id', 'nombre')
-            ->where([['modulo_id', 6], ['deleted_at', null]])
+            ->where([['modulo', 'Tipo_Empaque'], ['deleted_at', null]])
             ->get();
         $tipoPagos = MaestraMultiple::select('id', 'descripcion')
-            ->where([['modulo_id', 2], ['deleted_at', null]])
+            ->where([['modulo', 'Tipos_de_Pago'], ['deleted_at', null]])
             ->get();
         $formaPagos = MaestraMultiple::select('id', 'nombre')
-            ->where([['modulo_id', 1], ['deleted_at', null]])
+            ->where([['modulo', 'Forma_de_Pago'], ['deleted_at', null]])
             ->get();
         $grupos = MaestraMultiple::select('id', 'nombre')
-            ->where([['modulo_id', 3], ['deleted_at', null]])
+            ->where([['modulo', 'Grupos'], ['deleted_at', null]])
             ->get();
 
         $documento = Documento::leftJoin('shipper', 'documento.shipper_id', '=', 'shipper.id')
@@ -343,11 +343,14 @@ class DocumentoController extends Controller
             ])
             ->first();
         $consignee =  DB::table('consignee as a')
+            ->leftJoin('clientes', 'a.cliente_id', 'clientes.id')
             ->join('localizacion as b', 'a.localizacion_id', 'b.id')
             ->join('deptos as c', 'b.deptos_id', 'c.id')
             ->join('pais as d', 'c.pais_id', 'd.id')
             ->select(
               'a.nombre_full',
+              'a.po_box',
+              'clientes.nombre as cliente',
               'a.direccion',
               'a.telefono',
               'a.correo',
@@ -361,9 +364,9 @@ class DocumentoController extends Controller
             ])
             ->first();
 
-        $funcionalidades_doc = MaestraMultiple::select('id', 'nombre')
-            ->where([['modulo_id', 7], ['deleted_at', null]])
-            ->get();
+        // $funcionalidades_doc = MaestraMultiple::select('id', 'nombre')
+        //     ->where([['modulo', 7], ['deleted_at', null]])
+        //     ->get();
 
         $funcionalidades = json_decode($documento->funcionalidades);
         if ($liquidar) {
@@ -374,7 +377,7 @@ class DocumentoController extends Controller
         $citys = [];
         JavaScript::put([
             'functionalities_doc' => $funcionalidades,
-            'functionalities_db'  => json_decode(json_encode($funcionalidades_doc)),
+            // 'functionalities_db'  => json_decode(json_encode($funcionalidades_doc)),
             'shipper_data'  => json_decode(json_encode($shipper)),
             'consignee_data'  => json_decode(json_encode($consignee)),
             'citys_data'  => json_decode(json_encode($citys)),

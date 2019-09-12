@@ -28,8 +28,8 @@ class MaestraMultipleController extends Controller
     public function index($type)
     {
         $this->assignPermissionsJavascript('administracion');
-        $data = Modulo::findOrFail($type);
-        return view('templates/maestraMultiple')->with('type',$type)->with('name',$data->nombre);
+        $name = str_replace("_", " ", $type);
+        return view('templates/maestraMultiple')->with('type',$type)->with('name',$name);
     }
 
     /**
@@ -189,10 +189,10 @@ class MaestraMultipleController extends Controller
      */
     public function getAll($type)
     {
-        $maestra = MaestraMultiple::select(['id', 'nombre', 'descripcion', 'modulo_id'])
+        $maestra = MaestraMultiple::select(['id', 'nombre', 'descripcion', 'modulo'])
         ->where([
                 ['deleted_at', '=', NULL],
-                ['modulo_id', '=', $type]
+                ['modulo', '=', $type]
             ]);
 
         return Datatables::of($maestra)->make(true);
@@ -205,7 +205,7 @@ class MaestraMultipleController extends Controller
             ->select([$tableName.'.id', $tableName.'.nombre as text', $tableName.'.descripcion'])
         ->where([
                 [$tableName.'.nombre', 'like', $term.'%'],
-                [$tableName.'.modulo_id', '=', $type],
+                [$tableName.'.modulo', '=', $type],
                 [$tableName.'.deleted_at', '=', NULL]
             ])->get();
         $answer = array(
