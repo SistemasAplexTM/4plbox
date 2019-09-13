@@ -13,15 +13,13 @@
         <!-- Styles -->
         <link href="{{ asset('css/main.css') }}" rel="stylesheet">
         <link href="{{ asset('css/plantilla.css') }}" rel="stylesheet">
-        {{-- <link href="{{ asset('css/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet"> --}}
         <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-theme@0.1.0-beta.10/dist/select2-bootstrap.min.css" rel="stylesheet">
         <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
         <!-- Latest compiled and minified CSS -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css" rel="stylesheet">
-
-        {{-- <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-6jHF7Z3XI3fF4XZixAuSu0gGKrXwoX/w3uFPxC56OtjChio7wtTGJWRW53Nhx6Ev" crossorigin="anonymous"> --}}
+        <!-- ICONOS DE FONT AWESOME 5 PRO -->
+        <script src="https://kit.fontawesome.com/a3e351735a.js"></script>
         @yield('scripts_head')
-
     </head>
     <body class="fixed-sidebar fixed-nav fixed-nav-basic">
         <div id="wrapper">

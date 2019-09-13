@@ -111,7 +111,7 @@ var objVue = new Vue({
         editar: 0,
         formErrors: {},
         listErrors: {},
-        payload: {field_id: this.cliente_id, table: 'cliente', agency: data_agencia }
+        payload: {field_id: this.cliente_id, table: 'clientes', agency: data_agencia }
     },
     methods: {
         resetForm: function() {

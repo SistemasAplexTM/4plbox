@@ -381,7 +381,7 @@
                         </div>
                       </div>
                       <div class="modal-footer">
-                        <el-button type="primary" :loading="loading" @click="editConsignee"><i class="fal fa-edit"></i> @lang('documents.edit')</el-button>
+                        <el-button type="primary" :loading="loading" @click="editConsignee"><i class="fal fa-edit"></i> @lang('layouts.save')</el-button>
                         <el-button data-dismiss="modal"><i class="fal fa-times"></i> @lang('documents.close')</el-button>
                       </div>
                   </div>

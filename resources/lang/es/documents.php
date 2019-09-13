@@ -5,6 +5,7 @@ return [
 //Templades    => documento/documento.blade.php
 
 		'home'             => 'Inicio',
+		'new'             => 'Nuevo',
 		'create'           => 'Crear',
 		'agency'           => 'Agencia',
 		'document_number'  => 'Número de Documento',
