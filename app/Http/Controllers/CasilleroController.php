@@ -52,19 +52,21 @@ class CasilleroController extends Controller
         $fechas_error = null;
         DB::beginTransaction();
         try{
+            $request->agencia_id = base64_decode($request->agencia_id);
             $data = (new Consignee)->fill($request->all());
             $nombre_full = $request->primer_nombre .' '.$request->primer_apellido;
             $data->nombre_full = $nombre_full;
             $data->casillero = 1;
+            $data->agencia_id = $request->agencia_id;
             $data->localizacion_id = $request->localizacion_id;
             $data->created_at = date('Y-m-d H:i:s');
             $data->save();
             // PO_BOX
-            $agencia = $request->agencia_id;
+            $agencia =  $request->agencia_id;
             $pref = '';
-            $prefijo_pobox = Agencia::select('prefijo_pobox')->where('id', $request->agencia_id)->first();
+            $prefijo_pobox = Agencia::select('prefijo_pobox')->where('id', $agencia)->first();
             if($prefijo_pobox->prefijo_pobox == null){
-               $pref = $request->agencia_id;
+               $pref = $agencia;
             }else{
                 $pref = $prefijo_pobox->prefijo_pobox;
             }
@@ -167,7 +169,7 @@ class CasilleroController extends Controller
         if($success){
             return array(
                 'code' => 200,
-                'url' => url()->current().'/'.$request->agencia_id,
+                'url' => url()->current().'/'. $request->agencia_id,
                 'error' => false
             );
         }else{

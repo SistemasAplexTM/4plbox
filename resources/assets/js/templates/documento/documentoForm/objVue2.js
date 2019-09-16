@@ -44,25 +44,22 @@ var objVue = new Vue({
           this.searchShipperConsignee($('#consignee_id').val(), 'consignee');
         }
         this.getSelectCity();
-        bus.$on('getData', function (payload) {
-          if (me.table_edit == 'shipper') {
-            me.shipper_data = payload
-            $('#shipper_id').val(payload.id);
-            me.nombreR = payload.nombre_full;
-            me.edit_shipper = true
-            me.disabled_s = true
-          }else{
-            me.consignee_data = payload
-            $('#consignee_id').val(payload.id)
-            me.nombreD = payload.nombre_full;
-            me.edit_consignee = true
-            me.disabled_c = true
-          }
-        })
     },
     created: function() {
       this.liquidado = $('#document_type').data('liquidado');
       this.showHiddeFields();
+      let me = this;
+      bus.$on('getData', function (payload) {
+        if (me.table_edit == 'shipper') {
+          me.shipper_data = payload
+          $('#shipper_id').val(payload.id);
+          me.nombreR = payload.nombre_full;
+        }else{
+          me.consignee_data = payload
+          $('#consignee_id').val(payload.id)
+          me.nombreD = payload.nombre_full;
+        }
+      })
       /* CUSTOM MESSAGES VE-VALIDATOR*/
       const dict = {
           custom: {
@@ -80,7 +77,7 @@ var objVue = new Vue({
               },
           }
       };
-      this.$validator.localize('es', dict);
+      this.$validator.localize('es', dict)
     },
     data: {
         agency_data: data_agencia,

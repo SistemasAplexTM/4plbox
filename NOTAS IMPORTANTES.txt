@@ -11,3 +11,5 @@ QUEDA EPNDIENTE PARA TERMINAR: (11 - 09 - 2019)
 3. Manejo del menú en memoria caché o localStorage para no hacer demasiados llamados ajax
 4. Módulo de configuración desde el menú
 5. Listar iconos enselect (CREAR COMPONENTE)
+
+6. Tab de URLs privadas y publicas en agencia

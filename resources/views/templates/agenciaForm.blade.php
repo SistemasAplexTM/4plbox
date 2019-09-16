@@ -78,7 +78,7 @@
                             <li role="agencia" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">@lang('general.registration_data')</a></li>
                             <li role="agencia"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">@lang('general.integrations')</a></li>
                             <li role="agencia"><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">@lang('general.url_public')</a></li>
-                            <li role="agencia"><a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab">URL</a></li>
+                            {{-- <li role="agencia"><a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab">URL</a></li> --}}
                         </ul>
 
                         <!-- Tab panes -->
@@ -141,6 +141,19 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-lg-12">
+                                          <div class="form-group {{ $errors->has('whatsapp') ? ' has-error' : '' }}">
+                                            <div class="col-lg-4">
+                                                <label for="whatsapp" class="control-label">Whatsapp</label>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <input type="tel" class="form-control" data-mask="(999) 999-9999" id="whatsapp" name="whatsapp" value="{{ (isset($agencia) and $agencia) ? $agencia->whatsapp : old('whatsapp') }}">
+                                                @if ($errors->has('whatsapp'))
+                                                <small class="help-block">{{ $errors->first('whatsapp') }}</small>
+                                                @endif
+                                            </div>
+                                          </div>
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-12">
@@ -187,6 +200,19 @@
                                                     @endif
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                          <div class="form-group {{ $errors->has('email_cc') ? ' has-error' : '' }}">
+                                            <div class="col-lg-4">
+                                              <label for="email_cc" class="control-label">Correo CC</label>
+                                            </div>
+                                            <div class="col-lg-8">
+                                              <input type="mail" class="form-control" id="email_cc" name="email_cc" value="{{ (isset($agencia) and $agencia) ? $agencia->email_cc : old('mail') }}" >
+                                              @if ($errors->has('email_cc'))
+                                              <small class="help-block">{{ $errors->first('email_cc') }}</small>
+                                              @endif
+                                            </div>
+                                          </div>
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="form-group">
@@ -243,6 +269,7 @@
 
 
                                 <!-- DETALLE DE AGENCIA -->
+                                @if(isset($agencia) and $agencia->tipo_agencia == 1)
                                 <div class="col-lg-8">
                                     <div class="col-lg-12">
                                             <!--<div class="hr-line-dashed"></div>-->
@@ -352,15 +379,16 @@
                                             </div>
                                         </div>
                                     <!--**************** Fin Detalle Agencia  *******************************-->
-                                    </div>
+                                </div>
+                                @endif
+                                <div class="col-lg-12">
                                     <div class="col-lg-12">
-                                        <div class="col-lg-12">
-                                            <div class="form-group">
-                                                <label for="observacion" class="">@lang('general.observation')</label>
-                                                <textarea class="form-control" id="observacion" name="observacion"></textarea>
-                                            </div>
+                                        <div class="form-group">
+                                            <label for="observacion" class="">@lang('general.observation')</label>
+                                            <textarea class="form-control" id="observacion" name="observacion"></textarea>
                                         </div>
                                     </div>
+                                </div>
                                     <!--**************** Detalle Agencia  *******************************-->
                                      <!--****************Aquí*******************************-->
 
@@ -412,13 +440,13 @@
                                     </div>
                                 </div>
 
-                                <div role="tabpanel" class="tab-pane fade" id="tab4">
+                                {{-- <div role="tabpanel" class="tab-pane fade" id="tab4">
                                   <div class="row">
                                     <div class="col-lg-12" style="margin-top: 10px;">
                                       <agency-url-component :agency_id="{{ (isset($agencia) and $agencia) ? $agencia->id : null }}"/>
                                     </div>
                                   </div>
-                                </div>
+                                </div> --}}
                             </div>
 
 
