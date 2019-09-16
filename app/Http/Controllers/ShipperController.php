@@ -41,10 +41,15 @@ class ShipperController extends Controller
     public function store(ShipperRequest $request)
     {
         try {
+            $email_cc = null;
+            if ($request->emails_cc) {
+              $email_cc = implode(",", $request->emails_cc);
+            }
             $data              = (new Shipper)->fill($request->all());
             $data->nombre_full = $request->primer_nombre . ' ' . $request->segundo_nombre . ' ' . $request->primer_apellido . ' ' . $request->segundo_apellido;
             $data->created_at  = date('Y-m-d H:i:s');
             $data->agencia_id = Auth::user()->agencia_id;
+            $data->email_cc = $email_cc;
             if ($data->save()) {
                 $answer = array(
                     "datos"  => $this->getDataById($data->id)->original,

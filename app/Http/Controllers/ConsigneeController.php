@@ -34,10 +34,15 @@ class ConsigneeController extends Controller
     public function store(ConsigneeRequest $request)
     {
         try {
+            $email_cc = null;
+            if ($request->emails_cc) {
+              $email_cc = implode(",", $request->emails_cc);
+            }
             $data              = (new Consignee)->fill($request->all());
             $data->nombre_full = trim($request->primer_nombre) . ' ' . trim($request->segundo_nombre) . ' ' . trim($request->primer_apellido) . ' ' . trim($request->segundo_apellido);
             $data->created_at  = date('Y-m-d H:i:s');
             $data->agencia_id = Auth::user()->agencia_id;
+            $data->email_cc = $email_cc;
             if ($data->save()) {
                 $this->AddToLog('Consignee creado id (' . $data->id . ')');
                 $this->generarCasillero($data->id);

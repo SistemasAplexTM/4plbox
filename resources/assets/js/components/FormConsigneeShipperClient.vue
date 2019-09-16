@@ -213,12 +213,15 @@
         <el-checkbox v-model="form.emailsend"><i class="fal fa-envelope"></i> Enviar email con datos de su casillero.</el-checkbox>
       </el-col>
     </el-row>
-    <el-row :gutter="24">
-      <el-col :span="24">
-        <el-checkbox-group v-model="checkList">
-          <el-checkbox label="Shipper"></el-checkbox>
-          <el-checkbox label="Consignee"></el-checkbox>
-          <el-checkbox label="Cliente"></el-checkbox>
+    <el-row :gutter="24" v-if="payload.table !== 'clientes' && edit === false">
+      <el-col :span="8">
+        <label for="" class="control-label gcore-label-top">Registrar en:</label>
+      </el-col>
+      <el-col :span="16" class="checkbox_create">
+        <el-checkbox-group v-model="check_create">
+          <el-checkbox label="Shipper" v-if="payload.table != 'shipper'"></el-checkbox>
+          <el-checkbox label="Consignee" v-if="payload.table != 'consignee'"></el-checkbox>
+          <el-checkbox label="Clientes"></el-checkbox>
         </el-checkbox-group>
       </el-col>
     </el-row>
@@ -271,10 +274,11 @@ export default {
         notify_client: false,
         zona: null,
       },
-      checkList: ['Seleccionado y deshabilitado','Opción A'],
+      check_create: [],
       // branchs: [],
       clientes: null,
       city_selected_s: '',
+      table: this.payload.table
     };
   },
   watch:{
@@ -312,20 +316,25 @@ export default {
         }else{
           this.store();
         }
-      }else{
-        this.loading = false;
       }
+      this.loading = false;
     },
     store(){
       let me = this;
-      axios.post('/' + this.payload.table, this.form).then(function(response) {
+      axios.post('/' + this.table.toLowerCase(), this.form).then(function(response) {
         if (response.data['code'] == 200) {
           toastr.success('Registro creado correctamente.');
           me.loading = false;
-          me.resetForm();
-          me.$emit('updatetable');
-          bus.$emit('getData', response.data['datos']);
-          // me.$emit('getData', response.data['datos']);
+          if (me.check_create.length > 0) {
+            me.table = me.check_create[0];
+            me.check_create = removeItemFromArr(me.check_create, me.table);
+            me.beforeSend();
+          }else{
+            me.resetForm();
+            me.$emit('updatetable');
+            bus.$emit('getData', response.data['datos']);
+            // me.$emit('getData', response.data['datos']);
+          }
         } else {
           me.loading = false;
           toastr.warning(response.data['error']);
@@ -337,10 +346,14 @@ export default {
             timeOut: 50000
         });
       });
+
+      var removeItemFromArr = ( arr, item ) => {
+          return arr.filter( e => e !== item );
+      };
     },
     update(){
       let me = this;
-      axios.put('/' + this.payload.table + '/' + this.payload.field_id, this.form).then(function(response) {
+      axios.put('/' + this.table + '/' + this.payload.field_id, this.form).then(function(response) {
         if (response.data['code'] == 200) {
           toastr.success('Registro Actualizado correctamente.');
           me.loading = false;
@@ -445,6 +458,7 @@ export default {
     },
     setCity(data){
       this.form.localizacion_id = data.id;
+      this.form.zona = data.name;
     },
     getDataById(id){
       let me = this;
@@ -477,10 +491,15 @@ export default {
       });
     },
     setFormToClient(){
-      if (this.payload.table === 'clientes') {
+      if (this.table.toLowerCase() === 'clientes') {
+        console.log(this.city_selected_s);
+        console.log(this.form);
         this.form = {
           'localizacion_id': this.form.localizacion_id,
-          'nombre': this.form.primer_nombre,
+          'nombre': this.form.primer_nombre + ' '
+           + this.verifyNull(this.form.segundo_nombre) + ' '
+           + this.verifyNull(this.form.primer_apellido) + ' '
+           + this.verifyNull(this.form.segundo_apellido) + ' ',
           'direccion': this.form.direccion,
           'telefono': this.form.telefono,
           'email': this.form.correo,
@@ -488,6 +507,13 @@ export default {
         }
       }
     },
+    verifyNull(field){
+      if (field == null) {
+        return '';
+      }else{
+        return field;
+      }
+    }
   }
 }
 </script>
@@ -501,6 +527,9 @@ export default {
   }
 </style>
 <style lang="css" scoped>
+  .checkbox_create{
+    margin-top: 9px;
+  }
   .fade-enter-active, .fade-leave-active {
     transition: opacity .5s;
   }

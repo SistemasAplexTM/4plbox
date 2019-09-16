@@ -60,6 +60,24 @@ var objVue = new Vue({
           me.nombreD = payload.nombre_full;
         }
       })
+      /* CUSTOM MESSAGES VE-VALIDATOR*/
+      const dict = {
+          custom: {
+              nombreR: {
+                  required: 'El shipper es obligatorio.'
+              },
+              direccionR: {
+                  required: 'La direccion es obligatorio.'
+              },
+              nombreD: {
+                  required: 'El consignee es obligatorio.'
+              },
+              direccionD: {
+                  required: 'La direccion es obligatorio.'
+              },
+          }
+      };
+      this.$validator.localize('es', dict)
     },
     data: {
         agency_data: data_agencia,
@@ -127,7 +145,9 @@ var objVue = new Vue({
           ciudad : null,
           po_box : null,
         },
-        table_edit: null
+        table_edit: null,
+        edit_consignee: false,
+        edit_shipper: false,
     },
     methods: {
       open(op, create){
@@ -562,6 +582,8 @@ var objVue = new Vue({
           var me = this;
           if (id != '') {
               if (table === 'shipper') {
+                me.edit_shipper = true
+                me.disabled_s = true
                 if(selected){
                   axios.get('../../' + table + '/getDataById/' + id).then(response => {
                       data = response.data;
@@ -574,6 +596,8 @@ var objVue = new Vue({
                   me.placeShipperConsignee(shipper_data, table);
                 }
               } else {
+                me.edit_consignee = true
+                me.disabled_c = true
                 if(selected){
                   axios.get('../../' + table + '/getDataById/' + id).then(response => {
                       data = response.data;
@@ -592,10 +616,29 @@ var objVue = new Vue({
         let me = this;
           if (op == 1) {
               $('#consignee_id').val('');
+              this.edit_consignee = false;
+              this.disabled_c = false;
               this.nombreD = null;
+              this.consignee_data = {
+                direccion : null,
+                zip : null,
+                correo : null,
+                telefono : null,
+                ciudad : null,
+                po_box : null,
+              };
           } else {
               $('#shipper_id').val('');
+              this.edit_shipper = false;
+              this.disabled_s = false;
               this.nombreR = null;
+              this.shipper_data = {
+                direccion : null,
+                zip : null,
+                correo : null,
+                telefono : null,
+                ciudad : null,
+              };
           }
       },
       rollBackDelete: function(data) {
