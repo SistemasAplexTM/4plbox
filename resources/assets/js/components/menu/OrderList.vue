@@ -48,7 +48,6 @@ export default {
         // console.log(response.data);
         setTimeout(function () {
           bus.$emit('refreshList', true)
-
         }, 300);
       });
     },

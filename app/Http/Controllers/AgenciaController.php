@@ -147,8 +147,8 @@ class AgenciaController extends Controller
             $detalle->save();
           }
         }
-
-        return redirect()->route('agencia.index');
+        $id = base64_encode($agencia_id);
+        return redirect('/agencia/' . $id . '/edit');
     }
 
     public function createAplexConfig($key, $value, $configMC){

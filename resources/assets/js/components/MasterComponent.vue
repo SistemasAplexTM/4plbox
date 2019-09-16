@@ -512,11 +512,17 @@
             <div class="panel-body">
               <div class="col-lg-12">
                 <div class="row">
-                  <div class="col-lg-8">
+                  <div class="col-lg-6">
                     <div class="form-group" :class="{'has-error': errors.has('handing_information') }">
                       <label for="handing_information">Handing information</label>
                       <textarea v-model="handing_information" class="form-control" name="handing_information" id="handing_information" cols="30" rows="4"></textarea>
                       <small v-show="errors.has('handing_information')" class="bg-danger">{{ errors.first('handing_information') }}</small>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label for="handing_information">Master Detail</label>
+                      <textarea v-model="master_detail" class="form-control" cols="30" rows="4"></textarea>
                     </div>
                   </div>
                 </div>
@@ -718,6 +724,7 @@
         num_account: null,
         reference_num: null,
         handing_information: null,
+        master_detail: null,
         optional_shipping_info: null,
         amount_insurance: null,
         total_other_charge_due_agent: null,
@@ -965,6 +972,7 @@
           'total': this.total,
           'descripcion': this.descripcion,
           'handing_information': this.handing_information,
+          'master_detail': this.master_detail,
           'consolidado_id': (this.consolidado_id != null) ? this.consolidado_id.id : null,
           'to1': this.aeropuerto_destino.codigo,
           'other_c': this.other_c,
@@ -1007,6 +1015,7 @@
           'total': this.total,
           'descripcion': this.descripcion,
           'handing_information': this.handing_information,
+          'master_detail': this.master_detail,
           'consolidado_id': (this.consolidado_id != null) ? this.consolidado_id.id : null,
           'to1': this.aeropuerto_destino.codigo,
           'other_c': this.other_c,
@@ -1081,6 +1090,7 @@
           this.consolidado_id = response.data.data.consolidado_id;
           this.account_information = response.data.data.account_information;
           this.handing_information = response.data.data.handing_information;
+          this.master_detail = response.data.data.master_detail;
           this.agent_iata_data = response.data.data.agent_iata_data;
           this.num_account = response.data.data.num_account;
           this.reference_num = response.data.data.reference_num;

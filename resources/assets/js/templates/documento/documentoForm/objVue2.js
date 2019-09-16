@@ -44,21 +44,22 @@ var objVue = new Vue({
           this.searchShipperConsignee($('#consignee_id').val(), 'consignee');
         }
         this.getSelectCity();
-        bus.$on('getData', function (payload) {
-          if (me.table_edit == 'shipper') {
-            me.shipper_data = payload
-            $('#shipper_id').val(payload.id);
-            me.nombreR = payload.nombre_full;
-          }else{
-            me.consignee_data = payload
-            $('#consignee_id').val(payload.id)
-            me.nombreD = payload.nombre_full;
-          }
-        })
     },
     created: function() {
       this.liquidado = $('#document_type').data('liquidado');
       this.showHiddeFields();
+      let me = this;
+      bus.$on('getData', function (payload) {
+        if (me.table_edit == 'shipper') {
+          me.shipper_data = payload
+          $('#shipper_id').val(payload.id);
+          me.nombreR = payload.nombre_full;
+        }else{
+          me.consignee_data = payload
+          $('#consignee_id').val(payload.id)
+          me.nombreD = payload.nombre_full;
+        }
+      })
     },
     data: {
         agency_data: data_agencia,

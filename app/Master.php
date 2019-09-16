@@ -40,6 +40,7 @@ class Master extends Model
         'fecha_vuelo2',
         'amount_insurance',
         'handing_information',
+        'master_detail',
         'sci',
         'weight_charge',
         'valuation_charge',

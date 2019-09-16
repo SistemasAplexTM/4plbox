@@ -14,7 +14,7 @@
       </el-page-header>
     </span>
     <transition name="fade">
-      <component :is="component_active" :payload="data" @getData="getData"></component>
+      <component :is="component_active" :payload="data"></component>
     </transition>
   </el-drawer>
 </template>
@@ -42,9 +42,6 @@ import { mapGetters } from 'vuex'
       })
     },
     methods: {
-      getData(data){
-        bus.$emit('getData', data);
-      },
       handleClose(done) {
         this.$confirm('Are you sure you want to close this?')
           .then(_ => {

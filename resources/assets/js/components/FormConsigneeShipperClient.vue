@@ -324,7 +324,8 @@ export default {
           me.loading = false;
           me.resetForm();
           me.$emit('updatetable');
-          me.$emit('getData', response.data['datos']);
+          bus.$emit('getData', response.data['datos']);
+          // me.$emit('getData', response.data['datos']);
         } else {
           me.loading = false;
           toastr.warning(response.data['error']);
@@ -345,7 +346,8 @@ export default {
           me.loading = false;
           me.resetForm();
           me.$emit('updatetable');
-          me.$emit('getData', response.data['datos']);
+          bus.$emit('getData', response.data['datos']);
+          // me.$emit('getData', response.data['datos']);
         } else {
           me.loading = false;
           toastr.warning(response.data['error']);
