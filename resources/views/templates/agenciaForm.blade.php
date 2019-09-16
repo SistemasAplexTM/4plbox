@@ -272,70 +272,97 @@
                                 @if(isset($agencia) and $agencia->tipo_agencia == 1)
                                 <div class="col-lg-8">
                                     <div class="col-lg-12">
-                                            <!--<div class="hr-line-dashed"></div>-->
-                                            <div class="form-group">
-                                                <label for="" class="col-lg-12" style="text-align: center; font-size: 15px;">@lang('general.agency_detail')</label>
-                                            </div>
+                                      <!--<div class="hr-line-dashed"></div>-->
+                                      <div class="form-group">
+                                          <label for="" class="col-lg-12" style="text-align: center; font-size: 15px;">@lang('general.agency_detail')</label>
+                                      </div>
                                     </div>
-                                    <div class="col-sm-3">
-                                            <div class="form-group" id="servicio">
-                                                <label for="servicios_id" class="">@lang('general.service')</label>
-                                                <select id="servicios_id" name="servi_id" class="form-control">
-                                                    <option value="" data-tarifa="" data-seguro="">@lang('general.select')</option>
-                                                    {{-- llenar select de servicios --}}
-                                                </select>
-                                                <small id="msn1" class="help-block"></small>
+                                    <div class="row">
+                                      <div class="col-sm-3">
+                                        <div class="form-group" id="servicio">
+                                            <label for="servicios_id" class="">@lang('general.service')</label>
+                                            <select id="servicios_id" name="servi_id" class="form-control">
+                                                <option value="" data-tarifa="" data-seguro="">@lang('general.select')</option>
+                                                {{-- llenar select de servicios --}}
+                                            </select>
+                                            <small id="msn1" class="help-block"></small>
+                                        </div>
+                                      </div>
+                                      <div class="col-sm-2">
+                                        <div class="form-group" id="classTarifaP">
+                                            <label for="tarifaP" class="">@lang('general.rate')</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">$</span>
+                                                <input type="text" readonly="" class="form-control" id="tarifaP" name="tarifaP" placeholder="0">
                                             </div>
+                                            <small id="msn1" class="help-block"></small>
+                                        </div>
+                                      </div>
+                                      <div class="col-sm-2">
+                                        <div class="form-group" id="classTarifaP">
+                                            <label for="seguroP" class="">@lang('general.insurance')</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">$</span>
+                                                <input type="text" readonly="" class="form-control" id="seguroP" name="seguroP" placeholder="0">
+                                            </div>
+                                            <small id="msn1" class="help-block"></small>
+                                        </div>
+                                      </div>
+                                      <div class="col-sm-2">
+                                        <div class="form-group" id="classTarifaP">
+                                            <label for="seguroP" class="">@lang('general.minimum_fee')</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">$</span>
+                                                <input type="text" readonly="" class="form-control" id="min" name="min" placeholder="0">
+                                            </div>
+                                            <small id="msn1" class="help-block"></small>
+                                        </div>
+                                      </div>
                                     </div>
-                                    <div class="col-sm-2">
-                                            <div class="form-group" id="classTarifaP">
-                                                <label for="tarifaP" class="">@lang('general.rate')</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">$</span>
-                                                    <input type="text" readonly="" class="form-control" id="tarifaP" name="tarifaP" placeholder="0">
-                                                </div>
-                                                <small id="msn1" class="help-block"></small>
+                                    <div class="row">
+                                      <div class="col-sm-3">
+                                        &nbsp;
+                                      </div>
+                                      <div class="col-sm-2">
+                                        <div class="form-group" id="classTarifaA">
+                                          <label for="tarifaA" class="">@lang('general.agency_rate')</label>
+                                          <div class="input-group">
+                                              <span class="input-group-addon">$</span>
+                                              <input type="text" class="form-control" id="tarifaA" name="tarifaA" placeholder="Ej: 0.1">
+                                          </div>
+                                          <small id="msn1" class="help-block"></small>
+                                        </div>
+                                      </div>
+                                      <div class="col-sm-2" data-container="body" data-toggle="popover" data-placement="top" data-content="Por cada 100 USD se cobrara el valor ingresado en el seguro.">
+                                        <div class="form-group" id="classSeguro">
+                                            <label for="seguro" class="" >@lang('general.insurance_agency')</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">$</span>
+                                                <input type="text" class="form-control" id="seguro" name="seg" value="0">
                                             </div>
+                                            <small id="msn1" class="help-block"></small>
+                                        </div>
+                                      </div>
+                                      <div class="col-sm-2">
+                                        <div class="form-group" id="classSeguro">
+                                            <label for="seguro" class="" >@lang('general.minimum_fee_agency')</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">$</span>
+                                                <input type="text" class="form-control" id="min_agency" name="min_agency" value="0">
+                                            </div>
+                                            <small id="msn1" class="help-block"></small>
+                                        </div>
+                                      </div>
+                                      <div class="col-sm-1">
+                                      <div class="form-group">
+                                          <div class="col-lg-12">
+                                              <label for="" class="">&nbsp;</label>
+                                          </div>
+                                          <div class="col-lg-12">
+                                              <a class="btn btn-primary btn-sm" type="button" id="btn_add_row" onclick="addRow()" value="1" data-toggle="tooltip" title="Agregar"><i class="fal fa-plus"></i></a>
+                                          </div>
+                                      </div>
                                     </div>
-                                    <div class="col-sm-2">
-                                            <div class="form-group" id="classTarifaP">
-                                                <label for="seguroP" class="">@lang('general.insurance')</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">$</span>
-                                                    <input type="text" readonly="" class="form-control" id="seguroP" name="seguroP" placeholder="0">
-                                                </div>
-                                                <small id="msn1" class="help-block"></small>
-                                            </div>
-                                    </div>
-                                    <div class="col-sm-2">
-                                            <div class="form-group" id="classTarifaA">
-                                                <label for="tarifaA" class="">Tarifa Agencia</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">$</span>
-                                                    <input type="text" class="form-control" id="tarifaA" name="tarifaA" placeholder="Ej: 0.1">
-                                                </div>
-                                                <small id="msn1" class="help-block"></small>
-                                            </div>
-                                    </div>
-                                    <div class="col-sm-2" data-container="body" data-toggle="popover" data-placement="top" data-content="Por cada 100 USD se cobrara el valor ingresado en el seguro.">
-                                            <div class="form-group" id="classSeguro">
-                                                <label for="seguro" class="" >@lang('general.insurance')</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">$</span>
-                                                    <input type="text" class="form-control" id="seguro" name="seg" value="0">
-                                                </div>
-                                                <small id="msn1" class="help-block"></small>
-                                            </div>
-                                    </div>
-                                    <div class="col-sm-1">
-                                            <div class="form-group">
-                                                <div class="col-lg-12">
-                                                    <label for="" class="">&nbsp;</label>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <a class="btn btn-primary btn-sm" type="button" id="btn_add_row" onclick="addRow()" value="1" data-toggle="tooltip" title="Agregar"><i class="fal fa-plus"></i></a>
-                                                </div>
-                                            </div>
                                     </div>
                                     <div class="col-lg-12">
                                             <div class="table-responsive form-group">
@@ -349,6 +376,7 @@
                                                             <th>@lang('general.insurance')</th>
                                                             <th>@lang('general.agency_rate')</th>
                                                             <th>$ @lang('general.insurance')</th>
+                                                            <th>$ @lang('general.minimum_fee')</th>
                                                             <th width="100px">@lang('general.actions')</th>
                                                         </tr>
                                                     </thead>
@@ -363,6 +391,7 @@
                                                                 <td><input type="text" id="segup" name="" value="{{ $data->seguro_principal }}" class="form-control" readonly></td>
                                                                 <td><input type="text" id="tariA{{ $data->id }}" name="" value="{{ $data->tarifa_agencia }}" class="form-control" readonly></td>
                                                                 <td><input type="text" id="segu{{ $data->id }}" name="" value="{{ $data->seguro }}" class="form-control" readonly></td>
+                                                                <td><input type="text" id="min{{ $data->id }}" name="" value="{{ $data->tarifa_minima_agencia }}" class="form-control" readonly></td>
 
                                                                 <td>
                                                                   <a onclick="editRowServices({{ $count }}, {{ $data->id }})" id="btn_edit{{ $data->id }}" class='btn_edit edit_btn' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fal fa-pencil fa-lg'></i></a>

@@ -529,6 +529,7 @@ class DocumentoController extends Controller
                             $data->valor_libra     = ($request->valor_libra2 != '') ? $request->valor_libra2 : 0;
                             $data->impuesto        = $request->impuesto;
                             $data->flete           = $request->flete;
+                            $data->tarifa_minima   = $request->tarifa_minima;
                             $data->seguro          = $request->seguro_valor;
                             $data->seguro_cobrado  = $request->seguro;
                             $data->cargos_add      = $request->cargos_add;

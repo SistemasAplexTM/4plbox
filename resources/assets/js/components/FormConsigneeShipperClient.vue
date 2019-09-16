@@ -333,7 +333,6 @@ export default {
             me.resetForm();
             me.$emit('updatetable');
             bus.$emit('getData', response.data['datos']);
-            // me.$emit('getData', response.data['datos']);
           }
         } else {
           me.loading = false;
@@ -360,7 +359,6 @@ export default {
           me.resetForm();
           me.$emit('updatetable');
           bus.$emit('getData', response.data['datos']);
-          // me.$emit('getData', response.data['datos']);
         } else {
           me.loading = false;
           toastr.warning(response.data['error']);

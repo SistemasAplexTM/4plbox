@@ -46,43 +46,30 @@ trait sendEmailAlerts
                   'address' => $objAgencia->email,
                   'name'    => $objAgencia->descripcion,
               );
-
-              $moreUsers = explode(',', $consignee->email_cc);
+              $moreUsers = [];
+              if($consignee->email_cc != ''){
+                $moreUsers = explode(',', $consignee->email_cc);
+              }
               // VERIFICAR SI SE ENVIA CORREO AL CLIENTE ASOCIADO AL CONSIGNEE
-              if ($consignee->notify_client == 1) {
-                $evenMoreUsers = null;
+              $evenMoreUsers = [];
+              $cliente = null;
+              if ($consignee->cliente_id !== null) {
                 $cliente = Cliente::findOrFail($consignee->cliente_id);
-                if($cliente->email != ''){
-                  $evenMoreUsers = trim($cliente->email);
+              }
+              if ($consignee->cliente_id !== null and $cliente !== null) {
+                if ($consignee->notify_client == 1 || $cliente->email_bcc == 1) {
+                  if($cliente->email != ''){
+                    $evenMoreUsers = trim($cliente->email);
+                  }
                 }
               }
 
               $this->AddToLog('Email enviado verifySendEmail()');
 
-              if($consignee->email_cc != '' && $consignee->notify_client == 1){
-                return Mail::to(trim($consignee->correo))
-                ->cc($moreUsers)
-                ->bcc($evenMoreUsers)
-                ->send(new \App\Mail\BodegaRecibido($cuerpo_correo, $from_self, $asunto_correo));
-                //
-                // return Mail::send('emailTemplate', ['param' => $cuerpo_correo], function($message) use ($consignee)
-                // {
-                //     $message->from('duvierm24@gmail.com', 'Colombiana de Carga');
-                //     $message->to(trim($consignee->correo));
-                // });
-
-              }elseif($consignee->notify_client == 1){
-                return Mail::to(trim($consignee->correo))
-                ->cc($moreUsers)
-                ->send(new \App\Mail\BodegaRecibido($cuerpo_correo, $from_self, $asunto_correo));
-              }elseif ($consignee->email_cc != '') {
-                return Mail::to(trim($consignee->correo))
-                ->bcc($evenMoreUsers)
-                ->send(new \App\Mail\BodegaRecibido($cuerpo_correo, $from_self, $asunto_correo));
-              }else {
-                return Mail::to(trim($consignee->correo))
-                ->send(new \App\Mail\BodegaRecibido($cuerpo_correo, $from_self, $asunto_correo));
-              }
+              return Mail::to(trim($consignee->correo))
+              ->cc($moreUsers)
+              ->bcc($evenMoreUsers)
+              ->send(new \App\Mail\BodegaRecibido($cuerpo_correo, $from_self, $asunto_correo));
           }
       }
     }

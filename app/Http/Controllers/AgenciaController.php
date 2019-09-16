@@ -84,7 +84,7 @@ class AgenciaController extends Controller
 
         $detalle = AgenciaDetalle::join('servicios', 'agencia_detalle.servicios_id', 'servicios.id')
         ->join('maestra_multiple', 'maestra_multiple.id', 'servicios.tipo_embarque_id')
-            ->select('agencia_detalle.*','maestra_multiple.nombre as tipo_embarque', 'servicios.nombre as servicio', 'servicios.seguro as seguro_principal', 'servicios.id as servicio_id', 'servicios.peso_minimo as tarifa_minima')
+            ->select('agencia_detalle.*','maestra_multiple.nombre as tipo_embarque', 'servicios.nombre as servicio', 'servicios.seguro as seguro_principal', 'servicios.id as servicio_id', 'servicios.peso_minimo as tarifa_minima', 'agencia_detalle.tarifa_minima AS tarifa_minima_agencia')
             ->where([['agencia_detalle.agencia_id', '=', $id], ['agencia_detalle.deleted_at', '=', null]])
             ->get();
 
@@ -144,6 +144,7 @@ class AgenciaController extends Controller
             $detalle->tarifa_principal = $request->input('tarifa_principal')[$i];
             $detalle->tarifa_agencia   = $request->input('tarifa_agencia')[$i];
             $detalle->seguro           = $request->input('seguro')[$i];
+            $detalle->tarifa_minima    = $request->input('min_a')[$i];
             $detalle->save();
           }
         }

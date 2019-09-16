@@ -149,13 +149,13 @@ Destinatario y que se pueda enviar un email consolidado al cliente y no uno por 
 autocomplete="aplextmautocomplete"
 
 ===PRIORIDAD===
-J21.1. Colocar la tarifa mínima en la tabla del documento (Guardar y consultar de ahí cuando edito el documento).
-J3.2. Agregar la tarifa mínima para la agencia hija.
-J11.1. Agregar el nombre del sender en el email.
-J5.3. Enviar email al cliente (Colocar check si el cliente no quiere que le lleguen las notificaciones a sus consignee), si este lo solicita.
-(Cuando se envía un email a un consignee, que este si tiene un cliente, y si el cliente tiene veiricado que quiere recibir correos, se vaya con CCO).
-J5.1. Mostrar el cliente en el documento warehouse si el consignee tiene un cliente.
-J3.6. Crear el logo de las agencias como variable.
+====== J21.1. Colocar la tarifa mínima en la tabla del documento (Guardar y consultar de ahí cuando edito el documento).
+======J3.2. Agregar la tarifa mínima para la agencia hija.
+======J11.1. Agregar el nombre del sender en el email.
+======J5.3. Enviar email al cliente (Colocar check si el cliente no quiere que le lleguen las notificaciones a sus consignee), si este lo solicita.
+      (Cuando se envía un email a un consignee, que este si tiene un cliente, y si el cliente tiene veiricado que quiere recibir correos, se vaya con CCO).
+======J5.1. Mostrar el cliente en el documento warehouse si el consignee tiene un cliente.
+======J3.6. Crear el logo de las agencias como variable.
 J10.1. En la búsqueda global de trackins la consulta no muestra los que no tienen recibos.
 J10.2. Agregar la fecha de recibo del tracking en la consulta global que está en la barra arriba.
 J14.2. Mostrar el cliente al lado del consignee si lo tiene, Grilla principal y documento.
