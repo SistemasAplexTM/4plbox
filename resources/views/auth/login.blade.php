@@ -107,7 +107,7 @@
 
                             <small style=""><a href="registro/{{ base64_encode(1) }}" target="_blank" data-toggle="tooltip" title="Registro Casillero"><i class="fal fa-address-book"></i> @lang('auth.registry')</a></small>
                             <small style=""><a href="prealerta/{{ base64_encode(1) }}" target="_blank" data-toggle="tooltip" title="Prealertar mercancia"><i class="fal fa-bell"></i> @lang('auth.pre-alert')</a></small>
-                            <small style="float: right;"><a href="selfService/{{ base64_encode(1) }}" target="_blank" data-toggle="tooltip" title="Prealertar mercancia"><i class="fal fa-calculator-alt"></i> Self Service</a></small>
+                            <small style="float: right;"><a href="http://casillerodemo.4plbox.com/login/{{ base64_encode(1) }}" target="_blank" data-toggle="tooltip" title="Ingreso Casillero"><i class="fal fa-calculator-alt"></i> Casillero</a></small>
 
                         </div>
                     </form>
