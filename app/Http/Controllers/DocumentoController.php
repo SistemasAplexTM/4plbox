@@ -3247,10 +3247,26 @@ class DocumentoController extends Controller
               'tracking'
               )
             ->get();
+
+            $datos2 = DB::table('tracking AS a')
+            ->select(
+              'a.codigo AS tracking',
+              'a.contenido',
+              'a.created_at AS tracking_date',
+              'a.consignee_id',
+              'a.documento_detalle_id'
+            )
+            ->where([
+                ['a.consignee_id', null],
+                ['a.documento_detalle_id', null],
+            ])
+            ->whereRaw("(a.codigo LIKE '%" . $data . "%')")
+            ->get();
             // return DB::getQueryLog();
 
         $answer = array(
             "data" => $datos,
+            "data2" => $datos2,
             "code"  => 200,
         );
         return $answer;

@@ -33,6 +33,7 @@ trait DocumentTrait
       $sql = DB::table('documento AS b')
           ->leftJoin('shipper', 'b.shipper_id', '=', 'shipper.id')
           ->leftJoin('consignee', 'b.consignee_id', '=', 'consignee.id')
+          ->leftJoin('clientes AS cl', 'cl.id', 'consignee.cliente_id')
           ->join('agencia AS e', 'b.agencia_id', '=', 'e.id')
           ->leftJoin(DB::raw("(SELECT
                                 z.id As detalle_id,
@@ -63,6 +64,7 @@ trait DocumentTrait
            'b.created_at AS fecha',
            'b.num_warehouse AS warehouse',
            'b.consignee_id',
+           'cl.nombre AS cliente',
            'shipper.nombre_full as ship_nomfull', 'consignee.nombre_full as cons_nomfull',
            'consignee.correo as email_cons', 'e.descripcion as agencia',
               DB::raw("(SELECT Count(a.id) AS cantidad FROM documento_detalle AS a WHERE a.documento_id = b.id AND a.deleted_at IS NULL) as cantidad"),
@@ -98,6 +100,7 @@ trait DocumentTrait
               'b.consignee_id',
               'shipper.nombre_full',
               'consignee.nombre_full',
+              'cliente',
               'consignee.correo',
               'e.descripcion',
               'b.carga_courier'
@@ -183,6 +186,7 @@ trait DocumentTrait
         $sql = DB::table('documento AS b')
           ->leftJoin('documento_detalle AS a', 'b.id', 'a.documento_id')
           ->leftJoin('consignee AS c', 'b.consignee_id', 'c.id')
+          ->leftJoin('clientes AS cl', 'cl.id', 'c.cliente_id')
           ->leftJoin('shipper AS d', 'b.shipper_id', 'd.id')
           ->leftJoin('agencia AS e', 'b.agencia_id', 'e.id')
           ->select(
@@ -198,6 +202,7 @@ trait DocumentTrait
               'b.consignee_id',
             	'c.nombre_full AS cons_nomfull',
             	'c.correo AS email_cons',
+              'cl.nombre AS cliente',
             	'd.nombre_full AS ship_nomfull',
             	'e.descripcion AS agencia',
             	'a.piezas',

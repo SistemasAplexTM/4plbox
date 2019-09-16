@@ -101,7 +101,20 @@ function datatableDocument(t, tipo_doc_id, filtro){
           width: 80
       }, {
           data: (tipo_doc_id != 3) ? 'cons_nomfull' : 'central_destino',
-          name: (tipo_doc_id != 3) ? ((t === 3) ? 'consignee.nombre_full' : 'c.nombre_full') : 'central_destino.nombre'
+          name: (tipo_doc_id != 3) ? ((t === 3) ? 'consignee.nombre_full' : 'c.nombre_full') : 'central_destino.nombre',
+          "render": function (data, type, full, meta) {
+            var nombre = ''
+            if (tipo_doc_id != 3) {
+              nombre = full.cons_nomfull;
+            }else{
+              nombre = full.central_destino;
+            }
+            if (full.cliente !== null) {
+              return '<div>'+nombre+'</div> <small style="font-size: 11px;color: #a9a7a7;"><i class="fal fa-user"></i> '+full.cliente+'</small>'
+            }else{
+              return nombre;
+            }
+          },
       },{
           data: 'ciudad',
           name: 'ciudad',

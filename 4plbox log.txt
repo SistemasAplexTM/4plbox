@@ -156,9 +156,9 @@ autocomplete="aplextmautocomplete"
       (Cuando se envía un email a un consignee, que este si tiene un cliente, y si el cliente tiene veiricado que quiere recibir correos, se vaya con CCO).
 ======J5.1. Mostrar el cliente en el documento warehouse si el consignee tiene un cliente.
 ======J3.6. Crear el logo de las agencias como variable.
-J10.1. En la búsqueda global de trackins la consulta no muestra los que no tienen recibos.
+======J10.1. En la búsqueda global de trackins la consulta no muestra los que no tienen recibos.
+======J14.2. Mostrar el cliente al lado del consignee si lo tiene, Grilla principal y documento.
 J10.2. Agregar la fecha de recibo del tracking en la consulta global que está en la barra arriba.
-J14.2. Mostrar el cliente al lado del consignee si lo tiene, Grilla principal y documento.
 J14.3. Editar el nombre del consignee desde la grilla de recibo de casillero.
 J14.5. Quitar la opción de colocar Piezas desde la generación de recibos lo que dijo Duma.
 J15.3. Revisar que esté saliendo bien el TSA con el logo del agente (Que el logo lo pida si se chequea el agente).
