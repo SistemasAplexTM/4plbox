@@ -19,6 +19,7 @@ class Cliente extends Model
         'direccion',
         'telefono',
         'email',
-        'zona'
+        'zona',
+        'email_bcc',
     ];
 }

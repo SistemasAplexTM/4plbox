@@ -151,6 +151,9 @@
       float: right;
       margin-right: 5px;
     }
+    .el-col-12{
+      width: 100%;
+    }
 </style>
 <link href="{{ asset('css/plugins/dataTables/keyTable.dataTables.min.css') }}">
 @endsection
@@ -223,59 +226,56 @@
                               <button @click="open('shipper', true)" class="btn btn-xs btn-primary btn-action" type="button" data-toggle='tooltip' title="@lang('documents.new')"><i class="fal fa-user-plus"></i>&nbsp;</button>
                         </div>
                         <div class="ibox-content col-lg-12" :class="[mostrar.includes(22) ? 'wrh' : 'guia' ]">
-                            <div class="row">
-                                <div class="col-sm-12"  data-container="body" data-trigger="focus" data-toggle="popover" data-placement="top" data-content="Para registrar un nuevo Shipper, hacer clic en el icono (Reset Shipper) e ingresar los nuevos datos." style="padding-left: 0px; padding-right: 0px;">
-                                    <div class="form-group">
-                                        {{-- <label class="control-label col-sm-2">@lang('documents.name'): <samp id="require">*</samp></label> --}}
-                                        <div class="col-sm-6">
-                                            <div class="input-group"  style="margin-bottom: 5px;" :class="{ 'has-error': errors.has('nombreR') }">
-                                                <input type="search" autocomplete="aplextmautocomplete" data-id="nomBuscarShipper" id="nombreR" name="nombreR" placeholder="@lang('documents.type_to_search')" class="form-control" onkeyup="deleteError($(this).parent());" v-model="nombreR" v-validate="'required'" :disabled="disabled_s">
-                                                <span class="input-group-btn">
-                                                    <button id="btnBuscarShipper" @click="modalShipper(true)" class="btn btn-default" type="button" data-toggle='tooltip' title="Buscar"><span class="fal fa-search"></span>&nbsp;</button>
-                                                </span>
-                                            </div>
-                                            <small class="help-block has-error">@{{ errors.first('nombreR') }} </small>
+                          <div class="row">
+                            <div class="form-group">
+                              {{-- <label class="control-label col-sm-2">@lang('documents.name'): <samp id="require">*</samp></label> --}}
+                              <div class="col-sm-6">
+                                <div class="input-group"  style="margin-bottom: 5px;" :class="{ 'has-error': errors.has('nombreR') }">
+                                    <input type="search" autocomplete="aplextmautocomplete" data-id="nomBuscarShipper" id="nombreR" name="nombreR" placeholder="@lang('documents.type_to_search')" class="form-control" onkeyup="deleteError($(this).parent());" v-model="nombreR" v-validate="'required'" :disabled="disabled_s">
+                                    <span class="input-group-btn">
+                                        <button id="btnBuscarShipper" @click="modalShipper(true)" class="btn btn-default" type="button" data-toggle='tooltip' title="Buscar"><span class="fal fa-search"></span>&nbsp;</button>
+                                    </span>
+                                </div>
+                                <small class="help-block has-error">@{{ errors.first('nombreR') }} </small>
 
-                                            <el-row :gutter="24">
-                                              <el-col :span="24">
-                                                <div><label class="data_content"><i class="fal fa-map-marked-alt"></i></label> @{{ shipper_data.direccion }}</div>
-                                              </el-col>
-                                              <el-col :span="24">
-                                                <div><label class="data_content"><i class="fal fa-city"></i></label> @{{ shipper_data.ciudad }} - @{{ shipper_data.zip }}</div>
-                                              </el-col>
-                                            </el-row>
-
-                                        </div>
-                                        <div class="col-sm-6">
-                                          <el-row :gutter="24">
-                                            <el-col :span="24">
-                                              <div><label class="data_content"><i class="fal fa-phone"></i></label> @{{ shipper_data.telefono }}</div>
-                                            </el-col>
-                                            <el-col :span="24">
-                                              <div><label class="data_content"><i class="fab fa-whatsapp"></i></label> @{{ shipper_data.whatsapp }}</div>
-                                            </el-col>
-                                            <el-col :span="24">
-                                              <div><label class="data_content"><i class="fal fa-envelope-open-text"></i></label> <label class="data_content_email">@{{ shipper_data.correo }}</label></div>
-                                            </el-col>
-                                            <el-col :span="24">
-                                              <div class="checkbox checkbox-success checkbox-inline">
-                                                  <input type="checkbox" id="enviarEmailRemitente" name="enviarEmailRemitente" value="t" style="margin-left: -50px;">
-                                                  <label for="enviarEmailRemitente"> @lang('documents.send_email') <i class="fal fa-envelope-open"></i></label>
-                                              </div>
-                                            </el-col>
-                                          </el-row>
-
-                                        </div>
-                                    </div>
+                                <el-row :gutter="24">
+                                  <el-col :span="24">
+                                    <div><label class="data_content"><i class="fal fa-map-marked-alt"></i></label> @{{ shipper_data.direccion }}</div>
+                                  </el-col>
+                                  <el-col :span="24">
+                                    <div><label class="data_content"><i class="fal fa-city"></i></label> @{{ shipper_data.ciudad }} - @{{ shipper_data.zip }}</div>
+                                  </el-col>
+                                </el-row>
+                              </div>
+                              <div class="col-sm-6">
+                                  <el-row :gutter="24">
+                                    <el-col :span="24">
+                                      <div><label class="data_content"><i class="fal fa-phone"></i></label> @{{ shipper_data.telefono }}</div>
+                                    </el-col>
+                                    <el-col :span="24">
+                                      <div><label class="data_content"><i class="fab fa-whatsapp"></i></label> @{{ shipper_data.whatsapp }}</div>
+                                    </el-col>
+                                    <el-col :span="24">
+                                      <div><label class="data_content"><i class="fal fa-envelope-open-text"></i></label> <label class="data_content_email">@{{ shipper_data.correo }}</label></div>
+                                    </el-col>
+                                    <el-col :span="24">
+                                      <div class="checkbox checkbox-success checkbox-inline">
+                                        <input type="checkbox" id="enviarEmailRemitente" name="enviarEmailRemitente" value="t" style="margin-left: -50px;">
+                                        <label for="enviarEmailRemitente"> @lang('documents.send_email') <i class="fal fa-envelope-open"></i></label>
+                                      </div>
+                                    </el-col>
+                                  </el-row>
                                 </div>
                             </div>
-                            <div class="row">
-                                <input type="checkbox" id="opEditarShip" name="opEditarShip" style="display: none;">
-                                <input type="hidden" class="" id="shipper_id" name="shipper_id" value="{{ isset($documento->shipper_id) ? $documento->shipper_id : '' }}">
-                            </div>
+                          </div>
+                          <div class="row">
+                              <input type="checkbox" id="opEditarShip" name="opEditarShip" style="display: none;">
+                              <input type="hidden" class="" id="shipper_id" name="shipper_id" value="{{ isset($documento->shipper_id) ? $documento->shipper_id : '' }}">
+                          </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="col-lg-6" style="margin-bottom: 20px;" v-if="mostrar.includes(26)">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
@@ -289,62 +289,59 @@
                             <button @click="open('consignee', true)" class="btn btn-xs btn-primary btn-action" type="button" data-toggle='tooltip' title="@lang('documents.new')"><i class="fal fa-user-plus"></i>&nbsp;</button>
                         </div>
                         <div class="ibox-content col-lg-12" :class="[mostrar.includes(22) ? 'wrh' : 'guia' ]">
-                            <div class="row">
-                                <div class="col-sm-12"  data-container="body" data-trigger="focus" data-toggle="popover" data-placement="top" data-content="Para registrar un nuevo Consignee para este Shipper, hacer clic en el icono (Reset Consignee) e ingresar los nuevos datos." style="padding-left: 0px; padding-right: 0px;">
-                                    <div class="form-group">
-                                        {{-- <label class="control-label col-sm-2">@lang('documents.name'): <samp id="require">*</samp></label> --}}
-                                        <div class="col-sm-6">
-                                            <input type="hidden" value="" id="urlBuscarConsignee">
-                                            <div class="input-group" style="margin-bottom: 5px;" :class="{ 'has-error': errors.has('nombreD') }">
-                                                <input type="search" autocomplete="off" data-id="nomBuscarConsignee" class="form-control" id="nombreD" name="nombreD" placeholder="@lang('documents.type_to_search')" onkeyup="deleteError($(this).parent());" v-model="nombreD" v-validate="'required'" :disabled="disabled_c">
-                                                <span class="input-group-btn">
-                                                  <button class="btn btn-default" @click="modalConsignee(true)" id="btnBuscarConsignee" type="button" data-toggle='tooltip' title="Buscar"><span class="fal fa-search"></span>&nbsp;</button>
-                                                </span>
-                                            </div><!-- /input-group -->
-                                            <small class="help-block has-error">@{{ errors.first('nombreD') }}</small>
+                          <div class="row">
+                            <div class="form-group">
+                              {{-- <label class="control-label col-sm-2">@lang('documents.name'): <samp id="require">*</samp></label> --}}
+                              <div class="col-sm-6">
+                                  <input type="hidden" value="" id="urlBuscarConsignee">
+                                  <div class="input-group" style="margin-bottom: 5px;" :class="{ 'has-error': errors.has('nombreD') }">
+                                      <input type="search" autocomplete="off" data-id="nomBuscarConsignee" class="form-control" id="nombreD" name="nombreD" placeholder="@lang('documents.type_to_search')" onkeyup="deleteError($(this).parent());" v-model="nombreD" v-validate="'required'" :disabled="disabled_c">
+                                      <span class="input-group-btn">
+                                        <button class="btn btn-default" @click="modalConsignee(true)" id="btnBuscarConsignee" type="button" data-toggle='tooltip' title="Buscar"><span class="fal fa-search"></span>&nbsp;</button>
+                                      </span>
+                                  </div><!-- /input-group -->
+                                  <small class="help-block has-error">@{{ errors.first('nombreD') }}</small>
 
-                                            <el-row :gutter="24">
-                                              <el-col :span="12">
-                                                <div><label class="data_content"><i class="fal fa-map-marked-alt"></i></label> @{{ consignee_data.direccion }}</div>
-                                              </el-col>
-                                            </el-row>
-                                            <el-row :gutter="24">
-                                              <el-col :span="12">
-                                                <div><label class="data_content"><i class="fal fa-city"></i></label> @{{ consignee_data.ciudad }} - @{{ consignee_data.zip }}</div>
-                                              </el-col>
-                                            </el-row>
-                                        </div>
-                                        <div class="col-sm-6">
-                                          <el-row :gutter="24">
-                                            <el-col :span="24">
-                                              <div><label class="data_content"><i class="fal fa-phone"></i></label> @{{ consignee_data.telefono }}</div>
-                                            </el-col>
-                                            <el-col :span="24">
-                                              <div><label class="data_content"><i class="fab fa-whatsapp"></i></label> @{{ consignee_data.whatsapp }}</div>
-                                            </el-col>
-                                            <el-col :span="24">
-                                              <div><label class="data_content"><i class="fal fa-envelope-open-text"></i></label> <label class="data_content_email">@{{ consignee_data.correo }}</label></div>
-                                            </el-col>
-                                            <el-col :span="8">
-                                              <div class="checkbox checkbox-success checkbox-inline">
-                                                  <input type="checkbox" id="enviarEmailDestinatario" name="enviarEmailDestinatario" value="t" style="margin-left: -50px;" v-model="enviarEmailDestinatario">
-                                                  <label for="enviarEmailDestinatario"> @lang('documents.send_email') <i class="fal fa-envelope-open"></i></label>
-                                              </div>
-                                            </el-col>
-                                            <el-col :span="16">
-                                              <label style="" v-if="consignee_data.cliente"><a style="border-color: transparent;color: blue;" title="Cliente" data-toggle="tooltip"><i class="fal fa-user"></i> @{{ consignee_data.cliente }}</a></label>
-                                            </el-col>
-                                          </el-row>
-
-                                        </div>
-                                    </div>
+                                  <el-row :gutter="24">
+                                    <el-col :span="12">
+                                      <div><label class="data_content"><i class="fal fa-map-marked-alt"></i></label> @{{ consignee_data.direccion }}</div>
+                                    </el-col>
+                                  </el-row>
+                                  <el-row :gutter="24">
+                                    <el-col :span="12">
+                                      <div><label class="data_content"><i class="fal fa-city"></i></label> @{{ consignee_data.ciudad }} - @{{ consignee_data.zip }}</div>
+                                    </el-col>
+                                  </el-row>
+                              </div>
+                              <div class="col-sm-6">
+                                  <el-row :gutter="24">
+                                    <el-col :span="24">
+                                      <div><label class="data_content"><i class="fal fa-phone"></i></label> @{{ consignee_data.telefono }}</div>
+                                    </el-col>
+                                    <el-col :span="24">
+                                      <div><label class="data_content"><i class="fab fa-whatsapp"></i></label> @{{ consignee_data.whatsapp }}</div>
+                                    </el-col>
+                                    <el-col :span="24">
+                                      <div><label class="data_content"><i class="fal fa-envelope-open-text"></i></label> <label class="data_content_email">@{{ consignee_data.correo }}</label></div>
+                                    </el-col>
+                                    <el-col :span="8">
+                                      <div class="checkbox checkbox-success checkbox-inline">
+                                          <input type="checkbox" id="enviarEmailDestinatario" name="enviarEmailDestinatario" value="t" style="margin-left: -50px;" v-model="enviarEmailDestinatario">
+                                          <label for="enviarEmailDestinatario"> @lang('documents.send_email') <i class="fal fa-envelope-open"></i></label>
+                                      </div>
+                                    </el-col>
+                                    <el-col :span="16">
+                                      <label style="font-size: 13px;" v-if="consignee_data.cliente"><a style="border-color: transparent;color: blue;" title="Cliente" data-toggle="tooltip"><i class="fal fa-user"></i> @{{ consignee_data.cliente }}</a></label>
+                                    </el-col>
+                                  </el-row>
                                 </div>
                             </div>
-                                <div class="row">
-                                    <!-- /Fin Grupo Doble 2 -->
-                                    <input type="checkbox" id="opEditarCons" name="opEditarCons" style="display: none;">
-                                    <input type="hidden" class="" id="consignee_id" name="consignee_id"  value="{{ isset($documento->consignee_id) ? $documento->consignee_id : '' }}">
-                                </div>
+                          </div>
+                          <div class="row">
+                              <!-- /Fin Grupo Doble 2 -->
+                              <input type="checkbox" id="opEditarCons" name="opEditarCons" style="display: none;">
+                              <input type="hidden" class="" id="consignee_id" name="consignee_id"  value="{{ isset($documento->consignee_id) ? $documento->consignee_id : '' }}">
+                          </div>
                         </div>
                     </div>
                 </div>
@@ -449,6 +446,7 @@
                                         <div class="col-sm-6">
                                             <div class="input-group m-b">
                                                 <span class="input-group-addon">$</span>
+                                                <input type="hidden" placeholder="0" value="{{ isset($documento->tarifa_minima) ? $documento->tarifa_minima : '' }}" class="form-control" readonly="" id="tarifa_minima" name="tarifa_minima">
                                                 <input type="text" placeholder="0" value="{{ isset($documento->flete) ? $documento->flete : '' }}" class="form-control" readonly="" id="flete" name="flete">
                                             </div>
                                         </div>

@@ -294,12 +294,12 @@
                                       <input class="form-control" name="peso" placeholder="peso" type="number" min="0" v-model="peso">
                                     </div>
                                   </div>
-                                  <div class="col-sm-6">
+                                  {{-- <div class="col-sm-6">
                                     <div class="form-group">
                                       <label for="piezas" class="control-label gcore-label-top">@lang('documents.pieces'):</label>
                                       <input class="form-control" name="piezas" placeholder="piezas" type="number" min="1" v-model="piezas">
                                     </div>
-                                  </div>
+                                  </div> --}}
                                   <div class="col-sm-12">
                                     <div class="form-group">
                                       <label for="piezas" class="control-label gcore-label-top">@lang('documents.dimensions') (L x W x H):</label>

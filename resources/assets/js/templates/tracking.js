@@ -23,6 +23,7 @@ function loadTable(name, bodega) {
       serverSide: true,
       responsive: true,
       lengthChange: false,
+      order: [[0, "DESC"]],
       ajax: 'tracking/all/'+ true + '/' + false + '/'+ false + '/'+ false + '/' + bodega,
       columns: [{
           data: "fecha",
@@ -31,7 +32,11 @@ function loadTable(name, bodega) {
           data: "cliente",
           name: 'cliente',
           "render": function(data, type, full, meta) {
-            return '<div style="width:80%;float: left;">' + full.cliente + '</div> <div style="width:20%;float: right;"><a  data-toggle="tooltip" title="Cambiar" class="edit" style="color:#FFC107;" onclick="editConsignee(' + full.id + ')"><i class="fal fa-pencil"></i></a></div>'
+            if (full.cliente === null) {
+              return '';
+            }else{
+              return '<div style="width:80%;float: left;">' + full.cliente + '</div> <div style="width:20%;float: right;"><a  data-toggle="tooltip" title="Cambiar" class="edit" style="color:#FFC107;" onclick="editConsignee(' + full.id + ')"><i class="fal fa-pencil"></i></a></div>';
+            }
           }
       },
       // {

@@ -149,33 +149,26 @@ Destinatario y que se pueda enviar un email consolidado al cliente y no uno por 
 autocomplete="aplextmautocomplete"
 
 ===PRIORIDAD===
-J21.1. Colocar la tarifa mínima en la tabla del documento (Guardar y consultar de ahí cuando edito el documento).
-J3.2. Agregar la tarifa mínima para la agencia hija.
-J11.1. Agregar el nombre del sender en el email.
-D20.3. Usar el UUID de Laravel para no mostrar los id en las URL.
-J5.3. Enviar email al cliente (Colocar check si el cliente no quiere que le lleguen las notificaciones a sus consignee), si este lo solicita. (Cuando se envía un email a un consignee, que este si tiene un cliente, y si el cliente tiene veiricado que quiere recibir correos, se vaya con CCO).
-J5.1. Mostrar el cliente en el documento warehouse si el consignee tiene un cliente.
-R3.10. Revisar cómo está funcionando la agencia hija. (Ramon)
-D3.5. El Chat no estaba habilitado y seguía saliendo en el front del casillero.
-D3.1. Agregar que la agencia pueda modificar su perfil, ingresar sus APIs. (No está)
-D3.4. Agregar las URLS de la página web de la agencia para registro de usuarios, Rastreo, Prealertas (Mostrar como variable en las plantillas).
-J3.6. Crear el logo de las agencias como variable.
-D3.9. Colocar el WhatsApp de la agencia y CC en la agencia.
-J10.1. En la búsqueda global de trackins la consulta no muestra los que no tienen recibos.
+====== J21.1. Colocar la tarifa mínima en la tabla del documento (Guardar y consultar de ahí cuando edito el documento).
+======J3.2. Agregar la tarifa mínima para la agencia hija.
+======J11.1. Agregar el nombre del sender en el email.
+======J5.3. Enviar email al cliente (Colocar check si el cliente no quiere que le lleguen las notificaciones a sus consignee), si este lo solicita.
+      (Cuando se envía un email a un consignee, que este si tiene un cliente, y si el cliente tiene veiricado que quiere recibir correos, se vaya con CCO).
+======J5.1. Mostrar el cliente en el documento warehouse si el consignee tiene un cliente.
+======J3.6. Crear el logo de las agencias como variable.
+======J10.1. En la búsqueda global de trackins la consulta no muestra los que no tienen recibos.
+======J14.2. Mostrar el cliente al lado del consignee si lo tiene, Grilla principal y documento.
 J10.2. Agregar la fecha de recibo del tracking en la consulta global que está en la barra arriba.
-J14.2. Mostrar el cliente al lado del consignee si lo tiene, Grilla principal y documento.
-J14.3. Editar el nombre del consignee desde la grilla de recibo de casillero.
-J14.5. Quitar la opción de colocar Piezas desde la generación de recibos lo que dijo Duma.
-D15.1. En la Guía Master de acuerdo a lo que dicen en Colombiana de carga se deben colocar unos textos en mitad de la impresión, se debe colocar ese text area en el CRUD.
+======J14.3. Editar el nombre del consignee desde la grilla de recibo de casillero.
+======colocar el consignee y la agnecia al buscar las guias en el consolidado.
+======J14.5. Quitar la opción de colocar Piezas desde la generación de recibos lo que dijo Duma.
 J15.3. Revisar que esté saliendo bien el TSA con el logo del agente (Que el logo lo pida si se chequea el agente).
-J16.3. Que se pueda ver el nombre del consignatario cuando abro el modal desde el botón GUIAS.
+======J16.3. Que se pueda ver el nombre del consignatario cuando abro el modal desde el botón GUIAS.
 J16.4. Mostrar la cantidad de piezas en el consolidado.
 J17.3. Mostrar la cantidad de piezas que tiene la cajita.
 J17.4. Cuando agrupo cajas seleccionar si es MINTIC y que si no son MINTIC, se sumen: (Piezas, Peso y Declarado)
-D12.3 Arreglar la ciudad en el perfil de casillero.
-D12.1. Permitir el registro de casillero de la misma persona en diferentes agencias (Tabla Pivote con la nueva agencia).
-J9.1. Separar los usuarios de las agencias y los casilleros y los de la agencia principal, por pestañas, que si ingresa una agencia que no es principal vea sus usuarios y sus casilleros, que si entra la principal pueda ver sus usuarios y casilleros, y pueda seleccionar de que agencia quiere ver usuarios y casilleros.
-D8.3. Configurar el sistema de correos con SendGrid. (SMTP)
+J9.1. Separar los usuarios de las agencias y los casilleros y los de la agencia principal, por pestañas, que si ingresa una agencia que no es principal
+vea sus usuarios y sus casilleros, que si entra la principal pueda ver sus usuarios y casilleros, y pueda seleccionar de que agencia quiere ver usuarios y casilleros.
 J7.4. Informe de Manifiesto interno.
 R7.1. Informe de agencias, lo que se envía a la principal con utilidades.
 DJ4.1. Impresión de documentos con el programa que compramos.

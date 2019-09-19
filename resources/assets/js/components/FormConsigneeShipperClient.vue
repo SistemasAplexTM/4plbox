@@ -180,8 +180,23 @@
         </el-select>
       </el-col>
     </el-row>
+    <el-row :gutter="24" v-if="payload.table === 'clientes'">
+      <el-col :span="8">
+        <label for="notify_client" class="control-label gcore-label-top">&nbsp;</label>
+      </el-col>
+      <el-col :span="16">
+        <el-popover
+          placement="top-start"
+          title="Notificar Recibos de Trackings de Consignees"
+          width="200"
+          trigger="hover"
+          content="Se enviara email con copia oculta a este cliente de la carga recibida de los consignees asociado a el.">
+          <el-checkbox slot="reference" v-model="form.notify_client"><i class="fal fa-envelope"></i> Notificar Recibos de Trackings de Consignees.</el-checkbox>
+        </el-popover>
+      </el-col>
+    </el-row>
     <transition name="fade">
-      <el-row :gutter="24" v-if="form.cliente_id !== null && form.cliente_id !== ''">
+      <el-row :gutter="24" v-if="payload.table !== 'clientes' && form.cliente_id !== null && form.cliente_id !== ''">
         <el-col :span="8">
           <label for="notify_client" class="control-label gcore-label-top">&nbsp;</label>
         </el-col>
@@ -333,7 +348,6 @@ export default {
             me.resetForm();
             me.$emit('updatetable');
             bus.$emit('getData', response.data['datos']);
-            // me.$emit('getData', response.data['datos']);
           }
         } else {
           me.loading = false;
@@ -360,7 +374,6 @@ export default {
           me.resetForm();
           me.$emit('updatetable');
           bus.$emit('getData', response.data['datos']);
-          // me.$emit('getData', response.data['datos']);
         } else {
           me.loading = false;
           toastr.warning(response.data['error']);
@@ -466,6 +479,11 @@ export default {
       axios.get('/' + this.payload.table + '/getDataById/' + id).then(response => {
         me.form = response.data;
         me.form.cliente_id = me.form.cliente_id + '';
+        if (me.form.notify_client == 1) {
+          me.form.notify_client = true;
+        }else{
+          me.form.notify_client = false;
+        }
         if (this.payload.table !== 'clientes') {
           if (response.data.cliente_id == 'null' || response.data.cliente_id == '' || response.data.cliente_id == 'undefined') {
             me.form.cliente_id = null;
@@ -474,11 +492,6 @@ export default {
             me.form.corporativo = true;
           }else{
             me.form.corporativo = false;
-          }
-          if (me.form.notify_client == 1) {
-            me.form.notify_client = true;
-          }else{
-            me.form.notify_client = false;
           }
           if (me.form.email_cc !== null) {
             let emails = me.form.email_cc;
@@ -503,7 +516,8 @@ export default {
           'direccion': this.form.direccion,
           'telefono': this.form.telefono,
           'email': this.form.correo,
-          'zona': this.form.zona
+          'zona': this.form.zona,
+          'email_bcc': this.form.notify_client,
         }
       }
     },

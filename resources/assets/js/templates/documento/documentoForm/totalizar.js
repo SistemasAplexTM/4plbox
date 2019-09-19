@@ -22,6 +22,9 @@ function totalizeDocument(elemento) {
     if (typeof flete === 'undefined') {
         flete = 0;
     }
+    if (parseFloat($('#tarifa_minima').val()) === 0) {
+      $('#tarifa_minima').val(flete);
+    }
     $('#flete').val(flete);
     $(elemento).css('border-color', '');
     peso = $('#pesoDim').val();

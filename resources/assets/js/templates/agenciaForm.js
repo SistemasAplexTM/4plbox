@@ -4,8 +4,10 @@ $(document).ready(function() {
     $('#servicios_id').on("change", function(e) {
         var tarifa = $('#servicios_id option:selected').data("tarifa");
         var seguro = $('#servicios_id option:selected').data("seguro");
+        var tarifa_minima = $('#servicios_id option:selected').data("tarifa_minima");
         $('#tarifaP').val(tarifa);
         $('#seguroP').val(seguro);
+        $('#min').val(tarifa_minima);
     });
     $('#saveForm').on('click', function() {
         if ($('#detalleAgencia tbody tr').length > 0) {
@@ -30,19 +32,22 @@ function addRow() {
     var serviId = $('#servicios_id option:selected').val();
     var servi = $('#servicios_id option:selected').text();
     var tariM = $('#servicios_id option:selected').data('tarifa_minima');
+    var tariMinimaP = $('#servicios_id option:selected').data('minima_a');
     var tariP = $('#tarifaP').val();
     var segup = $('#seguroP').val();
     var tariA = $('#tarifaA').val();
     var segu = $('#seguro').val();
+    var min_agency = $('#min_agency').val();
     var fila = '<tr id="fila' + cont + '" class="rowServices">';
     var td1 = '<td><input type="hidden" id="servi" name="servicios_id[]" value="' + serviId + '" class="form-control" readonly><input type="text" id="serviN" name="serviN[]" value="' + servi + '" class="form-control" readonly></td>';
     var td2 = '<td><input type="text" id="tariP" name="tarifa_principal[]" value="' + tariP + '" class="form-control" readonly></td>';
-    var td7 = '<td><input type="text" id="tariM" name="tarifa_minima[]" value="' + tariM + '" class="form-control" readonly></td>';
-    var td3 = '<td><input type="text" id="segup" name="seguro_principal[]" value="' + segup + '" class="form-control" readonly></td>';
-    var td4 = '<td><input type="text" id="tariA" name="tarifa_agencia[]" value="' + tariA + '" class="form-control" readonly></td>';
-    var td5 = '<td><input type="text" id="segu" name="seguro[]" value="' + segu + '" class="form-control" readonly></td>';
-    var td6 = '<td><button class="btn btn-danger btn-xs btn_remove" type="button" onclick="removeRowServices(' + cont + ')"><i class="fal fa-times" data-toggle="tooltip" data-placement="top" title="Eliminar"></i></button></td>';
-    fila += td1 + td2 + td7 + td3 + td4 + td5 + td6 + '</tr>';
+    var td3 = '<td><input type="text" id="tariM" name="tarifa_minima[]" value="' + tariM + '" class="form-control" readonly></td>';
+    var td4 = '<td><input type="text" id="segup" name="seguro_principal[]" value="' + segup + '" class="form-control" readonly></td>';
+    var td5 = '<td><input type="text" id="tariA" name="tarifa_agencia[]" value="' + tariA + '" class="form-control" readonly></td>';
+    var td6 = '<td><input type="text" id="segu" name="seguro[]" value="' + segu + '" class="form-control" readonly></td>';
+    var td7 = '<td><input type="text" id="min_a" name="min_a[]" value="' + min_agency + '" class="form-control" readonly></td>';
+    var td8 = '<td><button class="btn btn-danger btn-xs btn_remove" type="button" onclick="removeRowServices(' + cont + ')"><i class="fal fa-times" data-toggle="tooltip" data-placement="top" title="Eliminar"></i></button></td>';
+    fila += td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + '</tr>';
     $('#noEnviar').css('display', 'none');
     $('#detalleAgencia').append(fila);
     $('#tarifaA').val('');
@@ -63,7 +68,7 @@ function llenarSelect(module, tableName, idSelect, length) {
             if (data.code === 200) {
                 /* llenar select */
                 $(data.items).each(function(index, value) {
-                    $("#" + idSelect).append('<option value="' + value.id + '" data-tarifa="' + value.tarifa + '" data-tarifa_minima="' + value.peso_minimo + '"  data-seguro="' + value.seguro + '">' + value.tipo_embarque + ' - ' + value.text + '</option>');
+                    $("#" + idSelect).append('<option value="' + value.id + '" data-tarifa="' + value.tarifa + '" data-tarifa_minima="' + value.peso_minimo + '"  data-seguro="' + value.seguro + '" data-impuesto="' + value.impuesto + '">' + value.tipo_embarque + ' - ' + value.text + '</option>');
                 });
             } else {
                 alert('error');
@@ -168,6 +173,7 @@ function editRowServices(index, idDetail) {
     if ($('#btn_edit' + idDetail).attr('class') === 'btn_edit edit_btn') {
         $('#tariA' + idDetail).removeAttr('readonly');
         $('#segu' + idDetail).removeAttr('readonly');
+        $('#min' + idDetail).removeAttr('readonly');
         $('#btn_edit' + idDetail).removeClass('edit_btn');
         $('#btn_edit' + idDetail).addClass('create_btn');
         $('#btn_edit' + idDetail).children().removeClass('fa-pencil');
@@ -178,17 +184,21 @@ function editRowServices(index, idDetail) {
             var id = idDetail;
             var tariA = $('#tariA' + idDetail).val();
             var segu = $('#segu' + idDetail).val();
+            var min = $('#min' + idDetail).val();
             var idAgencia = $('#agencia_id').val();
             var data = {
                 id: idDetail,
                 tarifa: tariA,
-                seguro: segu
+                seguro: segu,
+                minima: min,
             };
             objVue.editService(data);
             $('#tariA' + id).removeAttr('style');
             $('#tariA' + id).attr('readonly', 'readonly');
             $('#segu' + id).removeAttr('style');
             $('#segu' + id).attr('readonly', 'readonly');
+            $('#min' + id).removeAttr('style');
+            $('#min' + id).attr('readonly', 'readonly');
             $('#btn_edit' + id).removeClass('create_btn');
             $('#btn_edit' + id).addClass('edit_btn');
             $('#btn_edit' + id).children().removeClass('fa-check');
@@ -288,7 +298,8 @@ var objVue = new Vue({
             var me = this;
             axios.put('../updateDetail/' + data.id, {
                 'tarifa_agencia': data.tarifa,
-                'seguro': data.seguro
+                'seguro': data.seguro,
+                'tarifa_minima': data.minima,
             }).then(function(response) {
                 if (response.data['code'] == 200) {
                     toastr.success('Registro Actualizado correctamente');

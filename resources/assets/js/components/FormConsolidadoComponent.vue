@@ -42,228 +42,229 @@
 <template>
 	<div>
 		<div class="row">
-            <div class="col-lg-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>{{ documento.tipo_nombre }}</h5>
-                        <div class="ibox-tools">
-													<button type="button" class="btn btn-xs btn-danger" onclick="closeDocument()" v-if="!close"><i class="fal fa-lock"></i> Cerrar consolidado</button>
-                        </div>
-                    </div>
-                    <div class="form-horizontal">
-                        <div class="ibox-content col-lg-12">
-                            <div class="col-lg-12">
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <div class="col-sm-12">
-                                            <div class="form-group" :class="{ danger: errors.has('central_destino') }">
-                                                <label for="central_destino_id">Central destino (agencia)</label>
-																								<el-select autocomplete="off" name="central_destino" v-model="central_destino_id" filterable
-												                          placeholder="Buscar" v-validate.disable="'required'"
-												                          size="medium" value-key="id" :disabled="disabled_agencia">
-											                            <el-option
-											                              v-for="item in branchs"
-											                              :key="item.id"
-											                              :label="item.name"
-											                              :value="item.id">
-											                            </el-option>
-											                          </el-select>
-                                            </div>
-                                            <span class="danger">{{ errors.first('central_destino') }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="col-sm-12">
-                                            <div class="form-group" :class="{ danger: errors.has('pais') }">
-                                                <label for="localizacion_id">Ciudad destino</label>
-																								<city-component @get="setCity($event)" :disabled="disabled_city" :selected="city_selected_s"></city-component>
-                                            </div>
-                                            <span class="danger">{{ errors.first('pais') }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <div class="col-sm-12">
-                                            <div class="form-group" :class="{ danger: errors.has('transporte_id') }">
-                                                <label for="transporte_id">Transporte</label>
-																								<el-select autocomplete="off" name="transporte_id" v-model="transporte_id" filterable
-												                          placeholder="Buscar" v-validate.disable="'required'"
-												                          size="medium" :disabled="disabled_transporte">
-											                            <el-option
-											                              v-for="item in transportes"
-											                              :key="item.id"
-											                              :label="item.nombre"
-											                              :value="item.id">
-											                            </el-option>
-											                          </el-select>
-                                            </div>
-                                            <span class="danger">{{ errors.first('transporte_id') }}</span>
-                                        </div>
-                                    </div>
-                                    <!-- BOTONES DE IMPRESION -->
-                                    <div class="col-sm-4">
-                                        <div class="col-sm-12" v-show="show_buttons">
-                                            <label class="control-label col-lg-12">&nbsp;</label>
-                                            <a target="blank_" class="btn btn-info btn-sm printDocument" data-toggle="tooltip" data-placement="top" title="Imprimir manifiesto"><i class="fal fa-print"></i> Manifiesto</a>
-                                            <!-- <a target="blank_" class="btn btn-info btn-sm printDocumentGuiasCuba" data-toggle="tooltip" data-placement="top" title="Imprimir guias hijas" ><i class="fal fa-print"></i> Guias hijas Cuba</a> -->
-                                            <a target="blank_" class="btn btn-info btn-sm printDocumentGuias" data-toggle="tooltip" data-placement="top" title="Imprimir guias hijas" ><i class="fal fa-print"></i> Guias hijas</a>
-																						<div class="btn-group">
-																						  <a class="btn btn-info btn-sm" href="getDataPrintBagsConsolidate" target="blank_"><i class="fal fa-print"></i> Bolsas / Tulas</a>
-																						  <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-																						    <span class="caret"></span>
-																						  </button>
-																						  <ul class="dropdown-menu">
-																						    <li><a @click="printLabelBagModal"><i class="fal fa-print"></i> Mas</a></li>
-																						  </ul>
-																						</div>
-                                        </div>
-																					<div class="col-sm-12" v-show="!show_buttons && show_msn" style="color: #E34724">
-																						<span>Hay valores declarados en cero (0), valores que superan lo permitido para COURIER o no hay documentos ingresados</span>
-																						<a @click="show_buttons = true" class="btn btn-info btn-sm">Deseo continuar</a>
-																					</div>
-                                    </div>
-                                </div>
-																<div class="row">
-																	<div class="col-sm-6">
-																			<div class="col-sm-12">
-																					<div class="form-group">
-																							<label for="observacion">Observación</label>
-																							<input type="text" v-model="observacion" name="observacion" class="form-control">
-																					</div>
-																			</div>
+      <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+          <div class="ibox-title">
+	          <h5>{{ documento.tipo_nombre }}</h5>
+	          <div class="ibox-tools">
+							<button type="button" class="btn btn-xs btn-danger" onclick="closeDocument()" v-if="!close"><i class="fal fa-lock"></i> Cerrar consolidado</button>
+	          </div>
+          </div>
+          <div class="form-horizontal">
+              <div class="ibox-content col-lg-12">
+                  <div class="col-lg-12">
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <div class="col-sm-12">
+                                  <div class="form-group" :class="{ danger: errors.has('central_destino') }">
+                                      <label for="central_destino_id">Central destino (agencia)</label>
+																			<el-select autocomplete="off" name="central_destino" v-model="central_destino_id" filterable
+							                          placeholder="Buscar" v-validate.disable="'required'"
+							                          size="medium" value-key="id" :disabled="disabled_agencia">
+						                            <el-option
+						                              v-for="item in branchs"
+						                              :key="item.id"
+						                              :label="item.name"
+						                              :value="item.id">
+						                            </el-option>
+						                          </el-select>
+                                  </div>
+                                  <span class="danger">{{ errors.first('central_destino') }}</span>
+                              </div>
+                          </div>
+                          <div class="col-sm-3">
+                              <div class="col-sm-12">
+                                  <div class="form-group" :class="{ danger: errors.has('pais') }">
+                                      <label for="localizacion_id">Ciudad destino</label>
+																			<city-component @get="setCity($event)" :disabled="disabled_city" :selected="city_selected_s"></city-component>
+                                  </div>
+                                  <span class="danger">{{ errors.first('pais') }}</span>
+                              </div>
+                          </div>
+                          <div class="col-sm-2">
+                              <div class="col-sm-12">
+                                  <div class="form-group" :class="{ danger: errors.has('transporte_id') }">
+                                      <label for="transporte_id">Transporte</label>
+																			<el-select autocomplete="off" name="transporte_id" v-model="transporte_id" filterable
+							                          placeholder="Buscar" v-validate.disable="'required'"
+							                          size="medium" :disabled="disabled_transporte">
+						                            <el-option
+						                              v-for="item in transportes"
+						                              :key="item.id"
+						                              :label="item.nombre"
+						                              :value="item.id">
+						                            </el-option>
+						                          </el-select>
+                                  </div>
+                                  <span class="danger">{{ errors.first('transporte_id') }}</span>
+                              </div>
+                          </div>
+                          <!-- BOTONES DE IMPRESION -->
+                          <div class="col-sm-4">
+                              <div class="col-sm-12" v-show="show_buttons">
+                                  <label class="control-label col-lg-12">&nbsp;</label>
+                                  <a target="blank_" class="btn btn-info btn-sm printDocument" data-toggle="tooltip" data-placement="top" title="Imprimir manifiesto"><i class="fal fa-print"></i> Manifiesto</a>
+                                  <!-- <a target="blank_" class="btn btn-info btn-sm printDocumentGuiasCuba" data-toggle="tooltip" data-placement="top" title="Imprimir guias hijas" ><i class="fal fa-print"></i> Guias hijas Cuba</a> -->
+                                  <a target="blank_" class="btn btn-info btn-sm printDocumentGuias" data-toggle="tooltip" data-placement="top" title="Imprimir guias hijas" ><i class="fal fa-print"></i> Guias hijas</a>
+																	<div class="btn-group">
+																	  <a class="btn btn-info btn-sm" href="getDataPrintBagsConsolidate" target="blank_"><i class="fal fa-print"></i> Bolsas / Tulas</a>
+																	  <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																	    <span class="caret"></span>
+																	  </button>
+																	  <ul class="dropdown-menu">
+																	    <li><a @click="printLabelBagModal"><i class="fal fa-print"></i> Mas</a></li>
+																	  </ul>
 																	</div>
-																	<div class="col-sm-2">
-																			<div class="col-sm-12">
-																					<div class="form-group">
-																							<label for="observacion">Tipo consolidado</label>
-																							<input type="text" v-model="tipo_consolidado" name="tipo_consolidado" class="form-control">
-																					</div>
-																			</div>
-																	</div>
-																	<div class="col-sm-4" v-if="show_buttons && pais_id == pais_id_config">
-																			<div class="col-sm-3">
-																					<div class="form-group">
-																							<label for="" style="width: 100%;">&nbsp;</label>
-																							<button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Descargar Excel Liquimp" @click="exportLiquimp()"><i class="fal fa-cloud-download-alt"></i> Excel</button>
-																					</div>
-																			</div>
-																			<div class="col-sm-3">
-																					<div class="form-group">
-																							<label for="" style="width: 100%;">&nbsp;</label>
-																							<button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Descargar Excel Bodega" @click="exportCellar()"><i class="fal fa-cloud-download-alt"></i> Excel Bodega</button>
-																					</div>
-																			</div>
-																	</div>
+                              </div>
+																<div class="col-sm-12" v-show="!show_buttons && show_msn" style="color: #E34724">
+																	<span>Hay valores declarados en cero (0), valores que superan lo permitido para COURIER o no hay documentos ingresados</span>
+																	<a @click="show_buttons = true" class="btn btn-info btn-sm">Deseo continuar</a>
 																</div>
-                                <div class="row"><div class="hr-line-dashed"></div></div>
-                                <div class="row" v-if="!close">
-                                		<div class="col-sm-2">
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label for="num_bolsa" class="">N° Bolsa</label>
-																						    <div class="input-group">
-																							    <span class="input-group-btn">
-																							        <button @click="increaseBoxes()" class="btn btn-info" type="button" data-toggle="tooltip" title="Agregar bolsa" style="padding: 8px 12px;"><li class="fal fa-cubes"></li></button>
-																							    </span>
-																							    <input type="number" min="1" class="form-control" style="" v-model="num_bolsa" name="num_bolsa" id="num_bolsa"  value="1">
-																						    </div><!-- /input-group -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label for="num_guia" class="">Número de Warehouse</label>
-                                                <div class="input-group">
-		                                        				<input type="text" class="form-control" v-model="num_guia" @keyup.enter="addGuiasToConsolidado()" name="num_guia">
-																								    <span class="input-group-btn">
-																								        <button class="btn btn-info" @click="addGuiasToConsolidado()" type="button" id="agregarBolsa" data-toggle="tooltip" title="Agregar guia" style="padding: 8px 12px;"><li class="fal fa-plus"></li></button>
-																								    </span>
-																						    </div><!-- /input-group -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-12">&nbsp;</label>
-		                                        <button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" data-placement="top" title="Documentos Disponobles" id="btn_buscarGuias" @click="getModalGuias()"><i class="fal fa-search-plus"></i> Buscar</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="col-sm-12">
-                                          <div class="form-group" style="padding-top: 15px;margin-bottom: -15px;">
-																						<label class="control-label col-lg-12">Rango Declarado</label>
-																						<div class="col-lg-12">
-																					    <el-slider
-																					      v-model="range_value"
-																					      range
-																					      show-stops
-																								:step="10"
-																								:min="10"
-																					      :max="200">
-																					    </el-slider>
-																					  </div>
-                                          </div>
-                                        </div>
-                                    </div>
+                          </div>
+                      </div>
+											<div class="row">
+												<div class="col-sm-6">
+														<div class="col-sm-12">
+																<div class="form-group">
+																		<label for="observacion">Observación</label>
+																		<input type="text" v-model="observacion" name="observacion" class="form-control">
 																</div>
-																<div class="row">
-                                	<div class="col-sm-12">
-                                    	<table id="tbl-consolidado" class="table table-striped table-hover table-bordered dataTable" style="width: 100%;margin-top: 30px;">
-                                    		<thead>
-						                                <tr>
-						                                    <th style="width: 20px;"><i class="fal fa-cubes"></i></th>
-						                                    <th>#Guia/WRH</th>
-						                                    <th>Remitente</th>
-						                                    <th>Destinatario</th>
-						                                    <th>P.A</th>
-						                                    <th>Descripción</th>
-						                                    <th style="width: 40px;">Dec.</th>
-		                                            <th style="width: 40px;">Lb</th>
-						                                    <th style="width: 40px;">Lb R</th>
-						                                    <th style="width: 20px;"></th>
-						                                </tr>
-						                            </thead>
-						                            <tbody>
-			                                  </tbody>
-			                                  <tfoot>
-					                                <tr>
-					                                    <th style="text-align:right;font-size: 25px;" colspan="6">Totales de esta página:</th>
-					                                    <th id="Tdeclarado"></th>
-		                                          <th id="Tpeso"></th>
-					                                    <th id="TpesoR" colspan="2"></th>
-					                                    <!-- <th id="TpesoK"></th> -->
-					                                </tr>
-						                            </tfoot>
-                                    	</table>
-                                    </div>
+														</div>
+												</div>
+												<div class="col-sm-2">
+														<div class="col-sm-12">
+																<div class="form-group">
+																		<label for="observacion">Tipo consolidado</label>
+																		<input type="text" v-model="tipo_consolidado" name="tipo_consolidado" class="form-control">
+																</div>
+														</div>
+												</div>
+												<div class="col-sm-4" v-if="show_buttons && pais_id == pais_id_config">
+														<div class="col-sm-3">
+																<div class="form-group">
+																		<label for="" style="width: 100%;">&nbsp;</label>
+																		<button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Descargar Excel Liquimp" @click="exportLiquimp()"><i class="fal fa-cloud-download-alt"></i> Excel</button>
+																</div>
+														</div>
+														<div class="col-sm-3">
+																<div class="form-group">
+																		<label for="" style="width: 100%;">&nbsp;</label>
+																		<button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Descargar Excel Bodega" @click="exportCellar()"><i class="fal fa-cloud-download-alt"></i> Excel Bodega</button>
+																</div>
+														</div>
+												</div>
+											</div>
+                      <div class="row"><div class="hr-line-dashed"></div></div>
+                      <div class="row" v-if="!close">
+                      		<div class="col-sm-2">
+                              <div class="col-sm-12">
+                                  <div class="form-group">
+                                      <label for="num_bolsa" class="">N° Bolsa</label>
+																	    <div class="input-group">
+																		    <span class="input-group-btn">
+																		        <button @click="increaseBoxes()" class="btn btn-info" type="button" data-toggle="tooltip" title="Agregar bolsa" style="padding: 8px 12px;"><li class="fal fa-cubes"></li></button>
+																		    </span>
+																		    <input type="number" min="1" class="form-control" style="" v-model="num_bolsa" name="num_bolsa" id="num_bolsa"  value="1">
+																	    </div><!-- /input-group -->
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-sm-2">
+                              <div class="col-sm-12">
+                                  <div class="form-group">
+                                      <label for="num_guia" class="">Número de Warehouse</label>
+                                      <div class="input-group">
+                                  				<input type="text" class="form-control" v-model="num_guia" @keyup.enter="addGuiasToConsolidado()" name="num_guia">
+																			    <span class="input-group-btn">
+																			        <button class="btn btn-info" @click="addGuiasToConsolidado()" type="button" id="agregarBolsa" data-toggle="tooltip" title="Agregar guia" style="padding: 8px 12px;"><li class="fal fa-plus"></li></button>
+																			    </span>
+																	    </div><!-- /input-group -->
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-sm-2">
+                              <div class="col-sm-12">
+                                  <div class="form-group">
+                                      <label class="control-label col-lg-12">&nbsp;</label>
+                                  <button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" data-placement="top" title="Documentos Disponobles" id="btn_buscarGuias" @click="getModalGuias()"><i class="fal fa-search-plus"></i> Buscar</button>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-sm-6">
+                              <div class="col-sm-12">
+                                <div class="form-group" style="padding-top: 15px;margin-bottom: -15px;">
+																	<label class="control-label col-lg-12">Rango Declarado</label>
+																	<div class="col-lg-12">
+																    <el-slider
+																      v-model="range_value"
+																      range
+																      show-stops
+																			:step="10"
+																			:min="10"
+																      :max="200">
+																    </el-slider>
+																  </div>
                                 </div>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <div class="col-sm-12 col-sm-offset-0 guardar">
-                                            <button type="button" id="saveForm" class="ladda-button btn btn-success" data-style="expand-right" @click="saveConsolidado()"><i class="fal fa-save fa-fw"></i> Guardar Cambios</button>
+                              </div>
+                          </div>
+											</div>
+											<div class="row">
+                      	<div class="col-sm-12">
+                          	<table id="tbl-consolidado" class="table table-striped table-hover table-bordered dataTable" style="width: 100%;margin-top: 30px;">
+                          		<thead>
+	                                <tr>
+	                                    <th style="width: 20px;"><i class="fal fa-cubes"></i></th>
+	                                    <th>#Guia/WRH</th>
+	                                    <th>Remitente</th>
+	                                    <th>Destinatario</th>
+	                                    <th>P.A</th>
+	                                    <th>Descripción</th>
+	                                    <th style="width: 40px;">Dec.</th>
+                                      <th style="width: 40px;">Lb</th>
+	                                    <th style="width: 40px;">Lb R</th>
+	                                    <th style="width: 20px;"></th>
+	                                </tr>
+	                            </thead>
+	                            <tbody>
+                              </tbody>
+                              <tfoot>
+                                <tr>
+                                    <th style="text-align:right;font-size: 25px;" colspan="6">Totales de esta página:</th>
+                                    <th id="Tdeclarado"></th>
+                                    <th id="Tpeso"></th>
+                                    <th id="TpesoR" colspan="2"></th>
+                                    <!-- <th id="TpesoK"></th> -->
+                                </tr>
+	                            </tfoot>
+                          	</table>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="form-group">
+                              <div class="col-sm-12 col-sm-offset-0 guardar">
+                                  <button type="button" id="saveForm" class="ladda-button btn btn-success" data-style="expand-right" @click="saveConsolidado()"><i class="fal fa-save fa-fw"></i> Guardar Cambios</button>
 
-                                        	<div class="btn-group dropup"  v-show="show_buttons">
-	                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                                <i class="fal fa-print"></i>  Imprmir <span class="caret"></span>
-	                                            </button>
-	                                            <ul class="dropdown-menu">
-		                                            <li><a href="" id="printDocument" class="printDocument" data-style="expand-right" target="blank_"><i class="fal fa-print fa-fw"></i> Imprimir Manifiesto</a></li>
-                                                    <li><a href="" id="printDocumentGuias" class="printDocumentGuias" data-style="expand-right" target="blank_"><i class="fal fa-print fa-fw"></i> Imprimir Guias</a></li>
-		                                            <li><a href="#" id="" class=""><i class="fal fa-print fa-fw"></i> Instrucciones</a></li>
-	                                            </ul>
-	                                        </div>
-		                                     <a @click="cancelDocument()" type="button" class="btn btn-white"><i class="fal fa-times fa-fw"></i> Cancelar </a>
-                                        </div>
-                                    </div>
+                              	<div class="btn-group dropup"  v-show="show_buttons">
+                                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fal fa-print"></i>  Imprmir <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                      <li><a href="" id="printDocument" class="printDocument" data-style="expand-right" target="blank_"><i class="fal fa-print fa-fw"></i> Imprimir Manifiesto</a></li>
+                                          <li><a href="" id="printDocumentGuias" class="printDocumentGuias" data-style="expand-right" target="blank_"><i class="fal fa-print fa-fw"></i> Imprimir Guias</a></li>
+                                      <li><a href="#" id="" class=""><i class="fal fa-print fa-fw"></i> Instrucciones</a></li>
+                                    </ul>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                               <a @click="cancelDocument()" type="button" class="btn btn-white"><i class="fal fa-times fa-fw"></i> Cancelar </a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
         </div>
+      </div>
+    </div>
+
     <div class="modal fade bs-example-modal-lg" id="modalguiasconsolidado" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		    <div class="modal-dialog modal-lg">
 		        <div class="modal-content">
@@ -288,6 +289,8 @@
 		                            		<th>Número warehouse</th>
 		                            		<th>Peso lb</th>
 		                            		<th>Declarado</th>
+																		<th style="width:20%">Consignee</th>
+																		<th>Agencia</th>
 		                            	</tr>
 		                            </thead>
 		                        </table>
@@ -745,39 +748,41 @@
 							    processing: true,
 							    serverSide: true,
 							    searching: true,
+									order: [[1, "desc"]],
 				                ajax: 'getAllGuiasDisponibles/'+ me.pais_id+'/'+me.transporte_id,
 				                columns: [{
 				                    "render": function (data, type, full, meta) {
 					                	return '<div class="checkbox checkbox-success"><input type="checkbox" data-numguia="' + full.num_guia + '" id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '"></label></div>';
-					                }
+					                },
+													searchable: false,
+													sortable: false,
 				                }, {
 				                    data: 'created_at',
 				                    name: 'created_at'
 				                }, {
 				                    "render": function (data, type, full, meta) {
-		                                // if(me.app_type === 'courier'){
-		                                //     if(full.liquidado == 0){
-		                                //         codigoGW = full.num_warehouse;
-		                                //         return full.num_warehouse;
-		                                //     }else{
-		                                //         if(full.liquidado == 1){
-		                                //             codigoGW = full.num_guia;
-		                                //             return full.num_guia;
-		                                //         }
-		                                //     }
-		                                // }else{
-		                                //     codigoGW = full.num_warehouse;
-		                                    return full.num_warehouse;
-		                                // }
+		                          return full.num_warehouse;
 					                }
 				                }, {
 				                    data: 'peso2',
-				                    name: 'peso2'
+				                    name: 'peso2',
+														searchable: false,
+									          sortable: false,
 				                }, {
 				                    "render": function (data, type, full, meta) {
 					                	return '$ '+ full.declarado2;
-					                }
-				                }]
+					                },
+													searchable: false,
+								          sortable: false,
+				                },{
+				                    data: 'consignee',
+				                    name: 'consignee',
+														width: 100
+				                },{
+				                    data: 'agencia',
+				                    name: 'agencia',
+														width: 100
+				                }, ]
 				            });
 				        }else{
 				        	toastr.info('Porfavor, selecciona una central destino, un pais y un transporte para poder continuar.');

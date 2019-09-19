@@ -185,6 +185,7 @@
                                         </table>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-12" id="tbl2" style="display:none">
                                     <ul class="nav nav-tabs" role="tablist">
                     							    <li role="warehouses" id="default" :class="{ active: courier_carga }" @click="pendign">
@@ -256,6 +257,27 @@
                                           </table>
                                         </div>
                                       </div>
+                                    </div>
+                                </div>
+
+                                {{-- TABLA PARA CONSOLIDADO AGENCIA --}}
+                                <div class="col-lg-12" id="tbl3" style="display:none">
+                                    <div class="table-responsive">
+                                        <table id="tbl-documento_agencia" class="table table-striped table-hover table-bordered" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th><i class="fal fa-file" aria-hidden="true" id="icono-doc-table"></i> #@lang('documents.documents')</th>
+                                                    <th><i class="fal fa-calendar" aria-hidden="true"></i> @lang('documents.date')</th>
+                                                    <th><i class="fal fa-user" aria-hidden="true"></i> @lang('documents.consignee')</th>
+                                                    <th><i class="fal fa-map-marked-alt" aria-hidden="true"></i> @lang('documents.city')</th>
+                                                    <th><i class="fal fa-dollar-sign" aria-hidden="true"></i> @lang('general.rate')</th>
+                                                    <th><i class="fal fa-balance-scale" aria-hidden="true"></i> @lang('documents.weight')</th>
+                                                    <th><i class="fal fa-cubes" aria-hidden="true"></i> @lang('documents.volume')</th>
+                                                    <th><i class="fal fa-building" aria-hidden="true"></i> @lang('documents.agency')</th>
+                                                    <th><i class="fal fa-bolt" aria-hidden="true"></i> @lang('documents.actions')</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
                                     </div>
                                 </div>
                               </div>

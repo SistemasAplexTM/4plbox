@@ -17,6 +17,7 @@ class AgenciaDetalle extends Model
         'servicios_id',
         'tarifa_principal',*/
         'tarifa_agencia',
-        'seguro'
+        'seguro',
+        'tarifa_minima'
     ];
 }

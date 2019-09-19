@@ -392,7 +392,7 @@ function llenarSelectServicio(id_embarque) {
               $(data.data).each(function(index, value) {
                   $("#servicios_id").append('<option value="' + value.id + '" data-tarifa="' + value.tarifa + '" data-seguro="' + value.seguro + '" ' +
                   'data-cobvol="' + value.cobro_peso_volumen + '"' +
-                  'data-tarifamin="' + value.peso_minimo + '"' +
+                  'data-tarifamin="' + value.tarifa_minima + '"' +
                   'data-tarifa="' + value.tarifa + '"' +
                   'data-seguro="' + value.seguro + '"' +
                   'data-c_opcional="' + value.cobro_opcional + '"' +

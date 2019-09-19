@@ -184,6 +184,7 @@ class ClienteController extends Controller
     			'clientes.telefono',
     			'clientes.email',
     			'clientes.zona',
+    			'clientes.email_bcc',
     			'clientes.updated_at',
     			'b.nombre AS ciudad'
         )->where([
@@ -266,6 +267,7 @@ class ClienteController extends Controller
         'clientes.telefono',
         'clientes.email AS correo',
         'clientes.zona',
+        'clientes.email_bcc AS notify_client',
         'b.nombre AS ciudad'
       )->where([
           ['clientes.id', '=', $id],

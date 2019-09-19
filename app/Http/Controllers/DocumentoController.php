@@ -529,6 +529,7 @@ class DocumentoController extends Controller
                             $data->valor_libra     = ($request->valor_libra2 != '') ? $request->valor_libra2 : 0;
                             $data->impuesto        = $request->impuesto;
                             $data->flete           = $request->flete;
+                            $data->tarifa_minima   = $request->tarifa_minima;
                             $data->seguro          = $request->seguro_valor;
                             $data->seguro_cobrado  = $request->seguro;
                             $data->cargos_add      = $request->cargos_add;
@@ -779,7 +780,7 @@ class DocumentoController extends Controller
             $where[] = ['b.agencia_id', Auth::user()->agencia_id];
         // }
         /* GRILLA */
-        if ($request->id_tipo_doc == 3) {
+        if ($request->id_tipo_doc == 3 || $request->id_tipo_doc == 4) {
             $sql = $this->getAllConsolidated($where);
         } else {
             // if(env('APP_TYPE') == 'courier'){
@@ -807,6 +808,9 @@ class DocumentoController extends Controller
               $sql = $this->getAllCourier($where, $filter, $request->type);
             }
         }
+        // DB::connection()->enableQueryLog();
+        // Datatables::of($sql)->make(true);
+        // return DB::getQueryLog();
         return Datatables::of($sql)->make(true);
     }
 
@@ -2304,6 +2308,7 @@ class DocumentoController extends Controller
 
         $detalle = DB::table('documento_detalle AS a')
             ->join('documento as b', 'a.documento_id', 'b.id')
+            ->join('agencia', 'b.agencia_id', 'agencia.id')
             ->join('consignee as c', 'b.consignee_id', 'c.id')
             ->join('localizacion as d', 'c.localizacion_id', 'd.id')
             ->join('deptos as e', 'd.deptos_id', 'e.id')
@@ -2316,6 +2321,8 @@ class DocumentoController extends Controller
                 'a.liquidado',
                 'a.peso2',
                 'e.pais_id',
+                'c.nombre_full AS consignee',
+                'agencia.descripcion AS agencia',
                 DB::raw('IFNULL(ROUND(a.declarado2, 2),0) as declarado2')
             )
             ->groupBy(
@@ -3228,7 +3235,7 @@ class DocumentoController extends Controller
                 ['c.deleted_at', null]
             ])
             ->when($data, function ($query, $data) {
-                return $query->whereRaw("(c.num_guia LIKE '%" . $data . "' OR c.num_warehouse LIKE '%" . $data . "' OR t.codigo LIKE '%" . $data . "')");
+                return $query->whereRaw("(c.num_guia LIKE '%" . $data . "' OR c.num_warehouse LIKE '%" . $data . "' OR t.codigo LIKE '%" . $data . "%')");
             })
             ->groupBy(
               'c.id',
@@ -3246,10 +3253,25 @@ class DocumentoController extends Controller
               'tracking'
               )
             ->get();
+
+            $datos2 = DB::table('tracking AS a')
+            ->select(
+              'a.codigo AS tracking',
+              'a.contenido',
+              'a.created_at AS tracking_date',
+              'a.consignee_id',
+              'a.documento_detalle_id'
+            )
+            ->where([
+                ['a.documento_detalle_id', null],
+            ])
+            ->whereRaw("(a.codigo LIKE '%" . $data . "%')")
+            ->get();
             // return DB::getQueryLog();
 
         $answer = array(
             "data" => $datos,
+            "data2" => $datos2,
             "code"  => 200,
         );
         return $answer;
