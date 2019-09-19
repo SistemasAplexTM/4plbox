@@ -194,7 +194,7 @@ function actionsButtons(data, type, full, meta) {
     var btn_delete = '';
     var btn_status = '';
     if (full.tipo_documento_id == 4) {
-      var btn_edit = '<a href="documento/' + full.id + '/edit" class="edit_btn" title="Editar" data-toggle="tooltip"><i class="fal fa-pencil fa-lg"></i></a>';
+      var btn_edit = '<a href="#" onclick="openMenu('+full.id+')" class="edit_btn" title="Editar" data-toggle="tooltip"><i class="fal fa-pencil fa-lg"></i></a>';
       var btn_print = '<a href="documento/' + full.id + '/print" class="print_btn" title="Imprimir" data-toggle="tooltip"><i class="fal fa-print fa-lg"></i></a>';
       return btn_edit + btn_print;
     }else{
@@ -369,4 +369,8 @@ function modalChangeStatus(id) {
 
 function closeDocument(id) {
   objVue.closeDocument(id);
+}
+
+function openMenu(id) {
+  objVue.open(id);
 }

@@ -88,9 +88,11 @@ var objVue = new Vue({
       showFilter: true,
     },
     methods: {
-      open(){
+      open(id){
         var data = {component: 'report-agency-component', title: 'Consolidado Agencia', icon: 'fal fa-box-check'}
-        // var data = {component: 'report-agency-component', title: 'Consolidado Agencia', icon: 'fal fa-box-check', edit: true}
+        if (id) {
+          data = {component: 'report-agency-component', title: 'Consolidado Agencia', icon: 'fal fa-box-check', edit: true}
+        }
         bus.$emit('open', data)
       },
       closeModal(){
