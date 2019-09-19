@@ -151,9 +151,9 @@
       float: right;
       margin-right: 5px;
     }
-    .el-col-12{
+    /* .el-col-12{
       width: 100%;
-    }
+    } */
 </style>
 <link href="{{ asset('css/plugins/dataTables/keyTable.dataTables.min.css') }}">
 @endsection
