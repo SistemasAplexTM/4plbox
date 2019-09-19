@@ -62,14 +62,18 @@ function sendMail(id) {
 }
 
 function createNewDocument_(tipo_doc_id, name, functionalities, type, type_id) {
+  if (tipo_doc_id == 4) {
+    objVue.open();
+  }else{
     var data = {
-        tipo_doc_id: tipo_doc_id,
-        name: name,
-        functionalities: functionalities,
-        type: type,
-        type_id: type_id,
+      tipo_doc_id: tipo_doc_id,
+      name: name,
+      functionalities: functionalities,
+      type: type,
+      type_id: type_id,
     };
     objVue.createNewDocument(data);
+  }
 }
 
 function openModalTagsDocument(id, codigo, cliente, correo, cantidad, liquidado, piezas, estatus_color, detalle_id, consignee_id) {
