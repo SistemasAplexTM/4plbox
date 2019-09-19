@@ -158,6 +158,7 @@
                                     <a href="#" class="list-group-item active" style="text-align: center; background-color:#2196f3;border-color: #2196f3 ">
                                       @lang('documents.types_of_documents')
                                     </a>
+                                    <button type="" name="button" @click="open">DESPACHAR</button>
                                     <div class="btn-group-vertical" id="listaDocumentos" style="width: 100%;">
                                         <!--Listar documentos-->
                                     </div>
@@ -324,7 +325,7 @@
 
         {{-- MODAL SUBIR ESTATUS DOCUMENTO --}}
         <document-upload :dialogvisibleupload="dialogVisibleUpload" @close="closeModal()"></document-upload>
-    
+
     </div>
 
 @endsection

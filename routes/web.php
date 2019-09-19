@@ -400,6 +400,11 @@ Route::group(['middleware' => 'auth'], function () {
     /* MODULO INFORMES */
     Route::get('report', 'ReportController@index')->name('report.index');
 
+    Route::post('reportDispatch/{id}', 'ReportController@updateReportDispatch');
+    Route::get('reportDispatch/{id}', 'ReportController@getReportDispatchById');
+    Route::get('reportDispatch', 'ReportController@getReportDispatch');
+    Route::post('reportDispatch', 'ReportController@reportDispatch');
+
     /* MODULO MINTIC */
     Route::get('mintic', 'MinticController@index');
     Route::get('mintic/all', 'MinticController@all');

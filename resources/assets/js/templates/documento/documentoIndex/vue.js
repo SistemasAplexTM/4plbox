@@ -88,6 +88,11 @@ var objVue = new Vue({
       showFilter: true,
     },
     methods: {
+      open(){
+        var data = {component: 'report-agency-component', title: 'Consolidado Agencia', icon: 'fal fa-box-check'}
+        // var data = {component: 'report-agency-component', title: 'Consolidado Agencia', icon: 'fal fa-box-check', edit: true}
+        bus.$emit('open', data)
+      },
       closeModal(){
         this.dialogVisible = false;
         this.dialogVisibleUpload = false;
