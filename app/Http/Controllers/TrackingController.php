@@ -75,7 +75,7 @@ class TrackingController extends Controller
                           $user = User::where('consignee_id', $request->consignee_id)->first();
                           // $user->notify(new ChangeState($status));
                         }
-                        $this->verifySendEmail($config->value, $json_data->email_template_id, $request->consignee_id, $request->codigo);
+                        // $this->verifySendEmail($config->value, $json_data->email_template_id, $request->consignee_id, $request->codigo);
                       }
                     }
                   }

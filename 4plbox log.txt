@@ -160,9 +160,10 @@ autocomplete="aplextmautocomplete"
 ======J14.2. Mostrar el cliente al lado del consignee si lo tiene, Grilla principal y documento.
 J10.2. Agregar la fecha de recibo del tracking en la consulta global que está en la barra arriba.
 ======J14.3. Editar el nombre del consignee desde la grilla de recibo de casillero.
-J14.5. Quitar la opción de colocar Piezas desde la generación de recibos lo que dijo Duma.
+======colocar el consignee y la agnecia al buscar las guias en el consolidado.
+======J14.5. Quitar la opción de colocar Piezas desde la generación de recibos lo que dijo Duma.
 J15.3. Revisar que esté saliendo bien el TSA con el logo del agente (Que el logo lo pida si se chequea el agente).
-J16.3. Que se pueda ver el nombre del consignatario cuando abro el modal desde el botón GUIAS.
+======J16.3. Que se pueda ver el nombre del consignatario cuando abro el modal desde el botón GUIAS.
 J16.4. Mostrar la cantidad de piezas en el consolidado.
 J17.3. Mostrar la cantidad de piezas que tiene la cajita.
 J17.4. Cuando agrupo cajas seleccionar si es MINTIC y que si no son MINTIC, se sumen: (Piezas, Peso y Declarado)

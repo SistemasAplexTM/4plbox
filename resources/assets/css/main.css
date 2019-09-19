@@ -28,6 +28,9 @@ input{
 .el-input__inner{
   background-color: white!important;
 }
+.print_btn{
+  color:#6b6b6b;
+}
 .edit_btn{
   color:#FFC107;
 }

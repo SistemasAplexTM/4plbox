@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Agencia;
 use App\AplexConfig;
 use App\AgenciaDetalle;
@@ -81,6 +82,9 @@ class AgenciaController extends Controller
             ->select('agencia.*', 'localizacion.nombre as ciudad', 'localizacion.id as ciudad_id')
             ->where([['agencia.id', '=', $id], ['agencia.deleted_at', '=', null]])
             ->first();
+        if (Auth::user()->isRole('admin')) {
+          $agencia->tipo_agencia = 1;
+        }
 
         $detalle = AgenciaDetalle::join('servicios', 'agencia_detalle.servicios_id', 'servicios.id')
         ->join('maestra_multiple', 'maestra_multiple.id', 'servicios.tipo_embarque_id')

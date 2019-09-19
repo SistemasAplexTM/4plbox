@@ -81,7 +81,7 @@
                     {{-- window.location.href = '{{ route('administracion.index') }}'; --}}
                 });
                 $('#in_backup').on('click', function(){
-                    var url = 'commandBackup';
+                    var url = '/commandBackup';
                     axios.get(url).then(response => {
                         toastr.success('Backup generado.');
                     });

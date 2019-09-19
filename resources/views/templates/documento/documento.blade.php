@@ -446,7 +446,7 @@
                                         <div class="col-sm-6">
                                             <div class="input-group m-b">
                                                 <span class="input-group-addon">$</span>
-                                                <input type="text" placeholder="0" value="{{ isset($documento->tarifa_minima) ? $documento->tarifa_minima : '' }}" class="form-control" readonly="" id="tarifa_minima" name="tarifa_minima">
+                                                <input type="hidden" placeholder="0" value="{{ isset($documento->tarifa_minima) ? $documento->tarifa_minima : '' }}" class="form-control" readonly="" id="tarifa_minima" name="tarifa_minima">
                                                 <input type="text" placeholder="0" value="{{ isset($documento->flete) ? $documento->flete : '' }}" class="form-control" readonly="" id="flete" name="flete">
                                             </div>
                                         </div>
