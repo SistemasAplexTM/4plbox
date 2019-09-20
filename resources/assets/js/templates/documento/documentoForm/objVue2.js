@@ -153,9 +153,11 @@ var objVue = new Vue({
       open(op, create){
         this.table_edit = op;
         if (op === 'shipper') {
-          var data = {component: 'form-csc', title: 'Shipper', icon: 'fal fa-user', field_id: (create) ? null : $('#shipper_id').val(), table: 'shipper'}
+          var data = {component: 'form-csc', title: 'Shipper', icon: 'fal fa-user', field_id: (create) ? null : $('#shipper_id').val(), table: 'shipper',
+                      hidden_btn: true, edit: (create) ? false : true}
         }else {
-          var data = {component: 'form-csc', title: 'Consignee', icon: 'fal fa-user', field_id: (create) ? null :  $('#consignee_id').val(), table: 'consignee'}
+          var data = {component: 'form-csc', title: 'Consignee', icon: 'fal fa-user', field_id: (create) ? null :  $('#consignee_id').val(), table: 'consignee',
+                      hidden_btn: true, edit: (create) ? false : true}
         }
         bus.$emit('open', data)
       },

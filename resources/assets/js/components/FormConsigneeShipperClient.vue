@@ -240,7 +240,7 @@
         </el-checkbox-group>
       </el-col>
     </el-row>
-    <el-row :gutter="24">
+    <el-row :gutter="24" v-if="!payload.hidden_btn">
       <el-col :span="24">
         <el-button type="success" :loading="loading" @click="beforeSend()" v-if="!edit"><i class="fal fa-save"></i> Guardar</el-button>
         <el-button type="primary" :loading="loading" @click="beforeSend(true)" v-if="edit"><i class="fal fa-edit"></i> Actualizar</el-button>
@@ -295,6 +295,18 @@ export default {
       city_selected_s: '',
       table: this.payload.table
     };
+  },
+  created(){
+    let me = this;
+    bus.$on('save', function (payload) {
+      me.beforeSend();
+    });
+    bus.$on('update', function (payload) {
+      me.beforeSend(true);
+    });
+    bus.$on('cancel', function (payload) {
+      me.resetForm();
+    });
   },
   watch:{
     'payload.field_id': {
@@ -457,6 +469,7 @@ export default {
       this.city_selected_s = (this.city_selected_s === null) ? '' : null;
       this.edit=false;
       this.$emit('cancel');
+      bus.$emit('close');
     },
     getSelectBranch: function(){
       axios.get('/agencia/getAgencies').then(response => {
