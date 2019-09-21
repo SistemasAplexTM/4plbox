@@ -17,8 +17,8 @@ class AplexConfigController extends Controller
     public function config()
     {
       $menu = array(
-        array('icon' => 'cog', 'route' => 'settings', 'url' => false, 'desc' => 'general.general', 'perm' => 'administracion.index'),
         array('icon' => 'store', 'route' => 'agencia.index', 'url' => false, 'desc' => 'layouts.agencies', 'perm' => 'agencia.index'),
+        array('icon' => 'cog', 'route' => 'settings', 'url' => false, 'desc' => 'general.general', 'perm' => 'administracion.index'),
         array('icon' => 'box-check', 'route' => 'status.index', 'url' => false, 'desc' => 'layouts.status', 'perm' => 'status.index'),
         array('icon' => 'truck', 'route' => 'transportador.index', 'url' => false, 'desc' => 'layouts.transporters', 'perm' => 'transportador.index'),
         array('icon' => 'file', 'route' => 'tipoDocumento.index', 'url' => false, 'desc' => 'layouts.document_types', 'perm' => 'tipoDocumento.index'),
@@ -31,7 +31,6 @@ class AplexConfigController extends Controller
       );
 
       $menu2 = array(
-        // array('icon' => 'users-class', 'route' => 'empleado.index', 'url' => false, 'desc' => 'layouts.employees', 'perm' => 'agencia.index'),
         array('icon' => 'hand-holding-usd', 'route' => 'administracion/Forma_de_Pago', 'url' => true, 'desc' => 'layouts.payment_methods', 'perm' => 'administracion.index'),
         array('icon' => 'credit-card', 'route' => 'administracion/Tipos_de_Pago', 'url' => true, 'desc' => 'layouts.payment_types', 'perm' => 'emailTemplate.index'),
         array('icon' => 'plane-alt', 'route' => 'transport/aerolineas', 'url' => true, 'desc' => 'layouts.airlines', 'perm' => 'transport.index'),
