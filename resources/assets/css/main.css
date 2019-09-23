@@ -60,7 +60,8 @@ table > tfoot > tr > th{
 }
 
 label{
-  font-weight: 500;
+  font-weight: 300;
+  color:#000000;
 }
 
 .mt-20{

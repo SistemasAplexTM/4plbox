@@ -61,7 +61,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        <hr/>
                         <div class="row">
                             @include('layouts.buttons')
                         </div>

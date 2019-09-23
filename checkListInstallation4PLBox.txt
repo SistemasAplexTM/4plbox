@@ -1,0 +1,8 @@
+Name:         Check List First Configuration 4PL Box
+Description:  Este documento se crea para que cada vez que instalemos 4PLBOX se verificque la configuración inicial
+Create:       2019-9-21
+By:           Ramon Ocampo
+
+1. Verificar que en el archivo (.env) el tipo de embarque marítimo tenga el código del marítimo de la tabla maestra múltiple
+de la base de datos valiable (app_cuft).
+2. 

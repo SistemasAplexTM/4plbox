@@ -40,16 +40,16 @@
                 <table id="tbl-master" class="table table-striped table-hover table-bordered" style="width: 100%;">
                     <thead>
                         <tr>
-                            <th>Master AWB</th>
-                            <th>@lang('master.airline')</th>
-                            <th>@lang('master.date')</th>
-                            <th>@lang('master.rate')</th>
-                            <th>@lang('master.weight') Lb</th>
-                            <th>@lang('master.weight') Kl</th>
-                            <th>@lang('master.consignee')</th>
-                            <th>@lang('master.destination')</th>
-                            <th>@lang('master.manifest')</th>
-                            <th>@lang('master.actions')</th>
+                            <th><center><i class="fal fa-file-check"></i> AWB</center></th>
+                            <th><center><i class="fal fa-plane-departure"></i> @lang('master.airline')</center></th>
+                            <th><center><i class="fal fa-calendar-day"></i> @lang('master.date')</center></th>
+                            <th><center><i class="fal fa-dollar-sign"></i> @lang('master.rate')</center></th>
+                            <th><center><i class="fal fa-forklift"></i> @lang('master.weight') Lb</center></th>
+                            <th><center><i class="fal fa-dolly-flatbed"></i> @lang('master.weight') Kl</center></th>
+                            <th><center><i class="fal fa-warehouse-alt"></i> @lang('master.consignee')</center></th>
+                            <th><center><i class="fal fa-globe-americas"></i> @lang('master.destination')</center></th>
+                            <th><center><i class="fal fa-file-spreadsheet"></i> @lang('master.manifest')</center></th>
+                            <th><center>@lang('master.actions')</center></th>
                         </tr>
                     </thead>
                 </table>

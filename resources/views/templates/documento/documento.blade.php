@@ -151,15 +151,12 @@
       float: right;
       margin-right: 5px;
     }
-    /* .el-col-12{
-      width: 100%;
-    } */
 </style>
 <link href="{{ asset('css/plugins/dataTables/keyTable.dataTables.min.css') }}">
 @endsection
 
 @section('content')
-    {{-- DEFAULT VALUES --}}
+    {{-- DEFAULT VALUES Ramon Cambiar--}}
     <?php $id_pa = ((env('APP_CLIENT') != 'worldcargo') ? 234 : 1) ?> {{-- id de la posicion por defecto --}}
     <div class="row" id="documento">
         <modalshipper-component v-if="!mostrar.includes(24)"></modalshipper-component>
@@ -178,32 +175,20 @@
             <div class="col-lg-12" style="">
                 <div class="col-lg-12">
                     <div class="col-lg-6" style="padding-left: 0px;">
-                        <div class="form-group">
-                                <select id="agencia_id" name="agencia_id" class="form-control" style="font-size: 17px;font-weight: 900;">
-                                    @if(isset($agencias) and $agencias)
-                                        @role('admin')
-                                            @foreach($agencias as $agencia)
-                                                <option {{ ($documento->agencia_id == $agencia['id']) ? 'selected' : ((Auth::user()->agencia_id == $agencia['id']) ? 'selected ' : '') }} value="{{ $agencia['id'] }}">{{ $agencia['descripcion'] }}</option>
-                                            @endforeach
-                                        @else
-                                            @foreach($agencias as $agencia)
-                                                @if(Auth::user()->agencia_id == $agencia['id'])
-                                                    <option {{ ($documento->agencia_id == $agencia['id']) ? 'selected' : ((Auth::user()->agencia_id == $agencia['id']) ? 'selected ' : '') }} value="{{ $agencia['id'] }}">{{ $agencia['descripcion'] }}</option>
-                                                @endif
-                                            @endforeach
-                                        @endrole
-                                    @endif
-                                </select>
-                        </div>
+                        @foreach($agencias as $agencia)
+                            @if(Auth::user()->agencia_id == $agencia['id'])
+                            <input type="hidden" id="agencia_id" name="agencia_id" class="form-control" value="{{ $agencia['id'] }}" readonly="">
+                            <label for="agency" id="agencia_name" style="font-family: 'Russo One', sans-serif; font-size: 40px; float: left;font-weight: bold; color: #000;">{{ $agencia['descripcion'] }}</label>
+                            @endif
+                        @endforeach
                     </div>
                     @if(isset($agencia) and $agencia)
-                        <div class="col-lg-6" style="padding-right: 0px;">
-                            <div class="form-group">
-                                <label for="num_guia" class="" style="font-size: 40px; float: right;font-weight: bold; color: #0d87e9;">{{ $documento->num_warehouse }}</label>
-
-                                {{-- <input type="text" id="num_guia" name="num_guia" class="form-control" readonly="" value="{{ $documento->num_warehouse }}" > --}}
-                            </div>
+                    <div class="col-lg-6" style="padding-right: 0px;">
+                        <div class="form-group">
+                            <label for="num_guia" class="" style="font-family: 'Russo One', sans-serif; font-size: 40px; float: right;font-weight: bold; color: #0d87e9;">{{ $documento->num_warehouse }}</label>
+                            {{-- <input type="text" id="num_guia" name="num_guia" class="form-control" readonly="" value="{{ $documento->num_warehouse }}" > --}}
                         </div>
+                    </div>
                     @endif
                 </div>
             </div>
@@ -219,7 +204,7 @@
                 <div class="col-lg-6" style="margin-bottom: 20px;" v-if="mostrar.includes(25)">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5><span class="fal fa-plane-departure"> </span> @lang('documents.sender_shipper')
+                            <h5><span class="fal fa-plane-departure"></span> @lang('documents.sender_shipper')
                               <span style="color: coral; display: none;" id="msnEditarShip">@lang('documents.prepared_for_editing')</span></h5>
                               <button @click="resetFormsShipperConsignee(0)" class="btn btn-xs btn-default btn-action" type="button" data-toggle='tooltip' title="Reset"><span class="fal fa-sync"></span>&nbsp;</button>
                               <button v-if="edit_shipper" @click="open('shipper')" class="btn btn-xs btn-success btn-action" type="button" data-toggle='tooltip' title="@lang('documents.edit')"><i class="fal fa-edit"></i>&nbsp;</button>
@@ -229,7 +214,7 @@
                           <div class="row">
                             <div class="form-group">
                               {{-- <label class="control-label col-sm-2">@lang('documents.name'): <samp id="require">*</samp></label> --}}
-                              <div class="col-sm-6">
+                              <div class="col-sm-8">
                                 <div class="input-group"  style="margin-bottom: 5px;" :class="{ 'has-error': errors.has('nombreR') }">
                                     <input type="search" autocomplete="aplextmautocomplete" data-id="nomBuscarShipper" id="nombreR" name="nombreR" placeholder="@lang('documents.type_to_search')" class="form-control" onkeyup="deleteError($(this).parent());" v-model="nombreR" v-validate="'required'" :disabled="disabled_s">
                                     <span class="input-group-btn">
@@ -247,7 +232,7 @@
                                   </el-col>
                                 </el-row>
                               </div>
-                              <div class="col-sm-6">
+                              <div class="col-sm-4">
                                   <el-row :gutter="24">
                                     <el-col :span="24">
                                       <div><label class="data_content"><i class="fal fa-phone"></i></label> @{{ shipper_data.telefono }}</div>
@@ -279,11 +264,13 @@
                 <div class="col-lg-6" style="margin-bottom: 20px;" v-if="mostrar.includes(26)">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5 style="width: 30%;">
+                            <h5 style="width: 70%;">
                                 <span class="fal fa-plane-arrival"> </span> @lang('documents.addressee_consignee')
-                                <span style="color: coral; display: none;" id="msnEditarCons">@lang('documents.prepared_for_editing')</span>
                                 <label class="po">PO# <span style="border-color: transparent;color: blue;">@{{ consignee_data.po_box }}</span></label>
+                                <i style="font-size:10px" class="fal fa-chevron-right"></i> <span style="color: red;font-size:20px" id="consignee_client"><i class="fal fa-user"></i> @{{ consignee_data.cliente }}</span>
                             </h5>
+                            {{-- Arreglar Ramon Cliente --}}
+
                             <button @click="resetFormsShipperConsignee(1)" class="btn btn-xs btn-default btn-action" type="button" data-toggle='tooltip' title="Reset"><i class="fal fa-sync"></i>&nbsp;</button>
                             <button v-if="edit_consignee" @click="open('consignee')" class="btn btn-xs btn-success btn-action" type="button" data-toggle='tooltip' title="@lang('documents.edit')"><i class="fal fa-edit"></i>&nbsp;</button>
                             <button @click="open('consignee', true)" class="btn btn-xs btn-primary btn-action" type="button" data-toggle='tooltip' title="@lang('documents.new')"><i class="fal fa-user-plus"></i>&nbsp;</button>
@@ -292,7 +279,7 @@
                           <div class="row">
                             <div class="form-group">
                               {{-- <label class="control-label col-sm-2">@lang('documents.name'): <samp id="require">*</samp></label> --}}
-                              <div class="col-sm-6">
+                              <div class="col-sm-8">
                                   <input type="hidden" value="" id="urlBuscarConsignee">
                                   <div class="input-group" style="margin-bottom: 5px;" :class="{ 'has-error': errors.has('nombreD') }">
                                       <input type="search" autocomplete="off" data-id="nomBuscarConsignee" class="form-control" id="nombreD" name="nombreD" placeholder="@lang('documents.type_to_search')" onkeyup="deleteError($(this).parent());" v-model="nombreD" v-validate="'required'" :disabled="disabled_c">
@@ -313,7 +300,7 @@
                                     </el-col>
                                   </el-row>
                               </div>
-                              <div class="col-sm-6">
+                              <div class="col-sm-4">
                                   <el-row :gutter="24">
                                     <el-col :span="24">
                                       <div><label class="data_content"><i class="fal fa-phone"></i></label> @{{ consignee_data.telefono }}</div>
@@ -324,14 +311,14 @@
                                     <el-col :span="24">
                                       <div><label class="data_content"><i class="fal fa-envelope-open-text"></i></label> <label class="data_content_email">@{{ consignee_data.correo }}</label></div>
                                     </el-col>
-                                    <el-col :span="8">
+                                    <el-col :span="24">
                                       <div class="checkbox checkbox-success checkbox-inline">
                                           <input type="checkbox" id="enviarEmailDestinatario" name="enviarEmailDestinatario" value="t" style="margin-left: -50px;" v-model="enviarEmailDestinatario">
                                           <label for="enviarEmailDestinatario"> @lang('documents.send_email') <i class="fal fa-envelope-open"></i></label>
                                       </div>
                                     </el-col>
                                     <el-col :span="16">
-                                      <label style="font-size: 13px;" v-if="consignee_data.cliente"><a style="border-color: transparent;color: blue;" title="Cliente" data-toggle="tooltip"><i class="fal fa-user"></i> @{{ consignee_data.cliente }}</a></label>
+                                      {{-- <label style="font-size: 13px;" v-if="consignee_data.cliente"><a style="border-color: transparent;color: blue;" title="Cliente" data-toggle="tooltip"><i class="fal fa-user"></i> @{{ consignee_data.cliente }}</a></label> --}}
                                     </el-col>
                                   </el-row>
                                 </div>
@@ -360,7 +347,7 @@
                                 @endif
                             </div>
                         </div>
-                        <!-- TOTALES -->
+                        <!-- Inicia la columna de TOTALES -->
                         <transition name="fade">
                             <div class="form-horizontal" v-if="showFieldsTotals">
                                 <div class="ibox-content col-lg-12" :class="[mostrar.includes(22) ? 'wrh' : 'guia' ]">
@@ -451,10 +438,12 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <hr/>
                                     <div class="form-group">
                                         <div class="col-sm-6">
                                             <label class="control-label" for="impuesto"><div class="col-sm-12" data-trigger="hover"  data-container="body" data-toggle="popover" data-placement="right" data-content="Valor por el cual se calculara el impuesto sobre el valor declarado. (Por defecto 28%)" style="padding-left: 0px; padding-right: 0px;"><i class="fal fa-question-circle" style="cursor: pointer; color: coral;"></i> % @lang('documents.tax'): </div></label>
                                         </div>
+
                                         <div class="col-sm-6">
                                             <div class="input-group m-b">
                                                 <span class="input-group-addon">%</span>
@@ -462,6 +451,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <hr/>
                                     <div class="form-group">
                                         <div class="col-sm-6" style="padding-right: 0px;">
                                             <label class="control-label" for="valor_declarado">@lang('documents.declared'): </label>
@@ -470,6 +460,7 @@
                                             <label class="control-label" for="pa_aduana">@lang('documents.tax'): </label>
                                         </div>
                                     </div>
+                                    <hr/>
                                     <div class="form-group">
                                         <div class="col-sm-6" style="padding-right: 0px;">
                                             <div class="input-group m-b">
@@ -507,6 +498,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <hr/>
                                     <div class="form-group">
                                         <div class="col-sm-6">
                                             <button class="btn btn-info" id="btnBuscarCargosAdd" type="button" @click="modalAdditionalCharges()"><span class="fal fa-plus"></span> @lang('documents.charges') </button>
@@ -519,6 +511,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <hr/>
                                     <div class="form-group">
                                         <div class="col-sm-6">
                                             <label class="control-label" for="descuento">@lang('documents.discount'): </label>
@@ -548,6 +541,8 @@
                         </transition>
                     </div>
                 </div>
+                {{-- Finaliza cobro del recibo --}}
+
                 <div class="col-lg-8">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
@@ -637,12 +632,12 @@
                                                       </div>
                                               </div>
                                               <div class="col-sm-4" v-show="showFieldsTotals">
-                                                  <label for="pa" class="">@lang('documents.tariff_position')</label>
+                                                  <label for="pa" class="">@lang('documents.hs')</label>
                                                       <div class="form-group" id="Errpa">
                                                           <label style="display: none;" for="" class=""></label>
                                                           <div class="input-group">
                                                               <span class="input-group-btn" onclick="deleteError($(this).parent());">
-                                                                  <button class="btn btn-primary" id="btnBuscarPA" type="button" @click="modalArancel()"><small><span class="fal fa-search"></span> P.A (Adu.)</small></button>
+                                                                  <button class="btn btn-primary" id="btnBuscarPA" type="button" @click="modalArancel()"><small><span class="fal fa-search"></span> @lang('documents.hs')</small></button>
                                                               </span>
                                                               <input type="text" placeholder="@lang('general.select')" class="form-control" readonly="" value="" id="pa" name="pa" onkeyup="deleteError($(this).parent());">
                                                           </div><!-- /input-group -->
@@ -669,8 +664,8 @@
                                                       <!-- Split button -->
                                                           <label for="btn_add" class="control-label" style="padding-top: 2px;width: 100%">&nbsp;</label>
                                                           <div class="btn-group">
-                                                            <button type="button" class="btn btn-info btn-sm btnBlock" id="btn_add" value="0" @click="addDetail()">@lang('documents.add')</button>
-                                                            <button type="button" class="btn btn-info btn-sm dropdown-toggle btnBlock" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 35px;">
+                                                            <button type="button" class="btn btn-info ladda-button" id="btn_add" value="0" @click="addDetail()"><i class="fal fa-plus"></i> @lang('documents.add')</button>
+                                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 35px;">
                                                               <span class="caret"></span>
                                                               <span class="sr-only">Toggle Dropdown</span>
                                                             </button>
@@ -695,7 +690,7 @@
                                                                     <th style="width: 7%;">@lang('documents.pieces')</th>
                                                                     <th style="width: 17%;">@lang('documents.weight')(Lb)</th>
                                                                     <th style="">@lang('documents.contains')</th>
-                                                                    <th style="width: 15%;">PA</th>
+                                                                    <th style="width: 15%;">@lang('documents.hs')</th> {{-- Por qué HS? porque así se conoce internacionalmente la posición arancelaria como Sistema Armonizado de Aduanas --}}
                                                                     <th style="width: 10%;">@lang('documents.value') US$</th>
                                                                     <th style="width: 10%;">@lang('documents.points')</th>
                                                                     <th style="width: 13%;">@lang('documents.action')</th>
@@ -708,32 +703,32 @@
                                                                             <tr>
                                                                                 <td>
                                                                                     <div class="col-lg-12">
-                                                                                    <label class="">@lang('documents.pieces')(s)</label>
-                                                                                        <input type="text" onkeyup="deleteError($(this).parent());" id="piezas" name="piezas" class="form-control" readonly="" value="{{ isset($documento->piezas) ? $documento->piezas : 0 }}" style="width: 100px;">
+                                                                                        <div style="text-align:center;font-weight:300;"><i class="fal fa-box-check"></i> : <label id="piezas">0.00</label> @lang('documents.pieces')</div>
+                                                                                        <input type="hidden" id="piezas1" name="piezas" value="{{ isset($documento->piezas) ? $documento->piezas : 0 }}">
                                                                                     </div>
                                                                                 </td>
                                                                                 <td>
                                                                                     <div class="col-sm-12">
-                                                                                        <label class="">Total lbs</label>
-                                                                                        <input type="text" onkeyup="deleteError($(this).parent());" id="pesoDim" name="pesoDim" class="form-control" readonly="" value="{{ isset($documento->peso) ? $documento->peso : 0 }}" style="width: 100px;">
+                                                                                        <div style="text-align:center;font-weight:300;"><i class="fal fa-weight-hanging"></i>  : <label id="pesoDim">0.00</label> Lbs</div>
+                                                                                        <input type="hidden" id="pesoDim1" name="pesoDim" value="{{ isset($documento->peso) ? $documento->peso : 0 }}">
                                                                                     </div>
                                                                                 </td>
                                                                                 <td>
                                                                                     <div class="col-sm-12">
-                                                                                        <label class="">Total @lang('documents.volume')</label>
-                                                                                        <input type="text" onkeyup="deleteError($(this).parent());" id="volumen" name="volumen" class="form-control" readonly="" value="{{ isset($documento->volumen) ? $documento->volumen : 0 }}" style="width: 100px;">
+                                                                                        <div style="text-align:center;font-weight:300;"><i class="fal fa-ruler-combined"></i> : <label id="volumen">0.00</label> @lang('documents.volume')</div>
+                                                                                        <input type="hidden" id="volumen1" name="volumen" value="{{ isset($documento->volumen) ? $documento->volumen : 0 }}">
                                                                                     </div>
                                                                                 </td>
                                                                                 <td>
                                                                                     <div class="col-sm-12">
-                                                                                        <label class="">@lang('documents.cubic_foot')</label>
-                                                                                        <input type="text" id="pie_ft" name="pie_ft" class="form-control" readonly="" value="{{ (isset($documento->volumen)) ? number_format(($documento->volumen * 166 / 1728), 2) : 0 }}" style="width: 100px;">
+                                                                                        <div style="text-align:center;font-weight:300;"><i class="fal fa-container-storage"></i> : <label id="pie_ft">0.00</label> @lang('documents.cubic_foot')</div>
+                                                                                        <input type="hidden" id="pie_ft1" name="pie_ft" value="{{ (isset($documento->volumen)) ? number_format(($documento->volumen * 166 / 1728), 2) : 0 }}">
                                                                                     </div>
                                                                                 </td>
                                                                                 <td>
                                                                                     <div class="col-lg-12">
-                                                                                        <label class="">Total @lang('documents.declared')</label>
-                                                                                        <input type="text" onkeyup="deleteError($(this).parent());" id="valor_declarado_tbl" class="form-control" readonly="" value="0" style="width: 100px;">
+                                                                                        <div style="text-align:center;font-weight:300;"><i class="fal fa-dollar-sign"></i> : <label id="valor_declarado_tbl">0.00</label></div>
+                                                                                        <input type="hidden" id="valor_declarado_tbl1" value="0">
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>
@@ -756,16 +751,7 @@
                                           <input type="hidden" id="forma_pago_id" name="forma_pago_id" value="{{ $documento->forma_pago_id }}">
                                         </div>
                                         <div class="col-lg-4" v-if="mostrar.includes(18)">
-                                          <div class="form-group">
-                                              <label for="grupo_id" class="">@lang('documents.group')</label>
-                                              <select id="grupo_id" name="grupo_id" class="form-control text-write" onchange="deleteError($(this).parent());">
-                                                  @if(isset($grupos) and $grupos)
-                                                      @foreach($grupos as $grupo)
-                                                          <option {{ (isset($documento->grupo_id) and $documento->grupo_id === $grupo['id']) ? 'selected' : '' }} value="{{ $grupo['id'] }}">{{ $grupo['nombre'] }}</option>
-                                                      @endforeach
-                                                  @endif
-                                              </select>
-                                          </div>
+                                            <input type="hidden" id="grupo_id" name="grupo_id" value="{{ $documento->grupo_id }}">
                                         </div>
                                         <div class="col-lg-12">
                                                 <div class="form-group">
@@ -797,26 +783,22 @@
                                         </div>
                                     </div>
                                     <input type="hidden" id="id" name="id" value="">
+                                    <hr/>
                                     <div class="row">
                                         <div class="form-group">
                                             <div class="col-sm-12 col-sm-offset-0 guardar">
-                                                @if(env('APP_CLIENT') == 'jexpress')
-                                                    <button type="button" class="btn btn-success ladda-button" id="saveForm" data-style="expand-right" @click="beforeSaveDocument('all')"><i class="fal fa-save fa-fw"></i>@lang('documents.save_changes')</button>
-                                                @else
                                                 <div class="btn-group dropup">
-                                                    <button type="button" class="btn btn-success ladda-button" id="saveForm" data-style="expand-right" @click="beforeSaveDocument('print')"><i class="fal fa-save fa-fw"></i> @lang('documents.save_changes_print')</button>
+                                                    <button type="button" class="btn btn-success ladda-button" id="saveForm" data-style="expand-right" @click="beforeSaveDocument('print')"><i class="fal fa-print"></i> @lang('documents.save_changes_print')</button>
                                                     <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 35px;">
                                                         <span class="caret"></span>
                                                         <span class="sr-only">Toggle Dropdown</span>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li><a @click="beforeSaveDocument()"><i class="fal fa-print"></i> @lang('documents.save_changes')</a></li>
+                                                        <li><a @click="beforeSaveDocument()"><i class="fal fa-save fa-fw"></i> @lang('documents.save_changes')</a></li>
                                                         <li><a @click="beforeSaveDocument('email')"><i class="fal fa-envelope"></i> @lang('documents.save_changes_email')</a></li>
                                                         <li><a @click="beforeSaveDocument('all')"><i class="fal fa-mail-bulk"></i> @lang('documents.save_changes_email_print')</a></li>
                                                     </ul>
                                                 </div>
-                                                @endif
-
                                                 <a href="{{ route('documento.index') }}" type="button" class="btn btn-white"><i class="fal fa-times fa-fw"></i> @lang('documents.cancel') </a>
                                             </div>
                                         </div>
@@ -864,6 +846,7 @@
                                       <span style="float: right; color: #8492a6; font-size: 13px">@{{ item.descripcion }}</span>
                                     </el-option>
                                   </el-select> --}}
+
                                 </div>
                                 <div class="form-group" v-show="showPay">
                                   <label for="" class="">@lang('documents.way_to_pay')</label>
@@ -902,7 +885,7 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('js/templates/documento/documentoForm/objVue2.js') }}"></script>
+<script src="{{ asset('js/templates/documento/documentoForm/objVue.js') }}"></script>
 <script src="{{ asset('js/templates/documento/documentoForm/documento.js') }}"></script>
 <script src="{{ asset('js/templates/documento/documentoForm/totalizar.js') }}"></script>
 <script src="{{ asset('js/templates/documento/documentoForm/postalCode.js') }}"></script>

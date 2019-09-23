@@ -27,10 +27,10 @@ function totalizeDocument(elemento) {
     }
     $('#flete').val(flete);
     $(elemento).css('border-color', '');
-    peso = $('#pesoDim').val();
-    piezas = $('#piezas').val();
-    volumen = $('#volumen').val();
-    declarado = $('#valor_declarado_tbl').val();
+    peso = $('#pesoDim').html();
+    piezas = $('#piezas').html();
+    volumen = $('#volumen').html();
+    declarado = $('#valor_declarado_tbl').html();
     var cargos_add = 0;
     cargos_add = $('#cargos_add').val();
     if ($('#valor_libra2').val() == '0') {
@@ -44,7 +44,17 @@ function totalizeDocument(elemento) {
         }
     }
     $('#peso_total').val(parseFloat(peso));
-    $('#peso_cobrado').val(parseFloat(peso));
+
+    if($('#servicios_id option:selected').data('cobvol') == 1){
+      $('#peso_cobrado').val(parseFloat(peso));
+    } else {
+      if(parseFloat(peso) > parseFloat(volumen)) {
+        $('#peso_cobrado').val(parseFloat(peso));
+      } else {
+        $('#peso_cobrado').val(parseFloat(volumen));
+      }
+    }
+    
     if ($('#impuesto').val() == '') {
         impuesto = $('#servicios_id option:selected').data('impuesto_age');
         $('#impuesto').val(impuesto);
@@ -87,7 +97,7 @@ function calculateFlete(flete) {
     var cOpcional = $('#servicios_id option:selected').data('c_opcional');
 
     /* DEFINO SI ES AEREO O MARITIMO 8 = MARITIMO*/
-    if ($('#tipo_embarque_id').val() == 8) {
+    if ($('#tipo_embarque_id').val() == app_cuft) {
         /* SE COBRA POR PIE 3 SI LA POSICION ARANCELARIA ES CERO = 0 O SIN POSICION */
         if($('#pa_id').val() == 1){
             $('#cobrarPor').text('cuft');
@@ -104,11 +114,11 @@ function calculateFlete(flete) {
     } else {
         /* SE EVALUA SI SE COBRARA POR PESO O VOLUMEN (PESO = 1 - VOLUMEN = 0)*/
         if ($('#servicios_id option:selected').data('cobvol') == 0 && app_client != 'worldcargo') {
-            if (parseFloat(peso) >= 0 && parseFloat(peso) <= 8) {
+            if (parseFloat(peso) >= 0 && parseFloat(peso) <= $('#servicios_id option:selected').data('tarifamin')) {
                 $('#cobrarPor').text('Pes');
                 return flete;
             }
-            if (parseFloat(peso) > 8) {
+            if (parseFloat(peso) > $('#servicios_id option:selected').data('tarifamin')) {
                 /*PESO * LA TARIFA */
                 $('#cobrarPor').text('Pes');
 

@@ -323,11 +323,18 @@ function datatableDetail(){
                     }, 0);
 
             /*Update footer formatCurrency()*/
-            $('#piezas').val(parseFloat(isInteger(piezas)));
-            $('#volumen').val(parseFloat(isInteger(Math.ceil(vol))));
-            $('#pie_ft').val(parseFloat(isInteger(Math.ceil(vol * 166 / 1728))));
-            $('#pesoDim').val(parseFloat(isInteger(peso)));
-            $('#valor_declarado_tbl').val(parseFloat(isInteger(dec)));
+            $('#piezas').html(parseFloat(isInteger(piezas)));
+            $('#volumen').html(parseFloat(isInteger(Math.ceil(vol))));
+            $('#pie_ft').html(parseFloat(isInteger(Math.ceil(vol * 166 / 1728))));
+            $('#pesoDim').html(parseFloat(isInteger(peso)));
+            $('#valor_declarado_tbl').html(parseFloat(isInteger(dec)));
+
+            $('#piezas1').val(parseFloat(isInteger(piezas)));
+            $('#volumen1').val(parseFloat(isInteger(Math.ceil(vol))));
+            $('#pie_ft1').val(parseFloat(isInteger(Math.ceil(vol * 166 / 1728))));
+            $('#pesoDim1').val(parseFloat(isInteger(peso)));
+            $('#valor_declarado_tbl1').val(parseFloat(isInteger(dec)));            
+
         },
     }).on('xhr.dt', function ( e, settings, json, xhr ) {
         if(app_type === 'courier'){

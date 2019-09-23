@@ -144,7 +144,7 @@
                                         <div class="col-lg-12">
                                           <div class="form-group {{ $errors->has('whatsapp') ? ' has-error' : '' }}">
                                             <div class="col-lg-4">
-                                                <label for="whatsapp" class="control-label">Whatsapp</label>
+                                                <label for="whatsapp" class="control-label">@lang('general.whatsapp')</label>
                                             </div>
                                             <div class="col-lg-8">
                                                 <input type="tel" class="form-control" data-mask="(999) 999-9999" id="whatsapp" name="whatsapp" value="{{ (isset($agencia) and $agencia) ? $agencia->whatsapp : old('whatsapp') }}">
@@ -204,7 +204,7 @@
                                         <div class="col-lg-12">
                                           <div class="form-group {{ $errors->has('email_cc') ? ' has-error' : '' }}">
                                             <div class="col-lg-4">
-                                              <label for="email_cc" class="control-label">Correo CC</label>
+                                              <label for="email_cc" class="control-label">@lang('general.email_cc')</label>
                                             </div>
                                             <div class="col-lg-8">
                                               <input type="mail" class="form-control" id="email_cc" name="email_cc" value="{{ (isset($agencia) and $agencia) ? $agencia->email_cc : old('mail') }}" >
@@ -218,8 +218,8 @@
                                             <div class="form-group">
                                                 <div class="col-lg-4">
                                                     <label for="prefijo_pobox" class="control-label">
-                                                        <div class="col-sm-12" data-trigger="hover"  data-container="body" data-toggle="popover" data-placement="rigth" data-content="Si no se ingresa ningun dato aqui, el PO_BOX de los clientes se creara automaticamente." style="padding-left: 0px; padding-right: 0px;">
-                                                            Prefijo PO_BOX
+                                                        <div class="col-sm-12" data-trigger="hover"  data-container="body" data-toggle="popover" data-placement="rigth" data-content="Si no se ingresa ningun dato aqui, el PoBox de los clientes se creara automaticamente." style="padding-left: 0px; padding-right: 0px;">
+                                                            @lang('general.pobox_prefix')
                                                             <i class="fal fa-question-circle" style="cursor: pointer; color: coral;"></i>
                                                         </div>
                                                     </label>

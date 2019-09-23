@@ -79,7 +79,7 @@ return [
 //    resources/templates/list
 
 'home'=>'Inicio',
-'registered_guides'=>'Guías registradas',
+'registered_guides'=>'Guías Master',
 'airline'=>'Aerolínea',
 'rate'=>'Tarifa',
 'weight'=>'Peso',
@@ -88,7 +88,7 @@ return [
 'manifest'=>'Consolidado',
 'actions'=>'Acciones',
 'new'=>'Nuevo',
-'create'=>'Crear' 
+'create'=>'Crear'
 
 
 
