@@ -69,7 +69,7 @@ $(document).ready(function() {
 });
 
 function llenarSelect(tableModule, tableName, idSelect, length) {
-    var url = tableModule + '/5/selectInput/' + tableName;
+    var url = tableModule + '/Tipo_Embarque/selectInput/' + tableName;
     $.ajax({
         url: url,
         dataType: 'json',
