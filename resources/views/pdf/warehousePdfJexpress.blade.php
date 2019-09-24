@@ -97,7 +97,11 @@
         <table>
           <tr>
             <td colspan="2" rowspan="5" style="">
+              @if(env('APP_DEPELOPER'))
+                <img src="{{ public_path() . '/storage/' }}/{{ ((isset($documento->agencia_logo) and $documento->agencia_logo != '') ? trim($documento->agencia_logo) : 'logo.png') }}" style="width: 150px"/>
+              @else
                 <img src="{{ asset('storage/') }}/{{ ((isset($documento->agencia_logo) and $documento->agencia_logo != '') ? trim($documento->agencia_logo) : 'logo.png') }}" style="width: 150px"/>
+              @endif
             </td>
             <td colspan="2" class="agency_title title_doc" style="">{{ ((isset($documento->agencia) and $documento->agencia != '') ? $documento->agencia : '') }}</td>
           </tr>

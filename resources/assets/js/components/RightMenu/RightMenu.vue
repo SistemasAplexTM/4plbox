@@ -8,7 +8,7 @@
     <header-component slot="title" :data="data" @back="drawer = false"/>
     <transition-group name="fade">
       <component :is="component_active" :payload="data" key="component"></component>
-      <footer-component key="footer" :edit="data.edit"/>
+      <footer-component key="footer" :edit="data.edit" v-if="!data.btn_remove"/>
     </transition-group>
   </el-drawer>
 </template>
@@ -24,7 +24,8 @@
         drawer: false,
         data: {
           icon: '',
-          title: ''
+          title: '',
+          btn_remove: false,
         }
       };
     },

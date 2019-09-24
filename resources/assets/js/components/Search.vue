@@ -17,13 +17,14 @@
           <div style="color: #8492a6;">
             <i class="fal fa-box-open icon"></i> {{ item.name }} &nbsp;&nbsp;
             <i class="fal fa-balance-scale icon"></i> {{ item.peso }} Lb &nbsp;&nbsp;
-            ${{ item.peso }}
+            <!-- ${{ item.peso }} -->
           </div>
           <div style="color: #8492a6; font-size: 13px">
             <div><i class="fal fa-truck icon"></i> {{ item.tracking }}</div>
-            <div><i class="fal fa-comment-edit icon"></i> {{ item.contenido }}</div>
+            <div class="content-search"><div class="content-search-item"><i class="fal fa-comment-edit icon"></i> {{ item.contenido }}</div></div>
           </div>
         </div>
+        <hr class="hr-search">
   		</template>
     </el-autocomplete>
   </div>
@@ -35,6 +36,7 @@ export default {
       return {
         datos: {},
         options: [],
+        data: null
       }
     },
     mounted() {
@@ -59,22 +61,31 @@ export default {
         });
       },
       handleSelect(item) {
-        // this.datos = item;
-        // this.$emit('get', item);
+        var data = {component: 'search-result', title: 'Resultado de la Busqueda', icon: 'fal fa-search', datos: item, btn_remove:true}
+        bus.$emit('open', data)
       }
     }
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
+  .content-search{
+    overflow: hidden;
+  }
+  .content-search-item{
+    float: left;
+  }
+  .hr-search{
+    margin-bottom:0px;
+  }
   .content-select{
     padding-top: 10px;
   }
   .el-autocomplete, .inline-input{
     width: 100%
   }
-  .el-autocomplete-suggestion, .el-popper{
-    width: max-content!important;
+  .el-autocomplete-suggestion{
+    /* width: max-content!important; */
     z-index: 9999!important;
   }
   .icon{

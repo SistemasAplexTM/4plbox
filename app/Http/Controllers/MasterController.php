@@ -352,6 +352,7 @@ class MasterController extends Controller
             ->select(
                 'a.id',
                 'a.master_id',
+                'a.carrier_id',
                 'c.nombre AS aerolinea',
                 'e.nombre AS ciudad',
                 'a.num_master',

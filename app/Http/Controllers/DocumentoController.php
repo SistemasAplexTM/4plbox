@@ -31,6 +31,7 @@ use App\Invoice;
 use App\InvoiceDetail;
 use App\Shipper;
 use App\Consignee;
+use App\Transportador;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -1224,10 +1225,11 @@ class DocumentoController extends Controller
         return $pdf->stream('contrato.pdf');
     }
 
-    public function pdfTsa()
+    public function pdfTsa($carrier_id)
     {
-        $agencia = $this->getDataAgenciaById(1);
-        $pdf     = PDF::loadView('pdf.tsaPdf', compact('agencia'));
+        // $agencia2 = $this->getDataAgenciaById(1);
+        $data = Transportador::findOrFail($carrier_id);
+        $pdf     = PDF::loadView('pdf.tsaPdf', compact('data'));
         $this->AddToLog('Impresion TSA');
         return $pdf->stream('TSA.pdf');
     }
@@ -2189,6 +2191,7 @@ class DocumentoController extends Controller
                 'e.nombre_full as consignee',
                 'e.contactos_json as consignee_contactos',
                 'c.contenido2',
+                'c.piezas',
                 'f.id AS pa_id',
                 'f.pa',
                 'c.declarado2',

@@ -57,7 +57,13 @@
 	<table border="0" class="bill" width="100%" cellspacing="0" cellpadding="0">
 		<thead>
 			<tr>
-				<td style="padding-left: 5px;font-size: 25px"><img src="{{ '/storage/' . $data->agencia_logo }}" alt="" height="50" style="margin: 0 auto"></td>
+				<td style="padding-left: 5px;font-size: 25px">
+					@if(env('APP_DEPELOPER'))
+						<img src="{{ public_path() . '/storage/' }}/{{ $data->agencia_logo }}" alt="" height="50" style="margin: 0 auto">
+					@else
+						<img src="{{ '/storage/' . $data->agencia_logo }}" alt="" height="50" style="margin: 0 auto">
+					@endif
+				</td>
 				<td style="text-align: right;padding-right: 5px;font-size: 25px">BILL OF LADING</td>
 			</tr>
 		</thead>

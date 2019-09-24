@@ -988,7 +988,8 @@
 			                  },
 			                  {
 			                      "render": function (data, type, full, meta) {
-			                          return '<a data-name="contenido2" data-pk="'+full.documento_detalle_id+'" class="td_edit" data-placement="left" data-type="textarea" data-title="Contenido">'+full.contenido2+'</a>';
+															var piezas = '<div style="margin-top:5px;color:#a7a7a7"><small><i class="fal fa-box-full"></i> Piezas: '+full.piezas+'<small></div>';
+			                          return '<a data-name="contenido2" data-pk="'+full.documento_detalle_id+'" class="td_edit" data-placement="left" data-type="textarea" data-title="Contenido">'+full.contenido2+'</a> ' + piezas;
 			                      }
 			                  },
 			                  {

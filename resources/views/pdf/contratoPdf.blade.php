@@ -14,14 +14,14 @@
     }
     #iataLog{
         width: 60px;
-        margin-bottom: 10px;        
+        margin-bottom: 10px;
     }
     #titulo{
-        margin-bottom: 8px;  
+        margin-bottom: 8px;
     }
     #titulo2{
         margin-top: 12px;
-        margin-bottom: 5px;  
+        margin-bottom: 5px;
     }
     #info1{
         text-align: justify;
@@ -38,7 +38,13 @@
 </style>
 <table width="103%;" border="0" cellspacing="0" cellpadding="0" id="tableContainer">
     <tr>
-        <td colspan="3" align="CENTER"><img id="iataLog" src="{{ asset('img/iata.png') }}" /></td>
+        <td colspan="3" align="CENTER">
+          @if(env('APP_DEPELOPER'))
+            <img id="iataLog" src="{{ public_path() . '/img/' }}/iata.png" />
+          @else
+            <img id="iataLog" src="{{ asset('img/iata.png') }}" />
+          @endif
+        </td>
     </tr>
     <tr>
         <td colspan="3" align="CENTER"><div id="titulo">NOTICE CONCERNING CARRIERS' LIMITATION OF LIABILITY</div></td>

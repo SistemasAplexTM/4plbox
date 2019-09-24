@@ -54,7 +54,11 @@ $toalRegistros = count($detalleConsolidado);
                         <thead>
                             <tr>
                                 <th colspan="2" width="300px">
-                                  <img alt="image" class="img-circle" id="logo" style="height: 50px;margin-bottom: 10px;" src="{{ asset('storage/') }}/{{ ((isset($documento->agencia_logo) and $documento->agencia_logo != '') ? $documento->agencia_logo : 'logo.png') }}"/>
+                                  @if(env('APP_DEPELOPER'))
+                                    <img alt="image" class="img-circle" id="logo" style="height: 50px;margin-bottom: 10px;" src="{{ public_path() . '/storage/' }}/{{ ((isset($documento->agencia_logo) and $documento->agencia_logo != '') ? $documento->agencia_logo : 'logo.png') }}"/>
+                                  @else
+                                    <img alt="image" class="img-circle" id="logo" style="height: 50px;margin-bottom: 10px;" src="{{ asset('storage/') }}/{{ ((isset($documento->agencia_logo) and $documento->agencia_logo != '') ? $documento->agencia_logo : 'logo.png') }}"/>
+                                  @endif
                                 </th>
                                 <th width="250px" style="text-align: right;">
                                     <div class="agencia" id="nomAgencia" style="font-size: 20px;">{{ $documento->agencia }}</div>

@@ -90,7 +90,7 @@ var objVue = new Vue({
       getLogo(id){
         axios.get('transportador/getLogo/' + id).then(response => {
           console.log(response.data);
-          if(response.data.name !== null){
+          if(response.data.name !== null && response.data.name !== ''){
             this.fileList = [{
               name:response.data.name,
               url:response.data.url,
