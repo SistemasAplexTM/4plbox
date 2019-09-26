@@ -164,11 +164,14 @@ autocomplete="aplextmautocomplete"
 ======J16.3. Que se pueda ver el nombre del consignatario cuando abro el modal desde el botón GUIAS.
 ======J15.3. Revisar que esté saliendo bien el TSA con el logo del agente (Que el logo lo pida si se chequea el agente).
 ======J16.4. Mostrar la cantidad de piezas en el consolidado.
+======J9.1. Separar los usuarios de las agencias y los casilleros y los de la agencia principal, por pestañas, que si ingresa una agencia que no es principal
+vea sus usuarios y sus casilleros, que si entra la principal pueda ver sus usuarios y casilleros, y pueda seleccionar de que agencia quiere ver usuarios y casilleros.
+
 J10.2. Agregar la fecha de recibo del tracking en la consulta global que está en la barra arriba.
 J17.3. Mostrar la cantidad de piezas que tiene la cajita.
+
 J17.4. Cuando agrupo cajas seleccionar si es MINTIC y que si no son MINTIC, se sumen: (Piezas, Peso y Declarado)
-J9.1. Separar los usuarios de las agencias y los casilleros y los de la agencia principal, por pestañas, que si ingresa una agencia que no es principal
-vea sus usuarios y sus casilleros, que si entra la principal pueda ver sus usuarios y casilleros, y pueda seleccionar de que agencia quiere ver usuarios y casilleros.
+
 J7.4. Informe de Manifiesto interno.
 R7.1. Informe de agencias, lo que se envía a la principal con utilidades.
 DJ4.1. Impresión de documentos con el programa que compramos.

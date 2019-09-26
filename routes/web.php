@@ -63,7 +63,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('user', 'UserController', ['except' => ['show', 'create', 'edit']]);
     Route::get('user/delete/{id}/{logical?}', 'UserController@delete')->name('user.delete')->middleware('permission:user.delete');
     Route::get('user/restaurar/{id}', 'UserController@restaurar');
-    Route::get('user/all', 'UserController@getAll')->name('datatable/all');
+    Route::get('user/all/{data}', 'UserController@getAll')->name('datatable/all');
     Route::get('user/getDataSelect/{table}', 'UserController@getDataSelect');
     Route::post('user/validarUsername', 'UserController@validarUsername');
     Route::get('user/getNameAgenciaUser', 'UserController@getNameAgenciaUser');

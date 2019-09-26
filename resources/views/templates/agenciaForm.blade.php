@@ -84,7 +84,7 @@
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane fade in active" id="tab1" style="margin-top: 20px;">
-                        <!--***** contenido ******-->
+                              <!--***** contenido ******-->
                                 <div class="col-lg-4">
                                     <div class="row">
                                         <div class="col-lg-12">
@@ -451,7 +451,7 @@
                                                             </tr>
                                                             <tr>
                                                                 <td>@lang('general.locker_registration')</td>
-                                                                <td><a target="_blank" href="{{ url('/').'/registro/' }}{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}">{{ url('/').'/registro/' }}{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}</a></td>
+                                                                <td><a target="_blank" href="{{ url('/').'/registro/' }}{{ (isset($agencia) and $agencia) ? base64_encode($agencia->id) : '' }}">{{ url('/').'/registro/' }}{{ (isset($agencia) and $agencia) ? base64_encode($agencia->id) : '' }}</a></td>
                                                             </tr>
                                                             <tr>
                                                                 <td>@lang('general.pre_alert')</td>
