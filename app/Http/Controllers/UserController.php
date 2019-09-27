@@ -100,14 +100,7 @@ class UserController extends Controller
             /* ACTUALIZACION DE TABLA PIVOT ROLE_USER */
             // verifico si tiene rol
             $roles = DB::table('role_user')->where([['user_id', $data->id]])->get();
-            // if($roles->count()){
-            //   echo '<pre>';
-            //   print_r($roles);
-            //   echo '</pre>';
-            // }else{
-            //   echo 'no hay roles ' . $roles->count();
-            // }
-            // exit();
+
             if($roles->count()){
               DB::table('role_user')
               ->where('user_id', $data->id)

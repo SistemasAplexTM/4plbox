@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-// include_once(app_path() . '\WebClientPrint\WebClientPrint.php');
 use Neodynamic\SDK\Web\WebClientPrint;
 use Neodynamic\SDK\Web\Utils;
 use Neodynamic\SDK\Web\DefaultPrinter;
@@ -37,8 +36,6 @@ class HomeController extends Controller
     public function index()
     {
       $this->assignPermissionsJavascript('documento');
-      // $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('DocumentoController@printFile'), Session::getId());
-      // return view('templates.documento.index', ['wcpScript' => $wcpScript]);
       return view('templates.documento.index');
     }
 }

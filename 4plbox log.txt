@@ -175,5 +175,5 @@ J17.4. Cuando agrupo cajas seleccionar si es MINTIC y que si no son MINTIC, se s
 J7.4. Informe de Manifiesto interno.
 R7.1. Informe de agencias, lo que se envía a la principal con utilidades.
 DJ4.1. Impresión de documentos con el programa que compramos.
-DJR6.1. Facturar Recibos, Ojo: Vi que varios recibos se pueden facturar en una sola factura, colocar un Check al cliente para definir si se le hace factura solo a él.
+******DJR6.1. Facturar Recibos, Ojo: Vi que varios recibos se pueden facturar en una sola factura, colocar un Check al cliente para definir si se le hace factura solo a él.
 DJR6.1. Generar archivo plano para subir facturación a QB (Flete, Seguro, Impuestos, Otros Cobros).
