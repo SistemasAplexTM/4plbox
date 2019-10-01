@@ -402,6 +402,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('reportDispatch/{id}', 'ReportController@updateReportDispatch');
     Route::get('reportDispatch/{id}', 'ReportController@getReportDispatchById');
+    Route::get('reportDispatch/{id}/print', 'ReportController@reportDispatchPrint');
     Route::get('reportDispatch', 'ReportController@getReportDispatch');
     Route::post('reportDispatch', 'ReportController@reportDispatch');
 
