@@ -344,7 +344,7 @@ class ConsigneeController extends Controller
             $answer = Consignee::where('id', $id)->update(['po_box' => $po_box]);
 
             // CREAR USUARIO PARA Casillero
-            $user = User::where('email', trim($data['correo']))->first();
+            $user = User::where([['email', trim($data['correo'])], ['agencia_id', $data['agencia_id']]])->first();
             if(!$user){
               if($data['telefono'] != '' and $data['correo'] != ''){
                 User::create([

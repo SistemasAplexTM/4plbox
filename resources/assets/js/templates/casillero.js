@@ -38,9 +38,9 @@ var objVue = new Vue({
                 primer_nombre: {
                   required: 'El primer nombre es obligatorio.'
                 },
-                primer_apellido: {
-                  required: 'El primer apellido es obligatorio.'
-                },
+                // primer_apellido: {
+                //   required: 'El primer apellido es obligatorio.'
+                // },
                 password: {
                   required: 'La contraseña es obligatoria.'
                 },
@@ -154,7 +154,6 @@ var objVue = new Vue({
         },
         create: function(){
             let me=this;
-
             this.$validator.validateAll().then((result) => {
                 if (result) {
                   var l = Ladda.create(document.querySelector('.ladda-button'));
@@ -195,6 +194,8 @@ var objVue = new Vue({
                     }).catch(function(error){
                         console.log(error);
                     });
+                }else{
+                  console.log(result);
                 }
             });
 
