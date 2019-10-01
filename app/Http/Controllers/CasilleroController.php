@@ -169,7 +169,7 @@ class CasilleroController extends Controller
         if($success){
             return array(
                 'code' => 200,
-                'url' => url()->current().'/'. $request->agencia_id,
+                'url' => url()->current().'/'. base64_encode($request->agencia_id),
                 'error' => false
             );
         }else{
@@ -212,7 +212,7 @@ class CasilleroController extends Controller
                 ['correo', $request->element],
                 ['agencia_id', $request->agencia_id],
             ])->first();
-            $dataUser = DB::table('users')->select('email')->where('email', $request->element)->first();
+            $dataUser = DB::table('users')->select('email')->where([['email', $request->element],['agencia_id', $request->agencia_id]])->first();
             if ($data || $dataUser) {
                 $answer = array(
                     "valid"   => false,

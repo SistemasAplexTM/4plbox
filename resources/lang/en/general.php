@@ -37,9 +37,9 @@ return [
     //resources/views/templates/agenciaForm
 
     'agencies'=>'Agencies',
-    'registration_data'=>'Registration data',
+    'registration_data'=>'Agency Data',
     'integrations'=>'Integrations',
-    'url_public'=>'Url public',
+    'url_public'=>'URL Public',
     'name'=>'Name',
     'agency_registration'=>'Agency registration',
     'responsable'=>'Responsable:',
@@ -77,6 +77,9 @@ return [
     'cancel'=>'Cancel',
     'save'=>'Save',
     'update'=>'Update',
+    'pobox_prefix'=>'PoBox Prefix',
+    'whatsapp'=>'WhatsApp',
+    'email_cc'=>'e-mail CC',
 
     //resources/views/templates/agenciaIndex
 

@@ -45,15 +45,23 @@
 <table width="700px;" border="" cellspacing="0" cellpadding="0" id="tableContainer">
     <tr>
         <td>
-            <div class="list-group-item-text agencia">{{ $agencia->descripcion }}</div>
-            <div class="list-group-item-text agencia">{{ $agencia->direccion }}</div>
-            <div class="list-group-item-text agencia">{{ $agencia->ciudad }} - {{ $agencia->pais }}</div>
-            <div class="list-group-item-text agencia">{{ $agencia->telefono }}</div>
+            <div class="list-group-item-text agencia">{{ $data->nombre }}</div>
+            <div class="list-group-item-text agencia">{{ $data->direccion }}</div>
+            <div class="list-group-item-text agencia">{{ $data->ciudad }} - {{ $data->pais }}</div>
+            <div class="list-group-item-text agencia">{{ $data->telefono }}</div>
         </td>
     </tr>
     <tr>
         <td>
-            <div id="center" style="width:300px;margin: 0 auto;"><img alt="image" class="" id="imgLogo" src="{{ asset('storage/') }}/{{ ((isset($agencia->logo) and $agencia->logo != '') ? $agencia->logo : 'logo.png') }}" /></div>
+            <div id="center" style="width:300px;margin: 0 auto;">
+              @if($data->logo != '')
+                @if(env('APP_DEPELOPER'))
+                  <img alt="image" class="" id="imgLogo" src="{{ public_path() . '/storage/' }}/{{ ((isset($data->logo) and $data->logo != '') ? $data->logo : '') }}" />
+                @else
+                  <img alt="image" class="" id="imgLogo" src="{{ asset('storage/') }}/{{ ((isset($data->logo) and $data->logo != '') ? $data->logo : '') }}" />
+                @endif
+              @endif
+            </div>
         </td>
     </tr>
     <tr>
@@ -64,19 +72,19 @@
     <tr>
         <td>
             <div id="centerDetail">
-                <strong id="strong">{{ $agencia->descripcion }}</strong> is in compliance with TSA-approved security program and all applicable security directives.
+                <strong id="strong">{{ $data->nombre }}</strong> is in compliance with TSA-approved security program and all applicable security directives.
                 Our number is SE0707021. This shipment contains cargo originating from an unknown shipper not exempted by TSA.
                 This shipment must be transported on an <strong id="strong">ALL- CARGO AIRCRAFT ONLY.</strong>
                 The individual whose name appears below certifies that he or she is an employee or authorize representative of
-                <strong id="strong">{{ $agencia->descripcion }}</strong> and understand that any fraudulent or false statement made in connection with this certification may
-                subject this individual and <strong id="strong">{{ $agencia->descripcion }}</strong> to both civil penalties under 49 CFR Part 1540.103(b) and fines and/or
+                <strong id="strong">{{ $data->nombre }}</strong> and understand that any fraudulent or false statement made in connection with this certification may
+                subject this individual and <strong id="strong">{{ $data->nombre }}</strong> to both civil penalties under 49 CFR Part 1540.103(b) and fines and/or
                 imprisonment of not more that 5 years under 18 U.S.C 1001.
             </div>
         </td>
     </tr>
     <tr>
         <td>
-            <div id="foot" style="padding-top: 30px;">{{ $agencia->descripcion }}</div>
+            <div id="foot" style="padding-top: 30px;">{{ $data->nombre }}</div>
             <div id="foot" style="padding-bottom: 50px;">Shipper Company</div>
         </td>
     </tr>

@@ -49,7 +49,7 @@
     </style>
 
     </head>
-    <?php 
+    <?php
     $total_piezas = 0;
     $total_peso = 0;
     $total_volumen = 0;
@@ -59,7 +59,7 @@
     <body>
         @if(count($data) > 0)
             @foreach($data as $val)
-                <?php 
+                <?php
                     $total_piezas += $val->piezas;
                     $total_peso += $val->peso;
                     $total_volumen += $val->volumen;
@@ -70,7 +70,11 @@
         <table>
           <tr>
             <td colspan="2" rowspan="5" style="width:300px;">
+              @if(env('APP_DEPELOPER'))
+                <img src="{{ public_path() . '/storage/' }}/{{ ((isset($agencia->logo) and $agencia->logo != '') ? $agencia->logo : 'logo.png') }}" height="120px" style="width: 100%"/>
+              @else
                 <img src="{{ asset('storage/') }}/{{ ((isset($agencia->logo) and $agencia->logo != '') ? $agencia->logo : 'logo.png') }}" height="120px" style="width: 100%"/>
+              @endif
             </td>
             <td colspan="2" class="agency_title title_doc" style="">{{ ((isset($agencia->descripcion) and $agencia->descripcion != '') ? $agencia->descripcion : '') }}</td>
           </tr>

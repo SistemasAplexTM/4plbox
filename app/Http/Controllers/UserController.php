@@ -98,9 +98,24 @@ class UserController extends Controller
             $data->agencia_id = $request['data']['agencia_id'];
             $data->save();
             /* ACTUALIZACION DE TABLA PIVOT ROLE_USER */
-            DB::table('role_user')
-            ->where('user_id', $data->id)
-            ->update(['role_id'    => $request['data']['rol_id']]);
+            // verifico si tiene rol
+            $roles = DB::table('role_user')->where([['user_id', $data->id]])->get();
+
+            if($roles->count()){
+              DB::table('role_user')
+              ->where('user_id', $data->id)
+              ->update(['role_id'    => $request['data']['rol_id']]);
+            }else{
+              /* INSERCION DE TABLA PIVOT ROLE_USER */
+              DB::table('role_user')->insert([
+                  [
+                      'role_id'    => $request['data']['rol_id'],
+                      'user_id'    => $data->id,
+                      'created_at' => date('Y-m-d H:i:s'),
+                  ],
+              ]);
+            }
+
             $answer = array(
                 "datos" => $request['data'],
                 "code"  => 200,
@@ -183,18 +198,30 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getAll()
+    public function getAll($data)
     {
         $where = [['users.deleted_at', null]];
-        if(!Auth::user()->isRole('admin')){
-            $where[] = array('users.agencia_id', Auth::user()->agencia_id);
+        if($data == 1 || !Auth::user()->isRole('admin')){
+          $where[] = ['users.agencia_id', Auth::user()->agencia_id];
         }
+        if($data == 2){
+          $where[] = ['users.agencia_id', '<>', Auth::user()->agencia_id];
+        }
+
         $data = User::leftjoin('agencia as a', 'users.agencia_id', 'a.id')
             ->leftJoin('role_user as b', 'users.id', 'b.user_id')
             ->leftJoin('roles as c', 'c.id', 'b.role_id')
             ->select('users.id', 'users.name', 'users.email', 'users.agencia_id', 'users.actived', 'a.descripcion as name_agencia', 'c.id AS rol_id', 'c.name as rol_name')
             //->groupBy('users.id', 'users.name', 'users.email', 'users.agencia_id', 'users.actived', 'a.descripcion', 'c.id', 'c.name')
-            ->where($where)->get();
+            ->where($where)
+            ->when($data, function ($query, $dat) {
+              if ($dat == 3) {
+                return $query->whereNotNull('users.consignee_id');
+              }else{
+                return $query->whereNull('users.consignee_id');
+              }
+            })
+            ->get();
         return \DataTables::of($data)->make(true);
     }
 

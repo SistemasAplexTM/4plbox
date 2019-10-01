@@ -25,7 +25,7 @@
     </style>
 </head>
 <body>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQTpXj82d8UpCi97wzo_nKXL7nYrd4G70"></script>
+    {{-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQTpXj82d8UpCi97wzo_nKXL7nYrd4G70"></script> --}}
     <div id="wrapper">
         <div id="">
             <div class="wrapper wrapper-content animated fadeInRight" id="casillero">
@@ -67,8 +67,7 @@
                                                 <label class="control-label" for="primer_apellido">@lang('general.surnames')<span class="asterisco">*</span></label>
                                                 <input
                                                     v-model="primer_apellido"
-                                                    v-validate="corporativo ? '' : 'required'"
-                                                    type="text" required="" placeholder="@lang('general.surnames')" class="form-control" id="primer_apellido" name="primer_apellido" value="">
+                                                    type="text" placeholder="@lang('general.surnames')" class="form-control" id="primer_apellido" name="primer_apellido" value="">
                                                 <label v-show="errors.has('primer_apellido')" class="error">@{{ errors.first('primer_apellido') }}</label>
                                             </div>
                                         </div>
@@ -213,7 +212,7 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/plantilla.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
-    <script src="{{ asset('js/templates/documento/postalCode.js') }}"></script>
+    {{-- <script src="{{ asset('js/templates/documento/postalCode.js') }}"></script> --}}
     <script src="{{ asset('js/templates/casillero.js') }}"></script>
 </body>
 </html>

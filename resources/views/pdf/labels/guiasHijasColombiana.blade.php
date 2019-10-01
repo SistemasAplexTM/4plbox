@@ -27,7 +27,7 @@
         </style>
     </head>
     <body>
-        <?php 
+        <?php
             $cont = 0;
             $toalRegistros = count($detalle);
             $toalRegistros = 0;
@@ -43,7 +43,11 @@
             <table border="0" cellpadding="0" cellspacing="0" style="page-break-after:{{ ($contRegistros === $piezas) ? 'avoid' : 'always' }}">
                 <tr>
                     <td colspan="4" style="text-align:center">
+                      @if(env('APP_DEPELOPER'))
+                        <img src="{{ public_path() . '/storage/' }}/{{ ((isset($value->agencia_logo) and $value->agencia_logo != '') ? trim($value->agencia_logo) : 'logo.png') }}"  style="height: 65px;"/>
+                      @else
                         <img src="{{ asset('storage/') }}/{{ ((isset($value->agencia_logo) and $value->agencia_logo != '') ? trim($value->agencia_logo) : 'logo.png') }}"  style="height: 65px;"/>
+                      @endif
                     </td>
                 </tr>
                 <tr>

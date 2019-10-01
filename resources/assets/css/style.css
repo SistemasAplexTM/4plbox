@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
-@import url("https://fonts.googleapis.com/css?family=Roboto:400,300,500,700");
+@import url("https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i&display=swap");
 /*
  *
  *   INSPINIA - Responsive Admin Theme
@@ -1079,16 +1079,16 @@ button.dim:active:before {
 .label {
   background-color: #d1dade;
   color: #5e5e5e;
-  font-family: 'Open Sans';
+  font-family: 'Roboto Condensed';
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 300;
   padding: 3px 8px;
   text-shadow: none;
 }
 .badge {
   background-color: #d1dade;
   color: #5e5e5e;
-  font-family: 'Open Sans';
+  font-family: 'Roboto Condensed';
   font-size: 11px;
   font-weight: 600;
   padding-bottom: 4px;
@@ -3796,8 +3796,8 @@ code {
   border-width: 3px 0 0;
   color: inherit;
   margin-bottom: 0;
-  padding: 14px 15px 7px;
-  min-height: 48px;
+  padding: 10px 15px 7px;
+  min-height: 50px;
 }
 .ibox-content {
   background-color: #ffffff;
@@ -3854,7 +3854,9 @@ table.table-mail tr td {
 }
 .ibox-title h5 {
   display: inline-block;
-  font-size: 14px;
+  font-family: 'Roboto Condensed';
+  font-size: 20px;
+  font-weight: 100;
   margin: 0 0 7px;
   padding: 0;
   text-overflow: ellipsis;
@@ -7895,8 +7897,9 @@ body.md-skin {
   border-style: none;
 }
 .md-skin .ibox-title h5 {
+  font-family:'Roboto Condensed';
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 300;
 }
 .md-skin a.close-canvas-menu {
   color: #ffffff;

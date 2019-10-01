@@ -19,6 +19,9 @@
 
 @section('content')
 <style type="text/css">
+  .tab-pane{
+    padding-top: 15px;
+  }
 	.v-select{
 		background-color:#FFFFFF;
 	}
@@ -181,30 +184,70 @@
                   </div>
                   <div class="ibox-content">
                       <!--***** contenido ******-->
-                      <div class="table-responsive">
-                          <table id="tbl-user" class="table table-striped table-hover table-bordered" style="width: 100%;">
-                              <thead>
-                                  <tr>
-                                      <th>@lang('general.name')</th>
-                                      <th>@lang('general.email')</th>
-                                      <th>@lang('general.credential')</th>
-                                      <th>@lang('general.agency')</th>
-                                      <th>@lang('general.actions')</th>
-                                  </tr>
-                              </thead>
-                              <tbody>
+                      <ul class="nav nav-tabs" role="tablist">
+                        <li role="users" class="active">
+                          <a href="#users" aria-controls="users" role="tab" data-toggle="tab"><i class="fal fa-users"></i> Usuarios</a>
+                        </li>
+                        @if(Auth::user()->isRole('admin'))
+                          <li role="agency" @click="getUsersTable(2, 'user_agency')">
+                            <a href="#agency" aria-controls="agency" role="tab" data-toggle="tab"><i class="fal fa-user-friends"></i> Usuarios Agencias</a>
+                          </li>
+                        @endif
+                        <li role="users_locker" @click="getUsersTable(3, 'users_locker')">
+                          <a href="#users_locker" aria-controls="users_locker" role="tab" data-toggle="tab"><i class="fal fa-clipboard-user"></i> Usuarios Casillero</a>
+                        </li>
+                      </ul>
+                      <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active in fade" id="users">
+                          <div class="table-responsive">
+                              <table id="tbl-user" class="table table-striped table-hover table-bordered" style="width: 100%;">
+                                  <thead>
+                                      <tr>
+                                          <th>@lang('general.name')</th>
+                                          <th>@lang('general.email')</th>
+                                          <th>@lang('general.credential')</th>
+                                          <th>@lang('general.agency')</th>
+                                          <th>@lang('general.actions')</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                              </table>
+                          </div>
+                        </div>
 
-                              </tbody>
-                              <tfoot>
-                                  <tr>
-                                      <th>@lang('general.name')</th>
-                                      <th>@lang('general.email')</th>
-                                      <th>@lang('general.credential')</th>
-                                      <th>@lang('general.agency')</th>
-                                      <th>@lang('general.actions')</th>
-                                  </tr>
-                              </tfoot>
-                          </table>
+                        <div role="tabpanel" class="tab-pane fade" id="agency">
+                          <div class="table-responsive">
+                              <table id="tbl-user_agency" class="table table-striped table-hover table-bordered" style="width: 100%;">
+                                  <thead>
+                                      <tr>
+                                          <th>@lang('general.name')</th>
+                                          <th>@lang('general.email')</th>
+                                          <th>@lang('general.credential')</th>
+                                          <th>@lang('general.agency')</th>
+                                          <th>@lang('general.actions')</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                              </table>
+                          </div>
+                        </div>
+
+                        <div role="tabpanel" class="tab-pane fade" id="users_locker">
+                          <div class="table-responsive">
+                              <table id="tbl-users_locker" class="table table-striped table-hover table-bordered" style="width: 100%;">
+                                  <thead>
+                                      <tr>
+                                          <th>@lang('general.name')</th>
+                                          <th>@lang('general.email')</th>
+                                          <th>@lang('general.credential')</th>
+                                          <th>@lang('general.agency')</th>
+                                          <th>@lang('general.actions')</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                              </table>
+                          </div>
+                        </div>
                       </div>
                   </div>
               </div>

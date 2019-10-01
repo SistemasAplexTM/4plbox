@@ -44,7 +44,11 @@
             <table border="0" cellpadding="0" cellspacing="0" style="page-break-after:{{ ($contRegistros === $piezas) ? 'avoid' : 'always' }}">
                 <tr>
                     <td colspan="4" style="text-align:center">
+                      @if(env('APP_DEPELOPER'))
+                        <img src="{{ public_path() . '/storage/' }}/{{ ((isset($documento->agencia_logo) and $documento->agencia_logo != '') ? trim($documento->agencia_logo) : 'logo.png') }}"  style="height: 65px;"/>
+                      @else
                         <img src="{{ asset('storage/') }}/{{ ((isset($documento->agencia_logo) and $documento->agencia_logo != '') ? trim($documento->agencia_logo) : 'logo.png') }}"  style="height: 65px;"/>
+                      @endif
                     </td>
                 </tr>
                 <tr>

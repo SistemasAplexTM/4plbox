@@ -1,49 +1,53 @@
 $(document).ready(function() {});
 $(window).load(function() {
-    $('#tbl-user').DataTable({
-        ajax: 'user/all',
-        columns: [{
-            data: 'name',
-            name: 'name'
-        }, {
-            data: 'email',
-            name: 'email'
-        }, {
-            data: 'rol_name',
-            name: 'rol_name'
-        }, {
-            data: 'name_agencia',
-            name: 'name_agencia'
-        }, {
-            sortable: false,
-            "render": function(data, type, full, meta) {
-                var btn_edit = '';
-                var btn_delete = '';
-                var cred_id = full.rol_id;
-                var age_id = full.agencia_id;
-                if (full.rol_id == null) {
-                    cred_id = 'null';
-                }
-                if (full.agencia_id == null) {
-                    age_id = 'null';
-                }
-                if (permission_update) {
-                    var params = [
-                        full.id, "'" + full.name + "'", "'" + full.email + "'",
-                        cred_id,
-                        age_id, "'" + full.rol_name + "'", "'" + full.name_agencia + "'",
-                        full.actived,
-                    ];
-                    var btn_edit = "<a onclick=\"edit(" + params + ")\" class='edit_btn' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fal fa-pencil fa-lg'></i></a> ";
-                }
-                if (permission_delete) {
-                    var btn_delete = " <a onclick=\"eliminar(" + full.id + "," + true + ")\" class='delete_btn' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fal fa-trash-alt fa-lg'></i></a> ";
-                }
-                return btn_edit + btn_delete;
-            }
-        }]
-    });
+  getUsers(1, 'user');
 });
+
+function getUsers(data, table) {
+  $('#tbl-' + table).DataTable({
+      ajax: 'user/all/' + data,
+      columns: [{
+          data: 'name',
+          name: 'name'
+      }, {
+          data: 'email',
+          name: 'email'
+      }, {
+          data: 'rol_name',
+          name: 'rol_name'
+      }, {
+          data: 'name_agencia',
+          name: 'name_agencia'
+      }, {
+          sortable: false,
+          "render": function(data, type, full, meta) {
+              var btn_edit = '';
+              var btn_delete = '';
+              var cred_id = full.rol_id;
+              var age_id = full.agencia_id;
+              if (full.rol_id == null) {
+                  cred_id = 'null';
+              }
+              if (full.agencia_id == null) {
+                  age_id = 'null';
+              }
+              if (permission_update) {
+                  var params = [
+                      full.id, "'" + full.name + "'", "'" + full.email + "'",
+                      cred_id,
+                      age_id, "'" + full.rol_name + "'", "'" + full.name_agencia + "'",
+                      full.actived,
+                  ];
+                  var btn_edit = "<a onclick=\"edit(" + params + ")\" class='edit_btn' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fal fa-pencil fa-lg'></i></a> ";
+              }
+              if (permission_delete) {
+                  var btn_delete = " <a onclick=\"eliminar(" + full.id + "," + true + ")\" class='delete_btn' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fal fa-trash-alt fa-lg'></i></a> ";
+              }
+              return btn_edit + btn_delete;
+          }
+      }]
+  });
+}
 
 function edit(id, name, email, rol_id, agencia_id, rol_name, name_agencia, actived) {
     var data = {
@@ -105,6 +109,11 @@ var objVue = new Vue({
         listErrors: {},
     },
     methods: {
+      getUsersTable(op, table){
+        if (!$.fn.DataTable.isDataTable('#tbl-' + table)) {
+          getUsers(op, table)
+        }
+      },
         resetForm: function() {
             this.id = null;
             this.email = null;
@@ -151,6 +160,12 @@ var objVue = new Vue({
         },
         updateTable: function() {
             refreshTable('tbl-user');
+            if ($.fn.DataTable.isDataTable('#tbl-user_agency')) {
+              refreshTable('tbl-user_agency');
+            }
+            if ($.fn.DataTable.isDataTable('#tbl-users_locker')) {
+              refreshTable('tbl-users_locker');
+            }
         },
         delete: function(data) {
             this.formErrors = {};
@@ -205,17 +220,6 @@ var objVue = new Vue({
                     };
                 });
             };
-            /*const isUsernameUnique = (value) => {
-                return axios.get('/validarUsername/' + value).then((response) => {
-                    // Notice that we return an object containing both a valid property and a data property.
-                    return {
-                        valid: response.data.valid,
-                        data: {
-                            message: response.data.message
-                        }
-                    };
-                });
-            };*/
             // The messages getter may also accept a third parameter that includes the data we returned earlier.
             this.$validator.extend('unique', {
                 validate: isUnique,
@@ -223,12 +227,6 @@ var objVue = new Vue({
                     return data.message;
                 }
             });
-            /*this.$validator.extend('usernameunique', {
-                validate: isUsernameUnique,
-                getMessage: (field, params, data) => {
-                    return data.message;
-                }
-            });*/
             this.$validator.validateAll().then((result) => {
                 if (result) {
                     var activo = 0;

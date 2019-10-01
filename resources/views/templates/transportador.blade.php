@@ -178,7 +178,8 @@
                               </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <transition name="fade">
+                        <div class="row" v-show="carrier">
                             <div class="col-lg-12">
                                 <div class="col-lg-12">
                                   <div class="form-group">
@@ -206,6 +207,7 @@
                                 </div>
                             </div>
                         </div>
+                      </transition>
 
 
                         <div class="row">

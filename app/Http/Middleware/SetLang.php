@@ -7,7 +7,7 @@ use Session;
 use App;
 use Config;
 use JavaScript;
- 
+
 class SetLang
 {
     /**
@@ -24,16 +24,17 @@ class SetLang
         } else {
             // check browser lang - https://learninglaravel.net/detect-and-change-language-on-the-fly-with-laravel
             $lang = substr($request->server('HTTP_ACCEPT_LANGUAGE'), 0, 2);
- 
+
             if ($lang != 'es' && $lang != 'en') {
                 $lang = 'en';
             }
         }
         JavaScript::put([
-            'lang'          => $lang,   
-            'app_label'     => env('APP_LABEL'),   
-            'app_type'      => env('APP_TYPE'),   
-            'app_client'    => env('APP_CLIENT'),   
+            'lang'          => $lang,
+            'app_label'     => env('APP_LABEL'),
+            'app_type'      => env('APP_TYPE'),
+            'app_client'    => env('APP_CLIENT'),
+            'app_cuft'      => env('APP_CUFT')
         ]);
         App::setLocale($lang);
         return $next($request);

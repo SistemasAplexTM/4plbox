@@ -188,10 +188,25 @@
         <el-popover
           placement="top-start"
           title="Notificar Recibos de Trackings de Consignees"
-          width="200"
+          width="410"
           trigger="hover"
           content="Se enviara email con copia oculta a este cliente de la carga recibida de los consignees asociado a el.">
           <el-checkbox slot="reference" v-model="form.notify_client"><i class="fal fa-envelope"></i> Notificar Recibos de Trackings de Consignees.</el-checkbox>
+        </el-popover>
+      </el-col>
+    </el-row>
+    <el-row :gutter="24" v-if="payload.table === 'clientes'">
+      <el-col :span="8">
+        <label for="invoice_all" class="control-label gcore-label-top">&nbsp;</label>
+      </el-col>
+      <el-col :span="16">
+        <el-popover
+          placement="top-start"
+          title="Factura Agrupada"
+          width="410"
+          trigger="hover"
+          content="Se generará una sola factura agrupando en ella las de sus clientes.">
+          <el-checkbox slot="reference" v-model="form.invoice_all"><i class="fal fa-file-invoice-dollar"></i> Generar Factura Agrupada.</el-checkbox>
         </el-popover>
       </el-col>
     </el-row>
@@ -202,9 +217,8 @@
         </el-col>
         <el-col :span="16">
           <el-popover
-            placement="top-start"
             title="Notificar al Cliente"
-            width="200"
+            width="410"
             trigger="hover"
             content="Se le enviara email de la carga recibida al cliente asociado de este consignee.">
             <el-checkbox slot="reference" v-model="form.notify_client"><i class="fal fa-envelope"></i> Notificar al cliente.</el-checkbox>
@@ -240,7 +254,7 @@
         </el-checkbox-group>
       </el-col>
     </el-row>
-    <el-row :gutter="24">
+    <el-row :gutter="24" v-if="!payload.hidden_btn">
       <el-col :span="24">
         <el-button type="success" :loading="loading" @click="beforeSend()" v-if="!edit"><i class="fal fa-save"></i> Guardar</el-button>
         <el-button type="primary" :loading="loading" @click="beforeSend(true)" v-if="edit"><i class="fal fa-edit"></i> Actualizar</el-button>
@@ -287,6 +301,7 @@ export default {
         tarifa: 0,
         emailsend: false,
         notify_client: false,
+        invoice_all: false,
         zona: null,
       },
       check_create: [],
@@ -295,6 +310,18 @@ export default {
       city_selected_s: '',
       table: this.payload.table
     };
+  },
+  created(){
+    let me = this;
+    bus.$on('save', function (payload) {
+      me.beforeSend();
+    });
+    bus.$on('update', function (payload) {
+      me.beforeSend(true);
+    });
+    bus.$on('cancel', function (payload) {
+      me.resetForm();
+    });
   },
   watch:{
     'payload.field_id': {
@@ -453,10 +480,12 @@ export default {
       this.form.tarifa = 0;
       this.form.emailsend = false;
       this.form.notify_client = false;
+      this.form.invoice_all = false;
       this.form.zona = null;
       this.city_selected_s = (this.city_selected_s === null) ? '' : null;
       this.edit=false;
       this.$emit('cancel');
+      bus.$emit('close');
     },
     getSelectBranch: function(){
       axios.get('/agencia/getAgencies').then(response => {
@@ -484,6 +513,11 @@ export default {
         }else{
           me.form.notify_client = false;
         }
+        if (me.form.invoice_all == 1) {
+          me.form.invoice_all = true;
+        }else{
+          me.form.invoice_all = false;
+        }
         if (this.payload.table !== 'clientes') {
           if (response.data.cliente_id == 'null' || response.data.cliente_id == '' || response.data.cliente_id == 'undefined') {
             me.form.cliente_id = null;
@@ -505,8 +539,6 @@ export default {
     },
     setFormToClient(){
       if (this.table.toLowerCase() === 'clientes') {
-        console.log(this.city_selected_s);
-        console.log(this.form);
         this.form = {
           'localizacion_id': this.form.localizacion_id,
           'nombre': this.form.primer_nombre + ' '
@@ -518,6 +550,7 @@ export default {
           'email': this.form.correo,
           'zona': this.form.zona,
           'email_bcc': this.form.notify_client,
+          'factura_agrupada': this.form.invoice_all,
         }
       }
     },

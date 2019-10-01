@@ -21,5 +21,6 @@ class Cliente extends Model
         'email',
         'zona',
         'email_bcc',
+        'factura_agrupada',
     ];
 }

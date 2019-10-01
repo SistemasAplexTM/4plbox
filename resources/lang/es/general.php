@@ -40,9 +40,9 @@ return [
     //resources/views/templates/agenciaForm
 
     'agencies'=>'Agencias',
-    'registration_data'=>'Datos de registro',
+    'registration_data'=>'Datos Agencia',
     'integrations'=>'Integraciones',
-    'url_public'=>'Url publicas',
+    'url_public'=>'URL Públicas',
     'config_print'=>'Configuración de impresoras',
     'print_label'=>'Impresora para labels',
     'print_default'=>'Impresora por defecto',
@@ -52,9 +52,9 @@ return [
     'address'=>'Dirección',
     'phone'=>'Teléfono',
     'city'=>'Ciudad',
-    'zip_code'=>'Cd postal:',
-    'email'=>'Correo',
-    'url_terms'=>'Url términos:',
+    'zip_code'=>'Cód. Postal',
+    'email'=>'e-mail',
+    'url_terms'=>'URL Términos:',
     'service'=>'Servicio',
     'select'=>'Seleccione',
     'agency_detail'=>'Detalle Agencia: Define las tarifas para esta agencia.',
@@ -76,13 +76,16 @@ return [
     'view_client'=>'Alerta para Cliente',
     'transportadora'=>'Transportadora',
     'tracking'=>'Tracking',
-    'locker_registration'=>'Registro casillero ',
+    'locker_registration'=>'Registro Casillero ',
     'pre_alert'=>'Pre alert',
     'locker'=>'Casillero',
     'return'=>'Volver',
     'canel'=>'Cancelar',
     'save'=>'Salvar',
     'update'=>'Actualizar',
+    'pobox_prefix'=>'Prefijo PoBox',
+    'whatsapp'=>'WhatsApp',
+    'email_cc'=>'e-mail CC',
 
     //resources/views/templates/agenciaIndex
     'new'=>'Nuevo',
@@ -91,8 +94,8 @@ return [
 
     //resources/views/templates/arancel
 
-    'tariff_positions'=>'Posiciones arancelarias',
-    'tariff_position_register'=>'Registro de posición arancelaria',
+    'tariff_positions'=>'Posiciones Arancelarias',
+    'tariff_position_register'=>'Registro de Posición Arancelaria',
     'obligatory_field'=>'* Campo obligatorio',
     'description'=>'Descripción:',
     'tariff'=>'Arancel:',
@@ -115,7 +118,7 @@ return [
     'terms_and_conditions'=>'Términos y condiciones generales.',
     'i_wish_to_receive_information'=>'Deseo recibir información de mi casillero y de mi interés.',
     'create_locker'=>' Crear casillero',
-    'email_be_your_user'=>'Correo electrónico (ser tu usuario)',
+    'email_be_your_user'=>'e-mail (será tu usuario)',
 
 
     //resources/views/templates/ciudad
@@ -206,7 +209,7 @@ return [
 
     //resources/views/template/prealerta
 
-    'pre_alert'=>'Pre alerta',
+    'pre_alert'=>'Pre Alerta',
     'preview_your_shipment'=>'Prealerte su envío',
     'enter_the_tracking_and_instruction'=>'Ingrese los tracking y la instrucción de envío de sus paquetes.',
     'dispatch_immediately'=>'Despachar de inmediato',
@@ -249,8 +252,6 @@ return [
     'enter_the_tax_percentage'=>'Ingrese el porcentaje del impuesto',
 
 
-
-
     //resources/views/template/shipper
     'shipper_registration'=>'Registro de Shipper',
     'status'=>'Estado',
@@ -259,7 +260,6 @@ return [
     'not'=>'No',
 
     //resources/views/template/statusReport
-
     'report_status'=>'Reportar estatus',
     'register_report'=>' Registrar reporte',
     'conveyor'=>'Transportadora',
@@ -275,13 +275,13 @@ return [
     'types_of_documents'=>'Tipos de documentos',
     'record_type_of_document'=>'Registro tipo de documento',
     'icon'=>'Icono',
-    'mail_template'=>'Plantilla de correo',
+    'mail_template'=>'Plantilla de e-mail',
     'initial_consecutive'=>'Consecutivo inicial',
     'security_settings'=>'Configuración de seguridad',
     'select_the_credentials'=>'Seleccione las credenciales que podrán utilizar este documento *',
     'select_the_additional_functionalities'=>'Seleccione las funcionalidades adicionales del documento (opcional)',
     'document_type'=>'Tipo documento',
-    'mail_with_copy_to'=>'Correo con copia a:',
+    'mail_with_copy_to'=>'e-mail con copia a:',
 
 
     //resources/views/template/tracking
@@ -304,13 +304,13 @@ return [
     'transported'=>'Transportador',
     'registration_of_transported'=>'Registro de transportado',
     'contact'=>'Contacto',
-    'state_dpto'=>'Estado / Dpto',
+    'state_dpto'=>'Estado / Dpto.',
     'carrier'=>'Agente',
     'transporters'=>'Transportadores',
     'name_of_the_transporter'=>'Ingrese el nombre del transportador',
     'transporter_address'=>'Dirección del transportador',
     'enter_the_phone'=>'Ingrese el teléfono',
-    'enter_the_email'=>'Ingrese el email',
+    'enter_the_email'=>'Ingrese el e-mail',
     'enter_the_name_of_the_contact'=>'Enter the name of the contact',
     'enter_the_city_of_the_transporter'=>'Ingrese la ciudad del transportador',
     'enter_the_status_of_the_transporter'=>'Ingrese el estado del transportador',
@@ -331,8 +331,7 @@ return [
     'is_agency'=>'Rol de agencia',
 
     //home
-
-    'warehouse'=>'Almacén',
+    'warehouse'=>'Bodega',
     'backup'=>'Backup',
 
     //logActivity

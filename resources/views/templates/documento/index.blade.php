@@ -126,17 +126,13 @@
                                 <div class="col-lg-12" style="font-size: 30px; font-weight:800;border-bottom: 1px solid #CDCDCD;">
                                     <span id="icono_doc"></span>&nbsp;
                                     <div style="display:inline;" id="nombre_doc">
-                                       @lang('documents.warehouse')
+
                                     </div>
                                     <div class="btn_actions" style="display:inline;float:right;">
                                       <div class="btn-group print_document" style="display:none;">
                                           <button data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle" aria-expanded="false" style="padding-top: 3px;padding-bottom: 3px;"><i class='fal fa-print fa-lg'></i> <span class="caret"></span></button>
                                           <ul class="dropdown-menu dropdown-menu-right pull-right">
-                                              <li><a href="#">Action</a></li>
-                                              <li><a href="#">Another action</a></li>
-                                              <li><a href="#">Something else here</a></li>
-                                              <li class="divider"></li>
-                                              <li><a href="#">Separated link</a></li>
+
                                           </ul>
                                       </div>
                                       <a class="btn btn-warning btn-outline edit_document" title="Editar" data-toggle="tooltip" style="display:none;"><i class="fal fa-pencil fa-lg"></i></a>

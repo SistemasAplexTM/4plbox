@@ -65,7 +65,7 @@ return [
 		'freight'                  => 'Freight',
 		'insured_value'            => 'Insured value',
 		'insurance'                => 'Insurance',
-		'charges'                  => 'Charges Ad.',
+		'charges'                  => 'More Charges',
 		'discount'                 => 'Discount',
 		'total'                    => 'Total',
 		'close'                    => 'Close',

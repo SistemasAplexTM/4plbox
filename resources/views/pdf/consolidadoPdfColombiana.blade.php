@@ -44,8 +44,11 @@
     <thead>
         <tr>
             <th colspan="2" width="300px">
-              <img class="img-circle" id="logo" height="70px" style="margin-bottom: 10px;" src="{{ public_path() . '/storage/' }}/{{ ((isset($documento->agencia_logo) and $documento->agencia_logo != '') ? trim($documento->agencia_logo) : 'logo.png') }}" style="width: 100%"/>
-              {{-- <img alt="image" class="img-circle" id="logo" height="70px" style="margin-bottom: 10px;" src="{{ asset('storage/') }}/{{ ((isset($documento->agencia_logo) and $documento->agencia_logo != '') ? $documento->agencia_logo : 'logo.png') }}"/> --}}
+              @if(env('APP_DEPELOPER'))
+                <img class="img-circle" id="logo" height="70px" style="margin-bottom: 10px;" src="{{ public_path() . '/storage/' }}/{{ ((isset($documento->agencia_logo) and $documento->agencia_logo != '') ? trim($documento->agencia_logo) : 'logo.png') }}" style="width: 100%"/>
+              @else
+                <img alt="image" class="img-circle" id="logo" height="70px" style="margin-bottom: 10px;" src="{{ asset('storage/') }}/{{ ((isset($documento->agencia_logo) and $documento->agencia_logo != '') ? $documento->agencia_logo : 'logo.png') }}" style="width: 100%"/>
+              @endif
             </th>
             <th>&nbsp;</th>
             <th width="250px" style="text-align: right;">
