@@ -25,6 +25,7 @@
     "element-ui": "^2.11.1",
     "es6-promise": "^4.2.8",
     "imagemin": "^5.3.1",
+    "jsprintmanager": "^2.0.2",
     "sweetalert2": "^7.26.26",
     "v-money": "^0.8.1",
     "vee-validate": "^2.1.1",

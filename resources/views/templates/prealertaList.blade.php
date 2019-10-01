@@ -59,7 +59,7 @@
                                 </tr>
                             </tfoot>
                         </table>
-                    </div>             
+                    </div>
                 </div>
             </div>
         </div>
@@ -67,5 +67,14 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('js/templates/prealerta.js') }}"></script>
+  {{-- <script src="{{ asset('js/plugins/zip.js-master/scripts/JSPrintManager.js') }}"></script>
+  <script src="{{ asset('js/plugins/zip.js-master/scripts/zip.js') }}"></script>
+  <script src="{{ asset('js/plugins/zip.js-master/scripts/zip-ext.js') }}"></script>
+  <script src="{{ asset('js/plugins/zip.js-master/scripts/deflate.js') }}"></script> --}}
+
+  {{-- <script src="{{ asset('js/plugins/QZ-Print/dependencies/rsvp-3.1.0.min.js') }}"></script>
+  <script src="{{ asset('js/plugins/QZ-Print/dependencies/sha-256.min.js') }}"></script>
+  <script src="{{ asset('js/plugins/QZ-Print/qz-tray.js') }}"></script> --}}
+
+  <script src="{{ asset('js/templates/prealerta.js') }}"></script>
 @endsection

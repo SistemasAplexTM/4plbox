@@ -39,9 +39,81 @@ $(document).ready(function() {
         objVue.msn();
     });
 });
+
+// function findPrinters() {
+//   qz.printers.find().then(function(data) {
+//     var list = '';
+//     for(var i = 0; i < data.length; i++) {
+//        list += "&nbsp; " + data[i] + "<br/>";
+//     }
+//     $('#prealerta').append("<strong>Available printers:</strong><br/>" + list);
+//   }).catch(function(e) { console.error(e); });
+// }
+
 var objVue = new Vue({
     el: '#prealerta',
     mounted: function(){
+      let me = this;
+      // IMPRIMIENDO CON QZ
+      // Compruebo la conexion
+      // qz.websocket.connect().then(function() {
+      //   alert("Connected!");
+      //
+      //   // listando todas las impresoras del cliente
+      //   findPrinters();
+      //
+      //   // Busqueda de impresora por nombre
+      //   qz.printers.find("Nitro PDF Creator (Pro 12)").then(function(found) {
+      //     alert("Printer: " + found);
+      //
+      //     // impresion directa
+      //     var config = qz.configs.create(found);
+      //     var data = [{
+      //           type: 'pdf',
+      //           data: '/files/dumaFile.pdf'
+      //     }];
+      //     qz.print(config, data).catch(function(e) { console.error(e); });
+      //     // fin
+      //   });
+      // });
+
+      // JSPM.JSPrintManager.auto_reconnect = true;
+      // JSPM.JSPrintManager.start();
+      // JSPM.JSPrintManager.WS.onStatusChanged = function () {
+      //     if (JSPM.JSPrintManager.websocket_status == JSPM.WSStatus.Open) {
+      //       // Listado de impresoras simple
+      //       JSPM.JSPrintManager.getPrinters().then(function (e) {
+      //         e.forEach(function(el, index) {
+      //           // me.printers_options.push({ id: index, name: el });
+      //         });
+      //       });
+      //
+      //       // Impresion Multiple
+      //       var cpj = new JSPM.ClientPrintJob();
+      //       // impresora por defecto
+      //       // cpj.clientPrinter = new JSPM.DefaultPrinter();
+      //
+      //       // muestra dialog con listado de impresoras
+      //       // cpj.clientPrinter = new JSPM.UserSelectedPrinter();
+      //
+      //       // imprime con una impresora seleccionada
+      //       cpj.clientPrinter = new JSPM.InstalledPrinter('Nitro PDF Creator (Pro 12)');
+      //
+      //       var my_file1 = new JSPM.PrintFilePDF('/files/dumaFile.pdf', JSPM.FileSourceType.URL, 'archivo1.pdf', 1);
+      //       var my_file2 = new JSPM.PrintFilePDF('/files/file.pdf', JSPM.FileSourceType.URL, 'archivo2.pdf', 1);
+      //       cpj.files.push(my_file1);
+      //       cpj.files.push(my_file2);
+      //       cpj.sendToClient();
+      //     }else {
+      //       if(JSPM.JSPrintManager.websocket_status == JSPM.WSStatus.Closed){
+      //         console.log('JSPM is not installed or not running!');
+      //       }else{
+      //         if(JSPM.JSPrintManager.websocket_status == JSPM.WSStatus.BlackListed){
+      //           console.log('JSPM has blacklisted this website!');
+      //         }
+      //       }
+      //     }
+      // };
     },
     data:{
         email: null,

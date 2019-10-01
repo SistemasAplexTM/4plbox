@@ -13,7 +13,7 @@
         <i class="fal fa-balance-scale icon"></i> {{ item.peso }} Lb
       </div>
       <div class="content-text-search">
-        <i class="fal fa-balance-truck icon"></i> {{ item.tracking }}
+        <i class="fal fa-truck icon"></i> {{ item.tracking }}
       </div>
       <div class="content-text-search">
         <i class="fal fa-comment-edit icon"></i> {{ item.contenido }}
