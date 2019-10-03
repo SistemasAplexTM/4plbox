@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Plantillas Email')
 @section('breadcrumb')
-{{-- bread crumbs --}}
 <div class="row wrapper border-bottom white-bg page-heading">
   <div class="col-lg-10">
     <h2>@lang('general.email_templates')</h2>
@@ -391,275 +390,311 @@
           </div>
         </div>
         <div class="ibox-content">
-          <div>
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
-              <li role="plantillas" class="active"><a href="#table" aria-controls="table" role="tab"
-                  data-toggle="tab">@lang('general.table')</a></li>
-              <li role="plantillas"><a href="#variables" aria-controls="variables" role="tab"
-                  data-toggle="tab">Variables</a></li>
-            </ul>
-
-            {{-- input para coiar en clipboard --}}
-            <input type="hidden" id="testing-code" :value="testingCode">
-            <!-- Tab panes -->
-            <div class="tab-content">
-              <div role="tabpanel" class="tab-pane fade in active" id="table" style="margin-top: 20px;">
-                <div class="table-responsive">
-                  <table id="tbl-emailTemplate" class="table table-striped table-hover table-bordered"
-                    style="width: 100%;">
-                    <thead>
-                      <tr>
-                        <th>@lang('general.name')</th>
-                        <th>@lang('general.description')</th>
-                        <th style="width: 80px;">@lang('general.actions')</th>
-                      </tr>
-                    </thead>
-                    <tfoot>
-                      <tr>
-                        <th>@lang('general.name')</th>
-                        <th>@lang('general.description')</th>
-                        <th>@lang('general.actions')</th>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div>
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="plantillas" class="active"><a href="#table" aria-controls="table" role="tab"
+                data-toggle="tab">@lang('general.table')</a></li>
+            <li role="plantillas"><a href="#variables" aria-controls="variables" role="tab"
+                data-toggle="tab">Variables</a></li>
+          </ul>
+          {{-- input para coiar en clipboard --}}
+          <input type="hidden" id="testing-code" :value="testingCode">
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="table" style="margin-top: 20px;">
+              <div class="table-responsive">
+                <table id="tbl-emailTemplate" class="table table-striped table-hover table-bordered"
+                  style="width: 100%;">
+                  <thead>
+                    <tr>
+                      <th>@lang('general.name')</th>
+                      <th>@lang('general.description')</th>
+                      <th style="width: 80px;">@lang('general.actions')</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                      <th>@lang('general.name')</th>
+                      <th>@lang('general.description')</th>
+                      <th>@lang('general.actions')</th>
+                    </tr>
+                  </tfoot>
+                </table>
               </div>
-              <div role="tabpanel" class="tab-pane fade" id="variables">
-                <div class="row">
-                  <div class="col-lg-12">
-                    <div class="col-lg-12" style="margin-top: 20px;">
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="variables">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="col-lg-12" style="margin-top: 20px;">
+                    <div class="panel-group" id="accordion">
                       <div class="panel panel-info">
-                        <div class="panel-heading">@lang('general.document_data')</div>
-                        <!-- List group -->
-                        <ul class="list-group">
-                          <li class="list-group-item">{num_guia}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{num_guia}')">
-                              Copy
-                            </a>
-                          </li>
-                          <li class="list-group-item">{num_warehouse}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{num_warehouse}')">
-                              Copy
-                            </a>
-                          </li>
-                          <li class="list-group-item">{flete_impuesto}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{flete_impuesto}')">
-                              Copy
-                            </a>
-                          </li>
-                          <li class="list-group-item">{piezas}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{piezas}')">
-                              Copy
-                            </a>
-                          </li>
-                          <li class="list-group-item">{seguro}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{seguro}')">
-                              Copy
-                            </a>
-                          </li>
-                          <li class="list-group-item">{descuento}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{descuento}')">
-                              Copy
-                            </a>
-                          </li>
-                          <li class="list-group-item">{cargos_add}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{cargos_add}')">
-                              Copy
-                            </a>
-                          </li>
-                          <li class="list-group-item">{total}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{total}')">
-                              Copy
-                            </a>
-                          </li>
-                        </ul>
+                        <div class="panel-heading pointer" data-toggle="collapse" data-parent="#accordion"
+                          href="#collapse1">
+                          <h4 class="panel-title">
+                            @lang('general.document_data') <i class="fal fa-angle-down fr"></i>
+                          </h4>
+                        </div>
+                        <div class="panel-collapse collapse" id="collapse1">
+                          <div class="panel-body">
+                            <ul class="list-group">
+                              <li class="list-group-item">{num_guia}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{num_guia}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{num_warehouse}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{num_warehouse}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{flete_impuesto}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{flete_impuesto}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{piezas}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{piezas}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{seguro}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{seguro}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{descuento}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{descuento}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{cargos_add}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{cargos_add}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{total}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{total}')">
+                                  Copy
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
                       </div>
-                      <div class="panel panel-info">
-                        <div class="panel-heading">@lang('general.data_shipper')</div>
-                        <!-- List group -->
-                        <ul class="list-group">
-                          <li class="list-group-item">{nom_shipper}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{nom_shipper}')">
-                              Copy
-                            </a>
-                          </li>
-                        </ul>
+                      <div class="panel panel-info ">
+                        <div class="panel-heading pointer" data-toggle="collapse" data-parent="#accordion"
+                          href="#collapse2">
+                          <h4 class="panel-title">
+                            @lang('general.data_shipper') <i class="fal fa-angle-down fr"></i>
+                          </h4>
+                        </div>
+                        <div class="panel-collapse collapse" id="collapse2">
+                          <div class="panl-body">
+                            <ul class="list-group">
+                              <li class="list-group-item">{nom_shipper}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{nom_shipper}')">
+                                  Copy
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
                       </div>
-                      <div class="panel panel-info">
-                        <div class="panel-heading">@lang('general.data_consignee')</div>
-                        <!-- List group -->
-                        <ul class="list-group">
-                          <li class="list-group-item">{nom_consignee}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{nom_consignee}')">
-                              Copy
-                            </a>
-                          </li>
-                          <li class="list-group-item">{dir_consignee}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{dir_consignee}')">
-                              Copy
-                            </a>
-                          </li>
-                          <li class="list-group-item">{dir2_consignee}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{dir2_consignee}')">
-                              Copy
-                            </a>
-                          </li>
-                          <li class="list-group-item">{ciu_consignee}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{ciu_consignee}')">
-                              Copy
-                            </a>
-                          </li>
-                          <li class="list-group-item">{depto_consignee}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{depto_consignee}')">
-                              Copy
-                            </a>
-                          </li>
-                          <li class="list-group-item">{zip_consignee}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{zip_consignee}')">
-                              Copy
-                            </a>
-                          </li>
-                          <li class="list-group-item">{pais_consignee}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{pais_consignee}')">
-                              Copy
-                            </a>
-                          </li>
-                          <li class="list-group-item">{pass_consignee}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{pass_consignee}')">
-                              Copy
-                            </a>
-                          </li>
-                          <li class="list-group-item">{email_consignee}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{email_consignee}')">
-                              Copy
-                            </a>
-                          </li>
-                          <li class="list-group-item">{tel_consignee}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{tel_consignee}')">
-                              Copy
-                            </a>
-                          </li>
-                          <li class="list-group-item">{zip_consignee}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{zip_consignee}')">
-                              Copy
-                            </a>
-                          </li>
-                          <li class="list-group-item">{cel_consignee}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{cel_consignee}')">
-                              Copy
-                            </a>
-                          </li>
-                        </ul>
+                      <div class="panel panel-info ">
+                        <div class="panel-heading pointer" data-toggle="collapse" data-parent="#accordion"
+                          href="#collapse3">
+                          <h4 class="panel-title">
+                            @lang('general.data_consignee') <i class="fal fa-angle-down fr"></i>
+                          </h4>
+                        </div>
+                        <div class="panel-collapse collapse" id="collapse3">
+                          <div class="panel-body">
+                            <ul class="list-group">
+                              <li class="list-group-item">{nom_consignee}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{nom_consignee}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{dir_consignee}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{dir_consignee}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{dir2_consignee}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{dir2_consignee}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{ciu_consignee}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{ciu_consignee}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{depto_consignee}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{depto_consignee}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{zip_consignee}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{zip_consignee}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{pais_consignee}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{pais_consignee}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{pass_consignee}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{pass_consignee}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{email_consignee}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{email_consignee}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{tel_consignee}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{tel_consignee}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{zip_consignee}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{zip_consignee}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{cel_consignee}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{cel_consignee}')">
+                                  Copy
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
                       </div>
-                      <div class="panel panel-info">
-                        <div class="panel-heading">@lang('general.signature_data_agency')</div>
-                        <!-- List group -->
-                        <ul class="list-group">
-                          <li class="list-group-item">{id_agencia}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{id_agencia}')">
-                              Copy
-                            </a>
-                          </li>
-                          <li class="list-group-item">{logo_agencia}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{logo_agencia}')">
-                              Copy
-                            </a>
-                          </li>
-                          <li class="list-group-item">{nom_agencia}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{nom_agencia}')">
-                              Copy
-                            </a>
-                          </li>
-                          <li class="list-group-item">{tel_agencia}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{tel_agencia}')">
-                              Copy
-                            </a>
-                          </li>
-                          <li class="list-group-item">{email_agencia}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{email_agencia}')">
-                              Copy
-                            </a>
-                          </li>
-                          <li class="list-group-item">{dir_agencia}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{dir_agencia}')">
-                              Copy
-                            </a>
-                          </li>
-                          <li class="list-group-item">{zip_agencia}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{zip_agencia}')">
-                              Copy
-                            </a>
-                          </li>
-                          <li class="list-group-item">{ciudad_agencia}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{ciudad_agencia}')">
-                              Copy
-                            </a>
-                          </li>
-                          <li class="list-group-item">{estado_agencia}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{estado_agencia}')">
-                              Copy
-                            </a>
-                          </li>
-                        </ul>
+                      <div class="panel panel-info ">
+                        <div class="panel-heading pointer" data-toggle="collapse" data-parent="#accordion"
+                          href="#collapse4">
+                          <h4 class="panel-title">
+                            @lang('general.signature_data_agency') <i class="fal fa-angle-down fr"></i>
+                          </h4>
+                        </div>
+                        <div class="panel-collapse collapse" id="collapse4">
+                          <div class="panel-body">
+                            <ul class="list-group">
+                              <li class="list-group-item">{id_agencia}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{id_agencia}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{logo_agencia}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{logo_agencia}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{nom_agencia}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{nom_agencia}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{tel_agencia}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{tel_agencia}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{email_agencia}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{email_agencia}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{dir_agencia}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{dir_agencia}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{zip_agencia}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{zip_agencia}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{ciudad_agencia}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{ciudad_agencia}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{estado_agencia}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{estado_agencia}')">
+                                  Copy
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
                       </div>
-                      <div class="panel panel-info">
-                        <div class="panel-heading">@lang('general.data_detail_message')</div>
-                        <!-- List group -->
-                        <ul class="list-group">
-                          <li class="list-group-item">{datos_detalle}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{datos_detalle}')">
-                              Copy
-                            </a>
-                          </li>
-                          <li class="list-group-item">{tracking}
-                            <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
-                              @click.stop.prevent="copyTestingCode('{tracking}')">
-                              Copy
-                            </a>
-                          </li>
-                        </ul>
+                      <div class="panel panel-info ">
+                        <div class="panel-heading pointer" data-toggle="collapse" data-parent="#accordion"
+                          href="#collapse5">
+                          <h4 class="panel-title">
+                            @lang('general.data_detail_message') <i class="fal fa-angle-down fr"></i>
+                          </h4>
+                        </div>
+                        <div class="panel-collapse collapse" id="collapse5">
+                          <div class="panel-body">
+                            <ul class="list-group">
+                              <li class="list-group-item">{datos_detalle}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{datos_detalle}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{tracking}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{tracking}')">
+                                  Copy
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
           </div>
-          <!--***** contenido ******-->
-
         </div>
       </div>
     </div>
