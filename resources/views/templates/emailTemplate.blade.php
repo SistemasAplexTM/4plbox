@@ -402,6 +402,48 @@
                                   Copy
                                 </a>
                               </li>
+                              <li class="list-group-item">{url_principal}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{url}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{url_terms}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{url_terms}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{url_casillero}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{url_casillero}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{url_registro}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{url_registro}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{url_rastreo}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{url_rastreo}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{url_prealerta}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{url_prealerta}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{url_registro_casillero}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{url_registro_casillero}')">
+                                  Copy
+                                </a>
+                              </li>
                             </ul>
                           </div>
                         </div>
