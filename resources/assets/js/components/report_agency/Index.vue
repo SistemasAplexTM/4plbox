@@ -65,9 +65,10 @@
 
 <script>
 export default {
+  props: ["payload"],
   data(){
     return {
-      edit: false,
+      edit: this.payload.edit,
       activeName: 'first',
       tableData: [],
       tableDataById: [],
@@ -93,14 +94,10 @@ export default {
   },
   methods: {
      toggleSelection(rows) {
-       if (rows) {
-         rows.forEach(row => {
-           this.$refs.multipleTable.toggleRowSelection(row);
-         });
-       } else {
-         this.$refs.multipleTable.clearSelection();
-       }
-    },
+       this.$refs.multipleTable.clearSelection();
+       this.$refs.multipleTableById.clearSelection();
+       bus.$emit('close')
+     },
      handleSelectionChange(val) {
        this.multipleSelection = val;
      },
@@ -114,6 +111,7 @@ export default {
            this.$refs.multipleTable.clearSelection();
            this.multipleSelection = []
            toastr.success('Registro creado correctamente.');
+           refreshTable('tbl-documento_agencia')
            bus.$emit('close')
          }).catch(error => error)
        }else{
@@ -131,6 +129,7 @@ export default {
          this.multipleSelection = []
          this.multipleSelectionById = []
          toastr.success('Actualizado correctamente.');
+         refreshTable('tbl-documento_agencia')
          bus.$emit('close')
        }).catch(error => error)
      },
@@ -140,7 +139,7 @@ export default {
        }).catch(error => error)
      },
      getById(){
-       axios.get('/reportDispatch/54').then(({data}) => {
+       axios.get('/reportDispatch/' + this.payload.id).then(({data}) => {
          this.tableDataById = data
          this.$refs.multipleTableById.toggleAllSelection();
        }).catch(error => error)

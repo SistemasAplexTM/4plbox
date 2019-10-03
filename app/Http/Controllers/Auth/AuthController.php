@@ -57,7 +57,7 @@ class AuthController extends Controller
           'password' => 'required|string',
           'remember_me' => 'boolean'
       ]);
-      $credentials = request(['email', 'password']);
+      $credentials = request(['email', 'password', 'agencia_id']);
       if(!Auth::attempt($credentials))
           return response()->json([
             'code' => 401,

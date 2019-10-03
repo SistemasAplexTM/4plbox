@@ -76,6 +76,35 @@ class ReportController extends Controller
       ->get();
     }
 
+    public function reportDispatchPrint($id)
+    {
+      $data = DB::table('consolidado_detalle AS a')
+      ->join('documento_detalle AS b', 'a.documento_detalle_id', 'b.id')
+      ->select(
+        'b.id',
+        'b.num_guia',
+        DB::raw("
+            (
+            	SELECT
+            		h.descripcion
+            	FROM
+            		documento AS c
+            		INNER JOIN consignee AS d ON c.consignee_id = d.id
+            		INNER JOIN localizacion AS f ON d.localizacion_id = f.id
+            		INNER JOIN deptos AS g ON g.id = f.deptos_id
+            		INNER JOIN pais AS h ON g.pais_id = h.id
+            	WHERE
+            		c.id = b.documento_id
+          	) AS pais"
+          )
+        )
+      ->where('a.consolidado_id', $id)
+      ->get();
+
+      $pdf = PDF::loadView('reports.printReportDispatch', compact('data'))->setPaper('a4', 'landscape');
+      return $pdf->stream('despacho.pdf');
+    }
+
     public function reportDispatch(Request $request)
     {
       $data = $request->all();

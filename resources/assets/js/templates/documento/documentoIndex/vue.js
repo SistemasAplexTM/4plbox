@@ -91,7 +91,7 @@ var objVue = new Vue({
       open(id){
         var data = {component: 'report-agency-component', title: 'Consolidado Agencia', icon: 'fal fa-box-check'}
         if (id) {
-          data = {component: 'report-agency-component', title: 'Consolidado Agencia', icon: 'fal fa-box-check', edit: true}
+          data = {component: 'report-agency-component', title: 'Consolidado Agencia', icon: 'fal fa-box-check', edit: true, id: id}
         }
         bus.$emit('open', data)
       },

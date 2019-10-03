@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -75,17 +76,18 @@ class LoginController extends Controller
             'agency' => $objAgencia
         ]);
 
-        return 'documento';
+        return 'home';
     }
 
-    // public function authenticate(Request $request)
-    // {
-    //     if (Auth::attempt(['email' => $email, 'password' => $password, 'actived' => 1])) {
-    //         // Authentication passed...
-    //         return redirect()->intended('/home');
-    //     }else{
-    //         return 'No estas activo.';
-    //     }
-    // }
+    public function login(Request $request)
+    {
+      if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'actived' => 1])) {
+          return redirect()->route($this->redirectPath());
+      }else{
+        return back()
+        ->withErrors(['email' =>  trans('auth.failed')])
+        ->withInput(['email' => $request->email]);
+      }
+    }
 
 }
