@@ -242,6 +242,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('agencia/getSelectBranch', 'AgenciaController@getSelectBranch');
     Route::get('agencia/getAgencies', 'AgenciaController@getAgencies');
     Route::post('agencia/saveURL/{id}', 'AgenciaController@saveURL');
+    Route::get('agencia/getURL/{id}', 'AgenciaController@getURL');
 
     /*--- MODULO REMITENTES ---*/
     Route::resource('shipper', 'ShipperController', ['except' => ['show', 'create', 'edit']]);
