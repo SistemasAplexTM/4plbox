@@ -77,7 +77,7 @@
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="agencia" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">@lang('general.registration_data')</a></li>
                             <li role="agencia"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">@lang('general.integrations')</a></li>
-                            <li role="agencia"><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">@lang('general.url_public')</a></li>
+                            <li role="agencia"><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">URL</a></li>
                             {{-- <li role="agencia"><a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab">URL</a></li> --}}
                         </ul>
 
@@ -420,84 +420,102 @@
                                 </div>
                                     <!--**************** Detalle Agencia  *******************************-->
                                      <!--****************Aquí*******************************-->
+                                <div class="row">
+                                         <div class="col-lg-12">
+                                                 <div class="form-group">
+                                                     <div class="col-sm-12 col-sm-offset-0 guardar">
+                                                         <a class="btn btn-white" href="{{ route('agencia.index') }}"  style="display: {{ (isset($agencia) and $agencia) ? 'none' : 'inline-block' }}">
+                                                             <i class="fal fa-mail-reply"></i> @lang('general.return')
+                                                         </a>
+                                                         <a class="btn btn-white" href="{{ route('agencia.index') }}"  style="display: {{ (isset($agencia) and $agencia) ? 'inline-block' : 'none' }}">
+                                                             <i class="fal fa-times"></i> @lang('general.cancel')
+                                                         </a>
+                                                         <a class="ladda-button btn btn-primary" id="saveForm" style="display: {{ (isset($agencia) and $agencia) ? 'none' : 'inline-block' }}">
+                                                             <i class="fal fa-save"></i> @lang('general.save')
+                                                         </a>
+                                                         <button class="ladda-button btn btn-warning" id="updateForm" style="display: {{ (isset($agencia) and $agencia) ? 'inline-block' : 'none' }}">
+                                                             <i class="fal fa-edit"></i> @lang('general.update')
+                                                         </button>
+                                                     </div>
+                                                 </div>
+                                         </div>
+                                     </div>
+                             </div>
 
-                                </div>
-
-                                <div role="tabpanel" class="tab-pane fade" id="tab2">
-                                    <div class="row">
-                                      <div class="col-lg-12">
-                                        <agency-integrations-component :agency_id="{{ ((isset($agencia) and $agencia) ? $agencia->id : 0) }}"></agency-integrations-component>
-                                      </div>
-                                    </div>
-                                    <div class="row" style="margin-top: 20px;"></div>
-                                </div>
-
-                                <div role="tabpanel" class="tab-pane fade" id="tab3">
-                                    <div class="row">
-                                        <div class="col-lg-12" style="margin-top: 10px;">
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <table class="table table-striped table-hover table-bordered" id="tbl-url" style="width: 100%;">
-                                                        <thead>
-                                                            <tr>
-                                                                <th width="40%">@lang('general.description')</th>
-                                                                <th>Url</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>@lang('general.tracking')</td>
-                                                                <td><a target="_blank" href="{{ url('/').'/rastreo' }}">{{ url('/').'/rastreo' }}</a></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>@lang('general.locker_registration')</td>
-                                                                <td><a target="_blank" href="{{ url('/').'/registro/' }}{{ (isset($agencia) and $agencia) ? base64_encode($agencia->id) : '' }}">{{ url('/').'/registro/' }}{{ (isset($agencia) and $agencia) ? base64_encode($agencia->id) : '' }}</a></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>@lang('general.pre_alert')</td>
-                                                                <td><a target="_blank" href="{{ url('/').'/prealerta/' }}{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}">{{ url('/').'/prealerta/' }}{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}</a></td>
-                                                            </tr>
-                                                            {{-- <tr>
-                                                                <td>@lang('general.locker')</td>
-                                                                <td><a target="_blank" href="{{ url('/') }}">{{ url('/') }}</a></td>
-                                                            </tr> --}}
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {{-- <div role="tabpanel" class="tab-pane fade" id="tab4">
-                                  <div class="row">
-                                    <div class="col-lg-12" style="margin-top: 10px;">
-                                      <agency-url-component :agency_id="{{ (isset($agencia) and $agencia) ? $agencia->id : null }}"/>
-                                    </div>
+                            <div role="tabpanel" class="tab-pane fade" id="tab2">
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                    <agency-integrations-component :agency_id="{{ ((isset($agencia) and $agencia) ? $agencia->id : 0) }}"></agency-integrations-component>
                                   </div>
-                                </div> --}}
+                                </div>
+                                <div class="row" style="margin-top: 20px;"></div>
                             </div>
 
+                              <div role="tabpanel" class="tab-pane fade" id="tab3">
+                                  <div class="row">
+                                      <div class="col-lg-12" style="margin-top: 10px;">
+                                        <div class="col-lg-6">
+                                          <h3>Públicas</h3>
+                                            <div class="form-group">
+                                              <table class="table table-striped table-hover table-bordered" id="tbl-url" style="width: 100%;">
+                                                  <thead>
+                                                      <tr>
+                                                          <th width="35%">@lang('general.description')</th>
+                                                          <th>URL</th>
+                                                      </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                      <tr>
+                                                          <td>@lang('general.tracking')</td>
+                                                          <td><a target="_blank" href="{{ url('/').'/rastreo' }}">{{ url('/').'/rastreo' }}</a></td>
+                                                      </tr>
+                                                      <tr>
+                                                          <td>@lang('general.locker_registration')</td>
+                                                          <td><a target="_blank" href="{{ url('/').'/registro/' }}{{ (isset($agencia) and $agencia) ? base64_encode($agencia->id) : '' }}">{{ url('/').'/registro/' }}{{ (isset($agencia) and $agencia) ? base64_encode($agencia->id) : '' }}</a></td>
+                                                      </tr>
+                                                      <tr>
+                                                          <td>@lang('general.pre_alert')</td>
+                                                          <td><a target="_blank" href="{{ url('/').'/prealerta/' }}{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}">{{ url('/').'/prealerta/' }}{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}</a></td>
+                                                      </tr>
+                                                  </tbody>
+                                              </table>
 
-                            <div class="row">
-                                <div class="col-lg-12">
-                                        <div class="form-group">
-                                            <div class="col-sm-12 col-sm-offset-0 guardar">
-                                                <a class="btn btn-white" href="{{ route('agencia.index') }}"  style="display: {{ (isset($agencia) and $agencia) ? 'none' : 'inline-block' }}">
-                                                    <i class="fal fa-mail-reply"></i> @lang('general.return')
-                                                </a>
-                                                <a class="btn btn-white" href="{{ route('agencia.index') }}"  style="display: {{ (isset($agencia) and $agencia) ? 'inline-block' : 'none' }}">
-                                                    <i class="fal fa-times"></i> @lang('general.cancel')
-                                                </a>
-                                                <a class="ladda-button btn btn-primary" id="saveForm" style="display: {{ (isset($agencia) and $agencia) ? 'none' : 'inline-block' }}">
-                                                    <i class="fal fa-save"></i> @lang('general.save')
-                                                </a>
-                                                <button class="ladda-button btn btn-warning" id="updateForm" style="display: {{ (isset($agencia) and $agencia) ? 'inline-block' : 'none' }}">
-                                                    <i class="fal fa-edit"></i> @lang('general.update')
-                                                </button>
                                             </div>
-                                        </div>
-                                </div>
+                                          </div>
+                                        <div class="col-lg-6">
+                                          <h3>Privadas</h3>
+                                          <table class="table table-striped table-hover table-bordered" id="tbl-url" style="width: 100%;">
+                                              <thead>
+                                                  <tr>
+                                                      <th width="35%">@lang('general.description')</th>
+                                                      <th>URL</th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody>
+                                                  <tr>
+                                                      <td>URL Principal</td>
+                                                      <td>
+                                                        <a class="editable_url" data-name="url" data-type="textarea" data-pk="{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}">{{ $agencia->url }}</a>
+                                                      </td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td>Términos y condiciones</td>
+                                                      <td>
+                                                        <a class="editable_url" data-name="url_terms" data-type="textarea" data-pk="{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}">{{ $agencia->url_terms }}</a>
+                                                      </td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td>Casillero</td>
+                                                      <td>
+                                                        <a class="editable_url" data-name="url_casillero" data-type="textarea" data-pk="{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}">{{ $agencia->url_casillero }}</a>
+                                                      </td>
+                                                  </tr>
+                                              </tbody>
+                                          </table>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
                             </div>
                         </div>
                     </div>
@@ -511,4 +529,30 @@
 @section('scripts')
 
 <script src="{{ asset('js/templates/agenciaForm.js') }}"></script>
+<script>
+$(document).ready(function(){
+  $.fn.editable.defaults.mode = 'popup';
+  $.fn.editable.defaults.params = function(params) {
+      params._token = $('meta[name="csrf-token"]').attr('content');
+      return params;
+  };
+
+  $('.editable_url').editable({
+    ajaxOptions: {
+      type: 'post',
+      dataType: 'json'
+    },
+    url: "/agencia/saveURL/" + {{ (isset($agencia) and $agencia) ? $agencia->id : null }},
+    title: 'Digite URL',
+    validate:function(value){
+      if($.trim(value) == ''){
+        return 'Este campo es obligatorio!';
+      }
+    },
+    success: function(response, newValue) {
+      // me.get();
+    }
+  });
+})
+</script>
 @endsection

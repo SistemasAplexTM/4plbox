@@ -66,5 +66,6 @@ Vue.component('form-csc', require('./components/FormConsigneeShipperClient.vue')
 Vue.component('menu-component', require('./components/menu/Index.vue'));
 Vue.component('sidebar-component', require('./components/menu/Sidebar.vue'));
 Vue.component('right-menu', require('./components/RightMenu/RightMenu.vue'));
-Vue.component('agency-url-component', require('./components/AgencyURL.vue'));
+Vue.component('agency-form-url-component', require('./components/agency_url/FormURL.vue'));
+Vue.component('agency-list-url-component', require('./components/agency_url/ListURL.vue'));
 Vue.component('report-agency-component', require('./components/report_agency/Index.vue'));

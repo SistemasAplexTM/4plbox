@@ -45,5 +45,6 @@ class Agencia extends Model
         'usar_paypal',
         'url',
         'url_terms',
+        'url_casillero',
     ];
 }

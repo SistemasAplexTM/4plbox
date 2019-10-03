@@ -316,9 +316,14 @@ class AgenciaController extends Controller
     public function saveURL(Request $request, $id)
     {
       Agencia::where('id', $id)->update([
-        'url' => $request->main,
-        'url_terms' => $request->term
+        $request->name => $request->value
+        // 'url_terms' => $request->term
       ]);
       return ['code' => 200];
+    }
+
+    public function getURL($id)
+    {
+      return Agencia::find($id);
     }
 }

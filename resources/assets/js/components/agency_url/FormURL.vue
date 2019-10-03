@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="col-lg-5">
+  <div class="col-lg-12">
       <div class="form-group">
         <label>URL Principal</label>
         <input v-model="main" type="tex" class="form-control" placeholder="http://">
@@ -8,14 +8,14 @@
           <label>URL Términos</label>
           <input v-model="term" type="tex" class="form-control" placeholder="http://">
       </div>
-      <div class="form-group">
+      <!-- <div class="form-group">
           <label>Tracking</label>
           <input v-model="tracking" type="tex" class="form-control" placeholder="http://">
       </div>
       <div class="form-group">
           <label>Prealertar</label>
           <input v-model="prealert" type="tex" class="form-control" placeholder="http://">
-      </div>
+      </div> -->
       <div class="form-group">
           <el-button type="success" @click="save" size="small">
             <i class="fal fa-save"> </i> Guardar
@@ -42,7 +42,7 @@ export default {
       }
       var data = {main: this.main, term: this.term, prealert: this.prealert, tracikng: this.tracking}
       axios.post('/agencia/saveURL/' + this.agency_id, data).then(({data}) => {
-        console.log(data);
+        bus.$emit('updateListURL')
       }).catch(error => error)
     }
   }
