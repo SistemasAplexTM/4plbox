@@ -10,7 +10,6 @@
 </div>
 @endsection
 @section('content')
-
   @if(Auth::user()->isRole('admin'))
     <div class="row" id="homeIndex">
     <div class="col-lg-12">
