@@ -13,3 +13,5 @@ QUEDA EPNDIENTE PARA TERMINAR: (11 - 09 - 2019)
 5. Listar iconos enselect (CREAR COMPONENTE)
 
 6. Tab de URLs privadas y publicas en agencia
+
+nota de jhonny
