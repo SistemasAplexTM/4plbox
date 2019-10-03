@@ -46,5 +46,7 @@ class Agencia extends Model
         'url',
         'url_terms',
         'url_casillero',
+        'url_registro_casillero',
+        'url_prealerta',
     ];
 }
