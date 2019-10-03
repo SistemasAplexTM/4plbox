@@ -11,6 +11,7 @@
 @endsection
 @section('content')
   @if(Auth::user()->isRole('admin'))
+  
     <div class="row" id="homeIndex">
     <div class="col-lg-12">
         <div class="wrapper wrapper-content animated fadeInRight" style="padding-top: 0px;">
