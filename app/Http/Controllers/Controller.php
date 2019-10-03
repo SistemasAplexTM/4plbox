@@ -102,13 +102,7 @@ class Controller extends BaseController
             ->join('deptos AS c', 'c.id', 'b.deptos_id')
             ->join('pais AS d', 'd.id', 'c.pais_id')
             ->select([
-                'a.id',
-                'a.descripcion as descripcion',
-                'a.telefono',
-                'a.email',
-                'a.direccion',
-                'a.zip',
-                'a.logo',
+                'a.*',
                 'b.nombre AS ciudad',
                 'c.descripcion AS depto',
                 'd.descripcion AS pais',
@@ -548,8 +542,14 @@ class Controller extends BaseController
             '({ciudad_agencia})'  => ($objAgencia) ? $objAgencia->ciudad : '',
             '({estado_agencia})'  => ($objAgencia) ? $objAgencia->depto : '',
             '({pais_agencia})'    => ($objAgencia) ? $objAgencia->pais : '',
+            '({url_casillero})'   => ($objAgencia) ? $objAgencia->url_casillero : '',
+            '({url_terms})'       => ($objAgencia) ? $objAgencia->url_terms : '',
+            '({url_registro})'    => ($objAgencia) ? $objAgencia->url_registro : '',
+            '({url_rastreo})'     => ($objAgencia) ? $objAgencia->url_rastreo : '',
+            '({url_prealerta})'   => ($objAgencia) ? $objAgencia->url_prealerta : '',
+            '({url_registro_casillero})'     => ($objAgencia) ? $objAgencia->url_registro_casillero : '',
+            '({url})'             => ($objAgencia) ? $objAgencia->url : '',
             '({logo_agencia})'    => ($objAgencia) ? '<img src="'.url('storage').'/'.$objAgencia->logo.'" alt="logo" height="80" />' : '',
-            // $objAgencia->logo
         );
         return $replacements;
     }

@@ -10,9 +10,9 @@
 </div>
 @endsection
 @section('content')
-  @if(Auth::user()->isRole('admin'))
-  
-    <div class="row" id="homeIndex">
+@if(Auth::user()->isRole('admin'))
+
+<div class="row" id="homeIndex">
     <div class="col-lg-12">
         <div class="wrapper wrapper-content animated fadeInRight" style="padding-top: 0px;">
             <div class="row">
@@ -40,7 +40,8 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="col-lg-3 text-center">
-                        <button class="btn btn-warning dim btn-large-dim btn-outline btn-inicio" type="button" id="documento">
+                        <button class="btn btn-warning dim btn-large-dim btn-outline btn-inicio" type="button"
+                            id="documento">
                             <i class="fal fa-box-open">
                             </i>
                         </button>
@@ -49,7 +50,8 @@
                         </div>
                     </div>
                     <div class="col-lg-3 text-center">
-                        <button class="btn btn-primary dim btn-large-dim btn-outline btn-inicio" type="button" id="master">
+                        <button class="btn btn-primary dim btn-large-dim btn-outline btn-inicio" type="button"
+                            id="master">
                             <i class="fal fa-paste">
                             </i>
                         </button>
@@ -58,37 +60,41 @@
                         </div>
                     </div>
                     <div class="col-lg-3 text-center">
-                        <button class="btn btn-default dim btn-large-dim btn-outline btn-inicio" type="button" id="tracking">
+                        <button class="btn btn-default dim btn-large-dim btn-outline btn-inicio" type="button"
+                            id="tracking">
                             <i class="fal fa-cubes">
                             </i>
                         </button>
                         <div style="font-size: 20px;">
-                           @lang('general.tracking')
+                            @lang('general.tracking')
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="col-lg-3 text-center">
-                        <button class="btn btn-success dim btn-large-dim btn-outline btn-inicio" type="button" id="shipper">
+                        <button class="btn btn-success dim btn-large-dim btn-outline btn-inicio" type="button"
+                            id="shipper">
                             <i class="fal fa-user-circle">
                             </i>
                         </button>
                         <div style="font-size: 20px;">
-                             @lang('general.shipper')
+                            @lang('general.shipper')
                         </div>
                     </div>
                     <div class="col-lg-3 text-center">
-                        <button class="btn btn-info dim btn-large-dim btn-outline btn-inicio" type="button" id="consignee">
+                        <button class="btn btn-info dim btn-large-dim btn-outline btn-inicio" type="button"
+                            id="consignee">
                             <i class="fal fa-user-circle">
                             </i>
                         </button>
                         <div style="font-size: 20px;">
-                             @lang('general.consignee')
+                            @lang('general.consignee')
                         </div>
                     </div>
 
                     <div class="col-lg-3 text-center">
-                        <button class="btn btn-primary dim btn-large-dim btn-outline btn-inicio" type="button" id="backup">
+                        <button class="btn btn-primary dim btn-large-dim btn-outline btn-inicio" type="button"
+                            id="backup">
                             <i class="fal fa-cloud-download-alt">
                             </i>
                         </button>
@@ -137,7 +143,7 @@
         </div>
     </div>
 </div>
-  @endif
+@endif
 @endsection
 @section('scripts')
 

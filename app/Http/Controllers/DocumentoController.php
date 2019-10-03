@@ -3231,7 +3231,8 @@ class DocumentoController extends Controller
               'g.nombre AS ciudad',
               'h.descripcion AS depto',
               'i.descripcion AS pais',
-                DB::raw("(SELECT GROUP_CONCAT(tracking.codigo) FROM tracking WHERE tracking.documento_detalle_id = c.id) as tracking")
+                DB::raw("(SELECT GROUP_CONCAT(tracking.codigo) FROM tracking WHERE tracking.documento_detalle_id = c.id) as tracking"),
+                DB::raw("(SELECT GROUP_CONCAT(tracking.created_at) FROM tracking WHERE tracking.documento_detalle_id = c.id) as tracking_create")
             )
             ->where([
                 ['c.deleted_at', null]
