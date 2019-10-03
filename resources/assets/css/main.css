@@ -7,6 +7,9 @@ body{
 input{
   /* background-color: white!important; */
 }
+.pointer {
+  cursor: pointer;
+}
 .nav > li > a{
   font-family: "Roboto Condensed";
 }
