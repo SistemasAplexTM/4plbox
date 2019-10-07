@@ -19,12 +19,12 @@
 
 <body>
   <div class="">
-    <h2>{{ $agencyOrigin->agencia }}</h2>
+    <h2>{{ $agencyDestination->agencia }}</h2>
     <h2>REPORTE DIARIO DE CARGA</h2>
   </div>
   <div class="">
-    <h4>{{ $agencyDestination->agencia }}</h4>
-    <h4>{{ $agencyDestination->direccion }} - {{ $agencyDestination->ciudad }}, {{ $agencyDestination->depto }}</h4>
+    <h4>{{ $agencyOrigin->agencia }}</h4>
+    <h4>{{ $agencyOrigin->direccion }} - {{ $agencyOrigin->ciudad }}, {{ $agencyOrigin->depto }}</h4>
   </div>
   <table border="0" cellspacing="0" cellpadding="0" width="100%">
     <thead>
