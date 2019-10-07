@@ -567,6 +567,14 @@
                                                                 href="{{ url('/').'/prealerta/' }}{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}">{{ url('/').'/prealerta/' }}{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}</a>
                                                         </td>
                                                     </tr>
+                                                    <tr>
+                                                        <td>Casillero</td>
+                                                        <td>
+                                                            <a href="{{ $agencia->url_casillero }}">
+                                                                {{ $agencia->url_casillero }}
+                                                            </a>
+                                                        </td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
 
@@ -596,14 +604,6 @@
                                                         <a class="editable_url" data-name="url_terms"
                                                             data-type="textarea"
                                                             data-pk="{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}">{{ $agencia->url_terms }}</a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Casillero</td>
-                                                    <td>
-                                                        <a class="editable_url" data-name="url_casillero"
-                                                            data-type="textarea"
-                                                            data-pk="{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}">{{ $agencia->url_casillero }}</a>
                                                     </td>
                                                 </tr>
                                                 <tr>
