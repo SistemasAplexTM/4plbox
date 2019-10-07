@@ -454,7 +454,11 @@ class TrackingController extends Controller
               $json_data = json_decode($status->json_data);
               if(isset($json_data->email_template_id)){
                 Tracking::where('consignee_id', $id)->update(['confirmed_send' => 1]);
-                $this->verifySendEmail($config->value, $json_data->email_template_id, $id, $track);
+                $data = $this->verifySendEmail($config->value, $json_data->email_template_id, $id, $track);
+                if ($data['code']) {
+                  $code = 500;
+                  $error = $data['error'];
+                }
               }
             }else{
               $code = 500;

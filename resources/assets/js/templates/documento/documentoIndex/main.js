@@ -1,6 +1,6 @@
-var label = '('+app_label+')';
-$(document).ready(function() {
-    setTimeout(function() {
+var label = '(' + app_label + ')';
+$(document).ready(function () {
+    setTimeout(function () {
         $(".alert-success").fadeOut(1500);
     }, 3000);
     if (!permission_ajaxCreate) {
@@ -31,20 +31,21 @@ $(document).ready(function() {
     // }, 1000);
 });
 
-$(function() {
-  // if($('#li-pending').hasClass('active')){
-  //   console.log('remove');
-  //   $('.pending').removeClass('ligth');
-  // }else{
-  //   console.log('add');
-  //   $('.pending').addClass('ligth');
-  // }
+$(function () {
+    // if($('#li-pending').hasClass('active')){
+    //   console.log('remove');
+    //   $('.pending').removeClass('ligth');
+    // }else{
+    //   console.log('add');
+    //   $('.pending').addClass('ligth');
+    // }
 });
 
 function agruparGuiasIndex(id) {
-    objVue.datosAgrupar = {
-        id: id
-    };
+    objVue.openGroup = true
+    // objVue.datosAgrupar = {
+    //     id: id
+    // };
 }
 
 function removerDocumentoAgrupado(id) {
@@ -62,18 +63,18 @@ function sendMail(id) {
 }
 
 function createNewDocument_(tipo_doc_id, name, functionalities, type, type_id) {
-  if (tipo_doc_id == 4) {
-    objVue.open();
-  }else{
-    var data = {
-      tipo_doc_id: tipo_doc_id,
-      name: name,
-      functionalities: functionalities,
-      type: type,
-      type_id: type_id,
-    };
-    objVue.createNewDocument(data);
-  }
+    if (tipo_doc_id == 4) {
+        objVue.open();
+    } else {
+        var data = {
+            tipo_doc_id: tipo_doc_id,
+            name: name,
+            functionalities: functionalities,
+            type: type,
+            type_id: type_id,
+        };
+        objVue.createNewDocument(data);
+    }
 }
 
 function openModalTagsDocument(id, codigo, cliente, correo, cantidad, liquidado, piezas, estatus_color, detalle_id, consignee_id) {
