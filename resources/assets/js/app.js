@@ -7,7 +7,9 @@ window.swal = require('sweetalert2');
 import vSelect from 'vue-select'
 
 import es from 'vee-validate/dist/locale/es';
-import VeeValidate, { Validator } from 'vee-validate';
+import VeeValidate, {
+  Validator
+} from 'vee-validate';
 const config = {
   fieldsBagName: 'fieldBags'
 }
@@ -21,7 +23,9 @@ Validator.localize('es', es);
 // Install the Plugin.
 Vue.use(VeeValidate, config);
 
-Vue.use(Element, {locale})
+Vue.use(Element, {
+  locale
+})
 
 import VueGoodWizard from 'vue-good-wizard';
 
@@ -34,7 +38,7 @@ Vue.component('Spinner', Spinner)
 Vue.component('v-select', vSelect)
 Vue.component('autocomplete-component', require('./components/AutocompleteComponent.vue'));
 Vue.component('contactos-component', require('./components/ContactosComponent.vue'));
-Vue.component('search-result',	require('./components/SearchResult.vue'));
+Vue.component('search-result', require('./components/SearchResult.vue'));
 Vue.component('master-component', require('./components/MasterComponent.vue'));
 Vue.component('master2-component', require('./components/Master2Component.vue'));
 Vue.component('modalshipper-component', require('./components/ModalShipperComponent.vue'));
@@ -59,8 +63,6 @@ Vue.component('modal-cambiar-status-consolidado', require('./components/ModalCam
 Vue.component('status-component', require('./components/Status.vue'));
 Vue.component('search', require('./components/Search.vue'));
 Vue.component('shipper-consignee-select', require('./components/ShipperConsigneeSelect.vue'));
-Vue.component('document-filter', require('./components/DocumentFilter.vue'));
-Vue.component('document-upload', require('./components/DocumentUpload.vue'));
 //
 Vue.component('form-csc', require('./components/FormConsigneeShipperClient.vue'));
 Vue.component('menu-component', require('./components/menu/Index.vue'));
@@ -69,3 +71,8 @@ Vue.component('right-menu', require('./components/RightMenu/RightMenu.vue'));
 Vue.component('agency-form-url-component', require('./components/agency_url/FormURL.vue'));
 Vue.component('agency-list-url-component', require('./components/agency_url/ListURL.vue'));
 Vue.component('report-agency-component', require('./components/report_agency/Index.vue'));
+
+//documento
+Vue.component('document-filter', require('./components/DocumentFilter.vue'));
+Vue.component('document-upload', require('./components/DocumentUpload.vue'));
+Vue.component('document-group', require('./components/document/index/GroupDocuments.vue'));
