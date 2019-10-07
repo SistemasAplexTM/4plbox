@@ -2711,9 +2711,11 @@ class DocumentoController extends Controller
             ->select(
                 'a.id',
                 'a.num_warehouse AS codigo',
-                'a.liquidado',
+                'a.liquidado', 
+                'a.piezas', 
+                'a.valor AS declarado', 
                 'a.peso'
-            )
+                )
             ->where([
                 ['a.deleted_at', null],
                 ['a.id', '<>', $id_detalle],
@@ -2721,6 +2723,7 @@ class DocumentoController extends Controller
                 ['a.consolidado', 0],
                 ['b.carga_courier', 1]
             ])
+            ->orderBy('codigo', 'DESC')
             ->get();
       }else{
         $detalle = DB::table('consolidado_detalle AS a')

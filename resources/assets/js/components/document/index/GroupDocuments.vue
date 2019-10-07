@@ -10,53 +10,50 @@
         <i class="fal fa-cubes"></i> Documentos disponibles para agrupar
       </h3>
       <p>Selecione los documentos que desea agrupar en este registro.</p>
-      <el-table :data="gridData" ref="multipleTable" @selection-change="handleSelectionChange">
-        <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column property="date" label="Date" width="150"></el-table-column>
-        <el-table-column property="name" label="Name" width="200"></el-table-column>
-        <el-table-column property="address" label="Address"></el-table-column>
+      <el-table
+        :data="gridData"
+        ref="multipleTable"
+        max-height="300"
+        @selection-change="handleSelectionChange"
+      >
+        <el-table-column type="selection" width="40"></el-table-column>
+        <el-table-column property="codigo" label="Documento" width="150"></el-table-column>
+        <el-table-column property="piezas" label="Piezas"></el-table-column>
+        <el-table-column label="Peso">
+          <template slot-scope="scope">
+            <span>{{ scope.row.peso }} lb</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="Declarado">
+          <template slot-scope="scope">
+            <i class="fal fa-dollar-sign"></i>
+            <span style="margin-left: 2px">{{ scope.row.declarado }}</span>
+          </template>
+        </el-table-column>
       </el-table>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="closeModal">Cancel</el-button>
-        <el-button type="primary" @click="openGroup = false">Confirm</el-button>
+        <el-button @click="closeModal">Cancelar</el-button>
+        <el-button type="primary" @click="agruparDocumentoDetalle">Agrupar</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 <script>
 export default {
-  props: ["open_group"],
+  props: ["open_group", "id_document"],
   data() {
     return {
       openGroup: false,
-      gridData: [
-        {
-          date: "2016-05-02",
-          name: "John Smith",
-          address: "No.1518,  Jinshajiang Road, Putuo District"
-        },
-        {
-          date: "2016-05-04",
-          name: "John Smith",
-          address: "No.1518,  Jinshajiang Road, Putuo District"
-        },
-        {
-          date: "2016-05-01",
-          name: "John Smith",
-          address: "No.1518,  Jinshajiang Road, Putuo District"
-        },
-        {
-          date: "2016-05-03",
-          name: "John Smith",
-          address: "No.1518,  Jinshajiang Road, Putuo District"
-        }
-      ],
+      idDocument: null,
+      gridData: [],
       multipleSelection: []
     };
   },
   watch: {
     open_group: function(val) {
       this.openGroup = val;
+      this.idDocument = this.id_document;
+      this.getDataTable();
     }
   },
   methods: {
@@ -68,12 +65,40 @@ export default {
       this.multipleSelection = val;
     },
     getDataTable() {
+      let me = this;
       axios
-        .get("documento/insertStatusUploadDocument")
-        .then(function(response) {})
+        .get("documento/0/getGuiasAgrupar/" + this.idDocument + "/document")
+        .then(function(response) {
+          me.gridData = response.data.data;
+        })
         .catch(function(error) {
           console.log(error);
           toastr.warning("Error.", error.message);
+          toastr.options.closeButton = true;
+        });
+    },
+    agruparDocumentoDetalle: function() {
+      let me = this;
+      var ids = {};
+      $.each(me.multipleSelection, function(i, field) {
+        ids[i + 1] = parseInt(field.id);
+      });
+
+      axios
+        .post("documento/0/agruparGuiasConsolidadoCreate", {
+          id_detalle: me.idDocument,
+          ids_guias: ids,
+          document: true
+        })
+        .then(function(response) {
+          me.closeModal();
+          toastr.success("Se agrupo correctamente.");
+          refreshTable("tbl-documento2");
+          me.$emit("set");
+        })
+        .catch(function(error) {
+          console.log(error);
+          toastr.warning("Error.");
           toastr.options.closeButton = true;
         });
     }
