@@ -32,8 +32,15 @@
         </el-table-column>
       </el-table>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="closeModal">Cancelar</el-button>
-        <el-button type="primary" @click="agruparDocumentoDetalle">Agrupar</el-button>
+        <el-button @click="closeModal">
+          <i class="fal fa-times"></i> Cancelar
+        </el-button>
+        <el-button type="success" @click="beforeSend">
+          <i class="fal fa-layer-group"></i> Agrupar Mintic
+        </el-button>
+        <el-button type="primary" @click="beforeSend">
+          <i class="fal fa-box-full"></i> Agrupar
+        </el-button>
       </span>
     </el-dialog>
   </div>
@@ -77,17 +84,24 @@ export default {
           toastr.options.closeButton = true;
         });
     },
-    agruparDocumentoDetalle: function() {
+    beforeSend() {
+      this.$confirm("Are you sure to close this dialog?")
+        .then(_ => {
+          done();
+        })
+        .catch(_ => {});
+    },
+    agruparDocumentoDetalle: function(mintic) {
       let me = this;
       var ids = {};
       $.each(me.multipleSelection, function(i, field) {
         ids[i + 1] = parseInt(field.id);
       });
-
       axios
         .post("documento/0/agruparGuiasConsolidadoCreate", {
           id_detalle: me.idDocument,
           ids_guias: ids,
+          mintic: mintic,
           document: true
         })
         .then(function(response) {
@@ -105,3 +119,9 @@ export default {
   }
 };
 </script>
+<style lang="" scope>
+/* .el-message-box__wrapper,
+.el-dialog__wrapper {
+  z-index: 9999 !important;
+} */
+</style>

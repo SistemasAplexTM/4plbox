@@ -1032,11 +1032,6 @@ class DocumentoController extends Controller
                         "status" => 200,
                     );
 
-                    // Validación para Mintic
-                    if ($request->minitc != NULL) {
-                      $this->mintic($request->minitc, $data->id, $request->detail);
-                    }
-
                     //insercion de puntos para CUBA
                     if($request->points){
                       foreach ($request->points as $key => $value) {
@@ -1071,19 +1066,6 @@ class DocumentoController extends Controller
             );
             return $answer;
         }
-    }
-
-    public function mintic($mintic, $id, $ids)
-    {
-      DocumentoDetalle::where('id', $id)->update([
-        'mintic' => $mintic
-      ]);
-      foreach ($ids as $key => $value) {
-        DocumentoDetalle::where('id', $value['id'])->update([
-          'agrupado' => $id,
-          'flag' => 1
-        ]);
-      }
     }
 
     public function addTrackingsToDocument($ids, $id_detalle, $id_consignee)
@@ -2778,11 +2760,7 @@ class DocumentoController extends Controller
     public function agruparGuiasConsolidadoCreate(Request $request)
     {
       if(isset($request->all()['document']) and $request->all()['id_detalle']){
-        for ($i = 1; $i <= count($request->all()['ids_guias']); $i++) {
-            DB::table('documento_detalle')
-                ->where('id', $request->all()['ids_guias'][$i])
-                ->update(['agrupado' => $request->all()['id_detalle'], 'flag' => 1]);
-        }
+            $this->mintic($request->all()['mintic'], $request->all()['id_detalle'], $request->all()['ids_guias']);
       }else{
         $deta_guia = DB::table('consolidado_detalle')->select('documento_detalle_id')->where('id', $request->all()['id_detalle'])->first();
 
@@ -2796,6 +2774,25 @@ class DocumentoController extends Controller
             'code' => 200,
         );
         return $answer;
+    }
+
+    public function mintic($mintic, $id, $ids)
+    {
+        foreach ($ids as $key => $value) {
+            DocumentoDetalle::where('id', $value)->update([
+            'agrupado' => $id,
+            'flag' => 1
+            ]);
+        }
+        if ($mintic) {
+            DocumentoDetalle::where('id', $id)->update([
+                'mintic' => 'Mintic'
+            ]);
+        }else{
+            DocumentoDetalle::where('id', $id)->update([
+                'mintic' => null
+            ]);
+        }
     }
 
     public function removerGuiaAgrupada($id, $id_detalle, $id_guia_detalle, $document = false)
