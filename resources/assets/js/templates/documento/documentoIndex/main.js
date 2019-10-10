@@ -42,10 +42,7 @@ $(function () {
 });
 
 function agruparGuiasIndex(id) {
-    objVue.openGroup = true
-    // objVue.datosAgrupar = {
-    //     id: id
-    // };
+    objVue.datosAgrupar = id;
 }
 
 function removerDocumentoAgrupado(id) {

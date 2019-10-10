@@ -90,7 +90,7 @@
 @section('content')
 
     <div class="row" id="documentoIndex" data-id_print="{{Session('print_document')['id']}}" data-doc_print="{{Session('print_document')['document']}}">
-        <document-group :open_group="openGroup" @set="openGroup = false"></document-group>
+        <document-group :open_group="openGroup" :id_document="idDocument" @set="resetVariables"></document-group>
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">

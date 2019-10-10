@@ -11,45 +11,10 @@ var objVue = new Vue({
         },
         datosAgrupar: function (val) {
             let me = this;
-            if ($.fn.DataTable.isDataTable('#tbl-modalagrupar')) {
-                $('#tbl-modalagrupar tbody').empty();
-                $('#tbl-modalagrupar').dataTable().fnDestroy();
+            if (val != '' && val != null) {
+                me.openGroup = true
+                me.idDocument = val
             }
-            var table = $('#tbl-modalagrupar').DataTable({
-                "language": {
-                    "paginate": {
-                        "previous": "Anterior",
-                        "next": "Siguiente",
-                    },
-                    /*"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",*/
-                    "info": "Registros del _START_ al _END_  de un total de _TOTAL_",
-                    "search": "Buscar",
-                    "lengthMenu": "Mostrar _MENU_ Registros",
-                    "infoEmpty": "Mostrando registros del 0 al 0",
-                    "emptyTable": "No hay datos disponibles en la tabla",
-                    "infoFiltered": "(Filtrando para _MAX_ Registros totales)",
-                    "zeroRecords": "No se encontraron registros coincidentes",
-                },
-                "order": [
-                    [1, "desc"]
-                ],
-                processing: false,
-                serverSide: false,
-                searching: true,
-                ajax: 'documento/0/getGuiasAgrupar/' + val.id + '/document',
-                columns: [{
-                    "render": function (data, type, full, meta) {
-                        return '<div class="checkbox checkbox-success"><input type="checkbox" data-id_guia="' + full.id + '" id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '"></label></div>';
-                    }
-                }, {
-                    data: 'codigo',
-                    name: 'codigo'
-                }, {
-                    data: 'peso',
-                    name: 'peso'
-                }]
-            });
-            $('#modalagrupar').modal('show');
         },
         removerAgrupado: function (option) {
             let me = this;
@@ -78,7 +43,7 @@ var objVue = new Vue({
         tableDelete: null,
         params: {},
         type_document: null,
-        datosAgrupar: {},
+        datosAgrupar: null,
         removerAgrupado: {}, //es para poder remover guias agrupadas en el consolidado
         status_id: {
             id: 5,
@@ -91,7 +56,8 @@ var objVue = new Vue({
         // variable para saber que pestaña mostrar de la grilla principal de documentos si courier (true) o carga (false)
         courier_carga: 2,
         showFilter: true,
-        openGroup: false
+        openGroup: false,
+        idDocument: null
     },
     methods: {
         open(id) {
@@ -197,30 +163,9 @@ var objVue = new Vue({
                 }
             }, 100)
         },
-        agruparDocumentoDetalle: function () {
-            $('#modalagrupar').modal('hide');
-            let me = this;
-            var datos = $("#formGuiasAgrupar").serializeArray();
-            var ids = {};
-            $.each(datos, function (i, field) {
-                if (field.name === 'chk[]') {
-                    ids[i] = $('#chk' + field.value).data('id_guia');
-                }
-            });
-
-            console.log(ids, ids_chk)
-            // axios.post('documento/0/agruparGuiasConsolidadoCreate', {
-            //     'id_detalle': me.datosAgrupar.id,
-            //     'ids_guias': ids,
-            //     'document': true
-            // }).then(function (response) {
-            //     toastr.success('Se agrupo correctamente.');
-            //     refreshTable('tbl-documento2');
-            // }).catch(function (error) {
-            //     console.log(error);
-            //     toastr.warning('Error.');
-            //     toastr.options.closeButton = true;
-            // });
+        resetVariables() {
+            this.openGroup = false;
+            this.datosAgrupar = null;
         },
         getStatus: function () {
             let me = this;
