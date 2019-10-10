@@ -1,14 +1,25 @@
 <template lang="html">
   <div>
-    <!-- <el-divider content-position="right">Consignee</el-divider> -->
-    <h3>
-      <i class="fal fa-user icon mr-10"></i> {{ item.consignee }}
-    </h3>
-    <el-divider content-position="right">Procedencia</el-divider>
-    <div class="content-text-search">
-      <i class="fal fa-user-tag icon mr-10"></i> {{ item.procedencia }}
+    <div class="flex">
+      <div class="info box grow flex">
+        <i class="fal fa-user fa-2x m-a"></i>
+        <div class="box grow flex  column justify-center p-10 ml-15">
+          <div class="fs-12 o-080 mt-5">Procedencia</div>
+          <div class="fs-17">{{ item.procedencia }}</div>
+        </div>
+      </div>
     </div>
-    <el-divider content-position="right">Datos</el-divider>
+    <el-divider></el-divider>
+    <div class="flex">
+      <div class="info box grow flex">
+        <i class="fal fa-user fa-2x m-a"></i>
+        <div class="box grow flex  column justify-center p-10 ml-15">
+          <div class="fs-12 o-080 mt-5">Consignee</div>
+          <div class="fs-17">{{ item.consignee }}</div>
+        </div>
+      </div>
+    </div>
+    <el-divider></el-divider>
     <div slot="title" class="p-2 flex">
       <div class="info box grow flex">
         <i class="fal fa-box-open fa-2x m-a"></i>
@@ -122,6 +133,12 @@ export default {
 }
 .fs-20 {
   font-size: 20px;
+}
+.fs-17 {
+  font-size: 17px;
+}
+.fs-12 {
+  font-size: 12px;
 }
 .flex {
   display: flex;
