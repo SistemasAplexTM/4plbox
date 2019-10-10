@@ -35,10 +35,10 @@
         <el-button @click="closeModal">
           <i class="fal fa-times"></i> Cancelar
         </el-button>
-        <el-button type="success" @click="beforeSend">
+        <el-button type="success" @click="beforeSend(false)">
           <i class="fal fa-layer-group"></i> Agrupar Mintic
         </el-button>
-        <el-button type="primary" @click="beforeSend">
+        <el-button type="primary" @click="beforeSend(true)">
           <i class="fal fa-box-full"></i> Agrupar
         </el-button>
       </span>
@@ -84,12 +84,28 @@ export default {
           toastr.options.closeButton = true;
         });
     },
-    beforeSend() {
-      this.$confirm("Are you sure to close this dialog?")
-        .then(_ => {
-          done();
-        })
-        .catch(_ => {});
+    beforeSend(op) {
+      if (op) {
+        swal({
+          title: "Atención!",
+          html:
+            "Los valores de peso, declarado y piezas, seran actualizados con la " +
+            "sumatoria de peso, declarado y piezas de los documentos seleccionados. <br>Desea continuar?",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Si",
+          cancelButtonText: "No"
+        }).then(result => {
+          if (result.value) {
+            this.agruparDocumentoDetalle(false);
+          }
+        });
+      } else {
+        // agrupa como mintic
+        this.agruparDocumentoDetalle(true);
+      }
     },
     agruparDocumentoDetalle: function(mintic) {
       let me = this;
@@ -120,8 +136,4 @@ export default {
 };
 </script>
 <style lang="" scope>
-/* .el-message-box__wrapper,
-.el-dialog__wrapper {
-  z-index: 9999 !important;
-} */
 </style>

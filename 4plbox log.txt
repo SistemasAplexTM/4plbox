@@ -167,9 +167,9 @@ autocomplete="aplextmautocomplete"
 ======J9.1. Separar los usuarios de las agencias y los casilleros y los de la agencia principal, por pestañas, que si ingresa una agencia que no es principal
 vea sus usuarios y sus casilleros, que si entra la principal pueda ver sus usuarios y casilleros, y pueda seleccionar de que agencia quiere ver usuarios y casilleros.
 ======J17.3. Mostrar la cantidad de piezas que tiene la cajita.
+======J17.4. Cuando agrupo cajas seleccionar si es MINTIC y que si no son MINTIC, se sumen: (Piezas, Peso y Declarado)
+======J10.2. Agregar la fecha de recibo del tracking en la consulta global que está en la barra arriba.
 
-J10.2. Agregar la fecha de recibo del tracking en la consulta global que está en la barra arriba.
-J17.4. Cuando agrupo cajas seleccionar si es MINTIC y que si no son MINTIC, se sumen: (Piezas, Peso y Declarado)
 J7.4. Informe de Manifiesto interno.
 
 
