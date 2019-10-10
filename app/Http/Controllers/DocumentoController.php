@@ -2778,19 +2778,39 @@ class DocumentoController extends Controller
 
     public function mintic($mintic, $id, $ids)
     {
+        $peso = 0;
+        $declarado = 0;
+        $piezas = 0;
         foreach ($ids as $key => $value) {
             DocumentoDetalle::where('id', $value)->update([
             'agrupado' => $id,
             'flag' => 1
             ]);
+            if(!$mintic){
+                $data = DocumentoDetalle::select('id', 'piezas', 'valor', 'declarado2', 'peso', 'peso2', 'num_warehouse')
+                ->where('id', $value)->first();
+                $peso += $data->peso;
+                $declarado += $data->valor;
+                $piezas += $data->piezas;
+            }
+            
         }
         if ($mintic) {
             DocumentoDetalle::where('id', $id)->update([
                 'mintic' => 'Mintic'
             ]);
         }else{
+            $data = DocumentoDetalle::select('id', 'piezas', 'valor', 'declarado2', 'peso', 'peso2', 'num_warehouse')
+            ->where('id', $id)->first();
+            $this->AddToLog('Documento agrupado, valores anteriores del documento ('.$data->id .')'.
+                ' WRH ('.$data->num_warehouse .') Peso: '.$data->peso .' Piezas: '.$data->piezas .' Declarado:'. $data->valor);
             DocumentoDetalle::where('id', $id)->update([
-                'mintic' => null
+                'mintic' => null,
+                'piezas' => $piezas, 
+                'valor' => $declarado, 
+                'declarado2' => $declarado, 
+                'peso' => $peso, 
+                'peso2' => $peso
             ]);
         }
     }
