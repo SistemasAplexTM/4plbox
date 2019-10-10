@@ -171,17 +171,25 @@ vea sus usuarios y sus casilleros, que si entra la principal pueda ver sus usuar
 ======J10.2. Agregar la fecha de recibo del tracking en la consulta global que está en la barra arriba.
 
 J7.4. Informe de Manifiesto interno.
-
-
 R7.1. Informe de agencias, lo que se envía a la principal con utilidades.
 DJ4.1. Impresión de documentos con el programa que compramos.
 ******DJR6.1. Facturar Recibos, Ojo: Vi que varios recibos se pueden facturar en una sola factura, colocar un Check al cliente para definir si se le hace factura solo a él.
 DJR6.1. Generar archivo plano para subir facturación a QB (Flete, Seguro, Impuestos, Otros Cobros).
 
-
-
-
-
-
-
-
+PREGUNTAS PARA RAMON
+- Borrar fisicamente los usuarios de casillero?
+- En la plantilla de correo de registro de casillero agregar la info del usuario y las url y revisar porque no aparece el sender el el email
+- colocar las imagenes con tamaño obligado
+- colocar en el recibo de trackin si esta prealertado, si se despacha o no segun el check.
+- colocar en la plantilla de email de trackin recibido, los links para rastrear e ir al casillero
+- colocar filtro de agencia para la busqueda de consignee en recibo de tracking
+- colocar lb en el peso al crear recibo desde recibo casillero
+- colocar tilde en donde dice envio al crear recibo desde recibo casillero
+- quitar intensidad al nombre de la agencia en el formulario de documento
+- revisar la generacion del detalle cuando se crea el documento desde el recibo de tracking
+  porque no coloco la P y el consecutivo de la pieza
+- El boton de agregar en la modal del boton del detalle del documento que tiene los tracking debe ir con icono de plus
+  y tilde en la u de numero y la palabra trackings en plural y asociados en singular (corregir)
+- en la miga de pan del documento dice crear warehouse cuando en verdad estoy editando
+- los botones de la modal de agregar tracking del campo contenido en documento no tienen iconos
+- SUGERENCIA DE DUVIER: el boton verde del contenido para agregar trackings no debe ir alli.
