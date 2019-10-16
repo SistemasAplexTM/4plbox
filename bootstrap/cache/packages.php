@@ -114,6 +114,13 @@
       0 => 'Rap2hpoutre\\FastExcel\\Providers\\FastExcelServiceProvider',
     ),
   ),
+  's-ichikawa/laravel-sendgrid-driver' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Sichikawa\\LaravelSendgridDriver\\SendgridTransportServiceProvider',
+    ),
+  ),
   'spatie/laravel-backup' => 
   array (
     'providers' => 
