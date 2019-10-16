@@ -194,3 +194,8 @@ PREGUNTAS PARA RAMON
 - en la miga de pan del documento dice crear warehouse cuando en verdad estoy editando
 - los botones de la modal de agregar tracking del campo contenido en documento no tienen iconos
 - SUGERENCIA DE DUVIER: el boton verde del contenido para agregar trackings no debe ir alli.
+
+
+- Dejar factura proforma en una sola copia.
+- Revisar el label en el consolidado porque estan saliendo los datos originales, colocar datos fake.
+- Colocar en el numero de guia el COL siempre en vez de el codigo de la ciudad. ej: MZL00002545P1 => COL00002545P1

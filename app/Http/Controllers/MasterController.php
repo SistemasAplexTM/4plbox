@@ -245,6 +245,7 @@ class MasterController extends Controller
                 'a.currency',
                 'a.chgs_code',
                 'a.handing_information',
+                'a.master_detail',
                 'a.to1',
                 'a.to2',
                 'a.to3',
