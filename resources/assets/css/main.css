@@ -6,6 +6,9 @@ body {
   font-family: "Roboto Condensed";
 }
 
+.el-autocomplete {
+  width: 100% !important;
+}
 
 .el-autocomplete-suggestion {
   z-index: 3000 !important;

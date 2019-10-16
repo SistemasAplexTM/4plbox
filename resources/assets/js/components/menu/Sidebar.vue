@@ -1,7 +1,7 @@
 <template>
   <ul class="nav metismenu" id="side-menu">
     <slot name="header"></slot>
-    <li v-for="item in menu" class="active">
+    <li v-for="item in menu" class="active" :key="item.id">
       <a :href="item.route" :style="'background-color: ' + formatMeta(item.meta, 'color')" style="color: white;">
         <i :class="formatMeta(item.meta, 'icon')"></i>
         <span class="nav-label">
@@ -12,7 +12,7 @@
         </span>
       </a>
       <ul class="nav nav-second-level">
-        <li v-for="subItem in item.children">
+        <li v-for="subItem in item.children" :key="subItem.id">
           <a :href="'/'+subItem.route">
             <span :class="formatMeta(subItem.meta, 'icon')"></span>
             {{ subItem.name }}

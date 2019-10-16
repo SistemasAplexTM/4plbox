@@ -44,6 +44,7 @@ class PrealertaController extends Controller
     public function store(Request $request, $id_agencia)
     {
         try {
+            $id_agencia = base64_decode($id_agencia);
             $dataUser = Consignee::select('id')->where('correo', $request->email)->first();
             if (!$dataUser) {
                 /* ENVIAR EMAIL */
@@ -54,20 +55,20 @@ class PrealertaController extends Controller
             }
 
             // foreach ($request->campos as $key) {
-                // for ($i = 0; $i < count($request->campos); $i++) {
-                $data = new Prealerta;
-                if ($dataUser) {
-                    $data->consignee_id = $dataUser->id;
-                }
-                $data->correo = $request->email;
-                $data->tracking    = $request['tracking'];
-                $data->contenido    = $request['contenido'];
-                $data->agencia_id  = $id_agencia;
-                $data->instruccion = $request['instruccion'];
-                $data->despachar = ($request['despachar']) ? 1 : 0;
-                // $data->telefono    = $request['telefono'];
-                $data->created_at = date('Y-m-d H:i:s');
-                $data->save();
+            // for ($i = 0; $i < count($request->campos); $i++) {
+            $data = new Prealerta;
+            if ($dataUser) {
+                $data->consignee_id = $dataUser->id;
+            }
+            $data->correo = $request->email;
+            $data->tracking    = $request['tracking'];
+            $data->contenido    = $request['contenido'];
+            $data->agencia_id  = $id_agencia;
+            $data->instruccion = $request['instruccion'];
+            $data->despachar = ($request['despachar']) ? 1 : 0;
+            // $data->telefono    = $request['telefono'];
+            $data->created_at = date('Y-m-d H:i:s');
+            $data->save();
             // }
             $answer = array(
                 "datos"  => $request->all(),
@@ -145,10 +146,10 @@ class PrealertaController extends Controller
     public function getAll($id_agencia)
     {
         $sql = Prealerta::leftJoin('consignee as b', 'prealerta.consignee_id', 'b.id')
-        ->join('agencia as c', 'prealerta.agencia_id', 'c.id')
-        ->select('prealerta.*', 'b.nombre_full as consignee', 'c.descripcion as agencia')
-        ->where([['prealerta.deleted_at', NULL],['prealerta.recibido', 0],['prealerta.agencia_id', $id_agencia]])
-        ->get();
+            ->join('agencia as c', 'prealerta.agencia_id', 'c.id')
+            ->select('prealerta.*', 'b.nombre_full as consignee', 'c.descripcion as agencia')
+            ->where([['prealerta.deleted_at', NULL], ['prealerta.recibido', 0], ['prealerta.agencia_id', $id_agencia]])
+            ->get();
         return \DataTables::of($sql)->make(true);
     }
 

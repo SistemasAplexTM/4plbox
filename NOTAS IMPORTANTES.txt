@@ -6,12 +6,27 @@ EVITAR QUE RECARGE EL DETALLE DEL DOCUMENTO
 
 
 QUEDA EPNDIENTE PARA TERMINAR: (11 - 09 - 2019)
-1. Manejo de permisos desde la vista del menú
-2. Permiso especial para un usuario al ver el menú y en el control de acceso
 3. Manejo del menú en memoria caché o localStorage para no hacer demasiados llamados ajax
-4. Módulo de configuración desde el menú
-5. Listar iconos enselect (CREAR COMPONENTE)
 
-6. Tab de URLs privadas y publicas en agencia
 
-nota de jhonny
+PREGUNTAS PARA RAMON
+- Borrar fisicamente los usuarios de casillero?
+- En la plantilla de correo de registro de casillero agregar la info del usuario y las url y revisar porque no 
+  aparece el sender el el email
+- colocar en la plantilla de email de tracking recibido, los links para rastrear e ir al casillero
+- colocar las imagenes con tamaño obligado -----------USAR LIBRERÍA PARA TRATAR LAS IMAGENES
+- revisar la generación del detalle cuando se crea el documento desde el recibo de tracking
+  porque no coloco la P y el consecutivo de la pieza
+- SUGERENCIA DE DUVIER: el boton verde del contenido para agregar trackings no debe ir alli.
+
+- Desencriptar id al prealertar----------------------------------------------------------------------------------------------------------
+- Si hay error al prealertar el botón se queda cargando ---------------------------------------------------------------------------------
+- colocar en el recibo de tracking si esta prealertado, si se despacha o no segun el check.---------------------------------------------
+- colocar filtro de agencia para la busqueda de consignee en recibo de tracking (es el id del usuario en sesión?) .------------------
+- colocar lb en el peso al crear recibo desde recibo casillero--------------------------------------------------------------------------
+- colocar tilde en donde dice envio al crear recibo desde recibo casillero--------------------------------------------------------------
+- quitar intensidad al nombre de la agencia en el formulario de documento---------------------------------------------------------------
+- El botón de agregar en la modal del botón del detalle del documento que tiene los tracking debe ir con icono de plus------------------
+  y tilde en la u de numero y la palabra trackings en plural y asociados en singular (corregir)-----------------------------------------
+- en la miga de pan del documento dice crear warehouse cuando en verdad estoy editando--------------------------------------------------
+- los botones de la modal de agregar tracking del campo contenido en documento no tienen iconos-----------------------------------------

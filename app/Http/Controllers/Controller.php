@@ -89,9 +89,9 @@ class Controller extends BaseController
                 'a.otros_destinatarios',
                 'a.enviar_archivo'
             ])->where([
-            ['a.id', $id],
-            ['a.deleted_at', '=', null],
-        ])->first();
+                ['a.id', $id],
+                ['a.deleted_at', '=', null],
+            ])->first();
     }
 
     public function getDataAgenciaById($id)
@@ -107,9 +107,9 @@ class Controller extends BaseController
                 'c.descripcion AS depto',
                 'd.descripcion AS pais',
             ])->where([
-            ['a.id', $id],
-            ['a.deleted_at', '=', null],
-        ])->first();
+                ['a.id', $id],
+                ['a.deleted_at', '=', null],
+            ])->first();
     }
 
     public function getNameAgencia()
@@ -122,7 +122,7 @@ class Controller extends BaseController
                 ->first();
             session(['agencia_name_global' => $agencia_data->descripcion]);
             return $agencia_data;
-        }else{
+        } else {
             return false;
         }
     }
@@ -342,20 +342,20 @@ class Controller extends BaseController
 
                 /* CREACION DEL PO_BOX */
                 $prefijo = DB::table('consignee as a')
-                ->join('localizacion as b', 'a.localizacion_id', 'b.id')
-                ->join('deptos as c', 'b.deptos_id', 'c.id')
-                ->join('pais as d', 'c.pais_id', 'd.id')
-                ->select('b.prefijo', 'd.iso2')
-                ->where([
-                    ['a.deleted_at', null],
-                    ['a.id', $consig_id],
-                ])
-                ->first();
+                    ->join('localizacion as b', 'a.localizacion_id', 'b.id')
+                    ->join('deptos as c', 'b.deptos_id', 'c.id')
+                    ->join('pais as d', 'c.pais_id', 'd.id')
+                    ->select('b.prefijo', 'd.iso2')
+                    ->where([
+                        ['a.deleted_at', null],
+                        ['a.id', $consig_id],
+                    ])
+                    ->first();
                 $pref = '';
                 $prefijo_pobox = Agencia::select('prefijo_pobox')->where('id', Auth::user()->agencia_id)->first();
-                if($prefijo_pobox->prefijo_pobox == null){
-                   $pref = Auth::user()->agencia_id;
-                }else{
+                if ($prefijo_pobox->prefijo_pobox == null) {
+                    $pref = Auth::user()->agencia_id;
+                } else {
                     $pref = $prefijo_pobox->prefijo_pobox;
                 }
                 $caracteres      = strlen($pref);
@@ -367,7 +367,6 @@ class Controller extends BaseController
                 $po_box = $caracter . $pref . '-' . $consig_id;
                 // Consignee::where('id', $consig_id)->update(['po_box' => $prefijo->iso2 . '' . $po_box]);
                 Consignee::where('id', $consig_id)->update(['po_box' => $po_box]);
-
             } catch (Exception $e) {
                 echo 'Error: <pre>';
                 print_r($e);
@@ -494,7 +493,6 @@ class Controller extends BaseController
             $nomFull[1] = $ape;
             return $nomFull;
         }
-
     }
 
     public function replacements($id, $objAgencia, $objWarehouse = null, $objShipper = null, $objConsignee = null, $datosEnvio = null, $tracking = null)
@@ -544,54 +542,55 @@ class Controller extends BaseController
             '({pais_agencia})'    => ($objAgencia) ? $objAgencia->pais : '',
             '({url_casillero})'   => ($objAgencia) ? $objAgencia->url_casillero : '',
             '({url_terms})'       => ($objAgencia) ? $objAgencia->url_terms : '',
-            '({url_registro})'    => ($objAgencia) ? $objAgencia->url_registro : '',
-            '({url_rastreo})'     => ($objAgencia) ? $objAgencia->url_rastreo : '',
+            // '({url_registro})'    => ($objAgencia) ? $objAgencia->url_registro : '',
+            // '({url_rastreo})'     => ($objAgencia) ? $objAgencia->url_rastreo : '',
             '({url_prealerta})'   => ($objAgencia) ? $objAgencia->url_prealerta : '',
             '({url_registro_casillero})'     => ($objAgencia) ? $objAgencia->url_registro_casillero : '',
             '({url})'             => ($objAgencia) ? $objAgencia->url : '',
-            '({logo_agencia})'    => ($objAgencia) ? '<img src="'.url('storage').'/'.$objAgencia->logo.'" alt="logo" height="80" />' : '',
+            '({logo_agencia})'    => ($objAgencia) ? '<img src="' . url('storage') . '/' . $objAgencia->logo . '" alt="logo" height="80" />' : '',
         );
         return $replacements;
     }
 
-    public function getConfig($key){
-      $data = AplexConfig::where('key', $key)->first();
-      return $data;
+    public function getConfig($key)
+    {
+        $data = AplexConfig::where('key', $key)->first();
+        return $data;
     }
 
     public function sendEmailStatus($id_agencia, $id_consignee, $id_plantila)
     {
-      DB::beginTransaction();
-      try {
+        DB::beginTransaction();
+        try {
 
-          $user = $this->getDataConsigneeOrShipperById($id_consignee, 'consignee');
-          $plantilla = DB::table('plantillas_correo AS a')
-              ->select([
-                  'a.mensaje',
-                  'a.subject',
-              ])->where([
-              ['a.id', $id_plantila],
-              ['a.deleted_at', '=', null],
-          ])->first();
-          // La agencia es una consulta a la bd a partir del id que viene por url
-          $agencia = $this->getDataAgenciaById($id_agencia);
+            $user = $this->getDataConsigneeOrShipperById($id_consignee, 'consignee');
+            $plantilla = DB::table('plantillas_correo AS a')
+                ->select([
+                    'a.mensaje',
+                    'a.subject',
+                ])->where([
+                    ['a.id', $id_plantila],
+                    ['a.deleted_at', '=', null],
+                ])->first();
+            // La agencia es una consulta a la bd a partir del id que viene por url
+            $agencia = $this->getDataAgenciaById($id_agencia);
 
-          $replacements = $this->replacements(null, $agencia, null, null, $user, null);
+            $replacements = $this->replacements(null, $agencia, null, null, $user, null);
 
-          $cuerpo_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->mensaje);
-          $asunto_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->subject);
+            $cuerpo_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->mensaje);
+            $asunto_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->subject);
 
-          $from_self = array(
-              'address' => $agencia->email,
-              'name'    => $agencia->descripcion,
-          );
-          Mail::to($user->correo)->send(new \App\Mail\StatusEmail($cuerpo_correo, $from_self, $asunto_correo));
-          DB::commit();
-      } catch (\Exception $e) {
-          DB::rollback();
-          $success   = false;
-          $exception = $e;
-          return $e;
-      }
+            $from_self = array(
+                'address' => $agencia->email,
+                'name'    => $agencia->descripcion,
+            );
+            Mail::to($user->correo)->send(new \App\Mail\StatusEmail($cuerpo_correo, $from_self, $asunto_correo));
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            $success   = false;
+            $exception = $e;
+            return $e;
+        }
     }
 }
