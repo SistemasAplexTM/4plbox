@@ -178,7 +178,8 @@ DJR6.1. Generar archivo plano para subir facturación a QB (Flete, Seguro, Impue
 
 PREGUNTAS PARA RAMON
 - Borrar fisicamente los usuarios de casillero?
-- En la plantilla de correo de registro de casillero agregar la info del usuario y las url y revisar porque no aparece el sender el el email
+- En la plantilla de correo de registro de casillero agregar la info del usuario y las url y revisar porque no 
+  aparece el sender el el email
 - colocar las imagenes con tamaño obligado
 - colocar en el recibo de trackin si esta prealertado, si se despacha o no segun el check.
 - colocar en la plantilla de email de trackin recibido, los links para rastrear e ir al casillero
