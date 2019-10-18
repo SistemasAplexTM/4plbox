@@ -25,7 +25,9 @@ export default {
     };
   },
   methods: {
-    updateTable() {}
+    updateTable() {
+      bus.$emit("updateContact");
+    }
   }
 };
 </script>

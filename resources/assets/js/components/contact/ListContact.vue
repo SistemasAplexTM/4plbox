@@ -41,7 +41,11 @@ export default {
     };
   },
   created() {
-    this.get();
+    let me = this;
+    me.get();
+    bus.$on("updateContact", function(payload) {
+      me.get();
+    });
   },
   methods: {
     async get() {
