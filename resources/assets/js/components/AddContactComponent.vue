@@ -1,6 +1,9 @@
 <template>
   <el-tabs v-model="active" type="card">
     <el-tab-pane name="form" label="Formulario">
+      <span slot="label">
+        <i class="fal fa-user"></i> Formulario
+      </span>
       <form-csc
         :payload="payload"
         @updatetable="updateTable"
@@ -9,6 +12,9 @@
       ></form-csc>
     </el-tab-pane>
     <el-tab-pane name="list" label="Listado">
+      <span slot="label">
+        <i class="fal fa-list"></i> Listado
+      </span>
       <list-contact :id_consignee="payload.id_c" />
     </el-tab-pane>
   </el-tabs>
