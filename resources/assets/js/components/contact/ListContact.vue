@@ -25,6 +25,13 @@
               <td>Zip code</td>
               <td>{{ item.zip }}</td>
             </tr>
+            <tr class="text-center">
+              <td width="100%" class="text-center" colspan="2">
+                <el-button type="danger" @click="destroy(item.id)" size="small" plain class="w100">
+                  <i class="fal fa-trash"></i>
+                </el-button>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -56,6 +63,30 @@ export default {
       } catch (error) {
         console.error(error);
       }
+    },
+    destroy(id) {
+      swal({
+        title: "Seguro que desea eliminar este registro?",
+        text: "No lo podrás recuperar después!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si",
+        cancelButtonText: "No, cancelar!"
+      }).then(result => {
+        if (result.value) {
+          axios
+            .delete(`/consignee/${id}`)
+            .then(response => {
+              this.get();
+              toastr.success("Registro eliminado correctamente.");
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        }
+      });
     }
   }
 };
