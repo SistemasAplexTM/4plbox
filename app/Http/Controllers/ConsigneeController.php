@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Mail;
 use JavaScript;
 use App\User;
 use App\Agencia;
+use Exception;
+use PhpParser\Node\Stmt\TryCatch;
 
 class ConsigneeController extends Controller
 {
@@ -169,6 +171,7 @@ class ConsigneeController extends Controller
         ->leftjoin('clientes', $table . '.cliente_id', 'clientes.id')
         ->select('consignee.id', 'consignee.po_box', 'consignee.documento', 'consignee.tarifa', 'consignee.primer_nombre', 'consignee.segundo_nombre', 'consignee.primer_apellido', 'consignee.segundo_apellido', 'consignee.nombre_full', 'consignee.zip', 'consignee.correo', 'consignee.telefono', 'consignee.direccion', 'consignee.localizacion_id', 'consignee.tipo_identificacion_id', 'consignee.agencia_id', 'localizacion.nombre as ciudad', 'localizacion.id as ciudad_id', 'deptos.descripcion as estado', 'deptos.id as estado_id', 'pais.descripcion as pais', 'pais.id as pais_id', 'agencia.descripcion as agencia', 'tipo_identificacion.descripcion as identificacion', 'clientes.id AS cliente_id', 'clientes.nombre AS cliente')
         ->where($where)
+        ->whereNull('parent_id')
         ->orderBy($table . '.primer_nombre');
     } else {
       $where = [['a.deleted_at', null], ['consignee.deleted_at', null]];
@@ -487,6 +490,15 @@ class ConsigneeController extends Controller
         'code' => 200,
         'user' => $data
       );
+    } catch (Exception $e) {
+      return $e;
+    }
+  }
+
+  public function getContacts($id)
+  {
+    try {
+      return Consignee::where('parent_id', $id)->with('city')->get();
     } catch (Exception $e) {
       return $e;
     }
