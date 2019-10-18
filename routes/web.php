@@ -340,7 +340,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     /*  REPORTES - IMPRESIONES EN PDF */
     Route::get('impresion-documento/{id}/{document}/{id_detalle?}', 'DocumentoController@pdf')->name('documento.pdf');
-    Route::get('impresion-documento-label/{id}/{document}/{id_detalle?}/{consolidado?}', 'DocumentoController@pdfLabel')->name('documento.pdfLabel');
+    Route::get('impresion-documento-label/{id}/{document}/{id_detalle?}/{consolidado?}/{id_detail_consol?}', 'DocumentoController@pdfLabel')->name('documento.pdfLabel');
     Route::get('impresion-documento/pdfContrato', 'DocumentoController@pdfContrato')->name('documento.pdfContrato');
     Route::get('impresion-documento-tsa/pdfTsa/{carrier_id}', 'DocumentoController@pdfTsa')->name('documento.pdfTsa');
     Route::get('impresion-group/pdfConsolidadoGroup/{id}/{document}/{num_bolsa}', 'DocumentoController@pdfConsolidadoGroup')->name('documento.pdfConsolidadoGroup');

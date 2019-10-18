@@ -554,7 +554,7 @@ class Controller extends BaseController
 
     public function getConfig($key)
     {
-        $data = AplexConfig::where('key', $key)->first();
+        $data = AplexConfig::where([['key', $key], ['deleted_at', null]])->first();
         return $data;
     }
 

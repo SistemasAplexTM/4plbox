@@ -1012,7 +1012,7 @@
 			                              href_print_label = "../../impresion-documento-label/"+ full.documento_id + "/warehouse/"+full.documento_detalle_id+"/consolidado";
 																		document_print = "warehouse";
 			                          }else{
-			                              href_print_label = "../../impresion-documento-label/"+ full.documento_id + "/guia/"+full.documento_detalle_id+"/consolidado";
+			                              href_print_label = "../../impresion-documento-label/"+ full.documento_id + "/guia/"+full.documento_detalle_id+"/consolidado/"+ full.id;
 																		document_print = "guia";
 			                          }
 
