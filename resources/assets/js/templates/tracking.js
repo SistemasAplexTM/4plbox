@@ -9,12 +9,12 @@ $(document).ready(function () {
   loadTableCreateReceipt();
 
   jQuery('#tbl-tracking').
-    on('mouseover', 'tr', function () {
-      jQuery(this).find('.edit').css('opacity', '1');
-    }).
-    on('mouseout', 'tr', function () {
-      jQuery(this).find('.edit').css('opacity', '0');
-    });
+  on('mouseover', 'tr', function () {
+    jQuery(this).find('.edit').css('opacity', '1');
+  }).
+  on('mouseout', 'tr', function () {
+    jQuery(this).find('.edit').css('opacity', '0');
+  });
 });
 
 function loadTable(name, bodega) {
@@ -23,65 +23,68 @@ function loadTable(name, bodega) {
     serverSide: true,
     responsive: true,
     lengthChange: false,
-    order: [[0, "DESC"]],
+    order: [
+      [0, "DESC"]
+    ],
     ajax: 'tracking/all/' + true + '/' + false + '/' + false + '/' + false + '/' + bodega,
     columns: [{
-      data: "fecha",
-      name: 'fecha'
-    }, {
-      data: "cliente",
-      name: 'cliente',
-      "render": function (data, type, full, meta) {
-        if (full.cliente === null) {
-          return '';
-        } else {
-          return '<div style="width:80%;float: left;">' + full.cliente + '</div> <div style="width:20%;float: right;"><a  data-toggle="tooltip" title="Cambiar" class="edit" style="color:#FFC107;" onclick="editConsignee(' + full.id + ')"><i class="fal fa-pencil"></i></a></div>';
+        data: "fecha",
+        name: 'fecha'
+      }, {
+        data: "cliente",
+        name: 'cliente',
+        "render": function (data, type, full, meta) {
+          if (full.cliente === null) {
+            return '';
+          } else {
+            return '<div style="width:80%;float: left;">' + full.cliente + '</div> <div style="width:20%;float: right;"><a  data-toggle="tooltip" title="Cambiar" class="edit" style="color:#FFC107;" onclick="editConsignee(' + full.id + ')"><i class="fal fa-pencil"></i></a></div>';
+          }
         }
-      }
-    },
-    // {
-    //     data: "cliente_email",
-    //     name: 'cliente_email'
-    // },
-    {
-      data: "codigo",
-      name: 'codigo',
-      "render": function (data, type, full, meta) {
-        return '<a data-name="codigo" data-pk="' + full.id + '" class="td_edit" data-type="text" data-placement="top" data-title="Tracking">' + full.codigo + '</a>';
-      }
-    }, {
-      "render": function (data, type, full, meta) {
-        return '<div>' + ((full.num_warehouse === null) ? '' : full.num_warehouse) + '</div><small style="color:#2196F3">' + ((full.estatus === null) ? '' : full.estatus) + '</small>'
       },
-      "visible": bodega
-    }, {
-      "render": function (data, type, full, meta) {
-        return '<a data-name="contenido" data-pk="' + full.id + '" class="td_edit" data-type="textarea" data-placement="left" data-title="Contenido">' + ((full.contenido !== null) ? full.contenido : 'No hay datos') + '</a>';
-      }
-    },
-    // {
-    //     sortable: false,
-    //     "render": function(data, type, full, meta) {
-    //         var color = '#ccc';
-    //         var label = 'Sin acción';
-    //         if (full.confirmed_send == 1) {
-    //             color = '#4caf50';
-    //             label = 'Despachar';
-    //         }
-    //         return '<div style="color:' + color + '" class="text-center" data-toggle="tooltip" title="' + label + '"><i class="fal fa-flag"></i></div>';
-    //     }
-    // },
-    {
-      sortable: false,
-      "render": function (data, type, full, meta) {
-        var btn_delete = '';
-        if (permission_delete) {
-          var btn_delete = " <a onclick=\"eliminar(" + full.id + "," + false + ")\" class='delete_btn' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fal fa-trash-alt fa-lg'></i></a> ";
+      // {
+      //     data: "cliente_email",
+      //     name: 'cliente_email'
+      // },
+      {
+        data: "codigo",
+        name: 'codigo',
+        "render": function (data, type, full, meta) {
+          return '<a data-name="codigo" data-pk="' + full.id + '" class="td_edit" data-type="text" data-placement="top" data-title="Tracking">' + full.codigo + '</a>';
         }
-        var btn_recall_email = " <a onclick=\"reenviarEmail(" + full.consignee_id + ",'" + full.codigo + "')\" class='reply_btn' data-toggle='tooltip' data-placement='top' title='Reenviar Email'><i class='fal fa-reply-all'></i></a> ";
-        return btn_delete;
+      }, {
+        "render": function (data, type, full, meta) {
+          return '<div>' + ((full.num_warehouse === null) ? '' : full.num_warehouse) + '</div><small style="color:#2196F3">' + ((full.estatus === null) ? '' : full.estatus) + '</small>'
+        },
+        "visible": bodega
+      }, {
+        "render": function (data, type, full, meta) {
+          return '<a data-name="contenido" data-pk="' + full.id + '" class="td_edit" data-type="textarea" data-placement="left" data-title="Contenido">' + ((full.contenido !== null) ? full.contenido : 'No hay datos') + '</a>';
+        }
+      },
+      // {
+      //     sortable: false,
+      //     "render": function(data, type, full, meta) {
+      //         var color = '#ccc';
+      //         var label = 'Sin acción';
+      //         if (full.confirmed_send == 1) {
+      //             color = '#4caf50';
+      //             label = 'Despachar';
+      //         }
+      //         return '<div style="color:' + color + '" class="text-center" data-toggle="tooltip" title="' + label + '"><i class="fal fa-flag"></i></div>';
+      //     }
+      // },
+      {
+        sortable: false,
+        "render": function (data, type, full, meta) {
+          var btn_delete = '';
+          if (permission_delete) {
+            var btn_delete = " <a onclick=\"eliminar(" + full.id + "," + false + ")\" class='delete_btn' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fal fa-trash-alt fa-lg'></i></a> ";
+          }
+          var btn_recall_email = " <a onclick=\"reenviarEmail(" + full.consignee_id + ",'" + full.codigo + "')\" class='reply_btn' data-toggle='tooltip' data-placement='top' title='Reenviar Email'><i class='fal fa-reply-all'></i></a> ";
+          return btn_delete;
+        }
       }
-    }],
+    ],
     "drawCallback": function () {
       $('.edit').css('opacity', '0');
       $(".td_edit").editable({
@@ -117,52 +120,55 @@ function loadTableCreateReceipt() {
     processing: true,
     serverSide: true,
     responsive: true,
-    order: [[0, "DESC"]],
+    order: [
+      [0, "DESC"]
+    ],
     ajax: 'tracking/getTrackingByCreateReceipt/',
     columns: [{
-      data: "confirmed_send",
-      name: 'confirmed_send',
-      "render": function (data, type, full, meta) {
-        return parseInt(full.confirmed_send);
-      },
-      visible: false
-    }, {
-      data: "cliente",
-      name: 'cliente',
-      "render": function (data, type, full, meta) {
-        return '<label>' + full.cliente + '</label>'
-      }
-    }, {
-      sortable: false,
-      class: 'text-center',
-      "render": function (data, type, full, meta) {
-        var color = 'success';
-        // var dateObj = new Date();
-        // var month = (dateObj.getMonth() + 1).toString(); //months from 1-12
-        // var day = dateObj.getDate().toString();
-        // var year = dateObj.getUTCFullYear();
-        //
-        // var mmChars = month.split('');
-        // var ddChars = day.split('');
-        //
-        // month = (mmChars[1]?month:"0"+mmChars[0]);
-        // day = (ddChars[1]?day:"0"+ddChars[0]);
-        //
-        // var today = year + "-" + month + "-" + day;
-        if (parseInt(full.confirmed_send) !== 0) {
-          color = 'primary';
+        data: "confirmed_send",
+        name: 'confirmed_send',
+        "render": function (data, type, full, meta) {
+          return parseInt(full.confirmed_send);
+        },
+        visible: false
+      }, {
+        data: "cliente",
+        name: 'cliente',
+        "render": function (data, type, full, meta) {
+          return '<label>' + full.cliente + '</label>'
         }
-        return '<label class="badge badge-' + color + '" style="font-size: 15px;">' + full.cantidad + '</label> ';
+      }, {
+        sortable: false,
+        class: 'text-center',
+        "render": function (data, type, full, meta) {
+          var color = 'success';
+          // var dateObj = new Date();
+          // var month = (dateObj.getMonth() + 1).toString(); //months from 1-12
+          // var day = dateObj.getDate().toString();
+          // var year = dateObj.getUTCFullYear();
+          //
+          // var mmChars = month.split('');
+          // var ddChars = day.split('');
+          //
+          // month = (mmChars[1]?month:"0"+mmChars[0]);
+          // day = (ddChars[1]?day:"0"+ddChars[0]);
+          //
+          // var today = year + "-" + month + "-" + day;
+          if (parseInt(full.confirmed_send) !== 0) {
+            color = 'primary';
+          }
+          return '<label class="badge badge-' + color + '" style="font-size: 15px;">' + full.cantidad + '</label> ';
+        }
+      },
+      {
+        sortable: false,
+        "render": function (data, type, full, meta) {
+          var btn_recall_email = " <a onclick=\"reenviarEmail(" + full.consignee_id + ",'" + full.trackings + "')\" class='reply_btn' data-toggle='tooltip' data-placement='top' title='Reenviar Email'><i class='fal fa-reply-all'></i></a> ";
+          var btn_create = " <a onclick=\"showDataToCreateReceipt(" + full.consignee_id + ", '" + full.cliente + "')\" class='btn btn-outline btn-primary btn-xs' data-toggle='tooltip' title='Crear recibo'><i class='fal fa-file-signature'></i> </a> ";
+          return btn_create + ' ' + btn_recall_email;
+        }
       }
-    },
-    {
-      sortable: false,
-      "render": function (data, type, full, meta) {
-        var btn_recall_email = " <a onclick=\"reenviarEmail(" + full.consignee_id + ",'" + full.trackings + "')\" class='reply_btn' data-toggle='tooltip' data-placement='top' title='Reenviar Email'><i class='fal fa-reply-all'></i></a> ";
-        var btn_create = " <a onclick=\"showDataToCreateReceipt(" + full.consignee_id + ", '" + full.cliente + "')\" class='btn btn-outline btn-primary btn-xs' data-toggle='tooltip' title='Crear recibo'><i class='fal fa-file-signature'></i> </a> ";
-        return btn_create + ' ' + btn_recall_email;
-      }
-    }],
+    ],
   });
 }
 
@@ -178,18 +184,19 @@ function showDataToCreateReceipt(consignee_id, client) {
     "paging": false,
     ajax: 'tracking/getTrackingByIdConsignee/' + consignee_id,
     columns: [{
-      "render": function (data, type, full, meta) {
-        return '<div class="checkbox checkbox-success"><input type="checkbox" checked="true" data-contenido="' + full.contenido + '" id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '"></label></div>';
+        "render": function (data, type, full, meta) {
+          return '<div class="checkbox checkbox-success"><input type="checkbox" checked="true" data-contenido="' + full.contenido + '" id="chk' + full.id + '" name="chk[]" value="' + full.id + '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' + full.id + '"></label></div>';
+        }
+      }, {
+        data: "codigo",
+        name: 'codigo'
+      },
+      {
+        "render": function (data, type, full, meta) {
+          return '<a data-name="contenido" data-pk="' + full.id + '" class="td_edit" data-type="text" data-placement="right" data-title="Contenido">' + ((full.contenido !== null) ? full.contenido : 'No hay datos') + '</a>';
+        }
       }
-    }, {
-      data: "codigo",
-      name: 'codigo'
-    },
-    {
-      "render": function (data, type, full, meta) {
-        return '<a data-name="contenido" data-pk="' + full.id + '" class="td_edit" data-type="text" data-placement="right" data-title="Contenido">' + ((full.contenido !== null) ? full.contenido : 'No hay datos') + '</a>';
-      }
-    }],
+    ],
     "drawCallback": function () {
       $(".td_edit").editable({
         ajaxOptions: {
@@ -344,17 +351,23 @@ var objVue = new Vue({
           if (data.shipper != null) {
             return true;
           } else {
-            toastr.options = { "positionClass": "toast-top-center" }
+            toastr.options = {
+              "positionClass": "toast-top-center"
+            }
             toastr.error('Selecciona un shippper para continuar.');
             return false;
           }
         } else {
-          toastr.options = { "positionClass": "toast-top-center" }
+          toastr.options = {
+            "positionClass": "toast-top-center"
+          }
           toastr.error('Ingresa el peso del paquete.');
           return false;
         }
       } else {
-        toastr.options = { "positionClass": "toast-top-center" }
+        toastr.options = {
+          "positionClass": "toast-top-center"
+        }
         toastr.error('Ingresa el contenido en alguno de los registros de tracking seleccionados.');
         return false;
       }
