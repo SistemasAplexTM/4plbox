@@ -322,7 +322,7 @@ export default {
       me.beforeSend();
     });
     bus.$on("update", function(payload) {
-      me.0true);
+      me.true;
     });
     bus.$on("cancel", function(payload) {
       me.resetForm();
