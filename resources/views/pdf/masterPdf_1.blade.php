@@ -684,7 +684,7 @@
 					    <td class="left_line bg_azul" style="border-left: 1px solid {{ $color }};background-color:{{ $background }};">&nbsp;</td>
 					  </tr>
 					</table>
-
+					<div style="font-family:'Courier New', Courier, monospace;color: #dedede;position: absolute;margin-top: -80px;margin-left: 30em;width: 400px;"> {{ $data->master_detail }}</div>
 
 					<table width="100%" class="main_table_3" style="border-left: 1px solid {{ $color }};">
 					  <tr>

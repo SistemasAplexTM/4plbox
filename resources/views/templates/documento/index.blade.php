@@ -204,7 +204,10 @@
                                                       <th><i class="fal fa-user" aria-hidden="true"></i> @lang('documents.consignee')</th>
                                                       <th><i class="fal fa-map-marked-alt" aria-hidden="true"></i> @lang('documents.city')</th>
                                                       <th><i class="fal fa-dollar-sign" aria-hidden="true"></i> @lang('general.rate')</th>
-                                                      <th><i class="fal fa-balance-scale" aria-hidden="true"></i> @lang('documents.weight')</th>
+                                                      <th>
+                                                        <div style="float: left;"><i class="fal fa-balance-scale" aria-hidden="true"></i> @lang('documents.weight')</div>
+                                                        <div style="float: right;"><i class="fal fa-box-check" aria-hidden="true"></i> @lang('documents.pieces')</div>
+                                                      </th>
                                                       <th><i class="fal fa-cubes" aria-hidden="true"></i> @lang('documents.volume')</th>
                                                       <th><i class="fal fa-building" aria-hidden="true"></i> @lang('documents.agency')</th>
                                                       <th><i class="fal fa-bolt" aria-hidden="true"></i> @lang('documents.actions')</th>
@@ -224,7 +227,10 @@
                                                       <th><i class="fal fa-user" aria-hidden="true"></i> @lang('documents.consignee')</th>
                                                       <th><i class="fal fa-map-marked-alt" aria-hidden="true"></i> @lang('documents.city')</th>
                                                       <th><i class="fal fa-dollar-sign" aria-hidden="true"></i> @lang('general.rate')</th>
-                                                      <th><i class="fal fa-balance-scale" aria-hidden="true"></i> @lang('documents.weight')</th>
+                                                      <th>
+                                                        <div style="float: left;"><i class="fal fa-balance-scale" aria-hidden="true"></i> @lang('documents.weight')</div>
+                                                        <div style="float: right;"><i class="fal fa-box-check" aria-hidden="true"></i> @lang('documents.pieces')</div>
+                                                      </th>
                                                       <th><i class="fal fa-cubes" aria-hidden="true"></i> @lang('documents.volume')</th>
                                                       <th><i class="fal fa-building" aria-hidden="true"></i> @lang('documents.agency')</th>
                                                       <th><i class="fal fa-bolt" aria-hidden="true"></i> @lang('documents.actions')</th>
@@ -244,7 +250,10 @@
                                                       <th><i class="fal fa-user" aria-hidden="true"></i> @lang('documents.consignee')</th>
                                                       <th><i class="fal fa-map-marked-alt" aria-hidden="true"></i> @lang('documents.city')</th>
                                                       <th><i class="fal fa-dollar-sign" aria-hidden="true"></i> @lang('general.rate')</th>
-                                                      <th><i class="fal fa-balance-scale" aria-hidden="true"></i> @lang('documents.weight')</th>
+                                                      <th>
+                                                        <div style="float: left;"><i class="fal fa-balance-scale" aria-hidden="true"></i> @lang('documents.weight')</div>
+                                                        <div style="float: right;"><i class="fal fa-box-check" aria-hidden="true"></i> @lang('documents.pieces')</div>
+                                                      </th>
                                                       <th><i class="fal fa-cubes" aria-hidden="true"></i> @lang('documents.volume')</th>
                                                       <th><i class="fal fa-building" aria-hidden="true"></i> @lang('documents.agency')</th>
                                                       <th><i class="fal fa-bolt" aria-hidden="true"></i> @lang('documents.actions')</th>

@@ -2317,7 +2317,9 @@ class DocumentoController extends Controller
                 'a.liquidado',
                 'a.peso2',
                 'e.pais_id',
-                'a.declarado2')
+                'a.declarado2',
+                'consignee',
+                'agencia')
             ->where($filter)
             ->get();
         return \DataTables::of($detalle)->make(true);
@@ -3033,7 +3035,7 @@ class DocumentoController extends Controller
     {
       $trackings = DB::table('documento_detalle as a')
         ->leftJoin('tracking as b', 'a.id', 'b.documento_detalle_id')
-          ->select('b.codigo', 'a.contenido', 'a.peso')
+          ->select('b.codigo', 'b.contenido', 'a.peso')
           ->where([['a.deleted_at', null], ['b.deleted_at', null], ['a.documento_id', $id]])
           ->get();
       $answer = array(
