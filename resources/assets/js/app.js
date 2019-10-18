@@ -75,3 +75,4 @@ Vue.component('report-agency-component', require('./components/report_agency/Ind
 Vue.component('document-filter', require('./components/DocumentFilter.vue'));
 Vue.component('document-upload', require('./components/DocumentUpload.vue'));
 Vue.component('document-group', require('./components/document/index/GroupDocuments.vue'));
+Vue.component('add-contact', require('./components/AddContactComponent.vue'));
