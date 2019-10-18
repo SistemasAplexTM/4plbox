@@ -8,12 +8,12 @@ var flete = 0;
 var seguro = 0;
 var descuento = 0;
 var total = 0;
-$(window).load(function() {
-    setTimeout(function() {
+$(window).load(function () {
+    setTimeout(function () {
         totalizeDocument();
     }, 1000);
 });
-$(document).ready(function() {});
+$(document).ready(function () {});
 
 function totalizeDocument(elemento) {
     // setTimeout(function(){
@@ -23,7 +23,7 @@ function totalizeDocument(elemento) {
         flete = 0;
     }
     if (parseFloat($('#tarifa_minima').val()) === 0) {
-      $('#tarifa_minima').val(flete);
+        $('#tarifa_minima').val(flete);
     }
     $('#flete').val(flete);
     $(elemento).css('border-color', '');
@@ -45,16 +45,16 @@ function totalizeDocument(elemento) {
     }
     $('#peso_total').val(parseFloat(peso));
 
-    if($('#servicios_id option:selected').data('cobvol') == 1){
-      $('#peso_cobrado').val(parseFloat(peso));
-    } else {
-      if(parseFloat(peso) > parseFloat(volumen)) {
+    if ($('#servicios_id option:selected').data('cobvol') == 1) {
         $('#peso_cobrado').val(parseFloat(peso));
-      } else {
-        $('#peso_cobrado').val(parseFloat(volumen));
-      }
+    } else {
+        if (parseFloat(peso) > parseFloat(volumen)) {
+            $('#peso_cobrado').val(parseFloat(peso));
+        } else {
+            $('#peso_cobrado').val(parseFloat(volumen));
+        }
     }
-    
+
     if ($('#impuesto').val() == '') {
         impuesto = $('#servicios_id option:selected').data('impuesto_age');
         $('#impuesto').val(impuesto);
@@ -96,29 +96,30 @@ function calculateFlete(flete) {
     // }
     var cOpcional = $('#servicios_id option:selected').data('c_opcional');
 
-    /* DEFINO SI ES AEREO O MARITIMO 8 = MARITIMO*/
+    /* DEFINO SI ES AEREO O MARITIMO 2 = MARITIMO*/
     if ($('#tipo_embarque_id').val() == app_cuft) {
         /* SE COBRA POR PIE 3 SI LA POSICION ARANCELARIA ES CERO = 0 O SIN POSICION */
-        if($('#pa_id').val() == 1){
+        if ($('#pa_id').val() == 1) {
             $('#cobrarPor').text('cuft');
             var tot = parseFloat(pie) * parseFloat(tarifa);
-        }else{
+        } else {
             $('#cobrarPor').text('cbm');
             var tot = parseFloat(metro) * parseFloat(tarifa);
         }
         if (parseFloat(tot) <= parseFloat(flete)) {
             return flete;
-        }else{
+        } else {
             return tot;
         }
     } else {
         /* SE EVALUA SI SE COBRARA POR PESO O VOLUMEN (PESO = 1 - VOLUMEN = 0)*/
         if ($('#servicios_id option:selected').data('cobvol') == 0 && app_client != 'worldcargo') {
-            if (parseFloat(peso) >= 0 && parseFloat(peso) <= $('#servicios_id option:selected').data('tarifamin')) {
+            if ((parseFloat(peso) * parseFloat(tarifa)) >= 0 && ((parseFloat(peso) * parseFloat(tarifa)) <= $('#servicios_id option:selected').data('tarifamin'))) {
                 $('#cobrarPor').text('Pes');
+                console.log('entro 1', parseFloat(peso), ' tm: ', $('#servicios_id option:selected').data('tarifamin'));
                 return flete;
             }
-            if (parseFloat(peso) > $('#servicios_id option:selected').data('tarifamin')) {
+            if ((parseFloat(peso) * parseFloat(tarifa)) > $('#servicios_id option:selected').data('tarifamin')) {
                 /*PESO * LA TARIFA */
                 $('#cobrarPor').text('Pes');
 
@@ -130,10 +131,10 @@ function calculateFlete(flete) {
                     flete_c = parseFloat(flete_c) + parseFloat(res);
                     $('#cobrarPor').text('Vol');
                 }
-                if(parseFloat(flete) < parseFloat(flete_c)){
-                  return flete_c;
-                }else{
-                  return flete;
+                if (parseFloat(flete) < parseFloat(flete_c)) {
+                    return flete_c;
+                } else {
+                    return flete;
                 }
             }
         } else {
@@ -147,7 +148,7 @@ function calculateFlete(flete) {
             if (parseFloat(valor) * parseFloat(tarifa) <= parseFloat(flete)) {
                 return flete;
             } else {
-              return parseFloat(valor) * parseFloat(tarifa);
+                return parseFloat(valor) * parseFloat(tarifa);
                 // if (parseFloat(peso) >= 0 && parseFloat(peso) <= 8) {
                 //     return flete;
                 // } else {

@@ -951,7 +951,7 @@ class DocumentoController extends Controller
                   $data->posicion_arancelaria_id = $pa;
                   $data->arancel_id2 = $pa;
                 }
-
+                
                 /* OBTENER EL PREFIJO DE LA CIUDAD DEL CONSIGNEE PARA HACER EL NÚMERO DE GUIA */
                 $prefijoGuia = DB::table('consignee as a')
                     ->join('localizacion as b', 'a.localizacion_id', 'b.id')
@@ -963,6 +963,11 @@ class DocumentoController extends Controller
                         ['a.id', $request->consignee_id],
                     ])
                     ->first();
+                /* OBTENER PREFIJO DE GUIA DESDE LA TABLA DE CONFIG, SI EXISTE SE REEMPLAZA POR EL PREFIJO DE LA CIUDAD */
+                $config_pefix = $this->getConfig('prefix_guia');
+                if ($config_pefix) {
+                    $prefijoGuia->prefijo = $config_pefix->value;
+                }
 
                 $documento = Documento::findOrFail($data->documento_id);
 
@@ -1305,6 +1310,7 @@ class DocumentoController extends Controller
             ->first();
 
         $puntos = $this->getConfig('puntos_'.$documento->agencia_id);
+        $config_copies = $this->getConfig('copies_invoice');
         $pais_id_puntos = 0;
         if ($puntos) {
           $puntos_value = json_decode($puntos->value);
@@ -1356,7 +1362,12 @@ class DocumentoController extends Controller
             ->get();
         if($document === 'invoice_guia'){
           $this->AddToLog('Impresion Invoice (' . $documento->id . ')');
-          $pdf          = PDF::loadView('pdf.invoicePdf', compact('documento', 'detalle'));
+          if(env('APP_CLIENT') === 'colombiana'){
+              /* para colombiana se saca en carta la impresion */
+              $pdf          = PDF::loadView('pdf.invoicePdf', compact('config_copies', 'documento', 'detalle'));
+          }else{
+              $pdf          = PDF::loadView('pdf.invoicePdf', compact('config_copies', 'documento', 'detalle'));
+          }
           $nameDocument = 'comercial invoice -' . $documento->id;
         }else{
           if ($document === 'guia') {
@@ -1462,7 +1473,11 @@ class DocumentoController extends Controller
                               ->where([['a.deleted_at', null], ['a.documento_detalle_id', $id_detalle], ['a.flag', 0]])
                               ->get();
                       $this->AddToLog('Impresion Invoice (' . $documento->id . ')');
-                      $pdf          = PDF::loadView('pdf.invoicePdf', compact('documento', 'detalle', 'detalleConsolidado'));
+                        if(env('APP_CLIENT') === 'colombiana'){
+                            $pdf          = PDF::loadView('pdf.invoicePdf', compact('config_copies', 'documento', 'detalle', 'detalleConsolidado'));
+                        }else{
+                            $pdf          = PDF::loadView('pdf.invoicePdf', compact('config_copies', 'documento', 'detalle', 'detalleConsolidado'));
+                        }
                       $nameDocument = 'comercial invoice -' . $documento->id;
                   } else {
                       if ($document === 'consolidado_guias') {
@@ -1810,11 +1825,11 @@ class DocumentoController extends Controller
         $detalle = $this->pdfLabelDetail($where, $codigo, $consolidado, $id_detail_consol);
 
         $this->AddToLog('Impresion labels (' . $documento->id . ')');
-
+        
         if(env('APP_CLIENT') === 'colombiana'){
           // $pdf = PDF::loadView('pdf.labelWGJyg', compact('documento', 'detalle', 'document', 'consolidado', 'dato_consolidado'))
           // ->setPaper(array(25, -25, 260, 360), 'landscape');
-            $pdf = PDF::loadView('pdf.labelWGcolombiana', compact('documento', 'detalle', 'document'))
+            $pdf = PDF::loadView('pdf.labelWGcolombiana', compact('documento', 'detalle', 'document', 'dato_consolidado' ))
                 ->setPaper(array(25, -25, 300, 300), 'landscape');
 
             $nameDocument = 'Label' . $document . '-' . $documento->id;
@@ -2156,6 +2171,7 @@ class DocumentoController extends Controller
                 declarado <= 0 OR declarado >= ' . $config->declarado_max . ') AS h'), 'c.consignee_id', 'h.consignee_id')
             ->select(
                 'a.id',
+                'a.consolidado_id',
                 'c.documento_id',
                 'a.documento_detalle_id',
                 'b.estado_id',
