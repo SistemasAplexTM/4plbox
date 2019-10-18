@@ -509,7 +509,9 @@ export default {
       this.city_selected_s = this.city_selected_s === null ? "" : null;
       this.edit = false;
       this.$emit("cancel");
-      bus.$emit("close");
+      if (this.parent_id) {
+        bus.$emit("close");
+      }
     },
     getSelectBranch: function() {
       axios.get("/agencia/getAgencies").then(response => {
