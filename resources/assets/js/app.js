@@ -76,3 +76,4 @@ Vue.component('document-filter', require('./components/DocumentFilter.vue'));
 Vue.component('document-upload', require('./components/DocumentUpload.vue'));
 Vue.component('document-group', require('./components/document/index/GroupDocuments.vue'));
 Vue.component('add-contact', require('./components/AddContactComponent.vue'));
+Vue.component('modal-change', require('./components/consolidado/ModalChangeShipperConsignee.vue'));

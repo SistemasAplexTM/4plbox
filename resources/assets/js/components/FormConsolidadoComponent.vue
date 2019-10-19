@@ -707,6 +707,8 @@ a.badge:hover {
         </div>
       </div>
     </div>
+
+    <modal-change :open_modal="openModalChange"></modal-change>
   </div>
 </template>
 
@@ -760,29 +762,35 @@ export default {
       this.permissions = values;
     },
     contactos: function(option) {
-      this.contactos_fields = null;
-      if (option.opcion === "shipper") {
-        var id = option.idShipCons;
-        $("#modalShipperConsigneeConsolidado").modal("show");
-        this.tituloModal = "Remitente (Shipper)";
-        var contact = this.shipper_contactos[id];
-        if (contact != null) {
-          this.contactos_fields = JSON.parse(
-            contact.replace(/&quot;/g, '"')
-          ).campos;
-        }
-      }
-      if (option.opcion === "consignee") {
-        var id = option.idShipCons;
-        $("#modalShipperConsigneeConsolidado").modal("show");
-        this.tituloModal = "Destinatario (Consignee)";
-        var contact = this.consignee_contactos[id];
-        if (contact != null) {
-          this.contactos_fields = JSON.parse(
-            contact.replace(/&quot;/g, '"')
-          ).campos;
-        }
-      }
+      this.openModalChange = {
+        id: option.id,
+        id_data: option.idShipCons,
+        option: option.opcion,
+        open: true
+      };
+      // this.contactos_fields = null;
+      // if (option.opcion === "shipper") {
+      //   var id = option.idShipCons;
+      //   $("#modalShipperConsigneeConsolidado").modal("show");
+      //   this.tituloModal = "Remitente (Shipper)";
+      //   var contact = this.shipper_contactos[id];
+      //   if (contact != null) {
+      //     this.contactos_fields = JSON.parse(
+      //       contact.replace(/&quot;/g, '"')
+      //     ).campos;
+      //   }
+      // }
+      // if (option.opcion === "consignee") {
+      //   var id = option.idShipCons;
+      //   $("#modalShipperConsigneeConsolidado").modal("show");
+      //   this.tituloModal = "Destinatario (Consignee)";
+      //   var contact = this.consignee_contactos[id];
+      //   if (contact != null) {
+      //     this.contactos_fields = JSON.parse(
+      //       contact.replace(/&quot;/g, '"')
+      //     ).campos;
+      //   }
+      // }
     },
     restore: function(option) {
       let me = this;
@@ -931,6 +939,7 @@ export default {
   },
   data() {
     return {
+      openModalChange: {},
       transporte_id: null,
       transportes: [],
       countries: [],
