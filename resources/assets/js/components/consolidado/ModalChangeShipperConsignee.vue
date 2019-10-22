@@ -57,10 +57,25 @@ export default {
       }
     },
     async selectData(index, row) {
-      console.log(index, row);
-
+      // data: {id: 3, idShipCons: "699", opcion: "consignee"}
+      let me = this;
       try {
-        // this.gridData = await axios.get(`/consignee/getContacts/${id}`);
+        axios
+          .post("createContactsConsolidadoDetalle", {
+            id_change: row.id,
+            data: me.open_modal
+          })
+          .then(function(response) {
+            toastr.success("Cambio Exitoso.");
+            me.dialogTableVisible = false;
+            var table = $("#tbl-consolidado").DataTable();
+            table.ajax.reload();
+          })
+          .catch(function(error) {
+            console.log(error);
+            toastr.warning("Error.");
+            toastr.options.closeButton = true;
+          });
       } catch (error) {
         console.error(error);
       }

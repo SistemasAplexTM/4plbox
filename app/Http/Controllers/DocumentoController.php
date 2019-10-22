@@ -2656,12 +2656,15 @@ class DocumentoController extends Controller
 
     public function createContactsConsolidadoDetalle(Request $request, $id)
     {
-        $campos = json_encode($request->all()['campos']);
+        // data: {id: 3, idShipCons: "699", opcion: "consignee"}
+        // campos: {id: 1, nombre: "juan r", telefono: "3324234", ciudad: "pradera", pais: "colombia",…}
+        // exit();
+        $id_change = $request->all()['id_change'];
         $data   = $request->all()['data'];
-        $this->updateIdConsigneeContactConsolidate(false, $data['id'], json_decode($campos)->id);
+        $this->updateIdConsigneeContactConsolidate(false, $data['id'], $id_change);
         DB::table('consolidado_detalle')
             ->where('id', $data['id'])
-            ->update([$data['opcion'] => $campos]);
+            ->update([$data['option'] => $id_change]);
         $answer = array(
             'code' => 200,
         );
@@ -2680,7 +2683,7 @@ class DocumentoController extends Controller
         return $answer;
     }
 
-    public function updateIdConsigneeContactConsolidate($restore, $id_consol_detail, $id_json = null)
+    public function updateIdConsigneeContactConsolidate($restore, $id_consol_detail, $id_change = null)
     {
       $id_detail_document = DB::table('consolidado_detalle AS a')
           ->select('a.documento_detalle_id')
@@ -2694,7 +2697,7 @@ class DocumentoController extends Controller
         $dat = explode("-", $consignee_id->consignee_id);
         $id_cons = $dat[0];
       }else{
-        $id_cons = $consignee_id->consignee_id . '-' . $id_json;
+        $id_cons = $consignee_id->consignee_id . '-' . $id_change;
       }
 
       DB::table('documento_detalle AS a')
