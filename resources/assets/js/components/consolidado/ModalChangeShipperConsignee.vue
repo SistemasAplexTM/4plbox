@@ -36,7 +36,7 @@ export default {
   watch: {
     open_modal: function(val) {
       if (val.open) {
-        this.getData(val.id_data);
+        this.getData(val);
       }
     }
   },
@@ -47,9 +47,11 @@ export default {
     };
   },
   methods: {
-    async getData(id) {
+    async getData(request) {
       try {
-        let data = await axios.get(`/consignee/getContacts/${id}`);
+        let data = await axios.get(
+          `/${request.option}/getContacts/${request.id_data}`
+        );
         this.gridData = data.data;
         this.dialogTableVisible = true;
       } catch (error) {
@@ -57,7 +59,6 @@ export default {
       }
     },
     async selectData(index, row) {
-      // data: {id: 3, idShipCons: "699", opcion: "consignee"}
       let me = this;
       try {
         axios

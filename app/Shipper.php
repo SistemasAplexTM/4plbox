@@ -29,5 +29,11 @@ class Shipper extends Model
         'nombre_full',
         'nombre_old',
         'corporativo',
+        'parent_id',
     ];
+
+    public function city()
+    {
+        return $this->belongsTo('App\Ciudad', 'localizacion_id', 'id')->select(['id', 'nombre']);
+    }
 }

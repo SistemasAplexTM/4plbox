@@ -15,7 +15,7 @@
       <span slot="label">
         <i class="fal fa-list"></i> Listado
       </span>
-      <list-contact :id_consignee="payload.id_c" />
+      <list-contact :id_data="payload.id_c" :table="payload.table" />
     </el-tab-pane>
   </el-tabs>
 </template>

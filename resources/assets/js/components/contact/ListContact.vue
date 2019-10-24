@@ -40,7 +40,7 @@
 </template>
 <script>
 export default {
-  props: ["id_consignee"],
+  props: ["id_data", "table"],
   data() {
     return {
       activeNames: ["1"],
@@ -58,7 +58,7 @@ export default {
     async get() {
       try {
         this.contacts = await axios.get(
-          "/consignee/getContacts/" + this.id_consignee
+          "/" + this.table + "/getContacts/" + this.id_data
         );
       } catch (error) {
         console.error(error);
@@ -77,7 +77,7 @@ export default {
       }).then(result => {
         if (result.value) {
           axios
-            .delete(`/consignee/${id}`)
+            .delete(`/${this.table}/${id}`)
             .then(response => {
               this.get();
               toastr.success("Registro eliminado correctamente.");

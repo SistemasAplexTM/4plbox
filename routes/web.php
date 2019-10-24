@@ -41,6 +41,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     });
     /* EXPORT EXCEL CONSOLIDADO */
+    Route::get('exportInternalManifest/{id}', 'DocumentoController@internalManifest')->name('internalManifest');
     Route::get('exportLiquimp/{id}', 'DocumentoController@exportLiquimp')->name('exportLiquimp');
     Route::get('exportCellar/{id}', 'DocumentoController@exportCellar')->name('exportCellar');
     /* CONSULTAR SHIPPERS O CONSIGNEE */
@@ -252,6 +253,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('shipper/restaurar/{id}', 'ShipperController@restaurar');
     Route::get('shipper/selectInput/{tableName}', 'ShipperController@selectInput');
     Route::get('shipper/getDataById/{id}', 'ShipperController@getDataById');
+    Route::get('shipper/getContacts/{id}', 'ShipperController@getContacts');
 
     /*--- MODULO DESTINATARIOS ---*/
     Route::resource('consignee', 'ConsigneeController', ['except' => ['show', 'create', 'edit']]);

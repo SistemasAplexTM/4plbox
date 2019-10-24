@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     llenarSelectP('shipper', 'localizacion', 'localizacion_id', 2); // module, tableName, id_campo
     llenarSelect('shipper', 'agencia', 'agencia_id', 0); // module, tableName, id_campo
     $('#tbl-shipper').DataTable({
@@ -20,7 +20,7 @@ $(document).ready(function() {
             name: 'agencia.descripcion'
         }, {
             sortable: false,
-            "render": function(data, type, full, meta) {
+            "render": function (data, type, full, meta) {
                 var btn_edit = '';
                 var btn_delete = '';
                 if (permission_update) {
@@ -30,25 +30,25 @@ $(document).ready(function() {
                     var btn_delete = "<li><a onclick=\"eliminar(" + full.id + "," + true + ")\" style='color:red'><i class='fal fa-trash'></i> Eliminar</a></li>";
                 }
                 var btn = '<div class="btn-group">' +
-                        '<button type="button" class="btn btn-success dropdown-toggle btn-xs btn-circle-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
-                          '<i class="fal fa-ellipsis-v"></i>'+
-                        '</button>'+
-                        '<ul class="dropdown-menu dropdown-menu-right pull-right">'+
-                          "<li><a onclick=\"pasar_id(" + full.id + ")\" data-toggle='modal' data-target='#mdl-contactos'><i class='fal fa-user-plus'></i> Agregar Contactos</a></li>"+
-                          btn_delete
-                        '</ul>'+
-                      '</div>';
+                    '<button type="button" class="btn btn-success dropdown-toggle btn-xs btn-circle-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+                    '<i class="fal fa-ellipsis-v"></i>' +
+                    '</button>' +
+                    '<ul class="dropdown-menu dropdown-menu-right pull-right">' +
+                    "<li><a onclick=\"pasar_id(" + full.id + ")\"><i class='fal fa-user-plus'></i> Agregar Contactos</a></li>" +
+                    btn_delete + '</ul>' +
+                    '</div>';
                 return btn_edit + btn;
             }
         }]
     });
 });
-$(window).load(function() {
+$(window).load(function () {
     $('#agencia_id').empty().append('<option value="' + data_agencia['id'] + '" selected="selected">' + data_agencia['descripcion'] + '</option>').val([data_agencia['id']]).trigger('change');
 });
 
 function pasar_id(id) {
-    objVue.parametro = id;
+    // objVue.parametro = id;s
+    objVue.openRigthBar(id);
 }
 
 function edit(id) {
@@ -65,13 +65,13 @@ function llenarSelectP(module, tableName, idSelect, length) {
             url: url,
             dataType: 'json',
             delay: 250,
-            data: function(params) {
+            data: function (params) {
                 return {
                     term: params.term, // search term
                     page: params.page
                 };
             },
-            processResults: function(data, params) {
+            processResults: function (data, params) {
                 /*console.log(data.items);*/
                 params.page = params.page || 1;
                 return {
@@ -83,13 +83,13 @@ function llenarSelectP(module, tableName, idSelect, length) {
             },
             cache: true
         },
-        escapeMarkup: function(markup) {
+        escapeMarkup: function (markup) {
             return markup;
         }, // let our custom formatter work
         templateResult: formatRepo,
         templateSelection: formatRepoSelection,
         minimumInputLength: length,
-    }).on("change", function(e) {
+    }).on("change", function (e) {
         $('.select2-selection').css('border-color', '');
         $('#' + idSelect).siblings('small').css('display', 'none');
         $('#' + idSelect + '_input').val($('#' + idSelect).val());
@@ -110,7 +110,7 @@ function formatRepoSelection(repo) {
 /* objeto VUE */
 var objVue = new Vue({
     el: '#shipper',
-    mounted: function() {
+    mounted: function () {
         //
     },
     data: {
@@ -131,10 +131,27 @@ var objVue = new Vue({
         listErrors: {},
         existShipper: false,
         shipper_id: null,
-        payload: {field_id: this.shipper_id, table: 'shipper', agency: data_agencia }
+        payload: {
+            field_id: this.shipper_id,
+            table: 'shipper',
+            agency: data_agencia
+        }
     },
     methods: {
-        resetForm: function() {
+        openRigthBar(param) {
+            var data = {
+                component: 'add-contact',
+                title: 'Contactos',
+                icon: 'fal fa-users',
+                id_c: param,
+                table: 'shipper',
+                hidden_btn: true,
+                edit: false,
+                agency: data_agencia
+            }
+            bus.$emit('open', data)
+        },
+        resetForm: function () {
             this.id = '';
             this.localizacion_id = '';
             this.agencia_id = '';
@@ -154,9 +171,9 @@ var objVue = new Vue({
             $('#localizacion_id_input').val('');
         },
         /* metodo para eliminar el error de los campos del formulario cuando dan clic sobre el */
-        deleteError: function(element) {
+        deleteError: function (element) {
             let me = this;
-            $.each(me.listErrors, function(key, value) {
+            $.each(me.listErrors, function (key, value) {
                 if (key !== element) {
                     me.listErrors[key] = value;
                 } else {
@@ -164,19 +181,19 @@ var objVue = new Vue({
                 }
             });
         },
-        rollBackDelete: function(data) {
+        rollBackDelete: function (data) {
             var urlRestaurar = 'shipper/restaurar/' + data.id;
             axios.get(urlRestaurar).then(response => {
                 toastr.success('Registro restaurado.');
                 this.updateTable();
             });
         },
-        updateTable: function() {
-          this.shipper_id = null;
-          this.payload.field_id = null;
-          refreshTable('tbl-shipper');
+        updateTable: function () {
+            this.shipper_id = null;
+            this.payload.field_id = null;
+            refreshTable('tbl-shipper');
         },
-        delete: function(data) {
+        delete: function (data) {
             this.formErrors = {};
             this.listErrors = {};
             if (data.logical === true) {
@@ -193,7 +210,7 @@ var objVue = new Vue({
                 });
             }
         },
-        create: function() {
+        create: function () {
             let me = this;
             const isUnique = (value) => {
                 return axios.post('shipper/existEmail', {
@@ -229,7 +246,7 @@ var objVue = new Vue({
                         'telefono': this.telefono,
                         'correo': this.correo,
                         'zip': this.zip,
-                    }).then(function(response) {
+                    }).then(function (response) {
                         if (response.data['code'] == 200) {
                             toastr.success('Registro creado correctamente.');
                             toastr.options.closeButton = true;
@@ -239,13 +256,13 @@ var objVue = new Vue({
                             toastr.warning(response.data['error']);
                             toastr.options.closeButton = true;
                         }
-                    }).catch(function(error) {
+                    }).catch(function (error) {
                         /*console.log(error);*/
                         if (error.response.status === 422) {
                             me.formErrors = error.response.data; //guardo los errores
                             me.listErrors = me.formErrors.errors; //genero lista de errores
                         }
-                        $.each(me.formErrors.errors, function(key, value) {
+                        $.each(me.formErrors.errors, function (key, value) {
                             $('.result-' + key).html(value);
                         });
                         toastr.error("Porfavor completa los campos obligatorios.", {
@@ -255,12 +272,12 @@ var objVue = new Vue({
                 } else {
                     toastr.warning("Error. Porfavor verifica los datos ingresados.<br>");
                 }
-            }).catch(function(error) {
+            }).catch(function (error) {
                 console.log(error);
                 toastr.warning('Error: -' + error);
             });
         },
-        update: function() {
+        update: function () {
             var me = this;
             axios.put('shipper/' + this.id, {
                 'agencia_id': $('#agencia_id_input').val(),
@@ -273,7 +290,7 @@ var objVue = new Vue({
                 'telefono': this.telefono,
                 'correo': this.correo,
                 'zip': this.zip,
-            }).then(function(response) {
+            }).then(function (response) {
                 if (response.data['code'] == 200) {
                     toastr.success('Registro Actualizado correctamente');
                     toastr.options.closeButton = true;
@@ -285,12 +302,12 @@ var objVue = new Vue({
                     toastr.options.closeButton = true;
                     /* console.log(response.data);*/
                 }
-            }).catch(function(error) {
+            }).catch(function (error) {
                 if (error.response.status === 422) {
                     me.formErrors = error.response.data;
                     me.listErrors = me.formErrors.errors; //genero lista de errores
                 }
-                $.each(me.formErrors.errors, function(key, value) {
+                $.each(me.formErrors.errors, function (key, value) {
                     $('.result-' + key).html(value);
                 });
                 toastr.error("Porfavor completa los campos obligatorios.", {
@@ -298,7 +315,7 @@ var objVue = new Vue({
                 });
             });
         },
-        edit: function(id) {
+        edit: function (id) {
             var me = this;
             this.shipper_id = id;
             this.payload.field_id = id;
@@ -307,7 +324,7 @@ var objVue = new Vue({
             this.formErrors = {};
             this.listErrors = {};
         },
-        cancel: function() {
+        cancel: function () {
             var me = this;
             me.resetForm();
         },

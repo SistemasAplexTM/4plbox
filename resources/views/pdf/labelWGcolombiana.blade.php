@@ -37,9 +37,7 @@
             $toalRegistros = count($detalle);
             $toalRegistros = 0;
             $contRegistros = 0;
-            $piezas = 0;
-            $shipper = false;            
-            $consignee = false;            
+            $piezas = 0;           
 
         ?>
     @foreach ($detalle as $value)
@@ -70,34 +68,22 @@
                 </td>
             </tr>
             <tr>
-                @php
-                if(isset($dato_consolidado->shipper)){
-                $shipper = json_decode($dato_consolidado->shipper);
-                }
-                @endphp
                 <td class="border_bottom" colspan="4">
                     <div class="titulos">
                         Remitente
                     </div>
                     <div>
-                        <strong>{{ ($shipper) ? $consignee->nombre : $value->ship_nomfull }}</strong>
+                        <strong>{{ ($shipper) ? $shipper->nombre_full : $value->ship_nomfull }}</strong>
                     </div>
-                    {{-- <div>{{ $value->ship_dir }}</div>
-                    <div>{{ $value->ship_tel }}</div> --}}
                 </td>
             </tr>
             <tr>
-                @php
-                if(isset($dato_consolidado->consignee)){
-                $consignee = json_decode($dato_consolidado->consignee);
-                }
-                @endphp
                 <td class="border_bottom" colspan="4">
                     <div class="titulos">
                         Consignatario
                     </div>
                     <div>
-                        <strong>{{ ($consignee) ? $consignee->nombre : $value->cons_nomfull }}</strong>
+                        <strong>{{ ($consignee) ? $consignee->nombre_full : $value->cons_nomfull }}</strong>
                     </div>
                     <div>{{ ($consignee) ? $consignee->direccion : $value->cons_dir }}</div>
                     <div>{{ ($consignee) ? $consignee->telefono : $value->cons_tel }}</div>

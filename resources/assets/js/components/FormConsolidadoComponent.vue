@@ -213,33 +213,49 @@ a.badge:hover {
                     </div>
                   </div>
                   <div class="col-sm-4" v-if="show_buttons && pais_id == pais_id_config">
-                    <div class="col-sm-3">
-                      <div class="form-group">
-                        <label for style="width: 100%;">&nbsp;</label>
-                        <button
-                          class="btn btn-primary btn-sm"
-                          type="button"
-                          data-toggle="tooltip"
-                          title="Descargar Excel Liquimp"
-                          @click="exportLiquimp()"
-                        >
-                          <i class="fal fa-cloud-download-alt"></i> Excel
-                        </button>
-                      </div>
-                    </div>
-                    <div class="col-sm-3">
-                      <div class="form-group">
-                        <label for style="width: 100%;">&nbsp;</label>
-                        <button
-                          class="btn btn-primary btn-sm"
-                          type="button"
-                          data-toggle="tooltip"
-                          title="Descargar Excel Bodega"
-                          @click="exportCellar()"
-                        >
-                          <i class="fal fa-cloud-download-alt"></i> Excel Bodega
-                        </button>
-                      </div>
+                    <div class="col-lg-12">
+                      <!-- <div class="col-sm-5"> -->
+                      <!-- <div class="form-group"> -->
+                      <label for style="width: 100%;">&nbsp;</label>
+                      <button
+                        class="btn btn-primary btn-sm"
+                        type="button"
+                        data-toggle="tooltip"
+                        title="Descargar Manifiesto Interno"
+                        @click="exportInternalManifest()"
+                      >
+                        <i class="fal fa-cloud-download-alt"></i> Manifiesto Interno
+                      </button>
+                      <!-- </div> -->
+                      <!-- </div> -->
+                      <!-- <div class="col-sm-4"> -->
+                      <!-- <div class="form-group">
+                      <label for style="width: 100%;">&nbsp;</label>-->
+                      <button
+                        class="btn btn-primary btn-sm"
+                        type="button"
+                        data-toggle="tooltip"
+                        title="Descargar Excel Liquimp"
+                        @click="exportLiquimp()"
+                      >
+                        <i class="fal fa-cloud-download-alt"></i> Excel Liquimp
+                      </button>
+                      <!-- </div> -->
+                      <!-- </div>
+                      <div class="col-sm-3">-->
+                      <!-- <div class="form-group">
+                      <label for style="width: 100%;">&nbsp;</label>-->
+                      <button
+                        class="btn btn-primary btn-sm"
+                        type="button"
+                        data-toggle="tooltip"
+                        title="Descargar Excel Bodega"
+                        @click="exportCellar()"
+                      >
+                        <i class="fal fa-cloud-download-alt"></i> Excel Bodega
+                      </button>
+                      <!-- </div> -->
+                      <!-- </div> -->
                     </div>
                   </div>
                 </div>
@@ -991,6 +1007,9 @@ export default {
         "_blank"
       );
     },
+    exportInternalManifest() {
+      window.open("/exportInternalManifest/" + this.documento.id, "_blank");
+    },
     exportLiquimp() {
       window.open("/exportLiquimp/" + this.documento.id, "_blank");
     },
@@ -1419,8 +1438,7 @@ export default {
                   nom_ship = "";
                 }
                 if (full.shipper_json != null) {
-                  json = JSON.parse(full.shipper_json.replace(/&quot;/g, '"'));
-                  nom_ship = json.nombre;
+                  nom_ship = full.shipper_json;
                 }
                 me.shipper_contactos[full.shipper_id] = full.shipper_contactos;
                 return (
@@ -1445,13 +1463,8 @@ export default {
                   nom_cons = "";
                 }
                 if (full.consignee_json != null) {
-                  json = JSON.parse(
-                    full.consignee_json.replace(/&quot;/g, '"')
-                  );
-                  nom_cons = json.nombre;
+                  nom_cons = full.consignee_json;
                 }
-                me.consignee_contactos[full.consignee_id] =
-                  full.consignee_contactos;
                 return (
                   '<div class="center-content"><div style="width:80%;float: left;">' +
                   nom_cons +

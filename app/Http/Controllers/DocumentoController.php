@@ -37,7 +37,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Traits\DocumentTrait;
 use App\Exports\ConsolidadoExport;
+use App\Exports\InternalManifest;
 use Rap2hpoutre\FastExcel\FastExcel;
+use \Maatwebsite\Excel\Sheet;
 
 class DocumentoController extends Controller
 {
@@ -1418,6 +1420,38 @@ class DocumentoController extends Controller
                               ->leftJoin('deptos as h', 'e.deptos_id', '=', 'h.id')
                               ->leftJoin('pais as i', 'h.pais_id', '=', 'i.id')
                               ->leftJoin(DB::raw("(SELECT
+                                        s.id,
+                                        s.nombre_full,
+                                        s.direccion,
+                                        s.telefono,
+                                        s.correo,
+                                        s.zip,
+                                        l.nombre AS ciudad,
+                                        de.descripcion AS depto,
+                                        pa.descripcion AS pais
+                                        FROM
+                                        shipper AS s
+                                        INNER JOIN localizacion AS l ON l.id = s.localizacion_id
+                                        INNER JOIN deptos AS de ON l.deptos_id = de.id
+                                        INNER JOIN pais AS pa ON de.pais_id = pa.id
+                                        ) AS ss"), 'a.shipper', 'ss.id')
+                            ->leftJoin(DB::raw("(SELECT
+                                        cc.id,
+                                        cc.nombre_full,
+                                        cc.direccion,
+                                        cc.telefono,
+                                        cc.correo,
+                                        cc.zip,
+                                        ll.nombre AS ciudad,
+                                        dep.descripcion AS depto,
+                                        pai.descripcion AS pais
+                                        FROM
+                                        consignee AS cc
+                                        INNER JOIN localizacion AS ll ON ll.id = cc.localizacion_id
+                                        INNER JOIN deptos AS dep ON ll.deptos_id = dep.id
+                                        INNER JOIN pais AS pai ON dep.pais_id = pai.id
+                                        ) AS cc"), 'a.consignee', 'cc.id')
+                              ->leftJoin(DB::raw("(SELECT
                                           z.agrupado,
                                           SUM(x.peso) AS peso,
                                           SUM(x.peso2) AS peso2,
@@ -1468,16 +1502,28 @@ class DocumentoController extends Controller
                                   'b.declarado2',
                                   'j.peso2',
                                   'b.contenido2',
-                                  'b.liquidado'
+                                  'b.liquidado',
+                                  'ss.nombre_full AS ship_nomfull2',
+                                  'ss.direccion as ship_dir2',
+                                  'ss.telefono as ship_tel2',
+                                  'ss.zip as ship_zip2',
+                                  'ss.ciudad as ship_ciudad2',
+                                  'ss.depto as ship_depto2',
+                                  'ss.pais as ship_pais2',
+                                  'cc.nombre_full as cons_nomfull2',
+                                  'cc.zip as cons_zip2',
+                                  'cc.ciudad as cons_ciudad2',
+                                  'cc.depto as cons_depto2',
+                                  'cc.direccion as cons_dir2',
+                                  'cc.telefono as cons_tel2',
+                                  'cc.pais as cons_pais2'
                               )
                               ->where([['a.deleted_at', null], ['a.documento_detalle_id', $id_detalle], ['a.flag', 0]])
                               ->get();
-                      $this->AddToLog('Impresion Invoice (' . $documento->id . ')');
-                        if(env('APP_CLIENT') === 'colombiana'){
-                            $pdf          = PDF::loadView('pdf.invoicePdf', compact('config_copies', 'documento', 'detalle', 'detalleConsolidado'));
-                        }else{
-                            $pdf          = PDF::loadView('pdf.invoicePdf', compact('config_copies', 'documento', 'detalle', 'detalleConsolidado'));
-                        }
+                        $this->AddToLog('Impresion Invoice (' . $documento->id . ')');
+
+                        $pdf          = PDF::loadView('pdf.invoicePdf', compact('config_copies', 'documento', 'detalle', 'detalleConsolidado'));
+                        
                       $nameDocument = 'comercial invoice -' . $documento->id;
                   } else {
                       if ($document === 'consolidado_guias') {
@@ -1493,33 +1539,65 @@ class DocumentoController extends Controller
                               ->leftJoin('deptos as h', 'e.deptos_id', '=', 'h.id')
                               ->leftJoin('pais as i', 'h.pais_id', '=', 'i.id')
                               ->leftJoin(DB::raw("(SELECT
-                                          z.agrupado,
-                                          SUM(x.peso) AS peso,
-                                          SUM(x.peso2) AS peso2,
-                                          GROUP_CONCAT(
+                                        s.id,
+                                        s.nombre_full,
+                                        s.direccion,
+                                        s.telefono,
+                                        s.correo,
+                                        s.zip,
+                                        l.nombre AS ciudad,
+                                        de.descripcion AS depto,
+                                        pa.descripcion AS pais
+                                        FROM
+                                        shipper AS s
+                                        INNER JOIN localizacion AS l ON l.id = s.localizacion_id
+                                        INNER JOIN deptos AS de ON l.deptos_id = de.id
+                                        INNER JOIN pais AS pa ON de.pais_id = pa.id
+                                        ) AS ss"), 'a.shipper', 'ss.id')
+                                ->leftJoin(DB::raw("(SELECT
+                                            cc.id,
+                                            cc.nombre_full,
+                                            cc.direccion,
+                                            cc.telefono,
+                                            cc.correo,
+                                            cc.zip,
+                                            ll.nombre AS ciudad,
+                                            dep.descripcion AS depto,
+                                            pai.descripcion AS pais
+                                            FROM
+                                            consignee AS cc
+                                            INNER JOIN localizacion AS ll ON ll.id = cc.localizacion_id
+                                            INNER JOIN deptos AS dep ON ll.deptos_id = dep.id
+                                            INNER JOIN pais AS pai ON dep.pais_id = pai.id
+                                            ) AS cc"), 'a.consignee', 'cc.id')
+                                ->leftJoin(DB::raw("(SELECT
+                                            z.agrupado,
+                                            SUM(x.peso) AS peso,
+                                            SUM(x.peso2) AS peso2,
+                                            GROUP_CONCAT(
 
-                                              IF (
-                                                  z.flag = 1,
-                                                  CONCAT(
+                                                IF (
+                                                    z.flag = 1,
+                                                    CONCAT(
 
-                                                      IF (
-                                                          x.liquidado = 1,
-                                                          CONCAT('<label>- ', x.num_guia, \"</label><a style='float: right;cursor:pointer;color:red' title='Quitar' data-toggle='tooltip' onclick='removerGuiaAgrupada(\",z.id,\")'><i class='fa fa-times' style='font-size: 15px;'></i></a>\"),
-                                                          CONCAT('<label>- ', x.num_warehouse, \"</label><a style='float: right;cursor:pointer;color:red' title='Quitar' data-toggle='tooltip' onclick='removerGuiaAgrupada(\",z.id,\")'><i class='fa fa-times' style='font-size: 15px;'></i></a>\")
-                                                      )
-                                                  ),
-                                                  NULL
-                                              )
-                                          ) AS guias_agrupadas
-                                      FROM
-                                          consolidado_detalle AS z
-                                      INNER JOIN documento_detalle AS x ON z.documento_detalle_id = x.id
-                                      WHERE
-                                          z.deleted_at IS NULL
-                                      AND x.deleted_at IS NULL
-                                      GROUP BY
-                                          z.agrupado
-                                  ) AS j"), 'a.agrupado', 'j.agrupado')
+                                                        IF (
+                                                            x.liquidado = 1,
+                                                            CONCAT('<label>- ', x.num_guia, \"</label><a style='float: right;cursor:pointer;color:red' title='Quitar' data-toggle='tooltip' onclick='removerGuiaAgrupada(\",z.id,\")'><i class='fa fa-times' style='font-size: 15px;'></i></a>\"),
+                                                            CONCAT('<label>- ', x.num_warehouse, \"</label><a style='float: right;cursor:pointer;color:red' title='Quitar' data-toggle='tooltip' onclick='removerGuiaAgrupada(\",z.id,\")'><i class='fa fa-times' style='font-size: 15px;'></i></a>\")
+                                                        )
+                                                    ),
+                                                    NULL
+                                                )
+                                            ) AS guias_agrupadas
+                                        FROM
+                                            consolidado_detalle AS z
+                                        INNER JOIN documento_detalle AS x ON z.documento_detalle_id = x.id
+                                        WHERE
+                                            z.deleted_at IS NULL
+                                        AND x.deleted_at IS NULL
+                                        GROUP BY
+                                            z.agrupado
+                                    ) AS j"), 'a.agrupado', 'j.agrupado')
                               ->select(
                                   'a.num_bolsa',
                                   'a.shipper AS shipper_json',
@@ -1568,7 +1646,21 @@ class DocumentoController extends Controller
                                       a.deleted_at IS NULL
                                     AND b.deleted_at IS NULL
                                     AND b.consignee_id = d.id
-                                  ) AS declarado_total')
+                                  ) AS declarado_total'),
+                                  'ss.nombre_full AS ship_nomfull2',
+                                  'ss.direccion as ship_dir2',
+                                  'ss.telefono as ship_tel2',
+                                  'ss.zip as ship_zip2',
+                                  'ss.ciudad as ship_ciudad2',
+                                  'ss.depto as ship_depto2',
+                                  'ss.pais as ship_pais2',
+                                  'cc.nombre_full as cons_nomfull2',
+                                  'cc.zip as cons_zip2',
+                                  'cc.ciudad as cons_ciudad2',
+                                  'cc.depto as cons_depto2',
+                                  'cc.direccion as cons_dir2',
+                                  'cc.telefono as cons_tel2',
+                                  'cc.pais as cons_pais2'
                               )
                               ->where([['a.deleted_at', null], ['a.consolidado_id', $id], ['a.flag', 0]])
                               ->orderBy('b.num_warehouse', 'ASC')
@@ -1576,16 +1668,6 @@ class DocumentoController extends Controller
                           // VALIDAR QUE EL PESO Y EL DECLARADO NO SUPEREN LO MAXIMO ESTABLECIDO
                           $peso_t = 0;
                           $decla_t = 0;
-                          // if (count($detalleConsolidado) > 0) {
-                          //   foreach ($detalleConsolidado as $key) {
-                          //     if($key->peso_total > 50){
-                          //       $peso_t++;
-                          //     }
-                          //     if($key->declarado_total > 2000){
-                          //       $decla_t++;
-                          //     }
-                          //   }
-                          // }
                           if($peso_t === 0 and $decla_t === 0){
                             $this->AddToLog('Impresion Consolidado guias (' . $id . ')');
                             if($documento->transporte_id == 1){
@@ -1619,6 +1701,38 @@ class DocumentoController extends Controller
                                   ->leftJoin('localizacion as g', 'd.localizacion_id', '=', 'g.id')
                                   ->leftJoin('deptos as h', 'e.deptos_id', '=', 'h.id')
                                   ->leftJoin('pais as i', 'h.pais_id', '=', 'i.id')
+                                  ->leftJoin(DB::raw("(SELECT
+                                        s.id,
+                                        s.nombre_full,
+                                        s.direccion,
+                                        s.telefono,
+                                        s.correo,
+                                        s.zip,
+                                        l.nombre AS ciudad,
+                                        de.descripcion AS depto,
+                                        pa.descripcion AS pais
+                                        FROM
+                                        shipper AS s
+                                        INNER JOIN localizacion AS l ON l.id = s.localizacion_id
+                                        INNER JOIN deptos AS de ON l.deptos_id = de.id
+                                        INNER JOIN pais AS pa ON de.pais_id = pa.id
+                                        ) AS ss"), 'a.shipper', 'ss.id')
+                                    ->leftJoin(DB::raw("(SELECT
+                                        cc.id,
+                                        cc.nombre_full,
+                                        cc.direccion,
+                                        cc.telefono,
+                                        cc.correo,
+                                        cc.zip,
+                                        ll.nombre AS ciudad,
+                                        dep.descripcion AS depto,
+                                        pai.descripcion AS pais
+                                        FROM
+                                        consignee AS cc
+                                        INNER JOIN localizacion AS ll ON ll.id = cc.localizacion_id
+                                        INNER JOIN deptos AS dep ON ll.deptos_id = dep.id
+                                        INNER JOIN pais AS pai ON dep.pais_id = pai.id
+                                        ) AS cc"), 'a.consignee', 'cc.id')
                                   ->leftJoin(DB::raw("(SELECT
                                           z.agrupado,
                                           SUM(x.peso) AS peso,
@@ -1694,7 +1808,22 @@ class DocumentoController extends Controller
                                     			a.deleted_at IS NULL
                                     		AND b.deleted_at IS NULL
                                     		AND b.consignee_id = d.id
-                                    	) AS declarado_total')
+                                        ) AS declarado_total'),
+                                        
+                                    'ss.nombre_full AS ship_nomfull2',
+                                  'ss.direccion as ship_dir2',
+                                  'ss.telefono as ship_tel2',
+                                  'ss.zip as ship_zip2',
+                                  'ss.ciudad as ship_ciudad2',
+                                  'ss.depto as ship_depto2',
+                                  'ss.pais as ship_pais2',
+                                  'cc.nombre_full as cons_nomfull2',
+                                  'cc.zip as cons_zip2',
+                                  'cc.ciudad as cons_ciudad2',
+                                  'cc.depto as cons_depto2',
+                                  'cc.direccion as cons_dir2',
+                                  'cc.telefono as cons_tel2',
+                                  'cc.pais as cons_pais2'
                                   )
                                   ->where([['a.deleted_at', null], ['a.consolidado_id', $id], ['a.flag', 0]])
                                   ->orderBy('b.num_warehouse', 'ASC')
@@ -1703,16 +1832,6 @@ class DocumentoController extends Controller
                               // VALIDAR QUE EL PESO Y EL DECLARADO NO SUPEREN LO MAXIMO ESTABLECIDO
                               $peso_t = 0;
                               $decla_t = 0;
-                              // if (count($detalleConsolidado) > 0) {
-                              //   foreach ($detalleConsolidado as $key) {
-                              //     if($key->peso_total > 50){
-                              //       $peso_t++;
-                              //     }
-                              //     if($key->declarado_total > 2000){
-                              //       $decla_t++;
-                              //     }
-                              //   }
-                              // }
                               if($peso_t === 0 and $decla_t === 0){
                                 $this->AddToLog('Impresion Consolidado (' . $id . ')');
                                 if (env('APP_TYPE') === 'courier') {
@@ -1815,12 +1934,50 @@ class DocumentoController extends Controller
         if ($id_detalle != null) {
             $where[] = array('documento_detalle.id', $id_detalle);
         }
-        $dato_consolidado = null;
+        $shipper = false;
+        $consignee = false;
         if($id_detail_consol != null){
           $dato_consolidado = DB::table('consolidado_detalle AS a')
           ->select('a.consignee', 'a.shipper')
           ->where([['a.deleted_at', NULL],['a.id', $id_detail_consol]])
           ->first();
+          if ($dato_consolidado->shipper) {
+            $shipper = DB::table("shipper AS s")
+            ->leftJoin('localizacion as l', 'l.id', 's.localizacion_id')
+            ->leftJoin('deptos as de', 'l.deptos_id', 'de.id')
+            ->leftJoin('pais AS pa', 'de.pais_id', 'pa.id')
+            ->select(
+                's.id',
+                's.nombre_full',
+                's.direccion',
+                's.telefono',
+                's.correo',
+                's.zip',
+                'l.nombre AS ciudad',
+                'de.descripcion AS depto',
+                'pa.descripcion AS pais')
+            ->where([['s.id', $dato_consolidado->shipper]])
+            ->first();
+          }
+          if ($dato_consolidado->consignee) {
+            $consignee = DB::table("consignee AS cc")
+            ->leftJoin('localizacion as l', 'l.id', 'cc.localizacion_id')
+            ->leftJoin('deptos as de', 'l.deptos_id', 'de.id')
+            ->leftJoin('pais AS pa', 'de.pais_id', 'pa.id')
+            ->select(
+                'cc.id',
+                'cc.nombre_full',
+                'cc.direccion',
+                'cc.telefono',
+                'cc.correo',
+                'cc.zip',
+                'l.nombre AS ciudad',
+                'de.descripcion AS depto',
+                'pa.descripcion AS pais')
+            ->where([['cc.id', $dato_consolidado->consignee]])
+            ->first();
+          }
+          
         }
         $detalle = $this->pdfLabelDetail($where, $codigo, $consolidado, $id_detail_consol);
 
@@ -1829,7 +1986,7 @@ class DocumentoController extends Controller
         if(env('APP_CLIENT') === 'colombiana'){
           // $pdf = PDF::loadView('pdf.labelWGJyg', compact('documento', 'detalle', 'document', 'consolidado', 'dato_consolidado'))
           // ->setPaper(array(25, -25, 260, 360), 'landscape');
-            $pdf = PDF::loadView('pdf.labelWGcolombiana', compact('documento', 'detalle', 'document', 'dato_consolidado' ))
+            $pdf = PDF::loadView('pdf.labelWGcolombiana', compact('documento', 'detalle', 'document', 'dato_consolidado', 'shipper', 'consignee' ))
                 ->setPaper(array(25, -25, 300, 300), 'landscape');
 
             $nameDocument = 'Label' . $document . '-' . $documento->id;
@@ -1837,18 +1994,18 @@ class DocumentoController extends Controller
         }else{
             if (env('APP_LABEL') === '4x4') {
                 if(env('APP_CLIENT') === 'jyg'){
-                    $pdf = PDF::loadView('pdf.labelWGJyg', compact('documento', 'detalle', 'document', 'consolidado', 'dato_consolidado'))
+                    $pdf = PDF::loadView('pdf.labelWGJyg', compact('documento', 'detalle', 'document', 'consolidado', 'dato_consolidado', 'shipper', 'consignee'))
                     ->setPaper(array(25, -25, 260, 360), 'landscape');
                     $nameDocument = 'Label' . $document . '-' . $documento->id;
                     $pdf->save(public_path(). '/files/File.pdf');
                 }else{
-                    $pdf = PDF::loadView('pdf.labelWG', compact('documento', 'detalle', 'document', 'consolidado', 'dato_consolidado'))
+                    $pdf = PDF::loadView('pdf.labelWG', compact('documento', 'detalle', 'document', 'consolidado', 'dato_consolidado', 'shipper', 'consignee'))
                     ->setPaper(array(25, -25, 260, 360), 'landscape');
                 }
 
                 $nameDocument = 'Label' . $document . '-' . $documento->id;
             }else{
-                return view('pdf/labelWG_2', compact('documento', 'detalle', 'document', 'consolidado', 'dato_consolidado'));
+                return view('pdf/labelWG_2', compact('documento', 'detalle', 'document', 'consolidado', 'dato_consolidado', 'shipper', 'consignee'));
             }
         }
         return $pdf->stream($nameDocument . '.pdf');
@@ -2179,8 +2336,8 @@ class DocumentoController extends Controller
                 'a.num_bolsa',
                 'c.num_warehouse',
                 'c.num_guia',
-                'a.shipper AS shipper_json',
-                'a.consignee AS consignee_json',
+                // 'a.shipper AS shipper_json',
+                // 'a.consignee AS consignee_json',
                 'd.id as shipper_id',
                 'd.nombre_full as shipper',
                 'd.contactos_json as shipper_contactos',
@@ -2227,7 +2384,19 @@ class DocumentoController extends Controller
                     pivot_puntos_detalle AS z
                     WHERE
                     z.documento_detalle_id = a.documento_detalle_id AND
-                    z.deleted_at IS NULL) AS total_puntos')
+                    z.deleted_at IS NULL) AS total_puntos'),
+                DB::raw('(SELECT
+              			cc.nombre_full AS consignee
+              		FROM
+              			consignee as cc
+              		WHERE cc.id = a.consignee
+                  ) AS consignee_json'),
+                  DB::raw('(SELECT
+              			ss.nombre_full AS shipper
+              		FROM
+              			shipper as ss
+              		WHERE ss.id = a.shipper
+              	) AS shipper_json')
             )
             ->where($where)
             ->get();
@@ -2656,12 +2825,9 @@ class DocumentoController extends Controller
 
     public function createContactsConsolidadoDetalle(Request $request, $id)
     {
-        // data: {id: 3, idShipCons: "699", opcion: "consignee"}
-        // campos: {id: 1, nombre: "juan r", telefono: "3324234", ciudad: "pradera", pais: "colombia",…}
-        // exit();
         $id_change = $request->all()['id_change'];
         $data   = $request->all()['data'];
-        $this->updateIdConsigneeContactConsolidate(false, $data['id'], $id_change);
+        $this->updateIdConsigneeContactConsolidate(false, $data['option'], $data['id'], $id_change);
         DB::table('consolidado_detalle')
             ->where('id', $data['id'])
             ->update([$data['option'] => $id_change]);
@@ -2673,7 +2839,7 @@ class DocumentoController extends Controller
 
     public function restoreShipperConsignee($id, $idD, $table)
     {
-      $this->updateIdConsigneeContactConsolidate(true, $idD);
+      $this->updateIdConsigneeContactConsolidate(true, $table, $idD);
         DB::table('consolidado_detalle')
             ->where('id', $idD)
             ->update([$table => null]);
@@ -2683,26 +2849,26 @@ class DocumentoController extends Controller
         return $answer;
     }
 
-    public function updateIdConsigneeContactConsolidate($restore, $id_consol_detail, $id_change = null)
+    public function updateIdConsigneeContactConsolidate($restore, $table, $id_consol_detail, $id_change = null)
     {
       $id_detail_document = DB::table('consolidado_detalle AS a')
           ->select('a.documento_detalle_id')
           ->where('a.id', $id_consol_detail)
           ->first();
-      $consignee_id = DB::table('documento_detalle AS a')
-              ->select('a.consignee_id')
+      $data = DB::table('documento_detalle AS a')
+              ->select('a.'.$table.'_id')
               ->where('a.id', $id_detail_document->documento_detalle_id)
               ->first();
       if($restore){
-        $dat = explode("-", $consignee_id->consignee_id);
-        $id_cons = $dat[0];
+        $dat = explode("-", (($table === 'consignee') ? $data->consignee_id : $data->shipper_id));
+        $id_dat = $dat[0];
       }else{
-        $id_cons = $consignee_id->consignee_id . '-' . $id_change;
+        $id_dat = (($table === 'consignee') ? $data->consignee_id : $data->shipper_id) . '-' . $id_change;
       }
 
       DB::table('documento_detalle AS a')
           ->where('a.id', $id_detail_document->documento_detalle_id)
-          ->update(['a.consignee_id' => $id_cons]);
+          ->update(['a.'.$table.'_id' => $id_dat]);
       return true;
     }
 
@@ -3441,5 +3607,59 @@ class DocumentoController extends Controller
           );
         return \Response::json($answer);
     }
+
+
+public function internalManifest($id)
+{
+    try {
+        $count_groups = 0;
+        $data = DB::table('consolidado_detalle AS a')
+        ->join('documento_detalle AS b', 'a.documento_detalle_id', 'b.id')
+        ->join('documento AS c', 'c.id', 'b.documento_id')
+        ->join('consignee AS d', 'c.consignee_id', 'd.id')
+        ->join('localizacion AS e', 'd.localizacion_id', 'e.id')
+        ->select(
+            'b.id',
+            'b.num_warehouse',
+            'd.nombre_full',
+            'e.nombre',
+            'd.direccion'
+          )
+        ->where([['a.deleted_at', null], ['a.consolidado_id', $id]])
+        ->get();
+        foreach ($data as $key => $value) {
+            $det = DB::table('documento_detalle AS a')
+            ->join('documento AS b', 'a.documento_id', 'b.id')
+            ->join('consignee AS c', 'b.consignee_id', 'c.id')
+            ->join('localizacion AS d', 'c.localizacion_id', 'd.id')
+            ->select(
+                'a.id',
+                'a.num_warehouse',
+                'c.nombre_full',
+                'c.direccion',
+                'd.nombre'
+            )
+            ->where([
+                ['a.deleted_at', null], 
+                ['a.mintic', null], 
+                ['a.agrupado', $value->id],
+                ['a.id', '<>', $value->id]
+                ])
+            ->get();
+            if (count($det) > 0) {
+                $count_groups += count($det) + 1;
+            }
+            $data[$key]->groups = $det;
+        }
+        // return \Response::json($data);
+        Sheet::macro('styleCells', function (Sheet $sheet, string $cellRange, array $style) {
+              $sheet->getDelegate()->getStyle($cellRange)->applyFromArray($style);
+          });
+        return Excel::download(new InternalManifest('exports.excelInternalManifest', array('datos' => $data, 'count_groups' => $count_groups)),
+         'Manifiesto Interno.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+    } catch (Exception $e) {
+        return array('error' => $e, 'code' => 500);
+      }
+}
 
 }

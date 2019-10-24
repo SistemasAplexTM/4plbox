@@ -112,16 +112,6 @@
 
 <body style="margin-top: -25px;">
     @foreach($detalle as $val)
-    <?php
-                    $shipper_json = '';
-                    $consignee_json = '';
-                    if($val->shipper_json != ''){
-                        $shipper_json = json_decode($val->shipper_json);
-                    }
-                    if($val->consignee_json != ''){
-                        $consignee_json = json_decode($val->consignee_json);
-                    }
-                ?>
     <?php $contRegistros++ ?>
     <?php for ($i = 1; $i <= $copies; $i++): ?>
     {{-- dar salto de pagina --}}
@@ -195,28 +185,28 @@
                         <tr>
                             <td>
                                 <div id="nomS"><span id="titulo">@lang('general.name'):</span>
-                                    {{ ($val->shipper_json) ? $shipper_json->nombre : $detalle[$cont]->ship_nomfull }}
+                                    {{ ($val->ship_nomfull2) ? $val->ship_nomfull2 : $detalle[$cont]->ship_nomfull }}
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <div id="dirS"><span id="titulo">@lang('general.address'):</span>
-                                    {{ ($val->shipper_json) ? $shipper_json->direccion : $detalle[$cont]->ship_dir }}
+                                    {{ ($val->ship_dir2) ? $val->ship_dir2 : $detalle[$cont]->ship_dir }}
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <div id="ciuS"><span id="titulo">@lang('general.country')/@lang('general.city'):</span>
-                                    {{ ($val->shipper_json) ? $shipper_json->ciudad : $detalle[$cont]->ship_ciudad }}
+                                    {{ ($val->ship_ciudad2) ? $val->ship_ciudad2 : $detalle[$cont]->ship_ciudad }}
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <div id="telS"><span id="titulo">@lang('general.phone'):</span>
-                                    {{ ($val->shipper_json) ? $shipper_json->telefono : $detalle[$cont]->ship_tel }}
+                                    {{ ($val->ship_tel2) ? $val->ship_tel2 : $detalle[$cont]->ship_tel }}
                                 </div>
                             </td>
                         </tr>
@@ -239,25 +229,25 @@
                 <tr>
                     <td>
                         <div id="nomC"><span id="titulo">@lang('general.name'):</span>
-                            {{ ($val->consignee_json) ? $consignee_json->nombre : $detalle[$cont]->cons_nomfull }}</div>
+                            {{ ($val->cons_nomfull2) ? $val->cons_nomfull2 : $detalle[$cont]->cons_nomfull }}</div>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <div id="dirC"><span id="titulo">@lang('general.address'):</span>
-                            {{ ($val->consignee_json) ? $consignee_json->direccion : $detalle[$cont]->cons_dir  }}</div>
+                            {{ ($val->cons_dir2) ? $val->cons_dir2 : $detalle[$cont]->cons_dir  }}</div>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <div id="ciuC"><span id="titulo">@lang('general.country')/@lang('general.city'):</span>
-                            {{ ($val->consignee_json) ? $consignee_json->ciudad :  $detalle[$cont]->cons_ciudad }}</div>
+                            {{ ($val->cons_ciudad2) ? $val->cons_ciudad2 :  $detalle[$cont]->cons_ciudad }}</div>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <div id="telC"><span id="titulo">@lang('general.phone'):</span>
-                            {{ ($val->consignee_json) ? $consignee_json->telefono :  $detalle[$cont]->cons_tel }}</div>
+                            {{ ($val->cons_tel2) ? $val->cons_tel2 :  $detalle[$cont]->cons_tel }}</div>
                     </td>
                 </tr>
                 <!-- <tr>

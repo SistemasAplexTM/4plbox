@@ -351,4 +351,13 @@ class ShipperController extends Controller
         );
         return $answer;
     }
+
+    public function getContacts($id)
+    {
+        try {
+        return Shipper::where('parent_id', $id)->with('city')->get();
+        } catch (Exception $e) {
+        return $e;
+        }
+    }
 }

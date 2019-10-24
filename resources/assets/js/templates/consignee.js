@@ -38,8 +38,7 @@ $(document).ready(function () {
           "<li><a onclick=\"reenviarEmailCasillero(" + full.id + ")\"><i class='fal fa-mail-bulk'></i> Reenviar Email Casillero</a></li>" +
           "<li><a onclick=\"generarCasillero(" + full.id + ")\"><i class='fal fa-address-card'></i> Generar Casillero</a></li>" +
           "<li><a onclick=\"pasar_id(" + full.id + ")\" ><i class='fal fa-user-plus'></i> Agregar Contactos</a></li>" +
-          btn_delete
-        '</ul>' +
+          btn_delete + '</ul>' +
           '</div>';
         return btn_edit + btn;
       }
@@ -53,6 +52,7 @@ $(window).load(function () {
 function reenviarEmailCasillero(id) {
   objVue.reenviarEmailCasillero(id);
 }
+
 function generarCasillero(id) {
   objVue.generarCasillero(id);
 }
@@ -122,8 +122,7 @@ function formatRepoSelection(repo) {
 /* objeto VUE */
 var objVue = new Vue({
   el: '#consignee',
-  mounted: function () {
-  },
+  mounted: function () {},
   data: {
     agency_data: data_agencia,
     parametro: null,
@@ -148,13 +147,23 @@ var objVue = new Vue({
     listErrors: {},
     ident: false, //recordar descomentar las variables tipo_identificacion_id y documento
     consignee_id: null,
-    payload: { field_id: this.consignee_id, table: 'consignee', agency: data_agencia }
+    payload: {
+      field_id: this.consignee_id,
+      table: 'consignee',
+      agency: data_agencia
+    }
   },
   methods: {
     openRigthBar(param) {
       var data = {
-        component: 'add-contact', title: 'Contactos', icon: 'fal fa-users', id_c: param, table: 'consignee',
-        hidden_btn: true, edit: false, agency: data_agencia
+        component: 'add-contact',
+        title: 'Contactos',
+        icon: 'fal fa-users',
+        id_c: param,
+        table: 'consignee',
+        hidden_btn: true,
+        edit: false,
+        agency: data_agencia
       }
       bus.$emit('open', data)
     },
