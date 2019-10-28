@@ -100,6 +100,21 @@ class InternalManifest implements FromView, WithEvents, WithDrawings
                         ]
                     ]
                 );
+
+                // $styleArray = [
+                    
+                //     'alignment' => [
+                //         'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                //     ],                        
+                //     'font' => [
+                //         'name' => 'Century Gothic',
+                //         'size' => 11,
+                //         'bold' => true,
+                //         'color' => ['argb' => 'EB2B02'],
+                //     ]
+                // ];
+
+                // $event->sheet->getDelegate()->getStyle('E1:F1')->applyFromArray($styleArray);
             }
         ];
     }
