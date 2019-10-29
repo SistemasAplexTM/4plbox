@@ -11,9 +11,15 @@
         :parent="payload.id_c"
       ></form-csc>
     </el-tab-pane>
-    <el-tab-pane name="list" label="Listado">
+    <el-tab-pane name="exist" label="Existentes">
       <span slot="label">
-        <i class="fal fa-list"></i> Listado
+        <i class="fal fa-list"></i> Existentes
+      </span>
+      <existing-contact :id_data="payload.id_c" :table="payload.table" @assignedSuccess="active='list'" @updatetable="updateTable" />
+    </el-tab-pane>
+    <el-tab-pane name="list" label="Asignados">
+      <span slot="label">
+        <i class="fal fa-users"></i> Asignados
       </span>
       <list-contact :id_data="payload.id_c" :table="payload.table" />
     </el-tab-pane>
@@ -22,8 +28,9 @@
 
 <script>
 import ListContact from "./contact/ListContact";
+import ExistingContact from "./contact/Existing";
 export default {
-  components: { ListContact },
+  components: { ListContact, ExistingContact },
   props: ["payload"],
   data() {
     return {
