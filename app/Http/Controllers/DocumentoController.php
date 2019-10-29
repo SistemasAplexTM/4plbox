@@ -3623,6 +3623,7 @@ public function internalManifest($id)
             'b.num_warehouse',
             'd.nombre_full',
             'e.nombre',
+            'd.id AS localizacion_id',
             'd.direccion'
           )
         ->where([['a.deleted_at', null], ['a.consolidado_id', $id]])
@@ -3637,6 +3638,7 @@ public function internalManifest($id)
                 'a.num_warehouse',
                 'c.nombre_full',
                 'c.direccion',
+                'd.id AS localizacion_id',
                 'd.nombre'
             )
             ->where([

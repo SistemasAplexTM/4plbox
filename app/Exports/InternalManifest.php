@@ -101,20 +101,44 @@ class InternalManifest implements FromView, WithEvents, WithDrawings
                     ]
                 );
 
-                // $styleArray = [
+                $styleArray = [
                     
-                //     'alignment' => [
-                //         'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-                //     ],                        
-                //     'font' => [
-                //         'name' => 'Century Gothic',
-                //         'size' => 11,
-                //         'bold' => true,
-                //         'color' => ['argb' => 'EB2B02'],
-                //     ]
-                // ];
+                    'alignment' => [
+                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    ], 
+                    /* PROPIEDADES DEL TIPO DE LETRA Y COLOR DE LETRA */                       
+                    'font' => [
+                        'name' => 'Century Gothic',
+                        'size' => 12,
+                        'bold' => true,
+                        // 'color' => ['argb' => 'EB2B02'],
+                    ],
+                    /* COLOR DE FONDO DE LA CELDA */ 
+                    // 'fill' => [
+                    //     'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                    //     'startColor' => [
+                    //         'argb' => 'FFA0A0A0',
+                    //     ],
+                    // ]
+                ];
 
-                // $event->sheet->getDelegate()->getStyle('E1:F1')->applyFromArray($styleArray);
+                $event->sheet->getDelegate()->getStyle('E1:F1')->applyFromArray($styleArray);
+                $event->sheet->getDelegate()->getStyle('G1')->applyFromArray(
+                    ['fill' => [
+                        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                        'startColor' => [
+                            'argb' => 'FFCE88',
+                        ],
+                    ]]
+                );
+                $event->sheet->getDelegate()->getStyle('G3')->applyFromArray(
+                    ['fill' => [
+                        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                        'startColor' => [
+                            'argb' => 'EEBCFD',
+                        ],
+                    ]]
+                );
             }
         ];
     }
