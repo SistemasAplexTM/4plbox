@@ -171,10 +171,11 @@ class ConsigneeController extends Controller
         ->leftjoin('clientes', $table . '.cliente_id', 'clientes.id')
         ->select('consignee.id', 'consignee.po_box', 'consignee.documento', 'consignee.tarifa', 'consignee.primer_nombre', 'consignee.segundo_nombre', 'consignee.primer_apellido', 'consignee.segundo_apellido', 'consignee.nombre_full', 'consignee.zip', 'consignee.correo', 'consignee.telefono', 'consignee.direccion', 'consignee.localizacion_id', 'consignee.tipo_identificacion_id', 'consignee.agencia_id', 'localizacion.nombre as ciudad', 'localizacion.id as ciudad_id', 'deptos.descripcion as estado', 'deptos.id as estado_id', 'pais.descripcion as pais', 'pais.id as pais_id', 'agencia.descripcion as agencia', 'tipo_identificacion.descripcion as identificacion', 'clientes.id AS cliente_id', 'clientes.nombre AS cliente')
         ->where($where)
+        ->whereNull($table . '.parent_id')
         ->orderBy($table . '.primer_nombre');
     } else {
       $where = [['a.deleted_at', null], ['consignee.deleted_at', null]];
-      if ($data != null and  $data != 'null') {
+      if ($data != null &&  $data != 'null') {
         $where[] = array('consignee.nombre_full', 'like', '%' . $data . '%');
       }
       if ($id_shipper != null) {
@@ -200,6 +201,7 @@ class ConsigneeController extends Controller
           'consignee.correo'
         )
         ->where($where)
+        ->whereNull('consignee.parent_id')
         ->orderBy('consignee.nombre_full');
     }
 
@@ -501,5 +503,46 @@ class ConsigneeController extends Controller
     } catch (Exception $e) {
       return $e;
     }
+  }
+
+  public function assignContact(Request $request, $id)
+  {
+    Consignee::where('id', $request->id)->update([
+      'parent_id' => $id
+    ]);
+    return ['code', 200];
+  }
+
+  public function getExisting($data = null, $id_agencia = null)
+  {
+    if ($id_agencia == null) {
+      $id_agencia = Auth::user()->agencia_id;
+    }
+    if ($data != null &&  $data != 'null') {
+      $where[] = array('consignee.nombre_full', 'like', '%' . $data . '%');
+    }
+
+    $answer = DB::table('shipper_consignee AS a')
+      ->join('consignee', 'a.consignee_id', 'consignee.id')
+      ->join('localizacion', 'consignee.localizacion_id', 'localizacion.id')
+      ->join('agencia', 'consignee.agencia_id', 'agencia.id')
+      ->select(
+        'consignee.id',
+        'consignee.telefono',
+        'consignee.celular',
+        'consignee.nombre_full',
+        'consignee.agencia_id',
+        'localizacion.id AS localizacion_id',
+        'localizacion.nombre AS ciudad',
+        'agencia.descripcion AS agencia',
+        'consignee.zip',
+        'consignee.correo'
+      )
+      ->where($where)
+      ->whereNull('consignee.parent_id')
+      ->orderBy('consignee.nombre_full')
+      ->get();
+
+    return $answer;
   }
 }
