@@ -35,7 +35,14 @@ export default {
     querySearch(queryString, cb) {
       var me = this;
       axios
-        .get("/consignee/getExisting/" + queryString + "/" + this.id_data)
+        .get(
+          "/consignee/getExisting/" +
+            queryString +
+            "/" +
+            this.id_data +
+            "/" +
+            this.table
+        )
         .then(function({ data }) {
           me.options = data;
           cb(me.options);
@@ -47,7 +54,10 @@ export default {
     },
     async assignContact(item) {
       try {
-        await axios.post("/consignee/assignContact/" + this.id_data, item);
+        await axios.post(
+          "/consignee/assignContact/" + this.id_data + "/" + this.table,
+          item
+        );
         toastr.success("Contacto agregado");
         this.$emit("updatetable");
         this.$emit("assignedSuccess");
