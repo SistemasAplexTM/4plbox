@@ -266,7 +266,7 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('consignee/getSelect', 'ConsigneeController@getSelect');
   Route::get('consignee/getContacts/{id}', 'ConsigneeController@getContacts');
   Route::post('consignee/assignContact/{id}', 'ConsigneeController@assignContact');
-  Route::get('consignee/getExisting/{data?}/{id_agencia?}', 'ConsigneeController@getExisting');
+  Route::get('consignee/getExisting/{data?}/{consignee_id?}', 'ConsigneeController@getExisting');
 
   /*--- MODULO EMAIL TEMPLATES ---*/
   Route::resource('emailTemplate', 'EmailTemplateController', ['except' => ['show', 'create', 'edit']]);

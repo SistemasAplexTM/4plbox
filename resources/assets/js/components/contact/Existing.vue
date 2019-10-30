@@ -35,7 +35,7 @@ export default {
     querySearch(queryString, cb) {
       var me = this;
       axios
-        .get("/consignee/getExisting/" + queryString)
+        .get("/consignee/getExisting/" + queryString + "/" + this.id_data)
         .then(function({ data }) {
           me.options = data;
           cb(me.options);
