@@ -217,7 +217,7 @@ a.badge:hover {
                       <!-- <div class="col-sm-5"> -->
                       <!-- <div class="form-group"> -->
                       <label for style="width: 100%;">&nbsp;</label>
-                      <button
+                      <!-- <button
                         class="btn btn-primary btn-sm"
                         type="button"
                         data-toggle="tooltip"
@@ -225,7 +225,7 @@ a.badge:hover {
                         @click="exportInternalManifest()"
                       >
                         <i class="fal fa-cloud-download-alt"></i> Manifiesto Interno
-                      </button>
+                      </button>-->
                       <!-- </div> -->
                       <!-- </div> -->
                       <!-- <div class="col-sm-4"> -->
