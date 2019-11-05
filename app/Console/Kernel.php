@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
 
         // GENERAR BACKUP AUTOMATICO DE LA APLICACION (--only-db = solo base de datos)
-        $schedule->command('backup:run --only-db')->hourly();
+        $schedule->command('backup:run --only-db --db-name=4plbox')->hourly();
         // PARA VER SI HAY MENSAGES POR ENVIAR
         $schedule->command('queue:work')->everyMinute();
     }
@@ -40,7 +40,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }
