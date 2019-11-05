@@ -223,6 +223,7 @@
             readonly="">
           <span for="agency" id="agencia_name"
             style="font-family: 'Russo One', sans-serif; font-size: 40px; float: left;font-weight: bold;">{{ $agencia['descripcion'] }}</span>
+          <i class="fal fa-search"></i>
           @endif
           @endforeach
         </div>
