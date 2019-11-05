@@ -21,8 +21,14 @@ Route::get('/home', 'DocumentoController@index')->name('home');
 Route::get('master/buscar/{dato}/{type?}', 'MasterController@getSoC');
 Route::group(['middleware' => 'auth'], function () {
   Route::get('commandBackup', function () {
-    \Artisan::call('backup:run', ['--only-db' => true]);
-    return "successfully!";
+    try {
+      //code...
+      $exitCode = Artisan::call('backup:run', ['--only-db' => true]);
+      dd(Artisan::output());
+      return 'Successfuly!!' . $exitCode;
+    } catch (\Exception $th) {
+      throw $th;
+    }
   });
   /* REGISTRO DE LOG DE ACTIVIDADES DE USUARIOS */
   Route::get('logActivity', 'LogActivityController@index')->name('logActivity.index');
