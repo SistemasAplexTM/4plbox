@@ -148,6 +148,7 @@ var objVue = new Vue({
         table_edit: null,
         edit_consignee: false,
         edit_shipper: false,
+
     },
     methods: {
         open(op, create) {

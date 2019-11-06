@@ -22,6 +22,20 @@
   </div>
 </div>
 <style type="text/css">
+  .el-dropdown-link {
+    cursor: pointer;
+    color: #409EFF;
+    font-size: 20px;
+  }
+
+  .el-icon-arrow-down {
+    font-size: 12px;
+  }
+
+  .change_agency:hover {
+    text-shadow: 1px 0px 3px black;
+  }
+
   @-webkit-keyframes ripple {
     0% {
       opacity: 0;
@@ -219,11 +233,9 @@
         <div class="col-lg-6" style="padding-left: 0px;">
           @foreach($agencias as $agencia)
           @if(Auth::user()->agencia_id == $agencia['id'])
+          <change_agency :agency="{{ $agencia }}"></change_agency>
           <input type="hidden" id="agencia_id" name="agencia_id" class="form-control" value="{{ $agencia['id'] }}"
             readonly="">
-          <span for="agency" id="agencia_name"
-            style="font-family: 'Russo One', sans-serif; font-size: 40px; float: left;font-weight: bold;">{{ $agencia['descripcion'] }}</span>
-          <i class="fal fa-search"></i>
           @endif
           @endforeach
         </div>
