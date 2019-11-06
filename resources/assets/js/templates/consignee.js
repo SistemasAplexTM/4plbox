@@ -37,7 +37,7 @@ $(document).ready(function () {
           '<ul class="dropdown-menu dropdown-menu-right pull-right">' +
           "<li><a onclick=\"reenviarEmailCasillero(" + full.id + ")\"><i class='fal fa-mail-bulk'></i> Reenviar Email Casillero</a></li>" +
           "<li><a onclick=\"generarCasillero(" + full.id + ")\"><i class='fal fa-address-card'></i> Generar Casillero</a></li>" +
-          "<li><a onclick=\"pasar_id(" + full.id + ")\" ><i class='fal fa-user-plus'></i> Agregar Contactos</a></li>" +
+          "<li><a onclick=\"pasar_id(" + full.id + ", '" + full.nombre_full + "')\" ><i class='fal fa-user-plus'></i> Agregar Contactos</a></li>" +
           btn_delete + '</ul>' +
           '</div>';
         return btn_edit + btn;
@@ -57,8 +57,8 @@ function generarCasillero(id) {
   objVue.generarCasillero(id);
 }
 
-function pasar_id(id) {
-  objVue.openRigthBar(id);
+function pasar_id(id, name) {
+  objVue.openRigthBar(id, name);
 }
 
 function edit(id) {
@@ -122,7 +122,7 @@ function formatRepoSelection(repo) {
 /* objeto VUE */
 var objVue = new Vue({
   el: '#consignee',
-  mounted: function () {},
+  mounted: function () { },
   data: {
     agency_data: data_agencia,
     parametro: null,
@@ -154,12 +154,13 @@ var objVue = new Vue({
     }
   },
   methods: {
-    openRigthBar(param) {
+    openRigthBar(id, name) {
       var data = {
         component: 'add-contact',
         title: 'Contactos',
         icon: 'fal fa-users',
-        id_c: param,
+        id_c: id.id,
+        name: name,
         table: 'consignee',
         hidden_btn: true,
         edit: false,

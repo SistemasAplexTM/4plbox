@@ -34,7 +34,7 @@ $(document).ready(function () {
                     '<i class="fal fa-ellipsis-v"></i>' +
                     '</button>' +
                     '<ul class="dropdown-menu dropdown-menu-right pull-right">' +
-                    "<li><a onclick=\"pasar_id(" + full.id + ")\"><i class='fal fa-user-plus'></i> Agregar Contactos</a></li>" +
+                    "<li><a onclick=\"pasar_id(" + full.id + ", '" + full.nombre_full + "')\"><i class='fal fa-user-plus'></i> Agregar Contactos</a></li>" +
                     btn_delete + '</ul>' +
                     '</div>';
                 return btn_edit + btn;
@@ -46,9 +46,9 @@ $(window).load(function () {
     $('#agencia_id').empty().append('<option value="' + data_agencia['id'] + '" selected="selected">' + data_agencia['descripcion'] + '</option>').val([data_agencia['id']]).trigger('change');
 });
 
-function pasar_id(id) {
+function pasar_id(id, name) {
     // objVue.parametro = id;s
-    objVue.openRigthBar(id);
+    objVue.openRigthBar(id, name);
 }
 
 function edit(id) {
@@ -138,12 +138,13 @@ var objVue = new Vue({
         }
     },
     methods: {
-        openRigthBar(param) {
+        openRigthBar(param, name) {
             var data = {
                 component: 'add-contact',
                 title: 'Contactos',
                 icon: 'fal fa-users',
                 id_c: param,
+                name: name,
                 table: 'shipper',
                 hidden_btn: true,
                 edit: false,
