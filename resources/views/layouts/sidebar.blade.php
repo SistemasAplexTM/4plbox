@@ -5,8 +5,7 @@
                 <div class="dropdown profile-element">
                     <span>
                         <img alt="image" class="" id="imgProfile"
-                            src="{{ asset('storage/') }}/{{ Session::get('logo') }}"
-                            style="width: 170px;height: 60px;background-color: #fff" />
+                            src="{{ asset('storage/') }}/{{ Session::get('logo') }}" style="width: 170px;" />
                         {{-- <img alt="image" class="" id="imgProfile" src="" style="width: 170px;height: 60px;background-color: #fff"/> --}}
                     </span>
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
