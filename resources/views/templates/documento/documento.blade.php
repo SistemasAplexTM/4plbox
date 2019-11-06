@@ -790,12 +790,6 @@
                         </div>
                       </div>
                       <template v-show="mostrar.includes(16)">
-                        {{-- <div class="col-sm-6" v-show="!showFieldsTotals">
-                                                  <label class="tracking">Tracking</label>
-                                                      <div class="form-group">
-                                                          <input type="text" onkeyup="deleteError($(this).parent());" placeholder="Numero de tracking" onkeyup="deleteError($(this).parent());" id="tracking" name="tracking" class="form-control" value="">
-                                                      </div>
-                                              </div> --}}
                         <div class="col-sm-2" v-show="showFieldsTotals">
                           <label class="valDeclarado">@lang('documents.declared')</label>
                           <div class="form-group" id="ValDecla">
@@ -870,6 +864,7 @@
                             <thead>
                               <tr>
                                 <th>Item</th>
+                                <th style="width: 10%;">Minima</th>
                                 <th style="width: 10%;">@lang('documents.code')</th>
                                 <th style="width: 7%;">@lang('documents.pieces')</th>
                                 <th style="width: 17%;">@lang('documents.weight')(Lb)</th>
@@ -883,7 +878,7 @@
                             </thead>
                             <tfoot style="background-color: paleturquoise;">
                               <tr>
-                                <td colspan="9">
+                                <td colspan="10">
                                   <table style="width: 100%;">
                                     <tr>
                                       <td>
