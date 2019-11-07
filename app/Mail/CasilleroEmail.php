@@ -12,7 +12,8 @@ class CasilleroEmail extends Mailable implements ShouldQueue
     use Queueable, SerializesModels;
 
     public $param;
-    public $from_self;
+    public $from_name;
+    public $from_email;
     public $subject_msn;
     /**
      * Create a new message instance.
@@ -22,7 +23,8 @@ class CasilleroEmail extends Mailable implements ShouldQueue
     public function __construct($param, $from_self = array('address' => 'sac@4plbox.com', 'name' => '4plbox'), $subject_msn = 'Mensaje 4plbox')
     {
         $this->param = $param;
-        $this->from_self = $from_self;
+        $this->from_name = $from_self['name'];
+        $this->from_email = $from_self['address'];
         $this->subject_msn = $subject_msn;
     }
 
@@ -33,8 +35,8 @@ class CasilleroEmail extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->from($this->from_self)
-        ->subject($this->subject_msn)
-        ->view('emailTemplate');
+        return $this->view('emailTemplate')
+      ->from($this->from_email, $this->from_name)
+      ->subject($this->subject_msn);
     }
 }

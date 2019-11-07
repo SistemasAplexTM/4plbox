@@ -525,7 +525,7 @@
                           <tr>
                             <td>@lang('general.pre_alert')</td>
                             <td><a target="_blank"
-                                href="{{ url('/').'/prealerta/' }}{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}">{{ url('/').'/prealerta/' }}{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}</a>
+                                href="{{ url('/').'/prealerta/' }}{{ (isset($agencia) and $agencia) ? base64_encode($agencia->id) : '' }}">{{ url('/').'/prealerta/' }}{{ (isset($agencia) and $agencia) ? base64_encode($agencia->id) : '' }}</a>
                             </td>
                           </tr>
                           <tr>

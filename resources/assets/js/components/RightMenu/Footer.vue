@@ -19,19 +19,19 @@
 
 <script>
 export default {
-  name: 'FooterComponent',
-  props: ['edit'],
+  name: "FooterComponent",
+  props: ["edit"],
   computed: {
-    option(){
-      return (this.edit) ? 'update' : 'save'
+    option() {
+      return this.edit ? "update" : "save";
     }
   },
   methods: {
-    selectOption(type){
-      bus.$emit(type)
+    selectOption(type) {
+      bus.$emit(type);
     }
   }
-}
+};
 </script>
 
 <style lang="css" scoped>
@@ -44,8 +44,9 @@ export default {
   margin-left: 0px;
   border-top: solid 1px #dcdfe6;
   background-color: white;
+  z-index: 3;
 }
 .first {
-  border-right: solid 1px #dcdfe6
+  border-right: solid 1px #dcdfe6;
 }
 </style>

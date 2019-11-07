@@ -22,6 +22,20 @@
   </div>
 </div>
 <style type="text/css">
+  .el-dropdown-link {
+    cursor: pointer;
+    color: #409EFF;
+    font-size: 20px;
+  }
+
+  .el-icon-arrow-down {
+    font-size: 12px;
+  }
+
+  .change_agency:hover {
+    text-shadow: 1px 0px 3px black;
+  }
+
   @-webkit-keyframes ripple {
     0% {
       opacity: 0;
@@ -219,11 +233,9 @@
         <div class="col-lg-6" style="padding-left: 0px;">
           @foreach($agencias as $agencia)
           @if(Auth::user()->agencia_id == $agencia['id'])
+          <change_agency :agency="{{ $agencia }}"></change_agency>
           <input type="hidden" id="agencia_id" name="agencia_id" class="form-control" value="{{ $agencia['id'] }}"
             readonly="">
-          <span for="agency" id="agencia_name"
-            style="font-family: 'Russo One', sans-serif; font-size: 40px; float: left;font-weight: bold;">{{ $agencia['descripcion'] }}</span>
-          <i class="fal fa-search"></i>
           @endif
           @endforeach
         </div>
@@ -778,12 +790,6 @@
                         </div>
                       </div>
                       <template v-show="mostrar.includes(16)">
-                        {{-- <div class="col-sm-6" v-show="!showFieldsTotals">
-                                                  <label class="tracking">Tracking</label>
-                                                      <div class="form-group">
-                                                          <input type="text" onkeyup="deleteError($(this).parent());" placeholder="Numero de tracking" onkeyup="deleteError($(this).parent());" id="tracking" name="tracking" class="form-control" value="">
-                                                      </div>
-                                              </div> --}}
                         <div class="col-sm-2" v-show="showFieldsTotals">
                           <label class="valDeclarado">@lang('documents.declared')</label>
                           <div class="form-group" id="ValDecla">
@@ -858,6 +864,7 @@
                             <thead>
                               <tr>
                                 <th>Item</th>
+                                <th style="width: 10%;">Minima</th>
                                 <th style="width: 10%;">@lang('documents.code')</th>
                                 <th style="width: 7%;">@lang('documents.pieces')</th>
                                 <th style="width: 17%;">@lang('documents.weight')(Lb)</th>
@@ -871,7 +878,7 @@
                             </thead>
                             <tfoot style="background-color: paleturquoise;">
                               <tr>
-                                <td colspan="9">
+                                <td colspan="10">
                                   <table style="width: 100%;">
                                     <tr>
                                       <td>

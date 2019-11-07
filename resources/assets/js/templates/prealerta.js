@@ -135,7 +135,9 @@ var objVue = new Vue({
         },
         create: function () {
             const isUnique = (value) => {
-                return axios.post($('#formPrealerta').data('id_agencia') + '/validar_tracking', { 'element': value }).then((response) => {
+                return axios.post($('#formPrealerta').data('id_agencia') + '/validar_tracking', {
+                    'element': value
+                }).then((response) => {
                     return {
                         valid: response.data.valid,
                         data: {
@@ -176,7 +178,9 @@ var objVue = new Vue({
                     }).catch(function (error) {
                         l.stop();
                         console.log(error);
-                        toastr.error("Error al prealertar.", { timeOut: 30000 });
+                        toastr.error("Error al prealertar.", {
+                            timeOut: 30000
+                        });
                     });
                 }
             }).catch(function (error) {

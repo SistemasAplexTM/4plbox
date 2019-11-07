@@ -24,8 +24,11 @@ function totalizeDocument(elemento) {
     }
     if (parseFloat($('#tarifa_minima').val()) === 0) {
         $('#tarifa_minima').val(flete);
+        $('#flete').val(flete);
+    } else {
+        flete = parseFloat($('#tarifa_minima').val());
+        $('#flete').val(parseFloat($('#tarifa_minima').val()));
     }
-    $('#flete').val(flete);
     $(elemento).css('border-color', '');
     peso = $('#pesoDim').html();
     piezas = $('#piezas').html();
@@ -68,6 +71,7 @@ function totalizeDocument(elemento) {
     // flete = Math.ceil(parseFloat(calculateFlete(flete)));
     flete = parseFloat(calculateFlete(flete));
     $('#flete').val(isInteger(flete));
+
     seguro = calculateInsurance(seguro);
     $('#seguro').val(seguro);
     if ($('#descuento').val() === '') {
@@ -116,7 +120,6 @@ function calculateFlete(flete) {
         if ($('#servicios_id option:selected').data('cobvol') == 0 && app_client != 'worldcargo') {
             if ((parseFloat(peso) * parseFloat(tarifa)) >= 0 && ((parseFloat(peso) * parseFloat(tarifa)) <= $('#servicios_id option:selected').data('tarifamin'))) {
                 $('#cobrarPor').text('Pes');
-                console.log('entro 1', parseFloat(peso), ' tm: ', $('#servicios_id option:selected').data('tarifamin'));
                 return flete;
             }
             if ((parseFloat(peso) * parseFloat(tarifa)) > $('#servicios_id option:selected').data('tarifamin')) {
