@@ -175,7 +175,7 @@ export default {
       });
     },
     getModules(){
-      axios.get('getForSelect/modulo').then(({data}) => {
+      axios.get('getForSelect/modulo/menu').then(({data}) => {
         this.modules = data
       });
     },

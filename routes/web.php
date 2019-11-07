@@ -140,7 +140,7 @@ Route::group(['middleware' => 'auth'], function () {
   /*--- MODULO MODULOS ---*/
   Route::resource('modulo', 'ModuloController', ['except' => ['show', 'create', 'edit']]);
   Route::get('modulo/all', 'ModuloController@getAll')->name('datatable/all');
-  Route::get('getForSelect/modulo', 'ModuloController@getForSelect');
+  Route::get('getForSelect/modulo/{type?}', 'ModuloController@getForSelect');
   Route::get('modulo/delete/{id}/{logical?}', 'ModuloController@delete')->name('modulo.delete');
   Route::get('modulo/restaurar/{id}', 'ModuloController@restaurar');
 
