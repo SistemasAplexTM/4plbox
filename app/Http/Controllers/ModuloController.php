@@ -29,17 +29,17 @@ class ModuloController extends Controller
      */
     public function store(ModuloRequest $request)
     {
-        try{
+        try {
             $data = (new Modulo)->fill($request->all());
             $data->created_at = date('Y-m-d H:i:s');
             if ($data->save()) {
-                $answer=array(
+                $answer = array(
                     "datos" => $request->all(),
                     "code" => 200,
                     "status" => 200,
                 );
-            }else{
-                $answer=array(
+            } else {
+                $answer = array(
                     "error" => 'Error al intentar registrar.',
                     "code" => 600,
                     "status" => 500,
@@ -51,11 +51,11 @@ class ModuloController extends Controller
             foreach ($e->errorInfo as $key => $value) {
                 $error .= $key . ' - ' .  $value . ' <br> ';
             }
-            $answer=array(
-                    "error" => $error,
-                    "code" => 600,
-                    "status" => 500,
-                );
+            $answer = array(
+                "error" => $error,
+                "code" => 600,
+                "status" => 500,
+            );
             return $answer;
         }
     }
@@ -73,23 +73,22 @@ class ModuloController extends Controller
         try {
             $data = Modulo::findOrFail($id);
             $data->update($request->all());
-            $answer=array(
+            $answer = array(
                 "datos" => $request->all(),
                 "code" => 200,
                 "status" => 500,
             );
             return $answer;
-
         } catch (\Exception $e) {
             $error = '';
             foreach ($e->errorInfo as $key => $value) {
                 $error .= $key . ' - ' .  $value . ' <br> ';
             }
-            $answer=array(
-                    "error" => $error,
-                    "code" => 600,
-                    "status" => 500,
-                );
+            $answer = array(
+                "error" => $error,
+                "code" => 600,
+                "status" => 500,
+            );
             return $answer;
         }
     }
@@ -113,27 +112,27 @@ class ModuloController extends Controller
      * @param  boolean  $deleteLogical
      * @return \Illuminate\Http\Response
      */
-    public function delete($id,$logical)
+    public function delete($id, $logical)
     {
 
-        if(isset($logical) and $logical == 'true'){
+        if (isset($logical) and $logical == 'true') {
             $data = Modulo::findOrFail($id);
             $now = new \DateTime();
-            $data->deleted_at =$now->format('Y-m-d H:i:s');
-            if($data->save()){
-                    $answer=array(
-                        "datos" => 'Eliminación exitosa.',
-                        "code" => 200
-                    );
-               }  else{
-                    $answer=array(
-                        "error" => 'Error al intentar Eliminar el registro.',
-                        "code" => 600
-                    );
-               }
+            $data->deleted_at = $now->format('Y-m-d H:i:s');
+            if ($data->save()) {
+                $answer = array(
+                    "datos" => 'Eliminación exitosa.',
+                    "code" => 200
+                );
+            } else {
+                $answer = array(
+                    "error" => 'Error al intentar Eliminar el registro.',
+                    "code" => 600
+                );
+            }
 
-                return $answer;
-        }else{
+            return $answer;
+        } else {
             $this->destroy($id);
         }
     }
@@ -162,8 +161,8 @@ class ModuloController extends Controller
         return \DataTables::of(Modulo::query()->where('deleted_at', '=', NULL))->make(true);
     }
 
-    public function getForSelect()
+    public function getForSelect($type)
     {
-        return Modulo::where('deleted_at', '=', NULL)->get();
+        return Modulo::where([['deleted_at', '=', NULL], ['type', $type]])->get();
     }
 }

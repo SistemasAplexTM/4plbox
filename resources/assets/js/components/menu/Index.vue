@@ -5,7 +5,7 @@
         <el-card class="box-card" >
           <div slot="header" class="clearfix">
             <el-col :span="8">
-              <p>Selecione menú</p>
+              <!-- <p>Selecione menú</p>
               <el-select v-model="menu" clearable @change="changeMenu" placeholder="Seleccione menú" value-key="id">
                 <el-option
                   v-for="item in menus"
@@ -13,7 +13,7 @@
                   :label="item.nombre"
                   :value="item">
                 </el-option>
-              </el-select>
+              </el-select> -->
             </el-col>
             <el-col :span="16">
                 <h2 class="fr">{{ menu.nombre }}</h2>
