@@ -205,3 +205,15 @@ PREGUNTAS PARA RAMON
 3. quitar letras de las guias colocar AHWB*****
 4. Dejar factura proforma en una sola copia.****
 5. Revisar por que  da mas valores en los totales de la impresion****
+
+- Colocar formulario de validacion de element para el registro de cliente y quitar el calcular en el zip code 
+y borrar el consignee y user si no se esta usando (de forma permanente)
+
+- Pasos para config impresora: 
+  Elegir sistema operativo y explicar que se debe descargar e instalar en el pc
+  Seleccionar impresora con el combo que sale de las impresoras instaladas (impresora para documentos - impresora para label)
+
+- validar antes de imprimir si tiene configurada la impresora o si la imresora configurada existe.
+- ocultar consolidado agencia para la principal
+- poner consecutivo en consolidado agencia
+- y poner entre parentesis (editando..) para saber que se esta editando en la modal que sale a la derecha
