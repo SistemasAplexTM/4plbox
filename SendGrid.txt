@@ -3,3 +3,22 @@ Clave: Miami2013$
 
 sengrid_api_4plbox:
 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
+
+
+/* COMEXCO */
+
+Usaurio: comexco
+Clave: Miami2013$
+
+sengrid_api_4plbox:
+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
+
+
+
+/* AKOCARGO (jexpress) */
+
+User: akocargo
+Pss: Miami2013$
+
+API:
+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

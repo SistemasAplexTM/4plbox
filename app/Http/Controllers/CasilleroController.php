@@ -114,7 +114,7 @@ class CasilleroController extends Controller
                 ])->first();
 
             $agencia = $this->getDataAgenciaById($request->agencia_id);
-
+            
             $replacements = $this->replacements(null, $agencia, null, null, $user, null);
             $cuerpo_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->mensaje);
             $asunto_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->subject);
@@ -129,6 +129,7 @@ class CasilleroController extends Controller
                     $list_id = json_decode($list_id, true);
                     $list_id = $list_id['id_list'];
                     $listId = $request->listId;
+                    
                     if (!\Mailchimp::check($list_id, $request->correo)) {
                         \Mailchimp::subscribe(
                             $list_id,

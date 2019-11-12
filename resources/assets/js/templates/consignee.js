@@ -122,7 +122,7 @@ function formatRepoSelection(repo) {
 /* objeto VUE */
 var objVue = new Vue({
   el: '#consignee',
-  mounted: function () { },
+  mounted: function () {},
   data: {
     agency_data: data_agencia,
     parametro: null,
@@ -159,7 +159,7 @@ var objVue = new Vue({
         component: 'add-contact',
         title: 'Contactos',
         icon: 'fal fa-users',
-        id_c: id.id,
+        id_c: id,
         name: name,
         table: 'consignee',
         hidden_btn: true,

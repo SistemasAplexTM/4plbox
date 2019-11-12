@@ -12,7 +12,8 @@ class WarehouseEmail extends Mailable
     use Queueable, SerializesModels;
 
     public $param;
-    public $from_self;
+    public $from_name;
+    public $from_email;
     public $subject_msn;
     protected $pdf;
     protected $pdf_name;
@@ -24,7 +25,8 @@ class WarehouseEmail extends Mailable
     public function __construct($param, $from_self = array('address' => 'sac@4plbox.com', 'name' => '4plbox'), $subject_msn = 'Mensaje 4plbox', $pdf = false)
     {
         $this->param = $param;
-        $this->from_self = $from_self;
+        $this->from_name = $from_self['name'];
+        $this->from_email = $from_self['address'];
         $this->subject_msn = $subject_msn;
         if($pdf){
             $this->pdf = base64_encode($pdf['pdf']);
@@ -40,14 +42,14 @@ class WarehouseEmail extends Mailable
     public function build()
     {
         if($this->pdf){
-            return $this->from($this->from_self['address'])
+            return $this->from($this->from_email, $this->from_name)
             ->subject($this->subject_msn)
             ->view('emailTemplate')
             ->attachData(base64_decode($this->pdf), $this->pdf_name.'.pdf', [
                     'mime' => 'application/pdf',
             ]);
         }else{
-            return $this->from($this->from_self)
+            return $this->from($this->from_email, $this->from_name)
             ->subject($this->subject_msn)
             ->view('emailTemplate');
         }

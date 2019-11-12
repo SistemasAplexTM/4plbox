@@ -157,19 +157,8 @@ function datatableDetail() {
                 "render": function (data, type, full, meta) {
                     var str = full.paquete;
                     return parseInt(str);
-                    // return parseInt(str.substring(9));
                 },
                 width: 30
-            }, {
-                "render": function (data, type, full, meta) {
-                    return '<div class="checkbox checkbox-success checkbox-inline" style="padding-top: 0px;"> ' +
-                        '<input type = "checkbox" ' +
-                        'id = "minima_detalle' + full.id + '"' +
-                        'value = "t"' +
-                        'style = "" onchange="minimaDetalle(' + full.id + ')">' +
-                        '<label for = "minima_detalle' + full.id + '" ></label >' +
-                        '</div>';
-                },
             }, {
                 data: 'num_warehouse',
                 name: 'num_warehouse',
@@ -314,25 +303,25 @@ function datatableDetail() {
             };
             /*Total over all pages*/
             var vol = api
-                .column(10)
+                .column(9)
                 .data()
                 .reduce(function (a, b) {
                     return intVal(Math.ceil(a)) + intVal(Math.ceil(b));
                 }, 0);
             var piezas = api
-                .column(11)
+                .column(10)
                 .data()
                 .reduce(function (a, b) {
                     return intVal(a) + intVal(b);
                 }, 0);
             var peso = api
-                .column(12)
+                .column(11)
                 .data()
                 .reduce(function (a, b) {
                     return intVal(Math.ceil(a)) + intVal(Math.ceil(b));
                 }, 0);
             var dec = api
-                .column(13)
+                .column(12)
                 .data()
                 .reduce(function (a, b) {
                     return intVal(a) + intVal(b);
@@ -354,16 +343,7 @@ function datatableDetail() {
         },
     }).on('xhr.dt', function (e, settings, json, xhr) {
         var datos = json.data;
-        datos.forEach(function (element) {
-            // console.log(element);
-            if (element.tarifa_minima > 0) {
-                console.log('entro ', element.id);
-                setTimeout(() => {
 
-                    $('#minima_detalle5640').prop('checked', 'checked');
-                }, 200);
-            }
-        });
         if (app_type === 'courier') {
             if (json.data.length === 0) {
                 objVue.cantidad_detalle = true;
@@ -387,14 +367,14 @@ function datatableDetail() {
         //VALIDA SI SE MUESTRAN LOS PUNTOS PARA EL PAIS CONFIGURADO
         if (puntos !== null) {
             if (objVue.city_c.pais_id === puntos.pais_id) {
-                var columna = tbl.column(7);
+                var columna = tbl.column(6);
                 columna.visible(false);
-                var columna = tbl.column(8);
+                var columna = tbl.column(7);
                 columna.visible(true);
             } else {
-                var columna = tbl.column(7);
+                var columna = tbl.column(6);
                 columna.visible(true);
-                var columna = tbl.column(8);
+                var columna = tbl.column(7);
                 columna.visible(false);
             }
         }

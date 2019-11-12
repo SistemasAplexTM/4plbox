@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     $('#tbl-agencia').DataTable({
         ajax: 'agencia/all',
         columns: [{
@@ -26,18 +26,18 @@ $(document).ready(function() {
             data: 'logo',
             name: 'logo',
             "render": function (data, type, full, meta) {
-              var image = 'icon-no-image.svg';
-              var title = 'No image';
-              if(full.logo != '' && full.logo != 'null' && full.logo != null){
-                title = full.descripcion;
-                image = full.logo;
-              }
-              return '<img src="/storage/'+image+'" alt="Pedidos" height="50" width="100" title="'+title+'">';
+                var image = 'icon-no-image.svg';
+                var title = 'No image';
+                if (full.logo != '' && full.logo != 'null' && full.logo != null) {
+                    title = full.descripcion;
+                    image = full.logo;
+                }
+                return '<img src="/storage/' + image + '" alt="Pedidos" width="100" title="' + title + '">';
             },
             class: 'text-center'
         }, {
             sortable: false,
-            "render": function(data, type, full, meta) {
+            "render": function (data, type, full, meta) {
                 var btn_edit = '';
                 var btn_delete = '';
                 if (permission_edit) {
@@ -47,7 +47,7 @@ $(document).ready(function() {
                     var btn_edit = "<a onclick=\"edit(" + params + ")\" class='edit_btn' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fal fa-pencil fa-lg'></i></a> ";
                 }
                 if (permission_delete) {
-                    if(full.tipo_agencia != 1){
+                    if (full.tipo_agencia != 1) {
                         var btn_delete = " <a onclick=\"eliminar(" + full.id + "," + true + ")\" class='delete_btn' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fal fa-trash-alt fa-lg'></i></a> ";
                     }
                 }
@@ -70,17 +70,17 @@ var objVue = new Vue({
         //
     },
     methods: {
-        rollBackDelete: function(data) {
+        rollBackDelete: function (data) {
             var urlRestaurar = 'agencia/restaurar/' + data.id;
             axios.get(urlRestaurar).then(response => {
                 toastr.success('Registro restaurado.');
                 this.updateTable();
             });
         },
-        updateTable: function() {
+        updateTable: function () {
             refreshTable('tbl-agencia');
         },
-        delete: function(data) {
+        delete: function (data) {
             this.formErrors = {};
             this.listErrors = {};
             if (data.logical === true) {
@@ -97,7 +97,7 @@ var objVue = new Vue({
                 });
             }
         },
-        edit: function(data) {
+        edit: function (data) {
             $(location).attr('href', 'agencia/' + btoa(data.id) + '/edit');
         }
     },

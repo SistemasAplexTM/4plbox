@@ -634,10 +634,10 @@ class DocumentoController extends Controller
             });
             $msn = false;
             if($request->option == 'email' || $request->option == 'all'){
-                if ($request->enviarEmailRemitente) {
-                    $this->sendEmailDocument($id);
-                    $msn = ' Email remitente enviado!';
-                }
+                // if ($request->enviarEmailRemitente) {
+                //     $this->sendEmailDocument($id);
+                //     $msn = ' Email remitente enviado!';
+                // }
                 if ($request->enviarEmailDestinatario) {
                     $this->sendEmailDocument($id);
                     $msn .= ' Email destinatario enviado!';
