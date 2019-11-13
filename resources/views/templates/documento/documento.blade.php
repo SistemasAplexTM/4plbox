@@ -864,7 +864,6 @@
                             <thead>
                               <tr>
                                 <th>Item</th>
-                                <th style="width: 10%;">Minima</th>
                                 <th style="width: 10%;">@lang('documents.code')</th>
                                 <th style="width: 7%;">@lang('documents.pieces')</th>
                                 <th style="width: 17%;">@lang('documents.weight')(Lb)</th>

@@ -23,7 +23,7 @@ class CasilleroController extends Controller
     {
         $id = base64_decode($id);
         $img = DB::table('agencia')
-            ->select('logo')
+            ->select('*')
             ->where('id', $id)
             ->first();
         $terms = AplexConfig::where('key', 'agency_mc_' . $id)->first();
@@ -40,12 +40,6 @@ class CasilleroController extends Controller
         return view('templates/casillero', compact('img', 'terms'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $success = true;
@@ -114,7 +108,7 @@ class CasilleroController extends Controller
                 ])->first();
 
             $agencia = $this->getDataAgenciaById($request->agencia_id);
-
+            
             $replacements = $this->replacements(null, $agencia, null, null, $user, null);
             $cuerpo_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->mensaje);
             $asunto_correo = preg_replace(array_keys($replacements), array_values($replacements), $plantilla->subject);
@@ -127,10 +121,13 @@ class CasilleroController extends Controller
                 if ($list_id) {
                     $list_id = $list_id->value;
                     $list_id = json_decode($list_id, true);
+
+                    $mc = new \NZTim\Mailchimp\Mailchimp($list_id['mc_key']);
                     $list_id = $list_id['id_list'];
                     $listId = $request->listId;
-                    if (!\Mailchimp::check($list_id, $request->correo)) {
-                        \Mailchimp::subscribe(
+                   
+                    if (!$mc->check($list_id, $request->correo)) {
+                        $mc->subscribe(
                             $list_id,
                             $request->correo,
                             ['FNAME' => $request->primer_nombre, 'LNAME' => $request->primer_apellido, 'POBOX' => $po_box],
@@ -142,11 +139,15 @@ class CasilleroController extends Controller
             Mail::to($request->correo)->send(new \App\Mail\CasilleroEmail($cuerpo_correo, $from_self, $asunto_correo));
 
             DB::commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollback();
             $success = false;
             $exception = $e;
-            return $e;
+            return array(
+                'code' => 600,
+                'error' => true,
+                'exception' => $exception
+            );
         }
         if ($success) {
             return array(
@@ -191,6 +192,7 @@ class CasilleroController extends Controller
 
     public function validar_email(Request $request)
     {
+        $request->agencia_id = base64_decode($request->agencia_id);
         try {
             $data = Consignee::where([
                 ['correo', $request->element],
@@ -201,6 +203,7 @@ class CasilleroController extends Controller
                 $answer = array(
                     "valid"   => false,
                     "message" => "El registro ya existe en la base de datos.",
+                    "data" => array('consignee: ' => $data, 'User: ' => $dataUser)
                 );
             } else {
                 $answer = array(

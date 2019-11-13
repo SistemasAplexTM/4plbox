@@ -531,8 +531,12 @@
                           <tr>
                             <td>Casillero</td>
                             <td>
-                              <a href="{{ $agencia->url_casillero }}">
-                                {{ $agencia->url_casillero }}
+                              @php
+                              $arr = explode("//", url('/'));
+                              @endphp
+                              <a
+                                href="{{ $arr[0] . '//casillero/' . $arr[1].'/login/' }}{{ (isset($agencia) and $agencia) ? base64_encode($agencia->id) : '' }}">
+                                {{ $arr[0] . '//casillero/' . $arr[1].'/login/' }}{{ (isset($agencia) and $agencia) ? base64_encode($agencia->id) : '' }}
                               </a>
                             </td>
                           </tr>

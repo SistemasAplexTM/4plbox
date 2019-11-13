@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  props: ["data", "disabled", "selected"],
+  props: ["data", "disabled", "selected", "reset"],
   data() {
     return {
       options: [],
@@ -42,6 +42,13 @@ export default {
     },
     data: function(value) {
       this.list = value;
+    },
+    reset: function(value) {
+      if (value) {
+        this.city = {};
+        this.city = [];
+        this.options = [];
+      }
     }
   },
   methods: {

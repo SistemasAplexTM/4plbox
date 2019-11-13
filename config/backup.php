@@ -40,19 +40,6 @@ return [
             /*
              * The names of the connections to the databases that should be backed up
              * MySQL, PostgreSQL, SQLite and Mongo databases are supported.
-<<<<<<< HEAD
-             */
-            // The content of the database dump may be customized for each connection
-            // by adding a 'dump' key to the connection settings in config/database.php.
-            // E.g.
-            // 'mysql' => [
-            // 'excludeTables' => [
-            //     'table_to_exclude_from_backup',
-            //     'another_table_to_exclude'
-            // ]
-            // ],
-            /*
-=======
              *
              * The content of the database dump may be customized for each connection
              * by adding a 'dump' key to the connection settings in config/database.php.
@@ -67,7 +54,6 @@ return [
             //         ]
             //   ],
              /*
->>>>>>> fa01f74bb984d9331f0802a80ec503e6163428f6
              * For a complete list of available customization options, see https://github.com/spatie/db-dumper
              */
             'databases' => [

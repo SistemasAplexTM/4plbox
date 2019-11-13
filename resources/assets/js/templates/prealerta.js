@@ -167,7 +167,7 @@ var objVue = new Vue({
                     }).then(function (response) {
                         l.stop();
                         if (response.data['code'] == 200) {
-                            toastr.success('Registro creado correctamente.');
+                            toastr.success('Su paquete ha sido prealertado');
                             toastr.options.closeButton = true;
                             me.resetForm();
                         } else {
