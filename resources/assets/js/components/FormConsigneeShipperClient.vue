@@ -331,8 +331,10 @@ export default {
   watch: {
     "payload.field_id": {
       handler(newVal, oldVal) {
-        if (newVal !== "null" && newVal !== null && newVal !== "") {
-          this.getDataById(newVal);
+        if (!this.payload.id_c) {
+          if (newVal !== "null" && newVal !== null && newVal !== "") {
+            this.getDataById(newVal);
+          }
         }
       },
       deep: true

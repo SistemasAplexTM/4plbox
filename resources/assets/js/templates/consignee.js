@@ -159,7 +159,7 @@ var objVue = new Vue({
         component: 'add-contact',
         title: 'Contactos',
         icon: 'fal fa-users',
-        id_c: id.id,
+        id_c: id,
         name: name,
         table: 'consignee',
         hidden_btn: true,

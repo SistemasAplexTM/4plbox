@@ -166,6 +166,7 @@ class ReportController extends Controller
 
   public function updateReportDispatch(Request $request, $id)
   {
+    // return $request->all();
     DB::table('consolidado_detalle')->where('consolidado_id', $id)->delete();
     foreach ($request->data as $key => $value) {
       DB::table('consolidado_detalle')
