@@ -206,7 +206,7 @@ PREGUNTAS PARA RAMON
 4. Dejar factura proforma en una sola copia.****
 5. Revisar por que  da mas valores en los totales de la impresion****
 
-- Colocar formulario de validacion de element para el registro de cliente y quitar el calcular en el zip code 
+*****- Colocar formulario de validacion de element para el registro de cliente y quitar el calcular en el zip code 
 y borrar el consignee y user si no se esta usando (de forma permanente)
 
 - Pasos para config impresora: 

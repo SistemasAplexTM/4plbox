@@ -291,7 +291,7 @@ export default {
           if (response.data["code"] == 200) {
             toastr.success("Registro creado correctamente.");
             toastr.options.closeButton = true;
-            // window.location = response.data["url"];
+            window.location = response.data["url"];
             me.resetForm("ruleForm");
           } else {
             toastr.warning(

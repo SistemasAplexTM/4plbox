@@ -121,11 +121,13 @@ class CasilleroController extends Controller
                 if ($list_id) {
                     $list_id = $list_id->value;
                     $list_id = json_decode($list_id, true);
+
+                    $mc = new \NZTim\Mailchimp\Mailchimp($list_id['mc_key']);
                     $list_id = $list_id['id_list'];
                     $listId = $request->listId;
-                    
-                    if (!\Mailchimp::check($list_id, $request->correo)) {
-                        \Mailchimp::subscribe(
+                   
+                    if (!$mc->check($list_id, $request->correo)) {
+                        $mc->subscribe(
                             $list_id,
                             $request->correo,
                             ['FNAME' => $request->primer_nombre, 'LNAME' => $request->primer_apellido, 'POBOX' => $po_box],
