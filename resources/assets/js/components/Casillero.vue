@@ -128,8 +128,8 @@
 </template>
 
 <script>
-import DisableAutocomplete from "vue-disable-autocomplete";
-Vue.use(DisableAutocomplete);
+// import DisableAutocomplete from "vue-disable-autocomplete";
+// Vue.use(DisableAutocomplete);
 export default {
   props: ["agencia_id"],
   data() {

@@ -3,9 +3,9 @@
     :visible.sync="drawer"
     direction="rtl"
     size="25%"
-    :show-close="false"
     :destroy-on-close="true"
     :append-to-body="true"
+    :wrapperClosable="false"
   >
     <header-component slot="title" :data="data" @back="drawer = false" />
     <transition-group name="fade">

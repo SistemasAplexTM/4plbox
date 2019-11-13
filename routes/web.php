@@ -438,7 +438,7 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('radicado_clientes/all', 'RadicadoClienteController@getAll')->name('datatable/all');
   Route::get('radicado_clientes/delete/{id}/{logical?}', 'RadicadoClienteController@delete')->name('radicado_clientes.delete');
   Route::get('radicado_clientes/restaurar/{id}', 'RadicadoClienteController@restaurar');
-
+  
   /*--- MODULO RADICADO ---*/
   Route::resource('radicado', 'RadicadoController', ['except' => ['show', 'create', 'edit']]);
   Route::get('radicado/all', 'RadicadoController@getAll')->name('datatable/all');
@@ -448,6 +448,9 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('radicado/getEmpleados', 'RadicadoController@getEmpleados');
   Route::get('radicado/imprimir/{id}', 'RadicadoController@imprimir');
 });
+Route::get('DocumentoController', 'DocumentoController@printFile');
+Route::any('WebClientPrintController', 'WebClientPrintController@processRequest');
+
 Route::get('aplexConfig/config/{key}', 'AplexConfigController@get')->name('config.config');
 Route::get('aplexConfig/getDataAgencyById/{id}', 'AplexConfigController@getDataAgencyById')->name('aplexConfig.getDataAgencyById');
 
@@ -495,8 +498,6 @@ Route::post('prealerta/{id_agencia}/validar_tracking', 'PrealertaController@vali
 Route::get('rastreo', 'RastreoController@index');
 Route::get('rastreo/getStatusReport/{data}/{idStatus?}', 'RastreoController@getStatusReport');
 
-Route::any('WebClientPrintController', 'WebClientPrintController@processRequest');
-Route::get('DocumentoController', 'DocumentoController@printFile');
 
 Route::get('formatNumber', 'AplexConfigController@formatNumber');
 

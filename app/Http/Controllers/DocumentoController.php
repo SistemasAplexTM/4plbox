@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+include_once(app_path() . '\WebClientPrint\WebClientPrint.php');
 use Neodynamic\SDK\Web\WebClientPrint;
 use Neodynamic\SDK\Web\Utils;
 use Neodynamic\SDK\Web\DefaultPrinter;
@@ -66,6 +67,67 @@ class DocumentoController extends Controller
         $this->middleware('permission:documento.removerGuiaAgrupada')->only('removerGuiaAgrupada');
     }
 
+    public function printFile(Request $request){
+      $consolidado = null;
+      $id_detalle = null;
+      $id_detail_consol = null;
+      if($request->input('consolidado')){
+        $consolidado = 'consolidado';
+      }
+      if($request->input('id_detail')){
+        $id_detalle = $request->input('id_detail');
+      }
+      if($request->input('id_detail_consol')){
+        $id_detail_consol = $request->input('id_detail_consol');
+      }
+      // OBTENER LA CONFIGURACION DE LA IMPRESORA
+        //   $dataPrint = $this->getConfig('print_' . 1);
+      $dataPrint = $this->getConfig('print_' . $request->input('agency_id'));
+      $prints = json_decode($dataPrint->value);
+      // VALIDAR SI ES UN LABEL O UN DOCUMENTO A IMPRIMIR
+      if($request->input('label')){
+        $this->pdfLabel($request->input('id'), $request->input('document'), $id_detalle, $consolidado, $id_detail_consol);
+        $print = $prints->prints->labels;
+      }else{
+        $this->pdf($request->input('id'), $request->input('document'), $id_detalle, false);
+        $print = $prints->prints->default;
+      }
+       if ($request->exists(WebClientPrint::CLIENT_PRINT_JOB)) {
+            $useDefaultPrinter = ($request->input('useDefaultPrinter') === 'checked');
+            // $printerName = urldecode($request->input('printerName'));
+            $printerName = urldecode($print);
+            $filetype = $request->input('filetype');
+            $fileName = uniqid() . '.' . $filetype;
+
+            $filePath = '';
+            $filePath = public_path().'/files/File.pdf';
+
+            if (!Utils::isNullOrEmptyString($filePath)) {
+                //Create a ClientPrintJob obj that will be processed at the client side by the WCPP
+                $cpj = new ClientPrintJob();
+
+                $myfile = new PrintFilePDF($filePath, $fileName, null);
+                $myfile->printRotation = PrintRotation::None;
+                //$myfile->pagesRange = '1,2,3,10-15';
+                //$myfile->printAnnotations = true;
+                //$myfile->printAsGrayscale = true;
+                //$myfile->printInReverseOrder = true;
+                $cpj->printFile = $myfile;
+
+				        if ($useDefaultPrinter || $printerName === 'null') {
+                    $cpj->clientPrinter = new DefaultPrinter();
+                } else {
+                    $cpj->clientPrinter = new InstalledPrinter($printerName);
+                }
+
+                //Send ClientPrintJob back to the client
+                return response($cpj->sendToClient())
+                            ->header('Content-Type', 'application/octet-stream');
+
+            }
+        }
+    }
+
     public function index()
     {
         $this->assignPermissionsJavascript('documento');
@@ -83,7 +145,17 @@ class DocumentoController extends Controller
           ])
           ->whereNotNull('a.num_warehouse')
           ->first();
-        return view('templates.documento.index', compact('status_list', 'pendientes'));
+        $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('DocumentoController@printFile'), Session::getId());
+        
+        // OBTENER LA CONFIGURACION DE LA IMPRESORA
+        $dataPrint = $this->getConfig('print_' . Auth::user()->agencia_id);
+        $prints = json_decode($dataPrint->value);
+        JavaScript::put([
+            'print_labels' => $prints->prints->labels,
+            'print_documents'  => $prints->prints->default,
+            'print_format'  => 'PDF',
+        ]);
+        return view('templates.documento.index', compact('status_list', 'pendientes', 'wcpScript'));
     }
 
     public function create($tipo_documento_id)
@@ -2079,67 +2151,6 @@ class DocumentoController extends Controller
       return $pdf->stream('labelsGroup.pdf');
     }
 
-    public function printFile(Request $request){
-      $consolidado = null;
-      $id_detalle = null;
-      $id_detail_consol = null;
-      if($request->input('consolidado')){
-        $consolidado = 'consolidado';
-      }
-      if($request->input('id_detail')){
-        $id_detalle = $request->input('id_detail');
-      }
-      if($request->input('id_detail_consol')){
-        $id_detail_consol = $request->input('id_detail_consol');
-      }
-      // OBTENER LA CONFIGURACION DE LA IMPRESORA
-      $dataPrint = $this->getConfig('print_' . 1);
-      // $dataPrint = $this->getConfig('print_' . Auth::user()->agencia_id);
-      $prints = json_decode($dataPrint->value);
-      // VALIDAR SI ES UN LABEL O UN DOCUMENTO A IMPRIMIR
-      if($request->input('label')){
-        $this->pdfLabel($request->input('id'), $request->input('document'), $id_detalle, $consolidado, $id_detail_consol);
-        $print = $prints->prints->labels;
-      }else{
-        $this->pdf($request->input('id'), $request->input('document'), $id_detalle, false);
-        $print = $prints->prints->default;
-      }
-       if ($request->exists(WebClientPrint::CLIENT_PRINT_JOB)) {
-            $useDefaultPrinter = ($request->input('useDefaultPrinter') === 'checked');
-            // $printerName = urldecode($request->input('printerName'));
-            $printerName = urldecode($print);
-            $filetype = $request->input('filetype');
-            $fileName = uniqid() . '.' . $filetype;
-
-            $filePath = '';
-            $filePath = public_path().'/files/File.pdf';
-
-            if (!Utils::isNullOrEmptyString($filePath)) {
-                //Create a ClientPrintJob obj that will be processed at the client side by the WCPP
-                $cpj = new ClientPrintJob();
-
-                $myfile = new PrintFilePDF($filePath, $fileName, null);
-                $myfile->printRotation = PrintRotation::None;
-                //$myfile->pagesRange = '1,2,3,10-15';
-                //$myfile->printAnnotations = true;
-                //$myfile->printAsGrayscale = true;
-                //$myfile->printInReverseOrder = true;
-                $cpj->printFile = $myfile;
-
-				        if ($useDefaultPrinter || $printerName === 'null') {
-                    $cpj->clientPrinter = new DefaultPrinter();
-                } else {
-                    $cpj->clientPrinter = new InstalledPrinter($printerName);
-                }
-
-                //Send ClientPrintJob back to the client
-                return response($cpj->sendToClient())
-                            ->header('Content-Type', 'application/octet-stream');
-
-            }
-        }
-    }
-
     public function buscarGuias($id, $num_guia, $num_bolsa, $pais_id, $range_value = false)
     {
 
@@ -3609,59 +3620,59 @@ class DocumentoController extends Controller
     }
 
 
-public function internalManifest($id)
-{
-    try {
-        $count_groups = 0;
-        $data = DB::table('consolidado_detalle AS a')
-        ->join('documento_detalle AS b', 'a.documento_detalle_id', 'b.id')
-        ->join('documento AS c', 'c.id', 'b.documento_id')
-        ->join('consignee AS d', 'c.consignee_id', 'd.id')
-        ->join('localizacion AS e', 'd.localizacion_id', 'e.id')
-        ->select(
-            'b.id',
-            'b.num_warehouse',
-            'd.nombre_full',
-            'e.nombre',
-            'd.id AS localizacion_id',
-            'd.direccion'
-          )
-        ->where([['a.deleted_at', null], ['a.consolidado_id', $id]])
-        ->get();
-        foreach ($data as $key => $value) {
-            $det = DB::table('documento_detalle AS a')
-            ->join('documento AS b', 'a.documento_id', 'b.id')
-            ->join('consignee AS c', 'b.consignee_id', 'c.id')
-            ->join('localizacion AS d', 'c.localizacion_id', 'd.id')
+    public function internalManifest($id)
+    {
+        try {
+            $count_groups = 0;
+            $data = DB::table('consolidado_detalle AS a')
+            ->join('documento_detalle AS b', 'a.documento_detalle_id', 'b.id')
+            ->join('documento AS c', 'c.id', 'b.documento_id')
+            ->join('consignee AS d', 'c.consignee_id', 'd.id')
+            ->join('localizacion AS e', 'd.localizacion_id', 'e.id')
             ->select(
-                'a.id',
-                'a.num_warehouse',
-                'c.nombre_full',
-                'c.direccion',
+                'b.id',
+                'b.num_warehouse',
+                'd.nombre_full',
+                'e.nombre',
                 'd.id AS localizacion_id',
-                'd.nombre'
+                'd.direccion'
             )
-            ->where([
-                ['a.deleted_at', null], 
-                ['a.mintic', null], 
-                ['a.agrupado', $value->id],
-                ['a.id', '<>', $value->id]
-                ])
+            ->where([['a.deleted_at', null], ['a.consolidado_id', $id]])
             ->get();
-            if (count($det) > 0) {
-                $count_groups += count($det) + 1;
+            foreach ($data as $key => $value) {
+                $det = DB::table('documento_detalle AS a')
+                ->join('documento AS b', 'a.documento_id', 'b.id')
+                ->join('consignee AS c', 'b.consignee_id', 'c.id')
+                ->join('localizacion AS d', 'c.localizacion_id', 'd.id')
+                ->select(
+                    'a.id',
+                    'a.num_warehouse',
+                    'c.nombre_full',
+                    'c.direccion',
+                    'd.id AS localizacion_id',
+                    'd.nombre'
+                )
+                ->where([
+                    ['a.deleted_at', null], 
+                    ['a.mintic', null], 
+                    ['a.agrupado', $value->id],
+                    ['a.id', '<>', $value->id]
+                    ])
+                ->get();
+                if (count($det) > 0) {
+                    $count_groups += count($det) + 1;
+                }
+                $data[$key]->groups = $det;
             }
-            $data[$key]->groups = $det;
+            // return \Response::json($data);
+            Sheet::macro('styleCells', function (Sheet $sheet, string $cellRange, array $style) {
+                $sheet->getDelegate()->getStyle($cellRange)->applyFromArray($style);
+            });
+            return Excel::download(new InternalManifest('exports.excelInternalManifest', array('datos' => $data, 'count_groups' => $count_groups)),
+            'Manifiesto Interno.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+        } catch (Exception $e) {
+            return array('error' => $e, 'code' => 500);
         }
-        // return \Response::json($data);
-        Sheet::macro('styleCells', function (Sheet $sheet, string $cellRange, array $style) {
-              $sheet->getDelegate()->getStyle($cellRange)->applyFromArray($style);
-          });
-        return Excel::download(new InternalManifest('exports.excelInternalManifest', array('datos' => $data, 'count_groups' => $count_groups)),
-         'Manifiesto Interno.xlsx', \Maatwebsite\Excel\Excel::XLSX);
-    } catch (Exception $e) {
-        return array('error' => $e, 'code' => 500);
-      }
-}
+    }
 
 }

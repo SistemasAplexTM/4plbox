@@ -61,6 +61,7 @@ class WebClientPrintController extends Controller
                 $currentAbsoluteURL = substr($request->fullUrl(), 0, strrpos($request->fullUrl(), '?'));
 
                 // Return WebClientPrint's javascript code
+                
                 return response(WebClientPrint::generateScript($currentAbsoluteURL, $query))
                         ->header('Content-Type', 'text/javascript');
 

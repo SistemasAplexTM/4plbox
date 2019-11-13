@@ -147,7 +147,7 @@ function datatableDocument(t, tipo_doc_id, filtro) {
       data: 'peso',
       name: 'b.peso',
       "render": function (data, type, full, meta) {
-        return '<div style="float: left;">' + ((full.peso != null) ? full.peso : 0) + ' lb </div> <div style="float: right;">' + ((full.piezas != null) ? full.piezas  : 0) + '</div>';
+        return '<div style="float: left;">' + ((full.peso != null) ? full.peso : 0) + ' lb </div> <div style="float: right;">' + ((full.piezas != null) ? full.piezas : 0) + '</div>';
       },
       searchable: false,
       sortable: false,
@@ -259,17 +259,14 @@ function actionsButtons(data, type, full, meta) {
       var proforma = '';
       if (full.liquidado == 1) {
         href_print_view_g = "<li><a href='impresion-documento/" + full.id + "/guia' target='_blank'> <spam class='fal fa-print'></spam> Invoice</a></li><li role='separator' class='divider'></li>";
-        href_print_guia = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype=' + format + '&id=' + full.id + '&agency_id=' + agency_id + '&document=guia\')"> <spam class="fal fa-print"></spam> Invoice</a></li>';
-        var name = "Nitro PDF Creator (Pro 10)";
-        var format = "PDF";
+        print_guia_wcp = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + print_documents + '&filetype=' + print_format + '&id=' + full.id + '&agency_id=' + agency_id + '&document=guia\')"> <spam class="fal fa-print"></spam> Invoice WCP</a></li>';
         href_print_label_guia = '<li><a href="impresion-documento-label/' + full.id + '/guia" target="_blank"> <spam class="fal fa-print"></spam> Label Invoice ' + label + '</a></li>';
         proforma = '<li><a href="impresion-documento/' + full.id + '/invoice_guia" target="_blank"> <spam class="fal fa-print"></spam> Factura Proforma</a></li>';
       }
       href_print_view_w = "<li><a href='impresion-documento/" + full.id + "/warehouse' target='_blank'> <spam class='fal fa-print'></spam> Warehouse</a></li>";
-      href_print_wrh = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + name + '&filetype=' + format + '&id=' + full.id + '&agency_id=' + agency_id + '&document=warehouse\')"> <spam class="fal fa-print"></spam> Warehouse</a></li>';
+      print_wrh_wcp = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + print_documents + '&filetype=' + print_format + '&id=' + full.id + '&agency_id=' + agency_id + '&document=warehouse\')"> <spam class="fal fa-print"></spam> Warehouse</a></li>';
 
-      var name = "Nitro PDF Creator (Pro 10)";
-      var format = "PDF";
+      print_label_wcp = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + print_labels + '&filetype=' + print_format + '&id=' + full.id + '&agency_id=' + agency_id + '&document=warehouse&label=true\')"> <spam class="fal fa-print"></spam> Label WCP</a></li>';
       href_print_label_wrh = '<li><a href="impresion-documento-label/' + full.id + '/warehouse" target="_blank"> <spam class="fal fa-print"></spam> Labels Warehouse ' + label + '</a></li>';
       var btn_tags = ' <a onclick="openModalTagsDocument(' + full.id + ', \'' + codigo + '\', \'' + full.cons_nomfull + '\', \'' + full.email_cons + '\', \'' + full.cantidad + '\', \'' + full.liquidado + '\', \'' + full.piezas + '\', \'' + full.estatus_color + '\', \'' + full.detalle_id + '\', \'' + full.consignee_id + '\')" data-toggle="modal" data-target="#modalTagDocument" class="" style="font-size: 18px;"><i class="fal fa-arrow-square-right fa-lg" data-toggle="tooltip" title="Tareas"></i></a>';
       var btns = "<div class='btn-group'>" + "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + "<i class='fal fa-print fa-lg'></i> <span class='caret'></span>" + "</button>" + "<ul class='dropdown-menu dropdown-menu-right pull-right'>" +
@@ -279,6 +276,8 @@ function actionsButtons(data, type, full, meta) {
         href_print_label_guia + " " +
         proforma + " " +
         '<li role="separator" class="divider"></li>' +
+        print_guia_wcp + " " +
+        print_label_wcp + " " +
         "<li><a href='#' onclick=\"sendMail(" + full.id + ")\"> <spam class='fal fa-envelope'></spam> Enviar Mail</a></li>" + "</ul></div>";
 
       return btn_edit + btns + ' ' + btn_tags + btn_delete;
