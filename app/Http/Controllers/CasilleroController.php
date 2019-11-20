@@ -125,7 +125,6 @@ class CasilleroController extends Controller
                     $mc = new \NZTim\Mailchimp\Mailchimp($list_id['mc_key']);
                     $list_id = $list_id['id_list'];
                     $listId = $request->listId;
-                   
                     if (!$mc->check($list_id, $request->correo)) {
                         $mc->subscribe(
                             $list_id,
@@ -136,7 +135,7 @@ class CasilleroController extends Controller
                     }
                 }
             }
-            Mail::to($request->correo)->send(new \App\Mail\CasilleroEmail($cuerpo_correo, $from_self, $asunto_correo));
+            //Mail::to($request->correo)->send(new \App\Mail\CasilleroEmail($cuerpo_correo, $from_self, $asunto_correo));
 
             DB::commit();
         } catch (Exception $e) {

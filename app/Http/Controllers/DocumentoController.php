@@ -150,9 +150,13 @@ class DocumentoController extends Controller
         // OBTENER LA CONFIGURACION DE LA IMPRESORA
         $dataPrint = $this->getConfig('print_' . Auth::user()->agencia_id);
         $prints = json_decode($dataPrint->value);
+        // echo '<pre>';
+        // print_r($prints);
+        // echo '<pre>';
+        // exit();
         JavaScript::put([
-            'print_labels' => $prints->prints->labels,
-            'print_documents'  => $prints->prints->default,
+            'print_labels' => $prints[0]->label,
+            'print_documents'  => $prints[0]->default,
             'print_format'  => 'PDF',
         ]);
         return view('templates.documento.index', compact('status_list', 'pendientes', 'wcpScript'));

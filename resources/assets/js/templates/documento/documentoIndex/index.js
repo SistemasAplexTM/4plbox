@@ -257,6 +257,7 @@ function actionsButtons(data, type, full, meta) {
       var href_print_view_g = '';
       var href_print_view_w = '';
       var proforma = '';
+      var print_guia_wcp = '';
       if (full.liquidado == 1) {
         href_print_view_g = "<li><a href='impresion-documento/" + full.id + "/guia' target='_blank'> <spam class='fal fa-print'></spam> Invoice</a></li><li role='separator' class='divider'></li>";
         print_guia_wcp = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + print_documents + '&filetype=' + print_format + '&id=' + full.id + '&agency_id=' + agency_id + '&document=guia\')"> <spam class="fal fa-print"></spam> Invoice WCP</a></li>';
@@ -264,7 +265,7 @@ function actionsButtons(data, type, full, meta) {
         proforma = '<li><a href="impresion-documento/' + full.id + '/invoice_guia" target="_blank"> <spam class="fal fa-print"></spam> Factura Proforma</a></li>';
       }
       href_print_view_w = "<li><a href='impresion-documento/" + full.id + "/warehouse' target='_blank'> <spam class='fal fa-print'></spam> Warehouse</a></li>";
-      print_wrh_wcp = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + print_documents + '&filetype=' + print_format + '&id=' + full.id + '&agency_id=' + agency_id + '&document=warehouse\')"> <spam class="fal fa-print"></spam> Warehouse</a></li>';
+      print_wrh_wcp = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + print_documents + '&filetype=' + print_format + '&id=' + full.id + '&agency_id=' + agency_id + '&document=warehouse\')"> <spam class="fal fa-print"></spam> Warehouse WCP</a></li>';
 
       print_label_wcp = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + print_labels + '&filetype=' + print_format + '&id=' + full.id + '&agency_id=' + agency_id + '&document=warehouse&label=true\')"> <spam class="fal fa-print"></spam> Label WCP</a></li>';
       href_print_label_wrh = '<li><a href="impresion-documento-label/' + full.id + '/warehouse" target="_blank"> <spam class="fal fa-print"></spam> Labels Warehouse ' + label + '</a></li>';
@@ -278,6 +279,7 @@ function actionsButtons(data, type, full, meta) {
         '<li role="separator" class="divider"></li>' +
         print_guia_wcp + " " +
         print_label_wcp + " " +
+        print_wrh_wcp + " " +
         "<li><a href='#' onclick=\"sendMail(" + full.id + ")\"> <spam class='fal fa-envelope'></spam> Enviar Mail</a></li>" + "</ul></div>";
 
       return btn_edit + btns + ' ' + btn_tags + btn_delete;

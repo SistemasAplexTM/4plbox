@@ -131,6 +131,7 @@ var objVue = new Vue({
         resetForm: function () {
             this.tracking = null;
             this.contenido = null;
+            this.instruccion = null;
             this.errors.clear();
         },
         create: function () {

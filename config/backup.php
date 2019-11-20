@@ -44,20 +44,30 @@ return [
              * The content of the database dump may be customized for each connection
              * by adding a 'dump' key to the connection settings in config/database.php.
              * E.g.*/
-            //   'mysql' => [
-            //       'driver' => 'mysql',
-            //        'dump' => ['dump_binary_path' => 'D:\\laragon\\mysql\\mysql-5.7.24-winx64\\bin'
-            //             // 'excludeTables' => [
-            //             //      'table_to_exclude_from_backup',
-            //             //      'another_table_to_exclude'
-            //             //  ]
-            //         ]
-            //   ],
+              'mysql' => [
+                  'driver' => 'mysql',
+                //    'dump' => ['dump_binary_path' => 'D:\\laragon\\mysql\\mysql-5.7.24-winx64\\bin'
+                //         // 'excludeTables' => [
+                //         //      'table_to_exclude_from_backup',
+                //         //      'another_table_to_exclude'
+                //         //  ]
+                //     ]
+              ],
+              'mysql2' => [
+                  'driver' => 'mysql',
+                //    'dump' => ['dump_binary_path' => 'D:\\laragon\\mysql\\mysql-5.7.24-winx64\\bin'
+                //         // 'excludeTables' => [
+                //         //      'table_to_exclude_from_backup',
+                //         //      'another_table_to_exclude'
+                //         //  ]
+                //     ]
+              ],
              /*
              * For a complete list of available customization options, see https://github.com/spatie/db-dumper
              */
             'databases' => [
                 'mysql',
+                'mysql2',
             ],
         ],
 

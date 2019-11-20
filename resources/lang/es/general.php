@@ -81,7 +81,7 @@ return [
     'locker' => 'Casillero',
     'return' => 'Volver',
     'canel' => 'Cancelar',
-    'save' => 'Salvar',
+    'save' => 'Guardar',
     'update' => 'Actualizar',
     'pobox_prefix' => 'Prefijo PoBox',
     'whatsapp' => 'WhatsApp',

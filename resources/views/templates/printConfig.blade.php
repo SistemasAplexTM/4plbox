@@ -23,13 +23,11 @@
   <div class="col-lg-12">
     <div class="ibox float-e-margins">
       <div class="ibox-title">
-        <h5>@lang('layouts.print_config')</h5>
+        <h5>@lang('layouts.print_config') <small>(En este módulo, usted podrá configurar las impresoras para Labels y
+            para documentos, por favor siga las
+            instrucciones.)</small></h5>
       </div>
       <div class="ibox-content">
-        <p>
-          En este módulo, usted podrá configurar las impresoras para Labels y para documentos, por favor siga las
-          instrucciones.
-        </p>
         <div id="msgInProgress">
           <div id="mySpinner" style="width:32px;height:32px"></div>
           <br />
@@ -61,27 +59,23 @@
             </div>
           </div>
         </div>
+
+
         <div id="detected" style="display:none;">
           <div class="row">
-            <div class="col-lg-12">
-              <div class="col-md-3">
+            <div class="col-lg-6">
+              <div class="col-md-12">
                 <button type="button" onclick="javascript:jsWebClientPrint.getPrintersInfo();"
                   class="ladda-button btn btn-success load_printer" data-style="expand-right">Cargar
                   impresoras...</button>
               </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-12" style="margin-top: 10px;">
-              <div class="col-lg-6">
+              <div class="col-lg-12" style="margin-top: 10px;">
                 <div class="form-group">
                   <div>
                     <label for="installedPrinterName">@lang('general.print_label'):</label>
                     <select name="installedPrinterName" id="installedPrinterName" class="form-control"></select>
                   </div>
                 </div>
-              </div>
-              <div class="col-lg-6">
                 <div class="form-group">
                   <div>
                     <label for="installedPrinterName1">@lang('general.print_default'):</label>
@@ -89,18 +83,38 @@
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="col-lg-6">
+              <div class="col-lg-12">
                 <a class="ladda-button btn btn-primary" @click="savePrint()">
                   <i class="fal fa-save"></i> @lang('general.save')
                 </a>
               </div>
             </div>
+            <div class="col-lg-6">
+              <div class="table-responsive">
+                <table id="tbl-mintic" class="table table-striped table-hover" style="width: 100%;">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Impresora Por Defecto</th>
+                      <th>Impresora Labels</th>
+                      <th>@lang('general.actions')</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(item, index) in printers">
+                      <td>@{{ index + 1 }}</td>
+                      <td>@{{ item.label }}</td>
+                      <td>@{{ item.default }}</td>
+                      <td><a @click="deletePrint(index)" class="delete_btn" data-toggle="tooltip" data-placement="top"
+                          title="" data-original-title="Eliminar"><i class="fal fa-trash-alt fa-lg"></i></a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
   </div>

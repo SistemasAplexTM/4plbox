@@ -17,6 +17,8 @@
           v-model="ruleForm.corporativo"
           active-text="Corporativo"
           inactive-text="Personal"
+          active-icon-class="el-icon-office-building"
+          inactive-icon-class="el-icon-user"
         ></el-switch>
       </el-form-item>
 
@@ -49,7 +51,10 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item prop="city">
-            <label class="label-class">Ciudad</label>
+            <label class="label-class">
+              Ciudad
+              <small>(seleccione una ciudad de la lista)</small>
+            </label>
             <city-component @get="ruleForm.city = $event.id" :reset="reset_city" autocomplete="off"></city-component>
           </el-form-item>
         </el-col>

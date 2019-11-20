@@ -240,8 +240,14 @@ class TipoDocumentoController extends Controller
       $where = array(['a.deleted_at', null]);
 
       if(!Auth::user()->isRole('admin')){
-        // $where[] = ['a.id', '<>', 3];
+        // $where[] = ['a.id', '<>', 4];
       }
+      $roles = auth()->user()->roles;
+      $credential = 0;
+      foreach ($roles as $key => $val) {
+          $credential = $val->id;
+      }
+      $where[] = ['a.credenciales', 'LIKE', '%"id":"'.$credential.'"%'];
         $data = DB::table('tipo_documento as a')
             ->leftjoin('plantillas_correo as b', 'a.email_plantilla_id', 'b.id')
             ->select('a.*', 'b.nombre as name_plantilla', 'b.descripcion_plantilla')

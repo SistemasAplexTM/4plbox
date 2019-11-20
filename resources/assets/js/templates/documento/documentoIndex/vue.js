@@ -179,8 +179,8 @@ var objVue = new Vue({
         },
         printDocument: function () {
             if ($('#documentoIndex').data('id_print') != '' && $('#documentoIndex').data('doc_print') != '') {
-                var name = "Nitro PDF Creator (Pro 10)";
-                var format = "PDF";
+                // var name = "Nitro PDF Creator (Pro 10)";
+                // var format = "PDF";
                 javascript: jsWebClientPrint.print("useDefaultPrinter=false&printerName=" + print_labels + "&filetype=" + print_format + "&id=" + $('#documentoIndex').data('id_print') + "&agency_id=" + agency_id + "&document=" + $('#documentoIndex').data('doc_print') + "&label=true")
 
                 setTimeout(function () {

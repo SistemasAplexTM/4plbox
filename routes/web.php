@@ -278,6 +278,8 @@ Route::group(['middleware' => 'auth'], function () {
 
   /*--- MODULO PRINT CONFIG ---*/
   Route::get('printConfig', 'PrintConfigController@index')->name('printConfig');
+  Route::get('printConfig/getPrintersSaved', 'PrintConfigController@getPrintersSaved');
+  Route::get('printConfig/deletePrinter/{id}', 'PrintConfigController@deletePrinter');
   Route::post('printConfig', 'PrintConfigController@save');
 
   /*--- MODULO TIPO DOCUMENTOS ---*/
