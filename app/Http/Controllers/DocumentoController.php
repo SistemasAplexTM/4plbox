@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-include_once(app_path() . '\WebClientPrint\WebClientPrint.php');
+// include_once(app_path() . '\WebClientPrint\WebClientPrint.php');
 use Neodynamic\SDK\Web\WebClientPrint;
 use Neodynamic\SDK\Web\Utils;
 use Neodynamic\SDK\Web\DefaultPrinter;
@@ -145,21 +145,23 @@ class DocumentoController extends Controller
           ])
           ->whereNotNull('a.num_warehouse')
           ->first();
-        $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('DocumentoController@printFile'), Session::getId());
+        // $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('DocumentoController@printFile'), Session::getId());
         
         // OBTENER LA CONFIGURACION DE LA IMPRESORA
         $dataPrint = $this->getConfig('print_' . Auth::user()->agencia_id);
-        $prints = json_decode($dataPrint->value);
-        // echo '<pre>';
-        // print_r($prints);
-        // echo '<pre>';
-        // exit();
-        JavaScript::put([
-            'print_labels' => $prints[0]->label,
-            'print_documents'  => $prints[0]->default,
-            'print_format'  => 'PDF',
-        ]);
-        return view('templates.documento.index', compact('status_list', 'pendientes', 'wcpScript'));
+        if ($dataPrint) {
+            $prints = json_decode($dataPrint->value);
+            // echo '<pre>';
+            // print_r($prints);
+            // echo '<pre>';
+            // exit();
+            JavaScript::put([
+                'print_labels' => is_array($prints) ? $prints[0]->label : '',
+                'print_documents'  => is_array($prints) ? $prints[0]->default : '',
+                'print_format'  => 'PDF',
+                ]);
+        }
+        return view('templates.documento.index', compact('status_list', 'pendientes'));
     }
 
     public function create($tipo_documento_id)
@@ -854,9 +856,9 @@ class DocumentoController extends Controller
       $where = [['b.deleted_at', null],
         ['e.deleted_at', null],
         ['b.tipo_documento_id', $request->id_tipo_doc]];
-        // if(!Auth::user()->isRole('admin')){
+        if(!Auth::user()->isRole('admin')){
             $where[] = ['b.agencia_id', Auth::user()->agencia_id];
-        // }
+        }
         /* GRILLA */
         if ($request->id_tipo_doc == 3 || $request->id_tipo_doc == 4) {
             $sql = $this->getAllConsolidated($where);
@@ -870,9 +872,9 @@ class DocumentoController extends Controller
             }else{
               $where = [['a.deleted_at', null],
               ['b.deleted_at', null], ['b.tipo_documento_id', $request->id_tipo_doc]];
-              // if(!Auth::user()->isRole('admin')){
+              if(!Auth::user()->isRole('admin')){
                 $where[] = ['b.agencia_id', Auth::user()->agencia_id];
-              // }
+               }
               if($request->type == 2){
                 $where[] = ['a.num_warehouse', '<>', NULL ];
                 if($request->filter){

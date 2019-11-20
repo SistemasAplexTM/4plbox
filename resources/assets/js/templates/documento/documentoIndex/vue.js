@@ -60,7 +60,7 @@ var objVue = new Vue({
         idDocument: null
     },
     methods: {
-        open(id) {
+        open(id, consecutive) {
             var data = {
                 component: 'report-agency-component',
                 title: 'Consolidado Agencia',
@@ -72,7 +72,8 @@ var objVue = new Vue({
                     title: 'Consolidado Agencia',
                     icon: 'fal fa-box-check',
                     edit: true,
-                    id: id
+                    id: id,
+                    consecutive: consecutive
                 }
             }
             bus.$emit('open', data)
@@ -181,18 +182,18 @@ var objVue = new Vue({
             if ($('#documentoIndex').data('id_print') != '' && $('#documentoIndex').data('doc_print') != '') {
                 // var name = "Nitro PDF Creator (Pro 10)";
                 // var format = "PDF";
-                javascript: jsWebClientPrint.print("useDefaultPrinter=false&printerName=" + print_labels + "&filetype=" + print_format + "&id=" + $('#documentoIndex').data('id_print') + "&agency_id=" + agency_id + "&document=" + $('#documentoIndex').data('doc_print') + "&label=true")
+                // javascript: jsWebClientPrint.print("useDefaultPrinter=false&printerName=" + print_labels + "&filetype=" + print_format + "&id=" + $('#documentoIndex').data('id_print') + "&agency_id=" + agency_id + "&document=" + $('#documentoIndex').data('doc_print') + "&label=true")
 
                 setTimeout(function () {
-                    javascript: jsWebClientPrint.print("useDefaultPrinter=false&printerName=" + print_documents + "&filetype=" + print_format + "&id=" + $('#documentoIndex').data('id_print') + "&agency_id=" + agency_id + "&document=" + $('#documentoIndex').data('doc_print'))
-                    // window.open('impresion-documento-label/' + $('#documentoIndex').data('id_print') + '/' + $('#documentoIndex').data('doc_print'), '_blank');
-                }, 5000);
+                    // javascript: jsWebClientPrint.print("useDefaultPrinter=false&printerName=" + print_documents + "&filetype=" + print_format + "&id=" + $('#documentoIndex').data('id_print') + "&agency_id=" + agency_id + "&document=" + $('#documentoIndex').data('doc_print'))
+                    window.open('impresion-documento-label/' + $('#documentoIndex').data('id_print') + '/' + $('#documentoIndex').data('doc_print'), '_blank');
+                }, 1000);
                 if ($('#documentoIndex').data('doc_print') == 'guia') {
                     setTimeout(function () {
                         window.open('impresion-documento/' + $('#documentoIndex').data('id_print') + '/invoice_guia', '_blank');
                     }, 1500);
                 }
-                // window.open('impresion-documento/' + $('#documentoIndex').data('id_print') + '/' + $('#documentoIndex').data('doc_print'), '_blank');
+                window.open('impresion-documento/' + $('#documentoIndex').data('id_print') + '/' + $('#documentoIndex').data('doc_print'), '_blank');
             }
         },
         sendMail: function (id) {

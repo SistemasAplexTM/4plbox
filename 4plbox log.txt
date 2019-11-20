@@ -211,17 +211,17 @@ y borrar el consignee y user si no se esta usando (de forma permanente)
 
 - Pasos para config impresora: 
   Elegir sistema operativo y explicar que se debe descargar e instalar en el pc
-  Seleccionar impresora con el combo que sale de las impresoras instaladas (impresora para documentos - impresora para label)
+ ***** Seleccionar impresora con el combo que sale de las impresoras instaladas (impresora para documentos - impresora para label)
 
 - validar antes de imprimir si tiene configurada la impresora o si la imresora configurada existe.
-- ocultar consolidado agencia para la principal
-- poner consecutivo en consolidado agencia
-- y poner entre parentesis (editando..) para saber que se esta editando en la modal que sale a la derecha
+-****** ocultar consolidado agencia para la principal
+-****** poner consecutivo en consolidado agencia
+- ***** *y poner entre parentesis (editando..) para saber que se esta editando en la modal que sale a la derecha
 
 - SELECCIONE UNA CIUDAD DE LA LISTA
 - boton guardar configuracion de impresora
 - mirar que error manda cuando no encuentra la impresora
-- cargar impresoras automaticamente
-- reducir el tamaño de los selects
+- *******cargar impresoras automaticamente
+- *******reducir el tamaño de los selects
 
 - colocar pais en las tarifas

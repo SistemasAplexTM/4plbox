@@ -48,6 +48,7 @@ class ReportController extends Controller
         )
       )
       ->whereRaw("a.id NOT IN ( ( SELECT b.documento_detalle_id FROM consolidado_detalle AS b ) )")
+      ->where('b.agencia_id', Auth::user()->agencia_id)
       ->get();
   }
 

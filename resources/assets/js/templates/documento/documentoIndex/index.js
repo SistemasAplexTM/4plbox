@@ -205,7 +205,7 @@ function actionsButtons(data, type, full, meta) {
   var btn_delete = '';
   var btn_status = '';
   if (full.tipo_documento_id == 4) {
-    var btn_edit = '<a href="#" onclick="openMenu(' + full.id + ')" class="edit_btn" title="Editar" data-toggle="tooltip"><i class="fal fa-pencil fa-lg"></i></a>';
+    var btn_edit = '<a href="#" onclick="openMenu(' + full.id + ', \'' + full.codigo + '\')" class="edit_btn" title="Editar" data-toggle="tooltip"><i class="fal fa-pencil fa-lg"></i></a>';
     var btn_print = '<a href="/reportDispatch/' + full.id + '/print" target="_blank" class="print_btn" title="Imprimir" data-toggle="tooltip"><i class="fal fa-print fa-lg"></i></a>';
     return btn_edit + btn_print;
   } else {
@@ -277,9 +277,9 @@ function actionsButtons(data, type, full, meta) {
         href_print_label_guia + " " +
         proforma + " " +
         '<li role="separator" class="divider"></li>' +
-        print_guia_wcp + " " +
-        print_label_wcp + " " +
-        print_wrh_wcp + " " +
+        // print_guia_wcp + " " +
+        // print_label_wcp + " " +
+        // print_wrh_wcp + " " +
         "<li><a href='#' onclick=\"sendMail(" + full.id + ")\"> <spam class='fal fa-envelope'></spam> Enviar Mail</a></li>" + "</ul></div>";
 
       return btn_edit + btns + ' ' + btn_tags + btn_delete;
@@ -383,6 +383,6 @@ function closeDocument(id) {
   objVue.closeDocument(id);
 }
 
-function openMenu(id) {
-  objVue.open(id);
+function openMenu(id, consecutive) {
+  objVue.open(id, consecutive);
 }
