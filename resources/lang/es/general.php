@@ -442,6 +442,6 @@ return [
     'i_certify2' => 'y me hago directamente responsable, ante las autoridades nacionales y extranjeras por el contenido, valor declarado y este envío cumple los parámetros aduaneros del país de destino',
     'i_certify3' => 'Adicionalmente certifico que el envío no contiene dinero, valores negociables, ni objetos de prohibido transporte, según las normas internacionales y la legislación aplicable en el país de destino u origen, Por lo tanto, acuerdo indemnizar y absolver, por cualquier reclamo, obligación y/o costo debido al incumplimineto de cualquier ley o regulación aplicable en el país de origen o destino, de la mercancía amparada en este documento.',
 
-
+    'country' => 'Pais',
 
 ];

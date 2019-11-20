@@ -216,7 +216,7 @@ y borrar el consignee y user si no se esta usando (de forma permanente)
 - validar antes de imprimir si tiene configurada la impresora o si la imresora configurada existe.
 -****** ocultar consolidado agencia para la principal
 -****** poner consecutivo en consolidado agencia
-- ***** *y poner entre parentesis (editando..) para saber que se esta editando en la modal que sale a la derecha
+- ***** *y poner (editando..) para saber que se esta editando en la modal que sale a la derecha
 
 - SELECCIONE UNA CIUDAD DE LA LISTA
 - boton guardar configuracion de impresora
@@ -224,4 +224,4 @@ y borrar el consignee y user si no se esta usando (de forma permanente)
 - *******cargar impresoras automaticamente
 - *******reducir el tamaño de los selects
 
-- colocar pais en las tarifas
+- colocar pais en las tarifas (servicios)

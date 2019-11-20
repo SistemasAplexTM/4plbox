@@ -22,5 +22,6 @@ class Servicios extends Model
         'impuesto',
         'tipo_embarque_id',
         'posicion_arancel_id',
+        'pais_id',
     ];
 }

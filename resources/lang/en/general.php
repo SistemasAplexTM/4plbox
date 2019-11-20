@@ -440,7 +440,7 @@ return [
     'i_certify3'=>'Additionally, I certify that the shipment does not contain money, negotiable securities, or objects of prohibited transportation, according to international norms and applicable legislation in the country of destination or origin, Therefore, I agree to indemnify and absolve, for any claim, obligation and / or cost due to the breach of any law or regulation applicable in the country of origin or destination, of the merchandise covered in this document.',
 
 
-
+    'country' => 'Country',
 
 
 

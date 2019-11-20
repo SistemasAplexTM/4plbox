@@ -170,7 +170,8 @@ class ServiciosController extends Controller
         }
         $data = Servicios::join('maestra_multiple as b', 'servicios.tipo_embarque_id', 'b.id')
             ->leftJoin('posicion_arancelaria as c', 'servicios.posicion_arancel_id', 'c.id')
-            ->select('servicios.*', 'b.nombre as tipo_embarque', 'c.id as pa_id', 'c.pa')
+            ->leftJoin('pais as p', 'servicios.pais_id', 'p.id')
+            ->select('servicios.*', 'p.descripcion AS pais', 'b.nombre as tipo_embarque', 'c.id as pa_id', 'c.pa')
             ->where($where)
             ->get();
         return \DataTables::of($data)->make(true);
@@ -180,7 +181,8 @@ class ServiciosController extends Controller
     {
         $data = Servicios::join('agencia_detalle as b', 'servicios.id', '=', 'b.servicios_id')
             ->leftJoin('posicion_arancelaria as c', 'servicios.posicion_arancel_id', 'c.id')
-            ->select('servicios.id', 'servicios.tipo_embarque_id', 'servicios.nombre', 'servicios.tarifa', 'servicios.cobro_opcional', 'servicios.cobro_peso_volumen', 'servicios.peso_minimo', 'servicios.seguro', 'servicios.impuesto', 'b.tarifa_principal', 'b.tarifa_agencia', 'b.tarifa_minima', 'b.seguro_principal', 'b.seguro as seguro_agencia', 'c.id as pa_id', 'c.pa')
+            ->leftJoin('pais as p', 'servicios.pais_id', 'p.id')
+            ->select('servicios.id', 'p.descripcion AS pais', 'servicios.tipo_embarque_id', 'servicios.nombre', 'servicios.tarifa', 'servicios.cobro_opcional', 'servicios.cobro_peso_volumen', 'servicios.peso_minimo', 'servicios.seguro', 'servicios.impuesto', 'b.tarifa_principal', 'b.tarifa_agencia', 'b.tarifa_minima', 'b.seguro_principal', 'b.seguro as seguro_agencia', 'c.id as pa_id', 'c.pa')
             ->where([
                 ['servicios.deleted_at', null],
                 ['b.deleted_at', null],
