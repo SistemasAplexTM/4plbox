@@ -65,9 +65,9 @@
           <div class="row">
             <div class="col-lg-6">
               <div class="col-md-12">
-                <button type="button" onclick="javascript:jsWebClientPrint.getPrintersInfo();"
-                  class="ladda-button btn btn-success load_printer" data-style="expand-right">Cargar
-                  impresoras...</button>
+                <el-button type="primary" size="medium" @click="getPrints()" :loading="loading_prints">Cargar
+                  impresoras...
+                </el-button>
               </div>
               <div class="col-lg-12" style="margin-top: 10px;">
                 <div class="form-group">
@@ -84,9 +84,10 @@
                 </div>
               </div>
               <div class="col-lg-12">
-                <a class="ladda-button btn btn-primary" @click="savePrint()">
-                  <i class="fal fa-save"></i> @lang('general.save')
-                </a>
+                <el-button type="success" size="medium" @click="savePrint()" :loading="loading"><i
+                    class="fal fa-save"></i>
+                  @lang('general.save')
+                </el-button>
               </div>
             </div>
             <div class="col-lg-6">

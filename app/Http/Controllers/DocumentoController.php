@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-// include_once(app_path() . '\WebClientPrint\WebClientPrint.php');
+include_once(app_path() . '\WebClientPrint\WebClientPrint.php');
 use Neodynamic\SDK\Web\WebClientPrint;
 use Neodynamic\SDK\Web\Utils;
 use Neodynamic\SDK\Web\DefaultPrinter;
@@ -114,7 +114,7 @@ class DocumentoController extends Controller
                 //$myfile->printInReverseOrder = true;
                 $cpj->printFile = $myfile;
 
-				        if ($useDefaultPrinter || $printerName === 'null') {
+				if ($useDefaultPrinter || $printerName === 'null') {
                     $cpj->clientPrinter = new DefaultPrinter();
                 } else {
                     $cpj->clientPrinter = new InstalledPrinter($printerName);
@@ -145,21 +145,22 @@ class DocumentoController extends Controller
           ])
           ->whereNotNull('a.num_warehouse')
           ->first();
-        // $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('DocumentoController@printFile'), Session::getId());
-        
+
         // OBTENER LA CONFIGURACION DE LA IMPRESORA
         $dataPrint = $this->getConfig('print_' . Auth::user()->agencia_id);
         if ($dataPrint) {
             $prints = json_decode($dataPrint->value);
-            // echo '<pre>';
-            // print_r($prints);
-            // echo '<pre>';
-            // exit();
             JavaScript::put([
-                'print_labels' => is_array($prints) ? $prints[0]->label : '',
-                'print_documents'  => is_array($prints) ? $prints[0]->default : '',
+                'print_labels' => ((is_array($prints) and !empty($prints)) ? $prints[0]->label : ''),
+                'print_documents'  => ((is_array($prints) and !empty($prints)) ? $prints[0]->default : ''),
                 'print_format'  => 'PDF',
-                ]);
+            ]);
+        }else{
+            JavaScript::put([
+                'print_labels' => '',
+                'print_documents'  => '',
+                'print_format'  => 'PDF',
+            ]);
         }
         return view('templates.documento.index', compact('status_list', 'pendientes'));
     }

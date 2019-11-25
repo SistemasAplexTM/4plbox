@@ -108,6 +108,17 @@
     </el-row>
     <el-row :gutter="24">
       <el-col :span="8">
+        <label for="localizacion_id" class="control-label gcore-label-top">Ciudad:<samp id="require">*</samp></label>
+      </el-col>
+      <el-col :span="16">
+        <city-component @get="setCity($event)" :selected="city_selected_s" clearable
+        @blur="validateFields('localizacion_id')"
+        :class="{ 'error_field': errors_data.localizacion_id }"></city-component>
+        <small class="help-block" v-show="errors_data.localizacion_id">Campo obligatorio</small>
+      </el-col>
+    </el-row>
+    <el-row :gutter="24">
+      <el-col :span="8">
         <label for="telefono" class="control-label gcore-label-top">Teléfono:</label>
       </el-col>
       <el-col :span="16">
@@ -138,17 +149,7 @@
         <el-input-tag placeholder="Ingrese correos" v-model="form.emails_cc" size="medium"></el-input-tag>
       </el-col>
     </el-row>
-    <el-row :gutter="24">
-      <el-col :span="8">
-        <label for="localizacion_id" class="control-label gcore-label-top">Ciudad:<samp id="require">*</samp></label>
-      </el-col>
-      <el-col :span="16">
-        <city-component @get="setCity($event)" :selected="city_selected_s" clearable
-        @blur="validateFields('localizacion_id')"
-        :class="{ 'error_field': errors_data.localizacion_id }"></city-component>
-        <small class="help-block" v-show="errors_data.localizacion_id">Campo obligatorio</small>
-      </el-col>
-    </el-row>
+    
     <el-row :gutter="24" v-if="!hidde && showItem">
       <el-col :span="8">
         <label for="zona" class="control-label gcore-label-top">Zona:</label>
@@ -308,7 +309,7 @@ export default {
       // branchs: [],
       clientes: null,
       city_selected_s: "",
-      table: this.payload.table
+      table: null
     };
   },
   computed: {
@@ -338,6 +339,12 @@ export default {
         }
       },
       deep: true
+    },
+    "payload.table": {
+      handler(newVal, oldVal) {
+        this.table = newVal;
+      },
+      deep: true
     }
   },
   mounted() {
@@ -356,6 +363,7 @@ export default {
       me.hidde = false;
       me.form.corporativo = true;
     }
+    this.table = this.payload.table;
   },
   methods: {
     beforeSend(edit) {

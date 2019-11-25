@@ -39,32 +39,36 @@ class PrintConfigController extends Controller
         $cont = 0;
         $cant = 1;
         foreach ($printers as $key => $value) {
-          if ($value->label != $request->data['labels']) {
-            $cont++;
-          }
-          if ($value->default != $request->data['default']) {
+          if ($value->label == $request->data['labels'] and $value->default == $request->data['default']) {
             $cont++;
           }
           $cant++;
         }
         $datInsert['id'] = $cant;
-        if ($cont > 0) {
+        if ($cont == 0) {
           array_push($printers, $datInsert);
           $data = $printers;
         }
       }
+      $msn = 'Registro creado';
+      $code = 200;
       if ($id) {
-        AplexConfig::where('id', $id->id)->update([
-          'key' => $key_id,
-          'value' =>  json_encode($data)
-        ]);
+        if ($cont == 0) {
+          AplexConfig::where('id', $id->id)->update([
+            'key' => $key_id,
+            'value' =>  json_encode($data)
+          ]);
+        }else{
+          $msn = 'El registro ya existe!';
+          $code = 600;
+        }
       }else{
         AplexConfig::insert([
           'key' => $key_id,
           'value' => json_encode($data)
         ]);
       }
-      return array('code' => 200);
+      return array('data' => $msn, 'code' => $code);
     }
 
     public function getPrintersSaved()
@@ -78,16 +82,15 @@ class PrintConfigController extends Controller
     public function deletePrinter($id)
     {
       $key_id = 'print_'. Auth::user()->agencia_id;
-      DB::table('aplex_config')->where('key', $key_id)->update(['value' => DB::raw('JSON_REMOVE(value, "$.['.$id.']")')]);
-      // DB::table('aplex_config')
-      //       ->where('key', $key_id)
-      //       ->update(['value->id' => $id]);
       $data = $this->getConfig($key_id);
       $printers = json_decode($data->value);
-      echo '<pre>';
-      print_r($printers);
-      echo '</pre>';
-      exit();
+
+      unset($printers[$id]);
+      AplexConfig::where('id', $data->id)->update([
+        'key' => $key_id,
+        'value' =>  json_encode($printers)
+      ]);
+      return array('data' => $printers,'code' => 200);
     }
 
 }

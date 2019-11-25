@@ -225,3 +225,7 @@ y borrar el consignee y user si no se esta usando (de forma permanente)
 - *******reducir el tamaño de los selects
 
 - colocar pais en las tarifas (servicios)
+
+1. Debemos verificar que las impresoras del PC estén guardadas en el sistema.
+2. Si no están se imprimen los documentos en PDF
+3. Si existen se imprime en las impresoras encontradas en la config y si no.. se imprime en el pdf

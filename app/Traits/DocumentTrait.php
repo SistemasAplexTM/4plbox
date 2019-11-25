@@ -15,7 +15,7 @@ trait DocumentTrait
       if($filter['dates'] == '' and $filter['warehouse'] == '' and $filter['consignee_id'] == ''){
         $fFin = strtotime('+1 day' , strtotime(date('Y-m-d')));
         $fFin = date('Y-m-d' , $fFin);
-        $nuevafecha = strtotime('-5 day' , strtotime($fFin)) ;
+        $nuevafecha = strtotime('-2 day' , strtotime($fFin)) ;
         $fIni = date('Y-m-d' , $nuevafecha);
         $dates = array(
           'inicio' => $fIni,
@@ -115,7 +115,7 @@ trait DocumentTrait
       if($filter['dates'] == '' and $filter['warehouse'] == '' and $filter['consignee_id'] == '' and $type != 4){
         $fFin = strtotime('+1 day' , strtotime(date('Y-m-d')));
         $fFin = date('Y-m-d' , $fFin);
-        $nuevafecha = strtotime('-5 day' , strtotime($fFin)) ;
+        $nuevafecha = strtotime('-2 day' , strtotime($fFin)) ;
         $fIni = date('Y-m-d' , $nuevafecha);
         $dates = array(
           'inicio' => $fIni,

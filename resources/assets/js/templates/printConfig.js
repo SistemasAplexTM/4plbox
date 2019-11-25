@@ -7,8 +7,6 @@ const wcppGetPrintersTimeoutStep_ms = 500; //0.5 sec
 var clientPrinters = '';
 
 function wcpGetPrintersOnSuccess() {
-  var l = Ladda.create(document.querySelector('.ladda-button'));
-  l.start();
   $('.load_printer').attr('disabled');
 
   // Display client installed printers
@@ -38,13 +36,13 @@ function wcpGetPrintersOnSuccess() {
         alert(e.message)
       }
     }
-    l.stop();
+    objVue.loading_prints = false
     // $('.load_printer').attr('disabled', false);
 
     // objVue.getPrint();
 
   } else {
-    l.stop();
+    objVue.loading_prints = false
     alert("No printers are installed in your system.");
   }
 }
@@ -94,7 +92,8 @@ var objVue = new Vue({
   el: '#printConfig',
   data: {
     detected: false,
-    loading: true,
+    loading: false,
+    loading_prints: false,
     printers: []
   },
   created() {
@@ -102,16 +101,29 @@ var objVue = new Vue({
   },
   methods: {
     savePrint: function () {
+      let me = this;
+      me.loading = true
       var data = {
         labels: $('#installedPrinterName').val(),
         default: $('#installedPrinterName1').val()
       }
       axios.post('printConfig', {
         data
-      }).then(response => {
-        toastr.success("<div><p>Registrado exitosamente.</p></div>");
-        toastr.options.closeButton = true;
+      }).then(({
+        data
+      }) => {
+        me.loading = false
+        if (data.code == 200) {
+          me.getPrintersSaved();
+          toastr.success("<div><p>" + data.data + "</p></div>");
+        } else {
+          toastr.warning("<div><p>" + data.data + "</p></div>");
+        }
       }).catch(error => console.log(error))
+    },
+    getPrints() {
+      this.loading_prints = true
+      javascript: jsWebClientPrint.getPrintersInfo();
     },
     getPrint: function () {
       axios.get('getConfig/print_' + agency_id).then(({
@@ -127,16 +139,21 @@ var objVue = new Vue({
         data
       }) => {
         this.printers = data
-        console.log(data);
-
       }).catch(error => console.log(error))
     },
     deletePrint(id) {
+      let me = this;
       axios.get('printConfig/deletePrinter/' + id).then(({
         data
       }) => {
-        toastr.success("<div><p>Registrado Eliminado.</p></div>");
-        toastr.options.closeButton = true;
+        if (data.code == 200) {
+          me.getPrintersSaved();
+          toastr.success("<div><p>Registrado Eliminado.</p></div>");
+          toastr.options.closeButton = true;
+        } else {
+          toastr.danger("<div><p>Error.</p></div>");
+          toastr.options.closeButton = true;
+        }
 
       }).catch(error => console.log(error))
     }
