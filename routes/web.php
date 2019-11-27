@@ -5,9 +5,7 @@ use App\Shipper;
 use App\Consignee;
 use Illuminate\Support\Facades\DB;
 
-Route::get('/', function () {
-  return view('auth/login');
-});
+Route::get('/', 'Auth\LoginController@showLoginForm');
 /* RUTA PARA CAMBIAR EL LENGUAJE */
 Route::get('lang/{lang}', function ($lang) {
   \Session::put('lang', $lang);
@@ -440,7 +438,7 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('radicado_clientes/all', 'RadicadoClienteController@getAll')->name('datatable/all');
   Route::get('radicado_clientes/delete/{id}/{logical?}', 'RadicadoClienteController@delete')->name('radicado_clientes.delete');
   Route::get('radicado_clientes/restaurar/{id}', 'RadicadoClienteController@restaurar');
-  
+
   /*--- MODULO RADICADO ---*/
   Route::resource('radicado', 'RadicadoController', ['except' => ['show', 'create', 'edit']]);
   Route::get('radicado/all', 'RadicadoController@getAll')->name('datatable/all');

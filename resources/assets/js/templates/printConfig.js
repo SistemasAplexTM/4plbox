@@ -4,10 +4,10 @@
 //var wcppGetPrintersDelay_ms = 0;
 const wcppGetPrintersTimeout_ms = 100000; //5 sec
 const wcppGetPrintersTimeoutStep_ms = 500; //0.5 sec
-var clientPrinters = '';
+var clientPrinters = "";
 
 function wcpGetPrintersOnSuccess() {
-  $('.load_printer').attr('disabled');
+  $(".load_printer").attr("disabled");
 
   // Display client installed printers
   if (arguments[0].length > 0) {
@@ -22,27 +22,26 @@ function wcpGetPrintersOnSuccess() {
       try {
         clientPrinters = JSON.parse(arguments[0]);
         if (clientPrinters.error) {
-          alert(clientPrinters.error)
+          alert(clientPrinters.error);
         } else {
-          var options = '';
+          var options = "";
           for (var i = 0; i < clientPrinters.length; i++) {
-            options += '<option>' + clientPrinters[i].name + '</option>';
+            options += "<option>" + clientPrinters[i].name + "</option>";
           }
           // $('#lstPrinters').html(options);
-          $('#installedPrinterName').html(options);
-          $('#installedPrinterName1').html(options);
+          $("#installedPrinterName").html(options);
+          $("#installedPrinterName1").html(options);
         }
       } catch (e) {
-        alert(e.message)
+        alert(e.message);
       }
     }
-    objVue.loading_prints = false
+    objVue.loading_prints = false;
     // $('.load_printer').attr('disabled', false);
 
     // objVue.getPrint();
-
   } else {
-    objVue.loading_prints = false
+    objVue.loading_prints = false;
     alert("No printers are installed in your system.");
   }
 }
@@ -65,10 +64,10 @@ function wcppDetectOnSuccess() {
   if (wcppVer.substring(0, 1) == "4") {
     // window.reload;
     // $('#msgInProgress').hide();
-    $('#msgInProgress').hide();
-    $('#detected').css('display', 'block');
+    $("#msgInProgress").hide();
+    $("#detected").css("display", "block");
   } else {
-    console.log('ELSE');
+    console.log("ELSE");
     wcppDetectOnFailure();
   } //force to install WCPP v4.0
 }
@@ -76,20 +75,19 @@ function wcppDetectOnSuccess() {
 function wcppDetectOnFailure() {
   // It seems WCPP is not installed at the client side
   // ask the user to install it
-  $('#msgInProgress').hide();
-  $('#msgInstallWCPP').show();
+  $("#msgInProgress").hide();
+  $("#msgInstallWCPP").show();
 }
-
 
 function wcppDetectOnFailure() {
   // It seems WCPP is not installed at the client side
   // ask the user to install it
-  $('#msgInProgress').hide();
-  $('#msgInstallWCPP').show();
+  $("#msgInProgress").hide();
+  $("#msgInstallWCPP").show();
 }
 
 var objVue = new Vue({
-  el: '#printConfig',
+  el: "#printConfig",
   data: {
     detected: false,
     loading: false,
@@ -100,62 +98,65 @@ var objVue = new Vue({
     // this.getPrint();
   },
   methods: {
-    savePrint: function () {
+    savePrint: function() {
       let me = this;
-      me.loading = true
+      me.loading = true;
       var data = {
-        labels: $('#installedPrinterName').val(),
-        default: $('#installedPrinterName1').val()
-      }
-      axios.post('printConfig', {
-        data
-      }).then(({
-        data
-      }) => {
-        me.loading = false
-        if (data.code == 200) {
-          me.getPrintersSaved();
-          toastr.success("<div><p>" + data.data + "</p></div>");
-        } else {
-          toastr.warning("<div><p>" + data.data + "</p></div>");
-        }
-      }).catch(error => console.log(error))
+        labels: $("#installedPrinterName").val(),
+        default: $("#installedPrinterName1").val()
+      };
+      axios
+        .post("printConfig", {
+          data
+        })
+        .then(({ data }) => {
+          me.loading = false;
+          if (data.code == 200) {
+            me.getPrintersSaved();
+            toastr.success("<div><p>" + data.data + "</p></div>");
+          } else {
+            toastr.warning("<div><p>" + data.data + "</p></div>");
+          }
+        })
+        .catch(error => console.log(error));
     },
     getPrints() {
-      this.loading_prints = true
+      this.loading_prints = true;
       javascript: jsWebClientPrint.getPrintersInfo();
     },
-    getPrint: function () {
-      axios.get('getConfig/print_' + agency_id).then(({
-        data
-      }) => {
-        var printers = JSON.parse(data.value);
-        $('#installedPrinterName').val(printers.prints.labels)
-        $('#installedPrinterName1').val(printers.prints.default)
-      }).catch(error => console.log(error))
+    getPrint: function() {
+      axios
+        .get("getConfig/print_" + agency_id)
+        .then(({ data }) => {
+          var printers = JSON.parse(data.value);
+          $("#installedPrinterName").val(printers.prints.labels);
+          $("#installedPrinterName1").val(printers.prints.default);
+        })
+        .catch(error => console.log(error));
     },
-    getPrintersSaved: function () {
-      axios.get('printConfig/getPrintersSaved').then(({
-        data
-      }) => {
-        this.printers = data
-      }).catch(error => console.log(error))
+    getPrintersSaved: function() {
+      axios
+        .get("printConfig/getPrintersSaved")
+        .then(({ data }) => {
+          this.printers = data;
+        })
+        .catch(error => console.log(error));
     },
     deletePrint(id) {
       let me = this;
-      axios.get('printConfig/deletePrinter/' + id).then(({
-        data
-      }) => {
-        if (data.code == 200) {
-          me.getPrintersSaved();
-          toastr.success("<div><p>Registrado Eliminado.</p></div>");
-          toastr.options.closeButton = true;
-        } else {
-          toastr.danger("<div><p>Error.</p></div>");
-          toastr.options.closeButton = true;
-        }
-
-      }).catch(error => console.log(error))
+      axios
+        .get("printConfig/deletePrinter/" + id)
+        .then(({ data }) => {
+          if (data.code == 200) {
+            me.getPrintersSaved();
+            toastr.success("<div><p>Registrado Eliminado.</p></div>");
+            toastr.options.closeButton = true;
+          } else {
+            toastr.danger("<div><p>Error.</p></div>");
+            toastr.options.closeButton = true;
+          }
+        })
+        .catch(error => console.log(error));
     }
-  },
+  }
 });
