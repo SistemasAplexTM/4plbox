@@ -80,7 +80,7 @@ class LoginController extends Controller
     if ($objAgencia->logo != null && $objAgencia->logo != '') {
       \Session::put('logo', $objAgencia->logo);
     } else {
-      \Session::put('logo', 'logo.png');
+      \Session::put('logo', 'icon-no-image.svg');
     }
     \Session::put('agencia', $objAgencia->descripcion);
 
