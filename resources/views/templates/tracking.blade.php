@@ -120,7 +120,9 @@
             <div class="col-lg-12">
               <div class="form-group" :class="{ 'has-error': errors.has('consignee_id') }">
                 <div class="col-sm-4">
-                  <label for="consignee_id" class="control-label gcore-label-top">@lang('general.consignee'):</label>
+                  <label for="consignee_id" class="control-label gcore-label-top">@lang('general.consignee'):
+
+                  </label>
                 </div>
                 <div class="col-sm-8">
                   {{-- <v-select name="consignee_id" :options="consignees" placeholder="@lang('general.client')" label="name" v-model="consignee_id"> --}}
@@ -133,6 +135,9 @@
                       <div class="content-select">
                         <i class="fal fa-user icon"></i> @{{ item.name }}
                       </div>
+                    </template>
+                    <template slot="append">
+                      <i @click="openNew" class="pointer fal fa-user-plus"></i>
                     </template>
                   </el-autocomplete>
                   <small class="help-block error" v-show="errors.has('consignee_id')">
