@@ -24,9 +24,13 @@
   <div class="col-lg-12">
     <div class="ibox float-e-margins">
       <div class="ibox-title">
-        <h5>@lang('layouts.print_config') <small>(En este módulo, usted podrá configurar las impresoras para Labels y
+        <h5>@lang('layouts.print_config')
+          <small>
+            (En este módulo, usted podrá configurar las impresoras para Labels y
             para documentos, por favor siga las
-            instrucciones.)</small></h5>
+            instrucciones.)
+          </small>
+        </h5>
       </div>
       <div class="ibox-content">
         <div id="msgInProgress">
