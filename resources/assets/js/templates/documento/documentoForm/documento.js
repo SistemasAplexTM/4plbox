@@ -36,6 +36,7 @@ $(document).ready(function () {
         params._token = $('meta[name="csrf-token"]').attr('content');
         return params;
     };
+
     $('#agencia_id').on('change', function () {
         objVue.resetFormsShipperConsignee(0);
         objVue.resetFormsShipperConsignee(1);

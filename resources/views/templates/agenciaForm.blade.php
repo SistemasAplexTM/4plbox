@@ -289,9 +289,8 @@
                 </div>
               </div>
 
-
               <!-- DETALLE DE AGENCIA -->
-              @if(isset($agencia) and $agencia->tipo_agencia == 1)
+              {{-- @if(isset($agencia) and $agencia->tipo_agencia == 1) --}}
               <div class="col-lg-8">
                 <div class="col-lg-12">
                   <!--<div class="hr-line-dashed"></div>-->
@@ -450,7 +449,7 @@
                 </div>
                 <!--**************** Fin Detalle Agencia  *******************************-->
               </div>
-              @endif
+              {{-- @endif --}}
               <div class="col-lg-12">
                 <div class="col-lg-12">
                   <div class="form-group">
@@ -559,28 +558,28 @@
                           <td>URL Principal</td>
                           <td>
                             <a class="editable_url" data-name="url" data-type="textarea"
-                              data-pk="{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}">{{ $agencia->url }}</a>
+                              data-pk="{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}">{{ (isset($agencia) and $agencia) ? $agencia->url : '' }}</a>
                           </td>
                         </tr>
                         <tr>
                           <td>Términos y condiciones</td>
                           <td>
                             <a class="editable_url" data-name="url_terms" data-type="textarea"
-                              data-pk="{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}">{{ $agencia->url_terms }}</a>
+                              data-pk="{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}">{{ (isset($agencia) and $agencia) ? $agencia->url_terms : '' }}</a>
                           </td>
                         </tr>
                         <tr>
                           <td>Registro de casillero</td>
                           <td>
                             <a class="editable_url" data-name="url_registro_casillero" data-type="textarea"
-                              data-pk="{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}">{{ $agencia->url_registro_casillero }}</a>
+                              data-pk="{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}">{{ (isset($agencia) and $agencia) ? $agencia->url_registro_casillero : '' }}</a>
                           </td>
                         </tr>
                         <tr>
                           <td>Prealertar</td>
                           <td>
                             <a class="editable_url" data-name="url_prealerta" data-type="textarea"
-                              data-pk="{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}">{{ $agencia->url_prealerta }}</a>
+                              data-pk="{{ (isset($agencia) and $agencia) ? $agencia->id : '' }}">{{ (isset($agencia) and $agencia) ? $agencia->url_prealerta : '' }}</a>
                           </td>
                         </tr>
                       </tbody>
@@ -615,7 +614,7 @@
       type: 'post',
       dataType: 'json'
     },
-    url: "/agencia/saveURL/" + {{ (isset($agencia) and $agencia) ? $agencia->id : null }},
+    url: "/agencia/saveURL/" + {{ (isset($agencia) and $agencia) ? $agencia->id : 0 }},
     title: 'Digite URL',
     validate:function(value){
       if($.trim(value) == ''){

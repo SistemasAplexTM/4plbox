@@ -8,6 +8,14 @@ var objVue = new Vue({
                 this.enviarEmailDestinatario = false;
             }
         },
+        nombreD: function (value) {
+            if (value != null && value != '') {
+                $('#show-totales').bootstrapToggle('enable')
+            } else {
+                $('#show-totales').bootstrapToggle('off');
+                $('#show-totales').bootstrapToggle('disable');
+            }
+        },
         city_s: function (value) {
             if (Object.keys(value).length === 0) {
                 $('#msn_l1').css('display', 'inline-block');

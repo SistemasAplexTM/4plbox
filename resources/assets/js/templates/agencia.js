@@ -32,7 +32,7 @@ $(document).ready(function () {
                     title = full.descripcion;
                     image = full.logo;
                 }
-                return '<img src="/storage/' + image + '" alt="Pedidos" width="100" title="' + title + '">';
+                return '<img src="/storage/' + image + '" alt="Image" width="100" title="' + title + '">';
             },
             class: 'text-center'
         }, {

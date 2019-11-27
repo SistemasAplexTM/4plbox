@@ -14,6 +14,7 @@ class Tracking extends Model
      */
     protected $fillable = [
         'documento_detalle_id',
+        'agencia_id',
         'consignee_id',
         'codigo',
         'contenido',

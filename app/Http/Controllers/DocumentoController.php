@@ -467,11 +467,13 @@ class DocumentoController extends Controller
             'data_agencia' => $this->getNameAgencia(),
         ]);
         $this->AddToLog('Documento ver (' . $id . ') consecutivo (' . $documento->consecutivo . ')');
+        $role_admin = (Auth::user()->isRole('admin')) ? 1 : 0;
         return view('templates/documento/documento', compact(
             'documento',
             'detalle',
             'tipo',
             'agencias',
+            'role_admin',
             'embarques',
             'empaques',
             'tipoPagos',
@@ -2487,7 +2489,7 @@ class DocumentoController extends Controller
                 ['e.pais_id', $pais_id],
             ];
         // if(!Auth::user()->isRole('admin')){
-            $filter[] = ['b.agencia_id', Auth::user()->agencia_id];
+            // $filter[] = ['b.agencia_id', Auth::user()->agencia_id];
         // }
         if(env('APP_CLIENT') == 'jyg'){
           $filter[] = ['a.liquidado', 1];
@@ -3238,7 +3240,7 @@ class DocumentoController extends Controller
     {
       $trackings = DB::table('documento_detalle as a')
         ->leftJoin('tracking as b', 'a.id', 'b.documento_detalle_id')
-          ->select('b.codigo', 'b.contenido', 'a.peso')
+          ->select('b.codigo', 'a.contenido', 'a.peso')
           ->where([['a.deleted_at', null], ['b.deleted_at', null], ['a.documento_id', $id]])
           ->get();
       $answer = array(

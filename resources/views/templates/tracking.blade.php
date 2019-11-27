@@ -65,6 +65,17 @@
       <div class="ibox float-e-margins">
         <div class="ibox-title">
           <h5>@lang('general.track_record')</h5>
+          <div class="fr">
+            @foreach($agencias as $agencia)
+            @if(Auth::user()->agencia_id == $agencia['id'])
+            <change_agency :agency="{{ $agencia }}" :role="{{ $role_admin }}"
+              :style_="'font-size:17px;float: left;font-weight: bold;'">
+            </change_agency>
+
+            <input type="hidden" id="agencia_id" class="form-control" value="{{ $agencia['id'] }}" readonly="">
+            @endif
+            @endforeach
+          </div>
         </div>
         <div class="ibox-content">
           <!--***** contenido ******-->
@@ -120,8 +131,12 @@
                     @select="handleSelect">
                     <template slot-scope="{ item }">
                       <div class="content-select">
-                        <div style="">
+                        <div style="" v-if="item.id != 'z'">
                           <i class="fal fa-user icon"></i> @{{ item.name }}
+                        </div>
+                        <div style="text-align:center;color: cornflowerblue;text-decoration-line: underline;"
+                          v-if="item.id === 'z'">
+                          <i class="fal fa-plus"></i> @{{ item.name }}
                         </div>
                       </div>
                     </template>

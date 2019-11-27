@@ -7,6 +7,7 @@ use App\Tracking;
 use App\Prealerta;
 use Auth;
 use DataTables;
+use App\Agencia;
 use App\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -29,15 +30,36 @@ class TrackingController extends Controller
 
     public function index()
     {
+      $agencias = Agencia::select('id', 'descripcion')
+            ->where([['deleted_at', null]])
+            ->get();
+      $role_admin = (Auth::user()->isRole('admin')) ? 1 : 0;
       $this->assignPermissionsJavascript('tracking');
-      return view('templates/tracking');
+
+      // $update = DB::select(DB::raw("SELECT
+      // a.id,
+      // c.agencia_id AS agencia_documento
+      // FROM
+      // tracking AS a
+      // INNER JOIN documento_detalle AS b ON a.documento_detalle_id = b.id
+      // INNER JOIN documento AS c ON b.documento_id = c.id
+      // WHERE
+      // c.agencia_id <> 1"));
+      // foreach ($update as $key => $value) {
+      //   // echo $value->id . ' - '.$value->agencia_documento . '<br>';
+      //   $data = Tracking::findOrFail($value->id);
+      //   $data->agencia_id = $value->agencia_documento;
+      //   $data->save();
+      // }
+      // exit();
+      return view('templates/tracking', compact('agencias', 'role_admin'));
     }
 
     public function store(TrackingRequest $request)
     {
         try {
             $data             = (new Tracking)->fill($request->all());
-            $data->agencia_id = Auth::user()->agencia_id;
+            // $data->agencia_id = Auth::user()->agencia_id;
             if ($request->confirmed_send) {
                 $data->confirmed_send = 1;
             }
@@ -137,7 +159,10 @@ class TrackingController extends Controller
 
     public function getAll($grid = false, $add = null, $id = false, $req_consignee = false, $bodega = false)
     {
-        $where = [['tracking.deleted_at', null], ['tracking.agencia_id', Auth::user()->agencia_id]];
+        $where = [['tracking.deleted_at', null]];
+        if (!Auth::user()->isRole('admin')) {
+          $where[] = ['tracking.agencia_id', Auth::user()->agencia_id];
+        }
         if ($grid == false || $grid == 'false') {
            if ($id != '') {
                $where[] = array('tracking.documento_detalle_id', $id);
@@ -168,7 +193,8 @@ class TrackingController extends Controller
                 'tracking.consignee_id',
                 'tracking.documento_detalle_id',
                 'tracking.codigo',
-                'tracking.contenido',
+                'tracking.contenido AS contenido2',
+                'c.contenido',
                 'tracking.confirmed_send',
                 'tracking.created_at as fecha',
                 'b.nombre_full as cliente',
@@ -308,6 +334,10 @@ class TrackingController extends Controller
     public function getTrackingByCreateReceipt()
     {
       // DB::connection()->enableQueryLog();
+      $where = [['tracking.deleted_at', null]];
+      if (!Auth::user()->isRole('admin')) {
+        $where[] = ['tracking.agencia_id', Auth::user()->agencia_id];
+      }
       $data = Tracking::join('consignee AS b', 'tracking.consignee_id', 'b.id')
           ->select(
               'tracking.consignee_id',
@@ -374,6 +404,7 @@ class TrackingController extends Controller
             'trackings'
             )
           ->orderBy('last_date', 'DESC')
+          ->where($where)
           ->get();
           // return DB::getQueryLog();
       return \DataTables::of($data)->make(true);

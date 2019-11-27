@@ -22,12 +22,6 @@
   </div>
 </div>
 <style type="text/css">
-  .el-dropdown-link {
-    cursor: pointer;
-    color: #409EFF;
-    font-size: 20px;
-  }
-
   .el-icon-arrow-down {
     font-size: 12px;
   }
@@ -232,8 +226,8 @@
       <div class="col-lg-12">
         <div class="col-lg-6" style="padding-left: 0px;">
           @foreach($agencias as $agencia)
-          @if(Auth::user()->agencia_id == $agencia['id'])
-          <change_agency :agency="{{ $agencia }}"></change_agency>
+          @if($agencia['id'] == $documento->agencia_id)
+          <change_agency :agency="{{ $agencia }}" :role="{{ $role_admin }}"></change_agency>
           <input type="hidden" id="agencia_id" name="agencia_id" class="form-control" value="{{ $agencia['id'] }}"
             readonly="">
           @endif
@@ -443,12 +437,12 @@
               @if(env('APP_LIQUIDADO') == 1)
               <input type='checkbox' data-toggle="toggle" id='show-totales' name="liquidar" @click="showTotals()"
                 data-size='mini' data-on="Si" data-off="No" data-width="50" data-style="ios" data-onstyle="primary"
-                data-offstyle="danger"
+                data-offstyle="danger" disabled="disabled"
                 {{ ($documento->liquidado === null || $documento->liquidado !== 0) ? 'checked="checked"' : '' }}>
               @else
               <input type='checkbox' data-toggle="toggle" id='show-totales' name="liquidar" @click="showTotals()"
                 data-size='mini' data-on="Si" data-off="No" data-width="50" data-style="ios" data-onstyle="primary"
-                data-offstyle="danger"
+                data-offstyle="danger" disabled="disabled"
                 {{ ($documento->liquidado !== 0 and $documento->liquidado !== null) ? 'checked="checked"' : '' }}>
               @endif
             </div>

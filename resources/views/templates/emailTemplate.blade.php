@@ -304,6 +304,12 @@
                                   Copy
                                 </a>
                               </li>
+                              <li class="list-group-item">{user_consignee}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{user_consignee}')">
+                                  Copy
+                                </a>
+                              </li>
                               <li class="list-group-item">{pass_consignee}
                                 <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
                                   @click.stop.prevent="copyTestingCode('{pass_consignee}')">
@@ -331,6 +337,12 @@
                               <li class="list-group-item">{cel_consignee}
                                 <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
                                   @click.stop.prevent="copyTestingCode('{cel_consignee}')">
+                                  Copy
+                                </a>
+                              </li>
+                              <li class="list-group-item">{pobox_consignee}
+                                <a class="btn btn-default copy-btn btn-xs" data-toggle="tooltip" title="Copiar"
+                                  @click.stop.prevent="copyTestingCode('{pobox_consignee}')">
                                   Copy
                                 </a>
                               </li>

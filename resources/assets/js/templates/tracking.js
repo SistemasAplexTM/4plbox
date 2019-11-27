@@ -58,7 +58,7 @@ function loadTable(name, bodega) {
         "visible": bodega
       }, {
         "render": function (data, type, full, meta) {
-          return '<a data-name="contenido" data-pk="' + full.id + '" class="td_edit" data-type="textarea" data-placement="left" data-title="Contenido">' + ((full.contenido !== null) ? full.contenido : 'No hay datos') + '</a>';
+          return '<a data-name="contenido" data-pk="' + full.id + '" class="td_edit" data-type="textarea" data-placement="left" data-title="Contenido">' + ((full.contenido2 !== null) ? full.contenido2 : 'No hay datos') + '</a>';
         }
       },
       // {
@@ -302,6 +302,10 @@ var objVue = new Vue({
       var me = this;
       axios.get('/consignee/vueSelect/' + queryString).then(function (response) {
         me.consignees = response.data.items;
+        me.consignees.push({
+          id: 'z',
+          name: 'Registrar Nuevo'
+        });
         cb(me.consignees);
       }).catch(function (error) {
         console.log(error);
@@ -565,6 +569,7 @@ var objVue = new Vue({
             'codigo': this.tracking,
             'contenido': this.contenido,
             'confirmed_send': this.confirmedSend,
+            'agencia_id': $("#agencia_id").val(),
           }).then(function (response) {
             if (response.data['code'] == 200) {
               toastr.success('Registro creado correctamente.');
