@@ -302,10 +302,6 @@ var objVue = new Vue({
       var me = this;
       axios.get('/consignee/vueSelect/' + queryString).then(function (response) {
         me.consignees = response.data.items;
-        me.consignees.push({
-          id: 'z',
-          name: 'Registrar Nuevo'
-        });
         cb(me.consignees);
       }).catch(function (error) {
         console.log(error);

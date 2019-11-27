@@ -131,13 +131,7 @@
                     @select="handleSelect">
                     <template slot-scope="{ item }">
                       <div class="content-select">
-                        <div style="" v-if="item.id != 'z'">
-                          <i class="fal fa-user icon"></i> @{{ item.name }}
-                        </div>
-                        <div style="text-align:center;color: cornflowerblue;text-decoration-line: underline;"
-                          v-if="item.id === 'z'">
-                          <i class="fal fa-plus"></i> @{{ item.name }}
-                        </div>
+                        <i class="fal fa-user icon"></i> @{{ item.name }}
                       </div>
                     </template>
                   </el-autocomplete>
