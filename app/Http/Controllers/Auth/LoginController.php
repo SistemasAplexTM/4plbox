@@ -7,11 +7,17 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\AplexConfig;
+use Session;
 use JavaScript;
+
+include_once(app_path() . '\WebClientPrint\WebClientPrint.php');
+
+use Neodynamic\SDK\Web\WebClientPrint;
 
 class LoginController extends Controller
 {
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Login Controller
     |--------------------------------------------------------------------------
@@ -22,72 +28,99 @@ class LoginController extends Controller
     |
      */
 
-    use AuthenticatesUsers;
+  use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    // protected $redirectTo = '/home';
+  /**
+   * Where to redirect users after login.
+   *
+   * @var string
+   */
+  // protected $redirectTo = '/home';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
+  /**
+   * Create a new controller instance.
+   *
+   * @return void
+   */
+  public function __construct()
+  {
+    $this->middleware('guest')->except('logout');
+  }
+
+  public function showLoginForm()
+  {
+    $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('Auth\LoginController@showLoginForm'), Session::getId());
+    $wcppScriptDetect = WebClientPrint::createWcppDetectionScript(action('WebClientPrintController@processRequest'), Session::getId());
+    return view('auth.login', compact('wcpScript', 'wcppScriptDetect'));
+  }
+
+  public function redirectPath()
+  {
+    /* AGENCIA */
+    $objAgencia = DB::table('agencia AS a')
+      ->join('localizacion AS b', 'b.id', 'a.localizacion_id')
+      ->join('deptos AS c', 'c.id', 'b.deptos_id')
+      ->join('pais AS d', 'd.id', 'c.pais_id')
+      ->select([
+        'a.id',
+        'a.descripcion as descripcion',
+        'a.telefono',
+        'a.email',
+        'a.direccion',
+        'a.zip',
+        'a.logo',
+        'b.nombre AS ciudad',
+        'c.descripcion AS depto',
+        'd.descripcion AS pais',
+      ])->where([
+        ['a.id', Auth::user()->agencia_id],
+        ['a.deleted_at', '=', null],
+      ])->first();
+    /* GUARDAR DATOS EN VARIABLES DE SESION */
+    if ($objAgencia->logo != null && $objAgencia->logo != '') {
+      \Session::put('logo', $objAgencia->logo);
+    } else {
+      \Session::put('logo', 'logo.png');
     }
+    \Session::put('agencia', $objAgencia->descripcion);
 
-    public function redirectPath()
-    {
-        /* AGENCIA */
-        $objAgencia = DB::table('agencia AS a')
-            ->join('localizacion AS b', 'b.id', 'a.localizacion_id')
-            ->join('deptos AS c', 'c.id', 'b.deptos_id')
-            ->join('pais AS d', 'd.id', 'c.pais_id')
-            ->select([
-                'a.id',
-                'a.descripcion as descripcion',
-                'a.telefono',
-                'a.email',
-                'a.direccion',
-                'a.zip',
-                'a.logo',
-                'b.nombre AS ciudad',
-                'c.descripcion AS depto',
-                'd.descripcion AS pais',
-            ])->where([
-            ['a.id', Auth::user()->agencia_id],
-            ['a.deleted_at', '=', null],
-        ])->first();
-        /* GUARDAR DATOS EN VARIABLES DE SESION */
-        if($objAgencia->logo != null && $objAgencia->logo != ''){
-            \Session::put('logo', $objAgencia->logo);
-        }else{
-            \Session::put('logo', 'logo.png');
+    JavaScript::put([
+      'user' => Auth::user(),
+      'agency' => $objAgencia
+    ]);
+
+    return 'home';
+  }
+
+  public function login(Request $request)
+  {
+    if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'actived' => 1])) {
+      $key = 'print_' . Auth::user()->agencia_id;
+      $data = $this->getConfig($key);
+      $printers = json_decode($request->printers);
+      $printersDB =  json_decode($data->value);
+      // var_dump($printersDB);
+      // exit();
+      $default = null;
+      if ($printers && $printersDB) {
+        foreach ($printers as $key => $value) {
+          if ($value->isDefault) {
+            foreach ($printersDB as $valueBD) {
+              // echo $valueBD->label;
+              // echo $value['name'];
+              if ($valueBD->label == $value->name) {
+                $default = $valueBD;
+              }
+            }
+          }
         }
-        \Session::put('agencia', $objAgencia->descripcion);
-
-        JavaScript::put([
-            'user' => Auth::user(),
-            'agency' => $objAgencia
-        ]);
-
-        return 'home';
-    }
-
-    public function login(Request $request)
-    {
-      if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'actived' => 1])) {
-          return redirect()->route($this->redirectPath());
-      }else{
-        return back()
+      }
+      Session::put('printer', $default);
+      return redirect()->route($this->redirectPath());
+    } else {
+      return back()
         ->withErrors(['email' =>  trans('auth.failed')])
         ->withInput(['email' => $request->email]);
-      }
     }
-
+  }
 }
