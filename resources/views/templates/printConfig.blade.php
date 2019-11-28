@@ -20,7 +20,6 @@
 
 @section('content')
 <div class="row" id="printConfig">
-  {!! var_dump(Session::get('printer')) !!}
   <div class="col-lg-12">
     <div class="ibox float-e-margins">
       <div class="ibox-title">

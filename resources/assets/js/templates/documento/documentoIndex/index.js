@@ -1,7 +1,5 @@
 var listDocument = function (tipo_doc_id, nom, icon, funcionalidades, reinitialite, filter, courier_carga) {
   objVue.type_document = tipo_doc_id;
-  var href_print = '';
-  var href_print_label = '';
   var filtro = '';
   /* MOSTRAR LABELS DE ESTADOS SI ES WAREHOUSE */
   var labels = '';
@@ -250,37 +248,53 @@ function actionsButtons(data, type, full, meta) {
       return btn_edit + ' ' + btns + ' ' + btn_status + ' ' + btn_actions;
     } else {
       var codigo = full.num_warehouse;
-      var href_print_guia = '';
-      var href_print_label_guia = '';
-      var href_print_wrh = '';
-      var href_print_label_wrh = '';
-      var href_print_view_g = '';
-      var href_print_view_w = '';
+      var saveLabelGuia = '';
+      var saveLabelWH = '';
+      var saveGuia = '';
+      var saveWH = '';
       var proforma = '';
-      var print_guia_wcp = '';
-      if (full.liquidado == 1) {
-        href_print_view_g = "<li><a href='impresion-documento/" + full.id + "/guia' target='_blank'> <spam class='fal fa-print'></spam> Invoice</a></li><li role='separator' class='divider'></li>";
-        print_guia_wcp = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + print_documents + '&filetype=' + print_format + '&id=' + full.id + '&agency_id=' + agency_id + '&document=guia\')"> <spam class="fal fa-print"></spam> Invoice WCP</a></li>';
-        href_print_label_guia = '<li><a href="impresion-documento-label/' + full.id + '/guia" target="_blank"> <spam class="fal fa-print"></spam> Label Invoice ' + label + '</a></li>';
-        proforma = '<li><a href="impresion-documento/' + full.id + '/invoice_guia" target="_blank"> <spam class="fal fa-print"></spam> Factura Proforma</a></li>';
-      }
-      href_print_view_w = "<li><a href='impresion-documento/" + full.id + "/warehouse' target='_blank'> <spam class='fal fa-print'></spam> Warehouse</a></li>";
-      print_wrh_wcp = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + print_documents + '&filetype=' + print_format + '&id=' + full.id + '&agency_id=' + agency_id + '&document=warehouse\')"> <spam class="fal fa-print"></spam> Warehouse WCP</a></li>';
+      var label_wcp = '';
+      var label_guia_wcp = '';
+      var wrh_wcp = '';
+      var guia_wcp = '';
+      var guia_invoice_wcp = '';
 
-      print_label_wcp = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + print_labels + '&filetype=' + print_format + '&id=' + full.id + '&agency_id=' + agency_id + '&document=warehouse&label=true\')"> <spam class="fal fa-print"></spam> Label WCP</a></li>';
-      href_print_label_wrh = '<li><a href="impresion-documento-label/' + full.id + '/warehouse" target="_blank"> <spam class="fal fa-print"></spam> Labels Warehouse ' + label + '</a></li>';
+      console.log(print_labels, print_documents);
+      /* CONFIGURAR IMPRESION CON WCP */
+      if (print_labels != '') {
+        label_wcp = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + print_labels + '&filetype=' + print_format + '&id=' + full.id + '&agency_id=' + agency_id + '&document=warehouse&label=true\')"> <spam class="fal fa-print"></spam> Label Warehouse</a></li>';
+      }
+      if (print_documents != '') {
+        wrh_wcp = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + print_documents + '&filetype=' + print_format + '&id=' + full.id + '&agency_id=' + agency_id + '&document=warehouse\')"> <spam class="fal fa-print"></spam> Warehouse</a></li>';
+        if (full.liquidado == 1) {
+          guia_wcp = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + print_documents + '&filetype=' + print_format + '&id=' + full.id + '&agency_id=' + agency_id + '&document=guia\')"> <spam class="fal fa-print"></spam> Invoice</a></li>';
+          label_guia_wcp = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + print_labels + '&filetype=' + print_format + '&id=' + full.id + '&agency_id=' + agency_id + '&document=guia&label=true\')"> <spam class="fal fa-print"></spam> Label Invoice</a></li>';
+          guia_invoice_wcp = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + print_documents + '&filetype=' + print_format + '&id=' + full.id + '&agency_id=' + agency_id + '&document=invoice_guia\')"> <spam class="fal fa-print"></spam> Factura Proforma</a></li>';
+        }
+      }
+
+      if (full.liquidado == 1) {
+        saveGuia = "<li><a href='impresion-documento/" + full.id + "/guia' target='_blank'> <spam class='fal fa-file-pdf icon_lsave'></spam> Invoice</a></li>";
+        saveLabelGuia = '<li><a href="impresion-documento-label/' + full.id + '/guia" target="_blank"> <spam class="fal fa-file-pdf icon_lsave"></spam> Label Invoice ' + label + '</a></li>';
+        proforma = '<li><a href="impresion-documento/' + full.id + '/invoice_guia" target="_blank"> <spam class="fal fa-file-pdf icon_lsave"></spam> Factura Proforma</a></li>';
+      }
+      saveWH = "<li><a href='impresion-documento/" + full.id + "/warehouse' target='_blank'> <spam class='fal fa-file-pdf icon_lsave'></spam> Warehouse</a></li>";
+      saveLabelWH = '<li><a href="impresion-documento-label/' + full.id + '/warehouse" target="_blank"> <spam class="fal fa-file-pdf icon_lsave"></spam> Labels Warehouse ' + label + '</a></li>';
       var btn_tags = ' <a onclick="openModalTagsDocument(' + full.id + ', \'' + codigo + '\', \'' + full.cons_nomfull + '\', \'' + full.email_cons + '\', \'' + full.cantidad + '\', \'' + full.liquidado + '\', \'' + full.piezas + '\', \'' + full.estatus_color + '\', \'' + full.detalle_id + '\', \'' + full.consignee_id + '\')" data-toggle="modal" data-target="#modalTagDocument" class="" style="font-size: 18px;"><i class="fal fa-arrow-square-right fa-lg" data-toggle="tooltip" title="Tareas"></i></a>';
       var btns = "<div class='btn-group'>" + "<button type='button' class='btn btn-default dropdown-toggle btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + "<i class='fal fa-print fa-lg'></i> <span class='caret'></span>" + "</button>" + "<ul class='dropdown-menu dropdown-menu-right pull-right'>" +
-        href_print_view_g + " " +
-        href_print_view_w + " " +
-        href_print_label_wrh + " " +
-        href_print_label_guia + " " +
+        saveGuia + " " +
+        saveLabelGuia + " " +
+        saveWH + " " +
+        saveLabelWH + " " +
         proforma + " " +
         '<li role="separator" class="divider"></li>' +
-        // print_guia_wcp + " " +
-        // print_label_wcp + " " +
-        // print_wrh_wcp + " " +
-        "<li><a href='#' onclick=\"sendMail(" + full.id + ")\"> <spam class='fal fa-envelope'></spam> Enviar Mail</a></li>" + "</ul></div>";
+        guia_wcp + " " +
+        label_guia_wcp + " " +
+        wrh_wcp + " " +
+        label_wcp + " " +
+        guia_invoice_wcp + " " +
+        '<li role="separator" class="divider"></li>' +
+        "<li><a href='#' onclick=\"sendMail(" + full.id + ")\"> <spam class='fal fa-envelope icon_lemail'></spam> Enviar Mail</a></li>" + "</ul></div>";
 
       return btn_edit + btns + ' ' + btn_tags + btn_delete;
     }

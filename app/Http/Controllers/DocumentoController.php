@@ -80,17 +80,14 @@ class DocumentoController extends Controller
       if($request->input('id_detail_consol')){
         $id_detail_consol = $request->input('id_detail_consol');
       }
-      // OBTENER LA CONFIGURACION DE LA IMPRESORA
-        //   $dataPrint = $this->getConfig('print_' . 1);
-      $dataPrint = $this->getConfig('print_' . $request->input('agency_id'));
-      $prints = json_decode($dataPrint->value);
+
       // VALIDAR SI ES UN LABEL O UN DOCUMENTO A IMPRIMIR
       if($request->input('label')){
         $this->pdfLabel($request->input('id'), $request->input('document'), $id_detalle, $consolidado, $id_detail_consol);
-        $print = $prints->prints->labels;
+        $print =$request->input('printerName');
       }else{
         $this->pdf($request->input('id'), $request->input('document'), $id_detalle, false);
-        $print = $prints->prints->default;
+        $print = $request->input('printerName');
       }
        if ($request->exists(WebClientPrint::CLIENT_PRINT_JOB)) {
             $useDefaultPrinter = ($request->input('useDefaultPrinter') === 'checked');
@@ -145,24 +142,17 @@ class DocumentoController extends Controller
           ])
           ->whereNotNull('a.num_warehouse')
           ->first();
-
-        // OBTENER LA CONFIGURACION DE LA IMPRESORA
-        $dataPrint = $this->getConfig('print_' . Auth::user()->agencia_id);
-        if ($dataPrint) {
-            $prints = json_decode($dataPrint->value);
-            JavaScript::put([
-                'print_labels' => ((is_array($prints) and !empty($prints)) ? $prints[0]->label : ''),
-                'print_documents'  => ((is_array($prints) and !empty($prints)) ? $prints[0]->default : ''),
-                'print_format'  => 'PDF',
+          // OBTENER LA CONFIGURACION DE LA IMPRESORA
+          $printers = Session::get('printer');
+        //   print_r($printers);
+        //   exit();
+        JavaScript::put([
+            'print_labels' => (($printers) ? $printers->label : ''),
+            'print_documents'  => (($printers) ? $printers->default : ''),
+            'print_format'  => 'PDF',
             ]);
-        }else{
-            JavaScript::put([
-                'print_labels' => '',
-                'print_documents'  => '',
-                'print_format'  => 'PDF',
-            ]);
-        }
-        return view('templates.documento.index', compact('status_list', 'pendientes'));
+        $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('DocumentoController@printFile'), Session::getId());
+        return view('templates.documento.index', compact('status_list', 'pendientes', 'wcpScript'));
     }
 
     public function create($tipo_documento_id)

@@ -6,6 +6,18 @@ body {
   font-family: "Roboto Condensed";
 }
 
+.icon_lsave {
+  color: #fc7351
+}
+
+.icon_lprint {
+  /* color: #fc7351 */
+}
+
+.icon_lemail {
+  color: #2196f3
+}
+
 .el-autocomplete {
   width: 100% !important;
 }
