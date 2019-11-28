@@ -193,7 +193,6 @@ class AccessControlController extends Controller
             )
             ->where([
                 ['a.crud', '0'],
-                // ['a.module_id', $module],
                 ['a.module', $module]
             ])
             ->orWhere('a.module_id', $module)

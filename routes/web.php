@@ -336,7 +336,7 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('documento/getDataByDocument/{id}', 'DocumentoController@getDataByDocument');
   Route::get('documento/{id}/getDataPrintBagsConsolidate', 'DocumentoController@getDataPrintBagsConsolidate');
   Route::get('documento/getDataDocument/{data}', 'DocumentoController@getDataPrintBagsConsolidate');
-  Route::get('documento/getDataSearchDocument/{data?}', 'DocumentoController@getDataSearchDocument');
+  Route::get('documento/getDataSearchDocument/{data?}/{type?}', 'DocumentoController@getDataSearchDocument');
   Route::get('documento/updateShipperConsignee/{id}/{data_id}/{op}', 'DocumentoController@updateShipperConsignee');
   Route::post('documento/uploadFileStatus', 'DocumentoController@uploadFileStatus');
   Route::get('documento/validateUploadDocs', 'DocumentoController@validateUploadDocs');

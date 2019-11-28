@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Russo+One");
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+@import url("https://fonts.googleapis.com/css?family=Roboto+Condensed");
 
 /* CARGANDO*/
 body {
@@ -7,7 +7,7 @@ body {
 }
 
 .icon_lsave {
-  color: #fc7351
+  color: #fc7351;
 }
 
 .icon_lprint {
@@ -15,14 +15,15 @@ body {
 }
 
 .icon_lemail {
-  color: #2196f3
+  color: #2196f3;
 }
 
 .el-autocomplete {
   width: 100% !important;
 }
 
-.el-autocomplete-suggestion {
+.el-autocomplete-suggestion,
+.el-dropdown-menu {
   z-index: 3000 !important;
 }
 
@@ -30,7 +31,7 @@ body {
   cursor: pointer;
 }
 
-.nav>li>a {
+.nav > li > a {
   font-family: "Roboto Condensed";
 }
 
@@ -39,7 +40,7 @@ body {
 }
 
 .o-010 {
-  opacity: 0.10;
+  opacity: 0.1;
 }
 
 .mb-5 {
@@ -63,7 +64,7 @@ body {
 }
 
 .edit_btn {
-  color: #FFC107;
+  color: #ffc107;
 }
 
 .edit_btn:hover {
@@ -86,12 +87,12 @@ body {
   color: #f97e63;
 }
 
-table>thead>tr>th {
+table > thead > tr > th {
   font-weight: 200;
   font-size: 15px;
 }
 
-table>tfoot>tr>th {
+table > tfoot > tr > th {
   font-weight: 200;
   font-size: 15px;
 }
@@ -128,7 +129,7 @@ label {
   font-size: 15px;
 }
 
-.nav>li>a {
+.nav > li > a {
   font-size: 15px;
   font-weight: 100;
 }
@@ -151,7 +152,7 @@ label {
 #pre-load-web #imagen-load {
   left: 50%;
   margin-left: -30px;
-  position: absolute
+  position: absolute;
 }
 
 .sk-spinner-wave.sk-spinner {
@@ -179,7 +180,7 @@ table.table td a {
 table.table td a.view {
   width: 30px;
   height: 30px;
-  color: #2196F3;
+  color: #2196f3;
   border: 2px solid;
   border-radius: 30px;
   text-align: center;
@@ -213,11 +214,11 @@ table.table td a.view i {
 }
 
 .page-heading {
-  font-family: 'Russo One', sans-serif;
+  font-family: "Russo One", sans-serif;
 }
 
 .wrapper-content {
-  font-family: 'Roboto Condensed', sans-serif;
+  font-family: "Roboto Condensed", sans-serif;
   font-size: 16px;
 }
 
@@ -247,7 +248,7 @@ table.table td a.view i {
 /* STYLE VUE-SELECT */
 
 .v-select {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .v-select .dropdown li {
@@ -265,14 +266,14 @@ table.table td a.view i {
   color: #3c3c3c;
 }
 
-.v-select .dropdown-menu .active>a {
+.v-select .dropdown-menu .active > a {
   color: #fff;
 }
 
-.dropdown-toggle>input[type="search"] {
+.dropdown-toggle > input[type="search"] {
   width: 100px !important;
 }
 
-.dropdown-toggle>input[type="search"]:focus:valid {
+.dropdown-toggle > input[type="search"]:focus:valid {
   width: 100% !important;
 }
