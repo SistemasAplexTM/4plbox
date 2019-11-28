@@ -1,6 +1,6 @@
-$(document).ready(function() {
+$(document).ready(function () {
   $.fn.editable.defaults.mode = "popup";
-  $.fn.editable.defaults.params = function(params) {
+  $.fn.editable.defaults.params = function (params) {
     params._token = $('meta[name="csrf-token"]').attr("content");
     return params;
   };
@@ -9,12 +9,12 @@ $(document).ready(function() {
   loadTableCreateReceipt();
 
   jQuery("#tbl-tracking")
-    .on("mouseover", "tr", function() {
+    .on("mouseover", "tr", function () {
       jQuery(this)
         .find(".edit")
         .css("opacity", "1");
     })
-    .on("mouseout", "tr", function() {
+    .on("mouseout", "tr", function () {
       jQuery(this)
         .find(".edit")
         .css("opacity", "0");
@@ -27,9 +27,10 @@ function loadTable(name, bodega) {
     serverSide: true,
     responsive: true,
     lengthChange: false,
-    order: [[0, "DESC"]],
-    ajax:
-      "tracking/all/" +
+    order: [
+      [0, "DESC"]
+    ],
+    ajax: "tracking/all/" +
       true +
       "/" +
       false +
@@ -39,15 +40,17 @@ function loadTable(name, bodega) {
       false +
       "/" +
       bodega,
-    columns: [
-      {
+    columns: [{
         data: "fecha",
-        name: "fecha"
+        name: "fecha",
+        render: function (data, type, full, meta) {
+          return full.fecha + '<div style="color:#c6c9cb;">' + full.agencia + '</div>';
+        }
       },
       {
         data: "cliente",
         name: "cliente",
-        render: function(data, type, full, meta) {
+        render: function (data, type, full, meta) {
           if (full.cliente === null) {
             return "";
           } else {
@@ -68,7 +71,7 @@ function loadTable(name, bodega) {
       {
         data: "codigo",
         name: "codigo",
-        render: function(data, type, full, meta) {
+        render: function (data, type, full, meta) {
           return (
             '<a data-name="codigo" data-pk="' +
             full.id +
@@ -79,7 +82,7 @@ function loadTable(name, bodega) {
         }
       },
       {
-        render: function(data, type, full, meta) {
+        render: function (data, type, full, meta) {
           return (
             "<div>" +
             (full.num_warehouse === null ? "" : full.num_warehouse) +
@@ -91,7 +94,7 @@ function loadTable(name, bodega) {
         visible: bodega
       },
       {
-        render: function(data, type, full, meta) {
+        render: function (data, type, full, meta) {
           return (
             '<a data-name="contenido" data-pk="' +
             full.id +
@@ -115,7 +118,7 @@ function loadTable(name, bodega) {
       // },
       {
         sortable: false,
-        render: function(data, type, full, meta) {
+        render: function (data, type, full, meta) {
           var btn_delete = "";
           if (permission_delete) {
             var btn_delete =
@@ -135,7 +138,7 @@ function loadTable(name, bodega) {
         }
       }
     ],
-    drawCallback: function() {
+    drawCallback: function () {
       $(".edit").css("opacity", "0");
       $(".td_edit").editable({
         ajaxOptions: {
@@ -143,12 +146,12 @@ function loadTable(name, bodega) {
           dataType: "json"
         },
         url: "tracking/updateTrackingReceipt",
-        validate: function(value) {
+        validate: function (value) {
           if ($.trim(value) == "") {
             return "Este campo es obligatorio!";
           }
         },
-        success: function(response, newValue) {
+        success: function (response, newValue) {
           objVue.updateTable();
         }
       });
@@ -170,13 +173,14 @@ function loadTableCreateReceipt() {
     processing: true,
     serverSide: true,
     responsive: true,
-    order: [[0, "DESC"]],
+    order: [
+      [0, "DESC"]
+    ],
     ajax: "tracking/getTrackingByCreateReceipt/",
-    columns: [
-      {
+    columns: [{
         data: "confirmed_send",
         name: "confirmed_send",
-        render: function(data, type, full, meta) {
+        render: function (data, type, full, meta) {
           return parseInt(full.confirmed_send);
         },
         visible: false
@@ -184,14 +188,14 @@ function loadTableCreateReceipt() {
       {
         data: "cliente",
         name: "cliente",
-        render: function(data, type, full, meta) {
+        render: function (data, type, full, meta) {
           return "<label>" + full.cliente + "</label>";
         }
       },
       {
         sortable: false,
         class: "text-center",
-        render: function(data, type, full, meta) {
+        render: function (data, type, full, meta) {
           var color = "success";
           // var dateObj = new Date();
           // var month = (dateObj.getMonth() + 1).toString(); //months from 1-12
@@ -219,7 +223,7 @@ function loadTableCreateReceipt() {
       },
       {
         sortable: false,
-        render: function(data, type, full, meta) {
+        render: function (data, type, full, meta) {
           var btn_recall_email =
             ' <a onclick="reenviarEmail(' +
             full.consignee_id +
@@ -252,9 +256,8 @@ function showDataToCreateReceipt(consignee_id, client) {
     responsive: true,
     paging: false,
     ajax: "tracking/getTrackingByIdConsignee/" + consignee_id,
-    columns: [
-      {
-        render: function(data, type, full, meta) {
+    columns: [{
+        render: function (data, type, full, meta) {
           return (
             '<div class="checkbox checkbox-success"><input type="checkbox" checked="true" data-contenido="' +
             full.contenido +
@@ -273,7 +276,7 @@ function showDataToCreateReceipt(consignee_id, client) {
         name: "codigo"
       },
       {
-        render: function(data, type, full, meta) {
+        render: function (data, type, full, meta) {
           return (
             '<a data-name="contenido" data-pk="' +
             full.id +
@@ -284,19 +287,19 @@ function showDataToCreateReceipt(consignee_id, client) {
         }
       }
     ],
-    drawCallback: function() {
+    drawCallback: function () {
       $(".td_edit").editable({
         ajaxOptions: {
           type: "post",
           dataType: "json"
         },
         url: "tracking/updateTrackingReceipt",
-        validate: function(value) {
+        validate: function (value) {
           if ($.trim(value) == "") {
             return "Este campo es obligatorio!";
           }
         },
-        success: function(response, newValue) {
+        success: function (response, newValue) {
           objVue.updateTable();
           refreshTable("tbl-trackings-client");
         }
@@ -310,14 +313,17 @@ function showDataToCreateReceipt(consignee_id, client) {
 
 var objVue = new Vue({
   el: "#tracking",
-  created: function() {
+  created: function () {
     // this.getConsignee();
     this.getShipper();
     let me = this;
-    bus.$on("getData", function(payload) {
+    bus.$on("getData", function (payload) {
       // me.consignee_data = payload;
       me.consignee_name = payload.nombre_full;
-      me.consignee_id = { id: payload.id, name: payload.nombre_full };
+      me.consignee_id = {
+        id: payload.id,
+        name: payload.nombre_full
+      };
     });
     /* CUSTOM MESSAGES VE-VALIDATOR*/
     const dict = {
@@ -382,7 +388,7 @@ var objVue = new Vue({
             value: me.consignee_id.id,
             name: "consignee_id"
           })
-          .then(function(response) {
+          .then(function (response) {
             var res = response.data;
             if (response.data["code"] == 200) {
               $("#modalEditConsignee").modal("hide");
@@ -393,7 +399,7 @@ var objVue = new Vue({
             }
             me.loading = false;
           })
-          .catch(function(error) {
+          .catch(function (error) {
             me.loading = false;
             console.log(error);
             toastr.error("Error." + error, {
@@ -410,11 +416,11 @@ var objVue = new Vue({
       var me = this;
       axios
         .get("/consignee/vueSelect/" + queryString)
-        .then(function(response) {
+        .then(function (response) {
           me.consignees = response.data.items;
           cb(me.consignees);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
           toastr.warning("Error: -" + error);
         });
@@ -431,7 +437,7 @@ var objVue = new Vue({
     deleteSelected() {
       this.consignee_id = null;
     },
-    reenviarEmail: function(id, track) {
+    reenviarEmail: function (id, track) {
       axios
         .get("tracking/reenviarEmail/trackingRecibido/" + id + "/" + track)
         .then(response => {
@@ -442,14 +448,14 @@ var objVue = new Vue({
             toastr.error(response.data.error);
           }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
           toastr.error("Error.", {
             timeOut: 50000
           });
         });
     },
-    resetForm: function() {
+    resetForm: function () {
       this.consignee_id = null;
       this.consignee_name = null;
       this.tracking = null;
@@ -459,7 +465,7 @@ var objVue = new Vue({
       this.confirmedSend = false;
       this.editar = 0;
     },
-    validation: function(data) {
+    validation: function (data) {
       if (data.contenido != "") {
         if (data.peso != "" && parseFloat(data.peso) > 0) {
           if (data.shipper != null) {
@@ -488,14 +494,14 @@ var objVue = new Vue({
         return false;
       }
     },
-    createDocument: function() {
+    createDocument: function () {
       var l = $("#saveDoc").ladda();
       l.ladda("start");
       let me = this;
       var datos = $("#formTrackingClient").serializeArray();
       me.ids_tracking = [];
       me.contenido_tracking = [];
-      $.each(datos, function(i, field) {
+      $.each(datos, function (i, field) {
         if (field.name === "chk[]") {
           if ($("#chk" + field.value).val() != "") {
             me.ids_tracking.push($("#chk" + field.value).val());
@@ -523,12 +529,12 @@ var objVue = new Vue({
             shipper_id: me.shipper_id.id ? me.shipper_id.id : false,
             consignee_id: me.consignee_id_doc
           })
-          .then(function(response) {
+          .then(function (response) {
             var res = response.data;
             if (response.data["code"] == 200) {
               toastr.success(
                 "Registro creado correctamente. Recibo N°: " +
-                  res.datos["num_warehouse"]
+                res.datos["num_warehouse"]
               );
               me.createDocumentDetail(res.datos["id"]);
             } else {
@@ -536,13 +542,13 @@ var objVue = new Vue({
             }
             l.ladda("stop");
           })
-          .catch(function(error) {
+          .catch(function (error) {
             console.log(error);
             if (error.response.status === 422) {
               me.formErrors = error.response.data; //guardo los errores
               me.listErrors = me.formErrors.errors; //genero lista de errores
             }
-            $.each(me.formErrors.errors, function(key, value) {
+            $.each(me.formErrors.errors, function (key, value) {
               $(".result-" + key).html(value);
             });
             toastr.error("Porfavor completa los campos obligatorios.", {
@@ -553,14 +559,13 @@ var objVue = new Vue({
       }
       l.ladda("stop");
     },
-    createDocumentDetail: function(id_document) {
+    createDocumentDetail: function (id_document) {
       let me = this;
       axios
         .post("documento/insertDetail", {
           documento_id: id_document,
           contador: 1,
-          dimensiones:
-            me.peso + " Vol=" + me.largo + "x" + me.ancho + "x" + me.alto,
+          dimensiones: me.peso + " Vol=" + me.largo + "x" + me.ancho + "x" + me.alto,
           peso: me.peso,
           peso2: me.peso,
           contenido: me.contenido_detail,
@@ -577,7 +582,7 @@ var objVue = new Vue({
           shipper_id: me.shipper_id.id ? me.shipper_id.id : null,
           consignee_id: me.consignee_id_doc
         })
-        .then(function(response) {
+        .then(function (response) {
           var res = response.data;
           if (response.data["code"] == 200) {
             $("#modalCreateReceipt").modal("hide");
@@ -593,14 +598,14 @@ var objVue = new Vue({
             toastr.warning(response.data["error"]);
           }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
           toastr.error("Error.", {
             timeOut: 50000
           });
         });
     },
-    searchTracking: function() {
+    searchTracking: function () {
       let me = this;
       axios.get("tracking/searchTracking/" + me.tracking).then(response => {
         var datos = response.data;
@@ -632,24 +637,24 @@ var objVue = new Vue({
         }
       });
     },
-    getConsignee: function() {
+    getConsignee: function () {
       let me = this;
       axios.get("tracking/getAllShipperConsignee/consignee").then(response => {
         me.consignees = response.data.data;
       });
     },
-    getShipper: function() {
+    getShipper: function () {
       let me = this;
       axios.get("tracking/getAllShipperConsignee/shipper").then(response => {
         me.shippers = response.data.data;
       });
     },
-    updateTable: function() {
+    updateTable: function () {
       refreshTable("tbl-tracking");
       refreshTable("tbl-tracking-bodega");
       refreshTable("tbl-tracking-group");
     },
-    delete: function(data) {
+    delete: function (data) {
       swal({
         title: "Seguro que desea eliminar este registro?",
         text: "No lo podras recuperar despues!",
@@ -669,7 +674,7 @@ var objVue = new Vue({
         }
       });
     },
-    create: function() {
+    create: function () {
       const isUnique = value => {
         return axios
           .post("tracking/validar_tracking", {
@@ -698,14 +703,13 @@ var objVue = new Vue({
           if (result) {
             axios
               .post("tracking", {
-                consignee_id:
-                  this.consignee_id != null ? this.consignee_id.id : null,
+                consignee_id: this.consignee_id != null ? this.consignee_id.id : null,
                 codigo: this.tracking,
                 contenido: this.contenido,
                 confirmed_send: this.confirmedSend,
                 agencia_id: $("#agencia_id").val()
               })
-              .then(function(response) {
+              .then(function (response) {
                 if (response.data["code"] == 200) {
                   toastr.success("Registro creado correctamente.");
                   toastr.options.closeButton = true;
@@ -716,22 +720,21 @@ var objVue = new Vue({
                 me.resetForm();
                 me.updateTable();
               })
-              .catch(function(error) {
+              .catch(function (error) {
                 console.log(error);
                 toastr.warning(
-                  "Error: porfavor veifica la informacion ingresada.",
-                  {
+                  "Error: porfavor veifica la informacion ingresada.", {
                     timeOut: 50000
                   }
                 );
               });
           }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           toastr.warning("Error: " + error);
         });
     },
-    cancel: function() {
+    cancel: function () {
       var me = this;
       me.resetForm();
     }
