@@ -79,6 +79,8 @@
         </div>
         <div class="ibox-content">
           <!--***** contenido ******-->
+          {{-- <button type="button" class="btn btn-primary" data-target="#modalPrint" data-toggle="modal">Imprimir
+            recibo</button> --}}
           <div class="row">
             <div class="col-lg-12">
               <div class="form-group" :class="{ 'has-error': errors.has('tracking') }">
@@ -125,8 +127,6 @@
                   </label>
                 </div>
                 <div class="col-sm-8">
-                  {{-- <v-select name="consignee_id" :options="consignees" placeholder="@lang('general.client')" label="name" v-model="consignee_id"> --}}
-                  {{-- </v-select> --}}
                   <el-autocomplete clearable class="inline-input" v-model="consignee_name"
                     :fetch-suggestions="querySearchConsignee" :trigger-on-focus="false"
                     placeholder="@lang('general.consignee')" size="small" @clear="deleteSelected"
@@ -408,9 +408,42 @@
       </div>
     </div>
   </div>
+
+  {{-- MODAL PRINT DOCUMENT --}}
+  <div class="modal fade bs-example" id="modalPrint" tabindex="1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" style="width: 20%;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+              class="sr-only">@lang('documents.close')</span></button>
+          <h2 class="modal-title" id="myModalLabel"><i class="fal fa-print"></i> @lang('documents.print_document')</h2>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-sm-12">
+              <h2 style="text-align: center;padding-bottom: 20px;">
+                <i class="fal fa-cubes"></i> @{{ print_warehouse }}
+              </h2>
+              <el-button type="primary" :loading="loading" @click="printDocument(true)" v-if="print_direct"><i
+                  class="fal fa-print"></i>
+                @lang('general.direct_print')</el-button>
+
+              <el-button type="success" :loading="loading" @click="printDocument(false)"><i class="fal fa-print"></i>
+                @lang('layouts.print')</el-button>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <el-button data-dismiss="modal"><i class="fal fa-times"></i> @lang('documents.close')</el-button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 @endsection
 
 @section('scripts')
+{!! $wcpScript !!}
 <script src="{{ asset('js/templates/tracking.js') }}"></script>
 @endsection

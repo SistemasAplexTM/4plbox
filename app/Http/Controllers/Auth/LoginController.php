@@ -96,9 +96,12 @@ class LoginController extends Controller
   {
     if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'actived' => 1])) {
       $key = 'print_' . Auth::user()->agencia_id;
-      $data = $this->getConfig($key);
       $printers = json_decode($request->printers);
-      $printersDB =  json_decode($data->value);
+      $data = $this->getConfig($key);
+      $printersDB =  false;
+      if ($data) {
+        $printersDB =  json_decode($data->value);
+      }
       // var_dump($printersDB);
       // exit();
       $default = null;

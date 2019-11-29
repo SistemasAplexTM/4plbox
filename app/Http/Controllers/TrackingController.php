@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+include_once(app_path() . '\WebClientPrint\WebClientPrint.php');
+use Neodynamic\SDK\Web\WebClientPrint;
 use App\Http\Requests\TrackingRequest;
 use App\Tracking;
 use App\Prealerta;
+use Session;
 use Auth;
 use DataTables;
+use JavaScript;
 use App\Agencia;
 use App\Status;
 use Illuminate\Http\Request;
@@ -52,7 +56,18 @@ class TrackingController extends Controller
       //   $data->save();
       // }
       // exit();
-      return view('templates/tracking', compact('agencias', 'role_admin'));
+
+      // OBTENER LA CONFIGURACION DE LA IMPRESORA
+        $printers = Session::get('printer');
+        //   print_r($printers);
+        //   exit();
+        JavaScript::put([
+            'print_labels' => (($printers) ? $printers->label : ''),
+            'print_documents'  => (($printers) ? $printers->default : ''),
+            'print_format'  => 'PDF',
+        ]);
+      $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('DocumentoController@printFile'), Session::getId());
+      return view('templates/tracking', compact('agencias', 'role_admin', 'wcpScript'));
     }
 
     public function store(TrackingRequest $request)
