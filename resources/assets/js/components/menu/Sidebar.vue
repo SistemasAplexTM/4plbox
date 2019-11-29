@@ -2,11 +2,13 @@
   <ul class="nav metismenu" id="side-menu">
     <slot name="header"></slot>
     <li v-for="item in menu" class="active" :key="item.id">
-      <a :href="item.route" :style="'background-color: ' + formatMeta(item.meta, 'color')" style="color: white;">
+      <a
+        :href="item.route"
+        :style="'background-color: ' + formatMeta(item.meta, 'color')"
+        style="color: white;"
+      >
         <i :class="formatMeta(item.meta, 'icon')"></i>
-        <span class="nav-label">
-          {{ item.name }}
-        </span>
+        <span class="nav-label">{{ item.name }}</span>
         <span class="arrow">
           <i class="fal fa-angle-down"></i>
         </span>
@@ -24,37 +26,49 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        menu: []
-      };
+export default {
+  data() {
+    return {
+      menu: []
+    };
+  },
+  created() {
+    let me = this;
+    me.get();
+    bus.$on("refreshList", function(payload) {
+      localStorage.removeItem("menu");
+      me.get();
+    });
+  },
+  methods: {
+    get() {
+      let menuLS = localStorage.getItem("menu");
+      if (menuLS) {
+        this.menu = JSON.parse(menuLS);
+      } else {
+        axios
+          .get("/getMenu/" + true + "/17")
+          .then(({ data }) => {
+            this.menu = data;
+            localStorage.setItem("menu", JSON.stringify(data));
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
     },
-    created(){
-      let me = this
-      me.get()
-      bus.$on('refreshList', function (payload) {
-        me.get()
-      })
-    },
-    methods: {
-      get () {
-        axios.get('/getMenu/' + true + '/17').then(({data}) => {
-          this.menu = data
-        }).catch(error => { console.log(error) })
-      },
-      formatMeta (meta, param) {
-        if (meta) {
-          var data = JSON.parse(meta)
-          return data[param]
-        }
+    formatMeta(meta, param) {
+      if (meta) {
+        var data = JSON.parse(meta);
+        return data[param];
       }
     }
-  };
+  }
+};
 </script>
 
 <style lang="css">
-  .nav-header {
-    padding-bottom: 0px;
-  }
+.nav-header {
+  padding-bottom: 0px;
+}
 </style>
