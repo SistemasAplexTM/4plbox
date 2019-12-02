@@ -441,6 +441,7 @@ return [
 
 
     'country' => 'Country',
+    'direct_print' => 'Direct Print',
 
 
 

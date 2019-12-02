@@ -45,7 +45,7 @@
     <script src="{{ asset('js/plantilla.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
-    <script src="{{ asset('js/plugins/silentPrint/silentPrint.min.js') }}"></script>
+    {{-- <script src="{{ asset('js/plugins/silentPrint/silentPrint.min.js') }}"></script> --}}
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js">
     </script>

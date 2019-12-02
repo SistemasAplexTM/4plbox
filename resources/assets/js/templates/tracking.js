@@ -41,102 +41,102 @@ function loadTable(name, bodega) {
       "/" +
       bodega,
     columns: [{
-        data: "fecha",
-        name: "fecha",
-        render: function (data, type, full, meta) {
-          return full.fecha + '<div style="color:#c6c9cb;">' + full.agencia + '</div>';
-        }
-      },
-      {
-        data: "cliente",
-        name: "cliente",
-        render: function (data, type, full, meta) {
-          if (full.cliente === null) {
-            return "";
-          } else {
-            return (
-              '<div style="width:80%;float: left;">' +
-              full.cliente +
-              '</div> <div style="width:20%;float: right;"><a  data-toggle="tooltip" title="Cambiar" class="edit" style="color:#FFC107;" onclick="editConsignee(' +
-              full.id +
-              ')"><i class="fal fa-pencil"></i></a></div>'
-            );
-          }
-        }
-      },
-      // {
-      //     data: "cliente_email",
-      //     name: 'cliente_email'
-      // },
-      {
-        data: "codigo",
-        name: "codigo",
-        render: function (data, type, full, meta) {
+      data: "fecha",
+      name: "fecha",
+      render: function (data, type, full, meta) {
+        return full.fecha + '<div style="color:#c6c9cb;">' + full.agencia + '</div>';
+      }
+    },
+    {
+      data: "cliente",
+      name: "cliente",
+      render: function (data, type, full, meta) {
+        if (full.cliente === null) {
+          return "";
+        } else {
           return (
-            '<a data-name="codigo" data-pk="' +
+            '<div style="width:80%;float: left;">' +
+            full.cliente +
+            '</div> <div style="width:20%;float: right;"><a  data-toggle="tooltip" title="Cambiar" class="edit" style="color:#FFC107;" onclick="editConsignee(' +
             full.id +
-            '" class="td_edit" data-type="text" data-placement="top" data-title="Tracking">' +
-            full.codigo +
-            "</a>"
+            ')"><i class="fal fa-pencil"></i></a></div>'
           );
-        }
-      },
-      {
-        render: function (data, type, full, meta) {
-          return (
-            "<div>" +
-            (full.num_warehouse === null ? "" : full.num_warehouse) +
-            '</div><small style="color:#2196F3">' +
-            (full.estatus === null ? "" : full.estatus) +
-            "</small>"
-          );
-        },
-        visible: bodega
-      },
-      {
-        render: function (data, type, full, meta) {
-          return (
-            '<a data-name="contenido" data-pk="' +
-            full.id +
-            '" class="td_edit" data-type="textarea" data-placement="left" data-title="Contenido">' +
-            (full.contenido2 !== null ? full.contenido2 : "No hay datos") +
-            "</a>"
-          );
-        }
-      },
-      // {
-      //     sortable: false,
-      //     "render": function(data, type, full, meta) {
-      //         var color = '#ccc';
-      //         var label = 'Sin acción';
-      //         if (full.confirmed_send == 1) {
-      //             color = '#4caf50';
-      //             label = 'Despachar';
-      //         }
-      //         return '<div style="color:' + color + '" class="text-center" data-toggle="tooltip" title="' + label + '"><i class="fal fa-flag"></i></div>';
-      //     }
-      // },
-      {
-        sortable: false,
-        render: function (data, type, full, meta) {
-          var btn_delete = "";
-          if (permission_delete) {
-            var btn_delete =
-              ' <a onclick="eliminar(' +
-              full.id +
-              "," +
-              false +
-              ")\" class='delete_btn' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fal fa-trash-alt fa-lg'></i></a> ";
-          }
-          var btn_recall_email =
-            ' <a onclick="reenviarEmail(' +
-            full.consignee_id +
-            ",'" +
-            full.codigo +
-            "')\" class='reply_btn' data-toggle='tooltip' data-placement='top' title='Reenviar Email'><i class='fal fa-reply-all'></i></a> ";
-          return btn_delete;
         }
       }
+    },
+    // {
+    //     data: "cliente_email",
+    //     name: 'cliente_email'
+    // },
+    {
+      data: "codigo",
+      name: "codigo",
+      render: function (data, type, full, meta) {
+        return (
+          '<a data-name="codigo" data-pk="' +
+          full.id +
+          '" class="td_edit" data-type="text" data-placement="top" data-title="Tracking">' +
+          full.codigo +
+          "</a>"
+        );
+      }
+    },
+    {
+      render: function (data, type, full, meta) {
+        return (
+          "<div>" +
+          (full.num_warehouse === null ? "" : full.num_warehouse) +
+          '</div><small style="color:#2196F3">' +
+          (full.estatus === null ? "" : full.estatus) +
+          "</small>"
+        );
+      },
+      visible: bodega
+    },
+    {
+      render: function (data, type, full, meta) {
+        return (
+          '<a data-name="contenido" data-pk="' +
+          full.id +
+          '" class="td_edit" data-type="textarea" data-placement="left" data-title="Contenido">' +
+          (full.contenido2 !== null ? full.contenido2 : "No hay datos") +
+          "</a>"
+        );
+      }
+    },
+    // {
+    //     sortable: false,
+    //     "render": function(data, type, full, meta) {
+    //         var color = '#ccc';
+    //         var label = 'Sin acción';
+    //         if (full.confirmed_send == 1) {
+    //             color = '#4caf50';
+    //             label = 'Despachar';
+    //         }
+    //         return '<div style="color:' + color + '" class="text-center" data-toggle="tooltip" title="' + label + '"><i class="fal fa-flag"></i></div>';
+    //     }
+    // },
+    {
+      sortable: false,
+      render: function (data, type, full, meta) {
+        var btn_delete = "";
+        if (permission_delete) {
+          var btn_delete =
+            ' <a onclick="eliminar(' +
+            full.id +
+            "," +
+            false +
+            ")\" class='delete_btn' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fal fa-trash-alt fa-lg'></i></a> ";
+        }
+        var btn_recall_email =
+          ' <a onclick="reenviarEmail(' +
+          full.consignee_id +
+          ",'" +
+          full.codigo +
+          "')\" class='reply_btn' data-toggle='tooltip' data-placement='top' title='Reenviar Email'><i class='fal fa-reply-all'></i></a> ";
+        return btn_delete;
+      }
+    }
     ],
     drawCallback: function () {
       $(".edit").css("opacity", "0");
@@ -178,67 +178,67 @@ function loadTableCreateReceipt() {
     ],
     ajax: "tracking/getTrackingByCreateReceipt/",
     columns: [{
-        data: "confirmed_send",
-        name: "confirmed_send",
-        render: function (data, type, full, meta) {
-          return parseInt(full.confirmed_send);
-        },
-        visible: false
+      data: "confirmed_send",
+      name: "confirmed_send",
+      render: function (data, type, full, meta) {
+        return parseInt(full.confirmed_send);
       },
-      {
-        data: "cliente",
-        name: "cliente",
-        render: function (data, type, full, meta) {
-          return "<label>" + full.cliente + "</label>";
-        }
-      },
-      {
-        sortable: false,
-        class: "text-center",
-        render: function (data, type, full, meta) {
-          var color = "success";
-          // var dateObj = new Date();
-          // var month = (dateObj.getMonth() + 1).toString(); //months from 1-12
-          // var day = dateObj.getDate().toString();
-          // var year = dateObj.getUTCFullYear();
-          //
-          // var mmChars = month.split('');
-          // var ddChars = day.split('');
-          //
-          // month = (mmChars[1]?month:"0"+mmChars[0]);
-          // day = (ddChars[1]?day:"0"+ddChars[0]);
-          //
-          // var today = year + "-" + month + "-" + day;
-          if (parseInt(full.confirmed_send) !== 0) {
-            color = "primary";
-          }
-          return (
-            '<label class="badge badge-' +
-            color +
-            '" style="font-size: 15px;">' +
-            full.cantidad +
-            "</label> "
-          );
-        }
-      },
-      {
-        sortable: false,
-        render: function (data, type, full, meta) {
-          var btn_recall_email =
-            ' <a onclick="reenviarEmail(' +
-            full.consignee_id +
-            ",'" +
-            full.trackings +
-            "')\" class='reply_btn' data-toggle='tooltip' data-placement='top' title='Reenviar Email'><i class='fal fa-reply-all'></i></a> ";
-          var btn_create =
-            ' <a onclick="showDataToCreateReceipt(' +
-            full.consignee_id +
-            ", '" +
-            full.cliente +
-            "')\" class='btn btn-outline btn-primary btn-xs' data-toggle='tooltip' title='Crear recibo'><i class='fal fa-file-signature'></i> </a> ";
-          return btn_create + " " + btn_recall_email;
-        }
+      visible: false
+    },
+    {
+      data: "cliente",
+      name: "cliente",
+      render: function (data, type, full, meta) {
+        return "<label>" + full.cliente + "</label>";
       }
+    },
+    {
+      sortable: false,
+      class: "text-center",
+      render: function (data, type, full, meta) {
+        var color = "success";
+        // var dateObj = new Date();
+        // var month = (dateObj.getMonth() + 1).toString(); //months from 1-12
+        // var day = dateObj.getDate().toString();
+        // var year = dateObj.getUTCFullYear();
+        //
+        // var mmChars = month.split('');
+        // var ddChars = day.split('');
+        //
+        // month = (mmChars[1]?month:"0"+mmChars[0]);
+        // day = (ddChars[1]?day:"0"+ddChars[0]);
+        //
+        // var today = year + "-" + month + "-" + day;
+        if (parseInt(full.confirmed_send) !== 0) {
+          color = "primary";
+        }
+        return (
+          '<label class="badge badge-' +
+          color +
+          '" style="font-size: 15px;">' +
+          full.cantidad +
+          "</label> "
+        );
+      }
+    },
+    {
+      sortable: false,
+      render: function (data, type, full, meta) {
+        var btn_recall_email =
+          ' <a onclick="reenviarEmail(' +
+          full.consignee_id +
+          ",'" +
+          full.trackings +
+          "')\" class='reply_btn' data-toggle='tooltip' data-placement='top' title='Reenviar Email'><i class='fal fa-reply-all'></i></a> ";
+        var btn_create =
+          ' <a onclick="showDataToCreateReceipt(' +
+          full.consignee_id +
+          ", '" +
+          full.cliente +
+          "')\" class='btn btn-outline btn-primary btn-xs' data-toggle='tooltip' title='Crear recibo'><i class='fal fa-file-signature'></i> </a> ";
+        return btn_create + " " + btn_recall_email;
+      }
+    }
     ]
   });
 }
@@ -257,35 +257,35 @@ function showDataToCreateReceipt(consignee_id, client) {
     paging: false,
     ajax: "tracking/getTrackingByIdConsignee/" + consignee_id,
     columns: [{
-        render: function (data, type, full, meta) {
-          return (
-            '<div class="checkbox checkbox-success"><input type="checkbox" checked="true" data-contenido="' +
-            full.contenido +
-            '" id="chk' +
-            full.id +
-            '" name="chk[]" value="' +
-            full.id +
-            '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' +
-            full.id +
-            '"></label></div>'
-          );
-        }
-      },
-      {
-        data: "codigo",
-        name: "codigo"
-      },
-      {
-        render: function (data, type, full, meta) {
-          return (
-            '<a data-name="contenido" data-pk="' +
-            full.id +
-            '" class="td_edit" data-type="text" data-placement="right" data-title="Contenido">' +
-            (full.contenido !== null ? full.contenido : "No hay datos") +
-            "</a>"
-          );
-        }
+      render: function (data, type, full, meta) {
+        return (
+          '<div class="checkbox checkbox-success"><input type="checkbox" checked="true" data-contenido="' +
+          full.contenido +
+          '" id="chk' +
+          full.id +
+          '" name="chk[]" value="' +
+          full.id +
+          '" aria-label="Single checkbox One" style="right: 50px;"><label for="chk' +
+          full.id +
+          '"></label></div>'
+        );
       }
+    },
+    {
+      data: "codigo",
+      name: "codigo"
+    },
+    {
+      render: function (data, type, full, meta) {
+        return (
+          '<a data-name="contenido" data-pk="' +
+          full.id +
+          '" class="td_edit" data-type="text" data-placement="right" data-title="Contenido">' +
+          (full.contenido !== null ? full.contenido : "No hay datos") +
+          "</a>"
+        );
+      }
+    }
     ],
     drawCallback: function () {
       $(".td_edit").editable({
@@ -362,9 +362,24 @@ var objVue = new Vue({
     contenido_detail: null,
     consignee_name_change: null,
     errors_data: false,
-    tracking_id: null
+    tracking_id: null,
+    print_direct: (print_labels != '' && print_documents != '') ? true : false,
+    print_warehouse: null,
+    print_id_document: null
   },
   methods: {
+    printDocument: function (direct) {
+      let me = this;
+      if (direct) {
+        javascript: jsWebClientPrint.print("useDefaultPrinter=false&printerName=" + print_labels + "&filetype=" + print_format + "&id=" + me.print_id_document + "&agency_id=" + agency_id + "&document=warehouse&label=true")
+        setTimeout(function () {
+          javascript: jsWebClientPrint.print("useDefaultPrinter=false&printerName=" + print_documents + "&filetype=" + print_format + "&id=" + me.print_id_document + "&agency_id=" + agency_id + "&document=warehouse")
+        }, 1000);
+      } else {
+        window.open('impresion-documento-label/' + this.print_id_document + '/warehouse', '_blank');
+        window.open('impresion-documento/' + this.print_id_document + '/warehouse', '_blank');
+      }
+    },
     openNew() {
       var data = {
         component: "form-csc",
@@ -532,10 +547,15 @@ var objVue = new Vue({
           .then(function (response) {
             var res = response.data;
             if (response.data["code"] == 200) {
+              me.print_id_document = res.datos["id"];
+              me.print_warehouse = res.datos["num_warehouse"];
               toastr.success(
                 "Registro creado correctamente. Recibo N°: " +
                 res.datos["num_warehouse"]
               );
+              setTimeout(() => {
+                $('#modalPrint').modal('show');
+              }, 1500);
               me.createDocumentDetail(res.datos["id"]);
             } else {
               toastr.warning(response.data["error"]);
@@ -724,8 +744,8 @@ var objVue = new Vue({
                 console.log(error);
                 toastr.warning(
                   "Error: porfavor veifica la informacion ingresada.", {
-                    timeOut: 50000
-                  }
+                  timeOut: 50000
+                }
                 );
               });
           }

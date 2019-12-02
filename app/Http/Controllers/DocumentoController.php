@@ -1316,6 +1316,7 @@ class DocumentoController extends Controller
 
     public function pdf($id, $document, $id_detalle = null, $view = true)
     {
+
         $documento = DB::table('documento')
             ->leftJoin('localizacion AS ciudad_document', 'documento.ciudad_id', '=', 'ciudad_document.id')
             ->leftJoin('deptos AS deptos_documento', 'ciudad_document.deptos_id', '=', 'deptos_documento.id')
