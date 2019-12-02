@@ -173,9 +173,9 @@ function datatableDocument(t, tipo_doc_id, filtro) {
     "drawCallback": function () {
       /* POPOVER PARA LAS GUIAS AGRUPADAS (BADGED) */
       $(".pop").popover({
-          trigger: "manual",
-          html: true
-        })
+        trigger: "manual",
+        html: true
+      })
         .on("mouseenter", function () {
           var _this = this;
           $(this).popover("show");
@@ -192,7 +192,7 @@ function datatableDocument(t, tipo_doc_id, filtro) {
         });
       if (t === 4) {
         var table = $('#tbl-documento' + t).DataTable();
-        $('.pending').html(table.data().count());
+        // $('.pending').html(table.data().count());
       }
     }
   });
@@ -371,7 +371,7 @@ function numDocument(data, type, full, meta) {
         mintic = '<div><small style="color: #23c6c8;padding-left:15px">' + str + '</small></div>';
       }
     }
-    return '<span class="" data-toggle="tooltip" title="' + st + '"><i class="fal fa-' + ((full.estatus == null) ? 'box' : ((full.agrupadas > 0) ? 'boxes' : ((full.flag == 1) ? 'minus' : 'box-open'))) + ' fa-xs" style="color:' + ((full.flag == 1) ? '#E34724' : full.estatus_color) + '"></i> ' + ((codigo == null) ? full.warehouse : codigo) + '</span><a style="float: right;cursor:pointer;" class="badge badge-' + classText + ' pop" role="button" data-html="true" data-toggle="popover" data-trigger="hover" title="<b>Documentos agrupadas</b>" data-content="' + ((groupGuias == null) ? '' : groupGuias) + '" ' + group + '>' + ((full.agrupadas == null) ? '' : full.agrupadas) + '</a>' + mintic;
+    return '<span class="" data-toggle="tooltip" title="' + st + '"><i class="fal fa-' + ((full.estatus == null) ? 'box' : ((full.agrupadas > 0) ? 'boxes' : ((full.flag == 1) ? 'minus' : 'box-open'))) + ' " style="color:' + ((full.flag == 1) ? '#E34724' : full.estatus_color) + '"></i> ' + ((codigo == null) ? full.warehouse : codigo) + '</span><a style="float: right;cursor:pointer;" class="badge badge-' + classText + ' pop" role="button" data-html="true" data-toggle="popover" data-trigger="hover" title="<b>Documentos agrupadas</b>" data-content="' + ((groupGuias == null) ? '' : groupGuias) + '" ' + group + '>' + ((full.agrupadas == null) ? '' : full.agrupadas) + '</a>' + mintic;
   } else {
     icon = 'fal fa-boxes';
     if (full.transporte_id == 1) {

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-include_once(app_path() . '\WebClientPrint\WebClientPrint.php');
 use Neodynamic\SDK\Web\WebClientPrint;
 use App\Http\Requests\TrackingRequest;
 use App\Tracking;

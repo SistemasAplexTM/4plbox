@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-include_once(app_path() . '\WebClientPrint\WebClientPrint.php');
-
 use Neodynamic\SDK\Web\WebClientPrint;
 use Neodynamic\SDK\Web\Utils;
 use Neodynamic\SDK\Web\DefaultPrinter;

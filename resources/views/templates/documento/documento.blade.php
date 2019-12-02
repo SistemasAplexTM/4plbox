@@ -375,13 +375,13 @@
                   <small class="help-block has-error">@{{ errors.first('nombreD') }}</small>
 
                   <el-row :gutter="24">
-                    <el-col :span="12">
+                    <el-col :span="24">
                       <div><label class="data_content"><i class="fal fa-map-marked-alt"></i></label>
                         @{{ consignee_data.direccion }}</div>
                     </el-col>
                   </el-row>
                   <el-row :gutter="24">
-                    <el-col :span="12">
+                    <el-col :span="24">
                       <div><label class="data_content"><i class="fal fa-city"></i></label> @{{ consignee_data.ciudad }}
                         - @{{ consignee_data.zip }}</div>
                     </el-col>

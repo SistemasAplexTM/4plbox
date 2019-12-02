@@ -319,6 +319,7 @@ var objVue = new Vue({
                 'tracking': (codigo) ? codigo : me.tracking_number,
                 'id_detail': me.id_detalle,
                 'consignee_id': $('#consignee_id').val(),
+                'agencia_id': $('#agencia_id').val(),
             }).then(response => {
                 if (response.data.code == 200) {
                     me.tracking_number = null;
@@ -828,7 +829,7 @@ var objVue = new Vue({
                         data: 'arancel',
                         name: 'arancel',
                         "render": $.fn.dataTable.render.number(',', '.', 2, '% ')
-                    }, ]
+                    },]
                 });
             }
 
