@@ -131,6 +131,11 @@ class DocumentoController extends Controller
         $status_list = Status::select('id', 'descripcion', 'color', 'icon')
             ->where([['deleted_at', null]])
             ->get();
+
+        $fFin = strtotime('+5 day' , strtotime(date('Y-m-d')));
+        $fFin = date('Y-m-d' , $fFin);
+        $nuevafecha = strtotime('-6 day' , strtotime($fFin));
+        $fIni = date('Y-m-d' , $nuevafecha);
         $pendientes = DB::table('documento AS a')
             ->leftJoin('documento_detalle AS b', 'a.id', 'b.documento_id')
             ->select(DB::raw('Count(a.num_warehouse) AS cantidad'))
@@ -140,6 +145,7 @@ class DocumentoController extends Controller
                 ['b.num_warehouse', null],
                 ['b.deleted_at', null]
             ])
+            ->whereBetween('a.created_at', [$fIni,$fFin])
             ->whereNotNull('a.num_warehouse')
             ->first();
         // OBTENER LA CONFIGURACION DE LA IMPRESORA
@@ -1058,21 +1064,25 @@ class DocumentoController extends Controller
                     ->first();
                 /* OBTENER PREFIJO DE GUIA DESDE LA TABLA DE CONFIG, SI EXISTE SE REEMPLAZA POR EL PREFIJO DE LA CIUDAD */
                 $config_pefix = $this->getConfig('prefix_guia');
+                
                 if ($config_pefix) {
                     $prefijoGuia->prefijo = $config_pefix->value;
                 }
 
                 $documento = Documento::findOrFail($data->documento_id);
 
-                $documentoD = DocumentoDetalle::select('documento_detalle.id')
+                $documentoD = DocumentoDetalle::select('documento_detalle.id', 'documento_detalle.paquete')
                     ->where([
                         ['documento_detalle.documento_id', $data->documento_id],
-                    ])->get();
+                    ])
+                    ->orderBy('id', 'DESC')
+                    ->first();
+                    
                 // $data->num_guia      = $documento->num_guia . '' . (count($documentoD) + 1);
                 // PARA JYG QUITARLE EL UNO AL NUMERO DE GUIA Y WRH
                 $paquete = '';
                 if (env('APP_CLIENT') != 'jyg') {
-                    $paquete = 'P' . (count($documentoD) + 1);
+                    $paquete = 'P' . (($documentoD) ? $documentoD->paquete + 1 : 1);
                 }
 
                 /* GENERAR NUMERO DE GUIA */
@@ -1086,7 +1096,7 @@ class DocumentoController extends Controller
                 }
                 // $data->num_guia = trim($prefijo . $documento->consecutivo . $paquete . $prefijoPais);
                 $data->num_guia = trim($prefijo . $documento->consecutivo . $paquete);
-                $data->paquete  = (count($documentoD) + 1);
+                $data->paquete  = (($documentoD) ? $documentoD->paquete + 1 : 1);
 
                 /* GENERAR NUMERO DE WAREHOUSE */
                 $data->num_warehouse = trim($documento->num_warehouse . '' . $paquete);

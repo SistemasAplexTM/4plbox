@@ -20,7 +20,6 @@ Route::get('master/buscar/{dato}/{type?}', 'MasterController@getSoC');
 Route::group(['middleware' => 'auth'], function () {
   Route::get('commandBackup', function () {
     Artisan::call('backup:run', ['--only-db' => true]);
-    dd(Artisan::output());
     return "successfully!";
   });
   /* REGISTRO DE LOG DE ACTIVIDADES DE USUARIOS */

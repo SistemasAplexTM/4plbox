@@ -451,7 +451,6 @@ var objVue = new Vue({
             $('#modalPaymentMethod').modal('show');
         },
         validatePayment(val) {
-            console.log('em');
             let me = this;
             $('#tipo_pago_id').val(val);
             me.getAdminTable('Forma_de_Pago').then(response => {
@@ -601,7 +600,6 @@ var objVue = new Vue({
                 me.shipper_data = data
                 me.nombreR = data['nombre_full'];
             } else {
-                console.log(data);
                 me.consignee_data = data
                 me.nombreD = data['nombre_full'];
             }
@@ -678,7 +676,6 @@ var objVue = new Vue({
         },
         delete: function (data) {
             var me = this;
-            // console.log(data);
             if (data.logical === true) {
                 axios.get('../delete/' + data.id + '/' + data.logical + '/documento_detalle').then(response => {
                     toastr.success("<div><p>Registro eliminado exitosamente.</p><button type='button' onclick='deshacerEliminar(" + data.id + ")' id='okBtn' class='btn btn-xs btn-danger pull-right'><i class='fal fa-reply'></i> Restaurar</button></div>", '', {

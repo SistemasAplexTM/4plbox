@@ -57,7 +57,8 @@ var objVue = new Vue({
     courier_carga: 2,
     showFilter: true,
     openGroup: false,
-    idDocument: null
+    idDocument: null,
+    courier_today: 'HOY'
   },
   methods: {
     open(id, consecutive) {
@@ -83,6 +84,7 @@ var objVue = new Vue({
       this.dialogVisibleUpload = false;
     },
     filter(data) {
+      this.courier_today = '';
       listDocument(1, null, null, null, true, data.filter, data.courier_carga);
       this.dialogVisible = false;
     },

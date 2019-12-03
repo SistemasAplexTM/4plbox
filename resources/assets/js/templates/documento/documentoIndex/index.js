@@ -259,7 +259,6 @@ function actionsButtons(data, type, full, meta) {
       var guia_wcp = '';
       var guia_invoice_wcp = '';
 
-      console.log(print_labels, print_documents);
       /* CONFIGURAR IMPRESION CON WCP */
       if (print_labels != '') {
         label_wcp = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + print_labels + '&filetype=' + print_format + '&id=' + full.id + '&agency_id=' + agency_id + '&document=warehouse&label=true\')"> <spam class="fal fa-print"></spam> Label Warehouse</a></li>';

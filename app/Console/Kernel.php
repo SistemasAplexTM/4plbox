@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
 
         // GENERAR BACKUP AUTOMATICO DE LA APLICACION (--only-db = solo base de datos)
-        $schedule->command('backup:run --only-db --db-name=4plbox')->hourly();
+        $schedule->command('backup:run --only-db')->hourly();
         // PARA VER SI HAY MENSAGES POR ENVIAR
         $schedule->command('queue:work')->everyMinute();
     }

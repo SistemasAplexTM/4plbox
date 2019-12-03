@@ -331,7 +331,7 @@
                                         <li role="warehouses" id="default" :class="{ active: courier_carga }"
                                             @click="pendign">
                                             <a href="#courier" aria-controls="courier" role="tab" data-toggle="tab"><i
-                                                    class="fal fa-box-open"></i> COURIER
+                                                    class="fal fa-box-open"></i> COURIER @{{ courier_today }}
                                             </a>
                                         </li>
                                         <li role="load" :class="{ active: !courier_carga }" id="li-load"

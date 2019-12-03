@@ -46,12 +46,12 @@ return [
              * E.g.*/
               'mysql' => [
                   'driver' => 'mysql',
-                //    'dump' => ['dump_binary_path' => 'D:\\laragon\\mysql\\mysql-5.7.24-winx64\\bin'
-                //         // 'excludeTables' => [
-                //         //      'table_to_exclude_from_backup',
-                //         //      'another_table_to_exclude'
-                //         //  ]
-                //     ]
+                //    'dump' => ['dump_binary_path' => 'D:\laragon\bin\mysql\mysql-5.7.24-winx64\bin'
+                        // 'excludeTables' => [
+                        //      'table_to_exclude_from_backup',
+                        //      'another_table_to_exclude'
+                        //  ]
+                    // ]
               ],
               'mysql2' => [
                   'driver' => 'mysql',
@@ -67,7 +67,6 @@ return [
              */
             'databases' => [
                 'mysql',
-                'mysql2',
             ],
         ],
 
