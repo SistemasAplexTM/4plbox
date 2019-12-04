@@ -122,9 +122,9 @@ function datatableDocument(t, tipo_doc_id, filtro) {
         if (tipo_doc_id != 3 && t != '_agencia') {
           nombre = full.cons_nomfull;
         } else {
-          nombre = full.central_destino;
+          nombre = (full.central_destino != null) ? full.central_destino : '';
         }
-        if (full.cliente !== null) {
+        if (full.cliente !== null && tipo_doc_id != 3) {
           return '<div>' + nombre + '</div> <small style="font-size: 11px;color: #a9a7a7;"><i class="fal fa-user"></i> ' + full.cliente + '</small>'
         } else {
           return nombre;

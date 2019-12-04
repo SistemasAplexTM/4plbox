@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     changeItem(item) {
-      this.datos.name = null;
+      this.datos = {};
       this.typeSearch = item;
     },
     querySearch(queryString, cb) {
@@ -129,6 +129,7 @@ export default {
 .el-autocomplete-suggestion {
   /* width: max-content!important; */
   z-index: 9999 !important;
+  width: 300px;
 }
 .icon {
   font-size: 11px;

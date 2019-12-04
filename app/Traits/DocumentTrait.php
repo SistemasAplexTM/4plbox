@@ -128,14 +128,16 @@ trait DocumentTrait
             'fin' => $filter['dates'][1],
           );
         }else{
-          $fFin = strtotime('+5 day' , strtotime(date('Y-m-d')));
-          $fFin = date('Y-m-d' , $fFin);
-          $nuevafecha = strtotime('-6 day' , strtotime($fFin));
-          $fIni = date('Y-m-d' , $nuevafecha);
-          $dates = array(
-            'inicio' => $fIni,
-            'fin' => $fFin,
-          );
+          if($type == 4){
+            $fFin = strtotime('+5 day' , strtotime(date('Y-m-d')));
+            $fFin = date('Y-m-d' , $fFin);
+            $nuevafecha = strtotime('-6 day' , strtotime($fFin));
+            $fIni = date('Y-m-d' , $nuevafecha);
+            $dates = array(
+              'inicio' => $fIni,
+              'fin' => $fFin,
+            );
+          }
         }
       }
 
@@ -291,7 +293,10 @@ trait DocumentTrait
           ->leftJoin('localizacion as l', 'b.ciudad_id', 'l.id')
           ->join('agencia AS e', 'b.agencia_id', '=', 'e.id')
           ->leftJoin('transportador as central_destino', 'b.central_destino_id', '=', 'central_destino.id')
-          ->select('b.id as id', 'b.transporte_id', 'central_destino.nombre as central_destino', 'valor_libra', 'b.valor', 'b.liquidado', 'b.tipo_documento_id as tipo_documento_id', 'b.consecutivo as codigo', 'b.created_at as fecha', 'shipper.nombre_full as ship_nomfull', 'c.nombre_full as cons_nomfull', 'c.correo as email_cons', 'e.descripcion as agencia',
+          ->select('b.id as id', 'b.transporte_id', 'central_destino.nombre as central_destino', 
+          'valor_libra', 'b.valor', 'b.liquidado', 'b.tipo_documento_id as tipo_documento_id', 'b.consecutivo as codigo',
+           'b.created_at as fecha', 'shipper.nombre_full as ship_nomfull', 'c.nombre_full as cons_nomfull', 
+           'c.correo as email_cons', 'e.descripcion as agencia',
               DB::raw("(SELECT IFNULL(COUNT(consolidado_detalle.id),0) FROM consolidado_detalle WHERE consolidado_detalle.deleted_at IS NULL AND consolidado_detalle.consolidado_id = b.id) as cantidad"),
               DB::raw("(SELECT IFNULL(Sum(documento_detalle.peso2),0) FROM consolidado_detalle INNER JOIN documento_detalle ON consolidado_detalle.documento_detalle_id = documento_detalle.id WHERE consolidado_detalle.deleted_at IS NULL AND consolidado_detalle.consolidado_id = b.id) as peso"),
               DB::raw("(SELECT IFNULL(Sum(documento_detalle.volumen),0) FROM consolidado_detalle INNER JOIN documento_detalle ON consolidado_detalle.documento_detalle_id = documento_detalle.id WHERE consolidado_detalle.deleted_at IS NULL AND consolidado_detalle.consolidado_id = b.id) as volumen"),

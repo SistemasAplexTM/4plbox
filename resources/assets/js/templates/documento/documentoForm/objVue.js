@@ -156,6 +156,7 @@ var objVue = new Vue({
         table_edit: null,
         edit_consignee: false,
         edit_shipper: false,
+        loading_add_tracking: false
 
     },
     methods: {
@@ -313,6 +314,8 @@ var objVue = new Vue({
         },
         addTrackingToDocument(option, codigo) {
             let me = this;
+            me.loading_add_tracking = true;
+            $('#tracking_number').attr('disabled', true);
             $('#window-load').show();
             axios.post('../../tracking/addOrDeleteDocument', {
                 'option': option,
@@ -321,6 +324,8 @@ var objVue = new Vue({
                 'consignee_id': $('#consignee_id').val(),
                 'agencia_id': $('#agencia_id').val(),
             }).then(response => {
+                me.loading_add_tracking = false;
+                $('#tracking_number').attr('disabled', false);
                 if (response.data.code == 200) {
                     me.tracking_number = null;
                     me.addTrackings(me.id_detalle)
@@ -337,6 +342,8 @@ var objVue = new Vue({
                     }
                 }
             }).catch(function (error) {
+                me.loading_add_tracking = false;
+                $('#tracking_number').attr('disabled', false);
                 console.log(error);
                 toastr.warning('Error: -' + error);
                 $('#window-load').hide();
@@ -344,6 +351,8 @@ var objVue = new Vue({
         },
         createTracking() {
             let me = this;
+            me.loading_add_tracking = true;
+            $('#tracking_number').attr('disabled', true);
             axios.post('../../tracking', {
                 'consignee_id': $('#consignee_id').val(),
                 'codigo': me.tracking_number,
@@ -351,6 +360,8 @@ var objVue = new Vue({
                 'agencia_id': $('#agencia_id').val(),
                 'confirmed_send': false,
             }).then(function (response) {
+                me.loading_add_tracking = false;
+                $('#tracking_number').attr('disabled', false);
                 if (response.data['code'] == 200) {
                     toastr.success('Registro creado correctamente.');
                     toastr.options.closeButton = true;
@@ -361,6 +372,8 @@ var objVue = new Vue({
                     $('#window-load').hide();
                 }
             }).catch(function (error) {
+                me.loading_add_tracking = false;
+                $('#tracking_number').attr('disabled', false);
                 console.log(error);
                 toastr.warning("Error: " + error, {
                     timeOut: 50000

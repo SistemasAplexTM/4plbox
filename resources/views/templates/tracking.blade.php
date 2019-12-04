@@ -91,7 +91,7 @@
                 <div class="col-sm-8">
                   <input class="form-control" name="tracking" placeholder="@lang('general.number_of_tracking')"
                     type="text" v-model="tracking" v-validate.disable="'required|unique'"
-                    v-on:keyup.enter="searchTracking()">
+                    v-on:keyup.enter="focusContent('contenido')">
                   <small class="help-block error" v-show="errors.has('tracking')">
                     @{{ errors.first('tracking') }}
                   </small>
@@ -108,8 +108,8 @@
                   <label for="contenido" class="control-label gcore-label-top">@lang('general.content'):</label>
                 </div>
                 <div class="col-sm-8">
-                  <input class="form-control" name="contenido" placeholder="@lang('general.content')" type="text"
-                    v-model="contenido">
+                  <input class="form-control" id="contenido" name="contenido" placeholder="@lang('general.content')"
+                    type="text" v-model="contenido">
                   <small class="help-block error" v-show="errors.has('contenido')">
                     @{{ errors.first('contenido') }}
                   </small>
@@ -290,6 +290,7 @@
         </div>
         <div class="modal-body">
           <form id="formTrackingClient" name="formSearchTracking" method="POST" action="">
+            <input type="hidden" id="agencia_id_receipt">
             <div class="row">
               <div class="col-lg-4">
                 <div class="row">

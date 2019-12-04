@@ -99,7 +99,7 @@ function loadTable(name, bodega) {
           '<a data-name="contenido" data-pk="' +
           full.id +
           '" class="td_edit" data-type="textarea" data-placement="left" data-title="Contenido">' +
-          (full.contenido2 !== null ? full.contenido2 : "No hay datos") +
+          (full.contenido !== null ? full.contenido : "No hay datos") +
           "</a>"
         );
       }
@@ -235,7 +235,9 @@ function loadTableCreateReceipt() {
           full.consignee_id +
           ", '" +
           full.cliente +
-          "')\" class='btn btn-outline btn-primary btn-xs' data-toggle='tooltip' title='Crear recibo'><i class='fal fa-file-signature'></i> </a> ";
+          "', " +
+          full.agencia_id +
+          ")\" class='btn btn-outline btn-primary btn-xs' data-toggle='tooltip' title='Crear recibo'><i class='fal fa-file-signature'></i> </a> ";
         return btn_create + " " + btn_recall_email;
       }
     }
@@ -243,7 +245,8 @@ function loadTableCreateReceipt() {
   });
 }
 
-function showDataToCreateReceipt(consignee_id, client) {
+function showDataToCreateReceipt(consignee_id, client, agencia_id) {
+  $('#agencia_id_receipt').val(agencia_id);
   if ($.fn.DataTable.isDataTable("#tbl-trackings-client")) {
     $("#tbl-trackings-client" + " tbody").empty();
     $("#tbl-trackings-client")
@@ -368,6 +371,9 @@ var objVue = new Vue({
     print_id_document: null
   },
   methods: {
+    focusContent(el) {
+      $('#' + el).focus();
+    },
     printDocument: function (direct) {
       let me = this;
       if (direct) {
@@ -542,7 +548,8 @@ var objVue = new Vue({
             type_id: 1, //COURIER
             created_at: this.getTime(),
             shipper_id: me.shipper_id.id ? me.shipper_id.id : false,
-            consignee_id: me.consignee_id_doc
+            consignee_id: me.consignee_id_doc,
+            agencia_id: $('#agencia_id_receipt').val()
           })
           .then(function (response) {
             var res = response.data;

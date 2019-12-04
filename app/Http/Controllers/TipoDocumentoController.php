@@ -235,7 +235,7 @@ class TipoDocumentoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getAll()
+    public function getAll($list = false)
     {
       $where = array(['a.deleted_at', null]);
 
@@ -247,7 +247,9 @@ class TipoDocumentoController extends Controller
       foreach ($roles as $key => $val) {
           $credential = $val->id;
       }
-      $where[] = ['a.credenciales', 'LIKE', '%"id":"'.$credential.'"%'];
+      if (!$list) {
+          $where[] = ['a.credenciales', 'LIKE', '%"id":"'.$credential.'"%'];
+      }
         $data = DB::table('tipo_documento as a')
             ->leftjoin('plantillas_correo as b', 'a.email_plantilla_id', 'b.id')
             ->select('a.*', 'b.nombre as name_plantilla', 'b.descripcion_plantilla')
