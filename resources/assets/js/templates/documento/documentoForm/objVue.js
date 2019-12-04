@@ -348,6 +348,7 @@ var objVue = new Vue({
                 'consignee_id': $('#consignee_id').val(),
                 'codigo': me.tracking_number,
                 'contenido': null,
+                'agencia_id': $('#agencia_id').val(),
                 'confirmed_send': false,
             }).then(function (response) {
                 if (response.data['code'] == 200) {
