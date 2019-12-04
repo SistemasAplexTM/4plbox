@@ -132,10 +132,10 @@ class DocumentoController extends Controller
             ->where([['deleted_at', null]])
             ->get();
 
-        $fFin = strtotime('+5 day' , strtotime(date('Y-m-d')));
-        $fFin = date('Y-m-d' , $fFin);
-        $nuevafecha = strtotime('-6 day' , strtotime($fFin));
-        $fIni = date('Y-m-d' , $nuevafecha);
+        $fFin = strtotime('+5 day', strtotime(date('Y-m-d')));
+        $fFin = date('Y-m-d', $fFin);
+        $nuevafecha = strtotime('-6 day', strtotime($fFin));
+        $fIni = date('Y-m-d', $nuevafecha);
         $pendientes = DB::table('documento AS a')
             ->leftJoin('documento_detalle AS b', 'a.id', 'b.documento_id')
             ->select(DB::raw('Count(a.num_warehouse) AS cantidad'))
@@ -145,13 +145,13 @@ class DocumentoController extends Controller
                 ['b.num_warehouse', null],
                 ['b.deleted_at', null]
             ])
-            ->whereBetween('a.created_at', [$fIni,$fFin])
+            ->whereBetween('a.created_at', [$fIni, $fFin])
             ->whereNotNull('a.num_warehouse')
             ->first();
         // OBTENER LA CONFIGURACION DE LA IMPRESORA
         $printers = Session::get('printer');
-        //   print_r($printers);
-        //   exit();
+        // print_r($printers);
+        // exit();
         JavaScript::put([
             'print_labels' => (($printers) ? $printers->label : ''),
             'print_documents'  => (($printers) ? $printers->default : ''),
@@ -1064,7 +1064,7 @@ class DocumentoController extends Controller
                     ->first();
                 /* OBTENER PREFIJO DE GUIA DESDE LA TABLA DE CONFIG, SI EXISTE SE REEMPLAZA POR EL PREFIJO DE LA CIUDAD */
                 $config_pefix = $this->getConfig('prefix_guia');
-                
+
                 if ($config_pefix) {
                     $prefijoGuia->prefijo = $config_pefix->value;
                 }
@@ -1077,7 +1077,7 @@ class DocumentoController extends Controller
                     ])
                     ->orderBy('id', 'DESC')
                     ->first();
-                    
+
                 // $data->num_guia      = $documento->num_guia . '' . (count($documentoD) + 1);
                 // PARA JYG QUITARLE EL UNO AL NUMERO DE GUIA Y WRH
                 $paquete = '';

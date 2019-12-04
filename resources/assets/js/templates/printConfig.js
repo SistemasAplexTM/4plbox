@@ -25,12 +25,17 @@ function wcpGetPrintersOnSuccess() {
           alert(clientPrinters.error);
         } else {
           var options = "";
+          var optionDefault = "";
           for (var i = 0; i < clientPrinters.length; i++) {
+            if (clientPrinters[i].isDefault) {
+              optionDefault = "<option>" + clientPrinters[i].name + "</option>";
+            }
             options += "<option>" + clientPrinters[i].name + "</option>";
+
           }
           // $('#lstPrinters').html(options);
+          $("#installedPrinterName1").html(optionDefault);
           $("#installedPrinterName").html(options);
-          $("#installedPrinterName1").html(options);
         }
       } catch (e) {
         alert(e.message);
@@ -98,7 +103,7 @@ var objVue = new Vue({
     // this.getPrint();
   },
   methods: {
-    savePrint: function() {
+    savePrint: function () {
       let me = this;
       me.loading = true;
       var data = {
@@ -124,7 +129,7 @@ var objVue = new Vue({
       this.loading_prints = true;
       javascript: jsWebClientPrint.getPrintersInfo();
     },
-    getPrint: function() {
+    getPrint: function () {
       axios
         .get("getConfig/print_" + agency_id)
         .then(({ data }) => {
@@ -134,7 +139,7 @@ var objVue = new Vue({
         })
         .catch(error => console.log(error));
     },
-    getPrintersSaved: function() {
+    getPrintersSaved: function () {
       axios
         .get("printConfig/getPrintersSaved")
         .then(({ data }) => {

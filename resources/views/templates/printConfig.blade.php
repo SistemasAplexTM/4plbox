@@ -76,14 +76,15 @@
               <div class="col-lg-12" style="margin-top: 10px;">
                 <div class="form-group">
                   <div>
-                    <label for="installedPrinterName">@lang('general.print_label'):</label>
-                    <select name="installedPrinterName" id="installedPrinterName" class="form-control"></select>
+                    <label for="installedPrinterName1">@lang('general.print_default'):</label>
+                    <select disabled name="installedPrinterName1" id="installedPrinterName1"
+                      class="form-control"></select>
                   </div>
                 </div>
                 <div class="form-group">
                   <div>
-                    <label for="installedPrinterName1">@lang('general.print_default'):</label>
-                    <select name="installedPrinterName1" id="installedPrinterName1" class="form-control"></select>
+                    <label for="installedPrinterName">@lang('general.print_label'):</label>
+                    <select name="installedPrinterName" id="installedPrinterName" class="form-control"></select>
                   </div>
                 </div>
               </div>
@@ -100,8 +101,8 @@
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>Impresora Por Defecto</th>
                       <th>Impresora Labels</th>
+                      <th>Impresora Por Defecto</th>
                       <th>@lang('general.actions')</th>
                     </tr>
                   </thead>
