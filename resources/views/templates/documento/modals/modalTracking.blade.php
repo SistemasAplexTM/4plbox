@@ -23,9 +23,8 @@
           </div>
           <div class="col-lg-4">
             <label class="control-label" style="width: 100%;">&nbsp;</label>
-            <button type="button" id="tracking_save" class="btn btn-primary" @click="addTrackingToDocument('create')">
-              <i class="fal fa-plus"></i> Agregar
-            </button>
+            <el-button type="success" id="tracking_save" :loading="loading_add_tracking"
+              @click="addTrackingToDocument('create')"><i class="fal fa-plus"></i> Agregar</el-button>
           </div>
         </div>
         <div class="row">

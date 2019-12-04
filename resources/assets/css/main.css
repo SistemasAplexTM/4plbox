@@ -22,6 +22,10 @@ body {
   width: 100% !important;
 }
 
+.el-autocomplete-suggestion {
+  width: 400px !important;
+}
+
 .el-autocomplete-suggestion,
 .el-dropdown-menu {
   z-index: 3000 !important;
@@ -31,7 +35,7 @@ body {
   cursor: pointer;
 }
 
-.nav > li > a {
+.nav>li>a {
   font-family: "Roboto Condensed";
 }
 
@@ -87,12 +91,12 @@ body {
   color: #f97e63;
 }
 
-table > thead > tr > th {
+table>thead>tr>th {
   font-weight: 200;
   font-size: 15px;
 }
 
-table > tfoot > tr > th {
+table>tfoot>tr>th {
   font-weight: 200;
   font-size: 15px;
 }
@@ -129,7 +133,7 @@ label {
   font-size: 15px;
 }
 
-.nav > li > a {
+.nav>li>a {
   font-size: 15px;
   font-weight: 100;
 }
@@ -266,14 +270,14 @@ table.table td a.view i {
   color: #3c3c3c;
 }
 
-.v-select .dropdown-menu .active > a {
+.v-select .dropdown-menu .active>a {
   color: #fff;
 }
 
-.dropdown-toggle > input[type="search"] {
+.dropdown-toggle>input[type="search"] {
   width: 100px !important;
 }
 
-.dropdown-toggle > input[type="search"]:focus:valid {
+.dropdown-toggle>input[type="search"]:focus:valid {
   width: 100% !important;
 }

@@ -87,9 +87,9 @@ class PrintConfigController extends Controller
       unset($printers[$id]);
       AplexConfig::where('id', $data->id)->update([
         'key' => $key_id,
-        'value' =>  json_encode($printers)
+        'value' =>  json_encode($prints)
       ]);
-      return array('data' => $printers,'code' => 200);
+      return array('data' => $prints,'code' => 200);
     }
 
 }

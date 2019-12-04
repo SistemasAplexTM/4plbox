@@ -281,7 +281,7 @@ Route::group(['middleware' => 'auth'], function () {
 
   /*--- MODULO TIPO DOCUMENTOS ---*/
   Route::resource('tipoDocumento', 'TipoDocumentoController', ['except' => ['show', 'create', 'edit']]);
-  Route::get('tipoDocumento/all', 'TipoDocumentoController@getAll')->name('datatable/all');
+  Route::get('tipoDocumento/all/{list?}', 'TipoDocumentoController@getAll')->name('datatable/all');
   Route::get('tipoDocumento/delete/{id}/{logical?}', 'TipoDocumentoController@delete')->name('tipoDocumento.delete');
   Route::get('tipoDocumento/restaurar/{id}', 'TipoDocumentoController@restaurar');
   Route::get('tipoDocumento/selectInput/{tableName}', 'TipoDocumentoController@selectInput');

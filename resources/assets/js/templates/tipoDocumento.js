@@ -1,9 +1,9 @@
-$(document).ready(function() {
+$(document).ready(function () {
     // selectWhithFontAwesome();
     llenarSelect('administracion/7', 'maestra_multiple', 'funcionalidades', 0); // module, tableName, id_campo
     llenarSelect('tipoDocumento', 'credencial', 'credenciales', 0); // module, tableName, id_campo
     $('#tbl-tipoDocumento').DataTable({
-        ajax: 'tipoDocumento/all',
+        ajax: 'tipoDocumento/all/true',
         columns: [{
             data: 'prefijo',
             name: 'prefijo'
@@ -15,7 +15,7 @@ $(document).ready(function() {
             name: 'name_plantilla'
         }, {
             sortable: false,
-            "render": function(data, type, full, meta) {
+            "render": function (data, type, full, meta) {
                 var btn_edit = '';
                 var btn_delete = '';
                 var id_email = 'null'
@@ -39,14 +39,14 @@ $(document).ready(function() {
 });
 
 function selectWhithFontAwesome() {
-    $.getJSON('./json/fa-icons.json', function(data) {
+    $.getJSON('./json/fa-icons.json', function (data) {
         $(".ajaxLoadFontAwesome").append('<option value="">Seleccione</option>');
-        $.each(data, function(key, value) {
+        $.each(data, function (key, value) {
             var val = key.substring(3);
             $(".ajaxLoadFontAwesome").append('<option value="' + val + '" data-icon="fal ' + key + '">' + value + '</option>');
         });
     });
-    setTimeout(function() {
+    setTimeout(function () {
         $('.ajaxLoadFontAwesome').selectpicker();
     }, 2000);
 }
@@ -69,7 +69,7 @@ function edit(id, nombre, prefijo, icono, consecutivo_inicial, funcionalidades, 
 }
 var objVue = new Vue({
     el: '#tipoDocumento',
-    mounted: function() {
+    mounted: function () {
         this.getPlantillasEmail();
         this.getIcons();
     },
@@ -94,11 +94,11 @@ var objVue = new Vue({
         loading: false,
     },
     watch: {
-        email_plantilla_id: function(newQuestion) {
+        email_plantilla_id: function (newQuestion) {
             this.mostrar_correos_add = false;
             if (newQuestion != null) {
                 this.mostrar_correos_add = true;
-                setTimeout(function() {
+                setTimeout(function () {
                     $('.email_copia').tagsinput({
                         tagClass: 'label label-info'
                     });
@@ -107,31 +107,31 @@ var objVue = new Vue({
         }
     },
     methods: {
-        getIcons(){
-          let me = this;
-          $.getJSON('./json/fa-icons-lite.json', function(data) {
-              $(".ajaxLoadFontAwesome").append('<option value="">Seleccione</option>');
-              $.each(data, function(key, value) {
-                  var val = key.substring(4);
-                  me.list.push({value: key, label: value});
-              });
-          });
+        getIcons() {
+            let me = this;
+            $.getJSON('./json/fa-icons-lite.json', function (data) {
+                $(".ajaxLoadFontAwesome").append('<option value="">Seleccione</option>');
+                $.each(data, function (key, value) {
+                    var val = key.substring(4);
+                    me.list.push({ value: key, label: value });
+                });
+            });
         },
         remoteMethod(query) {
-          if (query !== '') {
-            this.loading = true;
-            setTimeout(() => {
-              this.loading = false;
-              this.options4 = this.list.filter(item => {
-                return item.label.toLowerCase()
-                  .indexOf(query.toLowerCase()) > -1;
-              });
-            }, 200);
-          } else {
-            this.options4 = [];
-          }
+            if (query !== '') {
+                this.loading = true;
+                setTimeout(() => {
+                    this.loading = false;
+                    this.options4 = this.list.filter(item => {
+                        return item.label.toLowerCase()
+                            .indexOf(query.toLowerCase()) > -1;
+                    });
+                }, 200);
+            } else {
+                this.options4 = [];
+            }
         },
-        resetForm: function() {
+        resetForm: function () {
             this.id = '';
             this.nombre = '';
             this.prefijo = '';
@@ -150,16 +150,16 @@ var objVue = new Vue({
             this.email_copia = null;
             this.email_copia_oculta = null;
         },
-        getPlantillasEmail: function() {
+        getPlantillasEmail: function () {
             let me = this;
             axios.get('tipoDocumento/getPlantillasEmail').then(response => {
                 me.plantillas = response.data.data;
             });
         },
         /* metodo para eliminar el error de los campos del formulario cuando dan clic sobre el */
-        deleteError: function(element) {
+        deleteError: function (element) {
             let me = this;
-            $.each(me.listErrors, function(key, value) {
+            $.each(me.listErrors, function (key, value) {
                 if (key !== element) {
                     me.listErrors[key] = value;
                 } else {
@@ -167,17 +167,17 @@ var objVue = new Vue({
                 }
             });
         },
-        rollBackDelete: function(data) {
+        rollBackDelete: function (data) {
             var urlRestaurar = 'tipoDocumento/restaurar/' + data.id;
             axios.get(urlRestaurar).then(response => {
                 toastr.success('Registro restaurado.');
                 this.updateTable();
             });
         },
-        updateTable: function() {
+        updateTable: function () {
             refreshTable('tbl-tipoDocumento');
         },
-        delete: function(data) {
+        delete: function (data) {
             this.formErrors = {};
             this.listErrors = {};
             if (data.logical === true) {
@@ -194,10 +194,10 @@ var objVue = new Vue({
                 });
             }
         },
-        create: function() {
+        create: function () {
             let me = this;
             var plantilla_id = '';
-            if(this.email_plantilla_id != null && this.email_plantilla_id != 'null'){
+            if (this.email_plantilla_id != null && this.email_plantilla_id != 'null') {
                 plantilla_id = this.email_plantilla_id.id;
             }
             axios.post('tipoDocumento', {
@@ -211,7 +211,7 @@ var objVue = new Vue({
                 'email_copia': $('#email_copia').val(),
                 'email_copia_oculta': $('#email_copia_oculta').val(),
                 'email_plantilla_id': plantilla_id,
-            }).then(function(response) {
+            }).then(function (response) {
                 if (response.data['code'] == 200) {
                     toastr.success('Registro creado correctamente.');
                     toastr.options.closeButton = true;
@@ -221,13 +221,13 @@ var objVue = new Vue({
                     toastr.warning(response.data['error']);
                     toastr.options.closeButton = true;
                 }
-            }).catch(function(error) {
+            }).catch(function (error) {
                 console.log(error);
                 if (error.response.status === 422) {
                     me.formErrors = error.response.data; //guardo los errores
                     me.listErrors = me.formErrors.errors; //genero lista de errores
                 }
-                $.each(me.formErrors.errors, function(key, value) {
+                $.each(me.formErrors.errors, function (key, value) {
                     $('.result-' + key).html(value);
                 });
                 toastr.error("Porfavor completa los campos obligatorios.", {
@@ -235,10 +235,10 @@ var objVue = new Vue({
                 });
             });
         },
-        update: function() {
+        update: function () {
             var me = this;
             var plantilla_id = '';
-            if(this.email_plantilla_id != null && this.email_plantilla_id != 'null'){
+            if (this.email_plantilla_id != null && this.email_plantilla_id != 'null') {
                 plantilla_id = this.email_plantilla_id.id;
             }
             axios.put('tipoDocumento/' + this.id, {
@@ -251,7 +251,7 @@ var objVue = new Vue({
                 'email_copia': $('#email_copia').val(),
                 'email_copia_oculta': $('#email_copia_oculta').val(),
                 'email_plantilla_id': plantilla_id,
-            }).then(function(response) {
+            }).then(function (response) {
                 if (response.data['code'] == 200) {
                     toastr.success('Registro Actualizado correctamente');
                     toastr.options.closeButton = true;
@@ -263,12 +263,12 @@ var objVue = new Vue({
                     toastr.options.closeButton = true;
                     console.log(response.data);
                 }
-            }).catch(function(error) {
+            }).catch(function (error) {
                 if (error.response.status === 422) {
                     me.formErrors = error.response.data;
                     me.listErrors = me.formErrors.errors; //genero lista de errores
                 }
-                $.each(me.formErrors.errors, function(key, value) {
+                $.each(me.formErrors.errors, function (key, value) {
                     $('.result-' + key).html(value);
                 });
                 toastr.error("Porfavor completa los campos obligatorios.", {
@@ -276,7 +276,7 @@ var objVue = new Vue({
                 });
             });
         },
-        edit: function(data) {
+        edit: function (data) {
             var me = this;
             me.resetForm();
             this.id = data['id'];
@@ -284,15 +284,15 @@ var objVue = new Vue({
             this.prefijo = data['prefijo'];
             this.consecutivo_inicial = data['consecutivo_inicial'];
             // $('.ajaxLoadFontAwesome').selectpicker('val', data['icono']);
-            let icono = _.filter(this.list, function(q){return q.value === data['icono']});
+            let icono = _.filter(this.list, function (q) { return q.value === data['icono'] });
             console.log(icono);
-            if(icono.length > 0){
-              me.value9 = icono[0].label;
+            if (icono.length > 0) {
+                me.value9 = icono[0].label;
             }
             /* ASIGNAR VALORES AL SELECT FUNCIONALIDADES */
             jsonFuncionalidades = JSON.parse(data['funcionalidades']);
             if (jsonFuncionalidades != null) {
-                $.each(jsonFuncionalidades, function(i, item) {
+                $.each(jsonFuncionalidades, function (i, item) {
                     $("#funcionalidades").append('<option value="' + item.id + '" selected="selected">' + item.name + '</option>');
                 });
                 $('#funcionalidades').trigger('change'); // Notify any JS components that the value changed
@@ -300,7 +300,7 @@ var objVue = new Vue({
             /* ASIGNAR VALORES AL SELECT CREDENCIALES */
             jsonCredenciales = JSON.parse(data['credenciales']);
             if (jsonCredenciales != null) {
-                $.each(jsonCredenciales, function(i, item) {
+                $.each(jsonCredenciales, function (i, item) {
                     $("#credenciales").append('<option value="' + item.id + '" selected="selected">' + item.name + '</option>');
                 });
                 $('#credenciales').trigger('change'); // Notify any JS components that the value changed
@@ -329,7 +329,7 @@ var objVue = new Vue({
             this.formErrors = {};
             this.listErrors = {};
         },
-        cancel: function() {
+        cancel: function () {
             var me = this;
             me.resetForm();
         },

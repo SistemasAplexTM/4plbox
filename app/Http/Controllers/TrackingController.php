@@ -208,8 +208,8 @@ class TrackingController extends Controller
                 'tracking.consignee_id',
                 'tracking.documento_detalle_id',
                 'tracking.codigo',
-                'tracking.contenido AS contenido2',
-                'c.contenido',
+                'tracking.contenido AS contenido',
+                'c.contenido AS contenido_detalle',
                 'tracking.confirmed_send',
                 'tracking.created_at as fecha',
                 'd.descripcion AS agencia',
@@ -358,6 +358,7 @@ class TrackingController extends Controller
           ->select(
               'tracking.consignee_id',
               'b.nombre_full as cliente',
+              'tracking.agencia_id',
               DB::raw("(
                 SELECT
                 Count(t.id)
@@ -417,7 +418,8 @@ class TrackingController extends Controller
             'b.nombre_full',
             'tracking.consignee_id',
             'cantidad',
-            'trackings'
+            'trackings',
+            'tracking.agencia_id'
             )
           ->orderBy('last_date', 'DESC')
           ->where($where)

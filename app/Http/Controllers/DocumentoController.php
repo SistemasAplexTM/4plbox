@@ -1163,11 +1163,11 @@ class DocumentoController extends Controller
         } catch (\Exception $e) {
             return $e;
             $error = '';
-            foreach ($e->errorInfo as $key => $value) {
-                $error .= $key . ' - ' . $value . ' <br> ';
-            }
+            // foreach ($e->errorInfo as $key => $value) {
+            //     $error .= $key . ' - ' . $value . ' <br> ';
+            // }
             $answer = array(
-                "error"  => $error,
+                "error"  => $e,
                 "code"   => 600,
                 "status" => 500,
             );
@@ -3276,7 +3276,7 @@ class DocumentoController extends Controller
     {
         $trackings = DB::table('documento_detalle as a')
             ->leftJoin('tracking as b', 'a.id', 'b.documento_detalle_id')
-            ->select('b.codigo', 'a.contenido', 'a.peso')
+            ->select('b.codigo', 'b.contenido', 'a.contenido AS contenido_detalle', 'a.peso')
             ->where([['a.deleted_at', null], ['b.deleted_at', null], ['a.documento_id', $id]])
             ->get();
         $answer = array(
