@@ -18,6 +18,8 @@ Route::get('/home', 'DocumentoController@index')->name('home');
 
 Route::get('master/buscar/{dato}/{type?}', 'MasterController@getSoC');
 Route::group(['middleware' => 'auth'], function () {
+  Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
   Route::get('commandBackup', function () {
     Artisan::call('backup:run', ['--only-db' => true]);
     return "successfully!";
