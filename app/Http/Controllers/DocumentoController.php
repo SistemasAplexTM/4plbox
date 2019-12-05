@@ -128,7 +128,6 @@ class DocumentoController extends Controller
     public function index()
     {
         try {
-          // retur $var;
           $this->assignPermissionsJavascript('documento');
           $status_list = Status::select('id', 'descripcion', 'color', 'icon')
               ->where([['deleted_at', null]])
@@ -1070,7 +1069,7 @@ class DocumentoController extends Controller
                     ->first();
                 /* OBTENER PREFIJO DE GUIA DESDE LA TABLA DE CONFIG, SI EXISTE SE REEMPLAZA POR EL PREFIJO DE LA CIUDAD */
                 $config_pefix = $this->getConfig('prefix_guia');
-                
+
                 if ($config_pefix) {
                     $prefijoGuia->prefijo = $config_pefix->value;
                 }
@@ -1083,7 +1082,7 @@ class DocumentoController extends Controller
                     ])
                     ->orderBy('id', 'DESC')
                     ->first();
-                    
+
                 // $data->num_guia      = $documento->num_guia . '' . (count($documentoD) + 1);
                 // PARA JYG QUITARLE EL UNO AL NUMERO DE GUIA Y WRH
                 $paquete = '';

@@ -35,15 +35,15 @@ class LoginController extends Controller
    */
   // protected $redirectTo = '/home';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
+  /**
+   * Create a new controller instance.
+   *
+   * @return void
+   */
+  public function __construct()
+  {
+    $this->middleware('guest')->except('logout');
+  }
 
   public function showLoginForm()
   {
@@ -109,7 +109,7 @@ class LoginController extends Controller
             foreach ($printersDB as $valueBD) {
               // echo $valueBD->label;
               // echo $value['name'];
-              if ($valueBD->label == $value->name) {
+              if ($valueBD->default == $value->name) {
                 $default = $valueBD;
               }
             }
