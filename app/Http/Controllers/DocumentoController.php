@@ -127,38 +127,43 @@ class DocumentoController extends Controller
 
     public function index()
     {
-        $this->assignPermissionsJavascript('documento');
-        $status_list = Status::select('id', 'descripcion', 'color', 'icon')
-            ->where([['deleted_at', null]])
-            ->get();
+        try {
+          $this->assignPermissionsJavascript('documento');
+          $status_list = Status::select('id', 'descripcion', 'color', 'icon')
+              ->where([['deleted_at', null]])
+              ->get();
 
-        $fFin = strtotime('+5 day', strtotime(date('Y-m-d')));
-        $fFin = date('Y-m-d', $fFin);
-        $nuevafecha = strtotime('-6 day', strtotime($fFin));
-        $fIni = date('Y-m-d', $nuevafecha);
-        $pendientes = DB::table('documento AS a')
-            ->leftJoin('documento_detalle AS b', 'a.id', 'b.documento_id')
-            ->select(DB::raw('Count(a.num_warehouse) AS cantidad'))
-            ->where([
-                ['a.deleted_at', null],
-                ['a.tipo_documento_id', 1],
-                ['b.num_warehouse', null],
-                ['b.deleted_at', null]
-            ])
-            ->whereBetween('a.created_at', [$fIni, $fFin])
-            ->whereNotNull('a.num_warehouse')
-            ->first();
-        // OBTENER LA CONFIGURACION DE LA IMPRESORA
-        $printers = Session::get('printer');
-        // print_r($printers);
-        // exit();
-        JavaScript::put([
-            'print_labels' => (($printers) ? $printers->label : ''),
-            'print_documents'  => (($printers) ? $printers->default : ''),
-            'print_format'  => 'PDF',
-        ]);
-        $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('DocumentoController@printFile'), Session::getId());
-        return view('templates.documento.index', compact('status_list', 'pendientes', 'wcpScript'));
+          $fFin = strtotime('+5 day' , strtotime(date('Y-m-d')));
+          $fFin = date('Y-m-d' , $fFin);
+          $nuevafecha = strtotime('-6 day' , strtotime($fFin));
+          $fIni = date('Y-m-d' , $nuevafecha);
+          $pendientes = DB::table('documento AS a')
+              ->leftJoin('documento_detalle AS b', 'a.id', 'b.documento_id')
+              ->select(DB::raw('Count(a.num_warehouse) AS cantidad'))
+              ->where([
+                  ['a.deleted_at', null],
+                  ['a.tipo_documento_id', 1],
+                  ['b.num_warehouse', null],
+                  ['b.deleted_at', null]
+              ])
+              ->whereBetween('a.created_at', [$fIni,$fFin])
+              ->whereNotNull('a.num_warehouse')
+              ->first();
+          // OBTENER LA CONFIGURACION DE LA IMPRESORA
+          $printers = Session::get('printer');
+          //   print_r($printers);
+          //   exit();
+          JavaScript::put([
+              'print_labels' => (($printers) ? $printers->label : ''),
+              'print_documents'  => (($printers) ? $printers->default : ''),
+              'print_format'  => 'PDF',
+          ]);
+          $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('DocumentoController@printFile'), Session::getId());
+          return view('templates.documento.index', compact('status_list', 'pendientes', 'wcpScript'));
+        } catch (\Exception  $e) {
+            \Log::debug('Test var fails: ' . $e->getMessage());
+        }
+        
     }
 
     public function create($tipo_documento_id)

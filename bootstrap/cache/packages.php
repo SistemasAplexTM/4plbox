@@ -114,6 +114,13 @@
       0 => 'Rap2hpoutre\\FastExcel\\Providers\\FastExcelServiceProvider',
     ),
   ),
+  'rap2hpoutre/laravel-log-viewer' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Rap2hpoutre\\LaravelLogViewer\\LaravelLogViewerServiceProvider',
+    ),
+  ),
   's-ichikawa/laravel-sendgrid-driver' => 
   array (
     'providers' => 
