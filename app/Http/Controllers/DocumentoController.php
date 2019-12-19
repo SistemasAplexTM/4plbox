@@ -243,7 +243,7 @@ class DocumentoController extends Controller
                             [
                                 /* VALORES POR DEFECTO AL CREAR EL DOCUMENTO INICIAL */
                                 'documento_id'     => $id_documento,
-                                'servicios_id'     => 1,
+                                'servicios_id'     => 4,// 4 PARA COMEXCO 1 GENERAL
                                 'forma_pago_id'    => null,
                                 'tipo_pago_id'     => 4, //collect
                                 'tipo_embarque_id' => (isset($request->tipo_embarque_id)) ? $request->tipo_embarque_id : 1, //aereo
@@ -1780,8 +1780,8 @@ class DocumentoController extends Controller
                                 if ($documento->transporte_id == 1) {
                                     if (env('APP_TYPE') === 'courier') {
                                         if (env('APP_CLIENT') === 'colombiana') {
-                                            // return view('pdf/consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
-                                            $pdf = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                                            return view('pdf/consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
+                                            // $pdf = PDF::loadView('pdf.consolidadoGuiasPdf2', compact('documento', 'detalle', 'detalleConsolidado'));
                                         } else {
                                             $pdf = PDF::loadView('pdf.consolidadoGuiasPdf', compact('documento', 'detalle', 'detalleConsolidado'));
                                         }

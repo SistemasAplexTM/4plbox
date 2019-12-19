@@ -22,3 +22,14 @@ Pss: Miami2013$
 
 API:
 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
+
+
+/* DIAMOND LOGISTICS */
+
+User: diamondlogistics
+Pss: Miami2013$
+
+Email: apps@aplicacionesexcel.com
+
+API: sengrid_api_diamond
+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

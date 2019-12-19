@@ -783,16 +783,24 @@
     props: ["master", "consol", "peso_consolidado", "piezas_consolidado"],
     watch:{
       peso: function(){
-        this.peso_cobrado = this.peso;
+        // console.log('cobrado: ', this.peso_cobrado);
+        
+        // if(this.peso_cobrado === '' || this.peso_cobrado === null || this.peso_cobrado == 0){
+          // this.peso_cobrado = this.peso;
+        // }
       },
       piezas: function(){
-        this.peso_cobrado = this.peso;
+          this.peso_cobrado = this.peso;
       },
       peso_cobrado: function(){
-        this.total = isInteger(this.peso_cobrado * this.tarifa);
+        if(this.tarifa !== '' && this.tarifa !== null && this.tarifa != 0){
+          this.total = isInteger(this.peso_cobrado * this.tarifa);
+        }
       },
       tarifa: function(){
+        if(this.tarifa !== '' && this.tarifa !== null && this.tarifa != 0){
         this.total = isInteger(this.peso_cobrado * this.tarifa);
+        }
       },
       write:function(value){
        if(value){
@@ -969,6 +977,7 @@
           'commodity_item': this.commodity_item,
           'peso_cobrado': this.peso_cobrado,
           'tarifa': (this.tarifa) ? this.tarifa : 0,
+          'minima': this.min,
           'total': this.total,
           'descripcion': this.descripcion,
           'handing_information': this.handing_information,
@@ -1012,6 +1021,7 @@
           'commodity_item': this.commodity_item,
           'peso_cobrado': this.peso_cobrado,
           'tarifa': this.tarifa,
+          'minima': this.min,
           'total': this.total,
           'descripcion': this.descripcion,
           'handing_information': this.handing_information,
@@ -1022,7 +1032,7 @@
           'updated_at': this.getTime()
         }).then(response => {
             toastr.success('Actualización exitosa.');
-            location.reload(true);
+            // location.reload(true);
             window.open("../imprimir/" + response.data.id_master + '/' + true, '_blank');
         });
       },
@@ -1107,6 +1117,7 @@
           this.commodity_item = response.data.detalle.commodity_item;
           this.peso_cobrado = response.data.detalle.peso_cobrado;
           this.tarifa = response.data.detalle.tarifa;
+          this.min = response.data.detalle.minima;
           this.total = response.data.detalle.total;
           this.descripcion = response.data.detalle.descripcion;
           this.total_other_charge_due_agent = response.data.data.total_other_charge_due_agent;

@@ -81,28 +81,28 @@ $(document).ready(function () {
 $(function () {
     //aparecer botones de accion en las bolsas del consolidado
     jQuery('.list-group').
-    on('mouseover', 'li', function () {
-        jQuery(this).find('.boxEdit, .boxDelete').show();
-    }).
-    on('mouseout', 'li', function () {
-        jQuery(this).find('.boxEdit, .boxDelete').hide();
-    });
+        on('mouseover', 'li', function () {
+            jQuery(this).find('.boxEdit, .boxDelete').show();
+        }).
+        on('mouseout', 'li', function () {
+            jQuery(this).find('.boxEdit, .boxDelete').hide();
+        });
 
     jQuery('#tbl-consolidado').
-    on('mouseover', 'tr', function () {
-        jQuery(this).find('.edit, .delete').css('opacity', '1');
-    }).
-    on('mouseout', 'tr', function () {
-        jQuery(this).find('.edit, .delete').css('opacity', '0');
-    });
+        on('mouseover', 'tr', function () {
+            jQuery(this).find('.edit, .delete').css('opacity', '1');
+        }).
+        on('mouseout', 'tr', function () {
+            jQuery(this).find('.edit, .delete').css('opacity', '0');
+        });
 
     jQuery('#whgTable').
-    on('mouseover', 'tr', function () {
-        jQuery(this).find('.edit').show();
-    }).
-    on('mouseout', 'tr', function () {
-        jQuery(this).find('.edit').hide();
-    });
+        on('mouseover', 'tr', function () {
+            jQuery(this).find('.edit').show();
+        }).
+        on('mouseout', 'tr', function () {
+            jQuery(this).find('.edit').hide();
+        });
 
     $('#show-all-c').change(function () {
         if ($(this).prop('checked') === true) {
@@ -155,103 +155,103 @@ function datatableDetail() {
             [0, "desc"]
         ],
         columns: [{
-                "render": function (data, type, full, meta) {
-                    var str = full.paquete;
-                    return parseInt(str);
-                },
-                width: 30
-            }, {
-                data: 'num_warehouse',
-                name: 'num_warehouse',
-                "render": function (data, type, full, meta) {
-                    return '<strong>' + full.num_warehouse + '</strong>';
-                },
-                "orderable": false,
-            }, {
-                "render": function (data, type, full, meta) {
-                    return '<a data-name="piezas" data-pk="' + full.id + '" data-value="' + full.piezas + '" class="td_edit" data-type="text" data-placement="right" data-title="Piezas">' + full.piezas + '</a>';
-                },
-                class: 'text-center'
-            }, {
-                "render": function (data, type, full, meta) {
-                    var cadena = full.dimensiones;
-                    var dimensiones = cadena.split(" ");
-                    var arr1 = cadena.split("=");
-                    var arrF = arr1[1].split("x");
-                    return '<a data-name="peso" data-pk="' + full.id + '" class="td_edit" data-type="text" data-placement="right" data-title="Peso">' + full.peso + '</a>' +
-                        ' <a data-name="dimensiones" data-pk="' + full.id + '" data-value="' + arrF + '" class="td_edit_d" data-type="address" data-placement="right" data-title="Dimensiones">' + dimensiones[1] + '</a>';;
-                }
-            }, {
-                "render": function (data, type, full, meta) {
-                    return '<a data-name="contenido" data-pk="' + full.id + '" data-value="' + full.contenido + '" class="td_edit" data-type="textarea" data-placement="right" data-title="Contenido">' + full.contenido + '</a>';
-                },
-                width: 200
-            }, {
-                "render": function (data, type, full, meta) {
-                    var pa = full.nom_pa;
-                    return ((pa === null) ? '' : pa) + '<a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalArancel(' + full.id + ', \'whgTable\')"><i class="fal fa-pencil"></i></a>';
-                },
-                // visible: ((objVue.mostrar.includes(16)) ? true : false),
-                // visible: false,
-                width: 100
+            "render": function (data, type, full, meta) {
+                var str = full.paquete;
+                return parseInt(str);
             },
-            {
-                "render": function (data, type, full, meta) {
-                    return '<a data-name="declarado" data-pk="' + full.id + '" class="td_edit" data-type="text" data-placement="left" data-title="Declarado">' + full.valor + '</a>';
-                }
-            }, {
-                data: 'puntos',
-                name: 'puntos'
-            }, {
-                sortable: false,
-                "render": function (data, type, full, meta) {
-                    var btn_addTracking = '';
-                    var btn_edit = '';
-                    var btn_save = '';
-                    var btn_delete = '';
-                    var btn_points = '';
-                    if (full.consolidado == 0) {
-                        btn_delete = '<a class="btn-actions" type="button" id="btn_remove' + full.id + '" onclick="eliminar(' + full.id + ', false)" data-toggle="tooltip" title="Eliminar" style="color:#E34724"><i class="fal fa-trash-alt"></i></a> ';
-                    }
-
-                    // btn_ship_cons = '<a class="btn btn-primary btn-xs btn-actions" type="button" id="btn_ship_cons'+full.id+'" onclick="changueShipperConsignee('+full.id+', '+full.shipper_id+', '+full.consignee_id+')" data-toggle="tooltip" title="Camibar"><i class="fal fa-user"></i></a> ';
-                    btn_ship_cons = '';
-                    btn_addTracking = '<a class="btn btn-info btn-xs btn-actions addTrackings" type="button" id="btn_addtracking' + full.id + '" data-toggle="tooltip" title="Agregar tracking" onclick="addTrackings(' + full.id + ')"><i class="fal fa-truck"></i> <span id="cant_tracking' + full.id + '">' + full.cantidad + '</span></a> ';
-                    if (puntos != null) {
-                        if (objVue.city_c.pais_id == puntos.pais_id) {
-                            btn_points = ' <a class="btn btn-warning btn-xs btn-actions" type="button" id="btn_points' + full.id + '" onclick="insertPoints(' + full.id + ')" data-toggle="tooltip" title="Puntos"><i class="fal fa-map-pin"></i></a> ';
-                        }
-                    }
-                    var btn_group = '<div class="btn-group" data-toggle="tooltip" title="Acciones">' +
-                        '<button type="button" class="btn btn-default btn-outline dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
-                        '<i class="fal fa-ellipsis-v"></i>' +
-                        '</button>' +
-                        '<ul class="dropdown-menu dropdown-menu-right pull-right" style="font-size: 15px!important;">' +
-                        '<li><a data-target="#modalAddPoints" data-toggle="modal"><i class="fal fa-map-pin"></i> Agregar Puntos</a></li>' +
-                        btn_delete +
-                        '</ul>' +
-                        '</div>';
-
-                    return btn_addTracking + btn_ship_cons + btn_points + btn_delete;
-                },
-                width: 105
-            }, {
-                data: 'volumen',
-                name: 'volumen',
-                visible: false
-            }, {
-                data: 'piezas',
-                name: 'piezas',
-                visible: false
-            }, {
-                data: 'peso',
-                name: 'peso',
-                visible: false
-            }, {
-                data: 'valor',
-                name: 'valor',
-                visible: false
+            width: 30
+        }, {
+            data: 'num_warehouse',
+            name: 'num_warehouse',
+            "render": function (data, type, full, meta) {
+                return '<strong>' + full.num_warehouse + '</strong>';
             },
+            "orderable": false,
+        }, {
+            "render": function (data, type, full, meta) {
+                return '<a data-name="piezas" data-pk="' + full.id + '" data-value="' + full.piezas + '" class="td_edit" data-type="text" data-placement="right" data-title="Piezas">' + full.piezas + '</a>';
+            },
+            class: 'text-center'
+        }, {
+            "render": function (data, type, full, meta) {
+                var cadena = full.dimensiones;
+                var dimensiones = cadena.split(" ");
+                var arr1 = cadena.split("=");
+                var arrF = arr1[1].split("x");
+                return '<a data-name="peso" data-pk="' + full.id + '" class="td_edit" data-type="text" data-placement="right" data-title="Peso">' + full.peso + '</a>' +
+                    ' <a data-name="dimensiones" data-pk="' + full.id + '" data-value="' + arrF + '" class="td_edit_d" data-type="address" data-placement="right" data-title="Dimensiones">' + dimensiones[1] + '</a>';;
+            }
+        }, {
+            "render": function (data, type, full, meta) {
+                return '<a data-name="contenido" data-pk="' + full.id + '" data-value="' + ((full.contenido === null) ? '' : full.contenido) + '" class="td_edit" data-type="textarea" data-placement="right" data-title="Contenido">' + ((full.contenido === null) ? '' : full.contenido) + '</a>';
+            },
+            width: 200
+        }, {
+            "render": function (data, type, full, meta) {
+                var pa = full.nom_pa;
+                return ((pa === null) ? '' : pa) + '<a  data-toggle="tooltip" title="Canbiar" class="edit" style="float:right;color:#FFC107;" onclick="showModalArancel(' + full.id + ', \'whgTable\')"><i class="fal fa-pencil"></i></a>';
+            },
+            // visible: ((objVue.mostrar.includes(16)) ? true : false),
+            // visible: false,
+            width: 100
+        },
+        {
+            "render": function (data, type, full, meta) {
+                return '<a data-name="declarado" data-pk="' + full.id + '" class="td_edit" data-type="text" data-placement="left" data-title="Declarado">' + full.valor + '</a>';
+            }
+        }, {
+            data: 'puntos',
+            name: 'puntos'
+        }, {
+            sortable: false,
+            "render": function (data, type, full, meta) {
+                var btn_addTracking = '';
+                var btn_edit = '';
+                var btn_save = '';
+                var btn_delete = '';
+                var btn_points = '';
+                if (full.consolidado == 0) {
+                    btn_delete = '<a class="btn-actions" type="button" id="btn_remove' + full.id + '" onclick="eliminar(' + full.id + ', false)" data-toggle="tooltip" title="Eliminar" style="color:#E34724"><i class="fal fa-trash-alt"></i></a> ';
+                }
+
+                // btn_ship_cons = '<a class="btn btn-primary btn-xs btn-actions" type="button" id="btn_ship_cons'+full.id+'" onclick="changueShipperConsignee('+full.id+', '+full.shipper_id+', '+full.consignee_id+')" data-toggle="tooltip" title="Camibar"><i class="fal fa-user"></i></a> ';
+                btn_ship_cons = '';
+                btn_addTracking = '<a class="btn btn-info btn-xs btn-actions addTrackings" type="button" id="btn_addtracking' + full.id + '" data-toggle="tooltip" title="Agregar tracking" onclick="addTrackings(' + full.id + ')"><i class="fal fa-truck"></i> <span id="cant_tracking' + full.id + '">' + full.cantidad + '</span></a> ';
+                if (puntos != null) {
+                    if (objVue.city_c.pais_id == puntos.pais_id) {
+                        btn_points = ' <a class="btn btn-warning btn-xs btn-actions" type="button" id="btn_points' + full.id + '" onclick="insertPoints(' + full.id + ')" data-toggle="tooltip" title="Puntos"><i class="fal fa-map-pin"></i></a> ';
+                    }
+                }
+                var btn_group = '<div class="btn-group" data-toggle="tooltip" title="Acciones">' +
+                    '<button type="button" class="btn btn-default btn-outline dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+                    '<i class="fal fa-ellipsis-v"></i>' +
+                    '</button>' +
+                    '<ul class="dropdown-menu dropdown-menu-right pull-right" style="font-size: 15px!important;">' +
+                    '<li><a data-target="#modalAddPoints" data-toggle="modal"><i class="fal fa-map-pin"></i> Agregar Puntos</a></li>' +
+                    btn_delete +
+                    '</ul>' +
+                    '</div>';
+
+                return btn_addTracking + btn_ship_cons + btn_points + btn_delete;
+            },
+            width: 105
+        }, {
+            data: 'volumen',
+            name: 'volumen',
+            visible: false
+        }, {
+            data: 'piezas',
+            name: 'piezas',
+            visible: false
+        }, {
+            data: 'peso',
+            name: 'peso',
+            visible: false
+        }, {
+            data: 'valor',
+            name: 'valor',
+            visible: false
+        },
         ],
         "drawCallback": function () {
             /* EDITABLE FIELD */
@@ -300,7 +300,7 @@ function datatableDetail() {
                 return typeof i === 'string' ?
                     i.replace(/[\$,]/g, '') * 1 :
                     typeof i === 'number' ?
-                    i : 0;
+                        i : 0;
             };
             /*Total over all pages*/
             var vol = api

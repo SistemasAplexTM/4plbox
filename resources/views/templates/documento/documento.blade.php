@@ -227,6 +227,7 @@
         <div class="col-lg-6" style="padding-left: 0px;">
           @foreach($agencias as $agencia)
           @if($agencia['id'] == $documento->agencia_id)
+          {{-- //CAMBIO DE AGENCIA --}}
           <change_agency :agency="{{ $agencia }}" :role="{{ $role_admin }}"></change_agency>
           <input type="hidden" id="agencia_id" name="agencia_id" class="form-control" value="{{ $agencia['id'] }}"
             readonly="">

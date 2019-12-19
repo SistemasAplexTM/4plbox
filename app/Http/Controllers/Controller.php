@@ -222,6 +222,7 @@ class Controller extends BaseController
             '({tel_consignee})'   => ($objConsignee) ? $objConsignee->telefono : '----------',
             '({cel_consignee})'   => ($objConsignee) ? $objConsignee->celular : '',
             '({pobox_consignee})' => ($objConsignee) ? $objConsignee->po_box : '',
+            '({user_consignee})'  => ($objConsignee) ? $objConsignee->correo : '',
             //Datos Guias
             '({flete_impuesto})'  => ($objWarehouse) ? (($objWarehouse->valor_declarado * $objWarehouse->impuesto / 100) + $objWarehouse->flete) : '',
             '({seguro})'          => ($objWarehouse) ? $objWarehouse->seguro : '',

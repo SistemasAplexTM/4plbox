@@ -650,7 +650,7 @@
 					    </td>
 					    <td class="left_line bg_azul" style="border-left: 1px solid {{ $color }};background-color:{{ $background }};">&nbsp;</td>
 					    <td align="center" valign="top" rowspan="2" class="left_line" style="border-left: 1px solid {{ $color }};">
-					    	<div id="rate" class="margin_div text_total">{{ $detalle->tarifa }}</div>
+					    	<div id="rate" class="margin_div text_total">{{ ($detalle->minima === 0) ? $detalle->tarifa : 'MIN' }}</div>
 					    </td>
 					    <td class="left_line bg_azul" style="border-left: 1px solid {{ $color }};background-color:{{ $background }};">&nbsp;</td>
 					    <td align="center" valign="top" class="left_line" style="border-left: 1px solid {{ $color }};">
@@ -659,7 +659,7 @@
 					    <td class="left_line bg_azul" style="border-left: 1px solid {{ $color }};background-color:{{ $background }};">&nbsp;</td>
 					    <td valign="top" rowspan="2" class="left_line" style="border-left: 1px solid {{ $color }};">
 					    	<div id="nature_goods" class="margin_div text_regular_l">
-					    	  {{ $detalle->descripcion }}
+					    	  <pre>{{ $detalle->descripcion }}</pre>
 					    	</div>
 					    </td>
 					  </tr>

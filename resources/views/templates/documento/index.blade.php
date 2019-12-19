@@ -518,7 +518,7 @@
                     </h4>
                 </div>
                 <div class="modal-body">
-                    <form id="formGuiasAgrupar">
+                    <form id="formGuiasAgrupar_2">
                         <p>Selecione los documentos que desea agrupar en este registro.</p>
                         <div class="table-responsive">
                             <table id="tbl-modalagrupar" class="table table-striped table-hover" style="width: 100%;">

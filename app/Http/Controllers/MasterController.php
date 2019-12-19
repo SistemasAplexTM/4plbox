@@ -136,6 +136,7 @@ class MasterController extends Controller
                 'peso_cobrado'   => $request->peso_cobrado,
                 'tarifa'         => $request->tarifa,
                 'total'          => $request->total,
+                'minima'         => $request->minima,
                 'descripcion'    => $request->descripcion,
             ]);
             DB::table('master_cargos_adicionales')->where('master_id', $master)->delete();
@@ -330,6 +331,7 @@ class MasterController extends Controller
                 'a.commodity_item',
                 'a.peso_cobrado',
                 'a.tarifa',
+                'a.minima',
                 'a.total',
                 'a.descripcion',
                 'a.peso',

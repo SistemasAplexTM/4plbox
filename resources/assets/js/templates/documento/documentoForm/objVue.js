@@ -976,8 +976,8 @@ var objVue = new Vue({
                             }
                         }
                     } else {
-                        toastr.warning('Ingrese el CONTENIDO de la carga.');
-                        return false;
+                        // toastr.warning('Ingrese el CONTENIDO de la carga.');
+                        return true;
                     }
                 } else {
                     toastr.warning('Seleccione un TIPO DE EMPAQUE.');

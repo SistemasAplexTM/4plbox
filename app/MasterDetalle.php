@@ -20,6 +20,7 @@ class MasterDetalle extends Model
         'peso_cobrado',
         'tarifa',
         'total',
-        'descripcion'
+        'descripcion',
+        'minima'
     ];
 }
