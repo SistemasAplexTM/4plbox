@@ -77,43 +77,43 @@ var objVue = new Vue({
         //   });
         // });
 
-        // JSPM.JSPrintManager.auto_reconnect = true;
-        // JSPM.JSPrintManager.start();
-        // JSPM.JSPrintManager.WS.onStatusChanged = function () {
-        //     if (JSPM.JSPrintManager.websocket_status == JSPM.WSStatus.Open) {
-        //       // Listado de impresoras simple
-        //       JSPM.JSPrintManager.getPrinters().then(function (e) {
-        //         e.forEach(function(el, index) {
-        //           // me.printers_options.push({ id: index, name: el });
-        //         });
-        //       });
-        //
-        //       // Impresion Multiple
-        //       var cpj = new JSPM.ClientPrintJob();
-        //       // impresora por defecto
-        //       // cpj.clientPrinter = new JSPM.DefaultPrinter();
-        //
-        //       // muestra dialog con listado de impresoras
-        //       // cpj.clientPrinter = new JSPM.UserSelectedPrinter();
-        //
-        //       // imprime con una impresora seleccionada
-        //       cpj.clientPrinter = new JSPM.InstalledPrinter('Nitro PDF Creator (Pro 12)');
-        //
-        //       var my_file1 = new JSPM.PrintFilePDF('/files/dumaFile.pdf', JSPM.FileSourceType.URL, 'archivo1.pdf', 1);
-        //       var my_file2 = new JSPM.PrintFilePDF('/files/file.pdf', JSPM.FileSourceType.URL, 'archivo2.pdf', 1);
-        //       cpj.files.push(my_file1);
-        //       cpj.files.push(my_file2);
-        //       cpj.sendToClient();
-        //     }else {
-        //       if(JSPM.JSPrintManager.websocket_status == JSPM.WSStatus.Closed){
-        //         console.log('JSPM is not installed or not running!');
-        //       }else{
-        //         if(JSPM.JSPrintManager.websocket_status == JSPM.WSStatus.BlackListed){
-        //           console.log('JSPM has blacklisted this website!');
-        //         }
-        //       }
-        //     }
-        // };
+        JSPM.JSPrintManager.auto_reconnect = true;
+        JSPM.JSPrintManager.start();
+        JSPM.JSPrintManager.WS.onStatusChanged = function () {
+            if (JSPM.JSPrintManager.websocket_status == JSPM.WSStatus.Open) {
+                // Listado de impresoras simple
+                JSPM.JSPrintManager.getPrinters().then(function (e) {
+                    e.forEach(function (el, index) {
+                        // me.printers_options.push({ id: index, name: el });
+                    });
+                });
+
+                // Impresion Multiple
+                var cpj = new JSPM.ClientPrintJob();
+                // impresora por defecto
+                // cpj.clientPrinter = new JSPM.DefaultPrinter();
+
+                // muestra dialog con listado de impresoras
+                // cpj.clientPrinter = new JSPM.UserSelectedPrinter();
+
+                // imprime con una impresora seleccionada
+                cpj.clientPrinter = new JSPM.InstalledPrinter('Microsoft Print to PDF');
+
+                var my_file1 = new JSPM.PrintFilePDF('/files/dumaFile.pdf', JSPM.FileSourceType.URL, 'archivo1.pdf', 1);
+                var my_file2 = new JSPM.PrintFilePDF('/files/file.pdf', JSPM.FileSourceType.URL, 'archivo2.pdf', 1);
+                cpj.files.push(my_file1);
+                cpj.files.push(my_file2);
+                cpj.sendToClient();
+            } else {
+                if (JSPM.JSPrintManager.websocket_status == JSPM.WSStatus.Closed) {
+                    console.log('JSPM is not installed or not running!');
+                } else {
+                    if (JSPM.JSPrintManager.websocket_status == JSPM.WSStatus.BlackListed) {
+                        console.log('JSPM has blacklisted this website!');
+                    }
+                }
+            }
+        };
     },
     data: {
         email: null,

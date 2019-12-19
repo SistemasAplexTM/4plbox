@@ -578,6 +578,12 @@
 
 @section('scripts')
 {!! $wcpScript !!}
+
+<script src="{{ asset('js/plugins/zip.js-master/scripts/JSPrintManager.js') }}"></script>
+<script src="{{ asset('js/plugins/zip.js-master/scripts/zip.js') }}"></script>
+<script src="{{ asset('js/plugins/zip.js-master/scripts/zip-ext.js') }}"></script>
+<script src="{{ asset('js/plugins/zip.js-master/scripts/deflate.js') }}"></script>
+
 <script src="{{ asset('js/templates/documento/documentoIndex/main.js') }}"></script>
 <script src="{{ asset('js/templates/documento/documentoIndex/vue.js') }}"></script>
 <script src="{{ asset('js/templates/documento/documentoIndex/index.js') }}"></script>
