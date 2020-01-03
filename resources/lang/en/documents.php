@@ -28,6 +28,7 @@ return [
 		'content'         => 'Description',
 		'declared'        => 'FOB',
 		'pieces'          => 'Piece',
+		'hs'  							=> 'Position',
 		'packing'         => 'Packing',
 		'tariff_position' => 'Tariff position',
 		'add'             => 'Add',

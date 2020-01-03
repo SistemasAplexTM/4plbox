@@ -545,11 +545,11 @@ class DocumentoController extends Controller
                 $consignee_old = $data->consignee_id;
                 if ($request->opEditarShip) {
                     //CREACION O ACTUALIZACION DEL SHIPPER O CONSIGNEE
-                    $idsShipCons      = $this->createOrUpdateShipperConsignee($request->all());
+                    // $idsShipCons      = $this->createOrUpdateShipperConsignee($request->all());
                     $data->shipper_id = $idsShipCons['shipper_id'];
                 } else {
                     if ($request->shipper_id == '') {
-                        $idsShipCons        = $this->createOrUpdateShipperConsignee($request->all());
+                        // $idsShipCons        = $this->createOrUpdateShipperConsignee($request->all());
                         $data->shipper_id   = $idsShipCons['shipper_id'];
                         $data->consignee_id = $idsShipCons['consig_id'];
                     } else {
@@ -558,11 +558,11 @@ class DocumentoController extends Controller
                 }
                 if ($request->opEditarCons) {
                     //CREACION O ACTUALIZACION DEL SHIPPER O CONSIGNEE
-                    $idsShipCons        = $this->createOrUpdateShipperConsignee($request->all());
+                    // $idsShipCons        = $this->createOrUpdateShipperConsignee($request->all());
                     $data->consignee_id = $idsShipCons['consig_id'];
                 } else {
                     if ($request->consignee_id == '' and  $data->consignee_id == '' and $data->shipper_id != '') {
-                        $idsShipCons        = $this->createOrUpdateShipperConsignee($request->all());
+                        // $idsShipCons        = $this->createOrUpdateShipperConsignee($request->all());
                         $data->consignee_id = $idsShipCons['consig_id'];
                     } else {
                         if ($request->consignee_id != '') {
@@ -762,6 +762,8 @@ class DocumentoController extends Controller
         $data->save();
         $piv = DB::table('status_detalle')->where([['documento_detalle_id', $obj->documento_detalle_id], ['status_id', 5]])->delete();
         $this->AddToLog('Consolidado detalle eliminado (' . $id_detalle . ')');
+        /* BUSCAR GUIAS AGRUPADAS EN LA GUIA CONSOLIDADA */
+        $this->guidesGroups($obj->documento_detalle_id, 0);
         $answer = array(
             "code" => 200,
         );
@@ -1329,7 +1331,6 @@ class DocumentoController extends Controller
 
     public function pdf($id, $document, $id_detalle = null, $view = true)
     {
-
         $documento = DB::table('documento')
             ->leftJoin('localizacion AS ciudad_document', 'documento.ciudad_id', '=', 'ciudad_document.id')
             ->leftJoin('deptos AS deptos_documento', 'ciudad_document.deptos_id', '=', 'deptos_documento.id')
@@ -1973,11 +1974,11 @@ class DocumentoController extends Controller
                 }
             }
         }
-        if ($view) {
-            return $pdf->stream($nameDocument . '.pdf'); //visualizar en el navegador
-        } else {
+        // if ($view) {
             $pdf->save(public_path() . '/files/File.pdf'); //GUARDAR PARA IMPRIMIR POR DEFECTO
-        }
+            return $pdf->stream($nameDocument . '.pdf'); //visualizar en el navegador
+        // } else {
+        // }
         // return $pdf->download($nameDocument . ' . pdf');// DESCARGAR ARCHIVO
     }
 
@@ -2092,10 +2093,10 @@ class DocumentoController extends Controller
         $this->AddToLog('Impresion labels (' . $documento->id . ')');
 
         if (env('APP_CLIENT') === 'colombiana') {
-            $pdf = PDF::loadView('pdf.labelWGJyg', compact('documento', 'detalle', 'document', 'dato_consolidado', 'shipper', 'consignee'))
-                ->setPaper(array(25, -25, 260, 360), 'landscape');
-            // $pdf = PDF::loadView('pdf.labelWGcolombiana', compact('documento', 'detalle', 'document', 'dato_consolidado', 'shipper', 'consignee' ))
-            //     ->setPaper(array(25, -25, 300, 300), 'landscape');
+            // $pdf = PDF::loadView('pdf.labelWGJyg', compact('documento', 'detalle', 'document', 'dato_consolidado', 'shipper', 'consignee'))
+            //     ->setPaper(array(25, -25, 260, 360), 'landscape'); 3*72 / 4.72
+            $pdf = PDF::loadView('pdf.labelWGcolombiana', compact('documento', 'detalle', 'document', 'dato_consolidado', 'shipper', 'consignee' ))
+                ->setPaper(array(25, -25, 288, 288), 'landscape');
 
             $nameDocument = 'Label' . $document . '-' . $documento->id;
             $pdf->save(public_path() . '/files/File.pdf');
@@ -2253,6 +2254,8 @@ class DocumentoController extends Controller
                                 'fecha_status'         => date('Y-m-d H:i:s'),
                             ],
                         ]);
+                        /* BUSCAR GUIAS AGRUPADAS EN LA GUIA CONSOLIDADA */
+                        $this->guidesGroups($detalle->id, 1);
                         $answer = array(
                             "code" => 200,
                             "data" => $detalle,
@@ -2286,6 +2289,18 @@ class DocumentoController extends Controller
             );
         }
         return $answer;
+    }
+
+    /* ACTUALIZAR GUIAS AGRUPADAS EN EL CAMPO CONSOLIDADO */
+    public function guidesGroups($id, $data)
+    {
+        $guias_agrupadas = DocumentoDetalle::select('id')->where('agrupado', $id)->get();
+        if ($guias_agrupadas) {
+            foreach ($guias_agrupadas as $key => $value) {
+                DocumentoDetalle::where('id', $value->id)->update(['consolidado' => $data]);
+            }
+        }
+        return true;
     }
 
     public function getAllConsolidadoDetalle($id, $num_bolsa = null)
@@ -2445,6 +2460,7 @@ class DocumentoController extends Controller
               	) AS shipper_json')
             )
             ->where($where)
+            ->orderBy('a.documento_detalle_id', 'DESC')
             ->get();
         return \DataTables::of($detalle)->make(true);
     }

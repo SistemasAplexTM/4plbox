@@ -53,17 +53,19 @@ export default {
   },
   methods: {
     querySearch(queryString, cb) {
-      var me = this;
-      axios
-        .get("/ciudad/getSelectCity/" + queryString)
-        .then(function(response) {
-          me.options = response.data.data;
-          cb(me.options);
-        })
-        .catch(function(error) {
-          console.log(error);
-          toastr.warning("Error: -" + error);
-        });
+      if (queryString.length > 3) {
+        var me = this;
+        axios
+          .get("/ciudad/getSelectCity/" + queryString)
+          .then(function(response) {
+            me.options = response.data.data;
+            cb(me.options);
+          })
+          .catch(function(error) {
+            console.log(error);
+            toastr.warning("Error: -" + error);
+          });
+      }
     },
     handleSelect(item) {
       this.city = item;

@@ -234,7 +234,7 @@ function actionsButtons(data, type, full, meta) {
         "<li><a href='impresion-documento/" + full.id + "/consolidado_guias' target='_blank'> <spam class='fal fa-print'></spam> Imprimir Guias</a></li>" +
         "<li role='separator' class='divider'></li>" +
         "<li><a href='impresion-documento/pdfContrato' target='_blank'> <spam class='fal fa-print'></spam> Imprimir contrato</a></li>" +
-        "<li><a href='impresion-documento/pdfTsa' target='_blank'> <spam class='fal fa-print'></spam> Imprimir TSA</a></li>" +
+        "<li><a href='impresion-documento-tsa/pdfTsa/" + full.master_id + "' target='_blank'> <spam class='fal fa-print'></spam> Imprimir TSA</a></li>" +
         "</ul></div>";
 
       var btn_actions = "<div class='btn-group'>" +
@@ -265,7 +265,7 @@ function actionsButtons(data, type, full, meta) {
       label_wcp = '<li><a onclick="print_direct(\'impresion-documento-label/' + full.id + '/warehouse\', \'' + label_printer_name + '\', \'File\')"> <spam class="fal fa-print"></spam> Label Warehouse</a></li>';
       // }
       // if (print_documents != '') {
-      wrh_wcp = '<li><a onclick="print_direct(\'impresion-documento/' + full.id + '/warehouse\', \'' + label_printer_name + '\', \'dumaFile\')"> <spam class="fal fa-print"></spam> Warehouse</a></li>';
+      wrh_wcp = '<li><a onclick="print_direct(\'impresion-documento/' + full.id + '/warehouse\', \'' + label_printer_name + '\', \'File\')"> <spam class="fal fa-print"></spam> Warehouse</a></li>';
       if (full.liquidado == 1) {
         guia_wcp = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + print_documents + '&filetype=' + print_format + '&id=' + full.id + '&agency_id=' + agency_id + '&document=guia\')"> <spam class="fal fa-print"></spam> Invoice</a></li>';
         label_guia_wcp = '<li><a onclick="javascript:jsWebClientPrint.print(\'useDefaultPrinter=false&printerName=' + print_labels + '&filetype=' + print_format + '&id=' + full.id + '&agency_id=' + agency_id + '&document=guia&label=true\')"> <spam class="fal fa-print"></spam> Label Invoice</a></li>';

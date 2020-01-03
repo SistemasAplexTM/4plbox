@@ -238,7 +238,9 @@
         <div class="col-lg-6" style="padding-right: 0px;">
           <div class="form-group">
             <label for="num_guia" class=""
-              style="font-family: 'Russo One', sans-serif; font-size: 40px; float: right;font-weight: bold; color: #0d87e9;">{{ $documento->num_warehouse }}</label>
+              style="font-family: 'Russo One', sans-serif; font-size: 40px; float: right;font-weight: bold; color: #0d87e9;">
+              {{ ($documento->tipo_documento_id == 3) ? 'Consolidado: ' . $documento->consecutivo : $documento->num_warehouse }}
+            </label>
             {{-- <input type="text" id="num_guia" name="num_guia" class="form-control" readonly="" value="{{ $documento->num_warehouse }}"
             > --}}
           </div>
@@ -438,12 +440,12 @@
               @if(env('APP_LIQUIDADO') == 1)
               <input type='checkbox' data-toggle="toggle" id='show-totales' name="liquidar" @click="showTotals()"
                 data-size='mini' data-on="Si" data-off="No" data-width="50" data-style="ios" data-onstyle="primary"
-                data-offstyle="danger" disabled="disabled"
+                data-offstyle="danger"
                 {{ ($documento->liquidado === null || $documento->liquidado !== 0) ? 'checked="checked"' : '' }}>
               @else
               <input type='checkbox' data-toggle="toggle" id='show-totales' name="liquidar" @click="showTotals()"
                 data-size='mini' data-on="Si" data-off="No" data-width="50" data-style="ios" data-onstyle="primary"
-                data-offstyle="danger" disabled="disabled"
+                data-offstyle="danger"
                 {{ ($documento->liquidado !== 0 and $documento->liquidado !== null) ? 'checked="checked"' : '' }}>
               @endif
             </div>

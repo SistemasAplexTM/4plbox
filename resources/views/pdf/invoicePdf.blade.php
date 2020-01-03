@@ -128,7 +128,7 @@
         style="page-break-after:{{ $style }}">
         <tr>
             <td colspan="4" align="CENTER">
-                <div id="space">(Copy {{ $i }})</div>
+                <div id="space">&nbsp;</div>
             </td>
         </tr>
         <tr>
@@ -272,7 +272,7 @@
                     </tr>
                     <?php $total = 0; ?>
                     <tr>
-                        <td align="CENTER" style="height: 400px;">
+                        <td align="CENTER" style="height: 600px;">
                             <div id="detalle">{{ 1 }}</div>
                         </td>
                         <?php $leng = strlen($detalle[$cont]->contenido2); ?>
@@ -302,23 +302,46 @@
                     </tr>
                     <tr>
                         <td colspan="4">
-                            <div id="declaro">Note: this declaration of commercial value replaces the original invoice.
-                            </div>
+                            {{-- <div id="declaro">Note: this declaration of commercial value replaces the original invoice.
+                            </div> --}}
                             <div id="declaro1">
-                                @lang('general.declare1')
+                                Declaracion del remitente: Yo/ Nosotros, certificamos que he/ hemos cumplido con todas
+                                las leyes y regulaciones
+                                aplicables
+                                a la exportacion, importacion y demas de los paises a los que, donde y a traves de los
+                                cuales puedan pasar las
+                                mercancias
+                                arriba citadas. Yo/ Nosotros autorizo a Colombiana de Carga Corp. para completar en
+                                mi/nuestro nombre cualquier
+                                documento
+                                requerido para cumplir con las leyes y regulacion. Por lo tanto, Yo/Notros designamos a
+                                Colombiana de Carga Corp. o a su
+                                representante como consignatario unicamente en el proposito de designar a un agente de
+                                aduanas para ejecutar los
+                                tramites
+                                de aduana y entrada al pais de destino de las mercancias descritas en esta declaracion.
                             </div>
                             <div id="declaro2">
-                                This invoice is only for customs use between united states and country of destination.
-                                this invoice is not for trade. the shipper declares all the information is true and
-                                correct. these commodities, technology or software were exported from the united states
-                                in accordance with the export administration regulations. diversion contrary to u.s. law
-                                is prohibited.
+                                Yo/ Nosotros certifico/certificamos que la informacion proporcionada a Colombiana de
+                                Carga Corp. de forma oral o en esta
+                                declaracion es precisa, completa y veraz, Por lo anterior Yo/ Nosotros acuerdo/
+                                acordamos indemnizar y absolver a
+                                Colombiana de Carga Corp. por cualquier reclamacion, obligacion o costo debido a mi/
+                                nuestro incumplimiento de cualquier
+                                ley o regulacion aplicable en el pais de origen o destino de las mercancias amparadas
+                                con la guia que se indica en este
+                                documento.
                             </div>
                         </td>
                     </tr>
                 </table>
                 <div id="firma">
                     <table width="100%;" border="0" cellspacing="0" cellpadding="0" id="table1">
+                        <tr>
+                            <th>{{ ($val->ship_nomfull2) ? $val->ship_nomfull2 : $detalle[$cont]->ship_nomfull }}</th>
+                            <th>&nbsp;</th>
+                            <th>{{ substr((isset($documento->created_at)) ? $documento->created_at : '', 0, -9) }}</th>
+                        </tr>
                         <tr>
                             <th>__________________________</th>
                             <th>__________________________</th>

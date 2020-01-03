@@ -4,7 +4,7 @@
 <head>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
     <title>
-        Label AWB
+        Label HAWB
     </title>
     <style type="text/css">
         body {
@@ -14,8 +14,10 @@
         }
 
         .titulos {
-            font-size: 9px;
+            font-size: 12px;
             font-weight: bold;
+            padding-top: 5px;
+            padding-bottom: 5px;
         }
 
         .titulo_grande {
@@ -27,6 +29,10 @@
 
         .border_bottom {
             border-bottom: solid 1px #000000;
+        }
+
+        .description {
+            padding-top: 10px;
         }
     </style>
 </head>
@@ -61,7 +67,7 @@
             </tr>
             <tr>
                 <td class="titulo_grande border_bottom" colspan="3" width="50%">
-                    GUIA AWB:
+                    GUIA HAWB:
                 </td>
                 <td class="titulo_grande border_bottom">
                     {{ $value->codigo }}
@@ -95,7 +101,7 @@
                     <div class="titulos">
                         Descripción - Contenido
                     </div>
-                    <div>
+                    <div class="description">
                         {{ $value->contenido2 }}
                     </div>
                 </td>

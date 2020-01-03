@@ -520,7 +520,6 @@ a.badge:hover {
               id
               @click="addGuiasToConsolidadoModal()"
               class="btn btn-primary"
-              data-dismiss="modal"
             >Agregar</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
           </div>
@@ -1238,7 +1237,7 @@ export default {
         .then(function(response) {
           toastr.success("Registro actualizado correctamente.");
           toastr.options.closeButton = true;
-          me.updateTableDetail();
+          me.updateTableDetail(true);
         })
         .catch(function(error) {
           toastr.success("Error.");
@@ -1297,7 +1296,10 @@ export default {
         }
       }
     },
-    updateTableDetail() {
+    updateTableDetail(op) {
+      if (typeof op == "undefined") {
+        this.getModalGuias();
+      }
       var table = $("#tbl-consolidado").DataTable();
       table.ajax.reload();
     },
@@ -1318,6 +1320,7 @@ export default {
             [40, 50, 80, 100, 200, -1],
             [40, 50, 80, 100, 200, "All"]
           ],
+          order: [[1, "desc"]],
           ajax: "getAllConsolidadoDetalle",
           columns: [
             { data: "num_bolsa", name: "num_bolsa" },
@@ -1386,7 +1389,7 @@ export default {
                       '" class="' +
                       error +
                       '">' +
-                      full.num_guia +
+                      full.num_warehouse +
                       '</span><a style="float: right;cursor:pointer;" class="badge badge-' +
                       color +
                       ' pop" \n\
@@ -1725,7 +1728,7 @@ export default {
                   }
                 },
                 success: function(response, newValue) {
-                  me.updateTableDetail();
+                  me.updateTableDetail(true);
                 }
               });
             }
@@ -1829,6 +1832,8 @@ export default {
       });
     },
     showAlert(type, message) {
+      toastr.warning(message);
+      toastr.options.closeButton = true;
       this.$message({
         message: message,
         type: type,

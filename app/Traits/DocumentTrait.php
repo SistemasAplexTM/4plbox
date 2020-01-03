@@ -117,10 +117,10 @@ trait DocumentTrait
         $fFin = date('Y-m-d' , $fFin);
         $nuevafecha = strtotime('-2 day' , strtotime($fFin));
         $fIni = date('Y-m-d' , $nuevafecha);
-        $dates = array(
-          'inicio' => $fIni,
-          'fin' => $fFin,
-        );
+        // $dates = array(
+        //   'inicio' => $fIni,
+        //   'fin' => $fFin,
+        // );
       }else{
         if($filter['dates'] != '' and $type != 4){
           $dates = array(
@@ -143,6 +143,8 @@ trait DocumentTrait
 
       if ($type != 4) {
         $where[] = ['b.carga_courier', 1];
+      }else{
+        $filter = false;
       }
 
         $label_1 = "<a style='float:right;cursor:pointer;color:red' title='Quitar' data-toggle='tooltip' onclick='removerDocumentoAgrupado(";
@@ -270,11 +272,18 @@ trait DocumentTrait
                 DB::raw('"ciudad" AS ciudad')
             )
             ->where($where)
+            ->when(!$filter['dates'], function ($query, $data) use ($type, $filter) {
+              if ($type != 4) {
+                if ($filter['dates'] == '' and $filter['consignee_id'] == '' and $filter['warehouse'] == '') {
+                  return $query->where([['a.consolidado', 0]]);
+                }
+              }
+            })
             ->when($filter['warehouse'], function ($query, $data) {
               return $query->where('a.num_warehouse', 'LIKE', "%".$data."%");
             })
             ->when($dates, function ($query, $data) {
-              return $query->whereBetween('b.created_at', [$data['inicio'],$data['fin']]);
+              return $query->whereBetween('b.created_at', [$data['inicio'], date("Y-m-d",strtotime($data['fin']."+ 1 days"))]);
             })
             ->when($filter['consignee_id'], function ($query, $data) {
               return $query->where('b.consignee_id', $data);
@@ -293,7 +302,7 @@ trait DocumentTrait
           ->leftJoin('localizacion as l', 'b.ciudad_id', 'l.id')
           ->join('agencia AS e', 'b.agencia_id', '=', 'e.id')
           ->leftJoin('transportador as central_destino', 'b.central_destino_id', '=', 'central_destino.id')
-          ->select('b.id as id', 'b.transporte_id', 'central_destino.nombre as central_destino', 
+          ->select('b.id as id', 'b.master_id', 'b.transporte_id', 'central_destino.nombre as central_destino', 
           'valor_libra', 'b.valor', 'b.liquidado', 'b.tipo_documento_id as tipo_documento_id', 'b.consecutivo as codigo',
            'b.created_at as fecha', 'shipper.nombre_full as ship_nomfull', 'c.nombre_full as cons_nomfull', 
            'c.correo as email_cons', 'e.descripcion as agencia',
